@@ -58,6 +58,29 @@ ABORTADO_PT = ('ABORTADO: nao consegui restaurar pai: ERRO:  atualização ou ex
 ABORTADO_TRUNCADO = 'ABORTADO: nao consegui restaurar pai: ERRO:  atualização ou exclusão em tabela "pai" viola restrição\n'
 
 
+ABORTADO_REAL = ('ABORTADO: nao consegui restaurar cgm: ERRO:  atualização ou exclusão em tabela "cgm" viola '
+                 'restrição de chave estrangeira "cgmendereco_numcgm_fk" em "cgmendereco"\n'
+                 'DETALHE:  Chave (z01_numcgm)=(19) ainda é referenciada pela tabela "cgmendereco".\n')
+
+
+def test_abortado_mensagem_real_do_servidor_pt_br_acha_a_filha():
+    """Texto capturado do servidor real (lc_messages=pt_BR.ISO-8859-1) num DELETE em cgm, com ROLLBACK."""
+    c = parse_post(ABORTADO_REAL, CASO)
+    assert c.veredito == Veredito.ERRO_AMBIENTE
+    assert "'cgmendereco'" in c.detalhe and "'cgm'" not in c.detalhe
+    assert "tabela filha nao identificada" not in c.detalhe
+
+
+def test_abortado_so_com_o_detalhe_acha_a_filha():
+    c = parse_post('ABORTADO: x: DETALHE:  Chave (a)=(1) ainda é referenciada pela tabela "filha2".\n', CASO)
+    assert "'filha2'" in c.detalhe
+
+
+def test_abortado_so_com_o_detalhe_em_ingles_acha_a_filha():
+    c = parse_post('ABORTADO: x: DETAIL:  Key (a)=(1) is still referenced from table "filha3".\n', CASO)
+    assert "'filha3'" in c.detalhe
+
+
 def test_abortado_em_portugues_acha_a_tabela_filha():
     c = parse_post(ABORTADO_PT, CASO)
     assert c.veredito == Veredito.ERRO_AMBIENTE
@@ -139,8 +162,9 @@ def test_catalogo_linha_malformada_nomeia_a_linha(tmp_path):
 
 def test_catalogo_semeado_carrega():
     casos = carrega_catalogo(posts.CATALOGO)
-    assert len(casos) == 31 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
-    assert all(c.verificado is False for c in casos)
+    assert len(casos) == 34 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
+    assert sum(c.verificado for c in casos) == 32
+    assert [c.tela for c in casos if not c.verificado] == ["rec4_rpcexame.php", "rec1_rhestagioresultado001.php"]
     assert any(c.tela == "pes1_rhpessoal004.php" and c.tabelas == ["registrapontoeletronicohistorico", "rhpessoal"]
                for c in casos)
 

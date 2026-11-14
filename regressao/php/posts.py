@@ -27,11 +27,14 @@ _ATENCAO = re.compile(r"^\s*ATENCAO: a tela gravou tambem em (.+?), que NAO e re
 _PAR_SQL = re.compile(r"^\s{4}(5\.6|8\.5): .*$", re.M)
 # Tabela REFERENCIANTE (a filha) = a que segue o nome da constraint. Ingles:
 #   violates foreign key constraint "fk" on table "filha"
-# pt_BR (traducao do PostgreSQL, NAO verificada contra violacao real):
-#   viola restrição de chave estrangeira "fk" da tabela "filha"
+# pt_BR REAL (capturado do servidor, lc_messages=pt_BR.ISO-8859-1, DELETE em cgm com ROLLBACK):
+#   viola restrição de chave estrangeira "fk" em "filha"      (sem a palavra "tabela")
+#   DETALHE: ... ainda é referenciada pela tabela "filha".
+# Outras formas aceitas por tolerancia: "da|na|em tabela", "on|from table".
 _TABELA_FK = re.compile(
-    r'(?:constraint|chave estrangeira)\s+"[^"]+"\s+(?:on table|from table|da tabela|na tabela|em tabela)\s+"([^"]+)"',
+    r'(?:constraint|chave estrangeira)\s+"[^"]+"\s+(?:(?:on|from) table|(?:da|na|em) tabela|em|on)\s+"([^"]+)"',
     re.I)
+_TABELA_DETALHE = re.compile(r'(?:referenciada pela tabela|referenced from table)\s+"([^"]+)"', re.I)
 
 
 @dataclass
@@ -67,7 +70,7 @@ def parse_post(saida: str, caso: PostCaso, codigo: int | None = None) -> Caso:
     nota = f"tabela(s) gravada(s) e NAO restaurada(s): {atencao.group(1)}" if atencao else ""
     if m := _ABORTADO.search(saida):
         motivo = m.group(1).strip()
-        filhas = _TABELA_FK.findall(motivo)
+        filhas = _TABELA_FK.findall(motivo) or _TABELA_DETALHE.findall(motivo)
         dica = (f"; acrescentar a tabela filha {filhas[-1]!r} ao catalogo (antes da mae) e conferir "
                 f"se o POST do 5.6 deixou linha de teste") if filhas else \
                ("; tabela filha nao identificada: ver motivo acima; conferir o banco: o POST do 5.6 "
