@@ -99,12 +99,10 @@ def _roda_cmp(sid: str, prefixo: str) -> str:
     return r.stdout.decode("utf-8", errors="replace")
 
 
-def busca_corpo(sid: str, tela: str) -> bytes:
-    """Corpo cru da tela no lado 5.6 (o lado ja sabido identico ao 8.5). Espelha o fetch do
-    cmp.py: restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa
-    em ecidade_php56) antes da requisicao, pois cada requisicao consome/reescreve a sessao;
-    depois curl com o cookie ECIDADEWINDOWMAIN, -m 60 e teto de 5 MB. A requisicao parte de
-    dentro do container (porta 80 do apache), via banco._docker."""
+def restaura_sessao(sid: str) -> None:
+    """Restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa em
+    ecidade_php56; o volume de sessoes e compartilhado com o php85), pois cada requisicao
+    consome/reescreve a sessao."""
     sess = f"/var/lib/php/sessions/sess_{sid}"
     # `[ -f ]`: so restaura sobre uma sessao que existe; senao um SID qualquer ganharia, a
     # partir de um backup velho, uma sessao autenticada forjada.
@@ -112,11 +110,19 @@ def busca_corpo(sid: str, tela: str) -> bytes:
              f"[ -f {sess} ] && cp /tmp/_sess.bak {sess} && chown www-data:www-data {sess} "
              f"&& chmod 600 {sess}"],
             TIMEOUT_CORPO)
+
+
+def busca_corpo(sid: str, tela: str) -> bytes:
+    """Corpo cru da tela no lado 5.6 (o lado ja sabido identico ao 8.5). Espelha o fetch do
+    cmp.py: restaura a sessao antes da requisicao; depois curl com o cookie
+    ECIDADEWINDOWMAIN, -m 60 e teto de 5 MB. A requisicao parte de dentro do container (porta
+    80 do apache), via banco._docker."""
+    restaura_sessao(sid)
     return _requisita(sid, tela)
 
 
-def _requisita(sid: str, tela: str) -> bytes:
-    return _docker(["exec", "ecidade_php56", "sh", "-c",
+def _requisita(sid: str, tela: str, container: str = "ecidade_php56") -> bytes:
+    return _docker(["exec", container, "sh", "-c",
                     f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' "
                     f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
                    TIMEOUT_CORPO)

@@ -1,0 +1,25 @@
+# Catalogo de relatorios por GET (nivel 4). Colunas: tela<TAB>query<TAB>tipo (html|pdf|xls|doc)<TAB>area<TAB>status
+# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' somente apos IDENTICO real, com conteudo
+# nao vazio, contra a pilha (nunca marcar a mao); 'nao-verificado' = candidato ainda sem IDENTICO (ou que DIVERGE: ver relatorio da Task 7).
+# Formatos reais do e-cidade: PDF (FPDF, rodape com hora de emissao) ; "xls" = CSV ';' em tmp/ servido por db_download.php (text/csv);
+# consulta HTML = func_*.php. Nao ha .xls/.xlsx binario servido por GET fixo (os arquivos de tmp/ tem nome com timestamp).
+orc2_cadorcsubfuncao002.php		pdf	orcamento	nao-verificado
+orc2_cadorcfuncao002.php		pdf	orcamento	nao-verificado
+com2_pctipocompra002.php		pdf	compras	nao-verificado
+con2_consistenciaplano002.php		pdf	contabilidade	nao-verificado
+iss2_tipcalc002.php		pdf	tributario	nao-verificado
+iss2_cadcal002.php		pdf	tributario	nao-verificado
+iss2_tiponotas002.php		pdf	tributario	nao-verificado
+pro2_andpadrao002.php		pdf	protocolo	nao-verificado
+mat2_cadunidade002.php		pdf	almoxarifado	nao-verificado
+prot2_cadcgm002.php		pdf	configuracao	nao-verificado
+con2_relinstituicoes002.php		pdf	configuracao	nao-verificado
+con2_conhist002.php		pdf	contabilidade	nao-verificado
+con2_conhistdoc002.php		pdf	contabilidade	nao-verificado
+con2_balancrece002.php		pdf	contabilidade	nao-verificado
+cem2_renovacoes.php		pdf	cemiterio	nao-verificado
+db_download.php	arquivo=tmp/con2_balancdespsinteticocsv002.csv	xls	contabilidade	nao-verificado
+db_download.php	arquivo=tmp/balrec.csv	xls	contabilidade	nao-verificado
+db_download.php	arquivo=tmp/con2_balancverificacaocsv002.csv	xls	contabilidade	nao-verificado
+func_orcfuncao.php	funcao_js=x	html	orcamento	nao-verificado
+func_cgm.php	funcao_js=x	html	configuracao	nao-verificado
