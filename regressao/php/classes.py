@@ -1,12 +1,11 @@
-import subprocess
 import tempfile
 from pathlib import Path
 
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
+from regressao.php.sintaxe import CONTAINERS
 from regressao.nucleo.veredito import Caso, Veredito
 
 AREA = "php-classes"
-CONTAINERS = ("ecidade_php56", "ecidade_php85")
 RAIZ = Path(__file__).resolve().parents[2]
 SCRATCH = RAIZ / "scratchpad"
 DESTINO = RAIZ / "ecidade" / "tmp"
@@ -14,22 +13,29 @@ TIMEOUT_CLASSES = 900
 
 
 def _parse(saida: str) -> dict[str, dict[str, str]]:
-    """Uma linha 'classe campo=valor' (ou 'classe<TAB>campo<TAB>valor') por campo.
-    Classe so com SEM_SAIDA/<ERRO> fica com dict vazio ou marcador."""
+    """Registros de escrita.php: 'arq<TAB>campo<TAB>valor'; valores var_export podem
+    ocupar varias linhas (continuacao, anexada com \\n, espacos preservados).
+    'SEM_SAIDA arq' cria a classe vazia; '<ERRO>' e um campo como outro."""
     classes: dict[str, dict[str, str]] = {}
-    for linha in saida.splitlines():
-        linha = linha.strip()
-        if not linha or linha.startswith("#"):
+    atual: tuple[str, str] | None = None
+    linhas = saida.split("\n")
+    if linhas and linhas[-1] == "":
+        linhas.pop()
+    for linha in linhas:
+        if linha.startswith("#"):
             continue
-        if linha.startswith("SEM_SAIDA"):
-            classes.setdefault(linha.split(None, 1)[1] if " " in linha else "?", {})
+        if linha.startswith("SEM_SAIDA ") and "\t" not in linha:
+            classes.setdefault(linha[len("SEM_SAIDA "):].strip(), {})
+            atual = None
             continue
-        if "\t" in linha:
-            cls, campo, valor = (linha.split("\t", 2) + [""])[:3]
-        else:
-            cls, _, resto = linha.partition(" ")
-            campo, _, valor = resto.partition("=")
-        classes.setdefault(cls, {})[campo] = valor
+        partes = linha.split("\t", 2)
+        if len(partes) >= 2 and partes[0].endswith(".php"):
+            cls, campo = partes[0], partes[1]
+            classes.setdefault(cls, {})[campo] = partes[2] if len(partes) == 3 else ""
+            atual = (cls, campo)
+        elif atual is not None:
+            cls, campo = atual
+            classes[cls][campo] += "\n" + linha
     return classes
 
 
@@ -45,6 +51,9 @@ def compara_classes(saida56: str, saida85: str) -> list[Caso]:
                 for k in sorted(set(ca) | set(cb)) if ca.get(k) != cb.get(k)]
         if difs:
             casos.append(Caso(cls, AREA, Veredito.DIVERGE, "; ".join(difs), "\n".join(difs)))
+        elif set(ca) == {"<ERRO>"}:
+            casos.append(Caso(cls, AREA, Veredito.INCONCLUSIVO,
+                              f"mesma excecao nos dois lados ({ca['<ERRO>']}); classe nao exercitada"))
         else:
             casos.append(Caso(cls, AREA, Veredito.IDENTICO))
     return casos
