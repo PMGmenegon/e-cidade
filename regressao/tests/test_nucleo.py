@@ -29,7 +29,7 @@ def test_codigo_saida_dois_com_erro_ambiente():
 
 
 def test_normaliza_troca_sid_nos_dois_lados():
-    assert normaliza(b"x?sid=abc123") == normaliza(b"x?sid=zzz999")
+    assert normaliza(b"x?sid=abc12345") == normaliza(b"x?sid=0f0f0f0f")
 
 
 def test_normaliza_nao_decodifica_latin1():
