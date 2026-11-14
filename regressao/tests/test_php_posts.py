@@ -8,7 +8,7 @@ from regressao.nucleo.veredito import Veredito
 from regressao.php import posts
 from regressao.php.posts import PostCaso, carrega_catalogo, parse_post, roda_post
 
-CASO = PostCaso("hrs1_assenta001.php", ["assentamentofuncional", "assenta"], "db_opcao=Incluir", "rh")
+CASO = PostCaso("hrs1_assenta001.php", ["assentamentofuncional", "assenta"], "db_opcao=Incluir", "rh", True)
 
 IDENTICO = """  snapshot: assentamentofuncional=0 linhas  assenta=0 linhas  | sequencias=1
   statements: 5.6=9  8.5=9
@@ -53,6 +53,60 @@ def test_parse_post_abortado_vira_erro_ambiente():
     assert "assentaextra" in c.detalhe  # tabela a acrescentar (filha antes da mae)
 
 
+ABORTADO_PT = ('ABORTADO: nao consegui restaurar pai: ERRO:  atualização ou exclusão em tabela "pai" viola '
+               'restrição de chave estrangeira "fk" da tabela "filha"\n')
+ABORTADO_TRUNCADO = 'ABORTADO: nao consegui restaurar pai: ERRO:  atualização ou exclusão em tabela "pai" viola restrição\n'
+
+
+def test_abortado_em_portugues_acha_a_tabela_filha():
+    c = parse_post(ABORTADO_PT, CASO)
+    assert c.veredito == Veredito.ERRO_AMBIENTE
+    assert "'filha'" in c.detalhe and "viola" in c.detalhe
+
+
+def test_abortado_em_ingles_acha_a_tabela_filha_e_traz_o_motivo():
+    c = parse_post(ABORTADO, CASO)
+    assert "'assentaextra'" in c.detalhe and "violates foreign key" in c.detalhe
+
+
+def test_abortado_sem_tabela_extraivel_diz_isso():
+    c = parse_post(ABORTADO_TRUNCADO, CASO)
+    assert c.veredito == Veredito.ERRO_AMBIENTE
+    assert "tabela filha nao identificada: ver motivo acima" in c.detalhe
+
+
+def test_codigo_de_saida_discorda_do_marcador():
+    for saida, cod in ((IDENTICO, 1), (DIVERGE, 0), (INCONCLUSIVO, 0)):
+        c = parse_post(saida, CASO, cod)
+        assert c.veredito == Veredito.ERRO_AMBIENTE and str(cod) in c.detalhe
+    assert parse_post(IDENTICO, CASO, 0).veredito == Veredito.IDENTICO
+    assert parse_post(DIVERGE, CASO, 1).veredito == Veredito.DIVERGE
+    assert parse_post(INCONCLUSIVO, CASO, 2).veredito == Veredito.INCONCLUSIVO
+
+
+def test_quinta_coluna_ausente_e_valor_invalido_falham(tmp_path):
+    for linha in ("a.php\tt\tc=1\tarea\n", "a.php\tt\tc=1\tarea\tverificdo\n", "a.php\tt\tc=1\tarea\t\n"):
+        tsv = tmp_path / "c.tsv"
+        tsv.write_text("# h\n" + linha, encoding="utf-8")
+        with pytest.raises(ValueError, match="linha 2"):
+            carrega_catalogo(tsv)
+
+
+def test_caso_nao_verificado_marca_detalhe(monkeypatch):
+    _grava_docker(monkeypatch)
+    monkeypatch.setattr(posts, "_roda_escrita", lambda s, c: (IDENTICO, 0))
+    caso = PostCaso("x.php", ["t"], "a=1", "rh", False)
+    c = roda_post("SID", caso)
+    assert c.veredito == Veredito.IDENTICO and c.detalhe.startswith("[nao-verificado]")
+
+
+def test_caso_verificado_nao_marca_detalhe(monkeypatch):
+    _grava_docker(monkeypatch)
+    monkeypatch.setattr(posts, "_roda_escrita", lambda s, c: (IDENTICO, 0))
+    c = roda_post("SID", CASO)
+    assert "nao-verificado" not in c.detalhe
+
+
 def test_parse_post_sql_com_a_palavra_identico_nao_engana():
     saida = "    5.6> insert into t values ('SQL de escrita de NEGOCIO IDENTICO')\n  == DIVERGE ==\n"
     assert parse_post(saida, CASO).veredito == Veredito.DIVERGE
@@ -71,21 +125,22 @@ def test_parse_post_saida_irreconhecivel_e_erro_ambiente():
 
 def test_catalogo_ordena_filhas_antes_da_mae(tmp_path):
     tsv = tmp_path / "c.tsv"
-    tsv.write_text("# comentario\n\nt1.php\tfilha,mae\tcampo=1\tarea\n", encoding="utf-8")
+    tsv.write_text("# comentario\n\nt1.php\tfilha,mae\tcampo=1\tarea\tverificado\n", encoding="utf-8")
     casos = carrega_catalogo(tsv)
-    assert casos == [PostCaso("t1.php", ["filha", "mae"], "campo=1", "area")]
+    assert casos == [PostCaso("t1.php", ["filha", "mae"], "campo=1", "area", True)]
 
 
 def test_catalogo_linha_malformada_nomeia_a_linha(tmp_path):
     tsv = tmp_path / "c.tsv"
-    tsv.write_text("ok.php\ta\tc=1\tarea\nruim.php\tsó_duas\n", encoding="utf-8")
+    tsv.write_text("ok.php\ta\tc=1\tarea\tverificado\nruim.php\tsó_duas\n", encoding="utf-8")
     with pytest.raises(ValueError, match="linha 2"):
         carrega_catalogo(tsv)
 
 
 def test_catalogo_semeado_carrega():
     casos = carrega_catalogo(posts.CATALOGO)
-    assert casos and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
+    assert len(casos) == 31 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
+    assert all(c.verificado is False for c in casos)
     assert any(c.tela == "pes1_rhpessoal004.php" and c.tabelas == ["registrapontoeletronicohistorico", "rhpessoal"]
                for c in casos)
 
@@ -106,7 +161,7 @@ def _sqls(chamadas):
 
 def test_roda_post_liga_e_desliga_log_statement(monkeypatch):
     chamadas = _grava_docker(monkeypatch)
-    monkeypatch.setattr(posts, "_roda_escrita", lambda sid, caso: IDENTICO)
+    monkeypatch.setattr(posts, "_roda_escrita", lambda sid, caso: (IDENTICO, 0))
     c = roda_post("SID", CASO)
     assert c.veredito == Veredito.IDENTICO
     s = _sqls(chamadas)
@@ -140,6 +195,6 @@ def test_falha_ao_ligar_log_statement_e_erro_ambiente(monkeypatch):
         raise ErroAmbienteBanco("docker ausente")
     monkeypatch.setattr("regressao.nucleo.banco._docker", falso)
     chamou = []
-    monkeypatch.setattr(posts, "_roda_escrita", lambda s, c: chamou.append(1) or IDENTICO)
+    monkeypatch.setattr(posts, "_roda_escrita", lambda s, c: chamou.append(1) or (IDENTICO, 0))
     c = roda_post("SID", CASO)
     assert c.veredito == Veredito.ERRO_AMBIENTE and not chamou

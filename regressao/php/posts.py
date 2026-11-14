@@ -25,7 +25,13 @@ _INCONCLUSIVO = re.compile(r"^\s*== INCONCLUSIVO\b", re.M)
 _ABORTADO = re.compile(r"^ABORTADO:\s*(.*)$", re.M)
 _ATENCAO = re.compile(r"^\s*ATENCAO: a tela gravou tambem em (.+?), que NAO e restaurada", re.M)
 _PAR_SQL = re.compile(r"^\s{4}(5\.6|8\.5): .*$", re.M)
-_TABELA_FK = re.compile(r'on table "([^"]+)"')
+# Tabela REFERENCIANTE (a filha) = a que segue o nome da constraint. Ingles:
+#   violates foreign key constraint "fk" on table "filha"
+# pt_BR (traducao do PostgreSQL, NAO verificada contra violacao real):
+#   viola restrição de chave estrangeira "fk" da tabela "filha"
+_TABELA_FK = re.compile(
+    r'(?:constraint|chave estrangeira)\s+"[^"]+"\s+(?:on table|from table|da tabela|na tabela|em tabela)\s+"([^"]+)"',
+    re.I)
 
 
 @dataclass
@@ -34,25 +40,29 @@ class PostCaso:
     tabelas: list[str]  # filhas ANTES da mae
     campos: str
     area: str
+    verificado: bool = False
 
 
 def carrega_catalogo(tsv: Path) -> list[PostCaso]:
-    """TSV `tela<TAB>tabelas(,)<TAB>campos<TAB>area[<TAB>comentario]`; ignora linhas
+    """TSV `tela<TAB>tabelas(,)<TAB>campos<TAB>area<TAB>status` (status obrigatorio:
+    `verificado` ou `nao-verificado`; outro valor ou ausente -> ValueError); ignora linhas
     em branco e as que comecam com '#'. A ordem das tabelas e a declarada."""
     casos = []
     for n, linha in enumerate(Path(tsv).read_text(encoding="utf-8").splitlines(), 1):
         if not linha.strip() or linha.lstrip().startswith("#"):
             continue
         col = linha.split("\t")
-        tela, tabelas, campos, area = (c.strip() for c in col[:4]) if len(col) >= 4 else ("",) * 4
+        tela, tabelas, campos, area, status = (c.strip() for c in col[:5]) if len(col) >= 5 else ("",) * 5
         lista = [t.strip() for t in tabelas.split(",") if t.strip()]
-        if not (tela and lista and campos and area) or not tela.endswith(".php"):
-            raise ValueError(f"{tsv}: linha {n} malformada (esperado tela.php<TAB>tabelas<TAB>campos<TAB>area): {linha[:80]!r}")
-        casos.append(PostCaso(tela, lista, campos, area))
+        if (not (tela and lista and campos and area) or not tela.endswith(".php")
+                or status not in ("verificado", "nao-verificado")):
+            raise ValueError(f"{tsv}: linha {n} malformada (esperado tela.php<TAB>tabelas<TAB>campos<TAB>area"
+                             f"<TAB>verificado|nao-verificado): {linha[:80]!r}")
+        casos.append(PostCaso(tela, lista, campos, area, status == "verificado"))
     return casos
 
 
-def parse_post(saida: str, caso: PostCaso) -> Caso:
+def parse_post(saida: str, caso: PostCaso, codigo: int | None = None) -> Caso:
     atencao = _ATENCAO.search(saida)
     nota = f"tabela(s) gravada(s) e NAO restaurada(s): {atencao.group(1)}" if atencao else ""
     if m := _ABORTADO.search(saida):
@@ -60,8 +70,14 @@ def parse_post(saida: str, caso: PostCaso) -> Caso:
         filhas = _TABELA_FK.findall(motivo)
         dica = (f"; acrescentar a tabela filha {filhas[-1]!r} ao catalogo (antes da mae) e conferir "
                 f"se o POST do 5.6 deixou linha de teste") if filhas else \
-               "; conferir o banco: o POST do 5.6 pode ter gravado antes do abort"
+               ("; tabela filha nao identificada: ver motivo acima; conferir o banco: o POST do 5.6 "
+                "pode ter gravado antes do abort")
         return Caso(caso.tela, caso.area, Veredito.ERRO_AMBIENTE, f"ABORTADO: {motivo}{dica}")
+    esperado = (0 if _IDENTICO.search(saida) else 1 if _DIVERGE.search(saida)
+                else 2 if _INCONCLUSIVO.search(saida) else None)
+    if codigo is not None and esperado is not None and codigo != esperado:
+        return Caso(caso.tela, caso.area, Veredito.ERRO_AMBIENTE,
+                    f"marcador da saida pede codigo {esperado} mas escrita_post.py saiu com {codigo}")
     if _DIVERGE.search(saida):
         diff = "\n".join(l.strip() for l in saida.splitlines() if _PAR_SQL.match(l))
         return Caso(caso.tela, caso.area, Veredito.DIVERGE, nota or "SQL de escrita diverge", diff)
@@ -74,14 +90,14 @@ def parse_post(saida: str, caso: PostCaso) -> Caso:
                 f"saida irreconhecivel de escrita_post.py: {saida.strip()[-200:]!r}")
 
 
-def _roda_escrita(sid: str, caso: PostCaso) -> str:
+def _roda_escrita(sid: str, caso: PostCaso) -> tuple[str, int]:
     """Unico ponto que executa escrita_post.py (mockavel nos testes). stdout+stderr: o
     ABORTADO sai em stderr."""
     r = subprocess.run(
         ["python3", str(SCRATCH / "escrita_post.py"), sid, caso.tela, ",".join(caso.tabelas), caso.campos],
         capture_output=True, timeout=TIMEOUT_POST, cwd=RAIZ,
     )
-    return (r.stdout + b"\n" + r.stderr).decode("utf-8", errors="replace")
+    return (r.stdout + b"\n" + r.stderr).decode("utf-8", errors="replace"), r.returncode
 
 
 def roda_post(sid: str, caso: PostCaso) -> Caso:
@@ -90,10 +106,13 @@ def roda_post(sid: str, caso: PostCaso) -> Caso:
     mas so depois do RESET."""
     try:
         with com_log_statement():
-            saida = _roda_escrita(sid, caso)
+            saida, codigo = _roda_escrita(sid, caso)
     except subprocess.TimeoutExpired as e:
         return Caso(caso.tela, caso.area, Veredito.ERRO_AMBIENTE,
                     f"timeout de {e.timeout}s em escrita_post.py; tabelas podem nao ter sido restauradas")
     except (ErroAmbienteBanco, OSError) as e:
         return Caso(caso.tela, caso.area, Veredito.ERRO_AMBIENTE, str(e))
-    return parse_post(saida, caso)
+    resultado = parse_post(saida, caso, codigo)
+    if not caso.verificado:
+        resultado.detalhe = ("[nao-verificado] " + resultado.detalhe).rstrip()
+    return resultado

@@ -1,5 +1,5 @@
 # Catalogo de POSTs reais (nivel 3). Colunas: tela<TAB>tabelas (filhas ANTES da mae)<TAB>campos<TAB>area<TAB>status
-# status: 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda sem rodada IDENTICO nesta bateria;
+# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda sem rodada IDENTICO nesta bateria;
 #         'verificado' so apos IDENTICO real contra a pilha (nunca marcar a mao).
 # Pendentes: um caso por modulo central (CGM, Orcamento, Arrecadacao, Folha) incl. *001/002/003.
 pes1_pesdiver001.php	pesdiver	r07_anousu=1&r07_mesusu=1&r07_instit=1&r07_codigo=901&r07_descr=TESTE_N3&r07_valor=1&incluir=Incluir	rh	nao-verificado
