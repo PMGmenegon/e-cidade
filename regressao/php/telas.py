@@ -128,6 +128,20 @@ def _requisita(sid: str, tela: str, container: str = "ecidade_php56") -> bytes:
                    TIMEOUT_CORPO)
 
 
+def _requisita_status(sid: str, tela: str, container: str = "ecidade_php56") -> tuple[int, bytes]:
+    """Como _requisita, mas devolve (codigo HTTP, corpo cru). O codigo vem num trailer
+    `\n@@<codigo>` (como no cmp.py), removido do corpo sem perder bytes. Teto de 5 MB no
+    pipe: se o corpo estourar, o trailer se perde e o codigo e 0 (resposta truncada)."""
+    saida = _docker(["exec", container, "sh", "-c",
+                     f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' -w '\n@@%{{http_code}}' "
+                     f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
+                    TIMEOUT_CORPO)
+    i = saida.rfind(b"\n@@")
+    if i < 0 or not saida[i + 3:].strip().isdigit():
+        return 0, saida
+    return int(saida[i + 3:]), saida[:i]
+
+
 # Pagina que o e-cidade devolve a uma sessao invalida/expirada (observada com um SID
 # inexistente, ISO-8859-1, 66 bytes): "Sessão inválida (12). Feche seu navegador e faça login
 # novamente." Identica nos dois runtimes, logo cmp.py a daria como IDENTICA.

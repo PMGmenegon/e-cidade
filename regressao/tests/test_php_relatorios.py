@@ -138,8 +138,8 @@ def test_roda_relatorio_restaura_sessao_antes_de_cada_runtime():
     chamadas = []
     pdf = (FIX / "relatorio_a.pdf").read_bytes()
     with patch.object(relatorios, "restaura_sessao", side_effect=lambda sid: chamadas.append(("restaura", sid))), \
-         patch.object(relatorios, "_requisita",
-                      side_effect=lambda sid, url, container: chamadas.append((container, url)) or pdf):
+         patch.object(relatorios, "_requisita_status",
+                      side_effect=lambda sid, url, container: chamadas.append((container, url)) or (200, pdf)):
         c = roda_relatorio("sid1", PDF)
     assert c.veredito == Veredito.IDENTICO and c.id == "cem2_x.php?cod=1"
     assert chamadas == [("restaura", "sid1"), ("ecidade_php56", "cem2_x.php?cod=1"),
@@ -149,7 +149,7 @@ def test_roda_relatorio_restaura_sessao_antes_de_cada_runtime():
 def test_roda_relatorio_nao_verificado_e_erro_de_docker():
     nv = RelCaso("a.php", "", "html", "x", False)
     with patch.object(relatorios, "restaura_sessao"), \
-         patch.object(relatorios, "_requisita", return_value=b"<p>dados</p>"):
+         patch.object(relatorios, "_requisita_status", return_value=(200, b"<p>dados</p>")):
         c = roda_relatorio("s", nv)
     assert c.veredito == Veredito.IDENTICO and c.detalhe.startswith("[nao-verificado]")
     with patch.object(relatorios, "restaura_sessao", side_effect=ErroAmbienteBanco("docker caiu")):
@@ -162,3 +162,51 @@ def test_pdf_ignora_hora_de_emissao_do_rodape():
     b = (FIX / "rodape_b.pdf").read_bytes()
     assert a != b and "Total 5" in extrai_conteudo(a, "pdf")
     assert compara_relatorio(a, b, PDF).veredito == Veredito.IDENTICO
+
+
+PAGINA_500 = ("<html><title>Notifica\xe7\xe3o do Sistema</title><p class='notification'>Erro interno</p></html>"
+              ).encode("latin-1")
+
+
+def test_um_lado_200_e_outro_500_e_diverge_com_codigos():
+    pdf = (FIX / "relatorio_a.pdf").read_bytes()
+    r = compara_relatorio(pdf, PAGINA_500, PDF, 200, 500)
+    assert r.veredito == Veredito.DIVERGE
+    assert "5.6=200" in r.detalhe and "8.5=500" in r.detalhe and "%PDF" in r.detalhe
+    assert "Erro interno" in r.diff
+    with patch.object(relatorios, "restaura_sessao"), \
+         patch.object(relatorios, "_requisita_status", side_effect=[(200, pdf), (500, PAGINA_500)]):
+        assert roda_relatorio("s", PDF).veredito == Veredito.DIVERGE
+
+
+def test_mesmo_500_nos_dois_lados_e_inconclusivo_para_html():
+    r = compara_relatorio(b"<p>falhou</p>", b"<p>falhou</p>", HTML, 500, 500)
+    assert r.veredito == Veredito.INCONCLUSIVO and "ambos 500" in r.detalhe
+
+
+def test_pagina_notificacao_do_sistema_nos_dois_lados_e_inconclusiva():
+    for caso in (HTML, XLS, RelCaso("a.php", "", "doc", "x")):
+        assert compara_relatorio(PAGINA_500, PAGINA_500, caso).veredito == Veredito.INCONCLUSIVO
+
+
+def test_pdf_ilegivel_identico_e_inconclusivo():
+    lixo = b"%PDF-1.4\nisto nao e um pdf valido\n"
+    assert extrai_conteudo(lixo, "pdf").startswith("<<pdf ilegivel")
+    r = compara_relatorio(lixo, lixo, PDF)
+    assert r.veredito == Veredito.INCONCLUSIVO and "ilegivel" in r.detalhe
+
+
+def test_pdf_ilegivel_so_de_um_lado_diverge():
+    lixo = b"%PDF-1.4\nisto nao e um pdf valido\n"
+    ok = (FIX / "relatorio_a.pdf").read_bytes()
+    assert compara_relatorio(ok, lixo, PDF).veredito == Veredito.DIVERGE
+    assert compara_relatorio(lixo, ok, PDF).veredito == Veredito.DIVERGE
+
+
+def test_requisita_status_separa_trailer_sem_perder_bytes():
+    from regressao.php import telas
+    corpo = b"%PDF\x00\xff\n@@ nao e trailer\n"
+    with patch.object(telas, "_docker", return_value=corpo + b"\n@@500"):
+        assert telas._requisita_status("s", "a.php") == (500, corpo)
+    with patch.object(telas, "_docker", return_value=b"truncado sem trailer"):
+        assert telas._requisita_status("s", "a.php") == (0, b"truncado sem trailer")

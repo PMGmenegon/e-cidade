@@ -10,7 +10,7 @@ from pathlib import Path
 from regressao.nucleo.banco import ErroAmbienteBanco
 from regressao.nucleo.normaliza import normaliza
 from regressao.nucleo.veredito import Caso, Veredito
-from regressao.php.telas import _requisita, corpo_de_sessao_invalida, restaura_sessao
+from regressao.php.telas import _requisita_status, corpo_de_sessao_invalida, restaura_sessao
 
 CATALOGO = Path(__file__).resolve().parent / "catalogo_relatorios.tsv"
 TIPOS = ("html", "pdf", "xls", "doc")
@@ -21,7 +21,9 @@ CONTAINER_56 = "ecidade_php56"
 CONTAINER_85 = "ecidade_php85"
 
 # Pagina de erro do PHP (display_errors) identica nos dois runtimes: nao e relatorio.
-_ERRO_PHP = re.compile(r"(?:Fatal error|Parse error|Uncaught \w*(?:Error|Exception))", re.I)
+_ERRO_PHP = re.compile(r"(?:Fatal error|Parse error|Uncaught \w*(?:Error|Exception)"
+                       r"|Notifica\S+ do Sistema|Erro interno)", re.I)
+_PDF_ILEGIVEL = "<<pdf ilegivel"
 
 
 @dataclass
@@ -57,7 +59,7 @@ def carrega_catalogo_relatorios(tsv: Path) -> list[RelCaso]:
 
 # Rodape do PDF do e-cidade (fpdf151/pdf.php): "Data: 14-11-2026 - 20:01:54 Pag 1/1". O horario
 # da emissao muda de uma requisicao a outra (observado ao vivo: cem2_renovacoes, com2_pcgrupo002).
-_HORA_EMISSAO = re.compile(r"Data: \d{2}-\d{2}-\d{4} - \d{2}:\d{2}:\d{2}")
+_HORA_EMISSAO = re.compile(r"Data: \d{2}-\d{2}-\d{4} - \d{2}:\d{2}:\d{2}(?=\s+P[aá]g\s+\d+/\d+\s*$)")
 
 
 def _texto_pdf(corpo: bytes) -> str:
@@ -67,7 +69,7 @@ def _texto_pdf(corpo: bytes) -> str:
     try:
         paginas = [(p.extract_text() or "") for p in PdfReader(io.BytesIO(corpo)).pages]
     except Exception as e:  # pdf corrompido/truncado: compara pelos bytes normalizados
-        return f"<<pdf ilegivel ({type(e).__name__}) sha256={hashlib.sha256(normaliza(corpo)).hexdigest()}>>"
+        return f"{_PDF_ILEGIVEL} ({type(e).__name__}) sha256={hashlib.sha256(normaliza(corpo)).hexdigest()}>>"
     saida = []
     for n, texto in enumerate(paginas, 1):
         linhas = [_HORA_EMISSAO.sub("Data: X", l.rstrip()) for l in texto.splitlines() if l.strip()]
@@ -144,10 +146,21 @@ def _diff(a: str, b: str) -> str:
     return "\n".join(linhas)
 
 
-def compara_relatorio(corpo56: bytes, corpo85: bytes, caso: RelCaso) -> Caso:
+def compara_relatorio(corpo56: bytes, corpo85: bytes, caso: RelCaso,
+                      status56: int = 200, status85: int = 200) -> Caso:
     id_ = caso.url
     if corpo_de_sessao_invalida(corpo56) or corpo_de_sessao_invalida(corpo85):
         return Caso(id_, caso.area, Veredito.ERRO_AMBIENTE, "sessao invalida (pagina 'Sessao invalida')")
+    if status56 != status85:  # ex.: 5.6=200 (PDF) e 8.5=500 (pagina de erro): a regressao a detectar
+        try:
+            c56, c85 = extrai_conteudo(corpo56, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
+        except Exception:
+            c56, c85 = corpo56[:300].decode("latin-1"), corpo85[:300].decode("latin-1")
+        return Caso(id_, caso.area, Veredito.DIVERGE,
+                    f"codigo HTTP diverge: 5.6={status56} 8.5={status85}; "
+                    f"inicio 5.6={corpo56[:60]!r} 8.5={corpo85[:60]!r}", _diff(c56, c85))
+    if status56 != 200:
+        return Caso(id_, caso.area, Veredito.INCONCLUSIVO, f"nao exercitado: ambos {status56}")
     pdf56, pdf85 = (c.lstrip().startswith(b"%PDF") for c in (corpo56, corpo85))
     if caso.tipo == "pdf" and not (pdf56 or pdf85):
         return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "esperava PDF e nenhum dos lados devolveu PDF")
@@ -155,11 +168,14 @@ def compara_relatorio(corpo56: bytes, corpo85: bytes, caso: RelCaso) -> Caso:
         c56, c85 = extrai_conteudo(corpo56, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
     except Exception as e:  # xlsx/xls corrompido etc.: o conteudo nao pode ser lido, nao e aprovado
         return Caso(id_, caso.area, Veredito.INCONCLUSIVO, f"conteudo ilegivel ({type(e).__name__}: {e})")
+    ileg56, ileg85 = c56.startswith(_PDF_ILEGIVEL), c85.startswith(_PDF_ILEGIVEL)
+    if ileg56 and ileg85:
+        return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "pdf ilegivel nos dois lados")
     if c56 == c85:
         if not c56:
             return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "sem dados (relatorio vazio) nos dois lados")
-        if caso.tipo != "pdf" and _ERRO_PHP.search(c56):
-            return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "erro PHP identico nos dois lados; nao e relatorio")
+        if not pdf56 and _ERRO_PHP.search(c56):
+            return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "pagina de erro identica nos dois lados; nao e relatorio")
         return Caso(id_, caso.area, Veredito.IDENTICO)
     return Caso(id_, caso.area, Veredito.DIVERGE, f"conteudo diverge ({len(c56)} vs {len(c85)} caracteres)",
                 _diff(c56, c85))
@@ -168,16 +184,22 @@ def compara_relatorio(corpo56: bytes, corpo85: bytes, caso: RelCaso) -> Caso:
 def roda_relatorio(sid: str, caso: RelCaso) -> Caso:
     """GET com a query nos dois runtimes (:8080 php56 e :8085 php85, cada um pela porta 80 do
     proprio container), com a sessao restaurada antes de CADA requisicao: cada requisicao
-    consome/reescreve a sessao, como no cmp.py."""
+    consome/reescreve a sessao, como no cmp.py. Os codigos HTTP dos dois lados entram na
+    comparacao."""
     try:
-        corpos = []
+        respostas = []
         for container in (CONTAINER_56, CONTAINER_85):
             restaura_sessao(sid)
-            corpos.append(_requisita(sid, caso.url, container))
+            respostas.append(_requisita_status(sid, caso.url, container))
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
         return Caso(caso.url, caso.area, Veredito.ERRO_AMBIENTE,
                     ("" if caso.verificado else "[nao-verificado] ") + str(e))
-    resultado = compara_relatorio(corpos[0], corpos[1], caso)
+    (s56, b56), (s85, b85) = respostas
+    if 0 in (s56, s85):
+        return Caso(caso.url, caso.area, Veredito.ERRO_AMBIENTE,
+                    ("" if caso.verificado else "[nao-verificado] ") +
+                    f"resposta sem codigo HTTP (truncada ou curl falhou): 5.6={s56} 8.5={s85}")
+    resultado = compara_relatorio(b56, b85, caso, s56, s85)
     if not caso.verificado:
         resultado.detalhe = ("[nao-verificado] " + resultado.detalhe).rstrip()
     return resultado
