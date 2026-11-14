@@ -173,7 +173,7 @@ def test_5xx_anexa_cauda_do_log_redigida(servidor_factory, monkeypatch):
     s = servidor_factory(500, {"message": "boom"})
     r = token.laravel_sobe(s.url)
     assert r.veredito == Veredito.ERRO_AMBIENTE
-    for proibido in ("ABC123SECRET", "eyJ0eXAi", "c2ln", "VALORREAL-9Z8Y7X", "dbseller"):
+    for proibido in ("ABC123SECRET", "eyJ0eXAi", "c2ln", "VALORREAL-9Z8Y7X"):
         assert proibido not in r.detalhe
     assert "<redigido>" in r.detalhe and "PHP Fatal error: x" in r.detalhe
     assert "podem ser antigas e nao relacionadas" in r.detalhe
@@ -217,3 +217,33 @@ def test_mascara_asterisco_sobre_dict_e_caminho_por_escalar_sao_ignorados():
 def test_mascara_caminho_desconhecido_nunca_levanta():
     for obj in (None, 3, "s", [], {}, [1, [2]], {"a": None}):
         mascara_json(obj, ["a.b", "*", "*.x", "a.*.b", ""])
+
+def test_redige_estilo_print_r_seta(monkeypatch):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    for k in ("password", "secret", "token", "senha", "api_key", "passwd"):
+        out = token.redige(f"[{k}] => valorzinho1\n{k} => valorzinho2")
+        assert "valorzinho" not in out, k
+        assert out.count("<redigido>") == 2
+
+
+def test_redige_bearer_opaco(monkeypatch):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    for linha in ("Authorization: Bearer opaco-abc123", "authorization=Basic Zm9vOmJhcg=="):
+        out = token.redige(linha)
+        assert "opaco-abc123" not in out and "Zm9vOmJhcg" not in out and "Bearer opaco" not in out
+        assert "<redigido>" in out
+
+
+def test_redige_nao_apaga_caminho_com_dbseller(monkeypatch):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    linha = "PHP Fatal error in /var/www/html/cache/user/dbseller/libs/db_conecta.php on line 3"
+    assert token.redige(linha) == linha
+    out = token.redige('username: dbseller, login="dbseller"')
+    assert "dbseller" not in out
+    assert token.redige("x VALORREAL-9Z8Y7X y") == "x <redigido> y"
+
+
+def test_redige_preserva_chaves_vizinhas_em_json_e_query(monkeypatch):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    assert token.redige('{"password":"abc","user":"x"}') == '{"password":"<redigido>","user":"x"}'
+    assert token.redige("?password=abc&user=x") == "?password=<redigido>&user=x"

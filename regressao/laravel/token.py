@@ -16,7 +16,12 @@ TIMEOUT = 15
 REDIGIDO = "<redigido>"
 MARCAS_BOOT = ("Fatal error", "Parse error", "Uncaught", "Cannot make non abstract method")
 _RE_JWT = re.compile(r"eyJ[\w-]+\.[\w-]+\.[\w-]+")
-_RE_SEGREDO = re.compile(r"(?i)(secret|password|passwd|senha|token|bearer|authorization|api[_-]?key)\S*\s*[=:]\s*\S+")
+_RE_SEGREDO = re.compile(
+    r"(?i)((?:secret|password|passwd|senha|token|bearer|authorization|api[_-]?key)[\w-]*[\"'\]]?\s*(?:=>|[=:])\s*[\"']?)"
+    r"(?:(?:bearer|basic)\s+)?[^\s\"',&;]+"
+)
+_RE_USUARIO_LITERAL = re.compile(
+    r"(?i)((?:user(?:name)?|usuario|login|password|senha)[\w\]]*[\s\"'=:>\[\]]{0,6})dbseller")
 
 
 class ErroToken(Exception):
@@ -58,11 +63,12 @@ def obtem_token(base_url: str, usuario: str = "dbseller", senha: str = "dbseller
 
 
 def redige(texto: str) -> str:
-    """Remove JWTs, pares segredo=valor e os literais conhecidos (segredo do cliente,
-    usuario/senha padrao) de um texto de log."""
+    """Remove JWTs, pares segredo=valor (=, :, =>; JSON e query), o segredo do cliente em
+    qualquer lugar e o usuario/senha padrao so quando colados a palavra-chave."""
     texto = _RE_JWT.sub(REDIGIDO, texto)
-    texto = _RE_SEGREDO.sub(REDIGIDO, texto)
-    literais = ["dbseller"]
+    texto = _RE_SEGREDO.sub(lambda m: m.group(1) + REDIGIDO, texto)
+    texto = _RE_USUARIO_LITERAL.sub(lambda m: m.group(1) + REDIGIDO, texto)
+    literais = []
     try:
         literais.append(_segredo_cliente())
     except ErroToken:
