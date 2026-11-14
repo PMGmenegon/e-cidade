@@ -1,4 +1,5 @@
 import hashlib
+import re
 import subprocess
 from contextlib import contextmanager
 from pathlib import Path
@@ -11,7 +12,16 @@ ARQ_SHA256 = DIR_BASELINE / "baseline.dump.sha256"
 
 
 class BancoDiferente(Exception):
-    pass
+    """Banco/dump difere do baseline registrado. Orquestradores mapeiam para ERRO_AMBIENTE."""
+
+
+class ErroAmbienteBanco(Exception):
+    """Falha ao executar docker/psql/pg_dump/pg_restore. Orquestradores mapeiam para ERRO_AMBIENTE."""
+
+
+TIMEOUT_PSQL = 60
+TIMEOUT_DUMP = 900
+_NOME_TABELA = re.compile(r"^[a-z_][a-z0-9_]*$")
 
 
 def _sha256(arquivo: Path) -> str:
@@ -22,24 +32,39 @@ def _sha256(arquivo: Path) -> str:
     return h.hexdigest()
 
 
+def _docker(args: list[str], timeout: int, stdin=None, stdout=None) -> bytes:
+    """Unico ponto de chamada ao docker (mockavel nos testes)."""
+    cmd = ["docker", *args]
+    try:
+        r = subprocess.run(
+            cmd, stdin=stdin, stdout=stdout if stdout is not None else subprocess.PIPE,
+            stderr=subprocess.PIPE, timeout=timeout,
+        )
+    except FileNotFoundError as e:
+        raise ErroAmbienteBanco(f"docker ausente: {e}") from e
+    except subprocess.TimeoutExpired as e:
+        raise ErroAmbienteBanco(f"timeout de {timeout}s: {' '.join(cmd)}") from e
+    if r.returncode != 0:
+        err = (r.stderr or b"").decode("utf-8", errors="replace").strip()
+        raise ErroAmbienteBanco(f"codigo de saida {r.returncode}: {' '.join(cmd)}: {err}")
+    return r.stdout or b""
+
+
 def _psql(sql: str, db: str = BASE) -> str:
-    """Unico ponto de chamada ao psql no container (mockavel nos testes)."""
-    r = subprocess.run(
-        ["docker", "exec", CONTAINER, "psql", "-U", "postgres", "-d", db,
+    saida = _docker(
+        ["exec", CONTAINER, "psql", "-U", "postgres", "-d", db,
          "-At", "-v", "ON_ERROR_STOP=1", "-c", sql],
-        capture_output=True, text=True, check=True,
+        TIMEOUT_PSQL,
     )
-    return r.stdout
+    return saida.decode("utf-8", errors="replace")
 
 
 def gera_dump(destino: Path) -> str:
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
     with open(destino, "wb") as f:
-        subprocess.run(
-            ["docker", "exec", CONTAINER, "pg_dump", "-U", "postgres", "-Fc", BASE],
-            stdout=f, check=True,
-        )
+        _docker(["exec", CONTAINER, "pg_dump", "-U", "postgres", "-Fc", BASE],
+                TIMEOUT_DUMP, stdout=f)
     sha = _sha256(destino)
     ARQ_SHA256.parent.mkdir(parents=True, exist_ok=True)
     ARQ_SHA256.write_text(sha + "\n")
@@ -48,18 +73,22 @@ def gera_dump(destino: Path) -> str:
 
 def restaura_dump(dump: Path) -> None:
     with open(dump, "rb") as f:
-        subprocess.run(
-            ["docker", "exec", "-i", CONTAINER, "pg_restore", "-U", "postgres",
-             "--clean", "--if-exists", "-d", BASE],
-            stdin=f, check=True,
-        )
+        _docker(["exec", "-i", CONTAINER, "pg_restore", "-U", "postgres",
+                 "--clean", "--if-exists", "--single-transaction", "--exit-on-error",
+                 "-d", BASE],
+                TIMEOUT_DUMP, stdin=f)
 
 
 def confere_baseline(dump: Path) -> None:
     dump = Path(dump)
-    if not ARQ_SHA256.exists():
+    if not ARQ_SHA256.is_file():
         raise BancoDiferente(f"hash registrado ausente: {ARQ_SHA256}")
-    esperado = ARQ_SHA256.read_text().split()[0]
+    partes = ARQ_SHA256.read_text().split()
+    if not partes:
+        raise BancoDiferente(f"arquivo de hash vazio ou invalido: {ARQ_SHA256}")
+    if not dump.is_file():
+        raise BancoDiferente(f"dump inexistente: {dump}")
+    esperado = partes[0]
     atual = _sha256(dump)
     if atual != esperado:
         raise BancoDiferente(f"sha256 do dump {atual} != registrado {esperado}")
@@ -68,7 +97,10 @@ def confere_baseline(dump: Path) -> None:
 def hash_tabelas(tabelas: list[str]) -> dict[str, str]:
     saida = {}
     for t in tabelas:
-        sql = f"select md5(coalesce(string_agg(x::text, E'\\n'), '')) from (select * from {t} order by 1) x"
+        if not _NOME_TABELA.match(t):
+            raise ValueError(f"nome de tabela invalido: {t!r}")
+        sql = (f"select md5(coalesce(string_agg(t::text, E'\\n' order by t::text), '')) "
+               f"from {t} t")
         saida[t] = _psql(sql).strip()
     return saida
 

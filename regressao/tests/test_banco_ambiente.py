@@ -41,7 +41,7 @@ def test_alvos_usam_variaveis_de_ambiente(monkeypatch):
 
 
 def test_verifica_reporta_alvo_fora(monkeypatch):
-    monkeypatch.setattr(ambiente, "containers_ativos", lambda: None)
+    monkeypatch.setattr(ambiente, "containers_ativos", lambda: {"ecidade_database"})
     alvos = ambiente.Alvos(
         ref="http://127.0.0.1:1",
         php_novo="http://127.0.0.1:1/php",
@@ -49,7 +49,9 @@ def test_verifica_reporta_alvo_fora(monkeypatch):
         proxy="http://127.0.0.1:1/px",
     )
     problemas = ambiente.verifica(alvos)
-    assert any("http://127.0.0.1:1" in p for p in problemas)
+    assert len(problemas) == 4
+    for url in (alvos.ref, alvos.php_novo, alvos.laravel_novo, alvos.proxy):
+        assert any(url in p for p in problemas)
 
 
 def test_verifica_reporta_container_ausente(monkeypatch):
@@ -81,4 +83,94 @@ def test_hash_tabelas_usa_psql(monkeypatch):
 
     monkeypatch.setattr(banco, "_psql", falso)
     assert banco.hash_tabelas(["db_usuarios"]) == {"db_usuarios": "abc123"}
-    assert "db_usuarios" in sqls[0] and "order by 1" in sqls[0]
+    assert "db_usuarios" in sqls[0] and "order by t::text" in sqls[0]
+
+
+def test_confere_baseline_sem_sha256_levanta(tmp_path, monkeypatch):
+    sha = tmp_path / "baseline.dump.sha256"
+    monkeypatch.setattr(banco, "ARQ_SHA256", sha)
+    dump = tmp_path / "baseline.dump"
+    dump.write_bytes(b"x")
+    with pytest.raises(banco.BancoDiferente, match="baseline.dump.sha256"):
+        banco.confere_baseline(dump)
+
+
+def test_confere_baseline_sem_dump_levanta(tmp_path, monkeypatch):
+    sha = tmp_path / "baseline.dump.sha256"
+    monkeypatch.setattr(banco, "ARQ_SHA256", sha)
+    sha.write_text("abc\n")
+    with pytest.raises(banco.BancoDiferente, match="inexistente.dump"):
+        banco.confere_baseline(tmp_path / "inexistente.dump")
+
+
+def test_confere_baseline_sha256_vazio_levanta(tmp_path, monkeypatch):
+    sha = tmp_path / "baseline.dump.sha256"
+    monkeypatch.setattr(banco, "ARQ_SHA256", sha)
+    sha.write_text("  \n")
+    dump = tmp_path / "baseline.dump"
+    dump.write_bytes(b"x")
+    with pytest.raises(banco.BancoDiferente, match="baseline.dump.sha256"):
+        banco.confere_baseline(dump)
+
+
+class _Res:
+    def __init__(self, rc=0, out=b"", err=b""):
+        self.returncode, self.stdout, self.stderr = rc, out, err
+
+
+def test_erro_do_docker_inclui_stderr(monkeypatch):
+    monkeypatch.setattr(
+        banco.subprocess, "run", lambda *a, **k: _Res(3, b"", "falha ".encode() + bytes([0xe7]))
+    )
+    with pytest.raises(banco.ErroAmbienteBanco) as e:
+        banco._psql("select 1")
+    assert "falha" in str(e.value) and "3" in str(e.value)
+
+
+def test_docker_ausente_vira_erro_ambiente_banco(monkeypatch):
+    def boom(*a, **k):
+        raise FileNotFoundError("docker")
+
+    monkeypatch.setattr(banco.subprocess, "run", boom)
+    with pytest.raises(banco.ErroAmbienteBanco):
+        banco._psql("select 1")
+
+
+def test_timeout_vira_erro_ambiente_banco(monkeypatch):
+    def boom(*a, **k):
+        raise banco.subprocess.TimeoutExpired("docker", 60)
+
+    monkeypatch.setattr(banco.subprocess, "run", boom)
+    with pytest.raises(banco.ErroAmbienteBanco):
+        banco._psql("select 1")
+
+
+def test_hash_tabelas_usa_ordenacao_por_texto_da_linha(monkeypatch):
+    sqls = []
+    monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": sqls.append(sql) or "h\n")
+    banco.hash_tabelas(["db_usuarios"])
+    assert "order by t::text" in sqls[0]
+    assert "order by 1" not in sqls[0]
+
+
+def test_hash_tabelas_rejeita_nome_invalido(monkeypatch):
+    monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": "h")
+    with pytest.raises(ValueError):
+        banco.hash_tabelas(["x; drop table y"])
+
+
+def test_restaura_dump_usa_transacao_unica_e_para_no_erro(tmp_path, monkeypatch):
+    chamadas = []
+
+    def falso(*a, **k):
+        chamadas.append((a[0], k))
+        return _Res()
+
+    monkeypatch.setattr(banco.subprocess, "run", falso)
+    dump = tmp_path / "d.dump"
+    dump.write_bytes(b"x")
+    banco.restaura_dump(dump)
+    args, kw = chamadas[0]
+    for flag in ("--clean", "--if-exists", "--single-transaction", "--exit-on-error"):
+        assert flag in args
+    assert kw["timeout"] == 900
