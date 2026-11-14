@@ -193,6 +193,35 @@ def test_sessao_autenticada_false_com_pagina_sessao_invalida():
         assert telas.sessao_autenticada("x") is False
 
 
+VARIANTES = {
+    "db_conecta (12)": "Sessão inválida (12).\nFeche seu navegador e faça login novamente.\n",
+    "db_sessoes (14)": "Sessão Inválida!(14)<br>Feche seu navegador e faça login novamente.<Br>\n",
+    "terminada": "Contate com Administrador do Sistema! (Conexão Inválida.)   <br>Sessão terminada, feche seu navegador!\n",
+    "desativado": "Sistema desativado pelo administrador!   <br>Sessão terminada, feche seu navegador!\n",
+}
+
+
+@pytest.mark.parametrize("codificacao", ["iso-8859-1", "utf-8"])
+@pytest.mark.parametrize("nome", list(VARIANTES))
+def test_corpo_de_sessao_invalida_reconhece_variantes(nome, codificacao):
+    assert telas.corpo_de_sessao_invalida(VARIANTES[nome].encode(codificacao)) is True
+
+
+def test_corpo_de_sessao_invalida_ignora_maiusculas():
+    assert telas.corpo_de_sessao_invalida(b"SESS\xc3O INV\xc1LIDA") is True
+
+
+def test_pagina_legitima_grande_com_a_frase_nao_e_sessao_invalida():
+    corpo = b"<html>" + b"x" * 1500 + "Sessão inválida (12). Feche seu navegador".encode("utf-8")
+    assert telas.corpo_de_sessao_invalida(corpo) is False
+
+
+@pytest.mark.parametrize("corpo", [b"", b"ok", b"\n\n"])
+def test_sessao_autenticada_falha_fechado_com_corpo_vazio_ou_minusculo(corpo):
+    with patch.object(telas, "_docker", return_value=corpo):
+        assert telas.sessao_autenticada("x") is False
+
+
 def test_sessao_autenticada_true_com_pagina_normal():
     with patch.object(telas, "_docker", return_value=b"<html>" + b"x" * 5000):
         assert telas.sessao_autenticada("x") is True

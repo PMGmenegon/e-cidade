@@ -125,19 +125,36 @@ def _requisita(sid: str, tela: str) -> bytes:
 # Pagina que o e-cidade devolve a uma sessao invalida/expirada (observada com um SID
 # inexistente, ISO-8859-1, 66 bytes): "Sessão inválida (12). Feche seu navegador e faça login
 # novamente." Identica nos dois runtimes, logo cmp.py a daria como IDENTICA.
-_MARCAS_INVALIDA = ("Sessão inválida".encode("iso-8859-1"), "Sessão inválida".encode("utf-8"))
 TELA_SONDA = "cem1_cemiterio001.php"
+# Letras acentuadas nas duas codificacoes (Latin-1 e UTF-8) e nas duas caixas; IGNORECASE em
+# bytes so dobra ASCII, por isso a caixa dos acentos e listada a mao.
+_A_TIL = rb"(?:\xe3|\xc3\xa3|\xc3\x83|\xc3|a)"      # ã / Ã
+_A_AGUDO = rb"(?:\xe1|\xc1|\xc3\xa1|\xc3\x81|a)"    # á / Á
+_INVALIDA = re.compile(
+    rb"sess" + _A_TIL + rb"o inv" + _A_AGUDO + rb"lida"   # libs/db_conecta.php:43 e db_sessoes.php:41 (sessao invalida (12)/(14))
+    rb"|sess" + _A_TIL + rb"o terminada"                  # libs/db_conecta.php:76 e :309 (conexao invalida / sistema desativado); db_conecta_cli.php:48, db_conecta_plugin.php:49
+    rb"|feche seu navegador",                             # frase comum a todas as variantes acima; cobre texto reescrito no db_erros.php?fechar=true
+    re.IGNORECASE,
+)
 
 
 def corpo_de_sessao_invalida(corpo: bytes) -> bool:
+    """Pagina curta (< 1000 B apos normalizar) com alguma mensagem de sessao morta. Todas sao
+    identicas nos dois runtimes, logo cmp.py as daria como IDENTICAS. O teto de tamanho
+    evita acusar uma tela real que apenas cite a frase."""
     c = normaliza(corpo)
-    return len(c) < 1000 and any(m in c for m in _MARCAS_INVALIDA)
+    return len(c) < 1000 and _INVALIDA.search(c) is not None
 
 
 def sessao_autenticada(sid: str) -> bool:
     """Sonda barata: uma tela conhecida com esta sessao (sem restaurar nada, para nao
-    transformar um SID inexistente em sessao valida)."""
-    return not corpo_de_sessao_invalida(_requisita(sid, TELA_SONDA))
+    transformar um SID inexistente em sessao valida). Falha fechado: corpo vazio (ex.: o
+    redirect para db_erros.php, que o curl sem -L nao segue) ou minusculo e sem HTML
+    (< 50 B sem '<') conta como NAO autenticado."""
+    corpo = _requisita(sid, TELA_SONDA)
+    if len(corpo) < 50 and b"<" not in corpo:
+        return False
+    return not corpo_de_sessao_invalida(corpo)
 
 
 def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str, bytes]]:
