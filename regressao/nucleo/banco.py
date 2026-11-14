@@ -74,11 +74,18 @@ def gera_dump(destino: Path) -> str:
 def restaura_dump(dump: Path) -> None:
     """Recria o banco `ecidade` a partir do dump (gerado com --create).
 
-    Derruba as conexoes, executa DROP DATABASE e restaura em banco novo (sem
+    Ordem: (1) ALLOW_CONNECTIONS false (tolera banco inexistente, ex.: retry apos
+    falha), para o apache/PHP nao reconectar entre o terminate e o DROP (corrida
+    que faria o DROP falhar com "being accessed by other users"); (2) derruba as
+    conexoes; (3) DROP DATABASE; (4) pg_restore --create, cujo banco recriado
+    volta a aceitar conexoes. Restaura em banco novo (sem
     --clean/--single-transaction, que esgotam a tabela de locks). Uma falha
     deixa o banco inutilizavel: o orquestrador deve rejeitar a execucao
     (ERRO_AMBIENTE) e simplesmente repetir a restauracao, que comeca por DROP.
     """
+    _psql(f"DO $$ BEGIN IF EXISTS (select 1 from pg_database where datname='{BASE}') "
+          f"THEN ALTER DATABASE {BASE} WITH ALLOW_CONNECTIONS false; END IF; END $$",
+          db="postgres")
     _psql(f"select pg_terminate_backend(pid) from pg_stat_activity "
           f"where datname='{BASE}' and pid<>pg_backend_pid()", db="postgres")
     _psql(f"DROP DATABASE IF EXISTS {BASE}", db="postgres")

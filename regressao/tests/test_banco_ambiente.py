@@ -170,8 +170,9 @@ def test_restaura_dump_recria_banco_e_restaura_com_create(tmp_path, monkeypatch)
     dump = tmp_path / "d.dump"
     dump.write_bytes(b"x")
     banco.restaura_dump(dump)
-    assert len(chamadas) == 3
-    (a1, _), (a2, _), (a3, k3) = chamadas
+    assert len(chamadas) == 4
+    (a0, _), (a1, _), (a2, _), (a3, k3) = chamadas
+    assert "ALLOW_CONNECTIONS false" in a0[-1] and "postgres" in a0
     assert "pg_terminate_backend" in a1[-1] and "postgres" in a1
     assert "datname='ecidade'" in a1[-1] and "pg_backend_pid()" in a1[-1]
     assert a2[-1] == "DROP DATABASE IF EXISTS ecidade" and "postgres" in a2
@@ -214,3 +215,16 @@ def test_hash_tabelas_rejeita_nomes_invalidos_com_schema(monkeypatch, nome):
     monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": "h")
     with pytest.raises(ValueError):
         banco.hash_tabelas([nome])
+
+
+def test_restaura_dump_bloqueio_tolera_banco_inexistente(tmp_path, monkeypatch):
+    sqls = []
+    monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": sqls.append(sql) or "")
+    monkeypatch.setattr(banco, "_docker", lambda *a, **k: b"")
+    dump = tmp_path / "d.dump"
+    dump.write_bytes(b"x")
+    banco.restaura_dump(dump)
+    assert "from pg_database where datname='ecidade'" in sqls[0]
+    assert "ALLOW_CONNECTIONS false" in sqls[0]
+    assert "pg_terminate_backend" in sqls[1]
+    assert sqls[2] == "DROP DATABASE IF EXISTS ecidade"
