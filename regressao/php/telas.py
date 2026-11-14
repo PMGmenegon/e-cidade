@@ -1,9 +1,11 @@
 import os
 import re
+import shlex
 import subprocess
 from pathlib import Path
 
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
+from regressao.nucleo.normaliza import normaliza
 from regressao.nucleo.veredito import Caso, Veredito
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -83,18 +85,63 @@ def obtem_sid() -> str:
     return nome[len("sess_"):]
 
 
+_ENV_PROIBIDO = ("ONLY", "PORTA_B", "NORM_MENU")
+TIMEOUT_CORPO = 90
+
+
 def _roda_cmp(sid: str, prefixo: str) -> str:
     """Unico ponto que executa cmp.py (mockavel nos testes). cmp.py fala com o docker por
-    conta propria; aqui so se captura a saida."""
+    conta propria; aqui so se captura a saida. ONLY/PORTA_B/NORM_MENU do ambiente de quem
+    chama mudariam a selecao/lado B/normalizacao do cmp.py, entao sao removidos."""
+    env = {k: v for k, v in os.environ.items() if k not in _ENV_PROIBIDO}
     r = subprocess.run(["python3", str(SCRATCH / "cmp.py"), sid, prefixo],
-                       capture_output=True, timeout=TIMEOUT_CMP)
+                       capture_output=True, timeout=TIMEOUT_CMP, env=env)
     return r.stdout.decode("utf-8", errors="replace")
 
 
-def roda_telas(sid: str, prefixo: str, area: str) -> list[Caso]:
+def busca_corpo(sid: str, tela: str) -> bytes:
+    """Corpo cru da tela no lado 5.6 (o lado ja sabido identico ao 8.5). Espelha o fetch do
+    cmp.py: restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa
+    em ecidade_php56) antes da requisicao, pois cada requisicao consome/reescreve a sessao;
+    depois curl com o cookie ECIDADEWINDOWMAIN, -m 60 e teto de 5 MB. A requisicao parte de
+    dentro do container (porta 80 do apache), via banco._docker."""
+    sess = f"/var/lib/php/sessions/sess_{sid}"
+    _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
+             f"cp /tmp/_sess.bak {sess}; chown www-data:www-data {sess}; chmod 600 {sess}"],
+            TIMEOUT_CORPO)
+    return _docker(["exec", "ecidade_php56", "sh", "-c",
+                    f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' "
+                    f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
+                   TIMEOUT_CORPO)
+
+
+def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str, bytes]]:
+    """Roda cmp.py e devolve (casos, corpos). Um IDENTICO vindo so do cmp.py nunca significou
+    "exercitada": uma tela vazia ou que falha igual nos dois lados tambem e "identica". Este
+    passo busca UM corpo (lado 5.6) de cada tela que cmp.py nao acusou e, se o corpo
+    normalizado tem 0 bytes, rebaixa a INCONCLUSIVO. `corpos` mapeia tela -> corpo cru dessas
+    telas (entrada de grava_hashes/cobertura_telas); telas DIVERGE/TIMEOUT/PULADA nao tem corpo.
+    Falha ao buscar corpo ou total do resumo != len(telas) -> um unico ERRO_AMBIENTE."""
     try:
         telas = lista_telas(prefixo)
         saida = _roda_cmp(sid, prefixo)
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
-        return [Caso("telas", area, Veredito.ERRO_AMBIENTE, str(e))]
-    return parse_cmp(saida, area, telas)
+        return [Caso("telas", area, Veredito.ERRO_AMBIENTE, str(e))], {}
+    resumo = next((m for m in map(_RESUMO.match, saida.splitlines()) if m), None)
+    if resumo is not None and int(resumo.group(2)) != len(telas):
+        return [Caso("telas", area, Veredito.ERRO_AMBIENTE,
+                     f"resumo do cmp.py tem {resumo.group(2)} telas, lista_telas tem {len(telas)}")], {}
+    casos = parse_cmp(saida, area, telas)
+    corpos: dict[str, bytes] = {}
+    try:
+        for c in casos:
+            if c.veredito != Veredito.IDENTICO or c.id not in telas:
+                continue
+            corpos[c.id] = busca_corpo(sid, c.id)
+    except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
+        return [Caso("telas", area, Veredito.ERRO_AMBIENTE, f"falha ao buscar corpo: {e}")], corpos
+    for c in casos:
+        if c.id in corpos and normaliza(corpos[c.id]) == b"":
+            c.veredito = Veredito.INCONCLUSIVO
+            c.detalhe = "resposta vazia (0 bytes) nos dois lados"
+    return casos, corpos

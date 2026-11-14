@@ -87,17 +87,83 @@ def test_cobertura_distingue_tabela_vazia():
 def test_roda_telas_erro_de_docker_vira_erro_ambiente():
     with patch.object(telas, "lista_telas", return_value=["a.php"]), \
          patch.object(telas, "_roda_cmp", side_effect=OSError("sem python3")):
-        casos = telas.roda_telas("abc", "^cem", "configuracao")
+        casos, corpos = telas.roda_telas("abc", "^cem", "configuracao")
     assert [c.veredito for c in casos] == [Veredito.ERRO_AMBIENTE]
+    assert corpos == {}
 
 
 def test_roda_telas_junta_lista_de_telas_e_saida_do_cmp():
     saida = ("2 telas\n\n  DIVERGE cem1_a.php  56=200/1B  85=200/2B\n"
              "\n=== 1/2 identicas, 1 divergentes, 0 timeout ===\n")
     with patch.object(telas, "lista_telas", return_value=["cem1_a.php", "cem1_b.php"]), \
-         patch.object(telas, "_roda_cmp", return_value=saida):
-        casos = {c.id: c.veredito for c in telas.roda_telas("s", "^cem", "x")}
-    assert casos == {"cem1_a.php": Veredito.DIVERGE, "cem1_b.php": Veredito.IDENTICO}
+         patch.object(telas, "_roda_cmp", return_value=saida), \
+         patch.object(telas, "busca_corpo", return_value=b"<td>x</td>"):
+        casos, corpos = telas.roda_telas("s", "^cem", "x")
+    assert {c.id: c.veredito for c in casos} == {"cem1_a.php": Veredito.DIVERGE, "cem1_b.php": Veredito.IDENTICO}
+    assert list(corpos) == ["cem1_b.php"]
+
+
+SAIDA_TODAS_IGUAIS = "2 telas\n\n=== 2/2 identicas, 0 divergentes, 0 timeout ===\n"
+
+
+def test_tela_vazia_nos_dois_lados_e_inconclusiva_via_roda_telas():
+    corpos_reais = {"a.php": b"", "b.php": b"<td>1</td>"}
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", side_effect=lambda sid, t: corpos_reais[t]):
+        casos, corpos = telas.roda_telas("s", "^", "x")
+    v = {c.id: c for c in casos}
+    assert v["a.php"].veredito == Veredito.INCONCLUSIVO and "vazi" in v["a.php"].detalhe
+    assert v["b.php"].veredito == Veredito.IDENTICO
+    assert corpos == corpos_reais
+
+
+def test_corpo_so_com_normalizacao_vazia_e_inconclusivo():
+    # heuristica fixa = 0 bytes apos normalizar; so quebra de linha continua IDENTICO
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", return_value=b"\n"):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    assert {c.veredito for c in casos} == {Veredito.IDENTICO}
+
+
+def test_falha_ao_buscar_corpo_e_erro_ambiente():
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", side_effect=ErroAmbienteBanco("docker caiu")):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    assert [c.veredito for c in casos] == [Veredito.ERRO_AMBIENTE]
+    assert "docker caiu" in casos[0].detalhe
+
+
+def test_roda_cmp_remove_only_e_porta_b_do_ambiente(monkeypatch):
+    for k in ("ONLY", "PORTA_B", "NORM_MENU"):
+        monkeypatch.setenv(k, "1")
+    monkeypatch.setenv("PATH_MARCA", "mantida")
+    capturado = {}
+
+    def falso_run(cmd, **kw):
+        capturado.update(kw)
+
+        class R:
+            stdout = b"ok"
+        return R()
+
+    with patch.object(telas.subprocess, "run", side_effect=falso_run):
+        assert telas._roda_cmp("s", "^cem") == "ok"
+    env = capturado["env"]
+    assert not {"ONLY", "PORTA_B", "NORM_MENU"} & set(env)
+    assert env["PATH_MARCA"] == "mantida"
+
+
+def test_total_do_resumo_diferente_da_lista_e_erro_ambiente():
+    saida = "3 telas\n\n=== 3/3 identicas, 0 divergentes, 0 timeout ===\n"
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=saida), \
+         patch.object(telas, "busca_corpo", return_value=b"x"):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    assert [c.veredito for c in casos] == [Veredito.ERRO_AMBIENTE]
+    assert "3" in casos[0].detalhe and "2" in casos[0].detalhe
 
 
 def test_lista_telas_espelha_selecao_do_cmp(tmp_path):
