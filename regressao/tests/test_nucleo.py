@@ -52,3 +52,32 @@ def test_carregar_conhecidas_ignora_comentarios_e_vazias(tmp_path: Path):
     p = tmp_path / "k.tsv"
     p.write_text("# id\tmotivo\n\nx1\tbug antigo\n", encoding="utf-8")
     assert carregar_conhecidas(p) == {"x1": "bug antigo"}
+
+
+import pytest
+
+# (entrada A, entrada B: so a parte volatil difere, entrada C: diferenca real)
+VOLATEIS = [
+    (b"x?sid=0123456789ab&a=1", b"x?sid=fedcba987654&a=1", b"x?sid=0123456789ab&a=2"),
+    (b"arquivo=QWxhZGRpbjpvcGVu&q", b"arquivo=ZZZZZZZZZZZZZZ==&q", b"arquivo=QWxhZGRpbjpvcGVu&r"),
+    (b"w=wname123 ok", b"w=wname98765 ok", b"w=wname123 no"),
+    (b"<iframe src=iframeab12.php>", b"<iframe src=iframezz99.php>", b"<iframe src=iframeab12.asp>"),
+    (b"t=" + b"a" * 32 + b" z", b"t=" + b"0" * 32 + b" z", b"t=" + b"a" * 32 + b" y"),
+    (b'nomeArquivo=a_1.pdf" k', b'nomeArquivo=b_99.pdf" k', b'nomeArquivo=a_1.pdf" j'),
+    (b"/tmp/rel_123_45.pdf ok", b"/tmp/rel_999_77.pdf ok", b"/tmp/rel_123_45.pdf no"),
+    (b"tmp/arq_17.csv a", b"tmp/arq_99.csv a", b"tmp/arq_17.csv b"),
+    (b"tmp/arq_17.txt a", b"tmp/arq_99.txt a", b"tmp/arq_17.txt b"),
+    (rb'"tmp\/arq_17.csv" a', rb'"tmp\/arq_99.csv" a', rb'"tmp\/arq_17.csv" b'),
+    (b"http://localhost:8080/x", b"http://localhost:8087/x", b"http://localhost:8080/y"),
+    (b"/CreationDate (D:20260101120000-03'00') k", b"/CreationDate (D:20271231235959Z) k",
+     b"/CreationDate (D:20260101120000-03'00') j"),
+    (b"/ModDate(D:20260101120000) k", b"/ModDate (D:20300505050505) k", b"/ModDate(D:20260101120000) j"),
+]
+
+
+@pytest.mark.parametrize("a,b,c", VOLATEIS)
+def test_regra_normaliza_parte_volatil(a, b, c):
+    assert a != b
+    assert normaliza(a) == normaliza(b)
+    assert normaliza(a) != normaliza(c)
+    assert normaliza(a, regras=[]) != normaliza(b, regras=[])
