@@ -159,7 +159,7 @@ def test_hash_tabelas_rejeita_nome_invalido(monkeypatch):
         banco.hash_tabelas(["x; drop table y"])
 
 
-def test_restaura_dump_usa_transacao_unica_e_para_no_erro(tmp_path, monkeypatch):
+def test_restaura_dump_recria_banco_e_restaura_com_create(tmp_path, monkeypatch):
     chamadas = []
 
     def falso(*a, **k):
@@ -170,7 +170,47 @@ def test_restaura_dump_usa_transacao_unica_e_para_no_erro(tmp_path, monkeypatch)
     dump = tmp_path / "d.dump"
     dump.write_bytes(b"x")
     banco.restaura_dump(dump)
-    args, kw = chamadas[0]
-    for flag in ("--clean", "--if-exists", "--single-transaction", "--exit-on-error"):
-        assert flag in args
-    assert kw["timeout"] == 900
+    assert len(chamadas) == 3
+    (a1, _), (a2, _), (a3, k3) = chamadas
+    assert "pg_terminate_backend" in a1[-1] and "postgres" in a1
+    assert "datname='ecidade'" in a1[-1] and "pg_backend_pid()" in a1[-1]
+    assert a2[-1] == "DROP DATABASE IF EXISTS ecidade" and "postgres" in a2
+    assert "pg_restore" in a3 and "--create" in a3 and "--exit-on-error" in a3
+    assert "--clean" not in a3 and "--single-transaction" not in a3
+    assert a3[a3.index("-d") + 1] == "postgres"
+    assert k3["timeout"] == 900
+
+
+def test_restaura_dump_falha_vira_erro_ambiente_banco(tmp_path, monkeypatch):
+    monkeypatch.setattr(banco.subprocess, "run", lambda *a, **k: _Res(1, b"", b"boom"))
+    dump = tmp_path / "d.dump"
+    dump.write_bytes(b"x")
+    with pytest.raises(banco.ErroAmbienteBanco, match="boom"):
+        banco.restaura_dump(dump)
+
+
+def test_gera_dump_usa_create(tmp_path, monkeypatch):
+    chamadas = []
+    monkeypatch.setattr(banco, "ARQ_SHA256", tmp_path / "x.sha256")
+
+    def falso(*a, **k):
+        chamadas.append(a[0])
+        return _Res()
+
+    monkeypatch.setattr(banco.subprocess, "run", falso)
+    banco.gera_dump(tmp_path / "d.dump")
+    assert "--create" in chamadas[0] and "-Fc" in chamadas[0]
+
+
+def test_hash_tabelas_aceita_schema_qualificado(monkeypatch):
+    sqls = []
+    monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": sqls.append(sql) or "h")
+    banco.hash_tabelas(["configuracoes.db_usuarios"])
+    assert "from configuracoes.db_usuarios t" in sqls[0]
+
+
+@pytest.mark.parametrize("nome", ["a.b.c", "x; drop table y", "A.b", "a."])
+def test_hash_tabelas_rejeita_nomes_invalidos_com_schema(monkeypatch, nome):
+    monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": "h")
+    with pytest.raises(ValueError):
+        banco.hash_tabelas([nome])

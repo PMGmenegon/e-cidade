@@ -21,7 +21,7 @@ class ErroAmbienteBanco(Exception):
 
 TIMEOUT_PSQL = 60
 TIMEOUT_DUMP = 900
-_NOME_TABELA = re.compile(r"^[a-z_][a-z0-9_]*$")
+_NOME_TABELA = re.compile(r"[a-z_][a-z0-9_]*(\.[a-z_][a-z0-9_]*)?")
 
 
 def _sha256(arquivo: Path) -> str:
@@ -63,7 +63,7 @@ def gera_dump(destino: Path) -> str:
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
     with open(destino, "wb") as f:
-        _docker(["exec", CONTAINER, "pg_dump", "-U", "postgres", "-Fc", BASE],
+        _docker(["exec", CONTAINER, "pg_dump", "-U", "postgres", "-Fc", "--create", BASE],
                 TIMEOUT_DUMP, stdout=f)
     sha = _sha256(destino)
     ARQ_SHA256.parent.mkdir(parents=True, exist_ok=True)
@@ -72,10 +72,19 @@ def gera_dump(destino: Path) -> str:
 
 
 def restaura_dump(dump: Path) -> None:
+    """Recria o banco `ecidade` a partir do dump (gerado com --create).
+
+    Derruba as conexoes, executa DROP DATABASE e restaura em banco novo (sem
+    --clean/--single-transaction, que esgotam a tabela de locks). Uma falha
+    deixa o banco inutilizavel: o orquestrador deve rejeitar a execucao
+    (ERRO_AMBIENTE) e simplesmente repetir a restauracao, que comeca por DROP.
+    """
+    _psql(f"select pg_terminate_backend(pid) from pg_stat_activity "
+          f"where datname='{BASE}' and pid<>pg_backend_pid()", db="postgres")
+    _psql(f"DROP DATABASE IF EXISTS {BASE}", db="postgres")
     with open(dump, "rb") as f:
         _docker(["exec", "-i", CONTAINER, "pg_restore", "-U", "postgres",
-                 "--clean", "--if-exists", "--single-transaction", "--exit-on-error",
-                 "-d", BASE],
+                 "--create", "--exit-on-error", "-d", "postgres"],
                 TIMEOUT_DUMP, stdin=f)
 
 
@@ -97,7 +106,7 @@ def confere_baseline(dump: Path) -> None:
 def hash_tabelas(tabelas: list[str]) -> dict[str, str]:
     saida = {}
     for t in tabelas:
-        if not _NOME_TABELA.match(t):
+        if not _NOME_TABELA.fullmatch(t):
             raise ValueError(f"nome de tabela invalido: {t!r}")
         sql = (f"select md5(coalesce(string_agg(t::text, E'\\n' order by t::text), '')) "
                f"from {t} t")
