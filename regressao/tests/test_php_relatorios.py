@@ -129,9 +129,18 @@ def test_catalogo_relatorios_exige_quinta_coluna(tmp_path):
             carrega_catalogo_relatorios(arq)
 
 
+ACHADOS = {"mat2_cadunidade002.php", "prot2_cadcgm002.php", "con2_relinstituicoes002.php",
+           "con2_conhist002.php", "con2_conhistdoc002.php", "con2_balancrece002.php"}
+
+
 def test_catalogo_semeado_carrega():
     casos = carrega_catalogo_relatorios(relatorios.CATALOGO)
-    assert casos and all(c.tipo in ("html", "pdf", "xls", "doc") for c in casos)
+    assert all(c.tipo in ("html", "pdf", "xls", "doc") for c in casos)
+    assert len(casos) == 20
+    assert sum(c.verificado for c in casos) == 17  # 11 IDENTICO + 6 achados DIVERGE
+    assert {c.tela for c in casos if not c.verificado} == {"cem2_renovacoes.php", "func_cgm.php"} | {"db_download.php"}
+    assert [c.query for c in casos if not c.verificado and c.tela == "db_download.php"] == ["arquivo=tmp/balrec.csv"]
+    assert {c.tela for c in casos if c.verificado} >= ACHADOS
 
 
 def test_roda_relatorio_restaura_sessao_antes_de_cada_runtime():

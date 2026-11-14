@@ -1,6 +1,6 @@
 # Catalogo de POSTs reais (nivel 3). Colunas: tela<TAB>tabelas (filhas ANTES da mae)<TAB>campos<TAB>area<TAB>status
-# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda sem rodada IDENTICO nesta bateria;
-#         'verificado' so apos IDENTICO real contra a pilha (nunca marcar a mao).
+# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' = caso VALIDO e veredito confiavel (rodou de verdade contra a pilha, seja qual for o veredito;
+#         um 'verificado' com DIVERGE e achado e faz a bateria sair com 1); 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda nao exercitado com confianca.
 # Modulos centrais: Folha = as linhas pes*/rec* (RH); Arrecadacao = arr1_*; Orcamento = orc1_*. CGM (prot1_cadcgm001.php) PENDENTE:
 # o restore aborta por FK em filhas de cgm que o POST preenche (cgmendereco, depois personacgm; possivelmente mais): a lista de tabelas
 # ainda nao esta completa e cada aborto deixa residuo no banco. So *001 (inclusao) dos demais modulos coberto.

@@ -1,10 +1,13 @@
 # Catalogo de relatorios por GET (nivel 4). Colunas: tela<TAB>query<TAB>tipo (html|pdf|xls|doc)<TAB>area<TAB>status
-# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' somente apos IDENTICO real, com conteudo
-# nao vazio, contra a pilha (nunca marcar a mao); 'nao-verificado' = candidato ainda sem IDENTICO (ou que DIVERGE: ver relatorio da Task 7).
-# Formatos reais do e-cidade: PDF (FPDF, rodape com hora de emissao) ; "xls" = CSV ';' em tmp/ servido por db_download.php (text/csv);
-# EVIDENCIA FRACA nas linhas db_download.php (xls): servem UM arquivo compartilhado de /tmp aos dois runtimes; IDENTICO prova so o serving do arquivo (db_download), nao a geracao do relatorio.
-# Verificados = IDENTICO real (5.6 vs 8.5) com dados. Mantidos nao-verificado: cem2_renovacoes (formulario sem cod), balrec.csv (so cabecalho), func_cgm (so formulario) e os que DIVERGEM (5.6=200 PDF vs 8.5=500 "Notificacao do Sistema, Erro interno").
+# status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' = o caso e VALIDO e o veredito e confiavel:
+#   ao vivo, o lado de referencia (5.6) devolveu 200 com conteudo extraido nao vazio e correto (o caso e de fato exercitado),
+#   seja qual for o veredito final. 'nao-verificado' = nao confiavel (so formulario/cabecalho, vazio, ilegivel, erro tambem no 5.6).
+#   Uma linha 'verificado' com veredito DIVERGE e um achado da migracao: e esperado que a bateria saia com codigo 1 ate corrigir.
+# Formatos reais do e-cidade: PDF (FPDF, rodape com hora de emissao); "xls" = CSV ';' em tmp/ servido por db_download.php (text/csv);
 # consulta HTML = func_*.php. Nao ha .xls/.xlsx binario servido por GET fixo (os arquivos de tmp/ tem nome com timestamp).
+# EVIDENCIA FRACA nas linhas db_download.php (xls): servem UM arquivo compartilhado de /tmp aos dois runtimes; IDENTICO prova so o serving do arquivo, nao a geracao do relatorio.
+# Achados (verificado + DIVERGE, 5.6=200 PDF vs 8.5=500 'Notificacao do Sistema / Erro interno'): mat2_cadunidade002, prot2_cadcgm002, con2_relinstituicoes002, con2_conhist002, con2_conhistdoc002, con2_balancrece002.
+# Mantidos nao-verificado: cem2_renovacoes (formulario sem cod), balrec.csv (so cabecalho), func_cgm (so formulario).
 orc2_cadorcsubfuncao002.php		pdf	orcamento	verificado
 orc2_cadorcfuncao002.php		pdf	orcamento	verificado
 com2_pctipocompra002.php		pdf	compras	verificado
@@ -13,12 +16,12 @@ iss2_tipcalc002.php		pdf	tributario	verificado
 iss2_cadcal002.php		pdf	tributario	verificado
 iss2_tiponotas002.php		pdf	tributario	verificado
 pro2_andpadrao002.php		pdf	protocolo	verificado
-mat2_cadunidade002.php		pdf	almoxarifado	nao-verificado
-prot2_cadcgm002.php		pdf	configuracao	nao-verificado
-con2_relinstituicoes002.php		pdf	configuracao	nao-verificado
-con2_conhist002.php		pdf	contabilidade	nao-verificado
-con2_conhistdoc002.php		pdf	contabilidade	nao-verificado
-con2_balancrece002.php		pdf	contabilidade	nao-verificado
+mat2_cadunidade002.php		pdf	almoxarifado	verificado
+prot2_cadcgm002.php		pdf	configuracao	verificado
+con2_relinstituicoes002.php		pdf	configuracao	verificado
+con2_conhist002.php		pdf	contabilidade	verificado
+con2_conhistdoc002.php		pdf	contabilidade	verificado
+con2_balancrece002.php		pdf	contabilidade	verificado
 cem2_renovacoes.php		pdf	cemiterio	nao-verificado
 db_download.php	arquivo=tmp/con2_balancdespsinteticocsv002.csv	xls	contabilidade	verificado
 db_download.php	arquivo=tmp/balrec.csv	xls	contabilidade	nao-verificado
