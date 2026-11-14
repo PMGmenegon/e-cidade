@@ -13,6 +13,10 @@ CLIENT_ID = "9999999"
 CONTAINER_PHP = "ecidade_php56"
 LOG_ERROS = "/var/log/php_errors.log"
 TIMEOUT = 15
+REDIGIDO = "<redigido>"
+MARCAS_BOOT = ("Fatal error", "Parse error", "Uncaught", "Cannot make non abstract method")
+_RE_JWT = re.compile(r"eyJ[\w-]+\.[\w-]+\.[\w-]+")
+_RE_SEGREDO = re.compile(r"(?i)(secret|password|passwd|senha|token|bearer|authorization|api[_-]?key)\S*\s*[=:]\s*\S+")
 
 
 class ErroToken(Exception):
@@ -31,16 +35,15 @@ def _segredo_cliente() -> str:
 
 
 def obtem_token(base_url: str, usuario: str = "dbseller", senha: str = "dbseller") -> str:
-    dados = {
-        "grant_type": "password",
-        "client_id": CLIENT_ID,
-        "client_secret": _segredo_cliente(),
-        "username": usuario,
-        "password": senha,
-    }
     url = base_url.rstrip("/") + "/v4/oauth/token"
     try:
-        r = requests.post(url, data=dados, timeout=TIMEOUT)
+        r = requests.post(url, data={
+            "grant_type": "password",
+            "client_id": CLIENT_ID,
+            "client_secret": _segredo_cliente(),
+            "username": usuario,
+            "password": senha,
+        }, timeout=TIMEOUT)
     except requests.RequestException as e:
         raise ErroToken(f"sem resposta de {url}: {type(e).__name__}") from None
     if r.status_code != 200:
@@ -54,26 +57,53 @@ def obtem_token(base_url: str, usuario: str = "dbseller", senha: str = "dbseller
     return tok
 
 
+def redige(texto: str) -> str:
+    """Remove JWTs, pares segredo=valor e os literais conhecidos (segredo do cliente,
+    usuario/senha padrao) de um texto de log."""
+    texto = _RE_JWT.sub(REDIGIDO, texto)
+    texto = _RE_SEGREDO.sub(REDIGIDO, texto)
+    literais = ["dbseller"]
+    try:
+        literais.append(_segredo_cliente())
+    except ErroToken:
+        pass
+    for lit in literais:
+        if lit:
+            texto = texto.replace(lit, REDIGIDO)
+    return texto
+
+
 def _cauda_php_errors(linhas: int = 5) -> str:
     try:
         saida = _docker(["exec", CONTAINER_PHP, "tail", "-n", str(linhas), LOG_ERROS], 15)
     except ErroAmbienteBanco:
         return ""
-    return saida.decode("utf-8", errors="replace").strip()
+    brutas = saida.decode("utf-8", errors="replace").strip().splitlines()[-linhas:]
+    return "\n".join(redige(l[:300]) for l in brutas)
 
 
-def laravel_sobe(base_url: str) -> Caso | None:
-    """None se o Laravel responde (qualquer status < 500); senao UM Caso ERRO_AMBIENTE."""
+def _boot_falho(base_url: str, detalhe: str) -> Caso:
+    log = _cauda_php_errors()
+    if log:
+        detalhe += ("\nphp_errors.log (ultimas linhas do log global do php; podem ser "
+                    "antigas e nao relacionadas):\n" + log)
+    return Caso("laravel:boot", "laravel", Veredito.ERRO_AMBIENTE, detalhe)
+
+
+def laravel_sobe(base_url: str, timeout: float = TIMEOUT) -> Caso | None:
+    """None se o Laravel responde sem erro de boot; senao UM Caso ERRO_AMBIENTE
+    (fora do ar, timeout, HTTP>=500 ou corpo com erro fatal de PHP)."""
     url = base_url.rstrip("/") + "/v4/oauth/token"
     try:
-        r = requests.get(url, timeout=TIMEOUT, allow_redirects=False)
+        r = requests.get(url, timeout=timeout, allow_redirects=False)
     except requests.RequestException as e:
         return Caso("laravel:boot", "laravel", Veredito.ERRO_AMBIENTE,
                     f"Laravel fora do ar em {base_url}: {type(e).__name__}")
     if r.status_code >= 500:
-        detalhe = f"Laravel em {base_url} devolveu HTTP {r.status_code} no boot"
-        log = _cauda_php_errors()
-        if log:
-            detalhe += f"\nphp_errors.log:\n{log}"
-        return Caso("laravel:boot", "laravel", Veredito.ERRO_AMBIENTE, detalhe)
+        return _boot_falho(base_url, f"Laravel em {base_url} devolveu HTTP {r.status_code} no boot")
+    corpo = r.text or ""
+    marca = next((m for m in MARCAS_BOOT if m in corpo), None)
+    if marca:
+        return _boot_falho(base_url, f"Laravel em {base_url} nao subiu: HTTP {r.status_code} "
+                                     f"com erro de PHP no corpo ({marca})")
     return None
