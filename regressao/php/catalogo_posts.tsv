@@ -2,7 +2,8 @@
 # status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda sem rodada IDENTICO nesta bateria;
 #         'verificado' so apos IDENTICO real contra a pilha (nunca marcar a mao).
 # Modulos centrais: Folha = as linhas pes*/rec* (RH); Arrecadacao = arr1_*; Orcamento = orc1_*. CGM (prot1_cadcgm001.php) PENDENTE:
-# o restore falha por FK em cgmendereco (trigger grava la); precisa 'cgmendereco' nas tabelas e limpeza previa. So *001 (inclusao) coberto.
+# o restore aborta por FK em filhas de cgm que o POST preenche (cgmendereco, depois personacgm; possivelmente mais): a lista de tabelas
+# ainda nao esta completa e cada aborto deixa residuo no banco. So *001 (inclusao) dos demais modulos coberto.
 pes1_pesdiver001.php	pesdiver	r07_anousu=1&r07_mesusu=1&r07_instit=1&r07_codigo=901&r07_descr=TESTE_N3&r07_valor=1&incluir=Incluir	rh	verificado
 pes1_rhempresavt001.php	rhempresavt	rh35_codigo=901&rh35_descr=TESTE_N3&incluir=Incluir	rh	verificado
 pes1_vtfempr001.php	vtfempr	r16_anousu=1&r16_mesusu=1&r16_codigo=901&r16_descr=TESTE_N3&r16_valor=1&r16_perc=1&r16_empres=1&rh35_descr=TESTE_N3&incluir=Incluir	rh	verificado
