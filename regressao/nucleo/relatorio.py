@@ -65,11 +65,31 @@ def _resumo(casos: list[Caso]) -> str:
     return "\n".join(linhas) + "\n"
 
 
+class RodadaInvalida(Exception):
+    """resultado.json ausente, corrompido ou sem as chaves esperadas."""
+
+
 def _carrega(diretorio: Path) -> dict[str, Veredito]:
-    dados = json.loads((Path(diretorio) / "resultado.json").read_text(encoding="utf-8"))
-    return {c["id"]: Veredito(c["veredito"]) for c in dados["casos"]}
+    arq = Path(diretorio) / "resultado.json"
+    try:
+        dados = json.loads(arq.read_text(encoding="utf-8"))
+    except FileNotFoundError as e:
+        raise RodadaInvalida(f"{arq}: arquivo ausente") from e
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise RodadaInvalida(f"{arq}: JSON invalido ({e})") from e
+    try:
+        return {c["id"]: Veredito(c["veredito"]) for c in dados["casos"]}
+    except (KeyError, TypeError) as e:
+        raise RodadaInvalida(f"{arq}: chave ausente ou formato inesperado ({e!r})") from e
+    except ValueError as e:
+        raise RodadaInvalida(f"{arq}: veredito desconhecido ({e})") from e
 
 
-def compara_rodadas(antes: Path, depois: Path) -> list[tuple[str, Veredito, Veredito]]:
+def compara_rodadas(
+    antes: Path, depois: Path
+) -> list[tuple[str, Veredito | None, Veredito | None]]:
+    """Mudancas entre rodadas, ordenadas por id. None = caso ausente na rodada."""
     a, d = _carrega(antes), _carrega(depois)
-    return [(i, a[i], d[i]) for i in a if i in d and a[i] != d[i]]
+    return [
+        (i, a.get(i), d.get(i)) for i in sorted(a.keys() | d.keys()) if a.get(i) != d.get(i)
+    ]
