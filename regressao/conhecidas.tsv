@@ -1,1 +1,4 @@
 # id	motivo
+# Chaves = ids NAMESPACED da bateria PHP (regressao/php/bateria.py): sintaxe:<arq>, classe:<arq>,
+# tela:<tela>, post:<tela>, relatorio:<tela>[?<query>]. Uma divergencia conhecida cobre so a etapa do id.
+# So entra divergencia PREEXISTENTE com prova (rodada na baseline antes da migracao); decisao do usuario.

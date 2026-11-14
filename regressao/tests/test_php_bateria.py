@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -26,7 +27,7 @@ def amb(monkeypatch, tmp_path):
 
     conhecidas = tmp_path / "conhecidas.tsv"
     conhecidas.write_text("# id\tmotivo\n", encoding="utf-8")
-    posts = [PostCaso("rec1_a001.php", ["a"], "x=1", "rh", True),
+    posts = [PostCaso("rec1_x.php", ["a"], "x=1", "rh", True),
              PostCaso("rec1_b001.php", ["b"], "x=1", "rh", False),
              PostCaso("orc1_c001.php", ["c"], "x=1", "orcamento", True)]
     rels = [RelCaso("pro2_r002.php", "", "pdf", "protocolo", True),
@@ -39,13 +40,20 @@ def amb(monkeypatch, tmp_path):
     m.setattr(bateria, "restaura_dump", reg("restaura_dump", None))
     m.setattr(bateria, "obtem_sid", reg("obtem_sid", "sid123"))
     m.setattr(bateria, "sessao_autenticada", reg("sessao_autenticada", True))
-    m.setattr(bateria, "lista_telas", lambda p: [f"{p[1:4]}_x.php"])
+    def fake_lista(rx):
+        mm = re.fullmatch(r"(?:\(\?=\(\?:(.*)\)\))?\^([a-z]+)\[0-9\]\*_", rx)
+        nome = f"{mm.group(2)}1_x.php"
+        return [nome] if not mm.group(1) or re.match(mm.group(1), nome, re.I) else []
+    m.setattr(bateria, "lista_telas", fake_lista)
     m.setattr(bateria, "_classes_das_telas", lambda t: ["classes/db_a_classe.php"])
     m.setattr(bateria, "_metadados_ambiente", lambda: {"php_56": "5.6.40", "php_85": "8.5.0",
                                                        "git_commit": "abc", "baseline_sha256": "ff"})
     m.setattr(bateria, "roda_lint", reg("lint", lambda arqs: [Caso(a, "php-sintaxe", V.IDENTICO) for a in arqs]))
     m.setattr(bateria, "roda_classes", reg("classes", lambda l: [Caso(c, "php-classes", V.IDENTICO) for c in l]))
-    m.setattr(bateria, "roda_telas", reg("telas", lambda sid, p, a: ([Caso(f"t{p}", a, V.IDENTICO)], {f"t{p}": b"<td>1</td>"})))
+    def fake_telas(sid, rx, a):
+        nome = fake_lista(rx)[0]
+        return [Caso(nome, a, V.IDENTICO), Caso("telas", a, V.INCONCLUSIVO, "run")], {nome: b"<td>1</td>"}
+    m.setattr(bateria, "roda_telas", reg("telas", fake_telas))
     m.setattr(bateria, "carrega_catalogo", lambda c: posts)
     m.setattr(bateria, "carrega_catalogo_relatorios", lambda c: rels)
     m.setattr(bateria, "roda_post", reg("post", lambda sid, c: Caso(c.tela, c.area, V.IDENTICO)))
@@ -64,11 +72,13 @@ def ids(saida: Path) -> dict[str, str]:
 def test_fluxo_completo_na_ordem(amb, tmp_path):
     assert bateria.roda_bateria_php(tmp_path, ["tributario"]) == 0
     ordem = [c for i, c in enumerate(amb) if c not in amb[:i]]
-    assert ordem[:6] == ["verifica", "confere_baseline", "restaura_dump", "obtem_sid", "sessao_autenticada", "lint"]
-    assert ordem[-3:] == ["telas", "post", "relatorio"] or ordem[-1] == "relatorio"
+    assert ordem == ["verifica", "confere_baseline", "restaura_dump", "obtem_sid", "sessao_autenticada",
+                     "lint", "classes", "telas", "post", "relatorio"]
     assert amb.count("restaura_dump") == 1
     meta = le(tmp_path)["meta"]
-    assert meta["php_56"] == "5.6.40" and meta["areas"] == ["tributario"]
+    assert meta["php_56"] == "5.6.40" and meta["php_85"] == "8.5.0" and meta["areas"] == ["tributario"]
+    assert meta["git_commit"] == "abc" and meta["baseline_sha256"] == "ff" and meta["comparavel"] is True
+    assert {"catalogo_posts", "catalogo_relatorios"} <= set(meta)
     assert "restauracao_s" in meta and "sintaxe_s" in meta["tempos_s"]
     assert any(p.name.startswith("hashes_") for p in tmp_path.iterdir())
     assert (tmp_path / "cobertura.json").is_file()
@@ -77,7 +87,7 @@ def test_fluxo_completo_na_ordem(amb, tmp_path):
 def test_ambiente_fora_gera_erro_ambiente_e_codigo_2(amb, monkeypatch, tmp_path):
     monkeypatch.setattr(bateria, "verifica", lambda a: ["ref: sem resposta em 5s: x", "docker ps indisponivel"])
     assert bateria.roda_bateria_php(tmp_path) == 2
-    assert ids(tmp_path) == {"ambiente": "ERRO_AMBIENTE"}
+    assert ids(tmp_path) == {"passo:ambiente": "ERRO_AMBIENTE"}
     assert "restaura_dump" not in amb and "lint" not in amb
 
 
@@ -87,7 +97,7 @@ def test_banco_diferente_rejeita_rodada(amb, monkeypatch, tmp_path, exc):
         raise exc
     monkeypatch.setattr(bateria, "confere_baseline", explode)
     assert bateria.roda_bateria_php(tmp_path, ["gestor"]) == 2
-    assert ids(tmp_path) == {"banco": "ERRO_AMBIENTE"}
+    assert ids(tmp_path) == {"passo:banco": "ERRO_AMBIENTE"}
     for passo in ("restaura_dump", "obtem_sid", "lint", "classes", "telas", "post", "relatorio"):
         assert passo not in amb
 
@@ -103,18 +113,18 @@ def test_falha_na_restauracao_tambem_rejeita(amb, monkeypatch, tmp_path):
 def test_sessao_invalida_para_tudo(amb, monkeypatch, tmp_path):
     monkeypatch.setattr(bateria, "sessao_autenticada", lambda s: False)
     assert bateria.roda_bateria_php(tmp_path, ["gestor"]) == 2
-    assert ids(tmp_path) == {"sessao": "ERRO_AMBIENTE"}
+    assert ids(tmp_path) == {"passo:sessao": "ERRO_AMBIENTE"}
     assert "lint" not in amb
 
 
 def test_diverge_conhecida_nao_quebra_rodada(amb, monkeypatch, tmp_path):
-    (bateria.CONHECIDAS).write_text("# id\tmotivo\npro2_r002.php\tpreexistente, provado\n", encoding="utf-8")
+    (bateria.CONHECIDAS).write_text("# id\tmotivo\nrelatorio:pro2_r002.php\tpreexistente, provado\n", encoding="utf-8")
     monkeypatch.setattr(bateria, "roda_relatorio",
                         lambda sid, c: Caso(c.url, c.area, V.DIVERGE, "dif"))
     # nao-verificado fica de fora; so o pro2 (conhecido) diverge
     assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 0
     casos = {c["id"]: c for c in le(tmp_path)["casos"]}
-    assert casos["pro2_r002.php"]["veredito"] == "DIVERGE" and casos["pro2_r002.php"]["conhecida"] is True
+    assert casos["relatorio:pro2_r002.php"]["veredito"] == "DIVERGE" and casos["relatorio:pro2_r002.php"]["conhecida"] is True
 
 
 def test_diverge_nova_da_codigo_1(amb, monkeypatch, tmp_path):
@@ -125,7 +135,7 @@ def test_diverge_nova_da_codigo_1(amb, monkeypatch, tmp_path):
 def test_nao_verificadas_nao_rodam_por_padrao_e_sao_contadas(amb, tmp_path):
     bateria.roda_bateria_php(tmp_path)  # todas as areas
     resultado = ids(tmp_path)
-    assert "rec1_b001.php" not in resultado and "con2_r002.php" not in resultado
+    assert "post:rec1_b001.php" not in resultado and "relatorio:con2_r002.php" not in resultado
     cat = le(tmp_path)["meta"]["catalogo_posts"]
     assert cat["nao_verificado_pulados"] == 1 and cat["nao_verificado_pulados_ids"] == ["rec1_b001.php"]
     assert le(tmp_path)["meta"]["catalogo_relatorios"]["nao_verificado_pulados"] == 1
@@ -135,11 +145,13 @@ def test_nao_verificadas_nao_rodam_por_padrao_e_sao_contadas(amb, tmp_path):
 def test_incluir_nao_verificados_roda_todas(amb, tmp_path):
     bateria.roda_bateria_php(tmp_path, incluir_nao_verificados=True)
     resultado = ids(tmp_path)
-    assert "rec1_b001.php" in resultado and "con2_r002.php" in resultado
+    assert "post:rec1_b001.php" in resultado and "relatorio:con2_r002.php" in resultado
 
 
-def test_sem_restaurar_marca_o_resumo(amb, tmp_path):
+def test_sem_restaurar_marca_o_resumo(amb, tmp_path, capsys):
     bateria.roda_bateria_php(tmp_path, ["gestor"], restaurar=False)
+    assert "banco NAO restaurado: resultado nao comparavel" in capsys.readouterr().err
+    assert le(tmp_path)["meta"]["comparavel"] is False
     assert "restaura_dump" not in amb
     resumo = (tmp_path / "resumo.md").read_text(encoding="utf-8")
     assert "banco NAO restaurado: resultado nao comparavel" in resumo
@@ -174,19 +186,19 @@ def test_um_passo_que_falha_nao_derruba_os_outros(amb, monkeypatch, tmp_path):
 
 def test_post_que_levanta_vira_erro_so_dessa_linha(amb, monkeypatch, tmp_path):
     def explode(sid, c):
-        if c.tela == "rec1_a001.php":
+        if c.tela == "rec1_x.php":
             raise OSError("boom")
         return Caso(c.tela, c.area, V.IDENTICO)
     monkeypatch.setattr(bateria, "roda_post", explode)
     bateria.roda_bateria_php(tmp_path)
     r = ids(tmp_path)
-    assert r["rec1_a001.php"] == "ERRO_AMBIENTE" and r["orc1_c001.php"] == "IDENTICO"
+    assert r["post:rec1_x.php"] == "ERRO_AMBIENTE" and r["post:orc1_c001.php"] == "IDENTICO"
 
 
 def test_filtra_catalogo_pela_area(amb, tmp_path):
     bateria.roda_bateria_php(tmp_path, ["assistenciasocial"])  # prefixos hab, pro, rec, soc
     r = ids(tmp_path)
-    assert "rec1_a001.php" in r and "pro2_r002.php" in r and "orc1_c001.php" not in r
+    assert "post:rec1_x.php" in r and "relatorio:pro2_r002.php" in r and "post:orc1_c001.php" not in r
     assert le(tmp_path)["meta"]["catalogo_posts"]["fora_da_area"] == 1
 
 
@@ -206,3 +218,133 @@ def test_sem_normalizar_esvazia_regras_so_durante_a_rodada(amb, monkeypatch, tmp
 def test_mapeamento_do_codigo_de_saida(veredito, conhecida, esperado):
     assert codigo_saida([Caso("x", "a", veredito, conhecida=conhecida)]) == esperado
     assert codigo_saida([Caso("x", "a", V.DIVERGE), Caso("y", "a", V.ERRO_AMBIENTE)]) == 2
+
+
+def test_sem_normalizacao_restaura_regras_se_levantar():
+    from regressao.nucleo.normaliza import REGRAS
+    antes = list(REGRAS)
+    with pytest.raises(RuntimeError):
+        with bateria.sem_normalizacao():
+            assert REGRAS == []
+            raise RuntimeError("x")
+    assert REGRAS == antes
+
+
+def test_ids_unicos_no_resultado_json(amb, tmp_path):
+    bateria.roda_bateria_php(tmp_path, ["assistenciasocial"])
+    todos = [c["id"] for c in le(tmp_path)["casos"]]
+    assert len(todos) == len(set(todos))
+    assert {"sintaxe:rec1_x.php", "tela:rec1_x.php", "post:rec1_x.php"} <= set(todos)
+    assert "tela-run:rec:telas" in todos and "classe:classes/db_a_classe.php" in todos
+
+
+def test_ids_que_ainda_colidem_ganham_sufixo(amb, monkeypatch, tmp_path):
+    monkeypatch.setattr(bateria, "roda_post", lambda sid, c: Caso("mesmo", "rh", V.IDENTICO))
+    bateria.roda_bateria_php(tmp_path)  # todas as areas: duas linhas de POST devolvem o mesmo id
+    todos = [c["id"] for c in le(tmp_path)["casos"]]
+    assert len(todos) == len(set(todos)) and "post:mesmo#2" in todos
+    assert le(tmp_path)["meta"]["ids_renomeados"]
+
+
+def test_conhecida_so_cobre_a_etapa_do_id(amb, monkeypatch, tmp_path):
+    bateria.CONHECIDAS.write_text("tela:rec1_x.php\tpreexistente\n", encoding="utf-8")
+    monkeypatch.setattr(bateria, "roda_telas", lambda sid, rx, a: ([Caso("rec1_x.php", a, V.DIVERGE, "t")], {}))
+    monkeypatch.setattr(bateria, "roda_post", lambda sid, c: Caso(c.tela, c.area, V.DIVERGE, "p"))
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 1
+    casos = {c["id"]: c for c in le(tmp_path)["casos"]}
+    assert casos["tela:rec1_x.php"]["conhecida"] is True
+    assert casos["post:rec1_x.php"]["conhecida"] is False
+
+
+def test_nome_de_diff_seguro_e_unico(amb, monkeypatch, tmp_path):
+    monkeypatch.setattr(bateria, "roda_relatorio",
+                        lambda sid, c: Caso("db_download.php?a=/x&b=1", c.area, V.DIVERGE, "d", "-a\n+b"))
+    monkeypatch.setattr(bateria, "roda_post",
+                        lambda sid, c: Caso("db/download.php?a=/x&b=1", c.area, V.DIVERGE, "d", "-a\n+b"))
+    monkeypatch.setattr(bateria, "carrega_catalogo_relatorios",
+                        lambda c: [RelCaso("db_download.php", "a=/x&b=1", "xls", "x", True)])
+    bateria.roda_bateria_php(tmp_path, None)
+    arqs = sorted(p.name for p in (tmp_path / "diffs").iterdir())
+    assert len(arqs) == 3 and len(set(a.lower() for a in arqs)) == 3  # 2 POSTs (id repetido) + 1 relatorio
+    assert all(re.fullmatch(r"[A-Za-z0-9._~-]+\.diff", a) for a in arqs)
+
+
+def test_corpos_sao_reduzidos_a_hash_e_pico_registrado(amb, tmp_path):
+    from regressao.nucleo.normaliza import hash_corpo
+    bateria.roda_bateria_php(tmp_path, ["assistenciasocial"])
+    hs = [p for p in tmp_path.iterdir() if p.name.startswith("hashes_")][0].read_text()
+    assert f"rec1_x.php\t{hash_corpo(b'<td>1</td>')}\n" in hs
+    meta = le(tmp_path)["meta"]
+    assert meta["pico_corpos_em_memoria"] == 1 and meta["telas_com_dados"] == 4
+
+
+def test_hashes_e_cobertura_a_partir_de_reducoes(tmp_path):
+    from regressao.nucleo.normaliza import hash_corpo
+    from regressao.php.cobertura import cobertura_de_flags, cobertura_telas
+    from regressao.php.hashes import grava_hashes, grava_hashes_de_hashes
+    corpos = {"b.php": b"<td>x", "a.php": b"<thead><td>x</thead>"}
+    a = grava_hashes(tmp_path, corpos, "1")
+    b = grava_hashes_de_hashes(tmp_path / "o", {t: hash_corpo(c) for t, c in corpos.items()}, "1")
+    assert a.read_text() == b.read_text()
+    assert cobertura_de_flags({"b.php": True, "a.php": False}) == cobertura_telas([], corpos)
+
+
+def test_sessao_expirada_antes_dos_posts_para_a_rodada(amb, monkeypatch, tmp_path):
+    estado = {"n": 0}
+
+    def sessao(sid):
+        estado["n"] += 1
+        return estado["n"] == 1  # so a checagem inicial passa
+    monkeypatch.setattr(bateria, "sessao_autenticada", sessao)
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 2
+    r = ids(tmp_path)
+    assert r["passo:sessao:posts"] == "ERRO_AMBIENTE"
+    assert "post" not in amb and "relatorio" not in amb and "telas" in amb
+
+
+def test_sessao_expirada_antes_dos_relatorios(amb, monkeypatch, tmp_path):
+    estado = {"n": 0}
+
+    def sessao(sid):
+        estado["n"] += 1
+        return estado["n"] <= 2
+    monkeypatch.setattr(bateria, "sessao_autenticada", sessao)
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 2
+    assert ids(tmp_path)["passo:sessao:relatorios"] == "ERRO_AMBIENTE"
+    assert "post" in amb and "relatorio" not in amb
+
+
+def test_so_ref_e_php_novo_sao_exigidos(amb, monkeypatch, tmp_path):
+    vistos = []
+    monkeypatch.setattr(bateria, "verifica", lambda a: vistos.append(a) or [])
+    bateria.roda_bateria_php(tmp_path, ["gestor"])
+    assert vistos[0].laravel_novo == vistos[0].ref == vistos[0].proxy == "a" and vistos[0].php_novo == "b"
+
+
+def test_prefixo_regex_estreita_telas_e_catalogos(amb, tmp_path):
+    bateria.roda_bateria_php(tmp_path, prefixos_regex=["^rec1_"])
+    r = ids(tmp_path)
+    assert "tela:rec1_x.php" in r and "post:rec1_x.php" in r
+    assert not any(k.startswith("tela:") and not k.startswith("tela:rec1") for k in r)
+    assert "post:orc1_c001.php" not in r and "relatorio:pro2_r002.php" not in r
+    assert le(tmp_path)["meta"]["prefixos_regex"] == ["^rec1_"]
+
+
+def test_prefixo_regex_invalido_ou_vazio_falha_antes_de_rodar(amb, tmp_path):
+    with pytest.raises(bateria.ArgumentoInvalido):
+        bateria.roda_bateria_php(tmp_path, prefixos_regex=["("])
+    with pytest.raises(bateria.ArgumentoInvalido, match="nenhuma tela"):
+        bateria.roda_bateria_php(tmp_path, prefixos_regex=["^nada_"])
+    assert amb == []
+    assert bateria.main(["--saida", str(tmp_path), "--prefixo", "("]) == 2
+
+
+def test_todo_prefixo_de_area_casa_algum_arquivo():
+    raiz = bateria.RAIZ / "ecidade"
+    if not raiz.is_dir():
+        pytest.skip(f"{raiz} ausente: sem arvore do e-cidade para conferir AREAS")
+    nomes = [f.name for f in raiz.iterdir()]
+    for area, prefixos in bateria.AREAS.items():
+        for p in prefixos:
+            rx = re.compile(bateria._regex_prefixo(p), re.I)
+            assert any(rx.match(n) and n.endswith(".php") for n in nomes), f"{area}: prefixo {p} sem arquivo"
