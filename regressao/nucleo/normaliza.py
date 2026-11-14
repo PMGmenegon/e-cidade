@@ -17,10 +17,10 @@ REGRAS: list[tuple[str, re.Pattern[bytes], bytes]] = [
     # nomeArquivo=... carrega nome temporario de arquivo gerado.
     ("nomeArquivo", re.compile(rb"nomeArquivo[^\s\"']*"), b"nomeArquivoX"),
     # PDF temporario: o nome carrega PID e timestamp, aleatorios por requisicao.
-    ("pdf temporario", re.compile(rb"tmp\?/[A-Za-z0-9_]+\.pdf"), b"tmp/X.pdf"),
+    ("pdf temporario", re.compile(rb"tmp/[A-Za-z0-9_]+\.pdf"), b"tmp/X.pdf"),
     # CSV/TXT temporario com timestamp no nome (arquivo_infra_escola_1791906927.csv);
     # dentro de JSON a barra vem escapada (tmp\/...). Achado no edu2.
-    ("csv/txt temporario", re.compile(rb"tmp\?/[A-Za-z0-9_]+\.(?:csv|txt)"), b"tmp/X.arq"),
+    ("csv/txt temporario", re.compile(rb"tmp\\?/[A-Za-z0-9_]+\.(?:csv|txt)"), b"tmp/X.arq"),
     # A pagina de erro monta URL absoluta a partir de HTTP_HOST (ver $DB_URL_ABS),
     # entao ela carrega a porta do runtime que a serviu. Diferenca por construcao.
     ("porta do runtime", re.compile(rb"localhost:80(80|85|86|87)"), b"localhost:PORT"),
