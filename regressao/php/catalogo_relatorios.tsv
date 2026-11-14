@@ -2,7 +2,8 @@
 # status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' somente apos IDENTICO real, com conteudo
 # nao vazio, contra a pilha (nunca marcar a mao); 'nao-verificado' = candidato ainda sem IDENTICO (ou que DIVERGE: ver relatorio da Task 7).
 # Formatos reais do e-cidade: PDF (FPDF, rodape com hora de emissao) ; "xls" = CSV ';' em tmp/ servido por db_download.php (text/csv);
-# Verificados = IDENTICO real (5.6 vs 8.5) com dados. Mantidos nao-verificado: cem2_renovacoes (formulario sem cod), balrec.csv (so cabecalho), func_cgm (so formulario) e os que DIVERGEM (8.5 devolve HTTP 500 "Erro interno").
+# EVIDENCIA FRACA nas linhas db_download.php (xls): servem UM arquivo compartilhado de /tmp aos dois runtimes; IDENTICO prova so o serving do arquivo (db_download), nao a geracao do relatorio.
+# Verificados = IDENTICO real (5.6 vs 8.5) com dados. Mantidos nao-verificado: cem2_renovacoes (formulario sem cod), balrec.csv (so cabecalho), func_cgm (so formulario) e os que DIVERGEM (5.6=200 PDF vs 8.5=500 "Notificacao do Sistema, Erro interno").
 # consulta HTML = func_*.php. Nao ha .xls/.xlsx binario servido por GET fixo (os arquivos de tmp/ tem nome com timestamp).
 orc2_cadorcsubfuncao002.php		pdf	orcamento	verificado
 orc2_cadorcfuncao002.php		pdf	orcamento	verificado
