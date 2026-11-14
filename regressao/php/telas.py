@@ -106,13 +106,38 @@ def busca_corpo(sid: str, tela: str) -> bytes:
     depois curl com o cookie ECIDADEWINDOWMAIN, -m 60 e teto de 5 MB. A requisicao parte de
     dentro do container (porta 80 do apache), via banco._docker."""
     sess = f"/var/lib/php/sessions/sess_{sid}"
+    # `[ -f ]`: so restaura sobre uma sessao que existe; senao um SID qualquer ganharia, a
+    # partir de um backup velho, uma sessao autenticada forjada.
     _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
-             f"cp /tmp/_sess.bak {sess}; chown www-data:www-data {sess}; chmod 600 {sess}"],
+             f"[ -f {sess} ] && cp /tmp/_sess.bak {sess} && chown www-data:www-data {sess} "
+             f"&& chmod 600 {sess}"],
             TIMEOUT_CORPO)
+    return _requisita(sid, tela)
+
+
+def _requisita(sid: str, tela: str) -> bytes:
     return _docker(["exec", "ecidade_php56", "sh", "-c",
                     f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' "
                     f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
                    TIMEOUT_CORPO)
+
+
+# Pagina que o e-cidade devolve a uma sessao invalida/expirada (observada com um SID
+# inexistente, ISO-8859-1, 66 bytes): "Sessão inválida (12). Feche seu navegador e faça login
+# novamente." Identica nos dois runtimes, logo cmp.py a daria como IDENTICA.
+_MARCAS_INVALIDA = ("Sessão inválida".encode("iso-8859-1"), "Sessão inválida".encode("utf-8"))
+TELA_SONDA = "cem1_cemiterio001.php"
+
+
+def corpo_de_sessao_invalida(corpo: bytes) -> bool:
+    c = normaliza(corpo)
+    return len(c) < 1000 and any(m in c for m in _MARCAS_INVALIDA)
+
+
+def sessao_autenticada(sid: str) -> bool:
+    """Sonda barata: uma tela conhecida com esta sessao (sem restaurar nada, para nao
+    transformar um SID inexistente em sessao valida)."""
+    return not corpo_de_sessao_invalida(_requisita(sid, TELA_SONDA))
 
 
 def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str, bytes]]:
@@ -124,6 +149,9 @@ def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str,
     Falha ao buscar corpo ou total do resumo != len(telas) -> um unico ERRO_AMBIENTE."""
     try:
         telas = lista_telas(prefixo)
+        if not sessao_autenticada(sid):
+            return [Caso("telas", area, Veredito.ERRO_AMBIENTE,
+                         "sessao nao autenticada (pagina 'Sessao invalida')")], {}
         saida = _roda_cmp(sid, prefixo)
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
         return [Caso("telas", area, Veredito.ERRO_AMBIENTE, str(e))], {}
@@ -141,7 +169,12 @@ def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str,
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
         return [Caso("telas", area, Veredito.ERRO_AMBIENTE, f"falha ao buscar corpo: {e}")], corpos
     for c in casos:
-        if c.id in corpos and normaliza(corpos[c.id]) == b"":
+        if c.id not in corpos:
+            continue
+        if corpo_de_sessao_invalida(corpos[c.id]):
+            c.veredito = Veredito.ERRO_AMBIENTE
+            c.detalhe = "sessao expirou durante a rodada (pagina 'Sessao invalida')"
+        elif normaliza(corpos[c.id]) == b"":
             c.veredito = Veredito.INCONCLUSIVO
             c.detalhe = "resposta vazia (0 bytes) nos dois lados"
     return casos, corpos

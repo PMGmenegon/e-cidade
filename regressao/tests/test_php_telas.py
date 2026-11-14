@@ -1,6 +1,8 @@
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+
 from regressao.nucleo.banco import ErroAmbienteBanco
 from regressao.nucleo.veredito import Veredito
 from regressao.php import telas
@@ -16,6 +18,16 @@ SAIDA = """3 telas
 === 1/3 identicas, 1 divergentes, 1 timeout ===
 """
 TELAS = ["cem1_cadastro001.php", "cem1_lento002.php", "cem1_ok003.php"]
+
+
+@pytest.fixture(autouse=True)
+def _sessao_ok(request):
+    """Fora dos testes que tratam da sessao, a sonda de autenticacao diz OK."""
+    if "sessao" in request.node.name:
+        yield
+        return
+    with patch.object(telas, "sessao_autenticada", return_value=True):
+        yield
 
 
 def _por_id(casos):
@@ -171,6 +183,48 @@ def test_lista_telas_espelha_selecao_do_cmp(tmp_path):
         (tmp_path / n).write_text("")
     assert telas.lista_telas("^cem", tmp_path) == ["CEM2_b.php", "cem1_a.php"]
     assert telas.lista_telas("^iss4", tmp_path) == []
+
+
+INVALIDA = "Sessão inválida (12).\nFeche seu navegador e faça login novamente.\n".encode("iso-8859-1")
+
+
+def test_sessao_autenticada_false_com_pagina_sessao_invalida():
+    with patch.object(telas, "_docker", return_value=INVALIDA):
+        assert telas.sessao_autenticada("x") is False
+
+
+def test_sessao_autenticada_true_com_pagina_normal():
+    with patch.object(telas, "_docker", return_value=b"<html>" + b"x" * 5000):
+        assert telas.sessao_autenticada("x") is True
+
+
+def test_roda_telas_sessao_nao_autenticada_e_erro_ambiente_sem_rodar_cmp():
+    def nao_deve_rodar(*a):
+        raise AssertionError("cmp.py nao pode rodar sem sessao autenticada")
+    with patch.object(telas, "sessao_autenticada", return_value=False), \
+         patch.object(telas, "lista_telas", return_value=["a.php"]), \
+         patch.object(telas, "_roda_cmp", side_effect=nao_deve_rodar):
+        casos, corpos = telas.roda_telas("lixo", "^", "x")
+    assert [c.veredito for c in casos] == [Veredito.ERRO_AMBIENTE]
+    assert "sessao nao autenticada" in casos[0].detalhe and corpos == {}
+
+
+def test_sessao_que_expira_no_meio_nao_aprova_tela():
+    corpos_reais = {"a.php": INVALIDA, "b.php": b"<td>1</td>"}
+    with patch.object(telas, "sessao_autenticada", return_value=True), \
+         patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", side_effect=lambda sid, t: corpos_reais[t]):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    v = {c.id: c.veredito for c in casos}
+    assert v == {"a.php": Veredito.ERRO_AMBIENTE, "b.php": Veredito.IDENTICO}
+
+
+def test_busca_corpo_nao_forja_sessao_inexistente():
+    comandos = []
+    with patch.object(telas, "_docker", side_effect=lambda args, t, **k: comandos.append(args) or b"ok"):
+        telas.busca_corpo("sid1", "a.php")
+    assert "[ -f /var/lib/php/sessions/sess_sid1 ]" in comandos[0][-1]
 
 
 def test_obtem_sid_extrai_nome_da_sessao():
