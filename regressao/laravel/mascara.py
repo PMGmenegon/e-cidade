@@ -28,13 +28,19 @@ def _ordena(no):
 
 # --- Mascara de ERRO, aplicada so na COMPARACAO (a baseline em disco guarda o registro bruto) --------
 # Erros do Laravel em modo debug trazem file/line/trace/stacktrace absolutos do servidor: num Laravel 12 em
-# outro caminho eles sempre diferem sem que a API tenha mudado. Decisao: mascarar esses CAMPOS (so em objetos
-# com cara de erro: tem `exception`, `message` ou `trace`) e normalizar caminhos absolutos de vendor/app/... em
-# qualquer texto. `exception` (classe) e `message` continuam comparados: mudar a excecao e DIVERGE real.
+# outro caminho eles sempre diferem sem que a API tenha mudado. Escopo ESTREITO (revisao):
+#  - so em RESPOSTAS DE ERRO (ver `e_resposta_de_erro`: status >= 400 ou objeto com `exception`);
+#  - os campos file/line/trace/stacktrace so em objetos com cara de erro: tem `exception`/`trace`/`stacktrace`
+#    ou o envelope do app (`error: true`); um objeto de negocio {message, file, line} NAO e tocado;
+#  - caminhos absolutos so com RAIZ conhecida do servidor (/var/www/html, /var/www, /app, /srv/<x>) seguida de
+#    vendor|app|bootstrap|storage|... : URLs como /storage/a.pdf ou /public/x.png nunca casam.
+# `exception` (classe) e `message` continuam comparados: mudar a excecao e DIVERGE real. Nao se aplica a
+# sql_negocio, cabecalhos nem a texto de resposta de sucesso.
 CAMPOS_DE_ERRO = ("file", "line", "trace", "stacktrace", "stack_trace")
-_SINAIS_DE_ERRO = ("exception", "message", "trace", "stacktrace", "stack_trace")
+_SINAIS_DE_ERRO = ("exception", "trace", "stacktrace", "stack_trace")
 _RE_CAMINHO = re.compile(
-    r"(?:/[\w.\-@]+)*/(?:vendor|app|bootstrap|storage|ecidade|libs|model|classes|dbforms|public)/[^\s\"'),;]*?"
+    r"(?<![\w:/.@-])(?:/var/www/html|/var/www|/app|/srv/[\w.@-]+)"
+    r"/(?:vendor|app|bootstrap|storage|ecidade|libs|model|classes|dbforms|public)/[^\s\"'),;]*?"
     r"(?:\.php)?(?::\d+)?(?=[\s\"'),;]|$)")
 _RE_NA_LINHA = re.compile(r"\bon line \d+")
 
@@ -43,14 +49,22 @@ def _texto(s: str) -> str:
     return _RE_NA_LINHA.sub("on line <N>", _RE_CAMINHO.sub("<caminho>", s))
 
 
+def e_resposta_de_erro(status: int, json_) -> bool:
+    return status >= 400 or (isinstance(json_, dict) and "exception" in json_)
+
+
+def _tem_cara_de_erro(obj: dict) -> bool:
+    return any(k in obj for k in _SINAIS_DE_ERRO) or obj.get("error") is True
+
+
 def normaliza_erro(obj):
-    """Copia de `obj` sem file/line/trace de erro e com caminhos absolutos normalizados."""
+    """Copia de `obj` sem file/line/trace de erro e com caminhos absolutos (raiz conhecida) normalizados."""
     if isinstance(obj, str):
         return _texto(obj)
     if isinstance(obj, list):
         return [normaliza_erro(x) for x in obj]
     if isinstance(obj, dict):
-        erro = any(k in obj for k in _SINAIS_DE_ERRO)
+        erro = _tem_cara_de_erro(obj)
         return {k: (MARCA if erro and k in CAMPOS_DE_ERRO else normaliza_erro(v)) for k, v in obj.items()}
     return obj
 

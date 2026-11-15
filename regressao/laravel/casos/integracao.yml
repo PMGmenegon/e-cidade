@@ -53,3 +53,4 @@
   caminho: artisan
   corpo: null
   console: [migrate:status]
+  console_modo: migracoes   # conjunto completo de migrations (contagem + sha256 + lista), sem truncar

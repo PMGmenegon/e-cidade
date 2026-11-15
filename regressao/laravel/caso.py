@@ -21,6 +21,7 @@ import requests
 import yaml
 
 from regressao.laravel import integracao
+from regressao.laravel import mascara
 from regressao.laravel.mascara import mascara_json, normaliza_erro
 from regressao.laravel.token import (CLIENT_ID, _RE_JWT, ErroToken, _segredo_cliente,
                                      laravel_sobe, obtem_token, redige)
@@ -40,6 +41,7 @@ TIMEOUT_SETUP = 30
 CABECALHOS_GRAVADOS = ("content-type", "www-authenticate", "cache-control")
 LIMITE_TEXTO = 4000
 LIMITE_DIFF_LINHAS = 80
+LIMITE_CONSOLE = 500_000  # teto de seguranca da saida do console; as saidas normalizadas ficam muito abaixo
 ESPERA_MARCADOR = 8.0  # s para o marcador final aparecer no log do banco
 TOKEN_NOVO = "@novo"
 TOKEN_EXPIRADO = "@expirado"  # o token valido com `exp` no passado, re-assinado com a chave local
@@ -408,9 +410,13 @@ def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Re
     """Exercita um caso. Setup (placeholders, token novo, sql_antes) acontece ANTES do
     marcador inicial, entao nao entra no SQL capturado. `token` = o token valido compartilhado."""
     if caso.console is not None:
-        codigo, saida = integracao.roda_console(caso.console, caso.console_modo)
+        try:
+            container = integracao.container_console(base_url)  # 5.4 na referencia; no alvo novo, so por variavel
+            codigo, saida = integracao.roda_console(caso.console, caso.console_modo, container=container)
+        except integracao.ErroConsole as e:  # container ausente/allowlist/alvo sem container: ambiente, nao veredito
+            raise ErroRequisicao(f"console {' '.join(caso.console)}: {e}") from None
         hashes = hash_tabelas(caso.tabelas) if banco and caso.tabelas else {}
-        return Resposta(status=codigo, cabecalhos={}, json=None, sql_negocio=[], texto=_limpa(saida)[:LIMITE_TEXTO * 5],
+        return Resposta(status=codigo, cabecalhos={}, json=None, sql_negocio=[], texto=_limpa(saida)[:LIMITE_CONSOLE],
                         hashes=hashes)
     ctx = _Contexto(base_url)
     corpo = ctx.aplica(caso.corpo) if caso.corpo is not None else None
@@ -586,6 +592,9 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
     intactas): restaura o dump, roda os novos e atualiza `_meta` (ids/n_casos). Recusa se a baseline foi
     gravada com outro dump, se algum caso antigo perdeu o registro ou se nao ha caso novo. Devolve os ids."""
     diretorio = Path(diretorio)
+    if _tipo_alvo(base_url) != "ref":
+        raise ErroGravacao(f"gravar_novos so grava contra a referencia 5.4 ({alvos_do_ambiente().ref}); "
+                           f"recebeu {base_url}: a baseline nunca nasce do sistema migrado")
     boot = laravel_sobe(base_url)
     if boot is not None:
         raise ErroGravacao(f"alvo nao sobe, nada foi restaurado: {boot.detalhe}")
@@ -597,12 +606,23 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
         raise ErroGravacao("baseline/_meta.json ilegivel: use `gravar` completo") from None
     if sha is None or meta.get("dump_sha256") != sha:
         raise ErroGravacao("baseline gravada com outro dump: grave de novo (completo)")
-    novos = [c for c in casos if not (diretorio / nome_arquivo(c.id)).is_file()]
+    ids_meta = set(meta.get("ids") or [])
+    ids_casos = {c.id for c in casos}
+    # novos = ids AUSENTES do _meta; perdidos = no _meta (e com caso) mas sem arquivo: perda de baseline que
+    # o `--apenas-novos` nao pode "curar" calado (a referencia mudou); arquivo sem id no _meta e inconsistencia.
+    perdidos = sorted(i for i in ids_meta & ids_casos if not (diretorio / nome_arquivo(i)).is_file())
+    if perdidos:
+        raise ErroGravacao("registros perdidos (no _meta, sem arquivo): " + ", ".join(perdidos[:10])
+                           + ". Nao serao regravados em silencio: remova-os com `caso remove <id>` (se for "
+                           "intencional) ou restaure o arquivo do git")
+    novos = [c for c in casos if c.id not in ids_meta]
+    com_arquivo = sorted(c.id for c in novos if (diretorio / nome_arquivo(c.id)).is_file())
+    if com_arquivo:
+        raise ErroGravacao("arquivo de baseline sem id no _meta (orfao/inconsistente): " + ", ".join(com_arquivo[:10]))
     if not novos:
         raise ErroGravacao("nenhum caso novo: todos ja tem registro na baseline")
     ids_novos = {c.id for c in novos}
-    ids_meta = set(meta.get("ids") or [])
-    if ids_meta - ids_novos - {c.id for c in casos}:
+    if ids_meta - ids_casos:
         raise ErroGravacao("_meta lista casos que nao existem mais: use `poda`")
     info: dict = {}
     respostas = _roda(novos, base_url, info=info)
@@ -618,6 +638,27 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
                  "novos_gravados": sorted(ids_novos)})
     _grava_meta(diretorio, meta)
     return sorted(ids_novos)
+
+
+def remove_registros(ids: list[str], diretorio: Path) -> list[str]:
+    """Ferramenta OFICIAL para retirar registros da baseline (arquivo + id no `_meta`) sem tocar nos demais;
+    em seguida `gravar --apenas-novos` os regrava. Recusa id que nao esta no `_meta`."""
+    diretorio = Path(diretorio)
+    try:
+        meta = json.loads((diretorio / "_meta.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise ErroGravacao("baseline/_meta.json ilegivel") from None
+    atuais = list(meta.get("ids") or [])
+    ausentes = [i for i in ids if i not in atuais]
+    if ausentes:
+        raise ErroGravacao("id que nao esta na baseline: " + ", ".join(ausentes))
+    for i in ids:
+        (diretorio / nome_arquivo(i)).unlink(missing_ok=True)
+    meta["ids"] = [i for i in atuais if i not in ids]
+    meta["n_casos"] = len(meta["ids"])
+    meta["removidos_no_commit"] = _commit()
+    _grava_meta(diretorio, meta)
+    return list(ids)
 
 
 def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path, completo: bool = False) -> None:
@@ -703,10 +744,23 @@ def _diff(base: dict, novo: dict) -> str:
     return redige(_RE_JWT.sub("<jwt>", "\n".join(linhas)))
 
 
+def _normaliza_para_comparar(d: dict) -> dict:
+    """Mascara de erro SO no JSON de respostas de erro e no texto de respostas 5xx; nunca em sql_negocio,
+    cabecalhos, tipos, tabelas nem em respostas de sucesso."""
+    status = d.get("status") or 0
+    if not mascara.e_resposta_de_erro(status, d.get("json")):
+        return d
+    novo = dict(d)
+    novo["json"] = normaliza_erro(d.get("json"))
+    if status >= 500 and isinstance(d.get("texto"), str):
+        novo["texto"] = normaliza_erro(d["texto"])
+    return novo
+
+
 def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
     # mascara de erro so na comparacao: o registro bruto (com file/line/trace) segue guardado em disco
-    base, novo = (normaliza_erro({k: v for k, v in reg.items() if k != "id"}),
-                  normaliza_erro(_nucleo(r)))
+    base, novo = _normaliza_para_comparar({k: v for k, v in reg.items() if k != "id"}), \
+        _normaliza_para_comparar(_nucleo(r))
     if base != novo:
         dif = [k for k in novo if base.get(k) != novo[k]]
         return Caso(caso.id, AREA, Veredito.DIVERGE, "difere em: " + ", ".join(dif),
@@ -716,6 +770,9 @@ def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
                     f"HTTP {r.status} nos dois lados: o caso nao foi exercitado")
     if r.json is None and not r.texto:
         return Caso(caso.id, AREA, Veredito.INCONCLUSIVO, "resposta sem conteudo nos dois lados")
+    if "<<ilegivel" in (r.texto or ""):
+        return Caso(caso.id, AREA, Veredito.INCONCLUSIVO,
+                    "arquivo gerado ilegivel nos dois lados: o conteudo nao foi comparado")
     if caso.espera_escrita and not r.sql_negocio:
         return Caso(caso.id, AREA, Veredito.INCONCLUSIVO,
                     "esperava escrita e nada foi gravado nos dois lados")
@@ -799,8 +856,19 @@ def _main(argv: list[str]) -> int:
         print("erro: `gravar` saiu deste atalho (sem protecao da baseline). Use: "
               "python -m regressao.laravel.bateria gravar --saida DIR [--confirmo-sobrescrever]", file=sys.stderr)
         return 2
+    if modo == "remove":
+        try:
+            ids = remove_registros(argv[1:], DIR_BASELINE) if len(argv) > 1 else None
+        except ErroGravacao as e:
+            print(f"remocao recusada: {e}", file=sys.stderr)
+            return 1
+        if ids is None:
+            print("uso: python -m regressao.laravel.caso remove <id> [<id>...]", file=sys.stderr)
+            return 2
+        print(f"removidos da baseline: {ids}; regrave com `bateria gravar --apenas-novos --confirmo-sobrescrever`")
+        return 0
     if modo not in ("comparar", "poda"):
-        print("uso: python -m regressao.laravel.caso comparar [url] | poda", file=sys.stderr)
+        print("uso: python -m regressao.laravel.caso comparar [url] | poda | remove <id>...", file=sys.stderr)
         return 2
     casos = carrega_casos(DIR_CASOS)
     if modo == "poda":

@@ -166,21 +166,93 @@ def test_normaliza_saida_console_ansi_caminhos_e_modo_nomes():
     assert integracao.normaliza_saida_console(lista, "nomes") == "clear-compiled\nmigrate\n"
 
 
-def test_roda_console_usa_o_container_do_ambiente(monkeypatch):
-    monkeypatch.setenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", "lab12")
+def test_roda_console_usa_o_container_informado(monkeypatch):
     vistos = []
 
     def fake(cmd):
         vistos.append(cmd)
         return SimpleNamespace(returncode=0, stdout=b"ok\n", stderr=b"")
-    assert integracao.roda_console(["list", "--raw"], runner=fake) == (0, "ok\n")
+    assert integracao.roda_console(["list", "--raw"], runner=fake, container="lab12") == (0, "ok\n")
     assert vistos[0][:5] == ["docker", "exec", "-w", "/var/www/html", "lab12"] and vistos[0][-3:] == ["artisan", "list", "--raw"]
 
 
+def test_container_do_console_na_referencia_e_sempre_o_54_e_no_alvo_novo_exige_a_variavel(monkeypatch):
+    monkeypatch.delenv("REGRESSAO_REF_URL", raising=False)
+    monkeypatch.setenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", "lab12")
+    assert integracao.container_console("http://localhost:8080") == "ecidade_php56"   # gravar/ref ignora a variavel
+    assert integracao.container_console("http://localhost:8087/") == "lab12"
+    monkeypatch.delenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER")
+    with pytest.raises(integracao.ErroConsole, match="REGRESSAO_LARAVEL_CONSOLE_CONTAINER"):
+        integracao.container_console("http://localhost:8087")
+    assert integracao.container_console("http://localhost:8080/") == "ecidade_php56"
+
+
+def test_comparar_console_em_alvo_novo_sem_container_vira_erro_ambiente_e_nao_falso_identico(monkeypatch):
+    monkeypatch.delenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", raising=False)
+    monkeypatch.delenv("REGRESSAO_REF_URL", raising=False)
+    monkeypatch.setattr(integracao, "_roda", lambda cmd: pytest.fail("nao pode executar no container do 5.4"))
+    c = CasoHttp(id="console-env", metodo="CONSOLE", caminho="artisan", corpo=None, console=["env"])
+    with pytest.raises(mod_caso.ErroRequisicao, match="CONSOLE_CONTAINER"):
+        mod_caso.executa(c, "http://localhost:8087", "tok", banco=False)
+
+
+@pytest.mark.parametrize("rc,err", [(125, b""), (126, b""), (127, b""), (1, b"Error response from daemon: No such container: x"),
+                                    (1, b"Error: No such container: lab12")])
+def test_falha_do_docker_exec_e_erro_de_ambiente_nao_saida_de_comando(rc, err):
+    fake = lambda cmd: SimpleNamespace(returncode=rc, stdout=b"", stderr=err)  # noqa: E731
+    with pytest.raises(integracao.ErroConsole):
+        integracao.roda_console(["env"], runner=fake, container="c")
+
+
+def test_codigo_de_saida_do_artisan_que_nao_e_do_docker_continua_sendo_dado_do_caso():
+    fake = lambda cmd: SimpleNamespace(returncode=1, stdout=b"", stderr=b"PHP Fatal error: x")  # noqa: E731
+    assert integracao.roda_console(["env"], runner=fake, container="c")[0] == 1
+
+
+def test_console_so_aceita_comandos_da_allowlist():
+    fake = lambda cmd: pytest.fail("nao pode rodar")  # noqa: E731
+    for args in (["migrate"], ["db:seed"], ["payroll:load"], ["tinker"], []):
+        with pytest.raises(integracao.ErroConsole, match="allowlist"):
+            integracao.roda_console(args, runner=fake, container="c")
+    ok = lambda cmd: SimpleNamespace(returncode=0, stdout=b"x\n", stderr=b"")  # noqa: E731
+    for args in (["list", "--raw"], ["env"], ["migrate:status"]):
+        assert integracao.roda_console(args, runner=ok, container="c")[0] == 0
+
+
+def test_migrate_status_compara_o_conjunto_completo_de_migrations_sem_truncar():
+    linhas = "\n".join(f"| Y    | 2020_01_01_{i:06d}_cria_tabela_{i} |" for i in range(1500))
+    bruto = "+------+------+\n| Ran? | Migration |\n+------+------+\n" + linhas + "\n+------+------+\n"
+    n = integracao.normaliza_saida_console(bruto, "migracoes")
+    assert len(n) > 20_000 and n.count("\n") > 1500            # nada de corte silencioso
+    assert n.splitlines()[0].startswith("migrations=1500 ran=1500 sha256=")
+    ordem = integracao.normaliza_saida_console(bruto.replace(linhas, "\n".join(reversed(linhas.split("\n")))), "migracoes")
+    assert ordem == n                                          # independe da ordem de listagem
+    faltando = integracao.normaliza_saida_console(bruto.replace(linhas.split("\n")[7], ""), "migracoes")
+    assert faltando != n and "migrations=1499" in faltando
+
+
+def test_executa_console_nao_trunca_a_saida(monkeypatch):
+    grande = "x" * 90_000
+    monkeypatch.setattr(integracao, "roda_console", lambda args, modo=None, runner=None, container=None: (0, grande))
+    c = CasoHttp(id="console-migrate-status", metodo="CONSOLE", caminho="artisan", corpo=None, console=["migrate:status"],
+                 console_modo="migracoes")
+    assert len(mod_caso.executa(c, "http://localhost:8080", "tok", banco=False).texto) == 90_000
+
+
+def test_arquivo_ilegivel_nos_dois_lados_e_inconclusivo_nao_identico():
+    texto = "[arquivo pdf status=200 ct=application/pdf]\n<<ilegivel: PdfReadError>>"
+    base = {"status": 200, "cabecalhos": {}, "json": {"ok": 1}, "texto": texto, "tipos": {}, "sql_negocio": [], "tabelas": {}}
+    c = CasoHttp(id="arquivo-x", metodo="POST", caminho="/x", corpo={}, arquivo="data.path")
+    r = mod_caso.Resposta(200, {}, {"ok": 1}, [], texto=texto)
+    v = mod_caso._veredito(c, {"id": "x", **base}, r)
+    assert v.veredito == Veredito.INCONCLUSIVO and "ilegivel" in v.detalhe
+
+
 def test_executa_console_devolve_codigo_e_saida_normalizada(monkeypatch):
-    monkeypatch.setattr(integracao, "roda_console", lambda args, modo=None, runner=None: (0, f"saida de {args} {modo}\n"))
+    monkeypatch.setattr(integracao, "roda_console",
+                        lambda args, modo=None, runner=None, container=None: (0, f"saida de {args} {modo}\n"))
     c = CasoHttp(id="console-env", metodo="CONSOLE", caminho="artisan", corpo=None, console=["env"], console_modo="nomes")
-    r = mod_caso.executa(c, "http://h:8080", "tok", banco=False)
+    r = mod_caso.executa(c, "http://localhost:8080", "tok", banco=False)
     assert r.status == 0 and r.json is None and r.texto == "saida de ['env'] nomes\n"
 
 
@@ -203,6 +275,15 @@ def _prepara_baseline(tmp_path, monkeypatch, antigos=("a", "b")):
     monkeypatch.setattr(mod_caso, "_commit", lambda: "c0ffee")
 
 
+REF = "http://localhost:8080"
+
+
+@pytest.fixture(autouse=True)
+def _sem_env_de_alvos(monkeypatch):
+    for v in ("REGRESSAO_REF_URL", "REGRESSAO_LARAVEL_NOVO_URL"):
+        monkeypatch.delenv(v, raising=False)
+
+
 def _c(i):
     return CasoHttp(id=i, metodo="GET", caminho="/" + i, corpo=None)
 
@@ -216,7 +297,7 @@ def test_gravar_novos_acrescenta_so_o_que_nao_tem_registro_e_nao_toca_nos_antigo
         rodados.extend(c.id for c in casos)
         return {c.id: mod_caso.Resposta(200, {}, {"ok": 1}, []) for c in casos}
     monkeypatch.setattr(mod_caso, "_roda", fake)
-    assert mod_caso.gravar_novos([_c("a"), _c("n1"), _c("b"), _c("n2")], "http://h", tmp_path) == ["n1", "n2"]
+    assert mod_caso.gravar_novos([_c("a"), _c("n1"), _c("b"), _c("n2")], REF, tmp_path) == ["n1", "n2"]
     assert rodados == ["n1", "n2"]
     for nome, conteudo in antes.items():
         assert (tmp_path / nome).read_bytes() == conteudo
@@ -228,10 +309,50 @@ def test_gravar_novos_acrescenta_so_o_que_nao_tem_registro_e_nao_toca_nos_antigo
 def test_gravar_novos_recusa_outro_dump_e_nada_novo(tmp_path, monkeypatch):
     _prepara_baseline(tmp_path, monkeypatch)
     with pytest.raises(mod_caso.ErroGravacao, match="nenhum caso novo"):
-        mod_caso.gravar_novos([_c("a"), _c("b")], "http://h", tmp_path)
+        mod_caso.gravar_novos([_c("a"), _c("b")], REF, tmp_path)
     monkeypatch.setattr(mod_caso, "_sha_dump_atual", lambda: "OUTRO")
     with pytest.raises(mod_caso.ErroGravacao, match="outro dump"):
-        mod_caso.gravar_novos([_c("a"), _c("n1")], "http://h", tmp_path)
+        mod_caso.gravar_novos([_c("a"), _c("n1")], REF, tmp_path)
+
+
+def test_gravar_novos_recusa_alvo_que_nao_e_a_referencia_54(tmp_path, monkeypatch):
+    _prepara_baseline(tmp_path, monkeypatch)
+    monkeypatch.setattr(mod_caso, "_roda", lambda *a, **k: pytest.fail("nao pode rodar"))
+    with pytest.raises(mod_caso.ErroGravacao, match="referencia"):
+        mod_caso.gravar_novos([_c("a"), _c("b"), _c("n1")], "http://localhost:8087", tmp_path)
+    assert not (tmp_path / mod_caso.nome_arquivo("n1")).exists()
+
+
+def test_gravar_novos_recusa_registros_perdidos_no_meta_sem_arquivo(tmp_path, monkeypatch):
+    _prepara_baseline(tmp_path, monkeypatch)
+    (tmp_path / mod_caso.nome_arquivo("b")).unlink()          # b esta no _meta, mas o arquivo sumiu
+    monkeypatch.setattr(mod_caso, "_roda", lambda *a, **k: pytest.fail("nao pode rodar"))
+    with pytest.raises(mod_caso.ErroGravacao, match="perdidos.*b"):
+        mod_caso.gravar_novos([_c("a"), _c("b"), _c("n1")], REF, tmp_path)
+
+
+def test_gravar_novos_so_trata_como_novo_o_id_ausente_do_meta(tmp_path, monkeypatch):
+    _prepara_baseline(tmp_path, monkeypatch)
+    mod_caso._grava_registro(tmp_path / mod_caso.nome_arquivo("orfao"), {"id": "orfao", "status": 200})
+    monkeypatch.setattr(mod_caso, "_roda", lambda *a, **k: pytest.fail("nao pode rodar"))
+    with pytest.raises(mod_caso.ErroGravacao, match="arquivo.*orfao|orfao"):
+        mod_caso.gravar_novos([_c("a"), _c("b"), _c("orfao")], REF, tmp_path)
+
+
+def test_remove_registros_apaga_arquivo_e_tira_o_id_do_meta_sem_tocar_nos_outros(tmp_path, monkeypatch):
+    _prepara_baseline(tmp_path, monkeypatch, antigos=("a", "b", "c"))
+    a_antes = (tmp_path / mod_caso.nome_arquivo("a")).read_bytes()
+    assert mod_caso.remove_registros(["b"], tmp_path) == ["b"]
+    assert not (tmp_path / mod_caso.nome_arquivo("b")).exists()
+    assert (tmp_path / mod_caso.nome_arquivo("a")).read_bytes() == a_antes
+    meta = json.loads((tmp_path / "_meta.json").read_text())
+    assert meta["ids"] == ["a", "c"] and meta["n_casos"] == 2
+    with pytest.raises(mod_caso.ErroGravacao, match="nao esta"):
+        mod_caso.remove_registros(["zzz"], tmp_path)
+    # e agora gravar_novos o recoloca como novo
+    monkeypatch.setattr(mod_caso, "_roda", lambda casos, url, erros=None, info=None, restaurar=True:
+                        {c.id: mod_caso.Resposta(200, {}, {"v": 2}, []) for c in casos})
+    assert mod_caso.gravar_novos([_c("a"), _c("b"), _c("c")], REF, tmp_path) == ["b"]
 
 
 def test_gravar_novos_recusa_espera_status_que_a_referencia_nao_confirma(tmp_path, monkeypatch):
@@ -240,7 +361,7 @@ def test_gravar_novos_recusa_espera_status_que_a_referencia_nao_confirma(tmp_pat
                         {c.id: mod_caso.Resposta(200, {}, None, []) for c in casos})
     novo = CasoHttp(id="n1", metodo="GET", caminho="/n1", corpo=None, espera_status=500)
     with pytest.raises(mod_caso.ErroGravacao, match="espera_status"):
-        mod_caso.gravar_novos([_c("a"), _c("b"), novo], "http://h", tmp_path)
+        mod_caso.gravar_novos([_c("a"), _c("b"), novo], REF, tmp_path)
     assert not (tmp_path / mod_caso.nome_arquivo("n1")).exists()
 
 

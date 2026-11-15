@@ -14,6 +14,7 @@ golden master gravada no 5.4 e comparada no alvo novo.
 import contextlib
 import email
 import email.policy
+import hashlib
 import os
 import re
 import subprocess
@@ -75,15 +76,57 @@ def normaliza_saida_console(texto: str, modo: str | None = None) -> str:
     linhas = [_normaliza_caminhos(l).rstrip() for l in texto.split("\n")]
     if modo == "nomes":
         return "\n".join(sorted({l.split()[0] for l in linhas if l.strip()})) + "\n"
+    if modo == "migracoes":
+        # `migrate:status`: o CONJUNTO de migrations (estado + nome), sem depender da largura da tabela nem da
+        # ordem, e sem truncar: cabecalho com contagem e sha256 do conjunto completo
+        itens = sorted({f"{m.group(1)} {m.group(2)}" for l in linhas
+                        for m in [re.match(r"^\|\s*([YN])\s*\|\s*(\S+)\s*\|", l)] if m})
+        corpo = "\n".join(itens)
+        ran = sum(1 for i in itens if i.startswith("Y "))
+        return (f"migrations={len(itens)} ran={ran} sha256={hashlib.sha256(corpo.encode()).hexdigest()}\n"
+                + corpo + ("\n" if corpo else ""))
     return "\n".join(linhas).strip("\n") + "\n"
 
 
-def roda_console(args: list[str], modo: str | None = None, runner=None) -> tuple[int, str]:
-    """(codigo de saida, saida normalizada) de `php artisan <args>` no container de console."""
-    container = os.environ.get("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", CONTAINER_CONSOLE_PADRAO)
+class ErroConsole(RuntimeError):
+    """Falha de AMBIENTE do console (container ausente, docker, comando fora da allowlist): nunca e veredito."""
+
+
+COMANDOS_PERMITIDOS = frozenset({"list", "env", "migrate:status"})  # so leitura; comandos de dominio escrevem
+_FALHA_DO_DOCKER = (125, 126, 127)
+_RE_DOCKER_ERRO = re.compile(rb"No such container|Error response from daemon|is not running|Cannot connect to the Docker",
+                             re.I)
+
+
+def container_console(base_url: str) -> str:
+    """Container do `artisan` para ESTE alvo. Na referencia (o 5.4 em REGRESSAO_REF_URL) e sempre o do 5.4:
+    gravar nunca usa um container novo. Em qualquer outro alvo a variavel REGRESSAO_LARAVEL_CONSOLE_CONTAINER e
+    OBRIGATORIA: sem ela comparar executaria no 5.4 e daria falso IDENTICO."""
+    from regressao.nucleo.ambiente import alvos_do_ambiente
+    if base_url.rstrip("/") == alvos_do_ambiente().ref.rstrip("/"):
+        return CONTAINER_CONSOLE_PADRAO
+    container = os.environ.get("REGRESSAO_LARAVEL_CONSOLE_CONTAINER")
+    if not container:
+        raise ErroConsole(f"alvo {base_url} nao e o 5.4 de referencia: defina REGRESSAO_LARAVEL_CONSOLE_CONTAINER "
+                          "com o container do artisan do alvo (senao o console rodaria no 5.4: falso IDENTICO)")
+    return container
+
+
+def roda_console(args: list[str], modo: str | None = None, runner=None,
+                 container: str | None = None) -> tuple[int, str]:
+    """(codigo de saida, saida normalizada) de `php artisan <args>` no container de console. Comando fora da
+    allowlist ou falha do `docker exec` (125/126/127, container inexistente) levanta ErroConsole."""
+    if not args or args[0] not in COMANDOS_PERMITIDOS:
+        raise ErroConsole(f"comando artisan fora da allowlist {sorted(COMANDOS_PERMITIDOS)}: {args[:1]}")
+    container = container or os.environ.get("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", CONTAINER_CONSOLE_PADRAO)
     cmd = ["docker", "exec", "-w", DIR_APP_PADRAO, container, "php", "artisan", *args]
     r = (runner or _roda)(cmd)
-    bruto = (r.stdout or b"") + (b"\n" + r.stderr if r.stderr else b"")
+    erro = r.stderr or b""
+    if r.returncode in _FALHA_DO_DOCKER or (r.returncode != 0 and _RE_DOCKER_ERRO.search(erro)):
+        raise ErroConsole(f"docker exec falhou (codigo {r.returncode}) no container {container}: "
+                          + erro.decode("utf-8", "replace").strip().splitlines()[0][:150] if erro.strip()
+                          else f"docker exec falhou (codigo {r.returncode}) no container {container}")
+    bruto = (r.stdout or b"") + (b"\n" + erro if erro else b"")
     return r.returncode, normaliza_saida_console(bruto.decode("utf-8", errors="replace"), modo)
 
 
@@ -91,7 +134,7 @@ def _roda(cmd: list[str]):
     try:
         return subprocess.run(cmd, capture_output=True, timeout=TIMEOUT_CONSOLE)
     except (OSError, subprocess.SubprocessError) as e:
-        raise RuntimeError(f"console indisponivel ({type(e).__name__}): {' '.join(cmd[:6])}") from None
+        raise ErroConsole(f"console indisponivel ({type(e).__name__}): {' '.join(cmd[:6])}") from None
 
 
 # ---------------------------------------------------------------- e-mail

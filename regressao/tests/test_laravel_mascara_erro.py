@@ -54,14 +54,63 @@ def test_veredito_ignora_diferenca_so_de_file_line_trace():
     novo = dict(ERRO_54, file="/srv/l12/vendor/laravel/framework/Builder.php", line=77,
                 trace=[{"file": "/srv/l12/app/Z.php", "line": 3, "function": "all"}])
     r = Resposta(500, {}, novo, [])
-    c = _veredito(_caso(), _reg(ERRO_54), r)
-    assert c.veredito != Veredito.DIVERGE
+    c = _veredito(CasoHttp(id="rota:GET:/x", metodo="GET", caminho="/x", corpo=None, espera_status=500),
+                  _reg(ERRO_54), r)
+    assert c.veredito == Veredito.IDENTICO
 
 
 def test_veredito_continua_divergindo_se_a_excecao_ou_a_mensagem_mudam():
     novo = dict(ERRO_54, exception="ErrorException", message="outra coisa")
     c = _veredito(_caso(), _reg(ERRO_54), Resposta(500, {}, novo, []))
     assert c.veredito == Veredito.DIVERGE and "json" in c.detalhe
+
+
+def _reg200(json, **extra):
+    return {"id": "rota:GET:/x", "status": 200, "cabecalhos": {}, "json": json, "texto": "", "tipos": {},
+            "sql_negocio": [], "tabelas": {}, **extra}
+
+
+def _div(base, novo, status=200, **kw):
+    r = Resposta(status, kw.get("cab", {}), novo, kw.get("sql", []), texto=kw.get("texto", ""))
+    return _veredito(_caso(), base, r).veredito
+
+
+def test_negativo_objeto_de_negocio_com_message_file_line_nao_e_mascarado():
+    assert normaliza_erro({"message": "ok", "file": "a.pdf", "line": 3}) == {"message": "ok", "file": "a.pdf", "line": 3}
+    assert _div(_reg200({"message": "ok", "file": "a.pdf", "line": 3}),
+                {"message": "ok", "file": "b.pdf", "line": 4}) == Veredito.DIVERGE
+
+
+def test_negativo_url_de_storage_e_public_continua_diferindo():
+    assert _div(_reg200({"url": "/storage/a.pdf"}), {"url": "/storage/b.pdf"}) == Veredito.DIVERGE
+    assert _div(_reg200({"url": "/public/a.png"}), {"url": "/public/b.png"}) == Veredito.DIVERGE
+    assert normaliza_erro({"message": "x", "exception": "E", "url": "http://h/storage/a.pdf"})["url"] == "http://h/storage/a.pdf"
+
+
+def test_negativo_sql_cabecalhos_e_texto_de_sucesso_nao_sao_normalizados():
+    sql_a = ["select * from /var/www/html/vendor/a.php"]
+    base = _reg200({"ok": 1}, sql_negocio=sql_a)
+    assert _div(base, {"ok": 1}, sql=["select * from /var/www/html/vendor/b.php"]) == Veredito.DIVERGE
+    base = _reg200({"ok": 1}, cabecalhos={"content-type": "/var/www/html/app/a.php"})
+    assert _div(base, {"ok": 1}, cab={"content-type": "/var/www/html/app/b.php"}) == Veredito.DIVERGE
+    base = _reg200(None, texto="gerado em /var/www/html/storage/a.txt")
+    assert _div(base, None, texto="gerado em /var/www/html/storage/b.txt") == Veredito.DIVERGE
+
+
+def test_resposta_2xx_com_json_de_negocio_nao_tem_caminho_normalizado():
+    assert _div(_reg200({"p": "/var/www/html/vendor/a.php"}), {"p": "/var/www/html/vendor/b.php"}) == Veredito.DIVERGE
+
+
+def test_envelope_de_erro_do_app_error_true_com_file_line_e_mascarado_mesmo_em_406():
+    env = {"error": True, "message": "O campo X e obrigatorio.", "file": "/var/www/html/app/Helpers/Functions.php",
+           "line": 113, "code": 0}
+    novo = dict(env, file="/srv/l12/app/Helpers/Functions.php", line=201)
+    assert _div({**_reg200(env), "status": 406}, novo, status=406) == Veredito.IDENTICO
+
+
+def test_caminho_so_com_raiz_conhecida_e_normalizado():
+    assert normaliza_erro({"message": "m", "exception": "E", "x": "em /var/www/html/vendor/a.php:3"})["x"] == "em <caminho>"
+    assert normaliza_erro({"message": "m", "exception": "E", "x": "em /outra/raiz/vendor/a.php"})["x"] == "em /outra/raiz/vendor/a.php"
 
 
 def test_registro_bruto_nao_e_alterado_pela_comparacao():
