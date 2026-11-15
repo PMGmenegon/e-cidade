@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/funcao/alterar",
+  "json": {
+    "data": {
+      "instituicao": [
+        "Instituição não informada."
+      ]
+    },
+    "error": true,
+    "message": "Instituição não informada."
+  },
+  "sha256": "7d0cc6ed473001e3286704ce34c912ada900295df86e42602d3c56add6fce71b",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

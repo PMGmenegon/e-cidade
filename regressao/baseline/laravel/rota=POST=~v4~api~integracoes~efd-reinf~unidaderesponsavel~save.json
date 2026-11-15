@@ -1,0 +1,21 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/integracoes/efd-reinf/unidaderesponsavel/save",
+  "json": {
+    "DB_instit": [
+      "O campo d b instit é obrigatório."
+    ],
+    "cgm": [
+      "O campo cgm é obrigatório."
+    ]
+  },
+  "sha256": "338f984a1f11e28976b703b0d672a957ed8792764ddd954a17545adcfedafd62",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

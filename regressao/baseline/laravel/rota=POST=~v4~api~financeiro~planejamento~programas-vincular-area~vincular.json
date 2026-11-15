@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-area/vincular",
+  "json": {
+    "data": {
+      "area": [
+        "O campo \"Área de Resultado\" deve ser informada."
+      ],
+      "programas": [
+        "Deve ser informado uma coleção de programas."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Área de Resultado\" deve ser informada."
+  },
+  "sha256": "86ac366ed7edb3080abc591873beb38fd668df749c5bbebde52f2ad80b843c76",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

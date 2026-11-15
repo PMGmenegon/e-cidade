@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao",
+  "json": {
+    "data": {
+      "comissao": [
+        "Código do tipo de sessão da comissão não informado."
+      ],
+      "quantidade": [
+        "Quantidade não informada."
+      ],
+      "tiposessao": [
+        "Código do tipo de sessão não informado."
+      ]
+    },
+    "error": true,
+    "message": "Código do tipo de sessão da comissão não informado."
+  },
+  "sha256": "b4e7e6400b8d9dc359abafb7cd5b494b826d9c0a9adaf7db2c5fdd6032ba96bf",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,31 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-receita",
+  "json": {
+    "data": [
+      {
+        "name": "Saldo Inicial",
+        "value": 1
+      },
+      {
+        "name": "Previsão Atualizada",
+        "value": 2
+      },
+      {
+        "name": "Realizado e Reestimado",
+        "value": 3
+      }
+    ],
+    "error": false,
+    "message": ""
+  },
+  "sha256": "a2a28ab951120e62fbd8f163da487c88426f3f70402cb594adcf0a2f9d3e9ddf",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

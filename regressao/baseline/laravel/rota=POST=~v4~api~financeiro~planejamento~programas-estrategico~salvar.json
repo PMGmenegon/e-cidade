@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/salvar",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/ProgramaEstrategicoService.php",
+    "line": 122,
+    "message": "Argument 1 passed to App\\Domain\\Financeiro\\Planejamento\\Services\\ProgramaEstrategicoService::programaJaCadastrado() must be an instance of App\\Domain\\Financeiro\\Planejamento\\Models\\Planejamento, null given, called in /var/www/html/app/Domain/Financeiro/Planejamento/Services/ProgramaEstrategicoService.php on line 99 and defined"
+  },
+  "sha256": "13a4ead90c2f99834033306c9bff0215a1f576c2c1f01bba2f1420f242f9ce72",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

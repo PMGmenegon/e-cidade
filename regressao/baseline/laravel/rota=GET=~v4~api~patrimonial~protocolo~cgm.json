@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/protocolo/cgm",
+  "json": {
+    "data": {
+      "numcgm": [
+        "O campo numcgm é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo numcgm é obrigatório."
+  },
+  "sha256": "80431f214788047563d4509e7496c2946bf7bd700d9c00b2049f3912d2b81846",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

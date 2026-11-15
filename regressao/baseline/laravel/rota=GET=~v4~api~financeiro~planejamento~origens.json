@@ -1,0 +1,61 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/planejamento/origens",
+  "json": {
+    "data": [
+      {
+        "created_at": null,
+        "pl13_codigo": 1,
+        "pl13_descricao": "Sociedade",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 2,
+        "pl13_descricao": "Poder Público",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 3,
+        "pl13_descricao": "Sociedade e Poder Público ",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 4,
+        "pl13_descricao": "Poder Público e Emenda Parlamentar",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 5,
+        "pl13_descricao": "Sociedade e Emenda Parlamentar",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 6,
+        "pl13_descricao": "Emenda Parlamentar, Sociedade, Poder Público",
+        "updated_at": null
+      },
+      {
+        "created_at": null,
+        "pl13_codigo": 7,
+        "pl13_descricao": "Emenda Parlamentar",
+        "updated_at": null
+      }
+    ],
+    "error": false,
+    "message": "Origens cadastradas"
+  },
+  "sha256": "db454c75f29fad1a113b131f8009261f9de8c55742d420f852742840f4a910ed",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

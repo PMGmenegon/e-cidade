@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/criarVinculo",
+  "json": {
+    "code": 406,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Controllers/PlanejamentoController.php",
+    "line": 212,
+    "message": "Você deve informar o tipo a qual deseja criar."
+  },
+  "sha256": "1d0f97e80f6f443b7a5d655e69730243dd80cd17dfdbf6070b7f30f65106e244",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-caixa",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/PcaspService.php",
+    "line": 344,
+    "message": "Undefined index: estrutural"
+  },
+  "sha256": "a0e7b37d3d6880054032a1342b83d3c9590a345f5e01e75ed345330cb50bd519",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

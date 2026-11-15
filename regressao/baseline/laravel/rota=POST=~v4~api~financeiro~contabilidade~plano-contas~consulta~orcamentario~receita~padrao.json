@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/padrao",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": "Contas encontradas."
+  },
+  "sha256": "835f7bf89b432abf8166a184a9646d53cd161e50ce5ebdcfa676272a096da1b1",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

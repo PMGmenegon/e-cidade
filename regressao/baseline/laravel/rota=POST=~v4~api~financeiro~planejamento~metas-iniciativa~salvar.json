@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/metas-iniciativa/salvar",
+  "json": {
+    "data": {
+      "metas": [
+        "Deve ser informado uma coleção de metas."
+      ],
+      "pl12_codigo": [
+        "O campo \"Código da iniciativa\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código da iniciativa\" deve ser informado."
+  },
+  "sha256": "f5777d9e388fc1135df13e427b24518a57f882ad8f332de88f8711e10d767936",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

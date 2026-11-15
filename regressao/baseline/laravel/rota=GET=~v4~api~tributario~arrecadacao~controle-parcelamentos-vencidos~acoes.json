@@ -1,0 +1,31 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/acoes",
+  "json": {
+    "data": [
+      {
+        "ar50_descricao": "Antecipa vencimento maior data vencida",
+        "ar50_id": 1
+      },
+      {
+        "ar50_descricao": "Antecipa vencimento menor data vencida",
+        "ar50_id": 2
+      },
+      {
+        "ar50_descricao": "Antecipa vencimento para data do termo",
+        "ar50_id": 3
+      }
+    ],
+    "error": false,
+    "message": ""
+  },
+  "sha256": "2b9f0f4974d364f094f9162587b4f44b597d41c3973b2be9a8b0492d20cd8ad8",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

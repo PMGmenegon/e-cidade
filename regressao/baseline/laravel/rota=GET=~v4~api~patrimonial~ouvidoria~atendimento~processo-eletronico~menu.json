@@ -1,0 +1,21 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/menu",
+  "json": {
+    "formas_reclamacao": [
+      "O campo formas reclamacao é obrigatório."
+    ],
+    "instituicoes": [
+      "O campo instituicoes é obrigatório."
+    ]
+  },
+  "sha256": "bf37c37d27c2fa75f15c3db82175f75d842c5b23fa7adfba1c416f50118a3554",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

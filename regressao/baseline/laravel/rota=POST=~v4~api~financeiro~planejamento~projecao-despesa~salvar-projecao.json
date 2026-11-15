@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/salvar-projecao",
+  "json": {
+    "code": 1,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/ProjecaoDespesaService.php",
+    "line": 52,
+    "message": "Class App\\Domain\\Financeiro\\Planejamento\\Services\\ProjecaoDespesaService contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (App\\Domain\\Financeiro\\Planejamento\\Services\\ProjecaoService::recalcular, App\\Domain\\Financeiro\\Planejamento\\Services\\ProjecaoService::get)"
+  },
+  "sha256": "f92e7a90e9717b87e58a87253cf62d7259d58660f01a212ab031296b6c883131",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

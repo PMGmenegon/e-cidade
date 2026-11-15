@@ -1,0 +1,31 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/buscar",
+  "json": {
+    "data": {
+      "DB_anousu": [
+        "Ano da sessão deve ser informado."
+      ],
+      "DB_id_usuario": [
+        "Código do usuário deve ser informado."
+      ],
+      "DB_instit": [
+        "Código da instituição deve ser informado."
+      ],
+      "planejamento": [
+        "Planejamento deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "Planejamento deve ser informado."
+  },
+  "sha256": "faae1fbc7fb7b9cec1393ae1d0871ce8eb1a25c6e2ff928f40eb4175ec3fddeb",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

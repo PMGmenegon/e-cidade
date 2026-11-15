@@ -1,0 +1,21 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/central-de-matriculas/emissao-protocolo",
+  "json": {
+    "data": {
+      "message": "Sem permissão para acessar a API.",
+      "success": false
+    },
+    "error": true,
+    "message": ""
+  },
+  "sha256": "3034f233af8336012e07cdf826d66de2a12b84cedbebd2e803cf2ef3bdbf4ff4",
+  "sql_negocio": [],
+  "status": 400,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

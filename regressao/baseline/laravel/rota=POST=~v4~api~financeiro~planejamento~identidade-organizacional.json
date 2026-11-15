@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/identidade-organizacional",
+  "json": {
+    "data": {
+      "pl2_codigo": [
+        "O campo \"Código\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código\" deve ser informado."
+  },
+  "sha256": "1ed15a1d9e446d90f85b3419b07610ed063e7c7eced549a7a179181770ae27f2",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

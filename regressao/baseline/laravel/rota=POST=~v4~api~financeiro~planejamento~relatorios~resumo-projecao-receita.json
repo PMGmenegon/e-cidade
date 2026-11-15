@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/resumo-projecao-receita",
+  "json": {
+    "code": 403,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/Relatorios/ReceitaService.php",
+    "line": 62,
+    "message": "Você deve selecionar o planejamento."
+  },
+  "sha256": "7f6886fffcbf02a87aca59f16acc4de8258aab14ffe55964a0a5b97745527e0a",
+  "sql_negocio": [],
+  "status": 403,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

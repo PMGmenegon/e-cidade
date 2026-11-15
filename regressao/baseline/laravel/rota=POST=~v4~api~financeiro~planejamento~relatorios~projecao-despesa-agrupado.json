@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/RelatorioProjecaoDespesaService.php",
+    "line": 82,
+    "message": "Undefined index: planejamento_id"
+  },
+  "sha256": "498b4461f9109fab416135301ae27ed2ea819a42e330b14349e7389ba754cd62",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

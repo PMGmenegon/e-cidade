@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/issqn/veiculos/condutorauxiliar/show",
+  "json": {
+    "q173_sequencial": [
+      "O campo q173 sequencial é obrigatório."
+    ]
+  },
+  "sha256": "01845f25a6b1a4703a576d89f88cef429e5dfbe82988c644ca4557efc6838067",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

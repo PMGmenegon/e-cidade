@@ -1,0 +1,34 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/arrecadacao/tef/confirmar-operacao",
+  "json": {
+    "data": {
+      "DB_coddepto": [
+        "Código do departamentro não informado."
+      ],
+      "DB_datausu": [
+        "Data do sistema não informada não informado."
+      ],
+      "DB_id_usuario": [
+        "Código do usuário não informado."
+      ],
+      "DB_instit": [
+        "Código da instituição não informado."
+      ],
+      "sequencial": [
+        "Sequencial não informado."
+      ]
+    },
+    "error": true,
+    "message": "Sequencial não informado."
+  },
+  "sha256": "1b17deacaa6765f95d4647cd3386debb561bbe8271ff5323248c71f120235b9f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao",
+  "json": {
+    "data": {
+      "comissao": [
+        "Código da comissão não informado."
+      ],
+      "funcao": [
+        "Código da função não informado."
+      ],
+      "quantidade": [
+        "Quantidade não informada."
+      ]
+    },
+    "error": true,
+    "message": "Código da comissão não informado."
+  },
+  "sha256": "15e7a92dd96c1397717d1af5a5716ad61702718a5e998e0d74a9c1afc5077b12",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

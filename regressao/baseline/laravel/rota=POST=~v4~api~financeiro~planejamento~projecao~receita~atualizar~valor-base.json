@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-base",
+  "json": {
+    "data": {
+      "id": [
+        "Estimativa deve ser informado."
+      ],
+      "valor": [
+        "Valor deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "Estimativa deve ser informado."
+  },
+  "sha256": "30b0e09b55638503f53ef1da199bead746ecf0a73a4f4adffec3521dbac19b6f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

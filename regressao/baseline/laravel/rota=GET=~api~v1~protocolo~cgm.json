@@ -1,0 +1,26 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/api/v1/protocolo/cgm",
+  "json": {
+    "message": "Sessão inválida ou expirada. Tente logar novamente.",
+    "stacktrace": "#0 [internal function]: {closure}(Object(Symfony\\Component\\HttpFoundation\\Request), Object(Silex\\Application))\n#1 /var/www/html/vendor/silex/silex/src/Silex/Application.php(254): call_user_func(Object(Closure), Object(Symfony\\Component\\HttpFoundation\\Request), Object(Silex\\Application))\n#2 [internal function]: Silex\\Application->Silex\\{closure}(Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent), 'kernel.request', Object(Symfony\\Component\\EventDispatcher\\EventDispatcher))\n#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(214): call_user_func(Object(Closure), Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent), 'kernel.request', Object(Symfony\\Component\\EventDispatcher\\EventDispatcher))\n#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(44): Symfony\\Component\\EventDispatcher\\EventDispatcher->doDispatch(Array, 'kernel.request', Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent))\n#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(127): Symfony\\Component\\EventDispatcher\\EventDispatcher->dispatch('kernel.request', Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent))\n#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(68): Symfony\\Component\\HttpKernel\\HttpKernel->handleRaw(Object(Symfony\\Component\\HttpFoundation\\Request), 1)\n#7 /var/www/html/vendor/silex/silex/src/Silex/Application.php(496): Symfony\\Component\\HttpKernel\\HttpKernel->handle(Object(Symfony\\Component\\HttpFoundation\\Request), 1, true)\n#8 /var/www/html/vendor/silex/silex/src/Silex/Application.php(477): Silex\\Application->handle(Object(Symfony\\Component\\HttpFoundation\\Request))\n#9 /var/www/html/api/api.php(117): Silex\\Application->run()\n#10 /var/www/html/FrontController.php(5): require_once('/var/www/html/a...')\n#11 {main}",
+    "statusCode": {
+      "attributes": {},
+      "cookies": {},
+      "files": {},
+      "headers": {},
+      "query": {},
+      "request": {},
+      "server": {}
+    }
+  },
+  "sha256": "e61fe370ff3dfa953fec091bfc66e40fd96da60e10ae6dbfcf4fca1bc653987c",
+  "sql_negocio": [],
+  "status": 403,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

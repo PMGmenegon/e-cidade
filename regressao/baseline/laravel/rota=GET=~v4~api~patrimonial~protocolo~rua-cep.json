@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/protocolo/rua-cep",
+  "json": {
+    "data": {
+      "cep": [
+        "O campo cep é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo cep é obrigatório."
+  },
+  "sha256": "3931cf4b5618474a3552db115f986b151b3713acbf38781aa445255c2548873f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

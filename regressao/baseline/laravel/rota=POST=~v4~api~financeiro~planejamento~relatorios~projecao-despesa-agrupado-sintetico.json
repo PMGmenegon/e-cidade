@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/RelatorioProjecaoDespesaService.php",
+    "line": 82,
+    "message": "Undefined index: planejamento_id"
+  },
+  "sha256": "76e8599bc7d74f2660ec4585fb0fddff60f3b19a1c1611ed7c2e1c8ec3e4d400",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

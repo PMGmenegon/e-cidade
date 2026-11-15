@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/material/relatorios/resumo-contabil-estoque",
+  "json": {
+    "data": {
+      "ordem": [
+        "O campo ordem é obrigatório."
+      ],
+      "transferencias": [
+        "O campo transferencias é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo transferencias é obrigatório."
+  },
+  "sha256": "053acc3554dcec5f0eda8af9a6396ed88e1bf237a8905b5dc0d0a6d56b057aea",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

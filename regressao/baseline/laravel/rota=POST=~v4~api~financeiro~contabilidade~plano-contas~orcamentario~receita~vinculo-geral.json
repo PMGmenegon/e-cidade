@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vinculo-geral",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": "Contas vinculadas com sucesso."
+  },
+  "sha256": "402e2d9b15f985d19a9663b63224f1ce56c6fa554e1ac8798bacc270e5a4c80d",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

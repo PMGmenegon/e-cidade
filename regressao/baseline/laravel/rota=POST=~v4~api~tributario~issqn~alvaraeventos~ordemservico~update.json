@@ -1,0 +1,58 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/issqn/alvaraeventos/ordemservico/update",
+  "json": {
+    "data": {
+      "q168_cgm": [
+        "CGM ou Inscrição devem ser informados!"
+      ],
+      "q168_codigo": [
+        "Código não informado."
+      ],
+      "q168_datafim": [
+        "Data de fim não informada."
+      ],
+      "q168_datainicio": [
+        "Data de inicio não informada."
+      ],
+      "q168_dataprocessoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ],
+      "q168_descricao": [
+        "Descricao não informada."
+      ],
+      "q168_horafim": [
+        "Hora final não informada."
+      ],
+      "q168_horainicio": [
+        "Hora de inicio não informada."
+      ],
+      "q168_inscricao": [
+        "CGM ou Inscrição devem ser informados!"
+      ],
+      "q168_localizacao": [
+        "Localização não informada."
+      ],
+      "q168_processo": [
+        "O campo q168 processo é obrigatório quando q168 processoexterno não está presente."
+      ],
+      "q168_processoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ],
+      "q168_titularprocessoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ]
+    },
+    "error": true,
+    "message": "Código não informado."
+  },
+  "sha256": "6d960d034d88871a588205bf82e6e8f041ed8924696fd02cae987cf3f693c2a1",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

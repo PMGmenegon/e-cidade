@@ -1,0 +1,34 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/existeInscricao",
+  "json": {
+    "data": {
+      "DB_coddepto": [
+        "Código inválido do usuario."
+      ],
+      "DB_id_usuario": [
+        "Código inválido do usuario."
+      ],
+      "DB_instit": [
+        "Código inválido do usuario."
+      ],
+      "anoProcesso": [
+        "Código inválido do usuario."
+      ],
+      "numeroProcesso": [
+        "Código inválido do usuario."
+      ]
+    },
+    "error": true,
+    "message": "Código inválido do usuario."
+  },
+  "sha256": "69a954cff1bc7593f8615aff8fd40fe37e51dd7ca6ea14e5171404bddc96ae6f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

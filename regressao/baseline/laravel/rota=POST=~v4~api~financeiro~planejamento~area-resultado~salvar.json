@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/area-resultado/salvar",
+  "json": {
+    "data": {
+      "pl2_codigo": [
+        "O campo \"Código\" deve ser informado."
+      ],
+      "pl4_titulo": [
+        "Deve ser informado um título para a área."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código\" deve ser informado."
+  },
+  "sha256": "a5c53d833d1b34dde73307e767d81c1346f5183ba743413b69ffb4f47ddeb780",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

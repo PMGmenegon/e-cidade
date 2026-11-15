@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/orgao-programa/salvar",
+  "json": {
+    "data": {
+      "orgaos": [
+        "Deve ser informado uma coleção de órgãos."
+      ],
+      "pl9_codigo": [
+        "O campo \"Código do programa estratégico\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código do programa estratégico\" deve ser informado."
+  },
+  "sha256": "0f00050e243b48d9e331650fda1db88a0ec38ac421adec95e3a4748deeadb67f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/configuracao/assinantes",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Configuracao/Usuario/Controller/AssinanteController.php",
+    "line": 98,
+    "message": "Verifique os parâmetros informados"
+  },
+  "sha256": "a58cf6a215796a5d9b6ee2780df6beedb55159cb1cabf1517274aa026e299467",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

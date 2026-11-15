@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Educacao/Escola/Controllers/ProfissionalController.php",
+    "line": 213,
+    "message": "Falha ao salvar Pós Graduação do profisional!"
+  },
+  "sha256": "6a015fc99e5346f326bf2d54004275959b4426c63f08af8a805a2b363d40e78d",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}
