@@ -1305,10 +1305,6 @@
   caminho: /v4/api/user
   campos_volateis:
   - senha
-- id: rota:DELETE:/v4/oauth/authorize
-  metodo: DELETE
-  caminho: /v4/oauth/authorize
-  corpo: {}
 - id: rota:GET:/v4/oauth/authorize
   metodo: GET
   caminho: /v4/oauth/authorize
