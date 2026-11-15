@@ -59,7 +59,18 @@ regressao/.venv/bin/python -c "from regressao.nucleo.banco import ARQ_DUMP, gera
 ```
 
 Trocar o dump invalida as baselines do Laravel e dos fluxos (elas guardam o sha256 e as baterias recusam rodar
-com outro): regrave-as (seção 4). Restaurar leva **≈ 3–5 min** (`DROP DATABASE` + `pg_restore --create`).
+com outro): regrave-as (seção 5). Restaurar leva **≈ 3–5 min** (`DROP DATABASE` + `pg_restore --create`).
+
+**Guarde uma cópia do `baseline.dump` fora do git** (disco/backup do time). `pg_dump -Fc` **não reproduz o mesmo
+sha256** ao ser rodado de novo (metadados e ordem mudam): se o arquivo se perder, um dump novo é outra baseline e
+obriga a regravar Laravel e fluxos.
+
+**Restaurar num container de banco NOVO** exige o que o dump não leva: as *roles* são globais ao cluster. As roles do
+ambiente atual (`\du`) são `dbseller` (sem atributos), `ecidade` e `plugin` (superusuários) e `postgres`; crie-as
+(com as senhas do seu `.env`/`libs/db_conn.php`, que **não** estão aqui) antes do `pg_restore`. O `search_path` real é
+configurado **por banco** (`ALTER DATABASE ecidade SET search_path = "$user", public, teleatend, acordos, …` com ~70
+schemas) e vem no dump porque ele é gerado com `--create`; não há `ALTER ROLE … SET`. Confira com
+`psql -c '\du'` e `select * from pg_db_role_setting`.
 
 ## 3. Rodar
 
@@ -105,6 +116,13 @@ impressão/PDF fora do `cai2_relcaixa`, navegadores além do Chromium headless, 
 
 ## 4. Ler os resultados
 
+> **ESCOPO DA BATERIA PHP (leia antes de confiar no verde).** `./ecidade` é montado nos **dois** runtimes
+> (`docker-compose.yml` e `docker-compose.php85.yml`): o mesmo código roda em 5.6 e em 8.5. A bateria PHP prova
+> **paridade 5.6 × 8.5 sobre o código ATUAL**; ela **não detecta** uma regressão introduzida num código comum aos dois
+> (um bug que apareça igual nos dois lados dá IDENTICO). Só o **Laravel** e os **fluxos de navegador** são *golden master*
+> contra uma gravação anterior. O `compara_hashes` das telas **não** entra no `--comparar`. Esse aviso fixo também sai no
+> `resumo.md` da completa.
+
 | Veredito | Significa |
 |---|---|
 | `IDENTICO` | os dois lados responderam igual (depois de normalizar o que é volátil) |
@@ -117,6 +135,12 @@ conhecida; **0** caso contrário. Na completa vale o **pior** das três. Um 0 co
 seção *INCONCLUSIVO por motivo* e a *Cobertura* do `resumo.md` (catálogos PHP verificados × não, rotas Laravel
 cobertas × não, passos de fluxo). O resumo também mostra git, versões, sha256 da baseline e tempos por fase;
 `meta.comparavel=false` marca rodadas que **não** servem para antes×depois (ex.: `--sem-restaurar`).
+
+Detalhes de leitura: `telas_com_dados` é um **limite superior** (a heurística `tem_dados` conta qualquer `<td` fora do
+cabeçalho, e o e-Cidade usa `<td>` em layout). Tela cuja resposta é uma **página de erro** (Notificação do Sistema/Erro
+interno, Fatal/Parse error) igual nos dois lados vira INCONCLUSIVO, não IDENTICO. O **lint** só cobre as telas
+selecionadas por `--area/--prefixo`, **não** classes, `libs/` nem models. `--sem-normalizar` só existe na bateria PHP e
+**não chega ao `cmp.py`** (que normaliza por conta própria).
 
 `git_sujo` olha o repositório inteiro (costuma ser `true` por causa do ambiente Docker); **`git_sujo_regressao`** olha só
 `regressao/`: se for `true`, o código da bateria que rodou não é o do commit registrado.
@@ -160,6 +184,10 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
 ## 7. Migração: antes × depois
 
+> Lembrete de escopo (§4): como `./ecidade` é compartilhado pelos dois runtimes, a rodada PHP "antes" **não** é uma
+> fotografia do comportamento pré-migração; só Laravel e fluxos guardam referência gravada. Para PHP, o "antes × depois"
+> mede a paridade 5.6 × 8.5 em cada momento.
+
 **ANTES de migrar** (no sistema de referência, ambiente recém-subido, nada rodado ao vivo antes do dump):
 
 1. Gerar o dump (seção 2) e commitar `baseline.dump.sha256`.
@@ -191,6 +219,14 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   completa) deixam um registro de teste em `grupotaxa`. Nada precisa ser limpo à mão: a próxima rodada restaura.
 
 ## 9. Limitações conhecidas
+
+- **A bateria PHP só prova paridade 5.6 × 8.5 sobre o código atual** (código compartilhado, ver §4); não detecta regressão
+  de código comum aos dois runtimes.
+- **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (115 de 381 registros trazem caminhos do servidor 5.4,
+  p.ex. `/var/www/html/...` e números de linha). Num Laravel 12 esses campos **vão** diferir. A máscara dessas chaves
+  (`file`, `line`, `trace`) deve ser **decidida e declarada antes da primeira comparação real com o Laravel 12**
+  (`volateis` em `casos/_ajustes.yml`). O registro bruto fica guardado na baseline, então a máscara pode ser aplicada
+  **na comparação** sem regravar.
 
 - **Laboratório Laravel 12 inexistente**: não há compose para o `:8087`. `comparar` no alvo padrão devolve **um**
   `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem restaurar o banco) e a completa segue com as outras frentes. Só a
