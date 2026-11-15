@@ -55,6 +55,8 @@ LIMITE_CONTEUDO = 3_000
 PRAZO_FLUXO_S = 120
 TIMEOUT_ACAO_MS = 20_000
 TABELA_REGISTRO = "arrecadacao.grupotaxa"
+AREA_PADRAO = "DB:TRIBUTÁRIO"       # titulo do link da area na tela de areas
+MODULO_PADRAO = "Arrecadação"       # titulo do link do modulo
 
 
 class SegredoNaBaseline(ValueError):
@@ -305,7 +307,9 @@ def grava_baseline(diretorio: Path, fluxos: list[dict], dump_sha256: str, commit
                 velho.unlink()
     existentes = sorted(p.stem for p in diretorio.glob("*.json") if p.name != "_meta.json")
     meta = {"dump_sha256": dump_sha256, "commit": commit, "data": time.strftime("%Y-%m-%d"),
-            "fluxos": existentes, "n_passos": sum(len(f["passos"]) for f in fluxos)}
+            "fluxos": existentes,
+            "n_passos": sum(len(json.loads((diretorio / f"{i}.json").read_text(encoding="utf-8"))["passos"])
+                            for i in existentes)}
     (diretorio / "_meta.json").write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n",
                                           encoding="utf-8", newline="\n")
 
@@ -437,18 +441,18 @@ class _Janela:
         self.assenta()
         self.dispensa_modal()
 
-    def escolhe_instituicao(self) -> None:
+    def escolhe_instituicao(self, area: str = AREA_PADRAO) -> None:
         self.corpo().click("a[title='PREFEITURA DBSELLER']")
-        self.corpo().wait_for_selector("a[title='DB:TRIBUTÁRIO']")
+        self.corpo().wait_for_selector(f"a[title='{area}']")
         self.assenta()
 
-    def escolhe_area(self) -> None:
-        self.corpo().click("a[title='DB:TRIBUTÁRIO']")
-        self.corpo().wait_for_selector("a[title='Arrecadação'][id=link]")
+    def escolhe_area(self, area: str = AREA_PADRAO, modulo: str = MODULO_PADRAO) -> None:
+        self.corpo().click(f"a[title='{area}']")
+        self.corpo().wait_for_selector(f"a[title='{modulo}'][id=link]")
         self.assenta()
 
-    def escolhe_modulo(self) -> None:
-        self.corpo().click("a[title='Arrecadação'][id=link]")
+    def escolhe_modulo(self, modulo: str = MODULO_PADRAO) -> None:
+        self.corpo().click(f"a[title='{modulo}'][id=link]")
         self.corpo().wait_for_selector("#db-menu")
         self.assenta()
 
@@ -460,12 +464,12 @@ class _Janela:
         self.corpo().wait_for_url(lambda u: pagina in u)
         self.assenta()
 
-    def entra_no_modulo(self) -> None:
+    def entra_no_modulo(self, area: str = AREA_PADRAO, modulo: str = MODULO_PADRAO) -> None:
         self.login()
         self.pula_atualiza_cadastro()
-        self.escolhe_instituicao()
-        self.escolhe_area()
-        self.escolhe_modulo()
+        self.escolhe_instituicao(area)
+        self.escolhe_area(area, modulo)
+        self.escolhe_modulo(modulo)
 
     def snapshot(self) -> dict:
         html = self.corpo().content()
@@ -493,9 +497,12 @@ def _passo_vazio(nome: str, ok: bool, erro: str | None, exercitado: bool = True)
     return p
 
 
-def _banco_linhas() -> dict:
+def _banco_linhas(tabelas: list[str] | None = None) -> dict:
+    """hash_tabelas + contagem de linhas por tabela (padrao: a tabela do fluxo `incluir-registro`)."""
     from regressao.nucleo.banco import _psql, hash_tabelas
-    return {"hash": hash_tabelas([TABELA_REGISTRO]), "linhas": int(_psql(f"select count(*) from {TABELA_REGISTRO}").strip())}
+    tabelas = tabelas or [TABELA_REGISTRO]
+    return {"hash": hash_tabelas(tabelas),
+            "linhas": {t: int(_psql(f"select count(*) from {t}").strip()) for t in tabelas}}
 
 
 # Cada fluxo: lista de (nome, funcao(janela) -> extra|None, tira_snapshot). A funcao devolve um dict
@@ -563,7 +570,8 @@ def _f_incluir():
         j.corpo().wait_for_load_state("load")
         j.assenta()
         depois = _banco_linhas()
-        return {"banco": depois["hash"], "linhas_antes": antes["linhas"], "linhas_depois": depois["linhas"],
+        return {"banco": depois["hash"], "linhas_antes": antes["linhas"][TABELA_REGISTRO],
+                "linhas_depois": depois["linhas"][TABELA_REGISTRO],
                 "hash_antes": antes["hash"][TABELA_REGISTRO]}
 
     return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("preenche", preenche, True),
@@ -578,39 +586,145 @@ def _f_relatorio():
         j.abre_menu("cai2_relcaixa_001.php?db_opcao=tabrecjm")
 
     def emite(j):
-        from regressao.php.relatorios import extrai_conteudo
-        j.c.fecha_passo()
-        j.c.pdfs.clear()
-        antes = set(j.ctx.pages)
-        j.corpo().click("#exibir_relatorio")
-        for _ in range(40):
-            j.prazo()
-            if j.c.pdfs:
-                break
-            j.login_pg.wait_for_timeout(500)
-        j.assenta()
-        if not j.c.pdfs:
-            raise RuntimeError("o clique em Imprimir nao abriu um PDF")
-        # o headless trata o PDF como download (a navegacao e abortada): o corpo vem de um GET
-        # identico com os cookies da sessao do navegador (idempotente)
-        resp = j.ctx.request.get(j.c.pdfs[0])
-        corpo = resp.body()
-        texto = normaliza_texto(extrai_conteudo(corpo, "pdf"))
-        for q in set(j.ctx.pages) - antes:
-            if not q.is_closed():
-                q.close()
-        return {"relatorio": caminho_seguro(j.c.pdfs[0]), "status_corpo": resp.status,
-                "content_type": (resp.headers.get("content-type") or "").split(";")[0],
-                "e_pdf": corpo.lstrip().startswith(b"%PDF"), "conteudo": texto[:LIMITE_CONTEUDO],
-                "conteudo_sha256": sha(texto)}
+        return _emite_pdf(j, "#exibir_relatorio")
 
     return [("entrada", entrada, False), ("tela-relatorio", tela, True), ("emitir", emite, False)]
+
+
+def _emite_pdf(j, seletor: str) -> dict:
+    """Clica no botao que abre o relatorio e confere o PDF aberto na janela nova."""
+    from regressao.php.relatorios import extrai_conteudo
+    j.c.fecha_passo()
+    j.c.pdfs.clear()
+    antes = set(j.ctx.pages)
+    j.corpo().click(seletor)
+    for _ in range(40):
+        j.prazo()
+        if j.c.pdfs:
+            break
+        j.login_pg.wait_for_timeout(500)
+    j.assenta()
+    if not j.c.pdfs:
+        raise RuntimeError("o clique em Imprimir nao abriu um PDF")
+    # o headless trata o PDF como download (a navegacao e abortada): o corpo vem de um GET
+    # identico com os cookies da sessao do navegador (idempotente)
+    resp = j.ctx.request.get(j.c.pdfs[0])
+    corpo = resp.body()
+    texto = normaliza_texto(extrai_conteudo(corpo, "pdf"))
+    for q in set(j.ctx.pages) - antes:
+        if not q.is_closed():
+            q.close()
+    return {"relatorio": caminho_seguro(j.c.pdfs[0]), "status_corpo": resp.status,
+            "content_type": (resp.headers.get("content-type") or "").split(";")[0],
+            "e_pdf": corpo.lstrip().startswith(b"%PDF"), "conteudo": texto[:LIMITE_CONTEUDO],
+            "conteudo_sha256": sha(texto)}
+
+
+def _inclui(j, tabelas: list[str], preenche, botao: str) -> dict:
+    """Passo `salvar` generico: hash/linhas das tabelas antes e depois de clicar no botao de incluir."""
+    antes = _banco_linhas(tabelas)
+    j.c.fecha_passo()
+    j.corpo().click(botao)
+    j.corpo().wait_for_load_state("load")
+    j.assenta()
+    depois = _banco_linhas(tabelas)
+    return {"banco": depois["hash"], "linhas_antes": antes["linhas"], "linhas_depois": depois["linhas"],
+            "hash_antes": antes["hash"]}
+
+
+def _f_financeiro():
+    """Financeiro / Orcamento: inclui uma funcao orcamentaria (campos de uma linha `verificado` do catalogo)."""
+    area, modulo, tabela = "DB:FINANCEIRO", "Modulo Orcamento", "orcamento.orcfuncao"
+
+    def entrada(j):
+        j.entra_no_modulo(area, modulo)
+
+    def cadastro(j):
+        j.abre_menu("orc1_orcfuncao001.php")
+
+    def preenche(j):
+        c = j.corpo()
+        valores = {"o52_funcao": "91", "o52_descr": "TESTE_FLUXO", "o52_siconfi": "1",
+                   "o52_codtri": "1", "o52_finali": "OBS_FLUXO"}  # a UI exige so digitos no codigo do tribunal
+        for n, v in valores.items():
+            c.fill(f"[name={n}]", v)
+        j.assenta()
+        return {"valores": {n: c.input_value(f"[name={n}]") for n in valores}}
+
+    def salvar(j):
+        return _inclui(j, [tabela], preenche, "input[name=db_opcao]")
+
+    return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("preenche", preenche, True),
+            ("salvar", salvar, True)]
+
+
+def _f_tributario():
+    """Tributario / ISSQN: abre o formulario do relatorio de tipos de calculo e o emite (PDF)."""
+    area, modulo = "DB:TRIBUTÁRIO", "Módulo Issqn"
+
+    def entrada(j):
+        j.entra_no_modulo(area, modulo)
+
+    def tela(j):
+        j.abre_menu("iss2_tipcalc001.php")
+        return {"campos": sorted(j.corpo().eval_on_selector_all("input[name]", "els => els.map(e => e.name)"))}
+
+    def emite(j):
+        return _emite_pdf(j, "#exibir_relatorio")
+
+    return [("entrada", entrada, False), ("tela-relatorio", tela, True), ("emitir", emite, False)]
+
+
+TABELAS_CGM = ["protocolo.cgm", "protocolo.cgmfisico", "protocolo.db_cgmcpf", "patrimonio.cgmendereco",
+               "protocolo.personacgm"]
+
+
+def _f_cadastros():
+    """Cadastros / Protocolo: inclui um CGM pessoa fisica (CPF -> formulario completo -> Incluir)."""
+    area, modulo = "DB:PATRIMONIAL", "Modulo Protocolo"
+
+    def entrada(j):
+        j.entra_no_modulo(area, modulo)
+
+    def cadastro(j):
+        j.abre_menu("prot1_cadcgm001.php")
+
+    def cpf(j):
+        c = j.corpo()
+        c.fill("input[name=cpf]", "11144477735")
+        c.click("input[name=enviar][value=Confirma]")
+        c.wait_for_selector("input[name=z01_nome]")
+        j.assenta()
+
+    def preenche(j):
+        c = j.corpo()
+        valores = {"z01_nome": "TESTE_FLUXO", "z01_nomecomple": "TESTE_FLUXO", "z01_ender": "RUA TESTE",
+                   "z01_numero": "1", "z01_munic": "SOUSA", "z01_uf": "PB", "z01_bairro": "CENTRO",
+                   "z01_cep": "58800000", "z01_nasc": "01/01/1990"}
+        for n, v in valores.items():
+            c.fill(f"[name={n}]", v)
+        c.evaluate("() => { const f = document.form1; f.z01_nasc_dia.value='01'; f.z01_nasc_mes.value='01';"
+                   " f.z01_nasc_ano.value='1990'; f.z01_cadast.value='01/01/2026'; f.z01_cadast_dia.value='01';"
+                   " f.z01_cadast_mes.value='01'; f.z01_cadast_ano.value='2026'; f.z01_ultalt.value='01/01/2026';"
+                   " f.z01_ultalt_dia.value='01'; f.z01_ultalt_mes.value='01'; f.z01_ultalt_ano.value='2026'; }")
+        c.select_option("select[name=z01_sexo]", "M")
+        j.assenta()
+        return {"valores": {n: c.input_value(f"[name={n}]") for n in valores}}
+
+    def salvar(j):
+        return _inclui(j, TABELAS_CGM, preenche, "input[name=db_opcao]")
+
+    return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("cpf", cpf, True),
+            ("preenche", preenche, True), ("salvar", salvar, True)]
 
 
 FLUXOS = {
     "navegacao": ("login ate sair passando por modulo, tela de cadastro e tela de relatorio", _f_navegacao),
     "incluir-registro": ("inclusao pela UI em arr1_grupotaxa001 com conferencia do efeito no banco", _f_incluir),
     "emitir-relatorio": ("emissao do relatorio cai2_relcaixa (PDF) pela UI", _f_relatorio),
+    "financeiro": ("Orcamento: inclusao de funcao orcamentaria (orc1_orcfuncao001) com efeito no banco", _f_financeiro),
+    "tributario": ("ISSQN: formulario e emissao do relatorio de tipos de calculo (iss2_tipcalc)", _f_tributario),
+    "cadastros": ("Protocolo: inclusao de CGM pessoa fisica (prot1_cadcgm001) com efeito no banco", _f_cadastros),
 }
 
 

@@ -134,6 +134,33 @@ def test_coletor_deduplica_e_ordena_console_e_falhas():
     assert c.falhas == ["FALHOU GET /z.js: net::ERR_FAILED"]
 
 
+# ---------------------------------------------------------------- definicao dos fluxos
+
+def test_fluxos_registrados_cobrem_as_areas_criticas_e_tem_passos_bem_formados():
+    assert {"navegacao", "incluir-registro", "emitir-relatorio", "financeiro", "tributario", "cadastros"} == set(fluxos.FLUXOS)
+    for fid, (descricao, fabrica) in fluxos.FLUXOS.items():
+        passos = fabrica()
+        nomes = [n for n, _f, _s in passos]
+        assert descricao and len(nomes) == len(set(nomes)), fid          # nomes unicos
+        assert nomes[0] in ("login", "entrada"), fid                       # 1o passo = ambiente (ERRO_AMBIENTE se falhar)
+        assert all(callable(f) and isinstance(s, bool) for _n, f, s in passos), fid
+
+
+def test_banco_linhas_devolve_hash_e_contagem_por_tabela(monkeypatch):
+    from regressao.nucleo import banco
+    monkeypatch.setattr(banco, "hash_tabelas", lambda ts: {t: f"h-{t}" for t in ts})
+    monkeypatch.setattr(banco, "_psql", lambda sql, db=banco.BASE: "7\n")
+    r = fluxos._banco_linhas(["a.t1", "b.t2"])
+    assert r == {"hash": {"a.t1": "h-a.t1", "b.t2": "h-b.t2"}, "linhas": {"a.t1": 7, "b.t2": 7}}
+
+
+def test_n_passos_do_meta_conta_todos_os_fluxos_da_pasta(tmp_path):
+    fluxos.grava_baseline(tmp_path, [fluxo(passo("a"), id="x")], dump_sha256="s", commit="c")
+    fluxos.grava_baseline(tmp_path, [fluxo(passo("a"), passo("b"), id="y")], dump_sha256="s", commit="c")  # sem apagar x
+    meta = json.loads((tmp_path / "_meta.json").read_text())
+    assert meta["fluxos"] == ["x", "y"] and meta["n_passos"] == 3
+
+
 # ---------------------------------------------------------------- _Janela (contexto falso)
 
 class _Pg:
