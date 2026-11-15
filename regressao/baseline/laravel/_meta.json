@@ -19,6 +19,14 @@
     "escrita-jetom-funcao-incluir",
     "escrita-jetom-funcao-duplicada",
     "escrita-jetom-funcao-listar",
+    "arquivo-vacinacao-pdf-todos",
+    "arquivo-vacinacao-pdf-tipo2",
+    "arquivo-vacinacao-pdf-tipo3",
+    "arquivo-siconfi-csv",
+    "arquivo-pcasp-csv",
+    "console-list",
+    "console-env",
+    "console-migrate-status",
     "rota:POST:/v4/api/assinador/obter-assinantes-portaria",
     "rota:POST:/v4/api/assinador/obter-configuracao",
     "rota:POST:/v4/api/assinador/recuperar-pfx",
@@ -386,5 +394,16 @@
     "rota:GET:/api/v1/protocolo/cgm",
     "rota:POST:/api/v1/tributario/recibo"
   ],
-  "n_casos": 381
+  "n_casos": 389,
+  "novos_gravados": [
+    "arquivo-pcasp-csv",
+    "arquivo-siconfi-csv",
+    "arquivo-vacinacao-pdf-tipo2",
+    "arquivo-vacinacao-pdf-tipo3",
+    "arquivo-vacinacao-pdf-todos",
+    "console-env",
+    "console-list",
+    "console-migrate-status"
+  ],
+  "novos_gravados_no_commit": "329f3db0e"
 }

@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "arquivo-pcasp-csv",
+  "json": {
+    "data": {
+      "csv": "<X>",
+      "csvLinkExterno": "<X>"
+    },
+    "error": false,
+    "message": "Mapeamento das contas vículadas."
+  },
+  "sha256": "b9f463cecd988d1533197d61f3fd903d89507e5b854c4ac5fa917791779de859",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "[arquivo csv status=200 ct=text/csv]\ncsv|1|1|Exercício\ncsv|1|2|2026\ncsv|2|1|Plano\ncsv|2|2|Estadual / Regional",
+  "tipos": {
+    "data.csv": [
+      "str"
+    ],
+    "data.csvLinkExterno": [
+      "str"
+    ]
+  }
+}
