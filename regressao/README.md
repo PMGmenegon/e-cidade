@@ -85,6 +85,7 @@ python -m regressao.php.bateria --saida /tmp/php --area tributario            # 
 
 # Laravel (a baseline é gravada no 5.4 e comparada com o alvo novo)
 python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g                # no :8080 (5.4); recusa sobrescrever (seção 6)
+python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g --apenas-novos --confirmo-sobrescrever   # só casos novos (11b)
 python -m regressao.laravel.bateria comparar --saida /tmp/lar                  # alvo = REGRESSAO_LARAVEL_NOVO_URL (padrão :8087)
 python -m regressao.laravel.bateria comparar --saida /tmp/lar --alvo http://localhost:8080   # prova de estabilidade (5.4 contra ele mesmo)
 
@@ -239,8 +240,30 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 - **Laboratório Laravel 12 inexistente**: não há compose para o `:8087`. `comparar` no alvo padrão devolve **um**
   `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem restaurar o banco) e a completa segue com as outras frentes. Só a
   prova de estabilidade (5.4 contra ele mesmo) foi exercitada ao vivo.
-- **Integrações (11b) não implementadas**: stub do PIX, SMTP de teste, PDF/XLS do Laravel por conteúdo e comandos de
-  console/artisan **não** têm casos.
+- **Integrações (11b), o que existe e o que não existe** (`laravel/integracao.py`, `laravel/stubs/`,
+  `laravel/casos/integracao.yml`):
+  - **Arquivo gerado por conteúdo**: 5 casos (`arquivo-vacinacao-pdf-*` x3, `arquivo-siconfi-csv`,
+    `arquivo-pcasp-csv`): a rota devolve JSON com o caminho do arquivo (`data.path`/`data.csv`), a bateria o baixa e
+    compara o **texto extraído** (pypdf/CSV/openpyxl/xlrd), nunca os bytes; o nome com timestamp é mascarado. Das 77
+    rotas que parecem gerar arquivo, só estas devolveram arquivo com corpo mínimo conhecido; as demais pedem dados de
+    domínio (planejamento existente, instituição na sessão legada `DB_instit`, filtros) que o banco de dev não tem
+    (`Undefined index: DB_instit`/`planejamento_id`...). Nenhum caso XLSX real: o app serve CSV.
+  - **Console**: 3 casos (`console-list` só pelos nomes dos comandos, `console-env`, `console-migrate-status`),
+    executados com `docker exec ... php artisan` em `ecidade_php56` (troque com `REGRESSAO_LARAVEL_CONSOLE_CONTAINER`
+    para o laboratório novo). Comandos de domínio (`agendamento:inativarvinculoprofessor`,
+    `matriculaonline:alteracaoinscricao`, `payroll:*`) **escrevem** no banco e não foram incluídos.
+  - **SMTP de teste e stub PIX**: servidores locais (`SmtpStub`, `PixStub`), sobem e param por `com_stubs()`; o
+    SMTP captura a mensagem e `compara_email` normaliza `Date`, `Message-ID` e fronteiras MIME (testado com
+    `smtplib`). **Mas nenhum caso os exercita**, por inviabilidade comprovada: (a) nenhum código de Laravel/Silex
+    (`app/`, `src/`) usa `Mail::`, PHPMailer ou Swift (o `.env` aponta `smtp.mailtrap.io:2525`; o envio de e-mail vive
+    no PHP legado e nenhuma rota `/v4` ou `/api/v1` o dispara); (b) as URLs do Banco do Brasil estão fixas em
+    constantes HTTPS (`BancoDoBrasil::BASE_URL`/`BASE_AUTH_URL`), `POST pix/gerar` exige sessão legada + recibo com
+    código de barras + CGM com CPF/CNPJ válido, e redirecionar o app ao stub exigiria DNS/TLS dentro do container,
+    o que não é permitido alterar aqui. Quando o Laravel 12 tiver um ponto de configuração para a URL do PSP, o
+    stub já está pronto para receber o caso.
+  - **Adicionar sem regravar**: `python -m regressao.laravel.bateria gravar --saida DIR --apenas-novos
+    --confirmo-sobrescrever` roda só os casos sem registro (restaurando o dump) e acrescenta à baseline; os registros
+    existentes não são tocados.
 - Laravel: cobre 366 de 568 rotas; ficam de fora rotas com parâmetro de caminho, perigosas por nome e 4 sondas que
   gravaram. `rest/v1` só com rotas parametrizadas (nenhum caso gerado); `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os
   casos de rota protegida dão HTTP 500 (não 401) no 5.4 e usam `espera_status`; ~100 casos são `INCONCLUSIVO`
