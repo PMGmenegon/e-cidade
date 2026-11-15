@@ -81,11 +81,16 @@ def fake(monkeypatch, tmp_path):
                 return self._json(500, {"message": "Server Error"})
             if self.path == "/escreve":
                 f.linha("set client_encoding to 'LATIN1'")   # assinatura de sessao da aplicacao
-                f.linha("insert into foo(z) values (99)", pid=5)  # outra sessao, sem assinatura
+                f.linha("SET statement_timeout = 0", pid=5)       # sessao do pg_dump (cliente nao-app)
+                f.linha("insert into foo(z) values (99)", pid=5)
                 for s in f.statements:
                     f.linha(s)
                 f.linha("insert into db_acount(x) values (1)")
                 f.linha("select * from foo")
+                return self._json(200, {"ok": True})
+            if self.path == "/muda":  # escrita invisivel ao log: so o fingerprint percebe
+                f.fp["s.t"] = f.fp.get("s.t", 0) + 1
+                f.fp["public.oauth_clients"] = f.fp.get("public.oauth_clients", 0) + 1  # infra
                 return self._json(200, {"ok": True})
             return self._json(404, {"message": "nao existe"})
 
@@ -97,6 +102,9 @@ def fake(monkeypatch, tmp_path):
     f.chamadas = []
     f.psql = []
     f.hashes = {}
+    f.fp = {}
+    monkeypatch.setattr(mod, "_fingerprint", lambda: dict(f.fp))
+    monkeypatch.setattr(mod, "ESPERA_ESTATISTICAS", 0)
 
     sha = tmp_path / "dump.sha256"
     sha.write_text("abc123\n")
@@ -188,11 +196,18 @@ def test_baseline_ausente_e_erro_ambiente(fake):
     assert [c.veredito for c in res] == [Veredito.ERRO_AMBIENTE]
     assert res[0].id == "x" and "baseline" in res[0].detalhe.lower()
     assert fake.chamadas == []
-    # arquivo de um caso ausente com meta presente
+    # caso carregado sem registro no _meta (fix round 1: integridade da baseline recusa tudo)
     gravar([_caso("a")], fake.url, fake.baseline)
     res = comparar([_caso("a"), _caso("b")], fake.url, fake.baseline)
-    assert [(c.id, c.veredito) for c in res] == [("b", Veredito.ERRO_AMBIENTE)]
+    assert [(c.id, c.veredito) for c in res] == [("laravel:baseline", Veredito.ERRO_AMBIENTE)]
+    assert "'b'" in res[0].detalhe
     assert fake.chamadas == ["restaura"]  # so o do gravar
+    # arquivo do caso ausente com o _meta listando o id: registro por caso
+    meta = json.loads((fake.baseline / "_meta.json").read_text())
+    meta["ids"] = ["a", "b"]
+    (fake.baseline / "_meta.json").write_text(json.dumps(meta))
+    res = comparar([_caso("a"), _caso("b")], fake.url, fake.baseline)
+    assert [(c.id, c.veredito) for c in res] == [("b", Veredito.ERRO_AMBIENTE)]
 
 
 def test_resposta_vazia_nos_dois_lados_e_inconclusiva(fake):

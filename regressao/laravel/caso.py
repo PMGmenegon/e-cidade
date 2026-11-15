@@ -65,6 +65,9 @@ class CasoHttp:
     form: bool = False  # corpo como application/x-www-form-urlencoded (senao JSON)
     sql_antes: list[str] = field(default_factory=list)  # preparacao no banco; `{jti}` = id do token @novo
     espera_escrita: bool = False  # INCONCLUSIVO se nao escrever nada nos dois lados
+    # Status documentado do comportamento da referencia (ex.: 500 "Unauthenticated" do 5.4):
+    # igual nos dois lados e com o mesmo corpo => IDENTICO em vez de INCONCLUSIVO (5xx).
+    espera_status: int | None = None
 
 
 @dataclass
@@ -230,9 +233,17 @@ def tipos_mascarados(obj, campos: list[str]) -> dict[str, list[str]]:
     return {c: sorted(set(_tipos(obj, c.split(".")))) or ["ausente"] for c in campos}
 
 
-_RE_ESCRITA = re.compile(r"^\s*(insert|update|delete)\b", re.I)
+_RE_ESCRITA = re.compile(
+    r"^\s*(?:insert|update|delete|truncate|copy\b.*\bfrom\b"
+    r"|with\b.*\b(?:insert\s+into|update|delete\s+from)\b)", re.I | re.S)
+_RE_ALVO = re.compile(
+    r"""(?:\binsert\s+into|\bdelete\s+from|\bupdate|\btruncate(?:\s+table)?|\bcopy)\s+(?:only\s+)?"""
+    r"""((?:"[^"]+"|\w+)(?:\s*\.\s*(?:"[^"]+"|\w+))?)""", re.I)
+# Tabelas de infraestrutura (login, sessao, log de acesso, oauth): ignoradas SE FOREM O ALVO da
+# escrita. `select fn(...)` com efeito de escrita NAO e reconhecido aqui: so o fingerprint de
+# pg_stat_user_tables (`_fingerprint`) o pega.
 _RE_INFRA = re.compile(
-    r"\b(db_acount\w*|db_usuariosonline|db_logsacessa|db_menu\w*|db_sessao\w*|oauth_\w+)\b", re.I)
+    r"(?:db_acount\w*|db_usuariosonline|db_logsacessa|db_menu\w*|db_sessao\w*|oauth_\w+)", re.I)
 _RE_PREFIXO = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[(\d+)\] LOG:\s+[^:]*:\s*")
 _RE_LINHA_LOG = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] ")
 # O log pode sair em ingles (DETAIL/parameters) ou portugues (DETALHE/parametros, com acento
@@ -240,10 +251,65 @@ _RE_LINHA_LOG = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] ")
 _RE_PARAMS = re.compile(
     r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] (?:DETAIL|DETALHE):\s+(?:parameters|par[^\s:]{1,4}metros):(.*)$",
     re.I)
-# Primeira instrucao de toda sessao da aplicacao (legado PHP e PDO/Laravel); o psql dos
-# marcadores e de qualquer outro cliente nao a emite.
-_RE_SESSAO_APP = re.compile(
-    r"^(set\s+client_encoding\b|set\s+names\b|SELECT\s+set_config\('search_path')", re.I)
+# Clientes que NAO sao a aplicacao, reconhecidos pela primeira instrucao da sessao: pg_dump/
+# pg_restore (`SET statement_timeout`, `SELECT pg_catalog.set_config(...)`) e a manutencao do
+# harness. O log_line_prefix do servidor e `%m [%p] `: so ha o pid para distinguir sessoes (sem
+# usuario nem application_name), por isso a exclusao e por pid. Ruido residual: um cliente
+# interativo qualquer (psql de outra pessoa) rodando escrita DENTRO da janela seria capturado.
+_RE_CLIENTE_NAO_APP = re.compile(
+    r"^(set\s+statement_timeout\b|select\s+pg_catalog\.set_config\(|select\s+pg_terminate_backend\b"
+    r"|alter\s+database\b|do\s+\$\$|select\s+'REGRESSAO_)", re.I)
+ESPERA_ESTATISTICAS = 2.0  # s apos a ultima sonda ate ler pg_stat_user_tables (ver _fingerprint)
+_SQL_FINGERPRINT = ("select schemaname||'.'||relname||'='||(n_tup_ins+n_tup_upd+n_tup_del) "
+                    "from pg_stat_user_tables")
+
+
+def _alvo_escrita(sql: str) -> str | None:
+    """Tabela-alvo (sem schema nem aspas, minuscula) de uma escrita; None se nao for escrita
+    ou se o alvo nao puder ser lido."""
+    if not _RE_ESCRITA.match(sql):
+        return None
+    m = _RE_ALVO.search(sql)
+    if not m:
+        return None
+    return m.group(1).split(".")[-1].strip().strip('"').lower()
+
+
+def _e_negocio(sql: str) -> bool:
+    """Escrita cujo ALVO nao e tabela de infraestrutura (mencionar `oauth_*` num subselect nao a
+    torna infra). Escrita de alvo ilegivel conta como negocio (conservador)."""
+    if not _RE_ESCRITA.match(sql):
+        return False
+    alvo = _alvo_escrita(sql)
+    return alvo is None or not _RE_INFRA.fullmatch(alvo)
+
+
+def _fingerprint() -> dict[str, int]:
+    """Contadores n_tup_ins+upd+del de TODA tabela do banco (`schema.tabela` -> total). Leitura
+    imediata: no PG16 deste ambiente o contador de uma sessao que terminou ja aparece em 0 s
+    (medido: insert via psql visivel na 1a leitura); a espera de ESPERA_ESTATISTICAS (2 s,
+    acima do PGSTAT_MIN_INTERVAL de 1 s) cobre sessoes longas que so descarregam as estatisticas
+    ao ficar ociosas."""
+    saida: dict[str, int] = {}
+    for l in _psql(_SQL_FINGERPRINT).splitlines():
+        nome, _, n = l.rpartition("=")
+        if nome and n.strip().isdigit():
+            saida[nome] = int(n)
+    return saida
+
+
+def _tabelas_alteradas(antes: dict[str, int], depois: dict[str, int]) -> set[str]:
+    return {t for t in set(antes) | set(depois) if antes.get(t, 0) != depois.get(t, 0)}
+
+
+def _e_rota(c: CasoHttp) -> bool:
+    """Caso gerado do inventario que nao declara escrita: uma SONDA."""
+    return c.id.startswith("rota:") and not c.espera_escrita and not c.tabelas
+
+
+def _e_sonda_de_escrita(c: CasoHttp) -> bool:
+    """Sonda que NAO e GET: nao pode escrever nada (nem SQL capturado)."""
+    return _e_rota(c) and c.metodo != "GET"
 _RE_TS = re.compile(r"'\d{4}-\d{2}-\d{2}[ T][\d:.]+(?:[+-]\d{2}(?::?\d{2})?|Z)?'")
 _RE_UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 _RE_HEX = re.compile(r"\b[0-9a-f]{40,}\b", re.I)
@@ -304,10 +370,10 @@ def _statements(bruto: bytes) -> list[str]:
 
 
 def _sql_entre(desde: datetime.datetime, ini: str, fim: str) -> list[str]:
-    """SQL de escrita de negocio entre os marcadores, SO das sessoes da aplicacao: um backend
-    conta como da aplicacao se a sua primeira instrucao no log e a de abertura de sessao do
-    PHP/PDO (`_RE_SESSAO_APP`). Os psql dos marcadores e qualquer outro cliente ficam fora.
-    Limite: sessao da aplicacao aberta antes de `desde` (5 s antes do marcador) nao e vista."""
+    """SQL de escrita de negocio entre os marcadores. Captura TODA sessao, menos as que o proprio
+    harness e a manutencao abrem: os backends que emitiram os marcadores e os clientes
+    reconhecidos por `_RE_CLIENTE_NAO_APP` (pg_dump/pg_restore, manutencao). Sessoes da
+    aplicacao ja abertas antes da janela (conexao reaproveitada) continuam capturadas."""
     limite = time.monotonic() + ESPERA_MARCADOR
     while True:
         pares = _statements_pid(_logs_banco(desde))
@@ -320,12 +386,12 @@ def _sql_entre(desde: datetime.datetime, ini: str, fim: str) -> list[str]:
             raise ErroAmbienteBanco("marcadores do caso nao apareceram no log do banco "
                                     "(log_statement ligado?)")
         time.sleep(0.25)
+    excluidos = {pares[i][0], pares[j][0]}
     primeira: dict[int, str] = {}
     for pid, s in pares:
         primeira.setdefault(pid, s)
-    app = {pid for pid, s in primeira.items() if _RE_SESSAO_APP.match(s)}
-    negocio = [s for pid, s in pares[i + 1:j]
-               if pid in app and _RE_ESCRITA.match(s) and not _RE_INFRA.search(s)]
+    excluidos |= {pid for pid, s in primeira.items() if _RE_CLIENTE_NAO_APP.match(s)}
+    negocio = [s for pid, s in pares[i + 1:j] if pid not in excluidos and _e_negocio(s)]
     return [normaliza_sql(s) for s in negocio]
 
 
@@ -450,28 +516,61 @@ def _commit() -> str:
         return "desconhecido"
 
 
-def _roda(casos: list[CasoHttp], base_url: str, erros: dict | None = None) -> dict[str, Resposta]:
+def _nome_tabela(t: str) -> str:
+    return t.rsplit(".", 1)[-1].strip('"').lower()
+
+
+def _suspeitas_da_janela(casos: list[CasoHttp], respostas: dict[str, Resposta],
+                         antes: dict[str, int], depois: dict[str, int], i0: int, i1: int) -> list[str]:
+    """Tabelas cujos contadores mudaram na janela das sondas SEM explicacao: nao sao infra, nao
+    foram declaradas por um caso de escrita dentro da janela e nao tem escrita capturada."""
+    declaradas = {_nome_tabela(t) for c in casos[i0:i1 + 1] if not _e_rota(c) for t in c.tabelas}
+    capturadas = {_alvo_escrita(s) for c in casos[i0:i1 + 1] if c.id in respostas
+                  for s in respostas[c.id].sql_negocio}
+    return sorted(t for t in _tabelas_alteradas(antes, depois)
+                  if not _RE_INFRA.fullmatch(_nome_tabela(t))
+                  and _nome_tabela(t) not in declaradas and _nome_tabela(t) not in capturadas)
+
+
+def _roda(casos: list[CasoHttp], base_url: str, erros: dict | None = None,
+          info: dict | None = None) -> dict[str, Resposta]:
     """Restaura o dump uma vez e roda os casos em ordem. Com `erros` (dict), falha por caso
-    vira entrada ali; sem ele, a primeira falha propaga."""
+    vira entrada ali; sem ele, a primeira falha propaga. `info["suspeitas"]` recebe as tabelas
+    alteradas sem explicacao durante a janela das sondas (fingerprint de pg_stat_user_tables
+    antes da primeira e depois da ultima, com ESPERA_ESTATISTICAS de folga)."""
     restaura_dump(ARQ_DUMP)
     try:
         token = obtem_token(base_url)
     except ErroToken as e:
         raise ErroRequisicao(str(e)) from None
+    sondas = [k for k, c in enumerate(casos) if _e_rota(c)]
+    i0, i1 = (sondas[0], sondas[-1]) if sondas else (-1, -1)
+    antes: dict[str, int] = {}
+    depois: dict[str, int] = {}
     respostas: dict[str, Resposta] = {}
     with com_log_statement():
-        for c in casos:
+        for k, c in enumerate(casos):
+            if k == i0:
+                antes = _fingerprint()
             try:
                 respostas[c.id] = executa(c, base_url, token)
             except (ErroRequisicao, ErroAmbienteBanco) as e:
                 if erros is None:
                     raise
                 erros[c.id] = redige(str(e))
+            if k == i1:
+                time.sleep(ESPERA_ESTATISTICAS)
+                depois = _fingerprint()
+    if info is not None:
+        info["suspeitas"] = _suspeitas_da_janela(casos, respostas, antes, depois, i0, i1) if i0 >= 0 else []
     return respostas
 
 
-def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> None:
-    """Restaura o dump, roda os casos contra `base_url` e grava `<id>.json` + `_meta.json`."""
+def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path, completo: bool = False) -> None:
+    """Restaura o dump, roda os casos contra `base_url` e grava `<id>.json` + `_meta.json`.
+    Recusa (ErroGravacao, nada e gravado) sonda que escreve, escrita invisivel ao log na janela
+    das sondas e `espera_status` que a referencia nao confirma. `completo=True` (conjunto inteiro
+    de casos) remove arquivos antigos da baseline sem caso."""
     diretorio = Path(diretorio)
     boot = laravel_sobe(base_url)
     if boot is not None:
@@ -480,14 +579,61 @@ def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> None:
     sha = _sha_dump_atual()
     if sha is None:
         raise ErroGravacao(f"hash do dump ausente: {ARQ_SHA256}")
-    respostas = _roda(casos, base_url)
+    info: dict = {}
+    respostas = _roda(casos, base_url, info=info)
+    for c in casos:
+        if _e_sonda_de_escrita(c) and respostas[c.id].sql_negocio:
+            raise ErroGravacao(
+                f"a sonda {c.id} ESCREVEU no banco com corpo vazio ({len(respostas[c.id].sql_negocio)} "
+                "statement(s) de negocio): nao vira baseline; mova-a para `perigosas` em _ajustes.yml")
+        if c.espera_status is not None and respostas[c.id].status != c.espera_status:
+            raise ErroGravacao(f"{c.id} declara espera_status={c.espera_status}, mas a referencia "
+                               f"respondeu {respostas[c.id].status}")
+    if info.get("suspeitas"):
+        raise ErroGravacao("escrita invisivel ao log durante as sondas (contadores de "
+                           "pg_stat_user_tables mudaram sem SQL de negocio capturado): "
+                           + ", ".join(info["suspeitas"]))
     for c in casos:
         _grava_registro(diretorio / nome_arquivo(c.id), {"id": c.id, **_nucleo(respostas[c.id])})
+    if completo:
+        esperados = {nome_arquivo(c.id) for c in casos}
+        for p in diretorio.glob("*.json"):
+            if not p.name.startswith("_") and p.name not in esperados:
+                p.unlink()
     meta = {"dump_sha256": sha, "commit": _commit(),
             "data": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
             "n_casos": len(casos), "alvo": _tipo_alvo(base_url), "ids": [c.id for c in casos]}
-    (diretorio / "_meta.json").write_bytes(
+    _grava_meta(diretorio, meta)
+
+
+def _grava_meta(diretorio: Path, meta: dict) -> None:
+    (Path(diretorio) / "_meta.json").write_bytes(
         (json.dumps(meta, sort_keys=True, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
+
+
+def _arquivos_de_baseline(diretorio: Path) -> list[str]:
+    return sorted(p.name for p in Path(diretorio).glob("*.json") if not p.name.startswith("_"))
+
+
+def poda(casos: list[CasoHttp], diretorio: Path) -> list[str]:
+    """Remove da baseline os arquivos sem caso carregado e reescreve `_meta` (ids, n_casos e o
+    commit da poda). Recusa (ErroGravacao) se algum caso carregado nao tem baseline: podar nao
+    grava nada. Devolve os nomes removidos."""
+    diretorio = Path(diretorio)
+    esperados = {nome_arquivo(c.id) for c in casos}
+    sem = [c.id for c in casos if not (diretorio / nome_arquivo(c.id)).is_file()]
+    if sem:
+        raise ErroGravacao("casos sem baseline (grave de novo): " + ", ".join(sem[:10]))
+    removidos = [n for n in _arquivos_de_baseline(diretorio) if n not in esperados]
+    for n in removidos:
+        (diretorio / n).unlink()
+    try:
+        meta = json.loads((diretorio / "_meta.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise ErroGravacao("baseline/_meta.json ilegivel: nada a podar") from None
+    meta.update({"ids": [c.id for c in casos], "n_casos": len(casos), "podado_no_commit": _commit()})
+    _grava_meta(diretorio, meta)
+    return removidos
 
 
 def _erro(id: str, detalhe: str) -> Caso:
@@ -509,7 +655,7 @@ def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
         dif = [k for k in novo if base.get(k) != novo[k]]
         return Caso(caso.id, AREA, Veredito.DIVERGE, "difere em: " + ", ".join(dif),
                     _diff(base, novo))
-    if r.status >= 500:
+    if r.status >= 500 and caso.espera_status != r.status:
         return Caso(caso.id, AREA, Veredito.INCONCLUSIVO,
                     f"HTTP {r.status} nos dois lados: o caso nao foi exercitado")
     if r.json is None and not r.texto:
@@ -541,6 +687,15 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso
         return [_erro("laravel:baseline",
                       f"baseline gravada com outro dump (sha256 {str(meta.get('dump_sha256'))[:12]} "
                       f"!= atual {atual[:12]}): grave a baseline de novo; nada foi restaurado")]
+    ids_meta, ids_casos = set(meta.get("ids") or []), {c.id for c in casos}
+    sobra_caso, sobra_meta = sorted(ids_casos - ids_meta), sorted(ids_meta - ids_casos)
+    orfaos = sorted(set(_arquivos_de_baseline(diretorio)) - {nome_arquivo(c.id) for c in casos})
+    if sobra_caso or sobra_meta or orfaos:
+        return [_erro("laravel:baseline",
+                      "baseline inconsistente com os casos carregados; nada foi restaurado. "
+                      f"casos sem registro no _meta: {sobra_caso[:10]}; ids do _meta sem caso: "
+                      f"{sobra_meta[:10]}; arquivos sem caso: {orfaos[:10]} "
+                      "(use `python -m regressao.laravel.caso poda` ou grave de novo)")]
     registros: dict[str, dict] = {}
     faltando: list[Caso] = []
     for c in casos:
@@ -559,8 +714,9 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso
     except BancoDiferente as e:
         return [_erro("laravel:baseline", f"dump local diferente do registrado: {e}")]
     erros: dict[str, str] = {}
+    info: dict = {}
     try:
-        respostas = _roda(casos, base_url, erros)
+        respostas = _roda(casos, base_url, erros, info)
     except (ErroRequisicao, ErroAmbienteBanco) as e:
         return [_erro("laravel:banco", f"preparo do banco/token falhou: {e}")]
     res: list[Caso] = []
@@ -569,23 +725,35 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso
             res.append(_erro(c.id, erros[c.id]))
         else:
             res.append(_veredito(c, registros[c.id], respostas[c.id]))
+    if info.get("suspeitas"):
+        res.append(Caso("fingerprint:probes", AREA, Veredito.DIVERGE,
+                        "tabelas alteradas durante as sondas sem SQL de negocio capturado: "
+                        + ", ".join(info["suspeitas"])))
     return res
 
 
 def _main(argv: list[str]) -> int:
     """python -m regressao.laravel.caso gravar|comparar [url]  (padrao: alvo `ref`, :8080 para gravar;
-    laravel_novo para comparar)."""
+    laravel_novo para comparar) | poda (remove da baseline o que nao tem caso e reescreve o _meta)."""
     import sys
     modo = argv[0] if argv else ""
-    if modo not in ("gravar", "comparar"):
-        print("uso: python -m regressao.laravel.caso gravar|comparar [url]", file=sys.stderr)
+    if modo not in ("gravar", "comparar", "poda"):
+        print("uso: python -m regressao.laravel.caso gravar|comparar [url] | poda", file=sys.stderr)
         return 2
+    casos = carrega_casos(DIR_CASOS)
+    if modo == "poda":
+        try:
+            removidos = poda(casos, DIR_BASELINE)
+        except ErroGravacao as e:
+            print(f"poda recusada: {e}", file=sys.stderr)
+            return 1
+        print(f"podados {len(removidos)} arquivo(s): {removidos}; _meta com {len(casos)} casos")
+        return 0
     alvos = alvos_do_ambiente()
     url = argv[1] if len(argv) > 1 else (alvos.ref if modo == "gravar" else alvos.laravel_novo)
-    casos = carrega_casos(DIR_CASOS)
     t0 = time.monotonic()
     if modo == "gravar":
-        gravar(casos, url, DIR_BASELINE)
+        gravar(casos, url, DIR_BASELINE, completo=True)
         print(f"gravados {len(casos)} casos em {DIR_BASELINE} ({time.monotonic() - t0:.0f} s)")
         return 0
     res = comparar(casos, url, DIR_BASELINE)

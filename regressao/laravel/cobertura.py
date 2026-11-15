@@ -70,7 +70,19 @@ def cobertura_rotas(rotas: list[Rota], casos: list[CasoHttp], dir_baseline: Path
                 inconclusivos.append(ids[0])
         cobertas.append({"origem": r.origem, "metodo": r.metodo, "uri": r.caminho,
                          "casos": ids, "status": status, "classe": classe})
-    return {"total": len(rotas), "por_origem": origens, "classes": classes,
+    # Por CASO (os 5xx da lista acima sao por rota: 1 por rota coberta; aqui entram tambem os
+    # casos de auth e as rotas com mais de um caso, e a rejeicao 5xx documentada vira a parte).
+    st = {c.id: _status_do_caso(dir_baseline, c) for c in casos}
+    c5 = [c for c in casos if (st[c.id] or 0) >= 500]
+    esperados = [c.id for c in c5 if c.espera_status == st[c.id]]
+    por_caso = {"total": len(casos), "5xx": len(c5),
+                "inconclusivos_5xx": [c.id for c in c5 if c.id not in esperados],
+                "rejeicao_esperada_5xx": esperados}
+    colapsados = sum(1 for x in cobertas if "|" in x["metodo"] and x["metodo"] != "GET|HEAD")
+    return {"total": len(rotas), "por_origem": origens, "classes": classes, "casos": por_caso,
+            "notas": {"metodos_colapsados": colapsados,
+                      "head": "rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); "
+                              "PUT|PATCH, se permitido, so por PUT"},
             "inconclusivos_5xx": inconclusivos, "cobertas": cobertas, "nao_cobertas": nao_cobertas}
 
 
@@ -88,7 +100,15 @@ def _md(rel: dict) -> str:
           "o caso e IDENTICO nos dois lados mas termina INCONCLUSIVO (500 x 500): a rota nao "
           "foi exercitada, so o seu roteamento/erro. Lista:", ""]
     L += [f"- `{i}`" for i in rel["inconclusivos_5xx"]] or ["- (nenhuma)"]
-    L += ["", "## Nao cobertas", ""]
+    k = rel["casos"]
+    L += ["", "## Por caso (explica a diferenca rotas x casos)", "",
+          f"Casos carregados: {k['total']}; com 5xx na referencia: {k['5xx']} = "
+          f"{len(k['inconclusivos_5xx'])} que terminam INCONCLUSIVO (500 x 500, nao exercitados) + "
+          f"{len(k['rejeicao_esperada_5xx'])} de rejeicao esperada (`espera_status`: IDENTICO, "
+          "comportamento documentado do 5.4).", ""]
+    L += [f"- rejeicao esperada: `{i}`" for i in k["rejeicao_esperada_5xx"]]
+    L += ["", f"Notas: {rel['notas']['head']}. Rotas com metodo colapsado alem de HEAD: "
+              f"{rel['notas']['metodos_colapsados']}.", "", "## Nao cobertas", ""]
     por_motivo: dict[str, list[dict]] = {}
     for n in rel["nao_cobertas"]:
         chave = n["motivo"].split(":")[0].split(" (")[0].strip()
@@ -107,6 +127,7 @@ def escreve_cobertura(rel: dict, destino: Path) -> None:
     (destino / "_cobertura.json").write_bytes(
         (json.dumps(rel, sort_keys=True, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
     (destino / "_cobertura.md").write_bytes(_md(rel).encode("utf-8"))
+    return None
 
 
 def main() -> int:

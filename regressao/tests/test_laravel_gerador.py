@@ -86,7 +86,7 @@ ROTAS = [
     _r("GET|HEAD", "/v4/api/a/{id}"),
     _r("DELETE", "/v4/api/a/{id}"),
     _r("POST", "/v4/api/a/excluir"),
-    _r("PUT|PATCH", "/v4/api/p"),
+    _r("POST", "/v4/api/p"),
     _r("GET", "/api/v1/protocolo/cgm", origem="silex", mw="silex"),
     _r("GET|HEAD", "/rest/v1/pessoa/{cpf}", origem="rest", mw="AuthSim"),
 ]
@@ -96,7 +96,7 @@ def test_gera_ordem_ordenada_por_uri_e_metodo_por_origem():
     g = gerador.gera(ROTAS)
     assert [c.id for c in g["laravel"]] == [
         "rota:GET:/v4/api/a/lista", "rota:GET:/v4/api/b/lista",
-        "rota:PUT:/v4/api/p", "rota:POST:/v4/api/z/salvar"]
+        "rota:POST:/v4/api/p", "rota:POST:/v4/api/z/salvar"]
     assert [c.id for c in g["silex"]] == ["rota:GET:/api/v1/protocolo/cgm"]
     assert g["rest"] == []
 
@@ -176,7 +176,7 @@ def test_cobertura_conta_origem_cobertas_nao_cobertas_e_classes(tmp_path):
     grava_tsv(rotas, inv)
     casos = [c for lista in gerador.gera(rotas).values() for c in lista]
     status = {"rota:GET:/v4/api/a/lista": 200, "rota:GET:/v4/api/b/lista": 500,
-              "rota:PUT:/v4/api/p": 422, "rota:POST:/v4/api/z/salvar": 406,
+              "rota:POST:/v4/api/p": 422, "rota:POST:/v4/api/z/salvar": 406,
               "rota:GET:/api/v1/protocolo/cgm": 403, "rota:POST:/v4/oauth/token": 400}
     base = tmp_path / "base"
     for c in casos:

@@ -10,6 +10,7 @@ Ajustes que a regeneracao preserva ficam em `casos/_ajustes.yml`:
   volateis:  {<id do caso>: [caminhos para mascarar]}
   instaveis: {<id do caso>: "motivo"}   # vao para `_instaveis.yml` (nao carregado por padrao)
   perigosas: {<id do caso>: "motivo"}   # sonda que ESCREVEU ao vivo: deixa de ser gerada
+  permitidas: [<id do caso>, ...]       # allowlist de DELETE/PUT/PATCH (vazia por padrao)
 
 Uso: python -m regressao.laravel.gerador
 """
@@ -30,6 +31,7 @@ PERIGOSA = re.compile(r"delete|destroy|truncate|reset|import|sync|logout|migrate
 PERIGOSA_ESCRITA = re.compile(
     PERIGOSA.pattern + r"|exclu|remov|apag|cancel|desfaz|desprocess|desvincul|inativ|desativ"
     r"|recalcul|processar|baix|estorn|arquiv|devolv|duplic|rejeit|aprov|limp|clear", re.I)
+METODOS_DESTRUTIVOS = frozenset({"DELETE", "PUT", "PATCH"})  # so com `permitidas` em _ajustes.yml
 CABECALHO = ("# GERADO por `python -m regressao.laravel.gerador` a partir de _inventario.tsv: "
              "nao edite a mao.\n# Ajustes (volateis/instaveis) ficam em _ajustes.yml.\n")
 
@@ -53,6 +55,9 @@ def motivo_nao_gerada(r: Rota, ajustes: dict | None = None) -> str | None:
     achado = _RE_PARAM.search(r.caminho)
     if achado:
         return f"parametro de caminho {achado.group(0)}: nao se envia id real"
+    if metodo_efetivo(r.metodo) in METODOS_DESTRUTIVOS and \
+            id_do_caso(r) not in ((ajustes or {}).get("permitidas") or []):
+        return "metodo destrutivo sem allowlist: DELETE/PUT/PATCH nao sao sondados"
     padrao = PERIGOSA if metodo_efetivo(r.metodo) == "GET" else PERIGOSA_ESCRITA
     alvo = f"{r.caminho} {r.controller}"
     m = padrao.search(alvo)
@@ -135,7 +140,7 @@ def le_ajustes(arquivo: Path = ARQ_AJUSTES) -> dict:
         return {}
     if not isinstance(dados, dict):
         raise ValueError(f"{Path(arquivo).name}: esperava um mapa")
-    extra = set(dados) - {"volateis", "instaveis", "perigosas"}
+    extra = set(dados) - {"volateis", "instaveis", "perigosas", "permitidas"}
     if extra:
         raise ValueError(f"{Path(arquivo).name}: chaves desconhecidas {sorted(extra)}")
     return dados
