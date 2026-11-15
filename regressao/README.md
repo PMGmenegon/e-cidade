@@ -174,8 +174,10 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 5. `python -m regressao.completa.orquestra --comparar ~/regressao/antes ~/regressao/depois` → `comparacao.md/.json`:
    **regressões** (IDENTICO/INCONCLUSIVO → DIVERGE/ERRO_AMBIENTE, e a *perda de verificação* IDENTICO → INCONCLUSIVO),
    **correções** (DIVERGE/ERRO → IDENTICO), casos **adicionados** e **removidos**, e diferenças de meta (commit, sha da
-   baseline, versões). Saída 1 se houver regressão ou caso removido; 2 se alguma rodada for inválida ou
-   `comparavel=false`.
+   baseline, versões). A saída é o **pior** entre a comparação e o estado de DEPOIS: 1 se houver regressão ou caso
+   removido **ou** DEPOIS tiver `DIVERGE` não conhecida (mesmo igual a ANTES); 2 se alguma rodada for inválida ou
+   `comparavel=false` **ou** DEPOIS tiver `ERRO_AMBIENTE`. `AVISOS` no `comparacao.md/.json` dizem isso. Transições
+   `DIVERGE/ERRO_AMBIENTE → INCONCLUSIVO` aparecem em **Lacunas** (não são correção: o caso deixou de ser verificado).
 
 ## 8. Custos, tempos e memória
 
