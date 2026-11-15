@@ -162,8 +162,9 @@ def test_catalogo_linha_malformada_nomeia_a_linha(tmp_path):
 
 def test_catalogo_semeado_carrega():
     casos = carrega_catalogo(posts.CATALOGO)
-    assert len(casos) == 34 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
-    assert sum(c.verificado for c in casos) == 32
+    assert len(casos) == 52 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
+    assert sum(c.verificado for c in casos) == 50  # 32 anteriores + 9 cai1_* (financeiro) + 9 agu1_* (tributario)
+    assert len({c.tela for c in casos}) == len(casos)
     assert [c.tela for c in casos if not c.verificado] == ["rec4_rpcexame.php", "rec1_rhestagioresultado001.php"]
     assert any(c.tela == "pes1_rhpessoal004.php" and c.tabelas == ["registrapontoeletronicohistorico", "rhpessoal"]
                for c in casos)

@@ -7,7 +7,10 @@
 # consulta HTML = func_*.php. Nao ha .xls/.xlsx binario servido por GET fixo (os arquivos de tmp/ tem nome com timestamp).
 # EVIDENCIA FRACA nas linhas db_download.php (xls): servem UM arquivo compartilhado de /tmp aos dois runtimes; IDENTICO prova so o serving do arquivo, nao a geracao do relatorio.
 # Achados (verificado + DIVERGE, 5.6=200 PDF vs 8.5=500 'Notificacao do Sistema / Erro interno'): mat2_cadunidade002, prot2_cadcgm002, con2_relinstituicoes002, con2_conhist002, con2_conhistdoc002, con2_balancrece002.
-# Mantidos nao-verificado: cem2_renovacoes (formulario sem cod), balrec.csv (so cabecalho), func_cgm (so formulario).
+# Achados novos (rodada pos-entrega A, verificado + DIVERGE, mesmo 500 no 8.5): con2_balancdespele002, con2_balancrecu002, con2_contasrecdesp002, con2_relrec002, cad2_loteam002.
+# cem2_renovacoes virou verificado, com EVIDENCIA FRACA: o PDF (RENOVACAO DE SEPULTURAS, ~18 KB) e um modelo em branco, igual com ou sem `cod`; prova o servico do PDF, nao dados.
+# Mantidos nao-verificado: balrec.csv (so o cabecalho da planilha: gerar dados exige um relatorio que preencha o arquivo; sem fixture no banco de dev) e func_cgm
+# (mesmo com pesquisa_chave=3 devolve so a pagina de pesquisa/JS, sem os dados do CGM no HTML: nao ha conteudo para comparar).
 orc2_cadorcsubfuncao002.php		pdf	orcamento	verificado
 orc2_cadorcfuncao002.php		pdf	orcamento	verificado
 com2_pctipocompra002.php		pdf	compras	verificado
@@ -22,9 +25,31 @@ con2_relinstituicoes002.php		pdf	configuracao	verificado
 con2_conhist002.php		pdf	contabilidade	verificado
 con2_conhistdoc002.php		pdf	contabilidade	verificado
 con2_balancrece002.php		pdf	contabilidade	verificado
-cem2_renovacoes.php		pdf	cemiterio	nao-verificado
+cem2_renovacoes.php		pdf	cemiterio	verificado
 db_download.php	arquivo=tmp/con2_balancdespsinteticocsv002.csv	xls	contabilidade	verificado
 db_download.php	arquivo=tmp/balrec.csv	xls	contabilidade	nao-verificado
 db_download.php	arquivo=tmp/con2_balancverificacaocsv002.csv	xls	contabilidade	verificado
 func_orcfuncao.php	funcao_js=x	html	orcamento	verificado
 func_cgm.php	funcao_js=x	html	configuracao	nao-verificado
+con2_balancdespele002.php		pdf	financeiro	verificado
+con2_balancrecu002.php		pdf	financeiro	verificado
+con2_contasrecdesp002.php		pdf	financeiro	verificado
+con2_razaoempenhos002.php		pdf	financeiro	verificado
+con2_relrec002.php		pdf	financeiro	verificado
+emp2_emprelcredor002.php		pdf	financeiro	verificado
+emp2_empnotas002.php		pdf	financeiro	verificado
+orc2_anexo1002.php		pdf	financeiro	verificado
+orc2_desppessoal002.php		pdf	financeiro	verificado
+cai2_relrecdesp002.php		pdf	financeiro	verificado
+orc2_despsecretaria002.php		pdf	financeiro	verificado
+iss2_atividade002.php		pdf	tributario	verificado
+iss2_classes002.php		pdf	tributario	verificado
+iss2_ativtipo002.php		pdf	tributario	verificado
+cad2_loteam002.php		pdf	tributario	verificado
+cad2_carface002.php		pdf	tributario	verificado
+arr2_relatoriodevolucoes002.php		pdf	tributario	verificado
+arr2_relatoriocompensacoes002.php		pdf	tributario	verificado
+div2_resumogeraldivida002.php		pdf	tributario	verificado
+fis2_tipoandamento002.php		pdf	tributario	verificado
+jur2_numproc002.php		pdf	tributario	verificado
+agu2_relconsumo002.php		pdf	tributario	verificado

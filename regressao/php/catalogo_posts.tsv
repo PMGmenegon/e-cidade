@@ -1,6 +1,12 @@
 # Catalogo de POSTs reais (nivel 3). Colunas: tela<TAB>tabelas (filhas ANTES da mae)<TAB>campos<TAB>area<TAB>status
 # status (5a coluna, OBRIGATORIA; so 'verificado' ou 'nao-verificado'): 'verificado' = caso VALIDO e veredito confiavel (rodou de verdade contra a pilha, seja qual for o veredito;
 #         um 'verificado' com DIVERGE e achado e faz a bateria sair com 1); 'nao-verificado' = convertido de scratchpad/n3_rh_payloads.tsv, ainda nao exercitado com confianca.
+# CGM (prot1_cadcgm001.php) NAO entra como linha rodavel: o DELETE de cgm falha fora do app (trigger tg_atualiza_issbaseintegracaoexterna:
+# EXECUTE com argumento nulo), entao o restore por diferenca de escrita_post.py aborta. Verificado a mao com 2 restauracoes completas do dump
+# (restore -> POST 5.6 -> SQL; restore -> POST 8.5 -> SQL): os 3 INSERTs de negocio (cgm, cgmfisico, db_cgmcpf) sao IDENTICOS nos dois runtimes,
+# exceto z01_hora (hora do relogio, '15:28' x '15:32': benigno). Tabelas tocadas: cgm, cgmfisico, db_cgmcpf, patrimonio.cgmendereco, protocolo.personacgm.
+# Rodada pos-entrega A: +9 linhas de Caixa/Tesouraria (cai1_*, area financeiro) e +9 de Agua (agu1_*, area tributario), todas IDENTICO 5.6 x 8.5 ao vivo.
+# Excluidas: cai1_bancoshistmovcategoria001 (DIVERGE so por sequence nao reposta pelo harness: id 3 x 4) e agu1_aguaconstr001 (grava tambem em aguaconstrcar, nao restaurada).
 # Modulos centrais: Folha = as linhas pes*/rec* (RH); Arrecadacao = arr1_*; Orcamento = orc1_*. CGM (prot1_cadcgm001.php) PENDENTE:
 # o restore aborta por FK em filhas de cgm que o POST preenche (cgmendereco, depois personacgm; possivelmente mais): a lista de tabelas
 # ainda nao esta completa e cada aborto deixa residuo no banco. So *001 (inclusao) dos demais modulos coberto.
@@ -38,3 +44,21 @@ rec1_rhestagioresultado001.php	rhestagioresultado,portariaassenta,assenta,portar
 arr1_procjurtipo001.php	procjurtipo	v66_sequencial=&v66_descr=TESTE_N3&v66_procjurtiporegra=1&incluir=Incluir	arrecadacao	verificado
 arr1_grupotaxa001.php	grupotaxa	ar37_sequencial=&ar37_grupotaxatipo=1&ar38_descricao=TESTE_N3&ar37_descricao=TESTE_N3&incluir=Incluir	arrecadacao	verificado
 orc1_orcfuncao001.php	orcfuncao	o52_funcao=91&o52_descr=TESTE_N3&o52_siconfi=1&o52_codtri=31/12/2026&o52_finali=OBS_N3&db_opcao=Incluir	orcamento	verificado
+cai1_arrenaoagrupa001.php	arrenaoagrupa	oid=1&k00_numpre=1&k00_tipo=1&k00_descr=TESTE_N3&incluir=Incluir	financeiro	verificado
+cai1_arretipo001.php	arretipo	k00_tipo=1&k00_codbco=1&k00_codage=1&k00_txban=1&k00_rectx=1&k00_vlrmin=1&codmodelo=1&k03_tipo=1&tipodescr=TESTE_N3&k00_receitacredito=1&receitacreditodescr=TESTE_N3&k00_descr=TESTE_N3&k00_tercdigcarneunica=1&k00_tercdigcarnenormal=1&k00_tercdigrecunica=1&k00_tercdigrecnormal=1&k00_exercicioscarne=1&k00_horainicial=1&k00_horafinal=1&k00_taxaespecifica=1&k196_sequencial=&k196_aceitatef=1&k196_maximoparcelas=1&k196_valorminimoparcelafisica=1&k196_valorminimoparcelajuridica=1&operacoes[]=1&k00_marcado=t&k00_emrec=f&k00_agnum=f&k00_agpar=f&k00_impval=f&k00_liberacarnesis=f&k00_liberacarnepref=f&k00_recibodbpref=1&k00_tipoagrup=1&k00_formemissao=2&selectTipoVenc=0&k00_bloqnutil=f&k00_msguni=OBS_N3&k00_msguni2=OBS_N3&k00_msgparc=OBS_N3&k00_msgparc2=OBS_N3&k00_msgparcvenc=OBS_N3&k00_msgparcvenc2=OBS_N3&k00_msgrecibo=OBS_N3&incluir=Incluir	financeiro	verificado
+cai1_bancoshistmov001.php	bancoshistmov	k66_sequencial=&k66_codbco=1&nomebco=TESTE_N3&k66_bancoshistmovcategoria=TESTE_N3&k67_descricao=TESTE_N3&k66_historico=TESTE_N3&k66_descricao=TESTE_N3&k66_vigencia=1&k66_vigencia_dia=31&k66_vigencia_mes=12&k66_vigencia_ano=2026&k66_sigla=1&incluir=Incluir	financeiro	verificado
+cai1_cadban001.php	cadban	k15_codigo=&k15_numcgm=1&z01_nome=TESTE_N3&k15_codbco=1&k15_codage=1&k15_contat=1&k15_gerent=1&k15_agenci=1&k15_conta=1&k15_rectxb=1&k15_txban=1&k15_local=1&k15_carte=1&k15_espec=1&k15_aceite=1&k15_ageced=1&k15_bancotef=1&incluir=Incluir	financeiro	verificado
+cai1_cadmodcarne001.php	cadmodcarne	k47_sequencial=&k47_descr=TESTE_N3&k47_altura=1&k47_largura=1&k47_orientacao=1&k47_tipoconvenio=1&k47_obs=OBS_N3&incluir=Incluir	financeiro	verificado
+cai1_cadtipoitem001.php	cadtipoitem	k09_sequencial=&k09_cadtipo=31/12/2026&k03_tipo=1&k09_cadtipoitemgrupo=31/12/2026&k37_descr=TESTE_N3&incluir=Incluir	financeiro	verificado
+cai1_cadtipomod001.php	cadtipomod	k46_sequencial=&k46_descr=TESTE_N3&incluir=Incluir	financeiro	verificado
+cai1_cadtipoorigem001.php	cadtipoorigem	k14_sequencial=&k14_cadtipo=31/12/2026&k03_tipo=1&k14_cadorigem=1&k33_descr=TESTE_N3&incluir=Incluir	financeiro	verificado
+cai1_caiparametro001.php	caiparametro	k29_chqemitidonaoautent=1&k29_chqemitidonaoautent_dia=31&k29_chqemitidonaoautent_mes=12&k29_chqemitidonaoautent_ano=2026&k29_datasaldocontasextra=31/12/2026&k29_datasaldocontasextra_dia=31&k29_datasaldocontasextra_mes=12&k29_datasaldocontasextra_ano=2026&k29_orctiporecfundeb=1&o15_recurso=1&o15_descr=TESTE_N3&k29_contapadraoslip=1&k13_descr=TESTE_N3&convenio_banco=1&k29_boletimzerado=f&k29_modslipnormal=36&k29_modsliptransf=36&k29_saldoemitechq=1&k29_trazdatacheque=f&k29_contassemmovimento=f&k29_chqduplicado=f&tipo_transmissao=1&k29_gerarslipautomaticoreceitaretencao=f&k29_validadatacreditobaixabanco=f&alterar=Alterar	financeiro	verificado
+agu1_aguabasebaixa001.php	aguabasebaixa	x08_matric=1&x01_numcgm=1&x08_data=31/12/2026&x08_data_dia=31&x08_data_mes=12&x08_data_ano=2026&x08_usuario=1&nome=TESTE_N3&x08_obs=OBS_N3&incluir=Incluir	tributario	verificado
+agu1_aguabasecorresp001.php	aguabasecorresp	x32_codcorresp=1&x02_codcorresp=1&x32_matric=1&incluir=Incluir	tributario	verificado
+agu1_aguabaseresp001.php	aguabaseresp	x14_matric=1&x14_numcgm=1&z01_nome=TESTE_N3&incluir=Incluir	tributario	verificado
+agu1_aguabasevenc001.php	aguabasevenc	x27_matric=1&x27_parcela=1&x27_dtvenc=31/12/2026&x27_dtvenc_dia=31&x27_dtvenc_mes=12&x27_dtvenc_ano=2026&incluir=Incluir	tributario	verificado
+agu1_aguacalcval001.php	aguacalcval	x23_codcalc=1&x22_matric=1&x23_codconsumotipo=1&x25_descr=TESTE_N3&x23_valor=1&incluir=Incluir	tributario	verificado
+agu1_aguacoletor001.php	aguacoletor	x46_sequencial=&x46_descricao=TESTE_N3&x46_observacao=OBS_N3&incluir=Incluir	tributario	verificado
+agu1_aguacondominiomat001.php	aguacondominiomat	x40_codcondominio=1&x40_matric=1&z01_nome=TESTE_N3&incluir=Incluir	tributario	verificado
+agu1_aguaconfvenc001.php	aguaconfvenc	x33_exerc=1&x33_parcela=1&x33_dtvenc=31/12/2026&x33_dtvenc_dia=31&x33_dtvenc_mes=12&x33_dtvenc_ano=2026&incluir=Incluir	tributario	verificado
+agu1_aguaconsumorec001.php	aguaconsumorec	x20_codconsumo=1&x19_descr=TESTE_N3&x20_codconsumotipo=1&x25_descr=TESTE_N3&x20_valor=1&incluir=Incluir	tributario	verificado
