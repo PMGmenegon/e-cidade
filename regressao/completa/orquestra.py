@@ -407,7 +407,8 @@ def _diferencas_meta(a: dict, d: dict) -> dict:
 def classifica(mudancas: list[tuple[str, Veredito | None, Veredito | None]]) -> dict[str, list[dict]]:
     """Separa as mudancas de `compara_rodadas` em regressoes / correcoes / adicionados / removidos / outras."""
     ruim = {Veredito.DIVERGE, Veredito.ERRO_AMBIENTE}
-    secoes: dict[str, list[dict]] = {"regressoes": [], "correcoes": [], "adicionados": [], "removidos": [], "outras": []}
+    secoes: dict[str, list[dict]] = {"regressoes": [], "correcoes": [], "adicionados": [], "removidos": [],
+                                  "lacunas": [], "outras": []}
     for id, a, d in mudancas:
         item = {"id": id, "antes": a.value if a else None, "depois": d.value if d else None}
         if a is None:
@@ -420,12 +421,34 @@ def classifica(mudancas: list[tuple[str, Veredito | None, Veredito | None]]) -> 
             secoes["regressoes"].append({**item, "tipo": "perda de verificacao"})
         elif a in ruim and d == Veredito.IDENTICO:
             secoes["correcoes"].append(item)
+        elif a in ruim and d == Veredito.INCONCLUSIVO:
+            secoes["lacunas"].append(item)  # saiu do vermelho sem ser verificado: nao e correcao
         else:
             secoes["outras"].append(item)
     return secoes
 
 
-def _md_comparacao(antes: Path, depois: Path, secoes: dict, difmeta: dict, ma: dict, md: dict) -> str:
+def _avisos_depois(dd: dict) -> list[str]:
+    """Avisos sobre o estado da rodada DEPOIS em si (independente de ter mudado em relacao a ANTES)."""
+    casos = [Caso(c["id"], c.get("area", ""), Veredito(c["veredito"]), conhecida=bool(c.get("conhecida")))
+             for c in dd["casos"]]
+    avisos = []
+    n_err = sum(1 for c in casos if c.veredito == Veredito.ERRO_AMBIENTE)
+    n_div = sum(1 for c in casos if c.veredito == Veredito.DIVERGE and not c.conhecida)
+    if n_err:
+        avisos.append(f"DEPOIS tem {n_err} caso(s) ERRO_AMBIENTE (mesmo que ja existissem em ANTES): saida 2")
+    if n_div:
+        avisos.append(f"DEPOIS tem {n_div} DIVERGE nao conhecida(s) (mesmo que ja existissem em ANTES): saida 1")
+    return avisos
+
+
+def _codigo_depois(dd: dict) -> int:
+    return codigo_saida([Caso(c["id"], c.get("area", ""), Veredito(c["veredito"]), conhecida=bool(c.get("conhecida")))
+                         for c in dd["casos"]])
+
+
+def _md_comparacao(antes: Path, depois: Path, secoes: dict, difmeta: dict, ma: dict, md: dict,
+                   avisos: list[str] | None = None) -> str:
     def tabela(titulo: str, itens: list[dict], com_tipo: bool = False) -> list[str]:
         out = ["", f"## {titulo} ({len(itens)})", ""]
         if not itens:
@@ -439,10 +462,13 @@ def _md_comparacao(antes: Path, depois: Path, secoes: dict, difmeta: dict, ma: d
 
     L = ["# Comparacao antes/depois", "", f"- ANTES: {antes}", f"- DEPOIS: {depois}",
          f"- totais ANTES: {ma.get('totais')}", f"- totais DEPOIS: {md.get('totais')}"]
+    if avisos:
+        L += ["", "## AVISOS", ""] + [f"- **{a}**" for a in avisos]
     L += tabela("Regressoes", secoes["regressoes"], com_tipo=True)
     L += tabela("Correcoes", secoes["correcoes"])
     L += tabela("Adicionados", secoes["adicionados"])
     L += tabela("Removidos", secoes["removidos"])
+    L += tabela("Lacunas (DIVERGE/ERRO_AMBIENTE -> INCONCLUSIVO: nao e correcao, nao foi verificado)", secoes["lacunas"])
     L += tabela("Outras mudancas de veredito", secoes["outras"])
     L += ["", "## Diferencas de meta", ""]
     if not difmeta:
@@ -454,7 +480,8 @@ def _md_comparacao(antes: Path, depois: Path, secoes: dict, difmeta: dict, ma: d
 
 
 def compara_completas(antes: Path, depois: Path, saida: Path | None = None) -> int:
-    """0 = sem regressao nem caso removido; 1 = ha regressao ou removido; 2 = entrada invalida."""
+    """Saida = max(comparacao, estado de DEPOIS): 1 se ha regressao/removido OU DEPOIS tem DIVERGE nao
+    conhecida; 2 se a entrada e invalida/nao comparavel OU DEPOIS tem ERRO_AMBIENTE; senao 0."""
     antes, depois = Path(antes), Path(depois)
     try:
         da = _le_rodada(antes, "ANTES")
@@ -472,13 +499,15 @@ def compara_completas(antes: Path, depois: Path, saida: Path | None = None) -> i
     difmeta = _diferencas_meta(da["meta"], dd["meta"])
     destino = Path(saida) if saida else depois
     destino.mkdir(parents=True, exist_ok=True)
-    resultado = {"antes": str(antes), "depois": str(depois), **secoes, "meta": difmeta,
+    avisos = _avisos_depois(dd)
+    resultado = {"antes": str(antes), "depois": str(depois), **secoes, "meta": difmeta, "avisos": avisos,
                  "totais": {"antes": da["meta"].get("totais"), "depois": dd["meta"].get("totais")}}
     (destino / "comparacao.json").write_text(json.dumps(resultado, ensure_ascii=False, indent=2),
                                              encoding="utf-8", newline="\n")
-    (destino / "comparacao.md").write_text(_md_comparacao(antes, depois, secoes, difmeta, da["meta"], dd["meta"]),
+    (destino / "comparacao.md").write_text(_md_comparacao(antes, depois, secoes, difmeta, da["meta"], dd["meta"], avisos),
                                            encoding="utf-8", newline="\n")
-    return 1 if secoes["regressoes"] or secoes["removidos"] else 0
+    mudou = 1 if secoes["regressoes"] or secoes["removidos"] else 0
+    return max(mudou, _codigo_depois(dd))  # DEPOIS vermelho continua vermelho, mesmo igual a ANTES
 
 
 # ------------------------------------------------------------------ CLI

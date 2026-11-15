@@ -222,7 +222,7 @@ def test_flag_comparar_lista_mudancas_de_veredito(tmp_path):
         [Caso("tela:reg.php", "x", D), Caso("tela:corr.php", "x", I), Caso("tela:nova.php", "x", I),
          Caso("tela:igual.php", "x", I), Caso("tela:perde.php", "x", N)],
         laravel=[Caso("rota:GET:/a", "l", E)]), {"git_commit": "bbb", "versoes": {"php_85": "8.5"}})
-    assert orquestra.compara_completas(antes, depois) == 1
+    assert orquestra.compara_completas(antes, depois) == 2  # DEPOIS tem ERRO_AMBIENTE (laravel)
     cj = json.loads((depois / "comparacao.json").read_text(encoding="utf-8"))
     assert [m["id"] for m in cj["regressoes"]] == ["laravel:rota:GET:/a", "php:tela:perde.php", "php:tela:reg.php"]
     assert [m["id"] for m in cj["correcoes"]] == ["php:tela:corr.php"]
@@ -287,6 +287,42 @@ def test_comparar_erro_contra_ok_e_demonstravel(tmp_path):
     assert [m["id"] for m in cj["removidos"]] == ["laravel:boot"]
     assert [m["id"] for m in cj["adicionados"]] == ["laravel:rota:GET:/a"]
     assert cj["removidos"][0]["antes"] == "ERRO_AMBIENTE"
+
+
+def test_comparar_depois_com_erro_ambiente_igual_ao_antes_sai_2_com_aviso(tmp_path):
+    f = frentes([Caso("tela:a.php", "x", I)], laravel=[Caso("laravel:boot", "l", E)])
+    antes = completa(tmp_path, "antes", f)
+    depois = completa(tmp_path, "depois", f)
+    assert orquestra.compara_completas(antes, depois) == 2
+    cj = json.loads((depois / "comparacao.json").read_text(encoding="utf-8"))
+    assert cj["regressoes"] == [] and any("ERRO_AMBIENTE" in a for a in cj["avisos"])
+    assert "AVISOS" in (depois / "comparacao.md").read_text(encoding="utf-8")
+
+
+def test_comparar_depois_com_diverge_nao_conhecida_igual_ao_antes_sai_1_com_aviso(tmp_path):
+    f = frentes([Caso("tela:a.php", "x", D)])
+    antes = completa(tmp_path, "antes", f)
+    depois = completa(tmp_path, "depois", f)
+    assert orquestra.compara_completas(antes, depois) == 1
+    assert any("DIVERGE" in a for a in json.loads((depois / "comparacao.json").read_text())["avisos"])
+
+
+def test_comparar_diverge_conhecida_no_depois_nao_forca_saida(tmp_path):
+    antes = completa(tmp_path, "antes", frentes([Caso("tela:a.php", "x", D, conhecida=True)]))
+    depois = completa(tmp_path, "depois", frentes([Caso("tela:a.php", "x", D, conhecida=True)]))
+    assert orquestra.compara_completas(antes, depois) == 0
+    assert json.loads((depois / "comparacao.json").read_text())["avisos"] == []
+
+
+@pytest.mark.parametrize("de", [D, E])
+def test_comparar_diverge_ou_erro_virando_inconclusivo_e_lacuna_nao_correcao(tmp_path, de):
+    antes = completa(tmp_path, "antes", frentes([Caso("tela:a.php", "x", de)]))
+    depois = completa(tmp_path, "depois", frentes([Caso("tela:a.php", "x", N)]))
+    orquestra.compara_completas(antes, depois)
+    cj = json.loads((depois / "comparacao.json").read_text(encoding="utf-8"))
+    assert [m["id"] for m in cj["lacunas"]] == ["php:tela:a.php"]
+    assert cj["correcoes"] == [] and cj["outras"] == []
+    assert "Lacunas" in (depois / "comparacao.md").read_text(encoding="utf-8")
 
 
 def test_cli_comparar_e_saida(tmp_path, monkeypatch):
