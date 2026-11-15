@@ -48,6 +48,16 @@ def test_normaliza_dom_tira_scripts_estilos_datas_horas_sessao_e_saudacao():
     assert out == out2
 
 
+def test_normaliza_dom_omite_a_lista_de_ultimos_acessos_do_modulo():
+    """`modulos.php` lista os ultimos acessos do usuario (db_logsacessa, janela por data): e historico
+    de uso, nao comportamento da tela; muda a cada rodada de fluxos."""
+    antes = ('<div id="acessosModulo"><table><tr><td>Ultimos</td></tr><tr><td><a href="x.php">Inclusao</a>'
+             '</td><td>14/11/2026</td></tr></table></div><p>resto</p>')
+    depois = '<div id="acessosModulo"><table><tr><td>Ultimos</td></tr></table></div><p>resto</p>'
+    assert fluxos.normaliza_dom(antes) == fluxos.normaliza_dom(depois)
+    assert "resto" in fluxos.normaliza_dom(antes) and "x.php" not in fluxos.normaliza_dom(antes)
+
+
 def test_normaliza_dom_uma_tag_por_linha_e_sem_espacos_repetidos():
     out = fluxos.normaliza_dom("<div>  <p>a   b</p>\n\n   <p>c</p></div>")
     assert out.splitlines() == ["<div>", "<p>a b</p>", "<p>c</p>", "</div>"]

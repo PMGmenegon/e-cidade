@@ -77,7 +77,8 @@ def sha(texto: str) -> str:
 
 _RE_SCRIPT = re.compile(r"<script\b([^>]*)>.*?</script\s*>", re.I | re.S)
 _RE_STYLE = re.compile(r"<style\b[^>]*>.*?</style\s*>", re.I | re.S)
-_RE_DATA_URI = re.compile(r"data:[a-z/+.-]+;base64,[A-Za-z0-9+/=]{40,}")
+_RE_ACESSOS = re.compile(r'(<div id="acessosModulo">)(.*?)(</div>)', re.S)  # "Ultimos acessos ao Modulo"
+_RE_DATA_URI =re.compile(r"data:[a-z/+.-]+;base64,[A-Za-z0-9+/=]{40,}")
 _RE_DATA = re.compile(r"\b\d{2}/\d{2}/\d{4}\b")
 _RE_HORA = re.compile(r"\b\d{2}:\d{2}(?::\d{2})?\b")
 _RE_SAUDACAO = re.compile(r"\b(?:Bom dia|Boa tarde|Boa noite)\b")
@@ -97,6 +98,7 @@ def normaliza_dom(html: str) -> str:
     sem volateis (datas, horas, ids de sessao, saudacao), uma tag por linha, espacos colapsados."""
     html = _RE_SCRIPT.sub(lambda m: f"<script{m.group(1)}></script>", html)
     html = _RE_STYLE.sub("<style></style>", html)
+    html = _RE_ACESSOS.sub(r"\1<!-- historico de acessos omitido -->\3", html)
     html = _RE_DATA_URI.sub("data:X", html)
     html = _volateis(html)
     html = re.sub(r"\s+", " ", html)
