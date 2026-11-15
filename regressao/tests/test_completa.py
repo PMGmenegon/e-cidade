@@ -108,6 +108,14 @@ def test_resumo_traz_totais_novas_conhecidas_e_inconclusivos_com_motivo(tmp_path
     assert meta["divergencias"] == {"novas": 1, "conhecidas": 1}
 
 
+def test_resumo_da_completa_traz_aviso_fixo_de_escopo_da_bateria_php(tmp_path):
+    roda(tmp_path)
+    resumo = (tmp_path / "saida" / "resumo.md").read_text(encoding="utf-8")
+    assert "ESCOPO" in resumo and "DOIS runtimes" in resumo and "golden master" in resumo
+    assert "limite superior" in resumo or "telas_com_dados" not in resumo
+    assert "lint: so as telas selecionadas" in resumo
+
+
 # ---------------------------------------------------------------- codigo de saida
 
 @pytest.mark.parametrize("php,lar,flu,esperado", [

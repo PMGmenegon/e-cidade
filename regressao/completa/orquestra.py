@@ -43,6 +43,8 @@ FRENTES = ("php", "laravel", "fluxos")
 PREFIXO_ID = {"php": "php", "laravel": "laravel", "fluxos": "fluxo"}
 AREA_COMPLETA = "completa"
 LIMITE_LISTA = 60
+AVISO_ESCOPO_PHP = ("ESCOPO: ./ecidade e montado nos DOIS runtimes; a bateria PHP prova so paridade 5.6 x 8.5 sobre o "
+                    "codigo ATUAL e NAO detecta regressao de codigo comum aos dois. So Laravel e fluxos sao golden master.")
 
 
 # ------------------------------------------------------------------ ambiente e meta
@@ -215,6 +217,8 @@ def agrega(frentes: dict[str, Frente], meta_repo: dict, tempos: dict, partes: li
         meta["alvo_laravel"] = lar.meta["alvo"]
 
     avisos = list(extra_avisos or [])
+    if "php" in frentes:
+        avisos.append(AVISO_ESCOPO_PHP)
     for n, b in baterias.items():
         if not b["comparavel"]:
             avisos.append(f"{n}: sub-rodada NAO COMPARAVEL"
@@ -276,7 +280,9 @@ def resumo_md(casos: list[Caso], meta: dict, avisos: list[str]) -> str:
                      f"{c.get('nao_verificado')} (pulados nesta rodada: {c.get('nao_verificado_pulados')})")
     for k in ("telas_selecionadas", "telas_com_dados", "telas_tabela_vazia", "classes_selecionadas"):
         if k in p:
-            L.append(f"- PHP {k}: {p[k]}")
+            extra = " (limite superior: a heuristica conta qualquer <td)" if k == "telas_com_dados" else ""
+            L.append(f"- PHP {k}: {p[k]}{extra}")
+    L.append("- PHP lint: so as telas selecionadas (nao cobre classes, libs/ nem models)")
     lar = cob.get("laravel", {})
     if "rotas_cobertas" in lar:
         L.append(f"- Laravel: rotas cobertas {lar['rotas_cobertas']} de {lar['rotas_total']} "
