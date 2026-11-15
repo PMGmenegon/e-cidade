@@ -396,14 +396,8 @@
   ],
   "n_casos": 389,
   "novos_gravados": [
-    "arquivo-pcasp-csv",
-    "arquivo-siconfi-csv",
-    "arquivo-vacinacao-pdf-tipo2",
-    "arquivo-vacinacao-pdf-tipo3",
-    "arquivo-vacinacao-pdf-todos",
-    "console-env",
-    "console-list",
     "console-migrate-status"
   ],
-  "novos_gravados_no_commit": "329f3db0e"
+  "novos_gravados_no_commit": "9a8cee82e",
+  "removidos_no_commit": "9a8cee82e"
 }
