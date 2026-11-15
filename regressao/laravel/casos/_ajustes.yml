@@ -1,0 +1,13 @@
+# Ajustes preservados pela regeneracao dos casos (ver gerador.py).
+# perigosas: sondas com corpo VAZIO que, na gravacao ao vivo no 5.4, ESCREVERAM no banco
+# (sql_negocio nao vazio): deixam de ser geradas.
+perigosas:
+  rota:POST:/v4/api/configuracao/instituicao/departamento-principal: UPDATE em db_config com corpo vazio (200)
+  rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-formacao-superior-profissional: INSERT DEFAULT VALUES em escola.rhformacaosuperior com corpo vazio (500)
+  rota:POST:/v4/api/educacao/secretaria/tipo-base/salvar: INSERT em secretariadeeducacao.tipobase com corpo vazio (500)
+  rota:POST:/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/agendamento/salvar: INSERT em arrecadacao.controleparc_agendamento com corpo vazio (500)
+# volateis: campo mascarado no JSON. Duas gravacoes independentes (restauracoes distintas)
+# deram 0 diferencas; a unica mascara e de SEGURANCA: /v4/api/user devolve o hash da senha.
+volateis:
+  rota:GET:/v4/api/user: [senha]
+instaveis: {}
