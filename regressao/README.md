@@ -230,12 +230,15 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   de código comum aos dois runtimes.
 - **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (115 de 381 registros trazem caminhos do servidor 5.4,
   p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
-  aplicada só na comparação; a baseline bruta não foi regravada):** em objetos JSON com cara de erro (têm
-  `exception`, `message`, `trace`…) os campos `file`, `line`, `trace`, `stacktrace`/`stack_trace` são trocados por
-  `<X>`; e, em qualquer texto, caminhos absolutos de `vendor/`, `app/`, `bootstrap/`, `storage/`, `ecidade/`, `libs/`…
-  viram `<caminho>` e `on line N` vira `on line <N>`. A classe da exceção (`exception`) e a `message` **continuam
-  comparadas**: mudar a exceção é DIVERGE real. Campos de negócio chamados `line`/`file` fora de objetos de erro não
-  são tocados. Consequência: um erro que só muda de arquivo/linha entre 5.4 e 12 não aparece como divergência.
+  aplicada só na comparação; a baseline bruta não foi regravada) — **escopo estreito**: só em **respostas de erro**
+  (status >= 400 ou objeto com `exception`), só no `json` (e no `texto` de respostas 5xx); nunca em `sql_negocio`,
+  cabeçalhos, tipos, hashes de tabela nem em respostas de sucesso. Em objetos com cara de erro (têm `exception`/`trace`/
+  `stacktrace`, ou o envelope do app `error: true`) os campos `file`, `line`, `trace`, `stacktrace`/`stack_trace` viram
+  `<X>`; um objeto de negócio `{message, file, line}` **não** é tocado. Caminhos absolutos só com **raiz conhecida do
+  servidor** (`/var/www/html`, `/var/www`, `/app`, `/srv/<x>`) seguida de `vendor/`, `app/`, `bootstrap/`, `storage/`,
+  `ecidade/`, `libs/`… viram `<caminho>` e `on line N` vira `on line <N>`; URLs como `/storage/a.pdf` ou `/public/x.png`
+  continuam comparadas. A classe da exceção (`exception`) e a `message` **continuam comparadas**: mudar a exceção é
+  DIVERGE real. Consequência: um erro que só muda de arquivo/linha entre 5.4 e 12 não aparece como divergência.
 
 - **Laboratório Laravel 12 inexistente**: não há compose para o `:8087`. `comparar` no alvo padrão devolve **um**
   `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem restaurar o banco) e a completa segue com as outras frentes. Só a
@@ -249,8 +252,12 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
     domínio (planejamento existente, instituição na sessão legada `DB_instit`, filtros) que o banco de dev não tem
     (`Undefined index: DB_instit`/`planejamento_id`...). Nenhum caso XLSX real: o app serve CSV.
   - **Console**: 3 casos (`console-list` só pelos nomes dos comandos, `console-env`, `console-migrate-status`),
-    executados com `docker exec ... php artisan` em `ecidade_php56` (troque com `REGRESSAO_LARAVEL_CONSOLE_CONTAINER`
-    para o laboratório novo). Comandos de domínio (`agendamento:inativarvinculoprofessor`,
+    executados com `docker exec ... php artisan`. **O container acompanha o alvo**: na referência (5.4) é sempre
+    `ecidade_php56`; em qualquer outro alvo `REGRESSAO_LARAVEL_CONSOLE_CONTAINER` é **obrigatória** (sem ela o caso vira
+    `ERRO_AMBIENTE`, para nunca comparar o 5.4 com ele mesmo e dar falso IDENTICO). Falha do `docker exec` (125/126/127,
+    "No such container") também é `ERRO_AMBIENTE`; só `list`, `env` e `migrate:status` passam pela allowlist.
+    `console-migrate-status` compara o **conjunto completo** de migrations (contagem + sha256 + lista, sem truncar).
+    Comandos de domínio (`agendamento:inativarvinculoprofessor`,
     `matriculaonline:alteracaoinscricao`, `payroll:*`) **escrevem** no banco e não foram incluídos.
   - **SMTP de teste e stub PIX**: servidores locais (`SmtpStub`, `PixStub`), sobem e param por `com_stubs()`; o
     SMTP captura a mensagem e `compara_email` normaliza `Date`, `Message-ID` e fronteiras MIME (testado com
@@ -262,8 +269,10 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
     o que não é permitido alterar aqui. Quando o Laravel 12 tiver um ponto de configuração para a URL do PSP, o
     stub já está pronto para receber o caso.
   - **Adicionar sem regravar**: `python -m regressao.laravel.bateria gravar --saida DIR --apenas-novos
-    --confirmo-sobrescrever` roda só os casos sem registro (restaurando o dump) e acrescenta à baseline; os registros
-    existentes não são tocados.
+    --confirmo-sobrescrever` roda só os casos **ausentes do `_meta`** (restaurando o dump) e acrescenta à baseline; os
+    registros existentes não são tocados. Recusa: alvo que não seja a referência 5.4, dump diferente, registros
+    **perdidos** (id no `_meta` sem arquivo) e arquivo órfão. Para refazer um registro: `python -m regressao.laravel.caso
+    remove <id>` (apaga o arquivo e tira o id do `_meta`) e depois `--apenas-novos`.
 - Laravel: cobre 366 de 568 rotas; ficam de fora rotas com parâmetro de caminho, perigosas por nome e 4 sondas que
   gravaram. `rest/v1` só com rotas parametrizadas (nenhum caso gerado); `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os
   casos de rota protegida dão HTTP 500 (não 401) no 5.4 e usam `espera_status`; ~100 casos são `INCONCLUSIVO`
