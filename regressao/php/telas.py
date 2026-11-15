@@ -166,6 +166,20 @@ def corpo_de_sessao_invalida(corpo: bytes) -> bool:
     return len(c) < 1000 and _INVALIDA.search(c) is not None
 
 
+# Mesmos marcadores de php/relatorios.py (_ERRO_PHP). cmp.py da IDENTICO a uma pagina de erro igual
+# nos dois lados; o corpo e pequeno (a 500 do e-cidade tem ~3,7 KB), entao o teto evita acusar uma
+# tela real que apenas cite "Erro interno". Fatal/Parse error valem em qualquer tamanho.
+_ERRO_FATAL = re.compile(rb"Fatal error|Parse error|Uncaught \w*(?:Error|Exception)", re.I)
+_ERRO_SISTEMA = re.compile(rb"Notifica\S{1,6} do Sistema|Erro interno", re.I)
+TETO_PAGINA_DE_ERRO = 20_000
+
+
+def corpo_e_pagina_de_erro(corpo: bytes) -> bool:
+    c = normaliza(corpo)
+    return _ERRO_FATAL.search(c) is not None or (
+        len(c) < TETO_PAGINA_DE_ERRO and _ERRO_SISTEMA.search(c) is not None)
+
+
 def sessao_autenticada(sid: str) -> bool:
     """Sonda barata: uma tela conhecida com esta sessao (sem restaurar nada, para nao
     transformar um SID inexistente em sessao valida). Falha fechado: corpo vazio (ex.: o
@@ -214,4 +228,7 @@ def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str,
         elif normaliza(corpos[c.id]) == b"":
             c.veredito = Veredito.INCONCLUSIVO
             c.detalhe = "resposta vazia (0 bytes) nos dois lados"
+        elif corpo_e_pagina_de_erro(corpos[c.id]):
+            c.veredito = Veredito.INCONCLUSIVO
+            c.detalhe = "pagina de erro identica nos dois lados; tela nao exercitada"
     return casos, corpos

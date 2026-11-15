@@ -139,6 +139,30 @@ def test_corpo_so_com_normalizacao_vazia_e_inconclusivo():
     assert {c.veredito for c in casos} == {Veredito.IDENTICO}
 
 
+@pytest.mark.parametrize("corpo", [
+    b"<html><title>Notifica\xe7\xe3o do Sistema</title><body>Erro interno</body></html>",
+    b"<br />\n<b>Fatal error</b>: Uncaught Error: Call to undefined function x() in /var/www/html/a.php",
+    b"<b>Parse error</b>: syntax error",
+])
+def test_pagina_de_erro_igual_nos_dois_lados_e_inconclusiva(corpo):
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", side_effect=lambda sid, t: corpo if t == "a.php" else b"<td>1</td>"):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    v = {c.id: c for c in casos}
+    assert v["a.php"].veredito == Veredito.INCONCLUSIVO and "erro" in v["a.php"].detalhe.lower()
+    assert v["b.php"].veredito == Veredito.IDENTICO
+
+
+def test_tela_grande_que_apenas_cita_erro_interno_continua_identica():
+    corpo = b"<td>x</td>" * 5000 + b"<p>Erro interno</p>"   # > 20 KB: tela real, nao pagina de erro
+    with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
+         patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
+         patch.object(telas, "busca_corpo", return_value=corpo):
+        casos, _ = telas.roda_telas("s", "^", "x")
+    assert {c.veredito for c in casos} == {Veredito.IDENTICO}
+
+
 def test_falha_ao_buscar_corpo_e_erro_ambiente():
     with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
          patch.object(telas, "_roda_cmp", return_value=SAIDA_TODAS_IGUAIS), \
