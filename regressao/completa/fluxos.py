@@ -352,10 +352,6 @@ class _Janela:
         self.ultimo = time.monotonic()
         self.ctx.on("request", self._inicio)
         self.ctx.on("requestfinished", self._fim_req)
-        self.em_voo = 0
-        self.ultimo = time.monotonic()
-        self.ctx.on("request", self._inicio)
-        self.ctx.on("requestfinished", self._fim_req)
         self.ctx.on("response", self._resposta)
         self.ctx.on("requestfailed", self._falhou)
         self.ctx.on("console", lambda m: coletor.erro_console(m.text) if m.type == "error" else None)

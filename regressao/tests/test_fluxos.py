@@ -134,6 +134,66 @@ def test_coletor_deduplica_e_ordena_console_e_falhas():
     assert c.falhas == ["FALHOU GET /z.js: net::ERR_FAILED"]
 
 
+# ---------------------------------------------------------------- _Janela (contexto falso)
+
+class _Pg:
+    def wait_for_timeout(self, ms):
+        import time
+        time.sleep(ms / 1000)
+
+
+class _Ctx:
+    def __init__(self):
+        self.h: dict[str, list] = {}
+
+    def on(self, ev, fn):
+        self.h.setdefault(ev, []).append(fn)
+
+    def set_default_timeout(self, _):
+        pass
+
+    def new_page(self):
+        return _Pg()
+
+    def emite(self, ev, *a):
+        for fn in self.h.get(ev, []):
+            fn(*a)
+
+
+class _Browser:
+    def __init__(self):
+        self.ctx = _Ctx()
+
+    def new_context(self, **_):
+        return self.ctx
+
+
+class _Req:
+    method, url, failure = "GET", "http://x/a.php", "net::ERR_ABORTED"
+
+
+def test_janela_registra_cada_handler_de_rede_uma_vez():
+    b = _Browser()
+    fluxos._Janela(b, "http://p", fluxos.Coletor(), 60)
+    for ev in ("request", "requestfinished", "requestfailed", "response"):
+        assert len(b.ctx.h[ev]) == 1, ev
+
+
+def test_requisicao_que_falha_nao_trava_o_assenta_e_a_contagem_volta_a_zero():
+    import time
+    b = _Browser()
+    j = fluxos._Janela(b, "http://p", fluxos.Coletor(), 60)
+    b.ctx.emite("request", _Req())
+    b.ctx.emite("request", _Req())
+    assert j.em_voo == 2
+    b.ctx.emite("requestfailed", _Req())     # inclusive ERR_ABORTED
+    b.ctx.emite("requestfinished", _Req())
+    assert j.em_voo == 0
+    t0 = time.monotonic()
+    j.assenta(maximo_s=5)
+    assert time.monotonic() - t0 < 3         # saiu por quietude, nao pelo teto de 5 s
+
+
 # ---------------------------------------------------------------- comparacao
 
 def test_fluxo_igual_e_identico_por_passo():
