@@ -111,8 +111,13 @@ banco. O cabeçalho **`X-Ecidade-Runtime` é registrado e mostrado como INFO, nu
 migração: telas hoje em 5.6 passarão a 8.5). Erros de console e requisições com falha só viram veredito se
 **diferirem da baseline**; `net::ERR_ABORTED` (cancelamento por navegação/download) é ignorado. Limite de 120 s por
 fluxo; passo que estoura vira falha com mensagem. Senha, SID e tokens nunca vão para a baseline (a gravação é barrada
-se aparecerem). **Não cobertos**: telas fora do módulo Arrecadação, escrita em tabelas além de `grupotaxa`, upload,
-impressão/PDF fora do `cai2_relcaixa`, navegadores além do Chromium headless, o fluxo "com o login recusado".
+se aparecerem). Fluxos por área crítica (rodada pós-entrega A): **`financeiro`** (área Financeiro, módulo Orçamento:
+inclui uma função orçamentária em `orc1_orcfuncao001`, efeito em `orcamento.orcfuncao`), **`tributario`** (módulo
+ISSQN: abre `iss2_tipcalc001` e emite o PDF `iss2_tipcalc002`) e **`cadastros`** (módulo Protocolo: CPF → formulário
+→ inclui um CGM pessoa física em `prot1_cadcgm001`, efeito em `cgm`, `cgmfisico`, `db_cgmcpf`, `cgmendereco`,
+`personacgm`). **Não cobertos**: telas fora desses módulos, upload, impressão fora de `cai2_relcaixa`/`iss2_tipcalc`,
+alteração/exclusão (só inclusão), navegadores além do Chromium headless, o fluxo "com o login recusado". Achado dos
+fluxos: o PNG `/228358.png` do formulário de Orçamento responde HTTP 500 (visível em `falhas`).
 
 ## 4. Ler os resultados
 
@@ -240,15 +245,22 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   gravaram. `rest/v1` só com rotas parametrizadas (nenhum caso gerado); `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os
   casos de rota protegida dão HTTP 500 (não 401) no 5.4 e usam `espera_status`; ~100 casos são `INCONCLUSIVO`
   (5xx nos dois lados). `dbseller` com senha errada recebe token no 5.4 (achado do app legado, gravado como referência).
-- PHP: o catálogo de POSTs não tem **CGM** (`prot1_cadcgm001`: tem muitas tabelas filhas por FK e deixa resíduo), nem
-  Orçamento/Arrecadação além das telas `*001`; 2 linhas de POST e 3 de relatório estão `nao-verificado`. Os relatórios `db_download.php`
-  (CSV) provam só o *serving* do arquivo.
-- **6 relatórios PDF dão HTTP 500 no PHP 8.5** e funcionam no 5.6 (`mat2_cadunidade002`, `prot2_cadcgm002`,
-  `con2_relinstituicoes002`, `con2_conhist002`, `con2_conhistdoc002`, `con2_balancrece002`): são regressões **reais**
+- PHP: o catálogo de POSTs (52 linhas, 50 `verificado`) **não tem CGM como linha rodável**: o `DELETE` em `cgm` falha fora
+  do app (trigger `tg_atualiza_issbaseintegracaoexterna`: EXECUTE com argumento nulo), então o restore por diferença do
+  `escrita_post.py` aborta. O CGM foi verificado à mão com 2 restaurações completas do dump: os 3 INSERTs de negócio
+  (`cgm`, `cgmfisico`, `db_cgmcpf`) são idênticos em 5.6 e 8.5, exceto `z01_hora` (relógio). Além dele, só `*001`
+  (inclusão) em Orçamento/Arrecadação; as linhas novas de Caixa/Água (18) são todas IDENTICO. Alguns cadastros não
+  restauram a `sequence` (ex.: `cai1_bancoshistmovcategoria001` dá DIVERGE falso por id 3 × 4) e ficaram de fora.
+  `nao-verificado`: 2 POSTs e 2 relatórios (`func_cgm.php`, que devolve só a página de pesquisa, e o CSV
+  `balrec.csv`, só com cabeçalho). `cem2_renovacoes` é `verificado` com evidência fraca (modelo de PDF em branco). Os
+  relatórios `db_download.php` (CSV) provam só o *serving* do arquivo.
+- **11 relatórios PDF dão HTTP 500 no PHP 8.5** e funcionam no 5.6 (`mat2_cadunidade002`, `prot2_cadcgm002`,
+  `con2_relinstituicoes002`, `con2_conhist002`, `con2_conhistdoc002`, `con2_balancrece002` e, na rodada pós-entrega A,
+  `con2_balancdespele002`, `con2_balancrecu002`, `con2_contasrecdesp002`, `con2_relrec002`, `cad2_loteam002`): são regressões **reais**
   da migração e mantêm a bateria PHP vermelha (saída 1) até serem corrigidas ou aceitas em `conhecidas.tsv`.
 - O PHP não cobre ainda a rodada de **área inteira** quanto à memória (corpos ficam em memória por prefixo): prefixos
   enormes (`con`, `edu`) usam mais RAM.
-- Fluxos: só o módulo Arrecadação e uma tabela de efeito; DOM compara estrutura (scripts inline e estilos são removidos),
+- Fluxos: 6 fluxos (Arrecadação, Orçamento, ISSQN, Protocolo/CGM), só inclusão e emissão; DOM compara estrutura (scripts inline e estilos são removidos),
   então erro de JS que não mude o DOM só aparece pelo console; PDF vem de um GET idêntico com a sessão do navegador
   (o Chromium headless trata o PDF como download). Banco de dev pode mudar o conteúdo de telas como "últimos acessos
   ao módulo": por isso os fluxos restauram o dump antes de cada rodada.
