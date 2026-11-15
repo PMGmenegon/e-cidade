@@ -4,15 +4,15 @@ Rotas no inventario: **568**.
 
 | origem | total | cobertas | nao cobertas |
 |---|---:|---:|---:|
-| laravel | 557 | 362 | 195 |
+| laravel | 557 | 361 | 196 |
 | rest | 4 | 0 | 4 |
 | silex | 7 | 5 | 2 |
 
 ## Resposta da referencia (Laravel 5.4) nas rotas cobertas
 
-2xx: 83  3xx: 0  4xx: 182  5xx: 102  sem baseline: 0
+2xx: 83  3xx: 0  4xx: 182  5xx: 101  sem baseline: 0
 
-**5xx na referencia: 102.** Rota quebrada ou que precisa de dados em dev; o caso e IDENTICO nos dois lados mas termina INCONCLUSIVO (500 x 500): a rota nao foi exercitada, so o seu roteamento/erro. Lista:
+**5xx na referencia: 101.** Rota quebrada ou que precisa de dados em dev; o caso e IDENTICO nos dois lados mas termina INCONCLUSIVO (500 x 500): a rota nao foi exercitada, so o seu roteamento/erro. Lista:
 
 - `rota:POST:/v4/api/assinador/obter-assinantes-portaria`
 - `rota:POST:/v4/api/assinador/recuperar-pfx`
@@ -102,7 +102,6 @@ Rotas no inventario: **568**.
 - `rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao`
 - `rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes`
 - `rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo`
-- `rota:DELETE:/v4/oauth/authorize`
 - `rota:GET:/v4/oauth/authorize`
 - `rota:POST:/v4/oauth/authorize`
 - `rota:GET:/v4/oauth/clients`
@@ -117,8 +116,20 @@ Rotas no inventario: **568**.
 - `rota:POST:/api/v1/matriculaonline/inscricao`
 - `rota:POST:/api/v1/tributario/recibo`
 
+## Por caso (explica a diferenca rotas x casos)
+
+Casos carregados: 381; com 5xx na referencia: 104 = 100 que terminam INCONCLUSIVO (500 x 500, nao exercitados) + 4 de rejeicao esperada (`espera_status`: IDENTICO, comportamento documentado do 5.4).
+
+- rejeicao esperada: `auth-sem-token`
+- rejeicao esperada: `auth-token-invalido`
+- rejeicao esperada: `auth-token-expirado`
+- rejeicao esperada: `auth-token-revogado`
+
+Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH, se permitido, so por PUT. Rotas com metodo colapsado alem de HEAD: 0.
+
 ## Nao cobertas
 
+- metodo destrutivo sem allowlist: 1
 - parametro de caminho {cgm}: 1
 - parametro de caminho {cgs}: 4
 - parametro de caminho {client_id}: 2
@@ -360,6 +371,7 @@ Rotas no inventario: **568**.
 | laravel | POST | `/v4/api/tributario/issqn/veiculos/condutorauxiliar/delete` | rota perigosa (delete): nao e sondada |
 | laravel | POST | `/v4/api/tributario/issqn/veiculos/veiculo/delete` | rota perigosa (delete): nao e sondada |
 | laravel | POST | `/v4/api/tributario/issqn/veiculos/veiculo/desprocessar` | rota perigosa (desprocess): nao e sondada |
+| laravel | DELETE | `/v4/oauth/authorize` | metodo destrutivo sem allowlist: DELETE/PUT/PATCH nao sao sondados |
 | laravel | DELETE | `/v4/oauth/clients/{client_id}` | parametro de caminho {client_id}: nao se envia id real |
 | laravel | PUT | `/v4/oauth/clients/{client_id}` | parametro de caminho {client_id}: nao se envia id real |
 | laravel | DELETE | `/v4/oauth/personal-access-tokens/{token_id}` | parametro de caminho {token_id}: nao se envia id real |

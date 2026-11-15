@@ -1,7 +1,7 @@
 {
   "alvo": "ref",
-  "commit": "f4414dd0f",
-  "data": "2026-11-14T21:49:43-03:00",
+  "commit": "87f41c56f",
+  "data": "2026-11-14T22:29:24-03:00",
   "dump_sha256": "af43b0909496d492059a605a6abd4a47466c03051e17dcca71555fa3998e5909",
   "ids": [
     "auth-token-valido",
@@ -370,7 +370,6 @@
     "rota:GET:/v4/api/tributario/itbi/tipos",
     "rota:GET:/v4/api/tributario/itbi/transmitente-principal",
     "rota:GET:/v4/api/user",
-    "rota:DELETE:/v4/oauth/authorize",
     "rota:GET:/v4/oauth/authorize",
     "rota:POST:/v4/oauth/authorize",
     "rota:GET:/v4/oauth/clients",
@@ -387,5 +386,5 @@
     "rota:GET:/api/v1/protocolo/cgm",
     "rota:POST:/api/v1/tributario/recibo"
   ],
-  "n_casos": 382
+  "n_casos": 381
 }
