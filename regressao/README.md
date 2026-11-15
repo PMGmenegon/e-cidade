@@ -59,7 +59,7 @@ regressao/.venv/bin/python -c "from regressao.nucleo.banco import ARQ_DUMP, gera
 ```
 
 Trocar o dump invalida as baselines do Laravel e dos fluxos (elas guardam o sha256 e as baterias recusam rodar
-com outro): regrave-as (seção 5). Restaurar leva **≈ 3–5 min** (`DROP DATABASE` + `pg_restore --create`).
+com outro): regrave-as (seção 6). Restaurar leva **≈ 3–5 min** (`DROP DATABASE` + `pg_restore --create`).
 
 **Guarde uma cópia do `baseline.dump` fora do git** (disco/backup do time). `pg_dump -Fc` **não reproduz o mesmo
 sha256** ao ser rodado de novo (metadados e ordem mudam): se o arquivo se perder, um dump novo é outra baseline e
@@ -223,10 +223,13 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 - **A bateria PHP só prova paridade 5.6 × 8.5 sobre o código atual** (código compartilhado, ver §4); não detecta regressão
   de código comum aos dois runtimes.
 - **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (115 de 381 registros trazem caminhos do servidor 5.4,
-  p.ex. `/var/www/html/...` e números de linha). Num Laravel 12 esses campos **vão** diferir. A máscara dessas chaves
-  (`file`, `line`, `trace`) deve ser **decidida e declarada antes da primeira comparação real com o Laravel 12**
-  (`volateis` em `casos/_ajustes.yml`). O registro bruto fica guardado na baseline, então a máscara pode ser aplicada
-  **na comparação** sem regravar.
+  p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
+  aplicada só na comparação; a baseline bruta não foi regravada):** em objetos JSON com cara de erro (têm
+  `exception`, `message`, `trace`…) os campos `file`, `line`, `trace`, `stacktrace`/`stack_trace` são trocados por
+  `<X>`; e, em qualquer texto, caminhos absolutos de `vendor/`, `app/`, `bootstrap/`, `storage/`, `ecidade/`, `libs/`…
+  viram `<caminho>` e `on line N` vira `on line <N>`. A classe da exceção (`exception`) e a `message` **continuam
+  comparadas**: mudar a exceção é DIVERGE real. Campos de negócio chamados `line`/`file` fora de objetos de erro não
+  são tocados. Consequência: um erro que só muda de arquivo/linha entre 5.4 e 12 não aparece como divergência.
 
 - **Laboratório Laravel 12 inexistente**: não há compose para o `:8087`. `comparar` no alvo padrão devolve **um**
   `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem restaurar o banco) e a completa segue com as outras frentes. Só a
