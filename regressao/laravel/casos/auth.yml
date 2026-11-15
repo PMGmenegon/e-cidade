@@ -75,26 +75,44 @@
     refresh_token: ${REFRESH_TOKEN}
   campos_volateis: [access_token, refresh_token, expires_in]
 
+# Os quatro casos abaixo usam a MESMA rota protegida (auth:api): um GET sem parametros que a
+# referencia responde 200 com JSON nao vazio quando o token e valido. `/v4/api/configuracao/bancos`
+# nao serve de controle: da 500 ate com token valido (metodo inexistente na app).
 - id: auth-sem-token
   metodo: GET
-  caminho: /v4/api/configuracao/bancos
+  caminho: /v4/api/financeiro/contabilidade/sistemas
   token: ""
 
 - id: auth-token-invalido
   metodo: GET
-  caminho: /v4/api/configuracao/bancos
+  caminho: /v4/api/financeiro/contabilidade/sistemas
   token: token-que-nao-e-valido
 
-# Token recem-emitido cujo expires_at no banco e forcado para o passado dentro do caso;
-# o status gravado diz se a app consulta o expires_at da tabela ou so o `exp` do JWT.
+# Expirado de verdade: o token valido com `exp` no passado no proprio JWT (re-assinado com a
+# chave local do Passport). Contraste direto com auth-rota-protegida-com-token (200).
 - id: auth-token-expirado
   metodo: GET
-  caminho: /v4/api/configuracao/bancos
+  caminho: /v4/api/financeiro/contabilidade/sistemas
+  token: "@expirado"
+
+# Achado do 5.4: a app NAO consulta oauth_access_tokens.expires_at (so o `exp` do JWT e o
+# `revoked`); este caso grava essa realidade para a migracao nao a "corrigir" sem querer.
+- id: auth-token-expirado-so-no-banco
+  metodo: GET
+  caminho: /v4/api/financeiro/contabilidade/sistemas
   token: "@novo"
   sql_antes:
     - "update oauth_access_tokens set expires_at = now() - interval '1 day' where id = '{jti}'"
 
-# Controle positivo: a rota protegida COM o token valido compartilhado.
+# Token revogado no banco (revoked = true): a app o rejeita.
+- id: auth-token-revogado
+  metodo: GET
+  caminho: /v4/api/financeiro/contabilidade/sistemas
+  token: "@novo"
+  sql_antes:
+    - "update oauth_access_tokens set revoked = true where id = '{jti}'"
+
+# Controle positivo: a rota protegida COM o token valido compartilhado (200 + JSON).
 - id: auth-rota-protegida-com-token
   metodo: GET
-  caminho: /v4/api/configuracao/bancos
+  caminho: /v4/api/financeiro/contabilidade/sistemas

@@ -33,8 +33,8 @@ class Fake:
         self.n_token = 0
         self.statements = ["insert into foo(a,b) values (1, '2026-11-14 10:20:30.123')"]
 
-    def linha(self, sql: str):
-        self.log.append(f"2026-11-14 10:20:30.123 -03 [9] LOG:  instrucao: {sql}")
+    def linha(self, sql: str, pid: int = 9):
+        self.log.append(f"2026-11-14 10:20:30.123 -03 [{pid}] LOG:  instrucao: {sql}")
 
 
 @pytest.fixture
@@ -80,6 +80,8 @@ def fake(monkeypatch, tmp_path):
             if self.path == "/quebra":
                 return self._json(500, {"message": "Server Error"})
             if self.path == "/escreve":
+                f.linha("set client_encoding to 'LATIN1'")   # assinatura de sessao da aplicacao
+                f.linha("insert into foo(z) values (99)", pid=5)  # outra sessao, sem assinatura
                 for s in f.statements:
                     f.linha(s)
                 f.linha("insert into db_acount(x) values (1)")
@@ -108,7 +110,7 @@ def fake(monkeypatch, tmp_path):
     def psql(sql, db="ecidade"):
         f.psql.append(sql)
         if "REGRESSAO_" in sql:
-            f.linha(sql)
+            f.linha(sql, pid=7)  # sessao do marcador (psql), diferente da da aplicacao
         return ""
     monkeypatch.setattr(mod, "_psql", psql)
     monkeypatch.setattr(mod, "_logs_banco", lambda desde: "\n".join(f.log).encode())
@@ -312,3 +314,123 @@ def test_carrega_auth_yml_real_tem_os_casos_exigidos():
         assert obrigatorio in casos, obrigatorio
     assert casos["auth-token-valido"].campos_volateis == ["access_token", "refresh_token", "expires_in"]
     assert casos["auth-sem-token"].token == ""
+
+
+# ------------------------------------------------------------ Task 11a: M1, ids de rota, janela de SQL
+
+def test_diff_passa_por_redige_e_nao_vaza_segredo_fora_de_jwt():
+    base = {"status": 200, "json": {"senha": "hunter2-segredo", "x": 1}}
+    novo = {"status": 200, "json": {"senha": "outra-senha-xyz", "x": 1}}
+    d = mod._diff(base, novo)
+    assert "hunter2-segredo" not in d and "outra-senha-xyz" not in d
+    assert "<redigido>" in d
+
+
+def test_id_de_rota_com_dois_pontos_e_barras_grava_arquivo_seguro(fake, tmp_path):
+    d = tmp_path / "casos"
+    d.mkdir()
+    (d / "r.yml").write_text(
+        "- id: 'rota:GET:/protegido'\n  metodo: GET\n  caminho: /protegido\n", encoding="utf-8")
+    casos = carrega_casos(d)
+    assert casos[0].id == "rota:GET:/protegido"
+    gravar(casos, fake.url, fake.baseline)
+    assert (fake.baseline / mod.nome_arquivo("rota:GET:/protegido")).is_file()
+    assert sorted(p.name for p in fake.baseline.iterdir()) == ["_meta.json", "rota=GET=~protegido.json"]
+    assert comparar(casos, fake.url, fake.baseline)[0].veredito == Veredito.IDENTICO
+
+
+def test_carrega_ignora_arquivos_com_underscore(tmp_path):
+    (tmp_path / "a.yml").write_text("- id: a\n  metodo: GET\n  caminho: /x\n", encoding="utf-8")
+    (tmp_path / "_instaveis.yml").write_text("- id: b\n  metodo: GET\n  caminho: /y\n", encoding="utf-8")
+    assert [c.id for c in carrega_casos(tmp_path)] == ["a"]
+
+
+def test_id_invalido_continua_rejeitado(tmp_path):
+    (tmp_path / "a.yml").write_text("- id: 'a b'\n  metodo: GET\n  caminho: /x\n", encoding="utf-8")
+    with pytest.raises(ValueError):
+        carrega_casos(tmp_path)
+
+
+def test_sql_de_negocio_ignora_outras_sessoes_e_a_do_marcador(fake):
+    casos = [_caso("escreve", "/escreve", "POST", corpo={}, espera_escrita=True)]
+    gravar(casos, fake.url, fake.baseline)
+    reg = json.loads((fake.baseline / "escreve.json").read_text(encoding="utf-8"))
+    # `insert into foo(z)` veio do pid 5 (sem assinatura de sessao da app): nao entra
+    assert reg["sql_negocio"] == ["insert into foo(a,b) values (1, '<TS>')"]
+
+
+def test_statements_com_pid_devolve_pid_por_statement():
+    bruto = (b"2026-11-14 10:20:30.123 -03 [11] LOG:  instrucao: set names 'latin1'\n"
+             b"2026-11-14 10:20:30.124 -03 [12] LOG:  executar pdo_stmt_00000002: insert into t values ($1)\n"
+             b"2026-11-14 10:20:30.124 -03 [12] DETAIL:  parameters: $1 = '1'\n")
+    assert mod._statements_pid(bruto) == [(11, "set names 'latin1'"),
+                                          (12, "insert into t values ($1) parameters: $1 = '1'")]
+    assert mod._statements(bruto) == [s for _, s in mod._statements_pid(bruto)]
+
+
+def test_parametros_do_statement_em_portugues_sao_anexados():
+    # o log real do postgres do e-cidade e em portugues: DETALHE / par\xe2metros
+    bruto = ("2026-11-14 21:31:58.776 -03 [21569] LOG:  executar pdo_stmt_00000004: "
+             "insert into \"t\" (\"a\") values ($1)\n"
+             "2026-11-14 21:31:58.776 -03 [21569] DETALHE:  par\xe2metros: $1 = 'x'\n").encode("latin1")
+    (pid, stm), = mod._statements_pid(bruto)
+    assert pid == 21569 and stm == "insert into \"t\" (\"a\") values ($1) parameters: $1 = 'x'"
+
+
+# ------------------------------------------------------------ token expirado (exp no JWT)
+
+def _jwt_valido():
+    return _jwt("jtiX")
+
+
+def test_jwt_expirado_tem_exp_no_passado_e_assinatura_valida(tmp_path):
+    import shutil
+    import subprocess
+    if shutil.which("openssl") is None:
+        pytest.skip("openssl ausente")
+    priv, pub = tmp_path / "priv.key", tmp_path / "pub.key"
+    subprocess.run(["openssl", "genrsa", "-out", str(priv), "2048"], check=True, capture_output=True)
+    subprocess.run(["openssl", "rsa", "-in", str(priv), "-pubout", "-out", str(pub)],
+                   check=True, capture_output=True)
+    novo = mod._jwt_expirado(_jwt_valido(), priv)
+    cab, pl, sig = novo.split(".")
+    dados = json.loads(base64.urlsafe_b64decode(pl + "=" * (-len(pl) % 4)))
+    import time
+    assert dados["exp"] < time.time() and dados["jti"] == "jtiX"
+    arq_sig = tmp_path / "sig"
+    arq_sig.write_bytes(base64.urlsafe_b64decode(sig + "=" * (-len(sig) % 4)))
+    r = subprocess.run(["openssl", "dgst", "-sha256", "-verify", str(pub), "-signature", str(arq_sig)],
+                       input=f"{cab}.{pl}".encode(), capture_output=True)
+    assert r.returncode == 0, r.stdout
+
+
+def test_jwt_expirado_sem_chave_e_erro_de_requisicao(tmp_path):
+    with pytest.raises(mod.ErroRequisicao):
+        mod._jwt_expirado(_jwt_valido(), tmp_path / "nao-existe.key")
+
+
+def test_caso_token_expirado_usa_o_jwt_forjado(fake, monkeypatch):
+    monkeypatch.setattr(mod, "_jwt_expirado", lambda jwt, chave=None: "EXPIRADO")
+    casos = [_caso("exp", token="@expirado")]
+    gravar(casos, fake.url, fake.baseline)
+    assert ("GET", "/protegido", "Bearer EXPIRADO") in fake.pedidos
+    reg = json.loads((fake.baseline / "exp.json").read_text(encoding="utf-8"))
+    assert reg["status"] == 401
+
+
+def test_auth_yml_real_as_quatro_rotas_apontam_para_a_mesma_rota_de_controle():
+    casos = {c.id: c for c in carrega_casos(REAL_CASOS)}
+    ids = ("auth-sem-token", "auth-token-invalido", "auth-token-expirado",
+           "auth-rota-protegida-com-token")
+    assert len({casos[i].caminho for i in ids}) == 1
+    assert casos[ids[0]].caminho != "/v4/api/configuracao/bancos"
+    assert casos["auth-token-expirado"].token == "@expirado"
+    assert casos["auth-token-revogado"].token == "@novo"
+    assert casos["auth-token-expirado-so-no-banco"].token == "@novo"
+
+
+def test_escrita_yml_real_declara_tabela_e_espera_escrita():
+    casos = {c.id: c for c in carrega_casos(REAL_CASOS)}
+    w = casos["escrita-jetom-funcao-incluir"]
+    assert w.metodo == "POST" and w.espera_escrita and w.tabelas == ["pessoal.jetomfuncao"]
+    assert w.corpo and w.corpo["descricao"]

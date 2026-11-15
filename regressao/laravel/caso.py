@@ -40,6 +40,8 @@ LIMITE_TEXTO = 4000
 LIMITE_DIFF_LINHAS = 80
 ESPERA_MARCADOR = 8.0  # s para o marcador final aparecer no log do banco
 TOKEN_NOVO = "@novo"
+TOKEN_EXPIRADO = "@expirado"  # o token valido com `exp` no passado, re-assinado com a chave local
+ARQ_CHAVE_PRIVADA = RAIZ_REPO / "ecidade" / "storage" / "oauth-private.key"
 
 
 class ErroRequisicao(Exception):
@@ -77,13 +79,21 @@ class Resposta:
 
 
 _CAMPOS = {f for f in CasoHttp.__dataclass_fields__}
+_RE_ID = re.compile(r"[\w.:/-]+")
+
+
+def nome_arquivo(id: str) -> str:
+    """Arquivo da baseline de um caso. `:` e `/` (ids `rota:GET:/uri`) viram `=` e `~`, que o
+    `_RE_ID` nao admite: o mapeamento e injetivo e nao ha subdiretorio nem nome invalido."""
+    return id.replace(":", "=").replace("/", "~") + ".json"
 
 
 def carrega_casos(diretorio: Path) -> list[CasoHttp]:
-    """YAML em ordem alfabetica de arquivo e, dentro dele, ordem do arquivo."""
+    """YAML em ordem alfabetica de arquivo e, dentro dele, ordem do arquivo. Arquivos que
+    comecam com `_` (ex.: `_instaveis.yml`) nao sao carregados."""
     casos: list[CasoHttp] = []
     vistos: set[str] = set()
-    for arq in sorted(Path(diretorio).glob("*.yml")):
+    for arq in sorted(p for p in Path(diretorio).glob("*.yml") if not p.name.startswith("_")):
         dados = yaml.safe_load(arq.read_text(encoding="utf-8")) or []
         if not isinstance(dados, list):
             raise ValueError(f"{arq.name}: esperava uma lista de casos")
@@ -94,7 +104,7 @@ def carrega_casos(diretorio: Path) -> list[CasoHttp]:
             for obrig in ("id", "metodo", "caminho"):
                 if obrig not in d:
                     raise ValueError(f"{arq.name}: caso sem '{obrig}'")
-            if d["id"] in vistos or not re.fullmatch(r"[\w.-]+", str(d["id"])):
+            if d["id"] in vistos or not _RE_ID.fullmatch(str(d["id"])):
                 raise ValueError(f"{arq.name}: id repetido ou invalido: {d['id']!r}")
             vistos.add(d["id"])
             d = dict(d)
@@ -127,6 +137,29 @@ def _jti(jwt: str) -> str:
     if not re.fullmatch(r"[\w-]+", jti):
         raise ErroRequisicao("jti do token com formato inesperado")
     return jti
+
+
+def _b64url(dados: bytes) -> str:
+    return base64.urlsafe_b64encode(dados).rstrip(b"=").decode()
+
+
+def _jwt_expirado(jwt: str, chave: Path = ARQ_CHAVE_PRIVADA) -> str:
+    """Copia de `jwt` com `exp` (e `nbf`/`iat`) no passado, re-assinada em RS256 com a chave
+    privada local do Passport (dev; nao e rastreada no git). O jti continua valido no banco:
+    so o `exp` do JWT distingue este token do valido."""
+    try:
+        cab, pl, _ = jwt.split(".")
+        dados = json.loads(base64.urlsafe_b64decode(pl + "=" * (-len(pl) % 4)))
+        agora = int(time.time())
+        dados.update({"exp": agora - 3600, "nbf": agora - 7200, "iat": agora - 7200})
+        corpo = f"{cab}.{_b64url(json.dumps(dados, separators=(',', ':')).encode())}"
+        r = subprocess.run(["openssl", "dgst", "-sha256", "-sign", str(chave)],
+                           input=corpo.encode(), capture_output=True, timeout=TIMEOUT_SETUP)
+    except (ValueError, TypeError, OSError, subprocess.SubprocessError):
+        raise ErroRequisicao("nao foi possivel forjar o token expirado") from None
+    if r.returncode != 0 or not r.stdout:
+        raise ErroRequisicao("nao foi possivel forjar o token expirado (openssl/chave)")
+    return f"{corpo}.{_b64url(r.stdout)}"
 
 
 def _grant_senha(base_url: str) -> dict:
@@ -200,9 +233,17 @@ def tipos_mascarados(obj, campos: list[str]) -> dict[str, list[str]]:
 _RE_ESCRITA = re.compile(r"^\s*(insert|update|delete)\b", re.I)
 _RE_INFRA = re.compile(
     r"\b(db_acount\w*|db_usuariosonline|db_logsacessa|db_menu\w*|db_sessao\w*|oauth_\w+)\b", re.I)
-_RE_PREFIXO = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] LOG:\s+[^:]*:\s*")
+_RE_PREFIXO = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[(\d+)\] LOG:\s+[^:]*:\s*")
 _RE_LINHA_LOG = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] ")
-_RE_PARAMS = re.compile(r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] DETAIL:\s+(parameters:.*)$")
+# O log pode sair em ingles (DETAIL/parameters) ou portugues (DETALHE/parametros, com acento
+# que o decode `replace` pode trocar por U+FFFD): ambos viram "parameters: ...".
+_RE_PARAMS = re.compile(
+    r"^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] (?:DETAIL|DETALHE):\s+(?:parameters|par[^\s:]{1,4}metros):(.*)$",
+    re.I)
+# Primeira instrucao de toda sessao da aplicacao (legado PHP e PDO/Laravel); o psql dos
+# marcadores e de qualquer outro cliente nao a emite.
+_RE_SESSAO_APP = re.compile(
+    r"^(set\s+client_encoding\b|set\s+names\b|SELECT\s+set_config\('search_path')", re.I)
 _RE_TS = re.compile(r"'\d{4}-\d{2}-\d{2}[ T][\d:.]+(?:[+-]\d{2}(?::?\d{2})?|Z)?'")
 _RE_UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 _RE_HEX = re.compile(r"\b[0-9a-f]{40,}\b", re.I)
@@ -234,34 +275,43 @@ def _logs_banco(desde: datetime.datetime) -> bytes:
     return r.stdout
 
 
-def _statements(bruto: bytes) -> list[str]:
-    """Statements do log, sem prefixo, com continuacoes juntadas (so elas) e a linha
-    `DETAIL: parameters:` do protocolo estendido anexada ao statement anterior."""
-    out: list[str] = []
+def _statements_pid(bruto: bytes) -> list[tuple[int, str]]:
+    """(pid do backend, statement) do log, sem prefixo, com continuacoes juntadas (so elas) e
+    a linha `DETAIL: parameters:` do protocolo estendido anexada ao statement anterior."""
+    out: list[tuple[int, str]] = []
     aberto = False
     for l in bruto.decode("utf-8", errors="replace").split("\n"):
         l = l.rstrip("\r")
         m = _RE_PREFIXO.match(l)
         if m:
-            out.append(l[m.end():])
+            out.append((int(m.group(1)), l[m.end():]))
             aberto = True
             continue
         p = _RE_PARAMS.match(l)
         if p:
             if out:
-                out[-1] += " " + p.group(1)
+                out[-1] = (out[-1][0], out[-1][1] + " parameters:" + p.group(1))
             aberto = False
         elif _RE_LINHA_LOG.match(l):
             aberto = False
         elif aberto and l.strip():
-            out[-1] += " " + l.strip()
+            out[-1] = (out[-1][0], out[-1][1] + " " + l.strip())
     return out
 
 
+def _statements(bruto: bytes) -> list[str]:
+    return [s for _, s in _statements_pid(bruto)]
+
+
 def _sql_entre(desde: datetime.datetime, ini: str, fim: str) -> list[str]:
+    """SQL de escrita de negocio entre os marcadores, SO das sessoes da aplicacao: um backend
+    conta como da aplicacao se a sua primeira instrucao no log e a de abertura de sessao do
+    PHP/PDO (`_RE_SESSAO_APP`). Os psql dos marcadores e qualquer outro cliente ficam fora.
+    Limite: sessao da aplicacao aberta antes de `desde` (5 s antes do marcador) nao e vista."""
     limite = time.monotonic() + ESPERA_MARCADOR
     while True:
-        stm = _statements(_logs_banco(desde))
+        pares = _statements_pid(_logs_banco(desde))
+        stm = [s for _, s in pares]
         i = next((k for k, s in enumerate(stm) if ini in s), None)
         j = next((k for k, s in enumerate(stm) if fim in s), None)
         if i is not None and j is not None and j > i:
@@ -270,7 +320,12 @@ def _sql_entre(desde: datetime.datetime, ini: str, fim: str) -> list[str]:
             raise ErroAmbienteBanco("marcadores do caso nao apareceram no log do banco "
                                     "(log_statement ligado?)")
         time.sleep(0.25)
-    negocio = [s for s in stm[i + 1:j] if _RE_ESCRITA.match(s) and not _RE_INFRA.search(s)]
+    primeira: dict[int, str] = {}
+    for pid, s in pares:
+        primeira.setdefault(pid, s)
+    app = {pid for pid, s in primeira.items() if _RE_SESSAO_APP.match(s)}
+    negocio = [s for pid, s in pares[i + 1:j]
+               if pid in app and _RE_ESCRITA.match(s) and not _RE_INFRA.search(s)]
     return [normaliza_sql(s) for s in negocio]
 
 
@@ -285,6 +340,8 @@ def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Re
             usado = token
         elif caso.token == TOKEN_NOVO:
             usado = str(_grant_senha(base_url)["access_token"])
+        elif caso.token == TOKEN_EXPIRADO:
+            usado = _jwt_expirado(token)
         elif caso.token != "":
             usado = caso.token
     if banco:
@@ -425,7 +482,7 @@ def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> None:
         raise ErroGravacao(f"hash do dump ausente: {ARQ_SHA256}")
     respostas = _roda(casos, base_url)
     for c in casos:
-        _grava_registro(diretorio / f"{c.id}.json", {"id": c.id, **_nucleo(respostas[c.id])})
+        _grava_registro(diretorio / nome_arquivo(c.id), {"id": c.id, **_nucleo(respostas[c.id])})
     meta = {"dump_sha256": sha, "commit": _commit(),
             "data": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
             "n_casos": len(casos), "alvo": _tipo_alvo(base_url), "ids": [c.id for c in casos]}
@@ -443,7 +500,7 @@ def _diff(base: dict, novo: dict) -> str:
     linhas = list(difflib.unified_diff(pp(base), pp(novo), "baseline", "atual", lineterm="", n=2))
     if len(linhas) > LIMITE_DIFF_LINHAS:
         linhas = linhas[:LIMITE_DIFF_LINHAS] + [f"... (diff truncado, {len(linhas)} linhas)"]
-    return _RE_JWT.sub("<jwt>", "\n".join(linhas))
+    return redige(_RE_JWT.sub("<jwt>", "\n".join(linhas)))
 
 
 def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
@@ -487,7 +544,7 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso
     registros: dict[str, dict] = {}
     faltando: list[Caso] = []
     for c in casos:
-        arq = diretorio / f"{c.id}.json"
+        arq = diretorio / nome_arquivo(c.id)
         if not arq.is_file():
             faltando.append(_erro(c.id, f"baseline ausente: {arq.name}"))
             continue
