@@ -1,0 +1,19 @@
+{
+  "alvo": "ref",
+  "commit": "383a4b0aa",
+  "data": "2026-11-14T21:20:01-03:00",
+  "dump_sha256": "af43b0909496d492059a605a6abd4a47466c03051e17dcca71555fa3998e5909",
+  "ids": [
+    "auth-token-valido",
+    "auth-client-secret-errado",
+    "auth-senha-errada",
+    "auth-usuario-inexistente",
+    "auth-sem-grant-type",
+    "auth-refresh-token",
+    "auth-sem-token",
+    "auth-token-invalido",
+    "auth-token-expirado",
+    "auth-rota-protegida-com-token"
+  ],
+  "n_casos": 10
+}

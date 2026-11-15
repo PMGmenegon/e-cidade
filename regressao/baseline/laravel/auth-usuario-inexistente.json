@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "auth-usuario-inexistente",
+  "json": {
+    "error": "invalid_credentials",
+    "message": "The user credentials were incorrect."
+  },
+  "sha256": "2f01da794e83a7d1de75e7270611461f7887f89d7673ce6a09c025c391570277",
+  "sql_negocio": [],
+  "status": 401,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "auth-token-expirado",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+    "line": 2445,
+    "message": "Call to undefined method Illuminate\\Database\\Query\\Builder::all()"
+  },
+  "sha256": "33c59b06ec557af514cfdbd0e54fa8803f6f1ad7e586349da41e1eb004006dc6",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

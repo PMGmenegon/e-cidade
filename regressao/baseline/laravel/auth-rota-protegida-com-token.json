@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "auth-rota-protegida-com-token",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+    "line": 2445,
+    "message": "Call to undefined method Illuminate\\Database\\Query\\Builder::all()"
+  },
+  "sha256": "b15f12f9cf9ee2be27fab2b04d7593d33b69e82e1acff768e27cdee91a2d4e6e",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}
