@@ -20,6 +20,7 @@ from pathlib import Path
 import requests
 import yaml
 
+from regressao.laravel import integracao
 from regressao.laravel.mascara import mascara_json, normaliza_erro
 from regressao.laravel.token import (CLIENT_ID, _RE_JWT, ErroToken, _segredo_cliente,
                                      laravel_sobe, obtem_token, redige)
@@ -69,6 +70,13 @@ class CasoHttp:
     # Status documentado do comportamento da referencia (ex.: 500 "Unauthenticated" do 5.4):
     # igual nos dois lados e com o mesmo corpo => IDENTICO em vez de INCONCLUSIVO (5xx).
     espera_status: int | None = None
+    # Arquivo gerado (PDF/CSV/XLS): caminho pontilhado, na resposta JSON, do arquivo a baixar; o TEXTO extraido
+    # (nao os bytes) vai para `Resposta.texto` e e o que se compara. Mascare tambem o caminho em campos_volateis.
+    arquivo: str | None = None
+    # Console: `php artisan <console>` no container de console (nao ha HTTP); `console_modo: nomes` compara so
+    # os nomes dos comandos (list --raw). Status = codigo de saida; texto = saida normalizada.
+    console: list[str] | None = None
+    console_modo: str | None = None
 
 
 @dataclass
@@ -399,6 +407,11 @@ def _sql_entre(desde: datetime.datetime, ini: str, fim: str) -> list[str]:
 def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Resposta:
     """Exercita um caso. Setup (placeholders, token novo, sql_antes) acontece ANTES do
     marcador inicial, entao nao entra no SQL capturado. `token` = o token valido compartilhado."""
+    if caso.console is not None:
+        codigo, saida = integracao.roda_console(caso.console, caso.console_modo)
+        hashes = hash_tabelas(caso.tabelas) if banco and caso.tabelas else {}
+        return Resposta(status=codigo, cabecalhos={}, json=None, sql_negocio=[], texto=_limpa(saida)[:LIMITE_TEXTO * 5],
+                        hashes=hashes)
     ctx = _Contexto(base_url)
     corpo = ctx.aplica(caso.corpo) if caso.corpo is not None else None
     usado = None
@@ -446,6 +459,11 @@ def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Re
     except ValueError:
         bruto = None
     texto = "" if bruto is not None else _limpa(r.text or "")[:LIMITE_TEXTO]
+    if caso.arquivo and r.status_code < 400:
+        try:
+            texto = _limpa(integracao.segue_arquivo(base_url, integracao.valor_json(bruto, caso.arquivo), headers))
+        except requests.RequestException as e:
+            raise ErroRequisicao(f"{caso.metodo} {caso.caminho}: arquivo gerado inacessivel: {type(e).__name__}") from None
     cab = {k.lower(): v for k, v in r.headers.items() if k.lower() in CABECALHOS_GRAVADOS}
     return Resposta(
         status=r.status_code, cabecalhos=_limpa(cab),
@@ -561,6 +579,45 @@ def _roda(casos: list[CasoHttp], base_url: str, erros: dict | None = None,
     if info is not None:
         info["suspeitas"] = _suspeitas_da_janela(casos, respostas, antes, depois, i0, i1) if i0 >= 0 else []
     return respostas
+
+
+def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[str]:
+    """Acrescenta a uma baseline existente SO os casos que ainda nao tem registro (as outras centenas ficam
+    intactas): restaura o dump, roda os novos e atualiza `_meta` (ids/n_casos). Recusa se a baseline foi
+    gravada com outro dump, se algum caso antigo perdeu o registro ou se nao ha caso novo. Devolve os ids."""
+    diretorio = Path(diretorio)
+    boot = laravel_sobe(base_url)
+    if boot is not None:
+        raise ErroGravacao(f"alvo nao sobe, nada foi restaurado: {boot.detalhe}")
+    confere_baseline(ARQ_DUMP)
+    sha = _sha_dump_atual()
+    try:
+        meta = json.loads((diretorio / "_meta.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise ErroGravacao("baseline/_meta.json ilegivel: use `gravar` completo") from None
+    if sha is None or meta.get("dump_sha256") != sha:
+        raise ErroGravacao("baseline gravada com outro dump: grave de novo (completo)")
+    novos = [c for c in casos if not (diretorio / nome_arquivo(c.id)).is_file()]
+    if not novos:
+        raise ErroGravacao("nenhum caso novo: todos ja tem registro na baseline")
+    ids_novos = {c.id for c in novos}
+    ids_meta = set(meta.get("ids") or [])
+    if ids_meta - ids_novos - {c.id for c in casos}:
+        raise ErroGravacao("_meta lista casos que nao existem mais: use `poda`")
+    info: dict = {}
+    respostas = _roda(novos, base_url, info=info)
+    for c in novos:
+        if _e_sonda_de_escrita(c) and respostas[c.id].sql_negocio:
+            raise ErroGravacao(f"a sonda {c.id} ESCREVEU no banco: nao vira baseline")
+        if c.espera_status is not None and respostas[c.id].status != c.espera_status:
+            raise ErroGravacao(f"{c.id} declara espera_status={c.espera_status}, mas a referencia "
+                               f"respondeu {respostas[c.id].status}")
+    for c in novos:
+        _grava_registro(diretorio / nome_arquivo(c.id), {"id": c.id, **_nucleo(respostas[c.id])})
+    meta.update({"ids": [c.id for c in casos], "n_casos": len(casos), "novos_gravados_no_commit": _commit(),
+                 "novos_gravados": sorted(ids_novos)})
+    _grava_meta(diretorio, meta)
+    return sorted(ids_novos)
 
 
 def gravar(casos: list[CasoHttp], base_url: str, diretorio: Path, completo: bool = False) -> None:

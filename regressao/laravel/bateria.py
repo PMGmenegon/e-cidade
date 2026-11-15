@@ -149,7 +149,10 @@ class _CronometraRestauro:
 
 
 def roda_bateria_laravel(diretorio_saida: Path, modo: str, alvo: str | None = None,
-                         confirmo_sobrescrever: bool = False, restaurar: bool = True) -> int:
+                         confirmo_sobrescrever: bool = False, restaurar: bool = True,
+                         apenas_novos: bool = False) -> int:
+    if apenas_novos and modo != "gravar":
+        raise ValueError("--apenas-novos so vale para gravar")
     if modo not in MODOS:
         raise ValueError(f"modo invalido: {modo!r}; validos: {', '.join(MODOS)}")
     if modo == "gravar" and not restaurar:
@@ -159,7 +162,7 @@ def roda_bateria_laravel(diretorio_saida: Path, modo: str, alvo: str | None = No
                                                                "restauracao_s": None},
                     "avisos": [], "inicio": time.monotonic()}
     try:
-        return _executa(diretorio_saida, modo, alvo, confirmo_sobrescrever, restaurar, estado)
+        return _executa(diretorio_saida, modo, alvo, confirmo_sobrescrever, restaurar, estado, apenas_novos)
     except RecusaBaseline:
         raise
     except Exception as e:  # rede de seguranca: nunca estourar sem rodada
@@ -215,7 +218,7 @@ def _termina(diretorio: Path, estado: dict, casos: list[Caso]) -> int:
 
 
 def _executa(diretorio_saida: Path, modo: str, alvo: str | None, confirmo_sobrescrever: bool,
-             restaurar: bool, estado: dict) -> int:
+             restaurar: bool, estado: dict, apenas_novos: bool = False) -> int:
     meta, avisos = estado["meta"], estado["avisos"]
     alvos = alvos_do_ambiente()
     if modo == "gravar":
@@ -223,6 +226,9 @@ def _executa(diretorio_saida: Path, modo: str, alvo: str | None, confirmo_sobres
             raise RecusaBaseline(
                 f"gravar contra {alvo} recusado: a baseline e a referencia do Laravel 5.4 ({alvos.ref}). "
                 "Gravar contra outro alvo exige --alvo explicito E --confirmo-sobrescrever.")
+        if apenas_novos and not confirmo_sobrescrever:
+            raise RecusaBaseline("gravar --apenas-novos acrescenta casos a baseline pre-migracao: exige "
+                                 "--confirmo-sobrescrever (confira antes que o alvo e o 5.4 de referencia).")
         if _baseline_existe() and not confirmo_sobrescrever:
             raise RecusaBaseline(
                 f"gravar recusado: {DIR_BASELINE} ja tem baseline. Ela e a referencia pre-migracao; "
@@ -258,10 +264,15 @@ def _executa(diretorio_saida: Path, modo: str, alvo: str | None, confirmo_sobres
     with _CronometraRestauro() as t:
         try:
             if modo == "gravar":
-                caso.gravar(casos_http, url, DIR_BASELINE, completo=True)
                 res: list[Caso] = []  # gravar NAO avalia nada: nenhum Caso (nada que pareca aprovacao)
+                if apenas_novos:
+                    novos = caso.gravar_novos(casos_http, url, DIR_BASELINE)
+                    meta["gravacao"] = {"n_casos": len(casos_http), "baseline": str(DIR_BASELINE),
+                                        "apenas_novos": novos}
+                else:
+                    caso.gravar(casos_http, url, DIR_BASELINE, completo=True)
+                    meta["gravacao"] = {"n_casos": len(casos_http), "baseline": str(DIR_BASELINE)}
                 avisos.append(AVISO_GRAVACAO)
-                meta["gravacao"] = {"n_casos": len(casos_http), "baseline": str(DIR_BASELINE)}
             else:
                 res = caso.comparar(casos_http, url, DIR_BASELINE, restaurar=restaurar)
         except BancoDiferente as e:
@@ -282,9 +293,13 @@ def main(argv: list[str] | None = None) -> int:
                     help="permite gravar sobre baseline existente / contra alvo diferente do 5.4")
     ap.add_argument("--sem-restaurar", action="store_true",
                     help="SO desenvolvimento (comparar): nao restaura o banco; resultado nao comparavel")
+    ap.add_argument("--apenas-novos", action="store_true",
+                    help="gravar: acrescenta so os casos sem registro, sem regravar os existentes "
+                         "(exige --confirmo-sobrescrever)")
     a = ap.parse_args(argv)
     try:
-        return roda_bateria_laravel(a.saida, a.modo, a.alvo, a.confirmo_sobrescrever, not a.sem_restaurar)
+        return roda_bateria_laravel(a.saida, a.modo, a.alvo, a.confirmo_sobrescrever, not a.sem_restaurar,
+                                    a.apenas_novos)
     except ValueError as e:  # modo invalido, RecusaBaseline, --sem-restaurar em gravar
         print(f"erro: {redige(str(e))}", file=sys.stderr)
         return 2
