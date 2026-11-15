@@ -17,6 +17,29 @@ def runner(rc=0, out="", err="", chamadas=None):
     return f
 
 
+def test_sujo_regressao_olha_so_a_pasta_regressao_e_fica_separado_do_repo_inteiro():
+    ch: list = []
+    r = git.sujo_regressao(RAIZ, runner=runner(out=" M regressao/a.py\n?? regressao/b.py\n", chamadas=ch))
+    assert r == {"git_sujo_regressao": True,
+                 "git_sujo_regressao_arquivos": [" M regressao/a.py", "?? regressao/b.py"]}
+    assert ch[0][-4:] == ["status", "--porcelain", "--", "regressao"]
+    limpo = git.sujo_regressao(RAIZ, runner=runner(out=""))
+    assert limpo == {"git_sujo_regressao": False, "git_sujo_regressao_arquivos": []}
+
+
+def test_sujo_regressao_limita_a_lista_e_nao_confunde_com_o_flag_do_repo():
+    out = "".join(f" M regressao/f{i}.py\n" for i in range(30))
+    r = git.sujo_regressao(RAIZ, runner=runner(out=out))
+    assert len(r["git_sujo_regressao_arquivos"]) == git.LIMITE_ARQUIVOS
+    assert "git_sujo" not in r and "git_sujo_arquivos" not in r
+
+
+def test_sujo_regressao_indisponivel_quando_git_falha():
+    r = git.sujo_regressao(RAIZ, runner=runner(rc=128, err="fatal: dubious ownership\n"))
+    assert r["git_sujo_regressao"] == "indisponivel: fatal: dubious ownership"
+    assert r["git_sujo_regressao_arquivos"] == []
+
+
 def test_commit_ok_usa_safe_directory_e_c():
     ch: list = []
     assert git.commit(RAIZ, runner=runner(out="abc123\n", chamadas=ch)) == "abc123"

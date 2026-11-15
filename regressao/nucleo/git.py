@@ -42,3 +42,14 @@ def sujo(raiz: Path, runner=None) -> dict:
         return {"git_sujo": f"indisponivel: {erro}", "git_sujo_arquivos": []}
     linhas = [l for l in saida.splitlines() if l.strip()]
     return {"git_sujo": bool(linhas), "git_sujo_arquivos": linhas[:LIMITE_ARQUIVOS]}
+
+
+def sujo_regressao(raiz: Path, runner=None) -> dict:
+    """Como `sujo`, mas so a pasta `regressao/` (o repo inteiro costuma estar sujo por causa do
+    ambiente Docker: este flag diz se o CODIGO DA BATERIA que rodou tem alteracoes nao commitadas).
+    Chaves proprias, para nunca se misturar com `git_sujo`."""
+    saida, erro = _git(raiz, "status", "--porcelain", "--", "regressao", runner=runner)
+    if saida is None:
+        return {"git_sujo_regressao": f"indisponivel: {erro}", "git_sujo_regressao_arquivos": []}
+    linhas = [l for l in saida.splitlines() if l.strip()]
+    return {"git_sujo_regressao": bool(linhas), "git_sujo_regressao_arquivos": linhas[:LIMITE_ARQUIVOS]}
