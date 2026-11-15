@@ -1,0 +1,100 @@
+# Casos de autenticacao (Passport/OAuth2). Marcadores ${...} sao resolvidos na execucao
+# (o segredo do cliente vem de application.php e nunca e gravado). A baseline registra o que
+# a app FAZ, inclusive onde isso surpreende: em dev, senha errada de `dbseller` ainda emite
+# token (200); so usuario inexistente da 401.
+- id: auth-token-valido
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    grant_type: password
+    client_id: ${CLIENT_ID}
+    client_secret: ${CLIENT_SECRET}
+    username: ${USUARIO}
+    password: ${SENHA}
+  campos_volateis: [access_token, refresh_token, expires_in]
+
+- id: auth-client-secret-errado
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    grant_type: password
+    client_id: ${CLIENT_ID}
+    client_secret: segredo-incorreto
+    username: ${USUARIO}
+    password: ${SENHA}
+
+- id: auth-senha-errada
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    grant_type: password
+    client_id: ${CLIENT_ID}
+    client_secret: ${CLIENT_SECRET}
+    username: ${USUARIO}
+    password: senha-incorreta
+  campos_volateis: [access_token, refresh_token, expires_in]
+
+- id: auth-usuario-inexistente
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    grant_type: password
+    client_id: ${CLIENT_ID}
+    client_secret: ${CLIENT_SECRET}
+    username: usuario-que-nao-existe
+    password: ${SENHA}
+
+- id: auth-sem-grant-type
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    client_id: ${CLIENT_ID}
+    client_secret: ${CLIENT_SECRET}
+    username: ${USUARIO}
+    password: ${SENHA}
+
+- id: auth-refresh-token
+  metodo: POST
+  caminho: /v4/oauth/token
+  form: true
+  autenticado: false
+  corpo:
+    grant_type: refresh_token
+    client_id: ${CLIENT_ID}
+    client_secret: ${CLIENT_SECRET}
+    refresh_token: ${REFRESH_TOKEN}
+  campos_volateis: [access_token, refresh_token, expires_in]
+
+- id: auth-sem-token
+  metodo: GET
+  caminho: /v4/api/configuracao/bancos
+  token: ""
+
+- id: auth-token-invalido
+  metodo: GET
+  caminho: /v4/api/configuracao/bancos
+  token: token-que-nao-e-valido
+
+# Token recem-emitido cujo expires_at no banco e forcado para o passado dentro do caso;
+# o status gravado diz se a app consulta o expires_at da tabela ou so o `exp` do JWT.
+- id: auth-token-expirado
+  metodo: GET
+  caminho: /v4/api/configuracao/bancos
+  token: "@novo"
+  sql_antes:
+    - "update oauth_access_tokens set expires_at = now() - interval '1 day' where id = '{jti}'"
+
+# Controle positivo: a rota protegida COM o token valido compartilhado.
+- id: auth-rota-protegida-com-token
+  metodo: GET
+  caminho: /v4/api/configuracao/bancos
