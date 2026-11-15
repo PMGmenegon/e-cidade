@@ -731,12 +731,17 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path, restaurar: b
 
 
 def _main(argv: list[str]) -> int:
-    """python -m regressao.laravel.caso gravar|comparar [url]  (padrao: alvo `ref`, :8080 para gravar;
-    laravel_novo para comparar) | poda (remove da baseline o que nao tem caso e reescreve o _meta)."""
+    """python -m regressao.laravel.caso comparar [url] | poda (remove da baseline o que nao tem caso e
+    reescreve o _meta). NAO ha `gravar` aqui: gravar passa por `python -m regressao.laravel.bateria gravar`,
+    que tem a protecao da baseline (RecusaBaseline / --confirmo-sobrescrever)."""
     import sys
     modo = argv[0] if argv else ""
-    if modo not in ("gravar", "comparar", "poda"):
-        print("uso: python -m regressao.laravel.caso gravar|comparar [url] | poda", file=sys.stderr)
+    if modo == "gravar":
+        print("erro: `gravar` saiu deste atalho (sem protecao da baseline). Use: "
+              "python -m regressao.laravel.bateria gravar --saida DIR [--confirmo-sobrescrever]", file=sys.stderr)
+        return 2
+    if modo not in ("comparar", "poda"):
+        print("uso: python -m regressao.laravel.caso comparar [url] | poda", file=sys.stderr)
         return 2
     casos = carrega_casos(DIR_CASOS)
     if modo == "poda":
@@ -748,12 +753,8 @@ def _main(argv: list[str]) -> int:
         print(f"podados {len(removidos)} arquivo(s): {removidos}; _meta com {len(casos)} casos")
         return 0
     alvos = alvos_do_ambiente()
-    url = argv[1] if len(argv) > 1 else (alvos.ref if modo == "gravar" else alvos.laravel_novo)
+    url = argv[1] if len(argv) > 1 else alvos.laravel_novo
     t0 = time.monotonic()
-    if modo == "gravar":
-        gravar(casos, url, DIR_BASELINE, completo=True)
-        print(f"gravados {len(casos)} casos em {DIR_BASELINE} ({time.monotonic() - t0:.0f} s)")
-        return 0
     res = comparar(casos, url, DIR_BASELINE)
     for c in res:
         print(f"{c.veredito.value:14} {c.id}  {c.detalhe.splitlines()[0] if c.detalhe else ''}")
