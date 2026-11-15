@@ -533,12 +533,13 @@ def _suspeitas_da_janela(casos: list[CasoHttp], respostas: dict[str, Resposta],
 
 
 def _roda(casos: list[CasoHttp], base_url: str, erros: dict | None = None,
-          info: dict | None = None) -> dict[str, Resposta]:
+          info: dict | None = None, restaurar: bool = True) -> dict[str, Resposta]:
     """Restaura o dump uma vez e roda os casos em ordem. Com `erros` (dict), falha por caso
     vira entrada ali; sem ele, a primeira falha propaga. `info["suspeitas"]` recebe as tabelas
     alteradas sem explicacao durante a janela das sondas (fingerprint de pg_stat_user_tables
     antes da primeira e depois da ultima, com ESPERA_ESTATISTICAS de folga)."""
-    restaura_dump(ARQ_DUMP)
+    if restaurar:
+        restaura_dump(ARQ_DUMP)
     try:
         token = obtem_token(base_url)
     except ErroToken as e:
@@ -666,9 +667,10 @@ def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
     return Caso(caso.id, AREA, Veredito.IDENTICO)
 
 
-def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso]:
+def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path, restaurar: bool = True) -> list[Caso]:
     """Ordem: boot do alvo -> baseline/meta -> restauracao -> casos (fixos, mesma ordem do gravar).
-    Nada e restaurado se uma das verificacoes iniciais falhar."""
+    Nada e restaurado se uma das verificacoes iniciais falhar. `restaurar=False` (so
+    desenvolvimento; resultado NAO comparavel) pula a restauracao."""
     diretorio = Path(diretorio)
     boot = laravel_sobe(base_url)
     if boot is not None:
@@ -716,7 +718,7 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[Caso
     erros: dict[str, str] = {}
     info: dict = {}
     try:
-        respostas = _roda(casos, base_url, erros, info)
+        respostas = _roda(casos, base_url, erros, info, restaurar)
     except (ErroRequisicao, ErroAmbienteBanco) as e:
         return [_erro("laravel:banco", f"preparo do banco/token falhou: {e}")]
     res: list[Caso] = []
