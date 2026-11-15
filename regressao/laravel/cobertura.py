@@ -45,7 +45,7 @@ def cobertura_rotas(rotas: list[Rota], casos: list[CasoHttp], dir_baseline: Path
         origens[r.origem]["total"] += 1
         achados = [c for m in r.metodo.split("|") for c in por_rota.get((m, r.caminho), [])]
         if not achados:
-            motivo = gerador.motivo_nao_gerada(r)
+            motivo = gerador.motivo_nao_gerada(r, ajustes)
             if motivo is None:
                 inst = instaveis.get(gerador.id_do_caso(r))
                 motivo = f"instavel (_instaveis.yml): {inst}" if inst else "sem caso carregado"

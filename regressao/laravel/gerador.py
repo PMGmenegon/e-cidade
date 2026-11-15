@@ -9,6 +9,7 @@ roteamento, middleware e validacao). O que fica de fora e listado com o motivo.
 Ajustes que a regeneracao preserva ficam em `casos/_ajustes.yml`:
   volateis:  {<id do caso>: [caminhos para mascarar]}
   instaveis: {<id do caso>: "motivo"}   # vao para `_instaveis.yml` (nao carregado por padrao)
+  perigosas: {<id do caso>: "motivo"}   # sonda que ESCREVEU ao vivo: deixa de ser gerada
 
 Uso: python -m regressao.laravel.gerador
 """
@@ -42,8 +43,13 @@ def metodo_efetivo(metodo: str) -> str:
     return metodo.split("|")[0]
 
 
-def motivo_nao_gerada(r: Rota) -> str | None:
-    """None se a rota pode virar caso; senao o motivo (vai para o relatorio de cobertura)."""
+def motivo_nao_gerada(r: Rota, ajustes: dict | None = None) -> str | None:
+    """None se a rota pode virar caso; senao o motivo (vai para o relatorio de cobertura).
+    `ajustes["perigosas"]` (id -> motivo) traz o que a gravacao ao vivo provou: sonda que
+    ESCREVEU no banco mesmo com corpo vazio."""
+    provada = ((ajustes or {}).get("perigosas") or {}).get(id_do_caso(r))
+    if provada:
+        return f"rota perigosa (provada ao vivo): {provada}"
     achado = _RE_PARAM.search(r.caminho)
     if achado:
         return f"parametro de caminho {achado.group(0)}: nao se envia id real"
@@ -74,12 +80,12 @@ def _ordem(r: Rota):
     return (r.caminho, metodo_efetivo(r.metodo), r.controller)
 
 
-def _geraveis(rotas: list[Rota]) -> list[Rota]:
+def _geraveis(rotas: list[Rota], ajustes: dict | None = None) -> list[Rota]:
     """Rotas geraveis, ordenadas, sem ids repetidos (a primeira vence)."""
     vistos: set[str] = set()
     saida: list[Rota] = []
     for r in sorted(rotas, key=_ordem):
-        if motivo_nao_gerada(r) is not None or id_do_caso(r) in vistos:
+        if motivo_nao_gerada(r, ajustes) is not None or id_do_caso(r) in vistos:
             continue
         vistos.add(id_do_caso(r))
         saida.append(r)
@@ -91,7 +97,7 @@ def gera(rotas: list[Rota], ajustes: dict | None = None) -> dict[str, list[CasoH
     ajustes = ajustes or {}
     instaveis = set((ajustes.get("instaveis") or {}))
     saida: dict[str, list[CasoHttp]] = {o: [] for o in ORIGENS}
-    for r in _geraveis(rotas):
+    for r in _geraveis(rotas, ajustes):
         if id_do_caso(r) not in instaveis:
             saida[r.origem].append(caso_para(r, ajustes))
     return saida
@@ -100,12 +106,12 @@ def gera(rotas: list[Rota], ajustes: dict | None = None) -> dict[str, list[CasoH
 def gera_instaveis(rotas: list[Rota], ajustes: dict) -> list[tuple[CasoHttp, str]]:
     instaveis = ajustes.get("instaveis") or {}
     return [(caso_para(r, ajustes), str(instaveis[id_do_caso(r)]))
-            for r in _geraveis(rotas) if id_do_caso(r) in instaveis]
+            for r in _geraveis(rotas, ajustes) if id_do_caso(r) in instaveis]
 
 
-def nao_geradas(rotas: list[Rota]) -> list[tuple[Rota, str]]:
+def nao_geradas(rotas: list[Rota], ajustes: dict | None = None) -> list[tuple[Rota, str]]:
     """Rotas que o gerador recusa, com o motivo; ordenadas por origem/uri/metodo."""
-    pares = [(r, m) for r in rotas if (m := motivo_nao_gerada(r)) is not None]
+    pares = [(r, m) for r in rotas if (m := motivo_nao_gerada(r, ajustes)) is not None]
     return sorted(pares, key=lambda p: (p[0].origem, p[0].caminho, p[0].metodo))
 
 
@@ -129,7 +135,7 @@ def le_ajustes(arquivo: Path = ARQ_AJUSTES) -> dict:
         return {}
     if not isinstance(dados, dict):
         raise ValueError(f"{Path(arquivo).name}: esperava um mapa")
-    extra = set(dados) - {"volateis", "instaveis"}
+    extra = set(dados) - {"volateis", "instaveis", "perigosas"}
     if extra:
         raise ValueError(f"{Path(arquivo).name}: chaves desconhecidas {sorted(extra)}")
     return dados
@@ -181,7 +187,7 @@ def main() -> int:
     ajustes = le_ajustes()
     arquivos = escreve(DIR_CASOS, rotas, ajustes)
     grupos = gera(rotas, ajustes)
-    nc = nao_geradas(rotas)
+    nc = nao_geradas(rotas, ajustes)
     print("casos gerados: " + ", ".join(f"{o}={len(grupos[o])}" for o in ORIGENS)
           + f"; instaveis={len(gera_instaveis(rotas, ajustes))}; nao geradas={len(nc)}; "
           f"rotas={len(rotas)}")

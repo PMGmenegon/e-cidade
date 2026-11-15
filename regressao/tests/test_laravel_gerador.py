@@ -213,7 +213,17 @@ def test_cobertura_sem_baseline_conta_a_parte(tmp_path):
 
 def test_ajustes_yml_real_e_valido():
     aj = gerador.le_ajustes()
-    assert set(aj) <= {"volateis", "instaveis"}
+    assert set(aj) <= {"volateis", "instaveis", "perigosas"}
     for caminhos in aj.get("volateis", {}).values():
         assert isinstance(caminhos, list)
     assert isinstance(yaml.safe_dump(aj), str)
+
+
+def test_sonda_que_escreveu_ao_vivo_deixa_de_ser_gerada_e_vira_nao_coberta():
+    aj = {"perigosas": {"rota:POST:/v4/api/z/salvar": "update db_config com corpo vazio"}}
+    g = gerador.gera(ROTAS, aj)
+    assert "rota:POST:/v4/api/z/salvar" not in [c.id for c in g["laravel"]]
+    motivos = {r.caminho: m for r, m in gerador.nao_geradas(ROTAS, aj)}
+    assert "provada ao vivo" in motivos["/v4/api/z/salvar"] and "db_config" in motivos["/v4/api/z/salvar"]
+    rel = cob.cobertura_rotas(ROTAS, [c for l in g.values() for c in l], "/nao/existe", aj)
+    assert any(n["uri"] == "/v4/api/z/salvar" and "perigosa" in n["motivo"] for n in rel["nao_cobertas"])
