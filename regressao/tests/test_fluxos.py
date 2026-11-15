@@ -154,6 +154,16 @@ def test_banco_linhas_devolve_hash_e_contagem_por_tabela(monkeypatch):
     assert r == {"hash": {"a.t1": "h-a.t1", "b.t2": "h-b.t2"}, "linhas": {"a.t1": 7, "b.t2": 7}}
 
 
+def test_hash_sem_horas_mascara_hhmm_no_sql_e_valida_o_nome(monkeypatch):
+    from regressao.nucleo import banco
+    sqls = []
+    monkeypatch.setattr(banco, "_psql", lambda sql, db=banco.BASE: sqls.append(sql) or "abc\n")
+    assert fluxos.hash_sem_horas(["protocolo.cgm"]) == {"protocolo.cgm": "abc"}
+    assert "regexp_replace(t::text" in sqls[0] and "HH:MM" in sqls[0] and "from protocolo.cgm t" in sqls[0]
+    with pytest.raises(ValueError):
+        fluxos.hash_sem_horas(["cgm; drop table x"])
+
+
 def test_n_passos_do_meta_conta_todos_os_fluxos_da_pasta(tmp_path):
     fluxos.grava_baseline(tmp_path, [fluxo(passo("a"), id="x")], dump_sha256="s", commit="c")
     fluxos.grava_baseline(tmp_path, [fluxo(passo("a"), passo("b"), id="y")], dump_sha256="s", commit="c")  # sem apagar x

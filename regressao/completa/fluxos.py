@@ -497,11 +497,24 @@ def _passo_vazio(nome: str, ok: bool, erro: str | None, exercitado: bool = True)
     return p
 
 
-def _banco_linhas(tabelas: list[str] | None = None) -> dict:
+def hash_sem_horas(tabelas: list[str]) -> dict[str, str]:
+    """Como `hash_tabelas`, mas trocando horas (`HH:MM[:SS]`) por `HH:MM` no texto da linha: o CGM grava a
+    hora do relogio (`z01_hora`), que mudaria o hash a cada rodada."""
+    from regressao.nucleo.banco import _NOME_TABELA, _psql
+    saida = {}
+    for t in tabelas:
+        if not _NOME_TABELA.fullmatch(t):
+            raise ValueError(f"nome de tabela invalido: {t!r}")
+        expr = r"regexp_replace(t::text, '\d{2}:\d{2}(:\d{2})?', 'HH:MM', 'g')"
+        saida[t] = _psql(f"select md5(coalesce(string_agg({expr}, E'\\n' order by {expr}), '')) from {t} t").strip()
+    return saida
+
+
+def _banco_linhas(tabelas: list[str] | None = None, sem_horas: bool = False) -> dict:
     """hash_tabelas + contagem de linhas por tabela (padrao: a tabela do fluxo `incluir-registro`)."""
     from regressao.nucleo.banco import _psql, hash_tabelas
     tabelas = tabelas or [TABELA_REGISTRO]
-    return {"hash": hash_tabelas(tabelas),
+    return {"hash": (hash_sem_horas if sem_horas else hash_tabelas)(tabelas),
             "linhas": {t: int(_psql(f"select count(*) from {t}").strip()) for t in tabelas}}
 
 
@@ -620,14 +633,14 @@ def _emite_pdf(j, seletor: str) -> dict:
             "conteudo_sha256": sha(texto)}
 
 
-def _inclui(j, tabelas: list[str], preenche, botao: str) -> dict:
+def _inclui(j, tabelas: list[str], preenche, botao: str, sem_horas: bool = False) -> dict:
     """Passo `salvar` generico: hash/linhas das tabelas antes e depois de clicar no botao de incluir."""
-    antes = _banco_linhas(tabelas)
+    antes = _banco_linhas(tabelas, sem_horas)
     j.c.fecha_passo()
     j.corpo().click(botao)
     j.corpo().wait_for_load_state("load")
     j.assenta()
-    depois = _banco_linhas(tabelas)
+    depois = _banco_linhas(tabelas, sem_horas)
     return {"banco": depois["hash"], "linhas_antes": antes["linhas"], "linhas_depois": depois["linhas"],
             "hash_antes": antes["hash"]}
 
@@ -698,11 +711,20 @@ def _f_cadastros():
 
     def preenche(j):
         c = j.corpo()
-        valores = {"z01_nome": "TESTE_FLUXO", "z01_nomecomple": "TESTE_FLUXO", "z01_ender": "RUA TESTE",
-                   "z01_numero": "1", "z01_munic": "SOUSA", "z01_uf": "PB", "z01_bairro": "CENTRO",
-                   "z01_cep": "58800000", "z01_nasc": "01/01/1990"}
-        for n, v in valores.items():
+        # a regra de nome do CGM recusa "_" e nome de uma palavra ("Nome inconsistente (regra 1)")
+        editaveis = {"z01_nome": "MARIA TESTE FLUXO", "z01_nomecomple": "MARIA TESTE FLUXO", "z01_numero": "1",
+                     "z01_nasc": "01/01/1990"}
+        # endereco/municipio/UF/bairro/CEP sao somente-leitura na UI (preenchidos por consulta de CEP/rua):
+        # o fluxo os define por script, como a consulta faria
+        somente_leitura = {"z01_ender": "RUA TESTE", "z01_munic": "SOUSA", "z01_uf": "PB", "z01_bairro": "CENTRO",
+                           "z01_cep": "58800000",
+                           # codigos de rua/bairro "NAO INFORMADO": sem eles o formulario abre a pesquisa de ruas
+                           "j14_codigo": "0", "j13_codi": "0"}
+        valores = {**editaveis, **somente_leitura}
+        for n, v in editaveis.items():
             c.fill(f"[name={n}]", v)
+        c.evaluate("(m) => { for (const [n, v] of Object.entries(m)) document.querySelector('[name='+n+']').value = v; }",
+                   somente_leitura)
         c.evaluate("() => { const f = document.form1; f.z01_nasc_dia.value='01'; f.z01_nasc_mes.value='01';"
                    " f.z01_nasc_ano.value='1990'; f.z01_cadast.value='01/01/2026'; f.z01_cadast_dia.value='01';"
                    " f.z01_cadast_mes.value='01'; f.z01_cadast_ano.value='2026'; f.z01_ultalt.value='01/01/2026';"
@@ -712,7 +734,7 @@ def _f_cadastros():
         return {"valores": {n: c.input_value(f"[name={n}]") for n in valores}}
 
     def salvar(j):
-        return _inclui(j, TABELAS_CGM, preenche, "input[name=db_opcao]")
+        return _inclui(j, TABELAS_CGM, preenche, "input[name=db_opcao]", sem_horas=True)
 
     return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("cpf", cpf, True),
             ("preenche", preenche, True), ("salvar", salvar, True)]
