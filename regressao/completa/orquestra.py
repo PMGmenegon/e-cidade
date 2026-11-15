@@ -140,6 +140,10 @@ def _motivo(c: Caso) -> str:
     return (d or "sem motivo")[:120]
 
 
+def _pct(n: int, total: int) -> float:
+    return round(100.0 * n / total, 1) if total else 0.0
+
+
 def _inconclusivos(casos: list[Caso]) -> dict[str, int]:
     return dict(Counter(_motivo(c) for c in casos if c.veredito == Veredito.INCONCLUSIVO))
 
@@ -198,6 +202,8 @@ def agrega(frentes: dict[str, Frente], meta_repo: dict, tempos: dict, partes: li
             "tempo_s": f.tempo_s, "restauracao_s": f.meta.get("restauracao_s"),
             "erro": f.erro, "subdiretorio": f.nome}
     div_todas = [c for c in casos if c.veredito == Veredito.DIVERGE]
+    pct = {n: _pct(b["totais"]["INCONCLUSIVO"], b["total"]) for n, b in baterias.items()}
+    pct["total"] = _pct(sum(1 for c in casos if c.veredito == Veredito.INCONCLUSIVO), len(casos))
     comparavel = all(b["comparavel"] for b in baterias.values()) and bool(baterias)
 
     meta = {
@@ -207,6 +213,7 @@ def agrega(frentes: dict[str, Frente], meta_repo: dict, tempos: dict, partes: li
         "divergencias": {"novas": sum(1 for c in div_todas if not c.conhecida),
                          "conhecidas": sum(1 for c in div_todas if c.conhecida)},
         "inconclusivos_por_motivo": {n: _inconclusivos(f.casos) for n, f in frentes.items()},
+        "inconclusivos_percentual": pct,
         "cobertura": {n: _cobertura(f) for n, f in frentes.items()},
         "ids_renomeados": renomeados,
     }
@@ -269,6 +276,12 @@ def resumo_md(casos: list[Caso], meta: dict, avisos: list[str]) -> str:
                  + f" | {b['divergencias_novas']} | {b['divergencias_conhecidas']} | {b['codigo_saida']} | {b['tempo_s']} |")
     L.append(f"| **total** | {meta['total']} | " + " | ".join(str(meta["totais"][v.value]) for v in Veredito)
              + f" | {meta['divergencias']['novas']} | {meta['divergencias']['conhecidas']} | | {meta['tempos_s'].get('total')} |")
+    n_inc = meta["totais"]["INCONCLUSIVO"]
+    pcts = meta.get("inconclusivos_percentual", {"total": 0.0})
+    L += ["", f"**INCONCLUSIVO: {n_inc} de {meta['total']} casos ({pcts['total']}%). "
+              "Isso NAO e aprovacao: esses casos nao foram exercitados.** Por bateria: "
+          + "; ".join(f"{n}: {b['totais']['INCONCLUSIVO']} de {b['total']} ({pcts.get(n, 0.0)}%)"
+                      for n, b in meta["baterias"].items())]
     L += ["", "## Tempos por fase (s)", ""] + [f"- {k}: {v}" for k, v in meta["tempos_s"].items()]
     L += ["", "## Cobertura", ""]
     cob = meta["cobertura"]

@@ -108,6 +108,17 @@ def test_resumo_traz_totais_novas_conhecidas_e_inconclusivos_com_motivo(tmp_path
     assert meta["divergencias"] == {"novas": 1, "conhecidas": 1}
 
 
+def test_resumo_mostra_percentual_de_inconclusivo_e_diz_que_nao_e_aprovacao(tmp_path):
+    ex = executores(laravel={"casos": [Caso(f"rota:GET:/{i}", "l", N, "HTTP 500 nos dois lados") for i in range(3)]
+                             + [Caso("rota:GET:/ok", "l", I)]})
+    roda(tmp_path, executores=ex)
+    resumo = (tmp_path / "saida" / "resumo.md").read_text(encoding="utf-8")
+    assert "INCONCLUSIVO: 3 de 6 casos (50.0%)" in resumo  # 1 php + 4 laravel + 1 fluxo = 6
+    assert "laravel: 3 de 4 (75.0%)" in resumo
+    assert "NAO e aprovacao" in resumo
+    assert carrega(tmp_path)["meta"]["inconclusivos_percentual"]["total"] == 50.0
+
+
 def test_resumo_da_completa_traz_aviso_fixo_de_escopo_da_bateria_php(tmp_path):
     roda(tmp_path)
     resumo = (tmp_path / "saida" / "resumo.md").read_text(encoding="utf-8")
