@@ -247,3 +247,27 @@ def test_redige_preserva_chaves_vizinhas_em_json_e_query(monkeypatch):
     monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
     assert token.redige('{"password":"abc","user":"x"}') == '{"password":"<redigido>","user":"x"}'
     assert token.redige("?password=abc&user=x") == "?password=<redigido>&user=x"
+
+@pytest.mark.parametrize("linha", [
+    "password" * 12500,
+    "token" * 20000,
+    "secret" * 16700,
+    "Authorization: Bearer " + "a" * 100000,
+], ids=["password", "token", "secret", "bearer"])
+def test_redige_nao_tem_custo_quadratico(monkeypatch, linha):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    assert len(linha) >= 100000
+    t0 = time.perf_counter()
+    out = token.redige(linha)
+    dt = time.perf_counter() - t0
+    print(f"redige 100KB: {dt:.3f}s")
+    assert isinstance(out, str)
+    assert dt < 1.0
+
+
+def test_redige_segredo_cortado_pelo_limite_nao_deixa_fragmento(monkeypatch):
+    monkeypatch.setattr(token, "_segredo_cliente", lambda: "VALORREAL-9Z8Y7X")
+    texto = "a" * (token.LIMITE_REDIGE - 5) + "VALORREAL-9Z8Y7X"
+    out = token.redige(texto)
+    assert "VALORREAL" not in out and "9Z8Y7X" not in out and "VALORRE" not in out
+    assert len(out) <= token.LIMITE_REDIGE + 20

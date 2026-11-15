@@ -14,14 +14,15 @@ CONTAINER_PHP = "ecidade_php56"
 LOG_ERROS = "/var/log/php_errors.log"
 TIMEOUT = 15
 REDIGIDO = "<redigido>"
+LIMITE_REDIGE = 20000
 MARCAS_BOOT = ("Fatal error", "Parse error", "Uncaught", "Cannot make non abstract method")
 _RE_JWT = re.compile(r"eyJ[\w-]+\.[\w-]+\.[\w-]+")
 _RE_SEGREDO = re.compile(
-    r"(?i)((?:secret|password|passwd|senha|token|bearer|authorization|api[_-]?key)[\w-]*[\"'\]]?\s*(?:=>|[=:])\s*[\"']?)"
+    r"(?i)((?:secret|password|passwd|senha|token|bearer|authorization|api[_-]?key)[\w-]{0,40}[\"'\]]?\s{0,20}(?:=>|[=:])\s{0,20}[\"']?)"
     r"(?:(?:bearer|basic)\s+)?[^\s\"',&;]+"
 )
 _RE_USUARIO_LITERAL = re.compile(
-    r"(?i)((?:user(?:name)?|usuario|login|password|senha)[\w\]]*[\s\"'=:>\[\]]{0,6})dbseller")
+    r"(?i)((?:user(?:name)?|usuario|login|password|senha)[\w\]]{0,40}[\s\"'=:>\[\]]{0,6})dbseller")
 
 
 class ErroToken(Exception):
@@ -65,17 +66,19 @@ def obtem_token(base_url: str, usuario: str = "dbseller", senha: str = "dbseller
 def redige(texto: str) -> str:
     """Remove JWTs, pares segredo=valor (=, :, =>; JSON e query), o segredo do cliente em
     qualquer lugar e o usuario/senha padrao so quando colados a palavra-chave."""
+    # Ordem importa: (1) o segredo do cliente e trocado ANTES do corte, para que o corte
+    # nunca deixe um fragmento dele; (2) o texto e cortado em LIMITE_REDIGE caracteres
+    # ANTES das regexes, limitando o custo; o corte so descarta o final do texto.
+    try:
+        segredo = _segredo_cliente()
+    except ErroToken:
+        segredo = ""
+    if segredo:
+        texto = texto.replace(segredo, REDIGIDO)
+    texto = texto[:LIMITE_REDIGE]
     texto = _RE_JWT.sub(REDIGIDO, texto)
     texto = _RE_SEGREDO.sub(lambda m: m.group(1) + REDIGIDO, texto)
     texto = _RE_USUARIO_LITERAL.sub(lambda m: m.group(1) + REDIGIDO, texto)
-    literais = []
-    try:
-        literais.append(_segredo_cliente())
-    except ErroToken:
-        pass
-    for lit in literais:
-        if lit:
-            texto = texto.replace(lit, REDIGIDO)
     return texto
 
 
