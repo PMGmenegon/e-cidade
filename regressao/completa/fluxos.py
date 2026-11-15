@@ -498,14 +498,14 @@ def _passo_vazio(nome: str, ok: bool, erro: str | None, exercitado: bool = True)
 
 
 def hash_sem_horas(tabelas: list[str]) -> dict[str, str]:
-    """Como `hash_tabelas`, mas trocando horas (`HH:MM[:SS]`) por `HH:MM` no texto da linha: o CGM grava a
-    hora do relogio (`z01_hora`), que mudaria o hash a cada rodada."""
+    """Como `hash_tabelas`, mas sem a coluna `z01_hora` (o CGM grava a hora do relogio, que mudaria o hash a
+    cada rodada). SO essa coluna sai: o resto da linha, inclusive outras horas, continua no hash."""
     from regressao.nucleo.banco import _NOME_TABELA, _psql
     saida = {}
     for t in tabelas:
         if not _NOME_TABELA.fullmatch(t):
             raise ValueError(f"nome de tabela invalido: {t!r}")
-        expr = r"regexp_replace(t::text, '\d{2}:\d{2}(:\d{2})?', 'HH:MM', 'g')"
+        expr = "(to_jsonb(t) - 'z01_hora')::text"
         saida[t] = _psql(f"select md5(coalesce(string_agg({expr}, E'\\n' order by {expr}), '')) from {t} t").strip()
     return saida
 
@@ -633,7 +633,7 @@ def _emite_pdf(j, seletor: str) -> dict:
             "conteudo_sha256": sha(texto)}
 
 
-def _inclui(j, tabelas: list[str], preenche, botao: str, sem_horas: bool = False) -> dict:
+def _inclui(j, tabelas: list[str], botao: str, sem_horas: bool = False) -> dict:
     """Passo `salvar` generico: hash/linhas das tabelas antes e depois de clicar no botao de incluir."""
     antes = _banco_linhas(tabelas, sem_horas)
     j.c.fecha_passo()
@@ -665,7 +665,7 @@ def _f_financeiro():
         return {"valores": {n: c.input_value(f"[name={n}]") for n in valores}}
 
     def salvar(j):
-        return _inclui(j, [tabela], preenche, "input[name=db_opcao]")
+        return _inclui(j, [tabela], "input[name=db_opcao]")
 
     return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("preenche", preenche, True),
             ("salvar", salvar, True)]
@@ -734,7 +734,7 @@ def _f_cadastros():
         return {"valores": {n: c.input_value(f"[name={n}]") for n in valores}}
 
     def salvar(j):
-        return _inclui(j, TABELAS_CGM, preenche, "input[name=db_opcao]", sem_horas=True)
+        return _inclui(j, TABELAS_CGM, "input[name=db_opcao]", sem_horas=True)
 
     return [("entrada", entrada, False), ("tela-cadastro", cadastro, True), ("cpf", cpf, True),
             ("preenche", preenche, True), ("salvar", salvar, True)]

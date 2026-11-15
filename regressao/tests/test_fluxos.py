@@ -159,9 +159,16 @@ def test_hash_sem_horas_mascara_hhmm_no_sql_e_valida_o_nome(monkeypatch):
     sqls = []
     monkeypatch.setattr(banco, "_psql", lambda sql, db=banco.BASE: sqls.append(sql) or "abc\n")
     assert fluxos.hash_sem_horas(["protocolo.cgm"]) == {"protocolo.cgm": "abc"}
-    assert "regexp_replace(t::text" in sqls[0] and "HH:MM" in sqls[0] and "from protocolo.cgm t" in sqls[0]
+    # so a coluna do relogio (z01_hora) sai do hash: o resto da linha, inclusive outras horas, continua comparado
+    assert "to_jsonb(t) - 'z01_hora'" in sqls[0] and "regexp_replace" not in sqls[0]
+    assert "from protocolo.cgm t" in sqls[0]
     with pytest.raises(ValueError):
         fluxos.hash_sem_horas(["cgm; drop table x"])
+
+
+def test_inclui_nao_tem_parametro_morto():
+    import inspect
+    assert list(inspect.signature(fluxos._inclui).parameters) == ["j", "tabelas", "botao", "sem_horas"]
 
 
 def test_n_passos_do_meta_conta_todos_os_fluxos_da_pasta(tmp_path):
