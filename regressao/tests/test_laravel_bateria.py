@@ -180,3 +180,103 @@ def test_comparar_usa_alvo_do_ambiente_ou_o_informado_e_marca_conhecidas(amb, mo
     assert verif.laravel_novo == REF
     assert le(tmp_path / "s")["meta"]["alvo"] == REF
     assert codigo_saida([Caso("x", "l", V.DIVERGE)]) == 1
+
+
+# ---- fix round 1 ----
+
+def test_gravar_com_sucesso_nao_emite_caso_e_marca_gravacao(amb, tmp_path):
+    saida = tmp_path / "s"
+    assert bateria.roda_bateria_laravel(saida, "gravar") == 0
+    r = le(saida)
+    assert r["casos"] == []
+    assert r["meta"]["modo"] == "gravar" and r["meta"]["gravacao"]["n_casos"] == 1
+    md = (saida / "resumo.md").read_text(encoding="utf-8")
+    assert "GRAVACAO da baseline" in md and "nenhum caso foi avaliado" in md
+    assert "IDENTICO" not in json.dumps(r["casos"]) and "IDENTICO: 0" in md
+
+
+def test_gravar_com_erro_continua_erro_ambiente(amb, monkeypatch, tmp_path):
+    def explode(*a, **k):
+        raise ErroGravacao("x")
+    monkeypatch.setattr(bateria.caso, "gravar", explode)
+    assert bateria.roda_bateria_laravel(tmp_path / "s", "gravar") == 2
+    assert [c["veredito"] for c in le(tmp_path / "s")["casos"]] == ["ERRO_AMBIENTE"]
+
+
+def test_gitkeep_nao_conta_como_baseline(amb, tmp_path):
+    (bateria.DIR_BASELINE / ".gitkeep").write_text("", encoding="utf-8")
+    assert bateria.roda_bateria_laravel(tmp_path / "s", "gravar") == 0
+    (bateria.DIR_BASELINE / "x.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(bateria.RecusaBaseline):
+        bateria.roda_bateria_laravel(tmp_path / "s2", "gravar")
+
+
+@pytest.mark.parametrize("onde", ["verifica", "laravel_sobe", "alvos", "baseline", "carrega"])
+def test_excecao_inesperada_vira_erro_ambiente_com_erro_log(amb, monkeypatch, tmp_path, onde):
+    def boom(*a, **k):
+        raise RuntimeError("falha password=segredo123 inesperada")
+    alvo = {"verifica": "verifica", "laravel_sobe": "laravel_sobe", "alvos": "alvos_do_ambiente",
+            "baseline": "_baseline_existe", "carrega": "carrega_casos"}[onde]
+    monkeypatch.setattr(bateria, alvo, boom)
+    saida = tmp_path / "s"
+    modo = "gravar" if onde == "baseline" else "comparar"
+    assert bateria.roda_bateria_laravel(saida, modo) == 2
+    casos = le(saida)["casos"]
+    assert len(casos) == 1 and casos[0]["veredito"] == "ERRO_AMBIENTE"
+    if onde in ("alvos",):
+        assert casos[0]["id"] == "laravel:inesperado"
+        log = (saida / "erro.log").read_text(encoding="utf-8")
+        assert "RuntimeError" in log and "segredo123" not in log
+    assert "segredo123" not in json.dumps(le(saida))
+
+
+def test_excecao_em_fim_escreve_a_rodada_na_segunda_tentativa(amb, monkeypatch, tmp_path):
+    real = bateria._fim
+    n = {"k": 0}
+
+    def fim(*a, **k):
+        n["k"] += 1
+        if n["k"] == 1:
+            raise OSError("disco cheio")
+        return real(*a, **k)
+    monkeypatch.setattr(bateria, "_fim", fim)
+    saida = tmp_path / "s"
+    assert bateria.roda_bateria_laravel(saida, "comparar") == 2
+    assert le(saida)["casos"][0]["id"] == "laravel:inesperado"
+    assert "OSError" in (saida / "erro.log").read_text(encoding="utf-8")
+
+
+def test_saida_nao_gravavel_imprime_erro_e_sai_2_sem_traceback(amb, monkeypatch, tmp_path, capsys):
+    def fim(*a, **k):
+        raise PermissionError("negado password=abc123")
+    monkeypatch.setattr(bateria, "_fim", fim)
+    assert bateria.main(["comparar", "--saida", str(tmp_path / "s")]) == 2
+    err = capsys.readouterr().err
+    assert "PermissionError" in err and "abc123" not in err and "Traceback" not in err
+
+
+def test_saida_realmente_nao_gravavel(amb, tmp_path, capsys):
+    arq = tmp_path / "arquivo"
+    arq.write_text("x")
+    assert bateria.main(["comparar", "--saida", str(arq / "sub")]) == 2
+    assert "Traceback" not in capsys.readouterr().err
+
+
+def test_ids_renomeados_geram_aviso_e_meta_tem_tempos_e_git(amb, monkeypatch, tmp_path):
+    monkeypatch.setattr(bateria.caso, "comparar", lambda c, u, d, restaurar=True: [
+        Caso("rota:GET:/a", "laravel", V.IDENTICO), Caso("rota:GET:/a", "laravel", V.IDENTICO)])
+    saida = tmp_path / "s"
+    assert bateria.roda_bateria_laravel(saida, "comparar") == 0
+    assert "renomeado" in (saida / "resumo.md").read_text(encoding="utf-8")
+    meta = le(saida)["meta"]
+    assert "tempo_casos_s" in meta and "tempo_total_s" in meta
+
+
+def test_metadados_usam_o_helper_de_git(monkeypatch):
+    from regressao.nucleo import git
+    monkeypatch.setattr(git, "commit", lambda raiz, curto=False, runner=None: "c0ffee")
+    monkeypatch.setattr(git, "sujo", lambda raiz, runner=None: {"git_sujo": False, "git_sujo_arquivos": []})
+    monkeypatch.setattr(bateria, "_docker", lambda *a, **k: b"5.6.40\n")
+    monkeypatch.setattr(bateria, "alvos_do_ambiente", lambda: Alvos(REF, "p", NOVO, "q"))
+    meta = bateria._metadados_ambiente(NOVO)
+    assert meta["git_commit"] == "c0ffee" and meta["git_sujo"] is False

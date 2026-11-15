@@ -24,6 +24,7 @@ from contextlib import contextmanager, nullcontext
 from dataclasses import replace
 from pathlib import Path
 
+from regressao.nucleo import git
 from regressao.nucleo.ambiente import alvos_do_ambiente, verifica
 from regressao.nucleo.banco import (ARQ_DUMP, ARQ_SHA256, BancoDiferente, ErroAmbienteBanco,
                                     _docker, confere_baseline, restaura_dump)
@@ -150,11 +151,8 @@ def _metadados_ambiente() -> dict:
             meta[nome] = _docker(["exec", cont, "php", "-r", "echo PHP_VERSION;"], 30).decode().strip()
         except Exception as e:
             meta[nome] = f"indisponivel: {e}"
-    try:
-        meta["git_commit"] = subprocess.run(["git", "rev-parse", "HEAD"], cwd=RAIZ, capture_output=True,
-                                            text=True, timeout=15).stdout.strip()
-    except Exception as e:
-        meta["git_commit"] = f"indisponivel: {e}"
+    meta["git_commit"] = git.commit(RAIZ)
+    meta.update(git.sujo(RAIZ))
     try:
         meta["baseline_sha256"] = ARQ_SHA256.read_text().split()[0]
     except Exception as e:

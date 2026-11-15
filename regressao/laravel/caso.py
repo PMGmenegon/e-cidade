@@ -23,6 +23,7 @@ import yaml
 from regressao.laravel.mascara import mascara_json
 from regressao.laravel.token import (CLIENT_ID, _RE_JWT, ErroToken, _segredo_cliente,
                                      laravel_sobe, obtem_token, redige)
+from regressao.nucleo import git
 from regressao.nucleo.ambiente import alvos_do_ambiente
 from regressao.nucleo.banco import (ARQ_DUMP, ARQ_SHA256, CONTAINER, BancoDiferente,
                                     ErroAmbienteBanco, _psql, com_log_statement,
@@ -508,12 +509,7 @@ def _tipo_alvo(base_url: str) -> str:
 
 
 def _commit() -> str:
-    try:
-        r = subprocess.run(["git", "-C", str(RAIZ_REPO), "rev-parse", "--short", "HEAD"],
-                           capture_output=True, text=True, timeout=15)
-        return r.stdout.strip() or "desconhecido"
-    except (OSError, subprocess.SubprocessError):
-        return "desconhecido"
+    return git.commit(RAIZ_REPO, curto=True)
 
 
 def _nome_tabela(t: str) -> str:
