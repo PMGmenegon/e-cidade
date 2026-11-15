@@ -20,7 +20,7 @@ from pathlib import Path
 import requests
 import yaml
 
-from regressao.laravel.mascara import mascara_json
+from regressao.laravel.mascara import mascara_json, normaliza_erro
 from regressao.laravel.token import (CLIENT_ID, _RE_JWT, ErroToken, _segredo_cliente,
                                      laravel_sobe, obtem_token, redige)
 from regressao.nucleo import git
@@ -647,7 +647,9 @@ def _diff(base: dict, novo: dict) -> str:
 
 
 def _veredito(caso: CasoHttp, reg: dict, r: Resposta) -> Caso:
-    base, novo = {k: v for k, v in reg.items() if k != "id"}, _nucleo(r)
+    # mascara de erro so na comparacao: o registro bruto (com file/line/trace) segue guardado em disco
+    base, novo = (normaliza_erro({k: v for k, v in reg.items() if k != "id"}),
+                  normaliza_erro(_nucleo(r)))
     if base != novo:
         dif = [k for k in novo if base.get(k) != novo[k]]
         return Caso(caso.id, AREA, Veredito.DIVERGE, "difere em: " + ", ".join(dif),

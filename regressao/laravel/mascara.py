@@ -1,5 +1,6 @@
 """Mascara de campos volateis em JSON para comparar respostas de API."""
 import copy
+import re
 
 MARCA = "<X>"
 
@@ -23,6 +24,35 @@ def _ordena(no):
     if isinstance(no, list):
         return [_ordena(x) for x in no]
     return no
+
+
+# --- Mascara de ERRO, aplicada so na COMPARACAO (a baseline em disco guarda o registro bruto) --------
+# Erros do Laravel em modo debug trazem file/line/trace/stacktrace absolutos do servidor: num Laravel 12 em
+# outro caminho eles sempre diferem sem que a API tenha mudado. Decisao: mascarar esses CAMPOS (so em objetos
+# com cara de erro: tem `exception`, `message` ou `trace`) e normalizar caminhos absolutos de vendor/app/... em
+# qualquer texto. `exception` (classe) e `message` continuam comparados: mudar a excecao e DIVERGE real.
+CAMPOS_DE_ERRO = ("file", "line", "trace", "stacktrace", "stack_trace")
+_SINAIS_DE_ERRO = ("exception", "message", "trace", "stacktrace", "stack_trace")
+_RE_CAMINHO = re.compile(
+    r"(?:/[\w.\-@]+)*/(?:vendor|app|bootstrap|storage|ecidade|libs|model|classes|dbforms|public)/[^\s\"'),;]*?"
+    r"(?:\.php)?(?::\d+)?(?=[\s\"'),;]|$)")
+_RE_NA_LINHA = re.compile(r"\bon line \d+")
+
+
+def _texto(s: str) -> str:
+    return _RE_NA_LINHA.sub("on line <N>", _RE_CAMINHO.sub("<caminho>", s))
+
+
+def normaliza_erro(obj):
+    """Copia de `obj` sem file/line/trace de erro e com caminhos absolutos normalizados."""
+    if isinstance(obj, str):
+        return _texto(obj)
+    if isinstance(obj, list):
+        return [normaliza_erro(x) for x in obj]
+    if isinstance(obj, dict):
+        erro = any(k in obj for k in _SINAIS_DE_ERRO)
+        return {k: (MARCA if erro and k in CAMPOS_DE_ERRO else normaliza_erro(v)) for k, v in obj.items()}
+    return obj
 
 
 def mascara_json(obj, campos_volateis: list[str]):
