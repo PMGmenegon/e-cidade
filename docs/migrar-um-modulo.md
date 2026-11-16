@@ -238,6 +238,21 @@ alvos). Lote grande (mais de ~300 arquivos a alterar) se divide por subprefixo (
 Para cada lote: passos 1 a 9. Ao terminar, **commit local** (passo 9) e **pare** — o próximo lote começa limpo.
 A verificação (4b a 7) roda de uma vez com `scratchpad/verifica_lote.py` (ver *Verificar o lote de uma vez*).
 
+**Cada passo em uma linha**, na ordem (exemplo do lote `soc` + `hab` da Assistência Social; rode da raiz do repositório e
+olhe o resultado de cada um antes de seguir — os que mudam algo só mudam com `--aplicar`):
+
+| Passo | Comando |
+| --- | --- |
+| prova de fumaça (início do dia) | o `verifica_lote.py` e o `nivel3.py` já fazem; à mão, *Antes de começar*, 4 |
+| 1 — enumerar | `python3 scratchpad/enumera.py soc` e `python3 scratchpad/enumera.py hab` |
+| 4 — Rector | `python3 scratchpad/rector_lote.py soc hab` → conferir as regras → `... --aplicar` |
+| 4b a 7 — verificar | `python3 scratchpad/verifica_lote.py as soc hab` → ler o `RELATORIO.md` |
+| corrigir o que apareceu | `guarda_ciclo.py` / `campo_ciclo.py` / `negada_corrige.py` / à mão (receituário) → verificar de novo |
+| nível 3 | `python3 scratchpad/nivel3.py --candidatas soc hab` → `python3 scratchpad/nivel3.py soc1_visitatipo001` |
+| 8 — rotear | `python3 scratchpad/rotear.py location soc hab` → conferir → `... --aplicar` |
+| 8b — abas e redirecionamentos | `python3 scratchpad/rotear.py 8b ASSIST` |
+| 9 — commit | `git add` / `git commit` (passo 9) |
+
 - **A bateria do passo 7 é só do lote.** Se o lote mexeu no núcleo ou numa classe que muitas telas alcançam, rode também
   uma **bateria dirigida** às telas já roteadas que chegam ao trecho alterado (ver *Preciso refazer a bateria dos outros
   módulos?*).
