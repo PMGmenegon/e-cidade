@@ -1583,6 +1583,43 @@ Isso é funcionalmente correto: eles **estão portados** (entram pelo universo d
 
 ## Passos 8 e 9 — rotear e registrar
 
+### Em um comando — `rotear.py`
+
+```bash
+python3 scratchpad/rotear.py location soc hab                # SO MOSTRA o que mudaria
+python3 scratchpad/rotear.py location soc hab --aplicar      # prefixo inteiro para o 8.5
+python3 scratchpad/rotear.py map assist:pre,con --aplicar     # so as telas que o banco da a area
+python3 scratchpad/rotear.py 8b ASSIST                       # passo 8b: o que ainda volta ao 5.6
+python3 scratchpad/rotear.py abas hab1_avaliacao004 --aplicar # rotear um destino que o 8b achou
+```
+
+Qual modo usar é a decisão da parte B do fluxo da área (`prefixos_area.py`): **`location`** quando nenhuma outra área
+pendente usa o prefixo, **`map`** quando usa (ou quando o prefixo é muito maior que as telas da área). **Sem `--aplicar`,
+nada muda**: o script mostra a linha antes e depois, ou as entradas que o `map` ganharia, e quantas telas passariam ao 8.5:
+
+```
+docker/proxy/nginx.conf:
+  antes:  ...|lab|far|sau|sys)
+  depois: ...|lab|far|sau|sys|soc|hab)
+scratchpad/dimensiona.py:            (as duas copias do regex que os scripts usam mudam junto)
+  ...
+Telas que passam ao 8.5 pelo prefixo: 139 arquivos .php em ecidade/ (hab1_avaliacao001.php, ...)
+```
+
+Com `--aplicar`, ele faz o que eram vários blocos deste passo, na ordem e com as proteções que custaram defeito:
+
+1. grava as alterações — no `location`, o `nginx.conf` **e** as cópias do regex em `dimensiona.py` e `redirecionamentos.py`;
+   no `map`, reaproveita o comando da linha 2 do `faseb_map.conf` e **recusa** se alguma tela sair do `map`;
+2. testa com `nginx -t` num container **descartável**; se falhar, **desfaz tudo** sem tocar no proxy;
+3. recria o proxy (`--force-recreate`: *reload* não basta para bind mount de arquivo único);
+4. confere o `X-Ecidade-Runtime` de telas novas (com e sem `/w/2/`) e do `login.php`.
+
+O modo **`8b`** roda o `redirecionamentos.py` nas telas de menu da área (com `--todas`, também nas já concluídas) e lista
+o que ainda manda o usuário ao 5.6, já sem `corpo.php` e `db_erros.php`, com o comando `abas` pronto para os destinos —
+que antes precisam ser portados (passos 4 a 7). Na Configuração (16/11/2026): 257 telas examinadas, nada ao 5.6, ~30 s.
+
+Os arquivos alterados entram no commit do lote (passo 9). As seções abaixo explicam cada etapa e servem para diagnosticar.
+
 ### Passo 8 — mandar as telas para o PHP 8.5
 
 Esta é literalmente a linha que avança a migração. Em `docker/proxy/nginx.conf`, acrescente o prefixo à alternativa:
@@ -2051,6 +2088,7 @@ O módulo `tra` foi escolhido como piloto só pelo resíduo (era zero) e depois 
 | `scratchpad/prefixos_area.py` | quais prefixos uma área precisa migrar e como rotear cada um (*O fluxo de uma área*, B) |
 | `scratchpad/rector_lote.py` | passo 4 em um comando: simula, classifica as regras, aplica até zerar com `--aplicar` |
 | `scratchpad/nivel3.py` | nível 3 em um comando: `--candidatas`, POST nos dois, log ligado/desligado, escrita fora das tabelas |
+| `scratchpad/rotear.py` | passos 8 e 8b em um comando: `location`, `map`, `abas` (com `--aplicar`) e o levantamento `8b` |
 | `scratchpad/verifica_lote.py` | passos 4b a 7 de uma vez, com relatório único em `ecidade/tmp/verif/` |
 | `scratchpad/ns_fecho.py` | 9ª frente da enumeração (classes com namespace); chamado pelo `enumera.py` |
 | `scratchpad/carrega_arquivo.php` | passo 5b: carregar cada arquivo (LSP) |

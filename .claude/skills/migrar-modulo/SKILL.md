@@ -472,6 +472,10 @@ entre os commits de lote.
 
 ## Passo 8 — Roteamento
 
+**Em um comando:** `python3 scratchpad/rotear.py location|map|abas ... [--aplicar]` (mostra antes; com `--aplicar` grava,
+incluindo as cópias do regex em `dimensiona.py`/`redirecionamentos.py`, testa `nginx -t` num container descartável e
+desfaz se falhar, recria o proxy e confere o `X-Ecidade-Runtime`) e `python3 scratchpad/rotear.py 8b <AREA>`.
+
 Acrescentar o prefixo à alternância em `docker/proxy/nginx.conf`:
 
 ```nginx
