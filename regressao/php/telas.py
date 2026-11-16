@@ -153,12 +153,18 @@ def login_http(base: str | None = None, usuario: str = "dbseller", senha: str = 
     auth = _b64(f"DB_login={usuario}&DB_senha={hashlib.md5(senha.encode()).hexdigest()}")
     get("/abrir.php", params={"sAuth": auth, "conteudoCaptcha": ""})
     get("/inicio.php", params={"uso": usuario, "janelaWidth": 1280, "janelaHeight": ""})
+    get("/topo.php", params={"uso": usuario})  # frames do navegador: topo.php grava DB_uol_hora na sessao;
+    get("/status.php")                          # sem isso area.php falha ("Erro(26) atualizando db_usuariosonline")
+    get("/instit.php")
     s.post(base + "/con4_atualizacadastro001.php", data={"cancelar": "Cancelar"}, timeout=60)
+    get("/instit.php")
     get("/corpo.php?" + _b64("instit=1"))
     get("/area.php?instit=1")
     modulos = get("/corpo.php?" + _b64("instit=1&area_de_acesso=1")).content
-    achado = (re.search(rb'title="Cemit[^"]*"[^>]*href="(modulos\.php\?[^"]+)"', modulos)
-              or re.search(rb'href="(modulos\.php\?[^"]+)"', modulos))
+    ancoras = re.findall(rb"<a\b[^>]*>", modulos)
+    achado = next((re.search(rb'href="(modulos\.php\?[^"]+)"', a) for a in ancoras
+                   if b"Cemit" in a and b"modulos.php?" in a), None) \
+        or next((m for m in (re.search(rb'href="(modulos\.php\?[^"]+)"', a) for a in ancoras) if m), None)
     if not achado:
         raise SessaoPerdida("login por HTTP nao chegou a lista de modulos")
     get("/" + achado.group(1).decode("latin-1"))
@@ -334,9 +340,40 @@ def roda_telas(sid: str, prefixo: str, area: str, _retenta: bool = True) -> tupl
         elif corpo_e_pagina_de_erro(corpos[c.id]):
             c.veredito = Veredito.INCONCLUSIVO
             c.detalhe = "pagina de erro identica nos dois lados; tela nao exercitada"
+    for c in casos:
+        if c.veredito == Veredito.DIVERGE and _RE_200X200.match(c.detalhe or "") and _reavalia_pdf(sid, c.id):
+            c.veredito = Veredito.IDENTICO
+            c.detalhe = ("bytes diferem mas o texto do PDF e identico nos dois lados "
+                         "(compressao/metadados do FPDF): " + c.detalhe)
     if _retenta:
         casos, corpos = _retenta_timeouts(sid, area, telas, casos, corpos)
     return casos, corpos
+
+
+# DIVERGE do cmp.py com 200 nos dois lados: so ai pode haver "diferenca de bytes sem diferenca de conteudo"
+_RE_200X200 = re.compile(r"56=200/\d+B\s+85=200/\d+B")
+
+
+def _reavalia_pdf_impl(sid: str, tela: str) -> bool:
+    """cmp.py compara BYTES; o FPDF comprime os streams e embute metadados, entao um PDF de conteudo igual
+    pode divergir (ruido, comprovado em con4_gerrrelatorio, orc2_orcprevmensalrec002 e sys3_modulos002:
+    `/Length 636` x `/Length 609` no mesmo texto). Baixa os dois lados e compara o TEXTO extraido: so e ruido
+    se os dois forem PDF 200 e o texto (nao vazio) for identico. Qualquer falha = continua DIVERGE."""
+    from regressao.php.relatorios import extrai_conteudo
+    textos = []
+    try:
+        for container in ("ecidade_php56", "ecidade_php85"):
+            restaura_sessao(sid)
+            status, corpo = _requisita_status(sid, tela, container=container)
+            if status != 200 or not corpo.lstrip().startswith(b"%PDF"):
+                return False
+            textos.append(extrai_conteudo(corpo, "pdf"))
+    except Exception:
+        return False
+    return bool(textos[0].strip()) and textos[0] == textos[1]
+
+
+_reavalia_pdf = _reavalia_pdf_impl  # alias patchavel nos testes (conftest desliga a reavaliacao real)
 
 
 def _retenta_timeouts(sid: str, area: str, telas: list[str], casos: list[Caso],
