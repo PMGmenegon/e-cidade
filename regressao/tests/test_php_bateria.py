@@ -376,6 +376,44 @@ def test_prefixo_regex_estreita_telas_e_catalogos(amb, tmp_path):
     assert le(tmp_path)["meta"]["prefixos_regex"] == ["^rec1_"]
 
 
+def test_pular_sintaxe_e_classes_roda_so_telas_posts_e_relatorios_e_marca_parcial(amb, tmp_path):
+    bateria.roda_bateria_php(tmp_path, ["assistenciasocial"], pular={"sintaxe", "classes"})
+    assert "lint" not in amb and "classes" not in amb and {"telas", "post", "relatorio"} <= set(amb)
+    meta = le(tmp_path)["meta"]
+    assert meta["etapas_puladas"] == ["classes", "sintaxe"] and meta["parcial"] is True
+    assert not any(k.startswith(("sintaxe:", "classe:")) for k in ids(tmp_path))
+
+
+def test_pular_etapa_desconhecida_e_argumento_invalido(amb, tmp_path):
+    with pytest.raises(bateria.ArgumentoInvalido, match="etapa"):
+        bateria.roda_bateria_php(tmp_path, ["gestor"], pular={"telas"})
+    assert bateria.main(["--saida", str(tmp_path), "--pular", "xyz"]) == 2
+
+
+def test_cli_pular_repetivel(amb, monkeypatch, tmp_path):
+    vistos = {}
+    monkeypatch.setattr(bateria, "roda_bateria_php", lambda *a, **k: vistos.update(k) or 0)
+    assert bateria.main(["--saida", str(tmp_path), "--pular", "sintaxe", "--pular", "classes"]) == 0
+    assert vistos["pular"] == {"sintaxe", "classes"}
+
+
+def test_catalogo_fora_de_qualquer_area_roda_quando_o_prefixo_regex_casa_explicitamente(amb, monkeypatch, tmp_path):
+    rels = [RelCaso("pro2_r002.php", "", "pdf", "protocolo", True),
+            RelCaso("db_download.php", "arquivo=tmp/x.csv", "xls", "contabilidade", True)]
+    monkeypatch.setattr(bateria, "carrega_catalogo_relatorios", lambda c: rels)
+    bateria.roda_bateria_php(tmp_path, prefixos_regex=["^rec1_", r"^db_download\.php$"])
+    r = ids(tmp_path)
+    assert "relatorio:db_download.php?arquivo=tmp/x.csv" in r      # sem prefixo de area, mas pedido pelo regex
+    assert "relatorio:pro2_r002.php" not in r                      # dentro de area: segue o filtro de sempre
+
+
+def test_catalogo_fora_de_qualquer_area_continua_de_fora_sem_regex_explicito(amb, monkeypatch, tmp_path):
+    rels = [RelCaso("db_download.php", "arquivo=tmp/x.csv", "xls", "contabilidade", True)]
+    monkeypatch.setattr(bateria, "carrega_catalogo_relatorios", lambda c: rels)
+    bateria.roda_bateria_php(tmp_path, ["assistenciasocial"])
+    assert not any(k.startswith("relatorio:") for k in ids(tmp_path))
+
+
 def test_prefixo_regex_invalido_ou_vazio_falha_antes_de_rodar(amb, tmp_path):
     with pytest.raises(bateria.ArgumentoInvalido):
         bateria.roda_bateria_php(tmp_path, prefixos_regex=["("])

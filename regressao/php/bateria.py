@@ -72,6 +72,8 @@ AREAS: dict[str, tuple[str, ...]] = {
                    "inf", "iss", "itb", "itbi", "jur", "mar", "not", "pre", "pro", "prot", "rec",
                    "sys", "tri"),
 }
+TODOS_PREFIXOS = tuple(sorted({p for ps in AREAS.values() for p in ps}))
+ETAPAS_PULAVEIS = frozenset({"sintaxe", "classes"})  # ja validas numa rodada anterior (complemento de rodada)
 ALIASES = {"rh": "recursoshumanos", "assistencia": "assistenciasocial", "social": "assistenciasocial",
            "tributaria": "tributario", "configuracoes": "configuracao"}
 
@@ -231,8 +233,12 @@ def _filtra_catalogo(linhas, prefixos, todas_areas: bool, incluir_nv: bool, tela
     """(a rodar, pulados nao-verificado, pulados de outra area/regex)."""
     rodar, nv, outra = [], [], []
     for r in linhas:
-        fora = (not todas_areas and not _tela_da_area(tela_de(r), prefixos)) or \
-               (rx_tela is not None and not rx_tela.match(tela_de(r)))
+        tela = tela_de(r)
+        # tela sem prefixo de NENHUMA area (db_download.php, func_*.php) so entra se o --prefixo a pedir de forma
+        # explicita (rx_tela casa); sem regex, continua so na rodada "todas"
+        pedida_fora_de_area = rx_tela is not None and not _tela_da_area(tela, TODOS_PREFIXOS)
+        fora = (not todas_areas and not _tela_da_area(tela, prefixos) and not pedida_fora_de_area) or \
+               (rx_tela is not None and not rx_tela.match(tela))
         if fora:
             outra.append(r)
         elif not r.verificado and not incluir_nv:
@@ -244,7 +250,11 @@ def _filtra_catalogo(linhas, prefixos, todas_areas: bool, incluir_nv: bool, tela
 
 def roda_bateria_php(diretorio_saida: Path, areas: list[str] | None = None, normalizar: bool = True,
                      incluir_nao_verificados: bool = False, restaurar: bool = True,
-                     prefixos_regex: list[str] | None = None) -> int:
+                     prefixos_regex: list[str] | None = None, pular: set[str] | None = None) -> int:
+    pular = set(pular or ())
+    if pular - ETAPAS_PULAVEIS:
+        raise ArgumentoInvalido(f"etapa nao pulavel: {sorted(pular - ETAPAS_PULAVEIS)}; "
+                                f"validas: {sorted(ETAPAS_PULAVEIS)}")
     nomes, prefixos = resolve_areas(areas)  # area desconhecida: levanta antes de qualquer passo
     rx_user = None
     if prefixos_regex:
@@ -327,7 +337,7 @@ def roda_bateria_php(diretorio_saida: Path, areas: list[str] | None = None, norm
     meta.update(_metadados_ambiente())
     with (sem_normalizacao() if not normalizar else nullcontext()):
         return _passos(termina, meta, tempos, sessao, nomes, prefixos, grupos, erros_lista,
-                       areas is None and rx_tela is None, incluir_nao_verificados, rx_tela, diretorio_saida)
+                       areas is None and rx_tela is None, incluir_nao_verificados, rx_tela, diretorio_saida, pular)
 
 
 MAX_RENOVACOES = 5
@@ -347,8 +357,11 @@ def _cronometra(tempos: dict, fase: str, fn):
 
 
 def _passos(termina, meta, tempos, sessao, nomes, prefixos, grupos, erros_lista, todas, incluir_nv,
-            rx_tela, diretorio) -> int:
+            rx_tela, diretorio, pular=frozenset()) -> int:
     casos: list[Caso] = []
+    if pular:
+        meta["etapas_puladas"] = sorted(pular)
+        meta["parcial"] = True  # rodada de COMPLEMENTO: nao cobre as etapas puladas
     rotulo = "+".join(nomes) if len(nomes) <= 3 else "todas"
     for e in erros_lista:
         casos.append(Caso("passo:lista_telas", rotulo, Veredito.ERRO_AMBIENTE, e))
@@ -356,14 +369,16 @@ def _passos(termina, meta, tempos, sessao, nomes, prefixos, grupos, erros_lista,
     telas_alvo = sorted({t for _p, _rx, ts in grupos for t in ts})
     meta["telas_selecionadas"] = len(telas_alvo)
 
-    casos += _ns(_cronometra(tempos, "sintaxe", lambda: _passo(
-        "sintaxe", rotulo, lambda: roda_lint(telas_alvo))), "sintaxe")
+    if "sintaxe" not in pular:
+        casos += _ns(_cronometra(tempos, "sintaxe", lambda: _passo(
+            "sintaxe", rotulo, lambda: roda_lint(telas_alvo))), "sintaxe")
 
     def _classes():
         lista = _classes_das_telas(telas_alvo)
         meta["classes_selecionadas"] = len(lista)
         return roda_classes(lista) if lista else []
-    casos += _ns(_cronometra(tempos, "classes", lambda: _passo("classes", rotulo, _classes)), "classe")
+    if "classes" not in pular:
+        casos += _ns(_cronometra(tempos, "classes", lambda: _passo("classes", rotulo, _classes)), "classe")
 
     hashes: dict[str, str] = {}
     flags: dict[str, bool] = {}
@@ -463,11 +478,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--incluir-nao-verificados", action="store_true")
     ap.add_argument("--sem-restaurar", action="store_true",
                     help="SO desenvolvimento: nao restaura a baseline; resultado nao comparavel")
+    ap.add_argument("--pular", action="append", default=None, metavar="ETAPA",
+                    help="repetivel (sintaxe|classes): COMPLEMENTO de rodada; essas etapas ja foram validas antes. "
+                         "A rodada fica marcada meta.parcial")
     a = ap.parse_args(argv)
     try:
         return roda_bateria_php(a.saida, a.area, normalizar=not a.sem_normalizar,
                                 incluir_nao_verificados=a.incluir_nao_verificados,
-                                restaurar=not a.sem_restaurar, prefixos_regex=a.prefixo)
+                                restaurar=not a.sem_restaurar, prefixos_regex=a.prefixo,
+                                pular=set(a.pular or ()))
     except ArgumentoInvalido as e:
         print(f"erro: {e}", file=sys.stderr)
         return 2
