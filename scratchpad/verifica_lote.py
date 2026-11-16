@@ -31,6 +31,10 @@ O que ele roda, nesta ordem (os detalhes de cada passo estao em docs/migrar-um-m
     6b  caminho de escrita: atualizacampos() le o formulario igual nos dois?
     6c  forma negada `$this->x != ""`: decide igual nos dois? (so as classes do lote contam)
     7   bateria: cada tela dos prefixos responde byte a byte igual nos dois?
+        e, para cada tela que divergir, um DIAGNOSTICO automatico: pede a tela de novo aos dois runtimes
+        com os logs limpos, junta o erro fatal do PHP (arquivo e linha), os erros de SQL do PostgreSQL e,
+        se os dois responderem 200, o trecho onde as paginas comecam a diferir; e classifica pela tabela
+        de decisao do guia (regressao, pre-existente, quebra nos dois, silenciosa, nao reproduziu).
 
 Ficam DE FORA de proposito: o passo 4 (Rector: exige conferir regra nova antes de aplicar),
 o nivel 3 (POST real: grava no banco e exige escolher a tela), os passos 8/8b (mudam o proxy)
@@ -369,6 +373,96 @@ def passo_6c(ctx, args):
     situacao = {"PASSOU": "OK", "INCOMPLETO": "FALHA", "INVESTIGAR": "INVESTIGAR"}.get(veredito, "FALHA")
     return Resultado(situacao, resumo, det, [s["56"], s["85"], rel])
 
+def normalizacao_do_cmp():
+    """A MESMA normalizacao que o cmp.py aplica antes de comparar (sid, nomes temporarios, datas
+    de PDF...). Lida do proprio cmp.py, e nao copiada, para o diagnostico enxergar exatamente a
+    diferenca que a bateria enxergou. Devolve uma funcao bytes -> bytes."""
+    fonte = ler("scratchpad/cmp.py")
+    bloco = fonte[fonte.index("NORM = ["): fonte.index("def norm(")]
+    ns = {"re": re}
+    exec(bloco, ns)
+    def norm(b):
+        for rx, rep in ns["NORM"]:
+            b = rx.sub(rep, b)
+        return b
+    return norm
+
+LOG_PHP = os.path.join(ECIDADE, "extension", "log", "error.log")
+
+def pedir(porta, tela, sid, sess):
+    """Pede UMA tela a uma porta, como a bateria faz (sessao restaurada antes), e devolve
+    (codigo HTTP, corpo, erros fatais do PHP, erros de SQL do PostgreSQL) daquele pedido.
+    O error.log e zerado antes, e o log do banco e lido so a partir do instante do pedido."""
+    sh(["docker", "exec", "-u", "root", "ecidade_php56", "sh", "-c",
+        f"cp /tmp/_diag_sess.bak {sess}; chown www-data:www-data {sess}"])
+    open(LOG_PHP, "w").close()
+    t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    r = subprocess.run(["curl", "-s", "-m", "60", "-b", f"ECIDADEWINDOWMAIN={sid}", "-w", "\n@@%{http_code}",
+                        f"http://localhost:{porta}/{tela}"], capture_output=True, stdin=subprocess.DEVNULL)
+    corpo, _, codigo = r.stdout.rpartition(b"\n@@")
+    import time; time.sleep(1)               # o Logger e o PostgreSQL gravam logo depois da resposta
+    fatais = sorted({re.sub(r"^\[[^]]*\]\s*", "", l).strip() for l in ler(LOG_PHP).splitlines()
+                     if "E_ERROR" in l or "Uncaught" in l})
+    _, out, err = sh(["docker", "logs", "--since", t0, "ecidade_database"])
+    # o docker devolve o log ja em UTF-8 (com o caractere de substituicao no lugar do LATIN-1 que nao
+    # converteu); o sh() decodificou como latin-1, entao desfaz e decodifica como UTF-8
+    sql, ls = [], (out + err).encode("latin-1").decode("utf-8", "replace").splitlines()
+    for i, l in enumerate(ls):
+        if "ERRO:" in l:                     # o log do PostgreSQL e em PORTUGUES (locale pt_BR)
+            sql.append(l.split("ERRO:", 1)[1].strip()
+                       + (" | " + ls[i + 1].split(":", 1)[-1].strip() if i + 1 < len(ls) and "INSTRU" in ls[i + 1] else ""))
+    return codigo.decode() or "000", corpo, fatais, sql
+
+def trecho_diferente(a, b, contexto=80):
+    """Onde dois corpos (ja normalizados) comecam a diferir, com um pouco de texto em volta."""
+    i = next((k for k in range(min(len(a), len(b))) if a[k] != b[k]), min(len(a), len(b)))
+    ini = max(0, i - contexto)
+    fmt = lambda x: x[ini:i + contexto].decode("latin-1").replace("\n", "\\n")
+    return i, fmt(a), fmt(b)
+
+def diagnosticar(telas, sid, p):
+    """Para cada tela divergente: pede de novo aos dois runtimes, coleta os erros e classifica
+    pela tabela de decisao do guia (passo 7). Devolve as linhas para o relatorio."""
+    norm = normalizacao_do_cmp()
+    sess = f"/var/lib/php/sessions/sess_{sid}"
+    sh(["docker", "exec", "-u", "root", "ecidade_php56", "cp", sess, "/tmp/_diag_sess.bak"])
+    saida = []
+    try:
+        for tela in telas:
+            c56, b56, f56, q56 = pedir(8080, tela, sid, sess)
+            c85, b85, f85, q85 = pedir(8085, tela, sid, sess)
+            n56, n85 = norm(b56), norm(b85)
+            if c56 == c85 and n56 == n85:
+                tipo = "NAO REPRODUZIU (identica agora: diferenca ocasional, ex. horario)"
+            elif c56 == "200" and c85 != "200":
+                tipo = "REGRESSAO: quebra so no 8.5 -> corrigir"
+            elif c56 != "200" and c85 == "200":
+                tipo = "PRE-EXISTENTE: quebra so no 5.6 (defeito da referencia) -> registrar, nao corrigir"
+            elif c56 != "200" and c85 != "200":
+                tipo = "QUEBRA NOS DOIS (pre-existente ou dado ausente) -> nao mexer; conferir se a causa e a mesma"
+            else:
+                tipo = "SILENCIOSA: 200 nos dois, conteudo diferente -> o tipo mais perigoso, ver o trecho"
+            bloco = [f"### {tela}", "", f"- 5.6: HTTP {c56}, {len(b56)} bytes; 8.5: HTTP {c85}, {len(b85)} bytes",
+                     f"- **Classificacao: {tipo}**"]
+            for rt, fat, sql in (("8.5", f85, q85), ("5.6", f56, q56)):
+                for x in fat[:3]:
+                    bloco.append(f"- erro do PHP no {rt}: `{x[:400]}`")
+                for x in sql[:3]:
+                    bloco.append(f"- erro de SQL no {rt}: `{x[:400]}`")
+            if c56 == c85 == "200" and n56 != n85:
+                pos, t56, t85 = trecho_diferente(n56, n85)
+                bloco += [f"- as paginas comecam a diferir no byte {pos}:", "", "```",
+                          f"5.6: ...{t56}...", f"8.5: ...{t85}...", "```"]
+            if not (f56 or f85 or q56 or q85) and not (c56 == c85 == "200"):
+                bloco.append("- nenhum erro registrado nos logs: ver o corpo da resposta (pagina de erro da aplicacao?)")
+            for rt, b in (("56", b56), ("85", b85)):
+                gravar(os.path.join(p, "7_corpo_" + tela.replace("/", "_") + f"_{rt}.html"), b.decode("latin-1"))
+            saida.append("\n".join(bloco))
+    finally:
+        sh(["docker", "exec", "-u", "root", "ecidade_php56", "sh", "-c",
+            f"cp /tmp/_diag_sess.bak {sess}; chown www-data:www-data {sess}; rm -f /tmp/_diag_sess.bak"])
+    return saida
+
 def passo_7(ctx, args):
     """Bateria byte a byte (scratchpad/cmp.py) em todas as telas dos prefixos. O cmp.py restaura a
     sessao antes de cada pedido, normaliza o que muda a cada requisicao e refaz o par antes de acusar."""
@@ -402,6 +496,13 @@ def passo_7(ctx, args):
     if linhas_div:
         det += "\n\n```\n" + amostra(linhas_div, 40) + "\n```"
     if nd or nt:
+        # Diagnostico automatico de cada divergente (os timeouts nao: repetir o pedido levaria mais 60 s
+        # cada e o motivo de um timeout raramente aparece em log).
+        divergentes = [l.split()[1] for l in linhas_div if l.strip().startswith("DIVERGE")]
+        if divergentes:
+            det += ("\n\n**Diagnostico automatico** (cada tela pedida de novo aos dois runtimes, com os logs limpos; "
+                    "a classificacao segue a tabela de decisao do guia, passo 7). As paginas de cada lado ficam na "
+                    "pasta como `7_corpo_<tela>_56.html` / `_85.html`.\n\n" + "\n\n".join(diagnosticar(divergentes, sid, p)))
         return Resultado("INVESTIGAR", f"{ok}/{tot} identicas, {nd} divergentes, {nt} timeout", det, [log, div])
     return Resultado("OK", f"{ok}/{tot} telas identicas", det, [log])
 

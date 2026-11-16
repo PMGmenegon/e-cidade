@@ -743,8 +743,37 @@ Saida em ecidade/tmp/verif/teste-20261116-1933/
 Relatorio: ecidade/tmp/verif/teste-20261116-1933/RELATORIO.md
 ```
 
-(Saída real do `soc` em 16/11/2026. As 2 divergências eram reais: um método chamado como estático sem ser `static` —
-`FamiliaRepository::getInstance()` — e a `AgataQuery.class:95`, corrigida à parte.)
+(Saída real do `soc` em 16/11/2026.)
+
+**O passo 7 diagnostica cada tela divergente sozinho.** A bateria só sabe *que* uma tela divergiu; o script então pede
+cada divergente de novo aos dois runtimes, com os logs limpos, e põe no relatório o **motivo**: o erro fatal do PHP (com
+arquivo e linha), os erros de SQL do PostgreSQL daquele pedido e, quando os dois respondem 200, o trecho onde as páginas
+começam a diferir. E classifica pela tabela de decisão do passo 7. As duas divergências do `soc`, como saíram no relatório:
+
+```
+### soc2_beneficiosfamilia002.php
+- 5.6: HTTP 200, 99 bytes; 8.5: HTTP 500, 3729 bytes
+- Classificacao: REGRESSAO: quebra so no 8.5 -> corrigir
+- erro do PHP no 8.5: Uncaught exception 'Error' with message 'Non-static method FamiliaRepository::getInstance()
+  cannot be called statically' in model/social/FamiliaRepository.model.php on line 127
+
+### soc2_declaracaoinss002.php
+- 5.6: HTTP 200, 115 bytes; 8.5: HTTP 500, 3726 bytes
+- Classificacao: REGRESSAO: quebra so no 8.5 -> corrigir
+- erro do PHP no 8.5: Uncaught exception 'TypeError' with message 'Unsupported operand types: string + string'
+  in dbagata/classes/core/AgataQuery.class on line 95
+- erro de SQL no 8.5: erro de sintaxe em ou próximo a "\" no caractere 39
+- erro de SQL no 5.6: erro de sintaxe em ou próximo a "\" no caractere 39
+```
+
+As classificações possíveis: **REGRESSÃO** (quebra só no 8.5 → corrigir), **PRÉ-EXISTENTE** (quebra só no 5.6 →
+registrar, não corrigir), **QUEBRA NOS DOIS** (não mexer; conferir se a causa é a mesma), **SILENCIOSA** (200 nos dois com
+conteúdo diferente — a mais perigosa; o relatório mostra o trecho) e **NÃO REPRODUZIU** (identica no segundo pedido:
+diferença ocasional). A classificação é um ponto de partida, não um veredito: o erro de SQL acima, por exemplo, acontece
+**nos dois** e não é a causa do 500 — a causa é o erro do PHP. As páginas de cada lado ficam na pasta
+(`7_corpo_<tela>_56.html` / `_85.html`). Os *timeouts* não são diagnosticados (repetir o pedido custaria mais 60 s cada).
+
+(As duas eram reais: a primeira é do lote; a segunda já estava corrigida na branch `nucleo/correcoes-transversais`.)
 
 **Tudo fica numa pasta só**, `ecidade/tmp/verif/<lote>-<data-hora>/`, e **só o `RELATORIO.md` precisa ser lido**: ele traz o
 cabeçalho (branch, commit, quantos arquivos o lote alterou), a tabela-resumo e, para cada passo, o critério, os números e as
