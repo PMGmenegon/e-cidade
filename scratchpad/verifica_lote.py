@@ -8,6 +8,8 @@ Uso (da raiz do repositorio):
     python3 scratchpad/verifica_lote.py as soc hab --so 6b,6c        # so alguns passos
     python3 scratchpad/verifica_lote.py as soc hab --continuar       # nao para no primeiro que falhar
     python3 scratchpad/verifica_lote.py as soc hab --base origin/base-php84   # lote ja commitado
+    python3 scratchpad/verifica_lote.py fim-assist --tudo            # TUDO: a bateria completa do fim da area
+    python3 scratchpad/verifica_lote.py teste --tudo --amostra 40    # TUDO, mas com amostra (teste rapido)
 
 Opcoes:
     --so PASSOS   lista separada por virgula, entre: 4b,5,5b,6,6b,6c,7 (padrao: todos)
@@ -16,6 +18,16 @@ Opcoes:
                   isto e, as alteracoes ainda nao commitadas). Depois do commit do lote, passe
                   o commit anterior a ele, ex. --base origin/base-php84
     --sid SID     sessao autenticada a usar na bateria (padrao: a mais recente do 5.6)
+    --tudo        em vez de prefixos, verifica TUDO: o universo sao os arquivos que a migracao alterou
+                  (diff contra o master, o codigo antes da migracao) e as classes entre eles; a bateria roda
+                  em todas as telas que o proxy manda ao 8.5 (location + map). E a bateria completa do fim da
+                  area (guia, fluxo D): ~3 h. Use --amostra para testar antes.
+    --amostra N   limita cada lista a N itens espalhados (teste rapido; NAO vale como bateria completa)
+    --telas A,B   a bateria roda so nestas telas (ex.: reconferir uma divergencia)
+    --conhecidas F lista de divergencias JA caracterizadas: so as que ficarem FORA dela contam como possivel
+                  regressao e sao diagnosticadas (e o criterio do fim da area). Aceita o
+                  docs/divergencias-conhecidas.md (padrao, se existir; linhas "Corrigida" nao entram) ou
+                  qualquer lista com o nome da tela no 1o campo, como o 7_divergentes.txt de uma bateria anterior
 
 Pre-requisitos:
     - os containers ecidade_database, ecidade_php56 e ecidade_php85 no ar;
@@ -98,12 +110,13 @@ ARTEFATOS = re.compile("|".join(p for p, *_ in ARTEFATOS_LISTA))
 # Utilitarios
 # ---------------------------------------------------------------------------------------------
 
-def sh(cmd, entrada=None, timeout=None):
+def sh(cmd, entrada=None, timeout=None, env=None):
     """Roda um comando (lista de argumentos) e devolve (codigo, stdout, stderr) como texto.
-    latin-1 nos dois sentidos: 64% da base e LATIN-1, e utf-8 estrito quebraria na leitura."""
+    latin-1 nos dois sentidos: 64% da base e LATIN-1, e utf-8 estrito quebraria na leitura.
+    env: variaveis a acrescentar ao ambiente (ex.: ONLY para o cmp.py)."""
     r = subprocess.run(cmd, input=entrada.encode("latin-1") if entrada is not None else None,
                        stdin=None if entrada is not None else subprocess.DEVNULL,
-                       capture_output=True, timeout=timeout)
+                       capture_output=True, timeout=timeout, env={**os.environ, **(env or {})})
     return r.returncode, r.stdout.decode("latin-1"), r.stderr.decode("latin-1")
 
 def dentro(caminho_host):
@@ -115,7 +128,9 @@ def ler(caminho):
         return f.read()
 
 def linhas(caminho):
-    return [l for l in ler(caminho).splitlines() if l.strip()]
+    """Linhas nao vazias. split("\\n") (so o LF) e nao splitlines(): lido como latin-1, um texto UTF-8 (ou um byte
+    0x85 de um arquivo LATIN-1) vira caracteres que o splitlines() trata como quebra de linha."""
+    return [l.rstrip("\r") for l in ler(caminho).split("\n") if l.strip()]
 
 def gravar(caminho, texto):
     with open(caminho, "w", encoding="latin-1", errors="replace") as f:
@@ -151,19 +166,36 @@ def preparar(args):
         sys.exit(f"ERRO: container(s) parado(s): {', '.join(faltam)}. Religue (docs/migrar-um-modulo.md, "
                  "'Antes de comecar').")
 
-    universo = set()
-    for p in args.prefixos:
-        u = os.path.join(ECIDADE, "tmp", f"{p}_universo.txt")
-        if not os.path.isfile(u):
-            sys.exit(f"ERRO: falta {os.path.relpath(u)}. Rode antes: python3 scratchpad/enumera.py {p}")
-        universo |= set(linhas(u))
-    codigo = sorted(f for f in universo if f.endswith((".php", ".class", ".inc"))
-                    and os.path.isfile(os.path.join(ECIDADE, f)))
-    classes = sorted(f for f in codigo if f.startswith("classes/"))
-
-    # Arquivos alterados pelo lote, relativos a ecidade/ (usado no 4b e no 5).
+    # Arquivos alterados em relacao a --base, relativos a ecidade/ (usado no 4b e no 5; no --tudo,
+    # e o proprio universo).
     _, out, _ = sh(["git", "diff", "--name-only", args.base, "--", "ecidade/"])
     alterados = {l[len("ecidade/"):] for l in out.splitlines() if l.startswith("ecidade/")}
+
+    telas = None
+    if args.tudo:
+        # TUDO: o universo sao os arquivos que a migracao alterou (diff contra o master, o codigo antes
+        # da migracao). Sao eles que podem regredir; e as classes alteradas sao as portadas -- uma classe
+        # nunca portada pertence a area que o 5.6 ainda serve e diverge por construcao (6c).
+        codigo = sorted(f for f in alterados if f.endswith((".php", ".class", ".inc"))
+                        and os.path.isfile(os.path.join(ECIDADE, f)))
+        telas = telas_servidas()
+    else:
+        universo = set()
+        for p in args.prefixos:
+            u = os.path.join(ECIDADE, "tmp", f"{p}_universo.txt")
+            if not os.path.isfile(u):
+                sys.exit(f"ERRO: falta {os.path.relpath(u)}. Rode antes: python3 scratchpad/enumera.py {p}")
+            universo |= set(linhas(u))
+        codigo = sorted(f for f in universo if f.endswith((".php", ".class", ".inc"))
+                        and os.path.isfile(os.path.join(ECIDADE, f)))
+    classes = sorted(f for f in codigo if f.startswith("classes/"))
+    if args.amostra:
+        codigo, classes = espalhar(codigo, args.amostra), espalhar(classes, args.amostra)
+        if telas:
+            telas = {"location": espalhar(telas["location"], args.amostra),
+                     "map": espalhar(telas["map"], max(1, args.amostra // 4))}
+    if args.telas:                       # telas pedidas explicitamente: so elas na bateria
+        telas = {"location": [], "map": [t if t.endswith(".php") else t + ".php" for t in args.telas.split(",")]}
 
     ts = datetime.datetime.now().strftime("%Y%m%d-%H%M")
     pasta = os.path.join(ECIDADE, "tmp", "verif", f"{args.lote}-{ts}")
@@ -172,8 +204,58 @@ def preparar(args):
 
     gravar(os.path.join(pasta, "universo_codigo.txt"), "\n".join(codigo) + "\n")
     gravar(os.path.join(pasta, "classes.txt"), "\n".join(classes) + "\n")
-    return {"pasta": pasta, "codigo": codigo, "classes": classes, "alterados": alterados,
-            "sid": args.sid or achar_sessao()}
+    return {"pasta": pasta, "codigo": codigo, "classes": classes, "alterados": alterados, "telas": telas,
+            "conhecidas": carregar_conhecidas(args.conhecidas), "sid": args.sid or achar_sessao()}
+
+def espalhar(lista, n):
+    """Amostra de n itens espalhados pela lista (deterministica: a mesma a cada execucao)."""
+    if n <= 0 or len(lista) <= n:
+        return list(lista)
+    passo = len(lista) / n
+    return [lista[int(i * passo)] for i in range(n)]
+
+def telas_servidas():
+    """As telas que o proxy manda ao 8.5, como no fluxo D do guia: as do `location` (prefixos lidos do
+    nginx.conf) e as do `map` (faseb_map.conf, com a grafia do disco; o map guarda em minuscula)."""
+    ng = ler(os.path.join(RAIZ, "docker", "proxy", "nginx.conf"))
+    pref = re.search(r"location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)\)", ng).group(1)
+    rx = re.compile(rf"^(?:{pref})[0-9]*_", re.I)
+    disco = {f.lower(): f for f in os.listdir(ECIDADE)}
+    loc = sorted(f for f in disco.values() if f.endswith(".php") and rx.match(f))
+    mp = sorted({disco[m.group(1)] for l in ler(os.path.join(RAIZ, "docker", "proxy", "faseb_map.conf")).splitlines()
+                 for m in [re.match(r"\s+(\S+)\s+php85;", l)] if m and m.group(1) in disco} - set(loc))
+    return {"location": loc, "map": mp, "regex": rf"^(?:{pref})[0-9]*_"}
+
+def carregar_conhecidas(caminho):
+    """Telas que JA divergiam e estao caracterizadas (defeito pre-existente, fragmento, horario...). Na
+    bateria, so as divergencias FORA desta lista contam como possivel regressao. Aceita:
+      - docs/divergencias-conhecidas.md: a 1a coluna de cada linha da tabela; linhas marcadas
+        "Corrigida" NAO entram (se uma delas voltar a divergir, e regressao); "x002/003.php" vira duas;
+      - qualquer outra lista (ex.: o 7_divergentes.txt de uma bateria anterior): o 1o campo de cada linha.
+    Padrao (caminho None): docs/divergencias-conhecidas.md, se existir."""
+    if caminho is None:
+        caminho = os.path.join(RAIZ, "docs", "divergencias-conhecidas.md")
+        if not os.path.isfile(caminho):
+            return None
+    nomes = set()
+    if caminho.endswith(".md"):
+        for l in open(caminho, encoding="utf-8", errors="replace").read().split("\n"):   # o .md e UTF-8
+            if not l.startswith("| `") or "Corrigida" in l:
+                continue
+            for tok in re.findall(r"`([^`]+)`", l.split("|")[1]):
+                for t in re.split(r",\s*", tok):
+                    m = re.match(r"^(.*?)(\d+)((?:/\d+)+)\.php$", t.strip())
+                    if m:   # edu1_calendarioescola002/003.php -> 002 e 003
+                        for num in [m.group(2)] + m.group(3).strip("/").split("/"):
+                            nomes.add(f"{m.group(1)}{num}.php")
+                    elif t.strip().endswith(".php"):
+                        nomes.add(t.strip())
+    else:
+        for l in linhas(caminho):
+            if l.split() and l.split()[0].endswith(".php"):
+                nomes.add(l.split()[0])
+    rel = os.path.relpath(caminho, RAIZ)
+    return {"arquivo": rel if not rel.startswith("..") else caminho, "nomes": nomes}
 
 def achar_sessao():
     """A sessao autenticada MAIS RECENTE do 5.6. O sess_?* exclui o arquivo "sess_" sem
@@ -201,7 +283,7 @@ def passo_4b(ctx, args):
     # (?<!function ) exclui DECLARACOES: sem ele, "__construct" seria acusada como ausente
     rx = re.compile(r"(?<![\$>:\w])(?<!function )([a-z_][a-z0-9_]{2,})\s*\(")
     nov, vel = set(), set()
-    for l in d.splitlines():
+    for l in d.split("\n"):              # diff de codigo LATIN-1: so o \n quebra linha
         if l.startswith(("+++", "---")):
             continue
         if l.startswith("+"):
@@ -211,16 +293,27 @@ def passo_4b(ctx, args):
     novas = sorted(nov - vel)
     arq = os.path.join(ctx["pasta"], "4b_funcoes_novas.txt")
     gravar(arq, "\n".join(novas) + "\n")
-    _, out, err = sh(["docker", "exec", "-i", "ecidade_php56", "php", "-r",
-                      f'foreach(file("{dentro(arq)}", FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $f)'
-                      ' if(!function_exists(trim($f))) echo trim($f),"\\n";'])
-    ausentes = [l for l in out.splitlines() if l.strip()]
+    # A pergunta e "o 8.5 conhece e o 5.6 NAO?": so isso e funcao NOVA do PHP (str_contains...). Perguntar so
+    # ao 5.6 acusaria tambem nomes que nao sao funcoes do PHP -- JavaScript dentro do PHP (alert, append) e
+    # funcoes do proprio e-cidade, que nao estao carregadas -- e no --tudo deu 286 falsos "ausentes".
+    existe = {}
+    for rt in ("56", "85"):
+        _, out, _ = sh(["docker", "exec", "-i", f"ecidade_php{rt}", "php", "-r",
+                        f'foreach(file("{dentro(arq)}", FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $f)'
+                        ' if(function_exists(trim($f))) echo trim($f),"\\n";'])
+        existe[rt] = {l.strip() for l in out.split("\n") if l.strip()}
+    # exit e die sao CONSTRUCOES da linguagem no 5.6 (funcionam, mas function_exists diz que nao) e viraram
+    # funcoes de verdade no PHP 8.4. Aparecem pelas correcoes `break` -> `exit` e nao sao ausencia nenhuma.
+    ausentes = sorted(existe["85"] - existe["56"] - {"exit", "die"})
     if ausentes:
-        return Resultado("FALHA", f"{len(novas)} funcoes novas, {len(ausentes)} AUSENTES no 5.6",
+        return Resultado("FALHA", f"{len(novas)} nomes novos, {len(ausentes)} funcoes do PHP 8 AUSENTES no 5.6",
                          "Funcoes que o Rector emitiu e o PHP 5.6 nao tem. Banir a regra que as emitiu e refazer o "
                          "passo 4 (guia: 'Como banir uma regra').\n\n```\n" + amostra(ausentes) + "\n```", [arq])
-    return Resultado("OK", f"{len(novas)} funcoes novas, 0 ausentes no 5.6",
-                     "Funcoes novas no diff (todas existem no 5.6): " + (", ".join(novas) or "nenhuma"), [arq])
+    do_php = sorted(existe["56"] & existe["85"])
+    return Resultado("OK", f"{len(do_php)} funcoes do PHP novas no diff, 0 ausentes no 5.6",
+                     "Funcoes do PHP que aparecem nas linhas novas (todas existem no 5.6): " + (", ".join(do_php) or "nenhuma")
+                     + f". Outros {len(novas) - len(do_php)} nomes novos nao sao funcoes do PHP (funcoes do e-cidade, "
+                     "JavaScript dentro do PHP) e nao interessam aqui.", [arq])
 
 def lint(ctx, rt, lista):
     """Arquivos da lista que NAO passam no `php -l` do runtime, com a mensagem de erro.
@@ -312,6 +405,8 @@ def passo_5b(ctx, args):
         with open(os.path.join(ECIDADE, f), "rb") as fh:
             if re.search(rb"\b(extends|implements)\b", fh.read()):
                 alvo.append(f)
+    if not alvo:
+        return Resultado("OK", "nenhum arquivo com extends/implements na lista", "Nada a carregar.")
     lista = os.path.join(ctx["pasta"], "5b_lista.txt")
     gravar(lista, "\n".join(alvo) + "\n")
     s = {}
@@ -415,7 +510,7 @@ def pedir(porta, tela, sid, sess):
                         f"http://localhost:{porta}/{tela}"], capture_output=True, stdin=subprocess.DEVNULL)
     corpo, _, codigo = r.stdout.rpartition(b"\n@@")
     import time; time.sleep(1)               # o Logger e o PostgreSQL gravam logo depois da resposta
-    fatais = sorted({re.sub(r"^\[[^]]*\]\s*", "", l).strip() for l in ler(LOG_PHP).splitlines()
+    fatais = sorted({re.sub(r"^\[[^]]*\]\s*", "", l).strip() for l in ler(LOG_PHP).split("\n")
                      if "E_ERROR" in l or "Uncaught" in l})
     _, out, err = sh(["docker", "logs", "--since", t0, "ecidade_database"])
     # o docker devolve o log ja em UTF-8 (com o caractere de substituicao no lugar do LATIN-1 que nao
@@ -494,31 +589,93 @@ def passo_7(ctx, args):
         return Resultado("FALHA", f"sessao invalida (tela de teste com {tam} bytes)",
                          "A sessao nao esta autenticada: a bateria compararia duas paginas de login. Entre em "
                          "http://localhost:8090 (dbseller/dbseller) e rode de novo, ou passe --sid.")
-    rx = "^(?:" + "|".join(re.escape(x) for x in args.prefixos) + ")[0-9]*_"
     div = os.path.join(p, "7_divergentes.txt")
-    _, out, err = sh(["python3", "scratchpad/cmp.py", sid, rx, div], timeout=6 * 3600)
     log = os.path.join(p, "7_bateria.log")
-    gravar(log, out + err)
-    m = re.search(r"=== (\d+)/(\d+) identicas, (\d+) divergentes, (\d+) timeout ===", out)
-    if not m:
-        return Resultado("FALHA", "a bateria nao terminou (ver 7_bateria.log)", "```\n" + (out + err)[-2000:] + "\n```", [log])
-    ok, tot, nd, nt = map(int, m.groups())
-    linhas_div = [l for l in (out + err).splitlines() if l.strip().startswith(("DIVERGE", "TIMEOUT", "PULADA"))]
-    det = (f"Regex das telas: `{rx}`. Resultado: **{ok}/{tot} identicas**, {nd} divergentes, {nt} timeout.\n\n"
-           "Cada divergencia precisa de diagnostico (guia, passo 7: log do PostgreSQL, error.log, tabela de decisao): "
-           "pode ser regressao (quebra so no 8.5) ou defeito pre-existente (quebra igual, ou so no 5.6).")
+    # Uma ou mais rodadas do cmp.py: (descricao, regex, lista ONLY). No modo de lote, uma rodada pelo
+    # regex dos prefixos. No --tudo, uma pelo regex do location e outra com a lista do map -- a lista
+    # inteira do location (~9 mil nomes) nao caberia numa variavel de ambiente (limite de 128 KB).
+    t = ctx["telas"]
+    if t is None:
+        rodadas = [("prefixos " + " ".join(args.prefixos),
+                    "^(?:" + "|".join(re.escape(x) for x in args.prefixos) + ")[0-9]*_", None)]
+    else:
+        rodadas = []
+        if t["location"]:
+            todas_loc = not args.amostra and not args.telas
+            rodadas.append((f"location ({len(t['location'])} telas)", t.get("regex") if todas_loc else "^$",
+                            None if todas_loc else t["location"]))
+        if t["map"]:
+            rodadas.append((f"map/lista ({len(t['map'])} telas)", "^$", t["map"]))
+    ok = tot = nd = nt = 0
+    textos, linhas_div, divs = [], [], []
+    for desc, rx, lista in rodadas:
+        tmp_div = div + ".parcial"
+        env = {"ONLY": ",".join(lista)} if lista else None
+        _, out, err = sh(["python3", "scratchpad/cmp.py", sid, rx, tmp_div], timeout=8 * 3600, env=env)
+        textos.append(f"##### {desc}\n{out}{err}")
+        m = re.search(r"=== (\d+)/(\d+) identicas, (\d+) divergentes, (\d+) timeout ===", out)
+        if not m:
+            gravar(log, "\n".join(textos))
+            return Resultado("FALHA", f"a bateria nao terminou: {desc} (ver 7_bateria.log)",
+                             "```\n" + (out + err)[-2000:] + "\n```", [log])
+        a, b, c, d = map(int, m.groups())
+        ok, tot, nd, nt = ok + a, tot + b, nd + c, nt + d
+        linhas_div += [l for l in (out + err).splitlines() if l.strip().startswith(("DIVERGE", "TIMEOUT", "PULADA"))]
+        if os.path.isfile(tmp_div):
+            divs.append(ler(tmp_div)); os.remove(tmp_div)
+    gravar(log, "\n".join(textos))
+    gravar(div, "".join(divs))
+
+    # Separar as divergencias JA CONHECIDAS (caracterizadas) das NOVAS. So as novas sao diagnosticadas e
+    # so elas decidem o resultado: e o criterio de regressao do fim da area (fluxo D do guia).
+    divergentes = [l.split()[1] for l in linhas_div if l.strip().startswith("DIVERGE")]
+    tout = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT")]
+    con = ctx["conhecidas"]
+    nomes_con = con["nomes"] if con else set()
+    novas = [x for x in divergentes if x not in nomes_con]
+    velhas = [x for x in divergentes if x in nomes_con]
+    # Timeout so no 5.6 (56=000, 8.5 respondeu) e laco eterno da referencia: pre-existente. Timeout no 8.5 e
+    # que pode ser regressao (laco que o PHP 8 passou a fazer).
+    tout_56 = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT") and "56=000" in l and "85=000" not in l]
+    tout_novos = [x for x in tout if x not in nomes_con and x not in tout_56]
+    testadas = set((t["location"] + t["map"]) if t else [])
+    sumiram = sorted(x for x in nomes_con & testadas if x not in divergentes and x not in tout) if con else []
+
+    det = (f"Rodadas: {'; '.join(r[0] for r in rodadas)}. Resultado: **{ok}/{tot} identicas**, {nd} divergentes, "
+           f"{nt} timeout.")
+    if con:
+        det += (f"\n\nDivergencias conhecidas: lista `{con['arquivo']}` ({len(nomes_con)} telas). Desta execucao: "
+                f"**{len(novas)} novas**, {len(velhas)} ja conhecidas" + (f", {len(tout_novos)} timeouts novos" if tout else "")
+                + ". So as novas sao possivel regressao e so elas sao diagnosticadas.")
+        if velhas:
+            det += "\n\nJa conhecidas (nao diagnosticadas): " + ", ".join(velhas)
+    if tout_56:
+        det += ("\n\nTimeout so no 5.6 (laco eterno da referencia; o 8.5 respondeu) -- pre-existente, nao conta: "
+                + ", ".join(tout_56))
+        if sumiram:
+            det += ("\n\nConhecidas que agora saem **identicas** (foram corrigidas? atualize a lista): "
+                    + ", ".join(sumiram))
+    else:
+        det += ("\n\nSem lista de divergencias conhecidas (`--conhecidas`, ou docs/divergencias-conhecidas.md): "
+                "toda divergencia e tratada como nova.")
+    det += ("\n\nCada divergencia nova precisa de diagnostico (guia, passo 7: tabela de decisao): pode ser regressao "
+            "(quebra so no 8.5) ou defeito pre-existente (quebra igual, ou so no 5.6).")
     if linhas_div:
         det += "\n\n```\n" + amostra(linhas_div, 40) + "\n```"
-    if nd or nt:
-        # Diagnostico automatico de cada divergente (os timeouts nao: repetir o pedido levaria mais 60 s
-        # cada e o motivo de um timeout raramente aparece em log).
-        divergentes = [l.split()[1] for l in linhas_div if l.strip().startswith("DIVERGE")]
-        if divergentes:
-            det += ("\n\n**Diagnostico automatico** (cada tela pedida de novo aos dois runtimes, com os logs limpos; "
-                    "a classificacao segue a tabela de decisao do guia, passo 7). As paginas de cada lado ficam na "
-                    "pasta como `7_corpo_<tela>_56.html` / `_85.html`.\n\n" + "\n\n".join(diagnosticar(divergentes, sid, p)))
-        return Resultado("INVESTIGAR", f"{ok}/{tot} identicas, {nd} divergentes, {nt} timeout", det, [log, div])
-    return Resultado("OK", f"{ok}/{tot} telas identicas", det, [log])
+    if novas:
+        # Diagnostico automatico de cada divergente NOVA (os timeouts nao: repetir o pedido levaria mais
+        # 60 s cada e o motivo de um timeout raramente aparece em log).
+        det += ("\n\n**Diagnostico automatico** (cada tela pedida de novo aos dois runtimes, com os logs limpos; "
+                "a classificacao segue a tabela de decisao do guia, passo 7). As paginas de cada lado ficam na "
+                "pasta como `7_corpo_<tela>_56.html` / `_85.html`.\n\n" + "\n\n".join(diagnosticar(novas, sid, p)))
+    arquivos = [log, div] if divergentes else [log]
+    if novas or tout_novos:
+        return Resultado("INVESTIGAR", f"{ok}/{tot} identicas, {len(novas)} divergencias novas"
+                         + (f" ({len(velhas)} conhecidas)" if con else "") + f", {len(tout_novos)} timeout", det, arquivos)
+    if divergentes or tout:
+        return Resultado("OK", f"{ok}/{tot} identicas; as {len(divergentes) + len(tout)} restantes sao conhecidas "
+                         "ou pre-existentes", det, arquivos)
+    return Resultado("OK", f"{ok}/{tot} telas identicas", det, arquivos)
 
 FUNCOES = {"4b": passo_4b, "5": passo_5, "5b": passo_5b, "6": passo_6, "6b": passo_6b, "6c": passo_6c, "7": passo_7}
 TITULOS = {"4b": "funcoes novas existem no 5.6", "5": "php -l nos dois runtimes", "5b": "carga dos arquivos (LSP)",
@@ -534,7 +691,10 @@ def relatorio(ctx, args, resultados, inicio):
     _, br, _ = sh(["git", "branch", "--show-current"])
     _, hd, _ = sh(["git", "log", "-1", "--format=%h %s"])
     fim = datetime.datetime.now()
-    r = [f"# Verificacao do lote `{args.lote}` ({' '.join(args.prefixos)})", "",
+    alvo = ("TUDO o que a migracao alterou (contra `" + args.base + "`)") if args.tudo else " ".join(args.prefixos)
+    if args.amostra:
+        alvo += f" -- AMOSTRA de {args.amostra} por lista (nao vale como bateria completa)"
+    r = [f"# Verificacao do lote `{args.lote}` ({alvo})", "",
          f"- Data: {inicio:%d/%m/%Y %H:%M} (duracao {str(fim - inicio).split('.')[0]})",
          f"- Branch: `{br.strip()}`, HEAD `{hd.strip()}`; alteracoes medidas contra `{args.base}` "
          f"({len(ctx['alterados'])} arquivos alterados em ecidade/)",
@@ -575,12 +735,22 @@ def relatorio(ctx, args, resultados, inicio):
 def main():
     ap = argparse.ArgumentParser(description="Roda as verificacoes automaticas de um lote (ver o docstring do arquivo).")
     ap.add_argument("lote", help="nome do lote, usado no nome da pasta de saida (ex.: as)")
-    ap.add_argument("prefixos", nargs="+", help="prefixos das telas do lote (ex.: soc hab)")
+    ap.add_argument("prefixos", nargs="*", help="prefixos das telas do lote (ex.: soc hab); nao use com --tudo")
+    ap.add_argument("--tudo", action="store_true",
+                    help="verificar TUDO o que a migracao alterou e todas as telas servidas pelo 8.5 (fim de area)")
+    ap.add_argument("--amostra", type=int, default=0, help="limitar cada lista a N itens espalhados (teste rapido)")
+    ap.add_argument("--telas", default=None, help="bateria so nestas telas (separadas por virgula)")
+    ap.add_argument("--conhecidas", default=None,
+                    help="lista de divergencias ja conhecidas (padrao: docs/divergencias-conhecidas.md, se existir)")
     ap.add_argument("--so", default=",".join(PASSOS), help="passos a rodar, separados por virgula")
     ap.add_argument("--continuar", action="store_true", help="nao parar no primeiro passo que falhar")
-    ap.add_argument("--base", default="HEAD", help="referencia do git para medir as alteracoes do lote")
+    ap.add_argument("--base", default=None, help="referencia do git para medir as alteracoes (padrao: HEAD; no --tudo, master)")
     ap.add_argument("--sid", default=None, help="sessao autenticada para a bateria")
     args = ap.parse_args()
+    if args.tudo == bool(args.prefixos):
+        sys.exit("ERRO: informe os prefixos do lote OU --tudo (um dos dois).")
+    if args.base is None:
+        args.base = "master" if args.tudo else "HEAD"
     escolhidos = [x.strip() for x in args.so.split(",") if x.strip()]
     invalidos = [x for x in escolhidos if x not in FUNCOES]
     if invalidos:
@@ -588,7 +758,10 @@ def main():
 
     inicio = datetime.datetime.now()
     ctx = preparar(args)
-    print(f"Lote {args.lote} ({' '.join(args.prefixos)}): {len(ctx['codigo'])} arquivos, {len(ctx['classes'])} classes")
+    alvo = "TUDO" if args.tudo else " ".join(args.prefixos)
+    extra = (f", {len(ctx['telas']['location'])} + {len(ctx['telas']['map'])} telas (location + map)" if ctx["telas"] else "")
+    print(f"Lote {args.lote} ({alvo}{', AMOSTRA ' + str(args.amostra) if args.amostra else ''}): "
+          f"{len(ctx['codigo'])} arquivos, {len(ctx['classes'])} classes{extra}")
     print(f"Saida em {os.path.relpath(ctx['pasta'], RAIZ)}/\n")
 
     resultados, parar = {}, False

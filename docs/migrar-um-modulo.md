@@ -264,6 +264,10 @@ olhe o resultado de cada um antes de seguir — os que mudam algo só mudam com 
 **1. Bateria completa** — todas as telas do `location` e todas as do `map`. Leva **cerca de 3 horas**; antes, zere o log do
 banco, que cresce gigabytes com os erros de SQL das baterias (`sudo truncate -s 0 $(docker inspect -f '{{.LogPath}}' ecidade_database)`).
 
+**Em um comando:** `python3 scratchpad/verifica_lote.py fim-<area> --tudo` — roda todos os passos de verificação sobre
+tudo o que a migração alterou, a bateria no `location` e no `map`, separa as divergências novas das conhecidas e diagnostica
+as novas (ver *Verificar o lote de uma vez*). Os comandos abaixo são o mesmo, à mão.
+
 ```bash
 SID=$(cat /tmp/sid.txt)      # ver "Prova de fumaça"
 # (a) telas do location: os prefixos sao lidos do proprio nginx.conf
@@ -834,6 +838,25 @@ passo, para conferir ou diagnosticar. A pasta fica em `ecidade/tmp/`, ignorada p
 Por padrão ele **para no primeiro passo com problema**: se o `php -l` falhou, os resultados seguintes não valem nada. Depois
 de corrigir, rode de novo (ou só o que falta, com `--so`). Os critérios de cada passo são os das seções abaixo — o script
 apenas os aplica e conta as entradas e saídas de cada um, para que um "OK" nunca venha de um teste que não rodou.
+
+**Para o código inteiro — `--tudo` (a bateria completa do fim da área):**
+
+```bash
+python3 scratchpad/verifica_lote.py fim-assist --tudo                    # ~3 h: rode no fim da área
+python3 scratchpad/verifica_lote.py teste --tudo --amostra 40            # o mesmo com amostra, para testar antes
+python3 scratchpad/verifica_lote.py fim-assist --tudo --conhecidas ecidade/tmp/verif/<anterior>/7_divergentes.txt
+```
+
+Em vez de prefixos, o universo são **os arquivos que a migração alterou** (diff contra o `master`) — 7.859 arquivos de código
+e 3.142 classes em 16/11/2026 — e a bateria roda em **todas as telas que o proxy manda ao 8.5**, as do `location` e as do
+`map`. As classes nunca portadas ficam de fora: são de áreas que o 5.6 ainda serve e divergem por construção.
+
+O que muda no resultado é o critério do passo 7: com uma lista de **divergências conhecidas**, só as que ficarem **fora**
+dela contam como possível regressão e são diagnosticadas; as conhecidas aparecem listadas, sem diagnóstico, e as conhecidas
+que voltaram a sair idênticas são apontadas (para atualizar a lista). A lista padrão é o `docs/divergencias-conhecidas.md`
+(as linhas marcadas "Corrigida" **não** contam: se uma delas voltar a divergir, é regressão); também serve o
+`7_divergentes.txt` da bateria completa anterior. Timeout **só no 5.6** (laço eterno da referência) é pré-existente e não
+conta. `--telas a,b` roda a bateria só nessas telas — útil para reconferir uma divergência.
 
 **Ficam de fora, de propósito:** o passo 4 (Rector: exige conferir regra nova antes de aplicar), o **nível 3** (POST real:
 grava no banco e exige escolher a tela), os passos 8 e 8b (mudam o proxy) e as correções (`guarda_ciclo.py`,
