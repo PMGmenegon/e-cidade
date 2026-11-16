@@ -455,6 +455,34 @@ No `cad`, este script acusou um `split` de separador variável que, olhado de pe
 
 **A regra que manda em tudo:** os dois containers montam o **mesmo diretório**, então cada arquivo precisa rodar em PHP 5.6 *e* em 8.5. Um arquivo que não parseia no 5.6 derruba o runtime que serve o login e todos os módulos ainda não migrados.
 
+### Em um comando — `rector_lote.py`
+
+```bash
+python3 scratchpad/rector_lote.py soc hab              # SO SIMULA: mostra as regras que disparariam
+python3 scratchpad/rector_lote.py soc hab --aplicar    # aplica e repete ate uma rodada alterar 0 arquivos
+```
+
+Ele faz tudo o que os blocos abaixo fazem: junta os alvos dos prefixos, copia a config e as regras para onde o container
+lê, confere a sintaxe da config, roda a simulação (com os avisos `Deprecated` num arquivo) e classifica cada regra:
+
+```
+SIMULACAO (--dry-run, nada e gravado):
+  28 arquivos seriam alterados, 0 erros do Rector
+     21  EregToPregMatchRector                         conhecida
+     21  GuardaComparacaoLiteralRector                 conhecida
+     21  Php4ConstructorRector                         conhecida
+      7  ParseStrComExtractRector                      conhecida
+```
+
+- **conhecida**: já conferida e aceita em lotes anteriores (a lista e o motivo de cada uma estão no script, `REGRAS_ACEITAS`);
+- **RESSALVA**: aceita, mas exige uma conferência depois (o script diz qual — hoje só a `OptionalParametersAfterRequiredRector`);
+- **NOVA**: nunca conferida. O script mostra as linhas que ela mudaria e **recusa o `--aplicar`** até você seguir o
+  *Protocolo para regra nova* (abaixo) e rodar com `--aceitar NomeDaRegra` — ou bani-la.
+
+Também avisa se há construtor PHP 4 nos alvos e o `Php4ConstructorRector` não apareceu (o pin de versão quebrado). Com
+`--aplicar`, repete até zerar e para se surgir regra nova no meio. Saídas em `ecidade/tmp/rector_lote/<data-hora>/`.
+As seções abaixo explicam cada etapa e continuam valendo para entender o resultado ou fazer à mão.
+
 ### Comando
 
 ```bash
@@ -1987,6 +2015,7 @@ O módulo `tra` foi escolhido como piloto só pelo resíduo (era zero) e depois 
 | `scratchpad/residuo.py` | escolha do próximo módulo |
 | `scratchpad/dimensiona.py` | dimensionar as áreas que faltam (*O fluxo de uma área*, B) |
 | `scratchpad/prefixos_area.py` | quais prefixos uma área precisa migrar e como rotear cada um (*O fluxo de uma área*, B) |
+| `scratchpad/rector_lote.py` | passo 4 em um comando: simula, classifica as regras, aplica até zerar com `--aplicar` |
 | `scratchpad/verifica_lote.py` | passos 4b a 7 de uma vez, com relatório único em `ecidade/tmp/verif/` |
 | `scratchpad/ns_fecho.py` | 9ª frente da enumeração (classes com namespace); chamado pelo `enumera.py` |
 | `scratchpad/carrega_arquivo.php` | passo 5b: carregar cada arquivo (LSP) |

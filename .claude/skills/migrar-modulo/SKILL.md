@@ -148,6 +148,9 @@ docker exec -i ecidade_php85 sh -c 'cd /var/www/html;
     --config tmp/rector/scratch/rector-curado.php --no-progress-bar' </dev/null
 ```
 
+**Em um comando:** `python3 scratchpad/rector_lote.py <pref...>` simula e classifica as regras (conhecida / RESSALVA /
+NOVA); com `--aplicar`, aplica até zerar, e recusa se houver regra NOVA não aceita com `--aceitar`.
+
 **Os ~15 avisos `Deprecated:` que saem antes de tudo são esperados** — vêm do `vendor/` do Laravel 5.4 (Guzzle, PsySH,
 Zend Diactoros, PHPUnit), que o Rector carrega pelo autoloader do projeto, e não dizem nada sobre o módulo. Mande o
 stderr para um arquivo (`2> /tmp/r.err`) e só pare se aparecer outra coisa nele (`Fatal`, `Killed`, `SEM ALVOS`).
