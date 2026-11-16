@@ -40,6 +40,7 @@ def amb(monkeypatch, tmp_path):
     m.setattr(bateria, "restaura_dump", reg("restaura_dump", None))
     m.setattr(bateria, "obtem_sid", reg("obtem_sid", "sid123"))
     m.setattr(bateria, "sessao_autenticada", reg("sessao_autenticada", True))
+    m.setattr(bateria, "renova_sessao", lambda sid, **k: None)  # por padrao a renovacao falha (testes antigos)
     def fake_lista(rx):
         mm = re.fullmatch(r"(?:\(\?=\(\?:(.*)\)\))?\^([a-z]+)\[0-9\]\*_", rx)
         nome = f"{mm.group(2)}1_x.php"
@@ -312,6 +313,51 @@ def test_sessao_expirada_antes_dos_relatorios(amb, monkeypatch, tmp_path):
     assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 2
     assert ids(tmp_path)["passo:sessao:relatorios"] == "ERRO_AMBIENTE"
     assert "post" in amb and "relatorio" not in amb
+
+
+def test_sessao_que_morre_no_meio_e_renovada_e_a_rodada_segue_ate_o_fim(amb, monkeypatch, tmp_path):
+    vivas = {"sid123": False, "nova1": True}                  # a sessao inicial passa so na 1a checagem
+    estado = {"n": 0}
+
+    def sessao(sid):
+        estado["n"] += 1
+        return True if estado["n"] == 1 else vivas.get(sid, False)
+    monkeypatch.setattr(bateria, "sessao_autenticada", sessao)
+    renovadas = []
+    monkeypatch.setattr(bateria, "renova_sessao", lambda sid, **k: renovadas.append(sid) or "nova1")
+    usados = []
+    monkeypatch.setattr(bateria, "roda_post", lambda sid, c: usados.append(("post", sid)) or Caso(c.tela, c.area, V.IDENTICO))
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 0
+    r = ids(tmp_path)
+    assert not any(k.startswith("passo:sessao") for k in r)   # nada de ERRO_AMBIENTE em massa
+    assert renovadas == ["sid123"] and all(sid == "nova1" for _, sid in usados) and usados
+    assert "relatorio" in amb
+    assert le(tmp_path)["meta"]["sessao_renovacoes"] == [{"motivo": "expirou antes de posts", "ok": True}]
+
+
+def test_prefixo_cuja_sessao_morreu_e_refeito_com_a_sessao_renovada(amb, monkeypatch, tmp_path):
+    chamadas = []
+
+    def telas(sid, rx, a):
+        chamadas.append(sid)
+        if sid == "sid123":
+            return [Caso("telas", a, V.ERRO_AMBIENTE, "sessao nao autenticada (pagina 'Sessao invalida')")], {}
+        return [Caso("hab1_x.php", a, V.IDENTICO)], {"hab1_x.php": b"<td>1</td>"}
+    monkeypatch.setattr(bateria, "roda_telas", telas)
+    monkeypatch.setattr(bateria, "renova_sessao", lambda sid, **k: "nova1")
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 0
+    assert chamadas[0] == "sid123" and set(chamadas[1:]) == {"nova1"}
+    r = ids(tmp_path)
+    assert "tela:hab1_x.php" in r and not any(v == "ERRO_AMBIENTE" for v in r.values())
+
+
+def test_renovacao_limitada_sessao_que_nao_volta_vira_erro_de_ambiente_uma_vez_por_prefixo(amb, monkeypatch, tmp_path):
+    tentativas = []
+    monkeypatch.setattr(bateria, "renova_sessao", lambda sid, **k: tentativas.append(sid) or None)
+    monkeypatch.setattr(bateria, "roda_telas", lambda sid, rx, a: ([Caso("telas", a, V.ERRO_AMBIENTE,
+                        "sessao nao autenticada (pagina 'Sessao invalida')")], {}))
+    assert bateria.roda_bateria_php(tmp_path, ["assistenciasocial"]) == 2
+    assert len(tentativas) <= bateria.MAX_RENOVACOES
 
 
 def test_so_ref_e_php_novo_sao_exigidos(amb, monkeypatch, tmp_path):

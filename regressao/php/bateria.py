@@ -40,7 +40,8 @@ from regressao.php.posts import carrega_catalogo, roda_post
 from regressao.php.relatorios import CATALOGO as CATALOGO_RELATORIOS
 from regressao.php.relatorios import carrega_catalogo_relatorios, roda_relatorio
 from regressao.php.sintaxe import roda_lint
-from regressao.php.telas import lista_telas, obtem_sid, roda_telas, sessao_autenticada
+from regressao.php.telas import (Sessao, lista_telas, obtem_sid, renova_sessao, roda_telas,
+                                 sessao_autenticada)
 
 RAIZ = Path(__file__).resolve().parents[2]
 CONHECIDAS = Path(__file__).resolve().parents[1] / "conhecidas.tsv"
@@ -309,17 +310,32 @@ def roda_bateria_php(diretorio_saida: Path, areas: list[str] | None = None, norm
         return para("banco", f"{type(e).__name__}: {e}")
 
     # 4. sessao autenticada (sobrevive ao restore: vive no volume de sessoes, nao no banco)
+    # Sessao morta (expirou, uma tela a destruiu, container reiniciou) NAO derruba a rodada: renova-se por
+    # login HTTP, com limite de renovacoes (MAX_RENOVACOES) para nao entrar em laco.
+    sessao: Sessao | None = None
     try:
         sid = obtem_sid()
-        if not sessao_autenticada(sid):
-            return para("sessao", "sessao nao autenticada (pagina 'Sessao invalida')")
+        sessao = Sessao(sid, MAX_RENOVACOES, renova=lambda s: renova_sessao(s))
+        if not sessao_autenticada(sid) and not sessao.renova("sessao inicial invalida"):
+            return para("sessao", "sessao nao autenticada (pagina 'Sessao invalida') e a renovacao falhou")
     except (ErroAmbienteBanco, OSError, subprocess.SubprocessError) as e:
-        return para("sessao", f"{type(e).__name__}: {e}")
+        if sessao is None:
+            sessao = Sessao("", MAX_RENOVACOES, renova=lambda s: renova_sessao(s))
+        if not sessao.renova(f"{type(e).__name__} ao obter a sessao inicial"):
+            return para("sessao", f"{type(e).__name__}: {e}")
 
     meta.update(_metadados_ambiente())
     with (sem_normalizacao() if not normalizar else nullcontext()):
-        return _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista,
+        return _passos(termina, meta, tempos, sessao, nomes, prefixos, grupos, erros_lista,
                        areas is None and rx_tela is None, incluir_nao_verificados, rx_tela, diretorio_saida)
+
+
+MAX_RENOVACOES = 5
+
+
+def _sessao_morreu(casos: list[Caso]) -> bool:
+    """O prefixo falhou por sessao (nao autenticada, expirou ao buscar corpo ou no meio da rodada)."""
+    return any(c.veredito == Veredito.ERRO_AMBIENTE and c.detalhe.startswith("sessao") for c in casos)
 
 
 def _cronometra(tempos: dict, fase: str, fn):
@@ -330,7 +346,7 @@ def _cronometra(tempos: dict, fase: str, fn):
         tempos[fase + "_s"] = round(time.monotonic() - t0, 1)
 
 
-def _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista, todas, incluir_nv,
+def _passos(termina, meta, tempos, sessao, nomes, prefixos, grupos, erros_lista, todas, incluir_nv,
             rx_tela, diretorio) -> int:
     casos: list[Caso] = []
     rotulo = "+".join(nomes) if len(nomes) <= 3 else "todas"
@@ -356,7 +372,9 @@ def _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista, to
     def _telas():
         saida: list[Caso] = []
         for p, rx, _ts in grupos:
-            cs, cp = roda_telas(sid, rx, rotulo)
+            cs, cp = roda_telas(sessao.sid, rx, rotulo)
+            if _sessao_morreu(cs) and sessao.renova(f"expirou no prefixo {p}"):
+                cs, cp = roda_telas(sessao.sid, rx, rotulo)  # refaz o prefixo com a sessao nova
             meta["pico_corpos_em_memoria"] = max(meta["pico_corpos_em_memoria"], len(cp))
             if not any(c.veredito == Veredito.ERRO_AMBIENTE for c in cs):
                 # corpos parciais acompanham ERRO_AMBIENTE: ignorados. Senao, so hash e flag ficam.
@@ -372,10 +390,12 @@ def _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista, to
 
     def _sessao_viva(passo: str) -> bool:
         try:
-            ok = sessao_autenticada(sid)
+            ok = sessao_autenticada(sessao.sid)
             detalhe = f"sessao expirou no passo {passo}"
         except Exception as e:
             ok, detalhe = False, f"sessao nao verificavel no passo {passo}: {type(e).__name__}: {e}"
+        if not ok and sessao.renova(f"expirou antes de {passo}"):
+            ok = True  # sessao renovada e validada: o passo segue
         if not ok:
             casos.append(Caso(f"passo:sessao:{passo}", rotulo, Veredito.ERRO_AMBIENTE, detalhe))
         return ok
@@ -395,7 +415,7 @@ def _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista, to
         saida: list[Caso] = []
         for r in rodar:
             try:
-                saida.append(roda(sid, r))
+                saida.append(roda(sessao.sid, r))
             except Exception as e:
                 saida.append(Caso(id_de(r), r.area, Veredito.ERRO_AMBIENTE, f"{type(e).__name__}: {e}"))
         return saida
@@ -429,6 +449,7 @@ def _passos(termina, meta, tempos, sid, nomes, prefixos, grupos, erros_lista, to
         return []
     casos += _passo("artefatos", rotulo, _artefatos)
 
+    meta["sessao_renovacoes"] = sessao.renovacoes
     return termina(casos)
 
 

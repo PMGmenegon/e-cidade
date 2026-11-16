@@ -1,9 +1,15 @@
+import base64
+import hashlib
 import os
 import re
 import shlex
 import subprocess
+import time
 from pathlib import Path
 
+import requests
+
+from regressao.nucleo.ambiente import alvos_do_ambiente
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
 from regressao.nucleo.normaliza import normaliza
 from regressao.nucleo.veredito import Caso, Veredito
@@ -99,17 +105,111 @@ def _roda_cmp(sid: str, prefixo: str) -> str:
     return r.stdout.decode("utf-8", errors="replace")
 
 
+class SessaoPerdida(ErroAmbienteBanco):
+    """A sessao autenticada nao existe mais no volume de sessoes (expirou, foi destruida por uma tela ou o
+    container reiniciou). A bateria tenta RENOVAR a sessao antes de desistir."""
+
+
 def restaura_sessao(sid: str) -> None:
     """Restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa em
     ecidade_php56; o volume de sessoes e compartilhado com o php85), pois cada requisicao
-    consome/reescreve a sessao."""
+    consome/reescreve a sessao. Sessao inexistente -> SessaoPerdida (nunca forja uma); backup ausente ou
+    vazio (o /tmp e limpo) e recriado a partir da propria sessao viva."""
     sess = f"/var/lib/php/sessions/sess_{sid}"
-    # `[ -f ]`: so restaura sobre uma sessao que existe; senao um SID qualquer ganharia, a
-    # partir de um backup velho, uma sessao autenticada forjada.
+    # `exit 3`: so restaura sobre uma sessao que existe; senao um SID qualquer ganharia, a partir de um
+    # backup velho, uma sessao autenticada forjada.
+    try:
+        _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
+                 f"[ -f {sess} ] || exit 3; [ -s /tmp/_sess.bak ] || cp {sess} /tmp/_sess.bak; "
+                 f"cp /tmp/_sess.bak {sess} && chown www-data:www-data {sess} && chmod 600 {sess}"],
+                TIMEOUT_CORPO)
+    except ErroAmbienteBanco as e:
+        if "codigo de saida 3" in str(e):
+            raise SessaoPerdida(f"a sessao {sid[:6]}... nao existe mais no volume de sessoes") from None
+        raise
+
+
+# ---------------------------------------------------------------- login e renovacao da sessao
+
+ARQ_BACKUP_SESSAO = "/tmp/_sess.bak"
+MAX_TENTATIVAS_LOGIN = 3
+
+
+def _b64(texto: str) -> str:
+    return base64.b64encode(texto.encode("latin-1")).decode()
+
+
+def login_http(base: str | None = None, usuario: str = "dbseller", senha: str = "dbseller", http=None) -> str:
+    """Faz por HTTP o que o navegador faz (login.php -> abrir.php -> inicio.php -> `Cancelar` da tela de
+    atualizacao de cadastro -> instituicao 1 -> area Tributario -> modulo Cemiterio) e devolve o SID da
+    sessao com DB_modulo. A senha vai como md5 (como o JavaScript do login), nunca em claro."""
+    base = (base or alvos_do_ambiente().ref).rstrip("/")
+    s = http if http is not None else requests.Session()
+
+    def get(caminho, **k):
+        return s.get(base + caminho, timeout=60, **k)
+
+    get("/login.php")
+    auth = _b64(f"DB_login={usuario}&DB_senha={hashlib.md5(senha.encode()).hexdigest()}")
+    get("/abrir.php", params={"sAuth": auth, "conteudoCaptcha": ""})
+    get("/inicio.php", params={"uso": usuario, "janelaWidth": 1280, "janelaHeight": ""})
+    s.post(base + "/con4_atualizacadastro001.php", data={"cancelar": "Cancelar"}, timeout=60)
+    get("/corpo.php?" + _b64("instit=1"))
+    get("/area.php?instit=1")
+    modulos = get("/corpo.php?" + _b64("instit=1&area_de_acesso=1")).content
+    achado = (re.search(rb'title="Cemit[^"]*"[^>]*href="(modulos\.php\?[^"]+)"', modulos)
+              or re.search(rb'href="(modulos\.php\?[^"]+)"', modulos))
+    if not achado:
+        raise SessaoPerdida("login por HTTP nao chegou a lista de modulos")
+    get("/" + achado.group(1).decode("latin-1"))
+    sid = s.cookies.get("ECIDADEWINDOWMAIN")
+    if not sid:
+        raise SessaoPerdida("login por HTTP nao devolveu o cookie de sessao")
+    return sid
+
+
+def _atualiza_backup(sid: str) -> None:
+    sess = f"/var/lib/php/sessions/sess_{sid}"
     _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
-             f"[ -f {sess} ] && cp /tmp/_sess.bak {sess} && chown www-data:www-data {sess} "
-             f"&& chmod 600 {sess}"],
-            TIMEOUT_CORPO)
+             f"cp {sess} {ARQ_BACKUP_SESSAO} && chmod 600 {ARQ_BACKUP_SESSAO}"], TIMEOUT_CORPO)
+
+
+def renova_sessao(sid_antigo: str | None = None, max_tentativas: int = MAX_TENTATIVAS_LOGIN, login=None,
+                  valida=None, espera=time.sleep) -> str | None:
+    """Login novo + validacao + backup da sessao nova em /tmp/_sess.bak; None se nao conseguir em
+    `max_tentativas` (a bateria entao registra ERRO_AMBIENTE)."""
+    login = login or login_http
+    valida = valida or sessao_autenticada
+    for i in range(max_tentativas):
+        try:
+            novo = login()
+            if valida(novo):
+                _atualiza_backup(novo)
+                return novo
+        except (requests.RequestException, ErroAmbienteBanco, OSError, subprocess.SubprocessError):
+            pass
+        if i + 1 < max_tentativas:
+            espera(2 * (i + 1))
+    return None
+
+
+class Sessao:
+    """SID corrente da rodada + historico de renovacoes (limitado, para nao entrar em laco)."""
+
+    def __init__(self, sid: str, max_renovacoes: int = 5, renova=None):
+        self.sid = sid
+        self.max_renovacoes = max_renovacoes
+        self.renovacoes: list[dict] = []
+        self._renova = renova or renova_sessao
+
+    def renova(self, motivo: str) -> bool:
+        if len(self.renovacoes) >= self.max_renovacoes:
+            return False
+        novo = self._renova(self.sid)
+        self.renovacoes.append({"motivo": motivo[:120], "ok": bool(novo)})
+        if novo:
+            self.sid = novo
+        return bool(novo)
 
 
 def busca_corpo(sid: str, tela: str) -> bytes:
@@ -191,7 +291,7 @@ def sessao_autenticada(sid: str) -> bool:
     return not corpo_de_sessao_invalida(corpo)
 
 
-def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str, bytes]]:
+def roda_telas(sid: str, prefixo: str, area: str, _retenta: bool = True) -> tuple[list[Caso], dict[str, bytes]]:
     """Roda cmp.py e devolve (casos, corpos). Um IDENTICO vindo so do cmp.py nunca significou
     "exercitada": uma tela vazia ou que falha igual nos dois lados tambem e "identica". Este
     passo busca UM corpo (lado 5.6) de cada tela que cmp.py nao acusou e, se o corpo
@@ -217,6 +317,9 @@ def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str,
             if c.veredito != Veredito.IDENTICO or c.id not in telas:
                 continue
             corpos[c.id] = busca_corpo(sid, c.id)
+    except SessaoPerdida as e:  # a bateria renova a sessao e refaz o prefixo
+        return [Caso("telas", area, Veredito.ERRO_AMBIENTE,
+                     f"sessao nao autenticada (sessao perdida ao buscar corpo: {e})")], {}
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
         return [Caso("telas", area, Veredito.ERRO_AMBIENTE, f"falha ao buscar corpo: {e}")], corpos
     for c in casos:
@@ -231,4 +334,27 @@ def roda_telas(sid: str, prefixo: str, area: str) -> tuple[list[Caso], dict[str,
         elif corpo_e_pagina_de_erro(corpos[c.id]):
             c.veredito = Veredito.INCONCLUSIVO
             c.detalhe = "pagina de erro identica nos dois lados; tela nao exercitada"
+    if _retenta:
+        casos, corpos = _retenta_timeouts(sid, area, telas, casos, corpos)
     return casos, corpos
+
+
+def _retenta_timeouts(sid: str, area: str, telas: list[str], casos: list[Caso],
+                      corpos: dict[str, bytes]) -> tuple[list[Caso], dict[str, bytes]]:
+    """UMA retentativa das telas que deram TIMEOUT no cmp.py (um worker preso nao pode virar ERRO_AMBIENTE
+    sem 2a chance). Persistindo, o ERRO_AMBIENTE fica com a marca `apos 1 retentativa`."""
+    tos = [c.id for c in casos if c.veredito == Veredito.ERRO_AMBIENTE and c.detalhe.startswith("timeout:")
+           and c.id in telas]
+    if not tos:
+        return casos, corpos
+    cs2, cp2 = roda_telas(sid, "^(?:" + "|".join(re.escape(t) for t in tos) + ")$", area, _retenta=False)
+    if any(c.id not in tos for c in cs2):  # a retentativa nao rodou (ex.: sessao): mantem os originais
+        for c in casos:
+            if c.id in tos:
+                c.detalhe += " (retentativa nao executada)"
+        return casos, corpos
+    for c in cs2:
+        if c.veredito == Veredito.ERRO_AMBIENTE and c.detalhe.startswith("timeout:"):
+            c.detalhe += " (apos 1 retentativa)"
+    resto = [c for c in casos if c.id not in tos]
+    return sorted(resto + cs2, key=lambda c: c.id), {**corpos, **cp2}
