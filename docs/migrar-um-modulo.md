@@ -236,6 +236,7 @@ alvos). Lote grande (mais de ~300 arquivos a alterar) se divide por subprefixo (
 ### C. Um lote por vez
 
 Para cada lote: passos 1 a 9. Ao terminar, **commit local** (passo 9) e **pare** — o próximo lote começa limpo.
+A verificação (4b a 7) roda de uma vez com `scratchpad/verifica_lote.py` (ver *Verificar o lote de uma vez*).
 
 - **A bateria do passo 7 é só do lote.** Se o lote mexeu no núcleo ou numa classe que muitas telas alcançam, rode também
   uma **bateria dirigida** às telas já roteadas que chegam ao trecho alterado (ver *Preciso refazer a bateria dos outros
@@ -707,6 +708,65 @@ git show <commit>^:ecidade/<arquivo> > <arquivo>
 Foi assim que as duas regras foram validadas: **246 de 248 arquivos semanticamente idênticos**, e nos 2 em que divergiam **o Rector estava certo** — o `porta.py` tinha editado um `parse_str` que estava dentro de um comentário.
 
 > **Sem a terceira árvore você não sabe quem mudou o quê.** Comparar só as duas saídas mostra que elas diferem, não qual das duas está certa.
+
+## Verificar o lote de uma vez — `verifica_lote.py`
+
+Depois do Rector (passo 4), os passos **4b, 5, 5b, 6, 6b, 6c e 7** rodam com **um comando só**, na ordem, e o resultado
+sai num **relatório único**:
+
+```bash
+python3 scratchpad/verifica_lote.py <nome-do-lote> <prefixo> [<prefixo> ...]
+python3 scratchpad/verifica_lote.py as soc hab                     # o lote soc + hab
+python3 scratchpad/verifica_lote.py as soc hab --so 6b,6c          # so alguns passos
+python3 scratchpad/verifica_lote.py as soc hab --continuar         # nao parar no primeiro problema
+python3 scratchpad/verifica_lote.py as soc hab --base origin/base-php84   # lote ja commitado
+```
+
+Pré-requisitos: os containers no ar, o universo de cada prefixo gerado (`enumera.py <prefixo>`, passo 1) e o Rector já
+aplicado. O script **não altera código nem banco**. Ele mesmo acha a sessão autenticada mais recente e confere que ela
+vale antes da bateria (com sessão vencida, as duas portas devolveriam a mesma página de login e tudo pareceria idêntico).
+
+No terminal sai uma linha por passo; o mesmo vai para o relatório:
+
+```
+Lote teste (soc): 1881 arquivos, 772 classes
+Saida em ecidade/tmp/verif/teste-20261116-1933/
+
+  4b  funcoes novas existem no 5.6     OK         2 funcoes novas, 0 ausentes no 5.6
+  5   php -l nos dois runtimes         OK         1881 arquivos, 0 erros novos (0 pre-existentes)
+  5b  carga dos arquivos (LSP)         OK         384 arquivos, 0 so no 8.5 (12 falham nos dois)
+  6   instanciar as classes            OK         772 classes, so artefatos conhecidos (3)
+  6b  caminho de escrita               OK         772 classes, so artefatos conhecidos (3)
+  6c  forma negada != ""               OK         0 divergencias no lote (556 fora do lote, ignoradas)
+  7   bateria byte a byte              INVESTIGAR 85/87 identicas, 2 divergentes, 0 timeout
+
+Relatorio: ecidade/tmp/verif/teste-20261116-1933/RELATORIO.md
+```
+
+(Saída real do `soc` em 16/11/2026. As 2 divergências eram reais: um método chamado como estático sem ser `static` —
+`FamiliaRepository::getInstance()` — e a `AgataQuery.class:95`, corrigida à parte.)
+
+**Tudo fica numa pasta só**, `ecidade/tmp/verif/<lote>-<data-hora>/`, e **só o `RELATORIO.md` precisa ser lido**: ele traz o
+cabeçalho (branch, commit, quantos arquivos o lote alterou), a tabela-resumo e, para cada passo, o critério, os números e as
+linhas que importam (as divergências, os artefatos que apareceram). Os outros arquivos da pasta são a saída bruta de cada
+passo, para conferir ou diagnosticar. A pasta fica em `ecidade/tmp/`, ignorada pelo git, e sobrevive ao reinício da máquina.
+
+| Situação | Significa | O que fazer |
+| --- | --- | --- |
+| `OK` | o critério do passo foi atingido | nada |
+| `FALHA` | defeito, ou o teste não rodou inteiro (contagem não bate) | ler a seção do passo no relatório e a seção do passo neste guia |
+| `INVESTIGAR` | há divergência a diagnosticar — pode ser regressão ou defeito pré-existente | diagnosticar cada uma (passo 7, *Diagnosticar uma divergência*) |
+| `AVISO` | nada a corrigir, mas conferir (ex.: diff vazio — lote já commitado? use `--base`) | conferir |
+| `PULADO` | fora do `--so`, ou não rodou porque um passo anterior falhou | — |
+
+Por padrão ele **para no primeiro passo com problema**: se o `php -l` falhou, os resultados seguintes não valem nada. Depois
+de corrigir, rode de novo (ou só o que falta, com `--so`). Os critérios de cada passo são os das seções abaixo — o script
+apenas os aplica e conta as entradas e saídas de cada um, para que um "OK" nunca venha de um teste que não rodou.
+
+**Ficam de fora, de propósito:** o passo 4 (Rector: exige conferir regra nova antes de aplicar), o **nível 3** (POST real:
+grava no banco e exige escolher a tela), os passos 8 e 8b (mudam o proxy) e as correções (`guarda_ciclo.py`,
+`negada_corrige.py`: exigem olhar caso a caso). As seções abaixo continuam valendo para **entender** cada passo,
+**diagnosticar** uma falha e rodar um passo isolado à mão.
 
 ## Passos 4b a 6c — os portões
 
@@ -1897,6 +1957,8 @@ O módulo `tra` foi escolhido como piloto só pelo resíduo (era zero) e depois 
 | `scratchpad/gera_map_faseb.py` | roteamento por lista, gerado do banco |
 | `scratchpad/residuo.py` | escolha do próximo módulo |
 | `scratchpad/dimensiona.py` | dimensionar as áreas que faltam (*O fluxo de uma área*, B) |
+| `scratchpad/prefixos_area.py` | quais prefixos uma área precisa migrar e como rotear cada um (*O fluxo de uma área*, B) |
+| `scratchpad/verifica_lote.py` | passos 4b a 7 de uma vez, com relatório único em `ecidade/tmp/verif/` |
 | `scratchpad/ns_fecho.py` | 9ª frente da enumeração (classes com namespace); chamado pelo `enumera.py` |
 | `scratchpad/carrega_arquivo.php` | passo 5b: carregar cada arquivo (LSP) |
 | `scratchpad/porclasse.sh` | passos 6/6b: uma classe por processo |

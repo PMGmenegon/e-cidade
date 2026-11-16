@@ -222,6 +222,12 @@ A forma corrigida `($this->X === 0 || $this->X === 0.0 || $this->X == "")` **con
 `$this->X == ""`. Um verificador ingênuo acusa tudo de novo. A checagem precisa olhar para
 trás e confirmar que a guarda precede a comparação.
 
+## Verificação de uma vez (passos 4b a 7)
+
+`python3 scratchpad/verifica_lote.py <lote> <prefixo> [...]` roda 4b, 5, 5b, 6, 6b, 6c e 7 na ordem, para no primeiro
+problema e grava `ecidade/tmp/verif/<lote>-<data>/RELATORIO.md` (só ele precisa ser lido). Opções: `--so`, `--continuar`,
+`--base`, `--sid`. As seções abaixo são o que cada passo faz e como diagnosticar uma falha.
+
 ## Passo 5 — `php -l` nos dois runtimes
 
 ```bash
