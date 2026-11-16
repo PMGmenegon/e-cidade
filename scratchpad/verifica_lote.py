@@ -72,15 +72,27 @@ PASSOS = ["4b", "5", "5b", "6", "6b", "6c", "7"]
 
 # Artefatos conhecidos dos harnesses dos passos 6 e 6b: classes que aparecem diferentes entre
 # os runtimes por causa do TESTE, nao da migracao. Registrados em Patrimonial, Financeiro e
-# Saude; explicados no guia (passos 6 e 6b). Uma linha de diff que case com este regex e
-# ignorada; QUALQUER outra conta como divergencia.
-ARTEFATOS = re.compile(
-    r"requisicaoMaterial\.model"          # construtor exige 1 argumento; o harness faz new X()
-    r"|solicitacaocompras\.model"         # idem
-    r"|lancamentoContabil|ordemPagamento"  # idem
-    r"|avaliacaogruporespostatrabalhointermitente"  # falta um .dd.xml na base: falha nos dois
-    r"|classes/empenho\.php"              # datausu: 1969-12-31 x hoje, so sem sessao
-)
+# Saude; explicados no guia (passos 6 e 6b). UMA lista so: ela gera o filtro (uma linha de diff
+# que case com algum padrao e ignorada; QUALQUER outra conta como divergencia) e a secao
+# "Artefatos conhecidos" do fim do relatorio.
+#   (padrao no texto da linha, classe, o que aparece no diff, por que nao e defeito)
+ARTEFATOS_LISTA = [
+    (r"requisicaoMaterial\.model", "RequisicaoMaterial",
+     "`ArgumentCountError` so no 8.5 (no 5.6, valores `NULL`)",
+     "o construtor exige 1 argumento e o teste faz `new X()` sem nenhum. O PHP 5.6 so avisava e seguia; o 8 recusa. "
+     "O sistema de verdade sempre passa o argumento"),
+    (r"solicitacaocompras\.model", "solicitacaoCompra",
+     "`ArgumentCountError` so no 8.5 (no 5.6, `SEM_SAIDA`)", "idem"),
+    (r"lancamentoContabil", "lancamentoContabil", "`ArgumentCountError` so no 8.5", "idem"),
+    (r"ordemPagamento", "ordemPagamento", "`ArgumentCountError` so no 8.5", "idem"),
+    (r"avaliacaogruporespostatrabalhointermitente", "cl_avaliacaogruporespostatrabalhointermitente",
+     "`ERRO ... Exception` no 8.5 e `SEM_SAIDA` (ou um \"pulado\") no 5.6",
+     "o construtor procura um arquivo `.dd.xml` que nao existe nesta base e falha NOS DOIS: o 8.5 captura a "
+     "excecao e o teste a imprime; o 5.6 morre sem imprimir nada"),
+    (r"classes/empenho\.php", "empenho, campo datausu", "`1969-12-31` no 5.6 contra a data de hoje no 8.5",
+     "so acontece SEM sessao (sem a data do usuario logado), que e condicao do teste, nao do uso real"),
+]
+ARTEFATOS = re.compile("|".join(p for p, *_ in ARTEFATOS_LISTA))
 
 # ---------------------------------------------------------------------------------------------
 # Utilitarios
@@ -272,12 +284,14 @@ def comparar_harness(ctx, nome, harness, explicacao):
     so56, so85 = diff_linhas(a, b)
     reais56 = [l for l in so56 if not ARTEFATOS.search(l)]
     reais85 = [l for l in so85 if not ARTEFATOS.search(l)]
-    art = sorted({m.group(0) for l in so56 + so85 for m in [ARTEFATOS.search(l)] if m})
+    vistos = {cls for pad, cls, *_ in ARTEFATOS_LISTA for l in so56 + so85 if re.search(pad, l)}
+    ctx.setdefault("artefatos_vistos", set()).update(vistos)
     sem = {rt: sum(1 for l in linhas(s[rt]) if l.startswith("SEM_SAIDA")) for rt in RT}
     det = [explicacao,
            f"Classes na lista: {n}. Processadas: 5.6={tot['56']}, 8.5={tot['85']}. "
            f"Sem saida (nada a testar ou o processo morreu): 5.6={sem['56']}, 8.5={sem['85']}.",
-           "Artefatos conhecidos que apareceram (ignorados): " + (", ".join(art) or "nenhum")]
+           "Artefatos conhecidos que apareceram (ignorados; explicados no fim do relatorio): "
+           + (", ".join(sorted(vistos)) or "nenhum")]
     if reais56 or reais85:
         det.append("**Diferencas fora dos artefatos** (`<` = 5.6, `>` = 8.5):\n```\n"
                    + amostra([f"< {l}" for l in reais56] + [f"> {l}" for l in reais85], 30) + "\n```")
@@ -287,7 +301,7 @@ def comparar_harness(ctx, nome, harness, explicacao):
     if reais56 or reais85:
         return Resultado("FALHA", f"{n} classes, {len(reais56) + len(reais85)} linhas de diferenca fora dos artefatos",
                          "\n\n".join(det), s.values())
-    return Resultado("OK", f"{n} classes, so artefatos conhecidos ({len(art)})", "\n\n".join(det), s.values())
+    return Resultado("OK", f"{n} classes, so artefatos conhecidos ({len(vistos)})", "\n\n".join(det), s.values())
 
 def passo_5b(ctx, args):
     """Carregar cada arquivo com extends/implements nos dois runtimes. O `php -l` olha um arquivo
@@ -540,6 +554,15 @@ def relatorio(ctx, args, resultados, inicio):
         r += ["", f"## {k} - {TITULOS[k]}: {res.situacao}", "", res.detalhe]
         if res.arquivos:
             r += ["", "Arquivos brutos: " + ", ".join(f"`{os.path.basename(a)}`" for a in res.arquivos)]
+    # Secao final: o que sao os artefatos conhecidos que os passos 6 e 6b ignoram
+    vistos = ctx.get("artefatos_vistos", set())
+    r += ["", "## Artefatos conhecidos (passos 6 e 6b)", "",
+          "Classes que aparecem diferentes entre o 5.6 e o 8.5 por causa do **teste**, nao da migracao. Os passos 6 e 6b "
+          "ignoram as linhas delas; qualquer **outra** diferenca conta como defeito. Registrados nas areas Patrimonial, "
+          "Financeiro e Saude e explicados no guia (`docs/migrar-um-modulo.md`, passos 6 e 6b).", "",
+          "| Apareceu nesta execucao? | Classe | O que aparece | Por que nao e defeito |", "| --- | --- | --- | --- |"]
+    for _, cls, oque, porque in ARTEFATOS_LISTA:
+        r.append(f"| {'**sim**' if cls in vistos else 'nao'} | `{cls}` | {oque} | {porque} |")
     caminho = os.path.join(ctx["pasta"], "RELATORIO.md")
     with open(caminho, "w", encoding="utf-8") as f:
         f.write("\n".join(r) + "\n")
