@@ -1073,6 +1073,40 @@ lotes 1 e 2 da Configuração: 2.068 e 2.426 pares, 0 divergências. No `soc`: 0
 
 Não rode em bateria — **é dirigido**. Umas 15 telas, espalhadas pelos módulos, bastam para sustentar a afirmação.
 
+#### Em um comando — `nivel3.py`
+
+```bash
+python3 scratchpad/nivel3.py --candidatas soc hab      # quais telas testar (aplica o criterio abaixo)
+python3 scratchpad/nivel3.py soc1_visitatipo001        # testa a escolhida
+```
+
+O `--candidatas` lista as telas de inclusão dos prefixos com a tabela de cada uma e uma sugestão: **RECOMENDADA** (tabela
+simples, família ou classe alterada pelo lote), **boa**, **EVITAR** (cadastro central com gatilhos) ou **não serve** (não
+grava direto, é contêiner de abas, ou a classe não corresponde a uma tabela). A tabela vem do código da tela; se ela gravar
+outra, ou mais de uma, informe com `--tabelas a,b`.
+
+O teste em si confere que a tela existe (e sugere o nome certo se não existir), acha a sessão e confere que ela vale, liga o
+log de SQL e **sempre o desliga no fim**, gera o payload, roda o `escrita_post.py` e, por último, confere pelas
+**estatísticas do PostgreSQL** se alguma **outra** tabela recebeu escrita durante o teste. Isso pega o que o log de SQL não
+mostra — escrita feita por **gatilho** dentro do banco, que foi o que deixou lixo na amostra da Saúde:
+
+```
+tela: soc1_visitatipo001.php
+tabelas fotografadas/restauradas: visitatipo
+payload: as13_sequencial=&as13_descricao=TESTE_N3&as13_exigeencaminhamento=f&incluir=Incluir
+
+  destes, escrita de NEGOCIO: 5.6=1  8.5=1
+    5.6> insert into visitatipo( as13_sequencial ,as13_descricao ,as13_exigeencaminhamento ) values ( 2 ,'TESTE_N3' ,'f' )
+    8.5> insert into visitatipo( as13_sequencial ,as13_descricao ,as13_exigeencaminhamento ) values ( 2 ,'TESTE_N3' ,'f' )
+  == SQL de escrita de NEGOCIO IDENTICO nos dois runtimes ==
+
+Nenhuma outra tabela recebeu escrita durante o teste (inclusive por gatilho).
+log de SQL desligado (RESET log_statement).
+```
+
+Os vereditos (`IDENTICO`, `DIVERGE`, `INCONCLUSIVO`) são os explicados abaixo. Cada execução fica registrada em
+`ecidade/tmp/nivel3/`. Os passos à mão continuam abaixo, para entender ou ajustar um caso difícil.
+
 #### Quais telas testar
 
 O critério usado desde a Saúde: **uma tela de inclusão por prefixo do lote**, como amostra.
@@ -2016,6 +2050,7 @@ O módulo `tra` foi escolhido como piloto só pelo resíduo (era zero) e depois 
 | `scratchpad/dimensiona.py` | dimensionar as áreas que faltam (*O fluxo de uma área*, B) |
 | `scratchpad/prefixos_area.py` | quais prefixos uma área precisa migrar e como rotear cada um (*O fluxo de uma área*, B) |
 | `scratchpad/rector_lote.py` | passo 4 em um comando: simula, classifica as regras, aplica até zerar com `--aplicar` |
+| `scratchpad/nivel3.py` | nível 3 em um comando: `--candidatas`, POST nos dois, log ligado/desligado, escrita fora das tabelas |
 | `scratchpad/verifica_lote.py` | passos 4b a 7 de uma vez, com relatório único em `ecidade/tmp/verif/` |
 | `scratchpad/ns_fecho.py` | 9ª frente da enumeração (classes com namespace); chamado pelo `enumera.py` |
 | `scratchpad/carrega_arquivo.php` | passo 5b: carregar cada arquivo (LSP) |

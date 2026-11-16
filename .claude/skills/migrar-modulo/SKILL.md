@@ -360,6 +360,10 @@ que um lote novo trouxer para o universo servido precisam passar por isto.
 
 ### Nível 3: POST real (dirigido, não em bateria)
 
+**Em um comando:** `python3 scratchpad/nivel3.py --candidatas <pref...>` e `python3 scratchpad/nivel3.py <tela>` (liga e
+sempre desliga o log, gera o payload, roda o `escrita_post.py` e acusa escrita em outra tabela pelo `pg_stat_user_tables`,
+inclusive por gatilho).
+
 Quando o passo 6b apontar uma classe com campo inteiro não-chave, vale confirmar com um `POST`
 de verdade, que compara o **SQL emitido** pelos dois runtimes:
 
