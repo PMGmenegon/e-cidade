@@ -109,6 +109,11 @@ pelo Passport 4) e passa a exigir segredo com hash. **Usar Passport 12.4** — a
 só acrescenta colunas opcionais (`secret` nullable, `provider`), o que o Passport 4 tolera. O
 password grant (o login usa) vem desligado no 12: `Passport::enablePasswordGrant()`.
 
+> **Correção (12/11/2026, T-006):** a migration que apaga essas colunas é a **opcional** do guia de upgrade do 13; o código do
+> Passport 13 lê as colunas antigas sem ela. O que impede o 13 no esquema atual (provado em execução, só leitura) é o segredo
+> **sempre** conferido com hash (os 8 segredos são texto puro → `This password does not use the Bcrypt algorithm.`) e a coluna
+> `provider` usada em SQL no `createToken()`. Ambos têm contorno só com código da aplicação. Ver `passport-esquema.md`.
+
 **Conclusão:** o legado não depende do Laravel novo nem é afetado por ele — 3.294 telas iguais.
 O custo está todo na camada HTTP (`app/` + `api/V1`), que hoje nem inicializa. A ordem certa é
 trocar o vendor do 8.5 **cedo** (cada área migrada depois disso não precisa ser reverificada) e
@@ -120,6 +125,24 @@ o `xargs` aborta a lista inteira quando um `php` sai com 255 (fatal) — 574 de 
 o invólucro `exit 0`; e o `cmp.py` não normalizava `localhost:8087`, gerando 129 falsos positivos.
 
 Remover: `docker rm -f ecidade_lar12` e `rm -rf ecidade/tmp/lar12`.
+
+#### 🔄 ATUALIZAÇÃO (12/11/2026, T-005): matriz Laravel 12/13 × PHP 8.4/8.5
+
+Resolução refeita com o Composer 2.11.1 para os quatro alvos. Relatório completo, matriz por pacote e comandos:
+`docs/migracao-laravel/matriz-versoes.md` (scripts em `docs/migracao-laravel/matriz/`).
+
+| | |
+|---|---|
+| Travados | **os mesmos 4** nos 4 alvos: `dbseller/sdk-api-pix-bb`, `silex/silex`, `dbseller/phinx_postgres`, `proner/phppimaco` |
+| PHP 8.4 × 8.5 | locks **idênticos** nos dois Laravel; com o Laravel 13 o Symfony 8 exige PHP ≥ 8.4.1 |
+| Resolvidos | L12: 137 + 29 dev (Laravel 12.72.0); L13: 136 + 29 dev (Laravel 13.42.0, Guzzle 8.4.0) |
+| Bloqueio por alerta de segurança | o Composer novo bloqueia por padrão; com ele desligado, Pix, Silex e Phinx **continuam** travados (conflito de versão); o Pimaco resolve, mas com `phppimaco` 1.2.3 + mPDF 6.1.3 (inseguro) |
+| Passport | L12 resolve com 12.4.3 ou 13.10.0; **L13 só com 13.x** (12.4.3 exige `illuminate` ≤ 12). Sem migration? → T-006 |
+| Phinx | `robmorgan/phinx` 0.16.12 direto resolve com L12 e L13; as 1.510 migrations de `db/migrations` dependem das 2 classes do `phinx_postgres` |
+| Resolve mas é problema | `zend-eventmanager` 2.6.2 puxa `zend-stdlib` 2.7.4 (o `PriorityQueue::count()` acima); `fzaninotto/faker` volta para 1.5.0; abandonados: `superclosure`, `phpqrcode` |
+
+Armadilhas desta medição: rede `bridge` do Docker sem DNS (Composer parado em "Loading composer repositories", 0% de CPU —
+usar `--network host`); `timeout` não derruba `docker run` sem `--init` (PHP como PID 1 ignora SIGTERM).
 
 ### 📐 LARAVEL SÓ PARA O TRIBUTÁRIO (16/10/2026) — o que a área usa, medido
 
