@@ -1,0 +1,18 @@
+# T-030 (parte A): primeira metade (15) da lista de lista.sh, em ordem alfabetica. Formato (TAB):
+# arquivo-da-lista <TAB> caminho-a-abrir (vazio = ponto cego) <TAB> classe <TAB> observacao
+# classe: tela (abre e registra) | host (arquivo e include/script: abre a tela que o inclui) | cego (nao da para exercitar; motivo na observacao) | T-031 (outra tarefa)
+api/V1/Middleware/Session/MenuAcessadoSessionMiddleware.php		cego	middleware PHP da API (nao tem tela nem chamada JS): roda dentro de toda rota /v4/api autenticada; sua linha de base sao as chamadas das outras telas e as rotas da T-012
+cai1_pix002.php		T-031	Pix: fora desta tarefa (spec T-030)
+con4_ecidadeinfo.RPC.php	/con4_ecidadeinfo.RPC.php	tela	endpoint RPC aberto por GET sem parametros
+edu1_atividadecomplementarespecial001.php	/edu1_atividadecomplementarespecial001.php	tela	
+efd4_efdreinfconfiguracao001.php	/efd4_efdreinfconfiguracao001.php	tela	
+forms/db_frmarretipo002.php	/cai1_arretipo001.php	host	formulario incluido por forms/db_frmarretipo001.php, que cai1_arretipo001/002/003 incluem; abre a de inclusao (nao precisa de chave)
+forms/db_frmdb_bancos.php	/con1_db_bancos001.php	host	formulario incluido por con1_db_bancos001/002/003; abre a de inclusao (nao precisa de chave)
+lic4_integracaocomprasbr.php	/lic4_integracaocomprasbr.php	tela	
+pes3_consvantagemconf002.php	/pes3_consvantagemconf002.php	tela	
+pes4_importacaoponto001.php	/pes4_importacaoponto001.php	tela	
+pes4_jetomcomissao.php	/pes4_jetomcomissao.php	tela	
+pes4_jetomfuncao.php	/pes4_jetomfuncao.php	tela	
+pes4_jetomprocessamento.php	/pes4_jetomprocessamento.php	tela	
+pes4_jetomsessao.php	/pes4_jetomsessao.php	tela	
+pro3_consultaprocesso002.php	/pro3_consultaprocesso002.php	tela	sem numero de processo: abre o formulario de consulta

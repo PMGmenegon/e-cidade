@@ -1,0 +1,227 @@
+{
+ "gerado_por": "T-030 bateria.mjs",
+ "runtime": "85",
+ "login": "SEM token (a tela de login nao obteve: Houve um erro ao se autenticar.) + abrir.php",
+ "casos": [
+  {
+   "arquivo": "api/V1/Middleware/Session/MenuAcessadoSessionMiddleware.php",
+   "classe": "cego",
+   "abre": null,
+   "motivo": "middleware PHP da API (nao tem tela nem chamada JS): roda dentro de toda rota /v4/api autenticada; sua linha de base sao as chamadas das outras telas e as rotas da T-012"
+  },
+  {
+   "arquivo": "cai1_pix002.php",
+   "classe": "T-031",
+   "abre": null,
+   "motivo": "Pix: fora desta tarefa (spec T-030)"
+  },
+  {
+   "arquivo": "con4_ecidadeinfo.RPC.php",
+   "classe": "tela",
+   "abre": "/con4_ecidadeinfo.RPC.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  },
+  {
+   "arquivo": "edu1_atividadecomplementarespecial001.php",
+   "classe": "tela",
+   "abre": "/edu1_atividadecomplementarespecial001.php",
+   "documento": 200,
+   "titulo": "DBSeller Informática Ltda - Página Inicial",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  },
+  {
+   "arquivo": "efd4_efdreinfconfiguracao001.php",
+   "classe": "tela",
+   "abre": "/efd4_efdreinfconfiguracao001.php",
+   "documento": 200,
+   "titulo": "DBSeller Serviços de Informática Ltda",
+   "chamadas_v4": [
+    {
+     "metodo": "POST",
+     "rota": "/v4/api/integracoes/efd-reinf/configuracao/get",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "forms/db_frmarretipo002.php",
+   "classe": "host",
+   "abre": "/cai1_arretipo001.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": [
+    "Failed to execute 'appendChild' on 'Node': parameter 1 is not of type 'Node'."
+   ]
+  },
+  {
+   "arquivo": "forms/db_frmdb_bancos.php",
+   "classe": "host",
+   "abre": "/con1_db_bancos001.php",
+   "documento": 200,
+   "titulo": "DBSeller Informática Ltda - Página Inicial",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  },
+  {
+   "arquivo": "lic4_integracaocomprasbr.php",
+   "classe": "tela",
+   "abre": "/lic4_integracaocomprasbr.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  },
+  {
+   "arquivo": "pes3_consvantagemconf002.php",
+   "classe": "tela",
+   "abre": "/pes3_consvantagemconf002.php",
+   "documento": 200,
+   "titulo": "DBSeller Informática Ltda - Página Inicial",
+   "chamadas_v4": [
+    {
+     "metodo": "POST",
+     "rota": "//v4/api/recursos-humanos/rh/concessaodireitos/configuracao",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "pes4_importacaoponto001.php",
+   "classe": "tela",
+   "abre": "/pes4_importacaoponto001.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  },
+  {
+   "arquivo": "pes4_jetomcomissao.php",
+   "classe": "tela",
+   "abre": "/pes4_jetomcomissao.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/comissao/?instituicao=1&buscaTodasComissoes=false",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    },
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/funcao/?instituicao=1",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    },
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/tiposessao/all",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input",
+    "Unexpected end of JSON input",
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "pes4_jetomfuncao.php",
+   "classe": "tela",
+   "abre": "/pes4_jetomfuncao.php",
+   "documento": 200,
+   "titulo": "DBSeller Informática Ltda",
+   "chamadas_v4": [
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/funcao/?instituicao=1",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "pes4_jetomprocessamento.php",
+   "classe": "tela",
+   "abre": "/pes4_jetomprocessamento.php",
+   "documento": 200,
+   "titulo": "Comissões > Processamento",
+   "chamadas_v4": [
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/sessao?rh247_processada=false&instituicao=1&usuario=1",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "pes4_jetomsessao.php",
+   "classe": "tela",
+   "abre": "/pes4_jetomsessao.php",
+   "documento": 200,
+   "titulo": "",
+   "chamadas_v4": [
+    {
+     "metodo": "GET",
+     "rota": "/v4/api/recursos-humanos/pessoal/jetom/sessao?usuario=1",
+     "status": 500,
+     "tipo": "texto",
+     "corpo": ""
+    }
+   ],
+   "alertas": [],
+   "erros_js": [
+    "Unexpected end of JSON input"
+   ]
+  },
+  {
+   "arquivo": "pro3_consultaprocesso002.php",
+   "classe": "tela",
+   "abre": "/pro3_consultaprocesso002.php",
+   "documento": 200,
+   "titulo": "DBSeller Informática Ltda - Página Inicial",
+   "chamadas_v4": [],
+   "alertas": [],
+   "erros_js": []
+  }
+ ]
+}
