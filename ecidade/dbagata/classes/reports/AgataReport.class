@@ -102,6 +102,25 @@ class AgataReport
         return $Return;
     }
 
+    // PHP 8: string nao numerica em conta e TypeError. No 5.6 valia o prefixo numerico da string ("12abc" = 12,
+    // "abc" = 0, "0x1A" = 26) e o resultado era int ou float conforme o texto. Numero e string numerica passam direto.
+    function CellNumber($Cell)
+    {
+        if (!is_string($Cell) || is_numeric($Cell))
+        {
+            return $Cell;
+        }
+        if (preg_match('/^[ \t\n\r\v\f]*0[xX]([0-9a-fA-F]+)/', $Cell, $m))
+        {
+            return hexdec($m[1]);
+        }
+        if (preg_match('/^[ \t\n\r\v\f]*[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?/', $Cell, $m))
+        {
+            return $m[0] + 0;
+        }
+        return 0;
+    }
+
     function PreProcessBreaks($QueryLine)
     {
         // inBreaks sao as quebras dentro da funcao, tipo sum(4,0);
@@ -119,7 +138,7 @@ class AgataReport
                 {
                     if (strstr($Formulafull, "($count)") or strstr($Formulafull, "($count,)"))
                     {
-                        $this->newSummary[$string_key][$count]['sum'] += $Cell;
+                        $this->newSummary[$string_key][$count]['sum'] += $this->CellNumber($Cell);
                         $this->newSummary[$string_key][$count]['count'] ++;
                         $this->newSummary[$string_key][$count]['dist'][$Cell] ++;
                         $this->newSummary[$string_key][$count]['max'] = ($Cell > $this->newSummary[$string_key][$count]['max']) ? $Cell : $this->newSummary[$string_key][$count]['max'];
@@ -165,7 +184,7 @@ class AgataReport
                         $average =  $this->newSummary[$string_key][$count]['sum'] /
                                     $this->newSummary[$string_key][$count]['count'];
                         
-                        $this->newSummary[$string_key][$count]['sum_var'] += pow($Cell - $average, 2);
+                        $this->newSummary[$string_key][$count]['sum_var'] += pow($this->CellNumber($Cell) - $average, 2);
                     }
                     $count ++;
                 }
