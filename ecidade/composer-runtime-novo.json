@@ -1,0 +1,98 @@
+{
+    "name": "dbseller/e-cidade",
+    "description": "e-cidade GRP - dependencias do runtime novo (Laravel 13, PHP 8.5)",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/DBSeller/Session.git",
+            "no-api": true
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "ext-bcmath": "*",
+        "ext-calendar": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-pgsql": "*",
+        "ext-simplexml": "*",
+        "ext-soap": "*",
+        "ext-xmlwriter": "*",
+        "ext-zip": "*",
+        "aferrandini/phpqrcode": "^1.0.1",
+        "barryvdh/laravel-ide-helper": "^3.8.0",
+        "dbseller/legacy": "^1.1.1",
+        "dbseller/session": "dev-master",
+        "doctrine/dbal": "^4.5.1",
+        "dompdf/dompdf": "^3.1.6",
+        "guzzlehttp/guzzle": "^8.5.0",
+        "intervention/image": "^4.4.1",
+        "jeremeamia/superclosure": "^2.4.0",
+        "laravel/framework": "^13.42.0",
+        "laravel/passport": "^13.10.0",
+        "laravel/tinker": "^3.1.0",
+        "lcobucci/jwt": "^5.6.1",
+        "league/fractal": "^0.21",
+        "michelf/php-markdown": "^2.0.0",
+        "mormat/php-formula-interpreter": "^2.0.1",
+        "mpdf/mpdf": "^8.3.1",
+        "ncjoes/office-converter": "^1.0.8",
+        "nfephp-org/sped-common": "^5.1.17",
+        "phpmailer/phpmailer": "^7.2.0",
+        "phpoffice/phpspreadsheet": "^5.11.0",
+        "phpoffice/phpword": "^1.4.0",
+        "pusher/pusher-php-server": "^7.3.0",
+        "symfony/console": "^8.1.11",
+        "symfony/filesystem": "^8.1.11",
+        "symfony/polyfill-php56": "^1.20.0",
+        "symfony/polyfill-php70": "^1.20.0",
+        "symfony/process": "^8.1.10",
+        "symfony/validator": "^8.1.11",
+        "symfony/yaml": "^8.1.11",
+        "vlucas/valitron": "^1.4.11",
+        "zendframework/zend-eventmanager": "^2.6.2"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.19.3",
+        "fzaninotto/faker": "^1.5.0",
+        "mockery/mockery": "^1.6.15",
+        "phpunit/phpunit": "^10.5.66",
+        "squizlabs/php_codesniffer": "^4.0.4"
+    },
+    "autoload": {
+        "files": [
+            "app/Helpers/PostgresPls.php",
+            "app/Helpers/Functions.php",
+            "app/Helpers/Drive.php",
+            "app/Helpers/Orcamento/FiltrosOrcamento.php",
+            "app/Helpers/Orcamento/FuncoesOrcamento.php",
+            "app/Helpers/Planejamento/FiltrosDespesaPlanejamento.php",
+            "app/Helpers/Contabilidade/FuncoesContabilidade.php"
+        ],
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "App\\": ["app-runtime-novo/", "app/"],
+            "Fpdf\\": "fpdf/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
+}

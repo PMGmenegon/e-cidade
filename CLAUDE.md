@@ -101,6 +101,7 @@ chmod -R 777 ecidade/storage ecidade/bootstrap/cache 2>/dev/null; chmod 777 ecid
 chmod 666 ecidade/extension/log/*.log   # os ARQUIVOS, nao so a pasta -- senao TODA tela autenticada da 500
 chmod 777 ecidade/tmp ecidade/arquivos        # SEM isto, 11% das telas falham antes de executar
 docker compose -f docker-compose.php85.yml up -d
+docker compose -f docker-compose.api-v1.yml up -d   # API V1 (/api/v1/ no proxy); vendor dela antes: docs/migracao-laravel/api-v1-dependencias.md
 docker compose -f docker-compose.proxy.yml up -d
 ```
 
@@ -227,7 +228,14 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `runtime-novo.md` | T-022: runtime novo (PHP 8.5) com `vendor/`, `bootstrap/cache` e `storage/` próprios (`docker-compose.runtime-novo.yml`, `docker/runtime-novo/prepara.sh`): como subir/derrubar, quando gravar (tela de menu com vigia) e quando somente leitura (relatório), prova (marcadores, mounts, bateria dirigida de 233 telas de menu com vigia) |
+| `dependencias-laravel13.md` | T-043: `ecidade/composer-runtime-novo.json`/`.lock` (Laravel 13.42, Passport 13.10, 165 pacotes) só do runtime novo, com `COMPOSER=`; o que fica de fora (Silex, Pimaco, Phinx, Pix), instalação limpa, hash do 5.6 igual, boot (login igual; o Laravel para no 1º provider) |
+| `documentos-runtime-novo.md` | T-065: código que o PhpSpreadsheet 5.11 pediu no runtime novo: 3 métodos privados no `ProgramaGestaoXls` (os `*ByColumnAndRow` saíram) e `ultimaColuna()` no `Template/Parser.php` (`XFD` do `anexo12.xlsx` estourava a memória); 5.6 byte a byte igual, novo igual ao 5.6; `razao_xlsx`/`phpword_docx`/`planilhas_leitura` × linha de base |
+| `dotenv-telas.md` | T-068: 9 pontos com `new \Dotenv\Dotenv('./')` (TypeError no Dotenv 5.8 do runtime novo) trocados por 1 linha que escolhe pela API (`createUnsafeImmutable` ou `new`); nenhum dos dois sobrescreve variável já definida (medido); 5 telas 5.6 × novo antes/depois, vigia rc=0 |
+| `boot-laravel13.md` | boot do Laravel 13 no runtime novo: `artisan --version` e GET `/v4` passam, onde parou cada vez (Handler, `BaseDeferredProvider`, `ImageServiceProvider`, `Passport::routes`) item a item do inventário, sobreposição `app-runtime-novo/` para o que o 5.6 não aceita, prova de que o 5.6 fica igual, 547 de 562 rotas registradas e o que sobra para middlewares, configuração e Passport |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `../migracao-laravel/api-v1-dependencias.md` | dependências só da API V1 nas versões de hoje (`docker/api-v1/composer.json`/`.lock`: 7 diretos, 23 na trava, todos iguais ao lock do 5.6), `--ignore-platform-req=php` só no comando da API (`cakephp/*`), como instalar em `runtime-api/vendor` |
+| `../migracao-laravel/api-v1-container.md` | container próprio da API V1 (`docker-compose.api-v1.yml`, vendor só dela) e regra `/api/v1/` no `docker/proxy/nginx.conf` (sem o container, desvio ao destino de hoje; sem repetir pedido já enviado): como subir/derrubar, sessão compartilhada obrigatória, prova (4 GET iguais ao 5.6 pelo proxy, 233 telas de menu iguais proxy antigo × novo) |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
