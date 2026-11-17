@@ -1,0 +1,59 @@
+http: 200
+content-type: text/plain
+bytes: 2336
+avisos-php:
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 133
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 134
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 137
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 138
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 144
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 145
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 146
+Warning: Trying to access array offset on null in /vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx/Styles.php on line 147
+tipo: outro (text/plain)
+--- corpo ---
+== config/templates/IN22/Anexo1.xlsx (abas: Planilha1)
+   Planilha1 A1:D31 celulas=36 sha=38e771a5bfb8
+== config/templates/IN22/anexo10.xlsx (abas: Anexo 10)
+   Anexo 10 A1:AMJ19 celulas=34 sha=ee2c3e6224ae
+== config/templates/IN22/anexo10_A.xlsx (abas: Anexo 10)
+   Anexo 10 A1:I19 celulas=33 sha=a89734ed9df0
+== config/templates/IN22/anexo11.xlsx (abas: Planilha1)
+   Planilha1 A1:H25 celulas=35 sha=9c8f2c44e247
+== config/templates/IN22/anexo11_A.xlsx (abas: Planilha1)
+   Planilha1 A1:E28 celulas=33 sha=63f5c17a331a
+== config/templates/IN22/anexo11_B.xlsx (abas: Planilha1)
+   Planilha1 A1:F20 celulas=31 sha=2c81d5568e81
+== config/templates/IN22/anexo11_C.xlsx (abas: Planilha1)
+   Planilha1 A1:B29 celulas=25 sha=acae95b165af
+== config/templates/IN22/anexo12.xlsx (abas: PÃ¡gina1)
+   PÃ¡gina1 A1:E990 celulas=39 sha=980d1f3ded39
+== config/templates/IN22/anexo13.xlsx (abas: Planilha1)
+   Planilha1 A1:J22 celulas=40 sha=1b645957cb18
+== config/templates/IN22/anexo13_A.xlsx (abas: Planilha1)
+   Planilha1 A1:I26 celulas=24 sha=7e0337985d8f
+== config/templates/IN22/anexo14.xlsx (abas: Planilha1)
+   Planilha1 A1:H29 celulas=29 sha=4217be9e8d48
+== config/templates/IN22/anexo15.xlsx (abas: Planilha1)
+   Planilha1 A1:I25 celulas=29 sha=68f7822eba83
+== config/templates/IN22/anexo16.xlsx (abas: Planilha1)
+   Planilha1 A1:G27 celulas=24 sha=36f22fa77149
+== config/templates/IN22/anexo2.xlsx (abas: Planilha1)
+   Planilha1 A1:F22 celulas=26 sha=a5809c3ff204
+== config/templates/IN22/anexo3.xlsx (abas: Anexo 3)
+   Anexo 3 A1:F24 celulas=25 sha=5bccc1a1e555
+== config/templates/IN22/anexo4.xlsx (abas: Anexo 4)
+   Anexo 4 A1:I24 celulas=38 sha=2263eb01e9c2
+== config/templates/IN22/anexo5.xlsx (abas: anexo 5)
+   anexo 5 A1:I25 celulas=38 sha=b8c89cb9922b
+== config/templates/IN22/anexo6.xlsx (abas: Anexo 6)
+   Anexo 6 A1:G25 celulas=34 sha=6cd2c5037a26
+== config/templates/IN22/anexo7.xlsx (abas: Anexo 10)
+   Anexo 10 A1:H38 celulas=23 sha=52e2c90fb782
+== config/templates/IN22/anexo8.xlsx (abas: Anexo 8)
+   Anexo 8 A1:F19 celulas=26 sha=8a2384249812
+== config/templates/IN22/anexo9.xlsx (abas: Anexo 9)
+   Anexo 9 A1:F19 celulas=26 sha=aa0038cb1abc
+== config/financeiro/siconfi/recursos/recurso_2018.csv linhas=0 campos=0 sha=e3b0c44298fc
+== config/financeiro/siconfi/recursos/recurso_2019.csv linhas=0 campos=0 sha=e3b0c44298fc
+

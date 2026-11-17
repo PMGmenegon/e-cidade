@@ -1,0 +1,16 @@
+http: 200
+content-type: application/pdf
+bytes: 17479
+tipo: pdf
+conteudo-paginas: ['9641032e7f54']
+paginas: 1
+tamanho: 595.276 x 841.89 pts (A4)
+imagens: 8 ['ce00064aab8aa1b7', 'bf3d9a454665db45', 'ce00064aab8aa1b7', 'b2c082ebbf90541a', 'ce00064aab8aa1b7', '1be2add7d0463266', 'ce00064aab8aa1b7', '03e9049324fc68cd']
+--- texto ---
+    PREFEITURA DBSELLER         PREFEITURA DBSELLER       PREFEITURA DBSELLER       PREFEITURA DBSELLER
+
+
+
+MESA DE ESCRITORIO EM MADEIRA    CADEIRA GIRATORIA       ARMARIO DE ACO 2 PORTAS    COMPUTADOR DESKTOP
+     BEM: 1 / PLACA: 000123     BEM: 2 / PLACA: 000124     BEM: 3 / PLACA: 000125   BEM: 4 / PLACA: 000126
+

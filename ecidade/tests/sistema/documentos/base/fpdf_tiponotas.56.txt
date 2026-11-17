@@ -1,0 +1,37 @@
+http: 200
+content-type: application/pdf
+bytes: 18997
+tipo: pdf
+conteudo-paginas: ['a3e53cea220e']
+paginas: 1
+tamanho: 595.28 x 841.89 pts (A4)
+imagens: 1 ['ca533689bae6e319']
+--- texto ---
+                      PREFEITURA DBSELLER
+                      RUA GENERAL CAMARA, 406
+                      PORTO ALEGRE - RS                                                          RELATÓRIO DOS TIPOS DE NOTAS
+                                                                                                 Ordem Numérica
+                      05130765101 - CNPJ : 00.000.000/0000-00
+
+                      www.dbseller.com.br
+
+                                             Código                         Descrição
+                                             ECF         CUPOM FISCAL
+                                             MOD 1       MODELO 1
+                                             MOD 2       NOTA FISCAL DE VENDA AO CONSUMIDOR
+                                             MOD 4       NOTA FISCAL DE PRODUTOR
+                                             MOD 7       NOTA FISCAL DE SERVIÇOS DE TRANSPORTE
+                                             SER A       NOTA FISCAL DE PREST DE SERVIÇO
+                                             SER B       NOTA FISCAL CONJUNTA ICMS/ISSQN
+
+
+
+Total de Registros                  7
+
+
+
+
+Base: ecidade
+
+  iss2_tiponotas002.php Emissor: Prefeitura Dbseller Exerc: 2018 Data: DD/MM/AAAA - HH:MM:SS                                    Pág 1/1
+

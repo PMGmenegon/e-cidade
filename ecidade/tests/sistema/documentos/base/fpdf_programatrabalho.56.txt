@@ -1,0 +1,23 @@
+http: 200
+content-type: application/pdf
+bytes: 18875
+tipo: pdf
+conteudo-paginas: ['cc8af8006927']
+paginas: 1
+tamanho: 595.28 x 841.89 pts (A4)
+imagens: 1 ['ca533689bae6e319']
+--- texto ---
+                       PREFEITURA DBSELLER
+                                                                                       PROGRAMA DE TRABALHO
+                       RUA GENERAL CAMARA, 406
+                       PORTO ALEGRE - RS                                               EXERCÍCIO :
+                       05130765101 - 00.000.000/0000-00
+
+                       www.dbseller.com.br
+
+
+
+
+Base: ecidade
+                Emissor: Prefeitura Dbseller Exerc: 2018 Data: DD/MM/AAAA - HH:MM:SS                          Pág 1/1
+

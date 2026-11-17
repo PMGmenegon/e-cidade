@@ -1,0 +1,40 @@
+http: 200
+content-type: application/pdf
+bytes: 19065
+tipo: pdf
+conteudo-paginas: ['d055ee7b9ac0']
+paginas: 1
+tamanho: 595.28 x 841.89 pts (A4)
+imagens: 1 ['ca533689bae6e319']
+--- texto ---
+                PREFEITURA DBSELLER
+                RUA GENERAL CAMARA, 406
+                PORTO ALEGRE - RS                                                                         RELATÓRIO DAS CLASSES
+                                                                                                          Ordem alfabética
+                05130765101 - CNPJ : 00.000.000/0000-00
+
+                www.dbseller.com.br
+
+                                Codigo                        Descricao
+                                   6       AGRICULTURA
+                                   5       AMBULANTES
+                                   4       AUTONOMO
+                                   1       COMERCIO
+                                   9       ENTIDADES SEM FINS LUCRATIVOS
+                                   8       EXTRACAO
+                                   3       INDUSTRIA
+                                   7       PECUARIA
+                                   2       SERVIÇO
+                                  10       SERVICOS SEM ISSQN
+
+
+
+                                Total de Registros                10
+
+
+
+
+Base: ecidade
+
+                                 iss2_classes002.php Emissor: Prefeitura Dbseller Exerc: 2018 Data: DD/MM/AAAA - HH:MM:SS         Pág 1/1
+

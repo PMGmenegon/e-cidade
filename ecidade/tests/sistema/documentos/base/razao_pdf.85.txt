@@ -1,0 +1,25 @@
+http: 200
+content-type: application/pdf
+bytes: 18483
+tipo: pdf
+conteudo-paginas: ['73962acefb29']
+paginas: 1
+tamanho: 841.89 x 595.28 pts (A4)
+imagens: 1 ['ca533689bae6e319']
+--- texto ---
+                      PREFEITURA DBSELLER
+                                                                                                 RAZÃO POR CONTA
+                      RUA GENERAL CAMARA, 406
+                      PORTO ALEGRE - RS
+                                                                                                 PERÍODO : 01/01/2018 à 31/12/2018
+                      05130765101 - CNPJ : 00.000.000/0000-00
+
+                      www.dbseller.com.br
+
+
+
+
+Base: ecidade
+
+  con2_razaocontas002.php Emissor: Prefeitura Dbseller Exerc: 2018 Data: DD/MM/AAAA - HH:MM:SS                                       Pág 1/1
+

@@ -1,0 +1,14 @@
+http: 500
+content-type: text/plain
+bytes: 607
+tipo: outro (text/plain)
+--- corpo ---
+rc=255
+  thrown in /vendor/dompdf/dompdf/src/Helpers.php on line 507
+#0 [internal function]: Dompdf\Helpers::record_warnings(8192, 'file_get_conten...', '/v...', 839)
+#1 /vendor/dompdf/dompdf/src/Helpers.php(839): file_get_contents('/v...', NULL, NULL, 0)
+#2 /vendor/dompdf/dompdf/src/Css/Stylesheet.php(367): Dompdf\Helpers::getFileContent('/v...', NULL)
+#3 /vendor/dompdf/dompdf/src/Dompdf.php(572): Dompdf\Css\Stylesheet->load_css_file('/v...', 1)
+#4 /vendor/dompdf/dompdf/src/Dompdf.php(724): Dompdf\Dompdf->processHtml()
+#5 /tests/sistema/documentos/dubles/gera_dompdf.php(12): Dompdf\Dompdf->render()
+

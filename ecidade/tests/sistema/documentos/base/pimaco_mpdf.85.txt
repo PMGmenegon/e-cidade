@@ -1,0 +1,7 @@
+http: 500
+content-type: text/plain
+bytes: 101
+tipo: outro (text/plain)
+--- corpo ---
+rc=255
+Parse error: syntax error, unexpected token "{" in /vendor/mpdf/mpdf/src/Mpdf.php on line 2238

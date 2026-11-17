@@ -1,0 +1,24 @@
+http: 200
+content-type: application/pdf
+bytes: 1905
+tipo: pdf
+conteudo-paginas: ['b9c1895da5af']
+paginas: 1
+tamanho: 595.28 x 841.89 pts (A4)
+imagens: 0 []
+--- texto ---
+                 PREFEITURA DBSELLER
+                 RUA GENERAL CAMARA                                                           Relatório: Pacto Concedentes
+                                                                                              DATA EMISSÃO: DD/MM/AAAA
+                 PORTO ALEGRE - RS
+                 05130765101
+                 www.dbseller.com.br
+
+
+        Código                                Nome                                                                       Descrição
+
+
+
+
+Base: ecidade                 orc2_relconcedentes002.php   Emissor: PREFEITURA DBSELLER   Exercício: 2018   Data: DD/MM/AAAA   Hora: HH:MM:SSPágina: 1 de 1
+

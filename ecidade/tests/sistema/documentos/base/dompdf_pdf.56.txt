@@ -1,0 +1,16 @@
+http: 200
+content-type: application/pdf
+bytes: 1647
+tipo: pdf
+conteudo-paginas: ['c4cc798dc32e']
+paginas: 1
+tamanho: 595.28 x 841.89 pts (A4)
+imagens: 0 []
+--- texto ---
+Boleto de teste
+Valor: R$ 1.234,56 — Vencimento 31/12/2026 — ação é única
+
+Item   Valor
+Taxa A 100,00
+Taxa B 1.134,56
+

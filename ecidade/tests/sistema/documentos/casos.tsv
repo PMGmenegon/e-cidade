@@ -1,0 +1,15 @@
+# nome	biblioteca	caminho (HTTP a partir da raiz, ou cli:<script> = duble por CLI no container)	[diverge:motivo = divergencia 5.6 x 8.5 ja conhecida]
+fpdf_classes	FPDF 1.51	iss2_classes002.php?opcaoOrdem=alfabetica
+fpdf_tiponotas	FPDF 1.51	iss2_tiponotas002.php?opcaoOrdem=numerica
+fpdf_programatrabalho	FPDF 1.51	orc2_programatrabalho002.php
+pdfdoc_penalidade	FPDF 1.51 (PDFDocument)	com2_certidaopenalidadeindividual002.php
+razao_pdf	FPDF 1.51 (PDFDocument)	con2_razaocontas002.php?tiporelatorio=1&data1=2018-01-01&data2=2018-12-31&relatorio=s&saldopordia=n&contasemmov=s&quebrapaginaporconta=n&sDocumentos=
+agata_relitens	dbagata	orc2_relitens002.php
+agata_relplanos	dbagata	orc2_relplanos002.php
+agata_relconcedentes	dbagata	orc2_relconcedentes002.php
+razao_xlsx	PhpSpreadsheet	con2_razaocontas002.php?tiporelatorio=2&data1=2018-01-01&data2=2018-12-31&relatorio=s&saldopordia=n&contasemmov=s&quebrapaginaporconta=n&sDocumentos=
+barras_qr	Barras int25 + QR (duble)	cli:tests/sistema/documentos/dubles/gera_barras_qr.php
+phpword_docx	PhpWord (duble)	cli:tests/sistema/documentos/dubles/gera_phpword.php
+pimaco_mpdf	Pimaco + mPDF + picqer (duble)	cli:tests/sistema/documentos/dubles/gera_pimaco.php	diverge:mPDF 7.1.9 (vendor atual) tem erro de sintaxe no PHP 8.5 (Mpdf.php:2238)
+dompdf_pdf	Dompdf (duble)	cli:tests/sistema/documentos/dubles/gera_dompdf.php	diverge:Dompdf 0.8.3 (vendor atual) vira excecao com Deprecated do PHP 8.5
+planilhas_leitura	PhpSpreadsheet (importacao, duble)	cli:tests/sistema/documentos/dubles/le_planilhas.php	diverge:conteudo igual; so o 8.5 emite Warning em PhpSpreadsheet 1.8.2 Reader/Xlsx/Styles.php:133-134 (offset em null)

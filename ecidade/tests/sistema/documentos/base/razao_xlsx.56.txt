@@ -1,0 +1,7 @@
+http: 200
+content-type: application/vnd.ms-excel
+bytes: 6496
+tipo: xlsx
+abas: ['Worksheet']
+--- aba Worksheet A1:Q1 ---
+LAN | SEQ | DATA | RECEITA | DOTAÇÃO | EMPENHO | SUPLEMENTAÇÃO | DOCUMENTO | SLIP | OP | PLANILHA | CONTA ORIGEM | CONTRAPARTIDA | VALOR | VALOR TIPO | HISTORICO | INSTITUICAO
