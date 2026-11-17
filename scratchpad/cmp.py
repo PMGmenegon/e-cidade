@@ -43,6 +43,8 @@ NORM = [
     # requisicoes cairem em segundos diferentes. Passou a aparecer depois que
     # tmp/ virou gravavel e os relatorios comecaram a ser gerados de fato.
     (re.compile(rb'/(CreationDate|ModDate) ?\(D:[0-9]{14}[^)]*\)'), b'/DateX'),
+    # PHP 8: "failed to open stream" -> "Failed to open stream" (mesmo warning nos dois runtimes)
+    (re.compile(rb'[Ff]ailed to open stream'), b'failed to open stream'),
 ]
 def norm(b):
     for rx, rep in NORM:

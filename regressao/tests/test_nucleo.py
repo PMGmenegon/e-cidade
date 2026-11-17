@@ -9,6 +9,15 @@ def c(id, v):
     return Caso(id=id, area="a", veredito=v)
 
 
+def test_normaliza_caixa_do_warning_failed_to_open_stream_sem_esconder_o_resto():
+    a = b"<b>Warning</b>:  file_put_contents(x): failed to open stream: No such file in <b>/v/D.php</b>"
+    b = b"<b>Warning</b>:  file_put_contents(x): Failed to open stream: No such file in <b>/v/D.php</b>"
+    assert normaliza(a) == normaliza(b)
+    # outro arquivo/erro continua diferente
+    assert normaliza(a) != normaliza(b.replace(b"No such file", b"Permission denied"))
+    assert normaliza(a) != normaliza(b.replace(b"file_put_contents(x)", b"file_put_contents(y)"))
+
+
 def test_codigo_saida_zero_sem_divergencia_nova():
     assert codigo_saida([c("1", Veredito.IDENTICO), c("2", Veredito.INCONCLUSIVO)]) == 0
 

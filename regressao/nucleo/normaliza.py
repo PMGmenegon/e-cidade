@@ -28,6 +28,9 @@ REGRAS: list[tuple[str, re.Pattern[bytes], bytes]] = [
     # requisicoes cairem em segundos diferentes. Passou a aparecer depois que
     # tmp/ virou gravavel e os relatorios comecaram a ser gerados de fato.
     ("data do pdf", re.compile(rb"/(CreationDate|ModDate) ?\(D:[0-9]{14}[^)]*\)"), b"/DateX"),
+    # PHP 8 trocou a capitalizacao da mensagem do warning ("failed to open stream" -> "Failed to open stream"):
+    # o mesmo warning sai nos dois runtimes (achado em pes2_contracheque_banrisul002, 200x200 so por isto).
+    ("caixa de 'failed to open stream'", re.compile(rb"[Ff]ailed to open stream"), b"failed to open stream"),
 ]
 
 
