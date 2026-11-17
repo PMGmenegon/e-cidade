@@ -105,6 +105,7 @@ def rodar(lista_container, simular, pasta, nome):
         f.write(err)
     # Os "Deprecated:" vem do vendor/ do Laravel 5.4 que o Rector carrega pelo autoloader: esperados.
     outros = [l for l in err.splitlines() if l.strip() and not l.startswith("Deprecated:")]
+    # o JSON comeca no primeiro "{": qualquer texto que o Rector/PHP imprima antes dele no stdout e descartado
     try:
         dados = json.loads(out[out.index("{"):]) if "{" in out else None
     except ValueError:
@@ -116,7 +117,7 @@ def contar(dados):
     fd = dados.get("file_diffs") or []
     c = collections.Counter()
     for f in fd:
-        for r in set(f.get("applied_rectors") or []):
+        for r in set(f.get("applied_rectors") or []):   # set: conta ARQUIVOS por regra, nao ocorrencias
             c[r.split("\\")[-1]] += 1
     return fd, c, dados.get("errors") or []
 
@@ -135,6 +136,9 @@ def linhas_da_regra(fd, regra, n=12):
     return saida
 
 def main():
+    """Le os argumentos, confere os pre-requisitos, prepara lista e config, simula, classifica as regras e,
+    com --aplicar (e sem regra nova nem erro), aplica ate uma rodada alterar 0 arquivos. Sai com sys.exit:
+    os codigos estao no docstring do arquivo."""
     ap = argparse.ArgumentParser(description="Passo 4 do guia (Rector) em um comando. Ver o docstring do arquivo.")
     ap.add_argument("prefixos", nargs="+", help="prefixos do lote (ex.: soc hab)")
     ap.add_argument("--aplicar", action="store_true", help="grava as alteracoes (sem ele, so simula)")
@@ -174,6 +178,7 @@ def main():
     if "No syntax errors" not in out:
         sys.exit("ERRO: a config do Rector tem erro de sintaxe (o Rector reportaria '0 arquivos' sem avisar):\n"
                  + out + err)
+    # tamanho da denylist so para o resumo: conta os "::class" entre "->withSkip([" e o primeiro "]);" depois dele
     skip = open("scratchpad/rector-curado.php", encoding="utf-8").read()
     skip = skip[skip.index("->withSkip(["):]
     denylist = len(re.findall(r"::class", skip[:skip.index("]);")]))
@@ -237,6 +242,7 @@ def main():
     # --- aplicar ate zerar ------------------------------------------------------------------------
     print("\nAPLICANDO (repete ate uma rodada alterar 0 arquivos):")
     alterados = set()
+    # for/else: o else so roda se o laco terminar sem break, isto e, nenhuma rodada chegou a 0 arquivos
     for i in range(1, args.max_rodadas + 1):
         dados, outros = rodar(lista_container, False, pasta, f"rodada{i}")
         if dados is None:

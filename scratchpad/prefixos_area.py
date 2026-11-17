@@ -11,6 +11,17 @@ areas ainda tem telas desse prefixo no 5.6. Sem outra area pendente -> o prefixo
 os .php do prefixo inteiro: se ela e muito maior que "telas", rotear pelo `location` obriga a portar
 o prefixo todo -- compare o custo com `enumera.py <pref>` antes (ver docs/migrar-um-modulo.md).
 Telas que o menu cita mas nao existem em disco (fantasmas) nao entram na contagem.
+
+Como faz: uma consulta ao banco (container ecidade_database) lista cada tela de menu com as
+areas que a abrem; le do nginx.conf o regex do `location` (o ORIGINAL, nao uma copia) e do
+faseb_map.conf as telas do `map`; agrupa as telas da area por prefixo e conta, para cada
+prefixo, as que ja vao ao 8.5 e as que faltam. Uma segunda volta junta as OUTRAS areas que
+tem telas desse prefixo ainda no 5.6 -- e o que decide entre `location` e `map`.
+
+Entradas: o banco, docker/proxy/nginx.conf, docker/proxy/faseb_map.conf, a lista de ecidade/.
+Saida: so imprime a tabela (prefixo, telas, no 8.5, faltam, em disco, outras areas) e o total
+  de telas que faltam; nao grava arquivo.
+Usado em: parte B do fluxo de uma area no guia ("Quais prefixos migrar").
 """
 import collections, os, re, subprocess, sys
 
@@ -31,32 +42,40 @@ out = subprocess.run(["docker", "exec", "-i", "ecidade_database", "psql", "-U", 
 if out.returncode:
     sys.exit("psql falhou -- o container ecidade_database esta no ar?\n" + out.stderr.decode("latin-1"))
 
-disco = {f.lower() for f in os.listdir("ecidade")}
+disco = {f.lower() for f in os.listdir("ecidade")}       # o banco guarda em minusculas (lower no SQL)
 # o mesmo criterio do proxy: location por prefixo + map por nome exato
+# a alternancia de prefixos do `location ~* ^(?:/w/[0-9]+)?/(?:(?:cem|itbi?|...)[0-9]*_)`:
+# captura tudo ate o primeiro `)`, que fecha a lista (os prefixos nao tem parenteses)
 loc = re.search(r'location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)',
                 open("docker/proxy/nginx.conf").read()).group(1)
 LOC = re.compile(rf'^(?:{loc})[0-9]*_', re.I)
+# entradas do `map`: linhas indentadas `    <tela>    php85;`
 MAP = {m.group(1) for l in open("docker/proxy/faseb_map.conf") for m in [re.match(r'\s+(\S+)\s+php85;', l)] if m}
 no85 = lambda t: bool(LOC.match(t)) or t in MAP
+# prefixo da tela: letras antes dos digitos e do `_` (soc1_x -> soc, con_x -> con); sem `_`,
+# as letras iniciais. O `+?` preguicoso deixa os digitos para o [0-9]*.
 pref = lambda t: (re.match(r'^([a-z]+?)(?:[0-9]*_|_)', t) or re.match(r'^([a-z]+)', t)).group(1)
 
-areas = collections.defaultdict(set)
+areas = collections.defaultdict(set)                      # tela -> areas cujo menu a abre
 for l in out.stdout.decode("latin-1").splitlines():
     t, a = l.split("\t")
     areas[t].add(a)
 
 tab = collections.defaultdict(lambda: [0, 0, 0, set()])   # telas, no 8.5, faltam, outras areas pendentes
+# 1a volta: as telas DESTA area, por prefixo
 for t, a in areas.items():
     if t in disco and any(x.startswith(AREA) for x in a):
         r = tab[pref(t)]
         r[0] += 1
         r[1 if no85(t) else 2] += 1
+# 2a volta: telas de OUTRAS areas, ainda no 5.6, com prefixo que esta area usa
 for t, a in areas.items():
     if t in disco and not no85(t) and pref(t) in tab:
         tab[pref(t)][3].update(x for x in a if not x.startswith(AREA))
 if not tab:
     sys.exit(f"nenhuma tela de menu para a area '{AREA}' -- confira o nome (ASSIST, CIDAD, GESTOR, INTEGRA...)")
 
+# .php do prefixo inteiro em disco -- o que o `location` mandaria ao 8.5
 emdisco = lambda p: sum(1 for f in disco if f.endswith(".php") and re.match(rf'^{p}[0-9]*_', f))
 print(f"{'prefixo':8} {'telas':>5} {'no 8.5':>6} {'faltam':>6} {'em disco':>8}  outras areas com telas desse prefixo ainda no 5.6")
 for p, (n, ok, f, outras) in sorted(tab.items(), key=lambda x: (-x[1][2], x[0])):

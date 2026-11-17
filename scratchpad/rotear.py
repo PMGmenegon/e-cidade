@@ -41,6 +41,13 @@ Codigo de saida: 0 = OK; 1 = nginx -t falhou, conferencia falhou ou 8b achou tel
 
 As ALTERACOES ficam no git (docker/proxy/ e scratchpad/): para desfazer, `git checkout -- <arquivo>` e
 recriar o proxy.
+
+Como faz: edita texto com regex (location), ou regenera o map com o gerador versionado e compara o conjunto de
+entradas `<tela> php85;` antes e depois (map/abas); valida com `nginx -t` antes de tocar no proxy de verdade e,
+depois de recriado, pede as telas por curl a :8090 e le o cabecalho X-Ecidade-Runtime.
+Entradas: docker/proxy/nginx.conf, faseb_map.conf, faseb_map_abas.txt, as listas LOC de dimensiona.py e
+redirecionamentos.py, os .php de ecidade/ e (8b) a sessao do 5.6. Saidas: o resumo no terminal; com --aplicar,
+esses arquivos alterados e o container ecidade_proxy recriado; o 8b grava ecidade/tmp/rotear_8b.tsv.
 """
 import argparse, os, re, subprocess, sys, time
 
@@ -52,6 +59,9 @@ MAP = "docker/proxy/faseb_map.conf"
 ABAS = "docker/proxy/faseb_map_abas.txt"
 # Os tres lugares com a MESMA lista de prefixos do location: (arquivo, regex que separa a lista).
 # Grupo 2 = a lista "cem|itbi?|...|sys". Precisam mudar juntos.
+# Os regex casam o TEXTO-FONTE de cada arquivo (por isso os \( \? \[ escapados): o do nginx casa
+# `location ~* ^(?:/w/[0-9]+)?/(?:(?:` e os dos scripts casam `LOC = re.compile(r"^(?:`. A lista termina
+# no primeiro ")", entao nenhum prefixo pode conter parentese (os que usam "?" como itbi? funcionam).
 LISTAS = [
     (NGINX, re.compile(r"(location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:)([^)]+)(\))")),
     ("scratchpad/dimensiona.py", re.compile(r"(LOC = re\.compile\(r\"\^\(\?:)([^)]+)(\))")),
@@ -59,14 +69,17 @@ LISTAS = [
 ]
 
 def erro(msg):
+    """Erro de uso ou de pre-requisito: mensagem no stderr e saida com codigo 2."""
     print("ERRO: " + msg, file=sys.stderr)
     sys.exit(2)
 
 def sh(cmd, timeout=None):
+    """Roda um comando (lista de argumentos) e devolve (codigo, stdout, stderr) decodificados como latin-1."""
     r = subprocess.run(cmd, capture_output=True, stdin=subprocess.DEVNULL, timeout=timeout)
     return r.returncode, r.stdout.decode("latin-1"), r.stderr.decode("latin-1")
 
 def ler(p):
+    # os arquivos que este script edita (nginx.conf, map, .py) sao UTF-8/ASCII, diferente do codigo da base
     return open(p, encoding="utf-8").read()
 
 def gravar(p, t):
@@ -86,12 +99,15 @@ def comando_do_map():
     return m.group(1).split()
 
 def entradas_map():
+    """Conjunto das telas (em minuscula, como o map guarda) com linha `<tela> php85;` no faseb_map.conf atual."""
     return {m.group(1) for l in ler(MAP).splitlines() for m in [re.match(r"\s+(\S+)\s+php85;", l)] if m}
 
 def testar_nginx():
     """nginx -t num container descartavel, com os arquivos ATUAIS do disco. Devolve (ok, saida)."""
     _, img, _ = sh(["docker", "inspect", "-f", "{{.Config.Image}}", "ecidade_proxy"])
     _, net, _ = sh(["docker", "inspect", "-f", "{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}", "ecidade_proxy"])
+    # mesma imagem e mesma rede do proxy: o nginx -t resolve os nomes dos upstream (ecidade_php56/85) e falha
+    # se nao achar; o default.conf e o faseb_map.conf montados sao os do disco, ja com a alteracao
     rc, out, err = sh(["docker", "run", "--rm", "--network", net.strip(),
                        "-v", f"{RAIZ}/{NGINX}:/etc/nginx/conf.d/default.conf:ro",
                        "-v", f"{RAIZ}/{MAP}:/etc/nginx/faseb_map.conf:ro", img.strip(), "nginx", "-t"], timeout=120)
@@ -120,7 +136,7 @@ def aplicar(novos_conteudos, conferir):
     print("\nConferencia (cabecalho X-Ecidade-Runtime pelo proxy :8090):")
     for url, esperado in conferir:
         rt = runtime(url)
-        bate = (f"PHP-{esperado}" in rt)
+        bate = (f"PHP-{esperado}" in rt)      # o cabecalho traz a versao, ex. "PHP-8.5..." ou "PHP-5.6..."
         falhas += not bate
         print(f"  {'ok ' if bate else 'ERRO'} /{url:50} {rt}   (esperado PHP-{esperado})")
     print("\nArquivos alterados: " + ", ".join(novos_conteudos) + " (entram no commit do lote).")
@@ -128,6 +144,9 @@ def aplicar(novos_conteudos, conferir):
     sys.exit(1 if falhas else 0)
 
 def modo_location(prefixos, aplicar_):
+    """Acrescenta os prefixos que faltam as tres copias da lista (LISTAS), mostra antes/depois e quantas telas
+    passam ao 8.5; com --aplicar, chama aplicar() conferindo o login.php (5.6) e uma tela de cada prefixo,
+    com e sem /w/2/ (8.5)."""
     novos, mostrar = {}, []
     for arq, rx in LISTAS:
         t = ler(arq)
@@ -179,6 +198,9 @@ def comparar_map(novo_texto):
     return sorted(novo - atual), sorted(atual - novo)
 
 def mostrar_e_aplicar_map(args_gera, extras, aplicar_):
+    """Comum a map e abas: regenera o map com args_gera, mostra o que entra e RECUSA (sai 1) se alguma tela
+    sairia dele. Com --aplicar, grava o map e os arquivos de `extras` ({arquivo: texto}) via aplicar().
+    O map guarda os nomes em minuscula; `disco` devolve a grafia real para pedir a URL na conferencia."""
     novo_texto = regenerar_map(args_gera)
     novas, sairam = comparar_map(novo_texto)
     print(f"Comando do gerador: python3 scratchpad/gera_map_faseb.py {' '.join(args_gera)}")
@@ -202,6 +224,8 @@ def mostrar_e_aplicar_map(args_gera, extras, aplicar_):
     aplicar({MAP: novo_texto, **extras}, conferir)
 
 def modo_map(lotes, aplicar_):
+    """lotes: ["area:pref,pref", ...]. Funde cada um nos argumentos atuais do gerador (linha 2 do map) e
+    segue para mostrar_e_aplicar_map."""
     args_gera = comando_do_map()
     for lote in lotes:
         if ":" not in lote:
@@ -218,6 +242,9 @@ def modo_map(lotes, aplicar_):
     mostrar_e_aplicar_map(args_gera, {}, aplicar_)
 
 def modo_abas(telas, aplicar_):
+    """Acrescenta as telas (nome com ou sem .php; devem existir em ecidade/) ao faseb_map_abas.txt e regenera o
+    map com o comando atual. Como o gerador le a lista do DISCO, o arquivo e gravado antes de regenerar e,
+    sem --aplicar, reposto no fim."""
     texto = ler(ABAS)
     atuais = {l.strip().lower() for l in texto.splitlines() if l.strip() and not l.startswith("#")}
     novas = []
@@ -242,8 +269,10 @@ def modo_abas(telas, aplicar_):
 def modo_8b(areas, todas):
     """Abas e redirecionamentos que voltam ao 5.6 (passo 8b), sem alterar nada."""
     if todas:
+        # areas ja concluidas: a tupla JA = ("TRIBUT", ...) do dimensiona.py (prefixos dos nomes de area)
         m = re.search(r"JA = \(([^)]*)\)", ler("scratchpad/dimensiona.py"))
         areas = [a.strip(' "\'') for a in m.group(1).split(",") if a.strip()] + areas
+    # sessao autenticada mais recente do 5.6 (a que tem DB_modulo); sess_?* exclui o arquivo "sess_" vazio
     _, out, _ = sh(["docker", "exec", "-i", "ecidade_php56", "sh", "-c",
                     "ls -t $(grep -la DB_modulo /var/lib/php/sessions/sess_?*) | head -1"])
     sid = out.strip().rsplit("sess_", 1)[-1]
@@ -253,6 +282,7 @@ def modo_8b(areas, todas):
     print(f"Levantamento do 8b nas areas {','.join(areas)} (abre cada tela de menu no 8.5; pode levar minutos)...")
     rc, out, err = sh(["python3", "scratchpad/redirecionamentos.py", sid, saida, ",".join(areas)], timeout=6 * 3600)
     print("\n".join(l for l in out.splitlines() if not l.strip().startswith("...")))
+    # cada linha do TSV (redirecionamentos.py): classe (NO_5.6...), tipo, tela de origem, destino, areas
     linhas = [l.split("\t") for l in open(saida, encoding="latin-1").read().splitlines() if l.strip()]
     # corpo.php (voltar ao inicio) e db_erros.php (pagina de erro) nao sao formulario nem lacuna
     no56 = [l for l in linhas if l[0] == "NO_5.6" and not re.search(r"^(corpo|db_erros)\.php", l[3])]
@@ -269,6 +299,7 @@ def modo_8b(areas, todas):
     sys.exit(1)
 
 def main():
+    """Argumentos, conferencia de que proxy e banco estao no ar, e despacho para o modo pedido."""
     ap = argparse.ArgumentParser(description="Passos 8 e 8b em um comando. Ver o docstring do arquivo.")
     ap.add_argument("modo", choices=["location", "map", "abas", "8b"])
     ap.add_argument("itens", nargs="+", help="prefixos (location), area:prefixos (map), telas (abas) ou AREA (8b)")

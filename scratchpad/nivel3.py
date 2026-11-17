@@ -38,15 +38,26 @@ Vereditos (os do escrita_post.py):
 
 Saida: o resultado vai para o terminal e para ecidade/tmp/nivel3/<data-hora>-<tela>.txt.
 Codigo de saida: 0 = IDENTICO; 1 = DIVERGE ou escrita fora das tabelas; 2 = INCONCLUSIVO ou pre-requisito.
+(Um ABORTADO do escrita_post.py -- restore recusado por FK -- tambem sai com 1.)
+
+Efeitos colaterais: GRAVA NO BANCO DE VERDADE (o POST nos dois runtimes; o escrita_post.py desfaz nas
+tabelas informadas); liga e desliga o log_statement do banco inteiro; copia a sessao para /tmp/_d.bak e
+a restaura no container ecidade_php56; cria ecidade/tmp/nivel3/. Nao altera codigo. O --candidatas so le.
+Se o payload_auto.py nao gerar payload, sai com 2 sem gravar o arquivo de registro.
+
+Usado em: guia docs/migrar-um-modulo.md, "Nivel 3 -- POST de verdade" / "Em um comando -- nivel3.py"
+(dentro de "Passos 4b a 6c -- os portoes"), e na tabela do lote (secao C, linha "nivel 3").
 
 Escolher a tela continua sendo sua decisao: o criterio (uma inclusao por prefixo, tabela simples, evitar
 cadastros centrais com gatilhos) esta no guia, e o --candidatas o aplica.
 """
 import argparse, datetime, difflib, os, re, subprocess, sys, time
 
+# os caminhos dos scripts chamados (scratchpad/...) sao relativos a raiz: fixa o cwd nela
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(RAIZ)
 ECIDADE = os.path.join(RAIZ, "ecidade")
+# psql -tA (sem cabecalho, colunas separadas por |) e -c no fim: basta acrescentar o SQL
 PSQL = ["docker", "exec", "-i", "ecidade_database", "psql", "-U", "postgres", "-d", "ecidade", "-tAc"]
 
 # Cadastros centrais: muitas tabelas e gatilhos que gravam em outras (a CGS da Saude deixou lixo).
@@ -60,6 +71,7 @@ def erro(msg):
     print("ERRO: " + msg, file=sys.stderr)
     sys.exit(2)
 
+# stdin=DEVNULL: docker exec -i nao engole a entrada do terminal; saida decodificada em LATIN-1 (banco e tela)
 def sh(cmd, timeout=None):
     r = subprocess.run(cmd, capture_output=True, stdin=subprocess.DEVNULL, timeout=timeout)
     return r.returncode, r.stdout.decode("latin-1"), r.stderr.decode("latin-1")
@@ -68,12 +80,14 @@ def tabela_da_tela(tela):
     """A tabela que a tela grava: a da primeira classe de dados que ela instancia
     (`new cl_x` ou `db_utils::getDao('x')`). None se a tela nao instancia nenhuma diretamente."""
     b = open(os.path.join(ECIDADE, tela), "rb").read()
+    # a primeira ocorrencia no arquivo, de qualquer das duas formas (o mesmo grep do Passo 2 do guia)
     m = re.search(rb"getDao\(\s*['\"]([a-z0-9_]+)|new\s+cl_([a-z0-9_]+)", b, re.I)
     return (m.group(1) or m.group(2)).decode() if m else None
 
 def candidatas(prefixos):
     """Telas de inclusao (<pref>1_...001) dos prefixos, com tabela e sugestao pelo criterio do guia."""
     _, st, _ = sh(["git", "status", "--porcelain", "--", "ecidade/"])
+    # porcelain: 'XY caminho' -> l[3:] e o caminho; tira o 'ecidade/' para comparar com os nomes do disco
     alterados = {l[3:].strip()[len("ecidade/"):] for l in st.splitlines()}
     disco = sorted(os.listdir(ECIDADE))
     _, out, _ = sh(PSQL + ["select distinct tablename from pg_tables"])
@@ -83,6 +97,7 @@ def candidatas(prefixos):
         for t in [f for f in disco if re.match(rf"^{re.escape(p)}1_.*001\.php$", f, re.I)]:
             tab = tabela_da_tela(t)
             familia = re.sub(r"\d+\.php$", "", t)          # soc1_visitatipo001.php -> soc1_visitatipo
+            # o lote mexeu na familia da tela (001/002/003...) ou na classe da tabela?
             mexida = any(a.startswith(familia) for a in alterados) or \
                      (tab and f"classes/db_{tab}_classe.php" in alterados)
             if not tab:
@@ -102,6 +117,8 @@ def candidatas(prefixos):
     print("\nCriterio (guia, nivel 3): uma tela de inclusao por prefixo; prefira a RECOMENDADA.\n"
           "A tabela e a da PRIMEIRA classe que a tela instancia: se a tela gravar outra (ou mais de uma), use --tabelas.")
 
+# Sessao autenticada mais recente do 5.6 (as que tem DB_modulo sao as logadas). O sess_?* exclui um
+# arquivo "sess_" sem identificador (cookie vazio), que dava SID vazio. SID valido tem 40 caracteres.
 def achar_sessao():
     _, out, _ = sh(["docker", "exec", "-i", "ecidade_php56", "sh", "-c",
                     "ls -t $(grep -la DB_modulo /var/lib/php/sessions/sess_?*) | head -1"])
@@ -118,8 +135,10 @@ def preparar_sessao(sid):
         f"cp {sess} /tmp/_d.bak && chmod 666 /tmp/_d.bak"])
     _, tam, _ = sh(["curl", "-s", "-o", "/dev/null", "-w", "%{size_download}", "-b", f"ECIDADEWINDOWMAIN={sid}",
                     "http://localhost:8080/cem1_campas001.php"])
+    # devolve a sessao ao estado salvo: o GET de teste pode te-la alterado
     sh(["docker", "exec", "-u", "root", "-i", "ecidade_php56", "sh", "-c",
         f"cp /tmp/_d.bak {sess}; chown www-data:www-data {sess}"])
+    # tela de modulo ja verificado (cem): com sessao boa vem com milhares de bytes; vencida, poucas dezenas
     if int(tam or 0) < 1000:
         erro(f"a sessao nao vale (tela de teste com {tam} bytes). Entre em http://localhost:8090 e rode de novo.")
 
@@ -151,6 +170,7 @@ def main():
     if not tabelas:
         erro(f"{tela} nao instancia uma classe de dados diretamente; informe --tabelas ou escolha outra tela.")
     lista_tab = [t.strip() for t in tabelas.split(",") if t.strip()]
+    # confere pelo nome sem schema; a contagem tem de bater com o numero de tabelas pedidas
     _, existe, _ = sh(PSQL + ["select count(*) from pg_tables where tablename in ("
                               + ",".join(f"'{t.split('.')[-1]}'" for t in lista_tab) + ")"])
     if int(existe.strip() or 0) != len(lista_tab):
@@ -167,6 +187,8 @@ def main():
     print("\n".join(registro))
 
     # --- 3 a 6, com o log de SQL ligado so durante o teste ---------------------------------------
+    # rc comeca em 2: se algo estourar antes do escrita_post.py, nao sai como aprovado.
+    # O RESET do log fica no finally para valer mesmo com excecao (inclusive o timeout).
     rc = 2
     sh(PSQL + ["ALTER DATABASE ecidade SET log_statement='all'"])
     try:
@@ -180,6 +202,7 @@ def main():
         if not payload:
             print("ERRO: o payload_auto.py nao gerou payload (a tela tem formulario?). Use --payload.")
             return 2
+        # foto das estatisticas ANTES: a diferenca no fim e o que o teste (ou um gatilho) escreveu
         antes = escritas_por_tabela()
         r = subprocess.run(["python3", "scratchpad/escrita_post.py", sid, tela, ",".join(lista_tab), payload],
                            capture_output=True, stdin=subprocess.DEVNULL, timeout=600)
@@ -189,6 +212,8 @@ def main():
         registro.append(saida)
         time.sleep(2)                     # as estatisticas do PostgreSQL sao atualizadas logo apos o commit
         depois = escritas_por_tabela()
+        # nao contam como escrita "fora": as tabelas informadas (o POST e o restore mexem nelas) e as
+        # copias _n3snap_ que o escrita_post.py cria e apaga
         nomes = {t.split(".")[-1].lower() for t in lista_tab} | {f"_n3snap_{t.replace('.', '_')}" for t in lista_tab}
         fora = sorted(t for t, n in depois.items()
                       if n > antes.get(t, 0) and t.lower() not in nomes and not INFRA.match(t))

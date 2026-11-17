@@ -13,6 +13,19 @@ Classifica cada par (classe, campo, metodo) que difere:
   FORMA_NEGADA     mesmo valor 0, `!= ""` decide diferente: corrigir com scratchpad/negada_corrige.py
   ERRO             <ERRO>/<SEM_CLASSE> de um lado so
   SO_DE_UM_LADO    o par so aparece num runtime (o processo morreu?)
+
+Usado no passo 6c do guia (docs/migrar-um-modulo.md), depois de rodar o negada.php nos dois runtimes.
+
+Como faz: le as duas saidas do negada.php indexando cada linha pela chave (classe, campo, metodo)
+e guardando o que vem a partir da 6a coluna (valor e resultado, ou <ERRO>/<SEM_CLASSE> ...);
+compara chave a chave, classifica as diferencas e as separa em DO LOTE (classe presente na lista
+do terceiro argumento) e FORA DO LOTE (so contadas por tipo).
+Saida (stdout): contagem de pares medidos em cada runtime, resumo FORA DO LOTE por tipo, uma linha
+por par DO LOTE ("tipo classe campo metodo 5.6=<valor>/<resultado> 8.5=<...>") e o VEREDITO:
+  PASSOU      nenhuma diferenca nas classes do lote
+  INCOMPLETO  os runtimes mediram numeros diferentes de pares (tem precedencia sobre os outros)
+  INVESTIGAR  ha pares do lote para olhar
+Os arquivos de entrada sao lidos como Latin-1 (as mensagens vem da base).
 """
 import collections, sys
 
@@ -20,6 +33,8 @@ if len(sys.argv) != 4:
     sys.exit(__doc__)
 
 def ler(p):
+    """Le uma saida do negada.php: {(classe, campo, metodo): [colunas 6 em diante]}.
+    Linhas repetidas da mesma chave: fica a ultima."""
     d = {}
     for l in open(p, encoding="latin-1"):
         c = l.rstrip("\n").split("\t")
@@ -39,7 +54,7 @@ for k in sorted(set(a) | set(b)):
         tipo = "SO_DE_UM_LADO"
     elif any(x in ("<ERRO>", "<SEM_CLASSE>") for x in va + vb):
         tipo = "ERRO"
-    elif va[0] != vb[0]:
+    elif va[0] != vb[0]:                      # va[0]/vb[0] = o valor do campo (var_export)
         tipo = "VALOR_DIFERENTE"
     else:
         tipo = "FORMA_NEGADA"

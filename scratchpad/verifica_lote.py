@@ -15,8 +15,8 @@ Opcoes:
     --so PASSOS   lista separada por virgula, entre: 4b,5,5b,6,6b,6c,7 (padrao: todos)
     --continuar   segue para os passos seguintes mesmo depois de uma FALHA
     --base REF    referencia do git contra a qual o lote e medido no 4b e no 5 (padrao: HEAD,
-                  isto e, as alteracoes ainda nao commitadas). Depois do commit do lote, passe
-                  o commit anterior a ele, ex. --base origin/base-php84
+                  isto e, as alteracoes ainda nao commitadas; com --tudo o padrao e master). Depois
+                  do commit do lote, passe o commit anterior a ele, ex. --base origin/base-php84
     --sid SID     sessao autenticada a usar na bateria (padrao: a mais recente do 5.6)
     --tudo        em vez de prefixos, verifica TUDO: o universo sao os arquivos que a migracao alterou
                   (diff contra o master, o codigo antes da migracao) e as classes entre eles; a bateria roda
@@ -59,6 +59,11 @@ Saida: uma pasta por execucao, ecidade/tmp/verif/<lote>-<AAAAMMDD-HHMM>/, com
     <passo>_*.txt  saida bruta de cada passo
 A pasta fica dentro de ecidade/ (montada nos containers como /var/www/html), entao os
 containers leem e escrevem nela sem `docker cp`. ecidade/tmp/ e ignorada pelo git.
+
+Usado em: passos 4b a 7 de cada lote (guia, "Verificar o lote de uma vez") e, com --tudo, na bateria completa
+do fim da area (guia, fluxo D). Metodo geral: cada passo roda um harness de scratchpad/ (porclasse.sh,
+carrega_arquivo.php, instancia_classes.php, escrita.php, negada*.py/php, cmp.py) nos DOIS containers sobre a
+mesma lista, compara as saidas e devolve um Resultado; o relatorio junta os Resultados.
 
 Codigo de saida: 0 = tudo OK; 1 = algum passo com FALHA ou INVESTIGAR; 2 = pre-requisito faltando.
 
@@ -124,6 +129,7 @@ def dentro(caminho_host):
     return WEB + "/" + os.path.relpath(caminho_host, ECIDADE)
 
 def ler(caminho):
+    # latin-1 nunca falha na leitura (todo byte e um caractere): serve para LATIN-1 e para UTF-8 "cru"
     with open(caminho, encoding="latin-1") as f:
         return f.read()
 
@@ -133,6 +139,7 @@ def linhas(caminho):
     return [l.rstrip("\r") for l in ler(caminho).split("\n") if l.strip()]
 
 def gravar(caminho, texto):
+    # errors="replace": texto vindo de UTF-8 (ex.: log do docker) pode ter caractere fora do latin-1
     with open(caminho, "w", encoding="latin-1", errors="replace") as f:
         f.write(texto)
 
@@ -316,7 +323,9 @@ def passo_4b(ctx, args):
                      "JavaScript dentro do PHP) e nao interessam aqui.", [arq])
 
 def lint(ctx, rt, lista):
-    """Arquivos da lista que NAO passam no `php -l` do runtime, com a mensagem de erro.
+    """Arquivos da lista que NAO passam no `php -l` do runtime, com a mensagem de erro ({arquivo: mensagem}).
+    O laco roda DENTRO do container (um docker exec so): um docker exec por arquivo seria lento demais.
+    `ctx` nao e usado.
     `</dev/null` no php: sem ele o php consome o stdin do laco e o laco da uma volta so."""
     script = ('while IFS= read -r f; do m=$(php -l "$f" 2>&1 </dev/null) || '
               'printf "%s\\t%s\\n" "$f" "$(echo "$m" | grep -a -m1 -i error)"; done < ' + shlex.quote(dentro(lista)))
@@ -442,11 +451,13 @@ def passo_5b(ctx, args):
     return Resultado("OK", f"{len(alvo)} arquivos, 0 so no 8.5 ({nos_dois} falham nos dois)", "\n\n".join(det), s.values())
 
 def passo_6(ctx, args):
+    """Passo 6: scratchpad/instancia_classes.php sobre classes.txt, via comparar_harness()."""
     return comparar_harness(ctx, "6_classes", "scratchpad/instancia_classes.php",
                             "Instancia cada classe e compara uma assinatura do estado inicial. Pega construtor estilo "
                             "PHP 4 que ficou sem renomear: no PHP 8 ele nao executa, sem erro nem aviso.")
 
 def passo_6b(ctx, args):
+    """Passo 6b: scratchpad/escrita.php sobre classes.txt, via comparar_harness()."""
     return comparar_harness(ctx, "6b_escrita", "scratchpad/escrita.php",
                             "Simula um formulario enviado (um valor por campo), chama atualizacampos() e compara o que "
                             "cada campo leu. Uma linha `< campo '1003'` / `> campo 0` e a guarda `0 == \"\"` faltando: "
@@ -472,6 +483,8 @@ def passo_6c(ctx, args):
     _, out, _ = sh(["python3", "scratchpad/negada_compara.py", s["56"], s["85"], os.path.join(p, "classes.txt")])
     rel = os.path.join(p, "6c_comparacao.txt")
     gravar(rel, out)
+    # o negada_compara.py imprime "VEREDITO: PASSOU|INCOMPLETO|INVESTIGAR" e os cabecalhos "== DO LOTE: N pares"
+    # e "== FORA DO LOTE: N pares"; e deles que saem a situacao e o resumo
     m = re.search(r"VEREDITO: (\w+)", out)
     veredito = m.group(1) if m else "?"
     fora = re.search(r"== FORA DO LOTE: (\d+) pares", out)
@@ -487,6 +500,7 @@ def normalizacao_do_cmp():
     de PDF...). Lida do proprio cmp.py, e nao copiada, para o diagnostico enxergar exatamente a
     diferenca que a bateria enxergou. Devolve uma funcao bytes -> bytes."""
     fonte = ler("scratchpad/cmp.py")
+    # depende do layout do cmp.py: a lista NORM = [...] tem de vir antes de "def norm(" e nao usar nada alem de re
     bloco = fonte[fonte.index("NORM = ["): fonte.index("def norm(")]
     ns = {"re": re}
     exec(bloco, ns)
@@ -508,7 +522,7 @@ def pedir(porta, tela, sid, sess):
     t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     r = subprocess.run(["curl", "-s", "-m", "60", "-b", f"ECIDADEWINDOWMAIN={sid}", "-w", "\n@@%{http_code}",
                         f"http://localhost:{porta}/{tela}"], capture_output=True, stdin=subprocess.DEVNULL)
-    corpo, _, codigo = r.stdout.rpartition(b"\n@@")
+    corpo, _, codigo = r.stdout.rpartition(b"\n@@")   # o -w acrescenta "\n@@<codigo>" ao fim do corpo
     import time; time.sleep(1)               # o Logger e o PostgreSQL gravam logo depois da resposta
     fatais = sorted({re.sub(r"^\[[^]]*\]\s*", "", l).strip() for l in ler(LOG_PHP).split("\n")
                      if "E_ERROR" in l or "Uncaught" in l})
@@ -613,6 +627,7 @@ def passo_7(ctx, args):
         env = {"ONLY": ",".join(lista)} if lista else None
         _, out, err = sh(["python3", "scratchpad/cmp.py", sid, rx, tmp_div], timeout=8 * 3600, env=env)
         textos.append(f"##### {desc}\n{out}{err}")
+        # a ultima linha do cmp.py; se ela nao veio, o cmp.py morreu no meio e a rodada nao vale
         m = re.search(r"=== (\d+)/(\d+) identicas, (\d+) divergentes, (\d+) timeout ===", out)
         if not m:
             gravar(log, "\n".join(textos))
@@ -733,6 +748,8 @@ def relatorio(ctx, args, resultados, inicio):
 # ---------------------------------------------------------------------------------------------
 
 def main():
+    """Le os argumentos, prepara o contexto, roda os passos escolhidos em ordem (parando no primeiro com FALHA ou
+    INVESTIGAR, salvo --continuar), escreve o RELATORIO.md e sai com 1 se algum passo ficou FALHA/INVESTIGAR."""
     ap = argparse.ArgumentParser(description="Roda as verificacoes automaticas de um lote (ver o docstring do arquivo).")
     ap.add_argument("lote", help="nome do lote, usado no nome da pasta de saida (ex.: as)")
     ap.add_argument("prefixos", nargs="*", help="prefixos das telas do lote (ex.: soc hab); nao use com --tudo")
