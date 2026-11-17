@@ -39,3 +39,34 @@ renova a sessao...`); os prefixos precisam ser re-rodados.
 ## Ruido corrigido
 `roda_telas` reavalia DIVERGE 200x200: se os dois lados sao PDF e o TEXTO extraido e igual, vira IDENTICO (item 7). Nao
 mascara nada que mude texto, status HTTP ou tamanho de pagina de erro.
+
+## Complemento da rodada "antes" (resultado consolidado)
+
+Refeitos so os 57 ERRO_AMBIENTE + POSTs + relatorios (`~/rodadas/antes-complemento`, 2 h 36, restore normal, sessao renovada
+3 vezes por login HTTP; o prefixo `cad` foi refeito em 4 pedacos, `~/rodadas/antes-complemento-cad`). Painel completo:
+`~/rodadas/antes-consolidado.md`.
+
+| veredito PHP | so a rodada antes | consolidado |
+|---|---|---|
+| IDENTICO | 19 623 | 25 565 |
+| DIVERGE | 781 | 941 |
+| INCONCLUSIVO | 639 | 919 |
+| ERRO_AMBIENTE | 57 | 11 (timeouts do 5.6) |
+
+- **POSTs**: 50 de 50 verificados IDENTICO 5.6 x 8.5. **Relatorios**: 28 IDENTICO, 1 INCONCLUSIVO e os **11 PDFs que dao 500 no 8.5**
+  (`mat2_cadunidade002`, `prot2_cadcgm002`, `con2_relinstituicoes002`, `con2_conhist002`, `con2_conhistdoc002`,
+  `con2_balancrece002`, `con2_balancdespele002`, `con2_balancrecu002`, `con2_contasrecdesp002`, `con2_relrec002`, `cad2_loteam002`).
+- **+160 DIVERGE novos** (alem dos 781 ja triados; vieram dos prefixos que nao tinham rodado): `parse_str()` de 1 argumento 101,
+  500 por outras causas 39, construtor PHP4 6, 3 telas 200x200, mais os 11 PDFs. Mesmas causas dominantes de antes.
+- **Causas "outras" (39), lidas no log do 8.5**: `pg_num_rows()/pg_numrows(false)` 20 (a consulta falha e, no PHP 8, `pg_*` com `false`
+  levanta `TypeError`; no 5.6 seguia calado), `sizeof(null)` 3, `Requires N or N arguments` 2, `No PostgreSQL connection opened yet` 2,
+  atribuicao de propriedade em `null` 3, `mktime()` com string, `array_key_exists()` com `null`, `Path must not be empty`.
+- **200x200 (3)**: `pes2_contracheque_banrisul002` = so a capitalizacao do warning (`failed` x `Failed to open stream`): **ruido,
+  normalizacao corrigida** (`nucleo/normaliza.py` e `cmp.py`, com teste); `cad4_constr002` = 8.5 mostra o `<select>` que o 5.6 nao mostra
+  (real); `cad2_carlote002` = texto de SQL impresso na pagina difere (verificar).
+- **Telas que destroem a sessao** (achadas ao refazer o `cad`): `edu4_informacoesdump.php` e `cad4_geracarneiptutxt_cli.php`
+  (`session_destroy`): agora ficam fora da lista e viram INCONCLUSIVO "pulada (destroi a sessao do harness)" (`PULAR_SESSAO`).
+- **ERRO_AMBIENTE restantes (11)**: telas que estouram o timeout ja no 5.6 mesmo apos 1 retentativa: `rec2_espelhoponto002`,
+  `con4_gerenciadortarefas002`, `edu4_atualizacadastrocenso002`, `edu4_atualizacadastrocenso_2009_002`, `edu4_exportarsituacaoaluno002`,
+  `edu4_importacaoatualizacaoaluno002`, `edu4_importarcodigoinep002`, `edu4_importarcodigoinep_2009_002`,
+  `edu4_importarmatriculainep002`, `edu4_verifexportcenso002`, `mer3_mer_nutriitem002` (importacoes/processamentos longos: nao sao regressao).
