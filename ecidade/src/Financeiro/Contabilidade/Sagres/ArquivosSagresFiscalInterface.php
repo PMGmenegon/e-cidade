@@ -27,8 +27,6 @@
 
 namespace ECidade\Financeiro\Contabilidade\Sagres;
 
-use Cake\Utility\String;
-
 /**
  * Interface ArquivosSagresFiscal
  * @package ECidade\Financeiro\Orcamento\Sagres

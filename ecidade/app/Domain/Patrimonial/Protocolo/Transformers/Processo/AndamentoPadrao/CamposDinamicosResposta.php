@@ -2,8 +2,7 @@
 
 namespace App\Domain\Patrimonial\Protocolo\Transformers\Processo\AndamentoPadrao;
 
-use App\Domain\Patrimonial\Protocolo\Model\Processo\AndamentoPadrao
-\CamposDinamicosResposta as CamposDinamicosRespostaModel;
+use App\Domain\Patrimonial\Protocolo\Model\Processo\AndamentoPadrao\CamposDinamicosResposta as CamposDinamicosRespostaModel;
 
 use League\Fractal\TransformerAbstract;
 

@@ -9,8 +9,7 @@ use App\Domain\Patrimonial\Protocolo\Model\Processo\AndamentoPadrao\CamposDinami
 use App\Domain\Patrimonial\Protocolo\Model\Processo\AndamentoPadrao\CamposDinamicosResposta;
 use App\Domain\Patrimonial\Protocolo\Repository\Processo\AndamentoPadrao\CamposDinamicosRepository;
 use App\Domain\Patrimonial\Protocolo\Repository\Processo\AndamentoPadrao\CamposDinamicosRespostaRepository;
-use App\Domain\Patrimonial\Protocolo\Transformers\Processo\AndamentoPadrao
-\CamposDinamicosResposta as CamposDinamicosRespostaTransform;
+use App\Domain\Patrimonial\Protocolo\Transformers\Processo\AndamentoPadrao\CamposDinamicosResposta as CamposDinamicosRespostaTransform;
 
 use \Exception;
 

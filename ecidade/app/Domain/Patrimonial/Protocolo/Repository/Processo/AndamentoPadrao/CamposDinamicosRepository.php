@@ -3,8 +3,7 @@ namespace App\Domain\Patrimonial\Protocolo\Repository\Processo\AndamentoPadrao;
 
 use App\Domain\Core\Base\Repository\BaseRepository;
 use App\Domain\Patrimonial\Protocolo\Model\Processo\AndamentoPadrao\CamposDinamicos;
-use App\Domain\Patrimonial\Protocolo\Repository\Processo\Contracts\
-AndamentoPadrao\CamposDinamicosRepository as RepositoryInterface;
+use App\Domain\Patrimonial\Protocolo\Repository\Processo\Contracts\AndamentoPadrao\CamposDinamicosRepository as RepositoryInterface;
 
 use Exception;
 
