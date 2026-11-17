@@ -37,7 +37,7 @@ menu e login/token rodam em container **que grava** (`RN_PGOPTIONS` vazio), a te
 um vigia do banco (script local que compara `pg_stat_user_tables` antes/depois) (só `db_logsacessa*`, `db_usuariosonline` e o token do login podem mudar);
 relatório/documento roda em somente leitura, salvo quando passou pela triagem por leitura de código (aí em container que
 grava, com o vigia em volta de cada um). Em somente leitura a tela de menu não chega ao conteúdo (para no primeiro
-INSERT, medido pelo Rev2: ver critério 2). O 5.6, o 8.5 e o `docker-compose.yml` de referência não mudam.
+INSERT, medido na revisão: ver critério 2). O 5.6, o 8.5 e o `docker-compose.yml` de referência não mudam.
 
 ## Subir e derrubar
 
@@ -154,7 +154,7 @@ As 6 restantes respondem igual nos **três** runtimes (5.6, 8.5 e runtime novo, 
 | `eso1_cadastroavaliacoes002.php` | HTTP 200, só `location.href='hab1_avaliacao002.php?iModulo=1'` | a tela é um redirecionamento |
 | `sys4_criafontes.php`, `sys4_criafuncao.php` | HTTP 500, "Notificação do Sistema" | erro de sintaxe no próprio arquivo: `E_PARSE` no 5.6, `ParseError` no 8.5 (`extension/log/error.log`) — herdado |
 
-Comparação contra o somente leitura (a rodada reprovada): com `RN_PGOPTIONS` ligado, o Rev2 mediu 119 de 131 telas
+Comparação contra o somente leitura (a rodada reprovada): com `RN_PGOPTIONS` ligado, a revisão mediu 119 de 131 telas
 `cus`/`ouv` parando em `não é possível executar INSERT em uma transação de leitura-apenas`; aqui, **0 de 233**.
 
 ```bash
@@ -198,14 +198,14 @@ acusou só `db_logsacessa_202611_0`, `db_usuariosonline` e `oauth_access_tokens`
 emite token; esses dois são logins de outros agentes no mesmo intervalo (o vigia vê o banco inteiro).
 
 **Rodadas que não contam.**
-- 12/11, containers **somente leitura** (601/601 "idênticas", todas as telas de 7 prefixos): reprovada pelo Rev2 — em
+- 12/11, containers **somente leitura** (601/601 "idênticas", todas as telas de 7 prefixos): reprovada na revisão — em
   somente leitura a tela para no INSERT do registro de acesso, e a comparação era quase só do mesmo erro dos dois lados.
 - 12/11, antes da regra de 13/11: rodada gravável sem vigia, interrompida em `cem` (116/116) e `bib` (98/98). Essas telas
   (todas as do prefixo, inclusive relatórios) podem ter gravado trilha de auditoria (`db_acount*`), como mostrou a T-023;
   pela decisão do cliente, linhas já gravadas ficam.
 - 13/11, primeira rodada com vigia (`cem`, `bib`, `eso` iguais e vigia OK), interrompida: usava uma cópia local do
   `vigia-banco.sh` com `set +e`, porque o original saía `rc=1` sem saída quando a última tabela alterada era permitida
-  (defeito avisado ao Lider e corrigido por ele na ferramenta). Refeita inteira com o original — é a da tabela acima.
+  (defeito da ferramenta, corrigido nela). Refeita inteira com o original — é a da tabela acima.
 
 ## O que isto não prova
 
