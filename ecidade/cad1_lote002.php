@@ -195,7 +195,7 @@ if($replote==true){
 			  			//	db_msgbox("erro numero 14 ");
 			  				$sqlerro=true;
 			  				$erro_msg=$clloteloteam->erro_msg;
-			  				break;
+			  				exit;
 			  			}
 	     			}   
           		}
@@ -210,7 +210,7 @@ if($replote==true){
 		  				//db_msgbox("erro numero 13 ");
 		  				$sqlerro=true;
 		  				$erro_msg=$clloteloteam->erro_msg;
-		  				break;
+		  				exit;
 		  			}
 	       		}   
       		}	  
@@ -226,7 +226,7 @@ if($replote==true){
 	  			//	db_msgbox("erro numero 12 ");
 	  				$sqlerro=true;
 	  				$erro_msg=$clloteloteam->erro_msg;
-	  				break;
+	  				exit;
 	  			}  
       		}
    		}

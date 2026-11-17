@@ -193,7 +193,7 @@ if (isset ($excluir)) {
 			if ($numrowst > 0) {
 				db_msgbox(" Impossível excluir. Existe matrícula cadastrada para este lote. ");
 				$erro_msg = $cllote->erro_msg;
-				break;
+				exit;
 			} else {
 				$erro_msg = $cllote->erro_msg;
 				$sqlerro = true;
