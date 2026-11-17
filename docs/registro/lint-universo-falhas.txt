@@ -1,0 +1,231 @@
+### PHP 5.6
+./classes/db_cursoedu_ext_classe.php :: Parse error: syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or namespace (T_NAMESPACE) or \ (T_NS_SEPARATOR) line 31
+./con2_anexo13_002.php :: Fatal error: Call-time pass-by-reference has been removed line 1105
+./con2_anexo13rpps_002.php :: Fatal error: Call-time pass-by-reference has been removed line 406
+./con2_anexo14_002.php :: Fatal error: Call-time pass-by-reference has been removed line 1134
+./con2_anexo14rpps_002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1336
+./con2_anexo14rpps_002.php :: Fatal error: Call-time pass-by-reference has been removed line 1167
+./con2_anexo15ee_002.php :: Fatal error: Call-time pass-by-reference has been removed line 403
+./con2_anexo16_002.php :: Fatal error: Call-time pass-by-reference has been removed line 170
+./con2_anexo17_002.php :: Fatal error: Call-time pass-by-reference has been removed line 363
+./con2_lfrorcanexoii002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 624
+./con2_lfrorcanexoii002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 324
+./con2_lfrorcanexoii002.php :: Fatal error: Call-time pass-by-reference has been removed line 391
+./con2_lrfademrecopcreddespcap002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 346
+./con2_lrfbalorc002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 3459
+./con2_lrfbalorc002_2008.php :: Fatal error: Call-time pass-by-reference has been removed; If you would like to pass argument by reference, modify the declaration of imprime_cabec_rec(). line 713
+./con2_lrfbalorc002_2010.php :: Fatal error: Call-time pass-by-reference has been removed; If you would like to pass argument by reference, modify the declaration of imprime_cabec_rec(). line 873
+./con2_lrfbalorc002_2012.php :: Fatal error: Call-time pass-by-reference has been removed; If you would like to pass argument by reference, modify the declaration of imprime_cabec_rec(). line 882
+./con2_lrfbalorc002_2013.php :: Fatal error: Call-time pass-by-reference has been removed; If you would like to pass argument by reference, modify the declaration of imprime_cabec_rec(). line 902
+./con2_lrfbalorc002.php :: Fatal error: Call-time pass-by-reference has been removed line 3351
+./con2_lrfdemonstrativorp002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 736
+./con2_lrfdemonstrativorp002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 384
+./con2_lrfdemonstrativorp002.php :: Fatal error: Call-time pass-by-reference has been removed line 380
+./con2_lrfdemrestosapagar002.php :: Fatal error: Call-time pass-by-reference has been removed line 546
+./con2_lrfdesppessoal002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 724
+./con2_lrfdesppessoal002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 788
+./con2_lrfdesppessoal002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 797
+./con2_lrfdesppessoal002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 585
+./con2_lrfdesppessoal002_2011.php :: Fatal error: Call-time pass-by-reference has been removed line 332
+./con2_lrfdesppessoal002.php :: Fatal error: Call-time pass-by-reference has been removed line 524
+./con2_lrfdivida002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1433
+./con2_lrfdivida002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 1465
+./con2_lrfdivida002.php :: Fatal error: Call-time pass-by-reference has been removed line 883
+./con2_lrfgarantias002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 608
+./con2_lrfgarantias002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 611
+./con2_lrfgarantias002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 639
+./con2_lrfgarantias002.php :: Fatal error: Call-time pass-by-reference has been removed line 562
+./con2_lrfimpostossaude002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 1042
+./con2_lrfimpostossaude002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1220
+./con2_lrfimpostossaude002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 1295
+./con2_lrfimpostossaude002.php :: Fatal error: Call-time pass-by-reference has been removed line 1036
+./con2_lrflimites002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 377
+./con2_lrflimites002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 369
+./con2_lrflimites002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 452
+./con2_lrflimites002.php :: Fatal error: Call-time pass-by-reference has been removed line 323
+./con2_lrfmdefundeb002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1317
+./con2_lrfmdefundeb002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 1650
+./con2_lrfmdefundeb002.php :: Fatal error: Call-time pass-by-reference has been removed line 1009
+./con2_lrfnominal002.php :: Fatal error: Call-time pass-by-reference has been removed line 816
+./con2_lrfprimario002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1148
+./con2_lrfprimario002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 1137
+./con2_lrfprimario002.php :: Fatal error: Call-time pass-by-reference has been removed line 790
+./con2_lrfrecdesprpps002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 1069
+./con2_lrfrecdesprpps002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1425
+./con2_lrfrecdesprpps002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 1423
+./con2_lrfrecdesprpps002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 1624
+./con2_lrfrecdesprpps002.php :: Fatal error: Call-time pass-by-reference has been removed line 707
+./con2_lrfreceitacorrente002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 924
+./con2_lrfreceitacorrente002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 956
+./con2_lrfreceitacorrente002.php :: Fatal error: Call-time pass-by-reference has been removed line 877
+./con2_lrfresumido002_2007.php :: Fatal error: Call-time pass-by-reference has been removed line 1661
+./con2_lrfresumido002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 1870
+./con2_lrfresumido002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 1941
+./con2_lrfresumido002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 1493
+./con2_lrfresumido002.php :: Fatal error: Call-time pass-by-reference has been removed line 1541
+./con2_opercredito002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 308
+./con2_opercredito002_2009.php :: Fatal error: Call-time pass-by-reference has been removed line 454
+./con2_opercredito002_2010.php :: Fatal error: Call-time pass-by-reference has been removed line 519
+./con2_opercredito002.php :: Fatal error: Call-time pass-by-reference has been removed line 235
+./con2_varpatrimoniaisrpps_002_2008.php :: Fatal error: Call-time pass-by-reference has been removed line 324
+./dbagata/classes/phpdocwriter/5/lib/phpdocwriter/pdw_document.php :: Fatal error: Call-time pass-by-reference has been removed line 381
+./dbagata/classes/phpdocwriter/lib/phpdocwriter/pdw_document.php :: Fatal error: Call-time pass-by-reference has been removed line 381
+./forms/db_frmcronogramabasereceita.php :: Parse error: syntax error, unexpected 'db_input' (T_STRING) line 62
+./forms/db_frmorcprogramaorgao.php :: Parse error: syntax error, unexpected 'db_input' (T_STRING) line 84
+./forms/db_frmorcprojativsubprojeto.php :: Parse error: syntax error, unexpected 'db_input' (T_STRING) line 62
+./forms/db_frmppadotacao.php :: Parse error: syntax error, unexpected 'db_input' (T_STRING) line 85
+./forms/db_frmrhlocaltrabcustoplano.php :: Parse error: syntax error, unexpected 'db_input' (T_STRING) line 77
+./func_calendario_atendimento_lembrete.php :: Parse error: syntax error, unexpected '<' line 50
+./func_calendario_atendimento_relatorio.php :: Parse error: syntax error, unexpected '<' line 151
+./func_issarquivoretencaodisarq.php :: Parse error: syntax error, unexpected ';' line 33
+./lab1_lab_labresp002.php :: Parse error: syntax error, unexpected '=' line 69
+./libs/jpgraph/jpgraph_gantt.php :: Fatal error: Cannot redeclare GanttLink::$iArrowType line 3390
+./mat4_entratransfauto001.php :: Fatal error: Call-time pass-by-reference has been removed line 177
+./mer1_mer_desper_und003.php :: Parse error: syntax error, unexpected end of file line 174
+./pes2_araemitearqbanco002.php :: Fatal error: Call-time pass-by-reference has been removed line 200
+./pes2_arrcontramatricial001.php :: Fatal error: Call-time pass-by-reference has been removed line 447
+./pes2_arrcontramatricial002.php :: Fatal error: Call-time pass-by-reference has been removed line 239
+./pes2_arremitearqbanco002.php :: Fatal error: Call-time pass-by-reference has been removed line 224
+./pes2_carcontramatricial002.php :: Fatal error: Call-time pass-by-reference has been removed line 238
+./pes2_emitearqbancocnab240_002.php :: Fatal error: Call-time pass-by-reference has been removed line 204
+./pes2_emitebb200lay002.php :: Fatal error: Call-time pass-by-reference has been removed line 134
+./pes2_mppiemitearqbanco002.php :: Fatal error: Call-time pass-by-reference has been removed line 253
+./pes2_osocontramatricial002.php :: Fatal error: Call-time pass-by-reference has been removed line 240
+./src/Patrimonial/Protocolo/Parametros/MensageriaProcesso.php :: Parse error: syntax error, unexpected end of file line 1
+./src/Saude/Agendamento/Exame/Cota/Mensal/Municipio/Interface.php :: Parse error: syntax error, unexpected 'Interface' (T_INTERFACE), expecting identifier (T_STRING) line 29
+./src/Saude/Agendamento/Exame/Cota/Mensal/Prestador/Interface.php :: Parse error: syntax error, unexpected 'Interface' (T_INTERFACE), expecting identifier (T_STRING) line 29
+./sys4_criafontes_geral.php :: Parse error: syntax error, unexpected ')' line 154
+./sys4_criafontes.php :: Parse error: syntax error, unexpected ')' line 155
+./sys4_criafuncao_geral.php :: Parse error: syntax error, unexpected ')' line 135
+./sys4_criafuncao.php :: Parse error: syntax error, unexpected ')' line 175
+./sys4_geradebitos002.php :: Parse error: syntax error, unexpected 'db_log' (T_STRING) line 76
+./sys4_processa008.php :: Parse error: syntax error, unexpected ')' line 749
+
+### PHP 8.5
+./app/Domain/Patrimonial/Protocolo/Controller/Processo/AndamentoPadrao/CamposDinamicosController.php :: Parse error: syntax error, unexpected fully qualified name "\CamposDinamicos", expecting "," or ";" line 11
+./app/Domain/Patrimonial/Protocolo/Controller/Processo/AndamentoPadrao/CamposDinamicosRespostaController.php :: Parse error: syntax error, unexpected fully qualified name "\CamposDinamicosResposta", expecting "," or ";" line 13
+./app/Domain/Patrimonial/Protocolo/Repository/Processo/AndamentoPadrao/CamposDinamicosRepository.php :: Parse error: syntax error, unexpected namespaced name "AndamentoPadrao\CamposDinamico...", expecting "{" line 7
+./app/Domain/Patrimonial/Protocolo/Repository/Processo/AndamentoPadrao/CamposDinamicosRespostaRepository.php :: Parse error: syntax error, unexpected namespaced name "AndamentoPadrao\CamposDinamico...", expecting "{" line 7
+./app/Domain/Patrimonial/Protocolo/Transformers/Processo/AndamentoPadrao/CamposDinamicosResposta.php :: Parse error: syntax error, unexpected fully qualified name "\CamposDinamicosResposta", expecting "," or ";" line 6
+./cad1_lote002.php :: Fatal error: 'break' not in the 'loop' or 'switch' context line 198
+./cad1_lote003.php :: Fatal error: 'break' not in the 'loop' or 'switch' context line 196
+./calculoiptu.php :: Parse error: syntax error, unexpected token "[", expecting "," or ";" line 65
+./calculoissqnfixo.php :: Parse error: syntax error, unexpected token "[", expecting "," or ";" line 130
+./classes/db_cursoedu_ext_classe.php :: Parse error: syntax error, unexpected token "class" line 31
+./con1_contrib007.php :: Fatal error: 'break' not in the 'loop' or 'switch' context line 53
+./con2_anexo13_002.php :: Parse error: syntax error, unexpected token "&" line 1105
+./con2_anexo13rpps_002.php :: Parse error: syntax error, unexpected token "&" line 406
+./con2_anexo14_002.php :: Parse error: syntax error, unexpected token "&" line 1134
+./con2_anexo14rpps_002_2008.php :: Parse error: syntax error, unexpected token "&" line 1336
+./con2_anexo14rpps_002.php :: Parse error: syntax error, unexpected token "&" line 1167
+./con2_anexo15ee_002.php :: Parse error: syntax error, unexpected token "&" line 403
+./con2_anexo16_002.php :: Parse error: syntax error, unexpected token "&" line 170
+./con2_anexo17_002.php :: Parse error: syntax error, unexpected token "&" line 363
+./con2_lfrorcanexoii002_2007.php :: Parse error: syntax error, unexpected token "&" line 624
+./con2_lfrorcanexoii002_2008.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 324
+./con2_lfrorcanexoii002.php :: Parse error: syntax error, unexpected token "&" line 391
+./con2_lrfademrecopcreddespcap002_2010.php :: Parse error: syntax error, unexpected token "&" line 346
+./con2_lrfbalorc002_2007.php :: Parse error: syntax error, unexpected token "&" line 3459
+./con2_lrfbalorc002_2008.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 713
+./con2_lrfbalorc002_2010.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 873
+./con2_lrfbalorc002_2012.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 882
+./con2_lrfbalorc002_2013.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 902
+./con2_lrfbalorc002.php :: Parse error: syntax error, unexpected token "&" line 3351
+./con2_lrfdemonstrativorp002_2007.php :: Parse error: syntax error, unexpected token "&" line 736
+./con2_lrfdemonstrativorp002_2008.php :: Parse error: syntax error, unexpected token "&" line 384
+./con2_lrfdemonstrativorp002.php :: Parse error: syntax error, unexpected token "&" line 380
+./con2_lrfdemrestosapagar002.php :: Parse error: syntax error, unexpected token "&" line 546
+./con2_lrfdesppessoal002_2007.php :: Parse error: syntax error, unexpected token "&" line 724
+./con2_lrfdesppessoal002_2008.php :: Parse error: syntax error, unexpected token "&" line 788
+./con2_lrfdesppessoal002_2009.php :: Parse error: syntax error, unexpected token "&" line 797
+./con2_lrfdesppessoal002_2010.php :: Parse error: syntax error, unexpected token "&" line 585
+./con2_lrfdesppessoal002_2011.php :: Parse error: syntax error, unexpected token "&" line 332
+./con2_lrfdesppessoal002.php :: Parse error: syntax error, unexpected token "&" line 524
+./con2_lrfdivida002_2008.php :: Parse error: syntax error, unexpected token "&" line 1433
+./con2_lrfdivida002_2009.php :: Parse error: syntax error, unexpected token "&" line 1465
+./con2_lrfdivida002.php :: Parse error: syntax error, unexpected token "&" line 883
+./con2_lrfgarantias002_2008.php :: Parse error: syntax error, unexpected token "&" line 608
+./con2_lrfgarantias002_2009.php :: Parse error: syntax error, unexpected token "&" line 611
+./con2_lrfgarantias002_2010.php :: Parse error: syntax error, unexpected token "&" line 639
+./con2_lrfgarantias002.php :: Parse error: syntax error, unexpected token "&" line 562
+./con2_lrfimpostossaude002_2007.php :: Parse error: syntax error, unexpected token "&" line 1042
+./con2_lrfimpostossaude002_2008.php :: Parse error: syntax error, unexpected token "&" line 1220
+./con2_lrfimpostossaude002_2009.php :: Parse error: syntax error, unexpected token "&" line 1295
+./con2_lrfimpostossaude002.php :: Parse error: syntax error, unexpected token "&" line 1036
+./con2_lrflimites002_2008.php :: Parse error: syntax error, unexpected token "&" line 377
+./con2_lrflimites002_2009.php :: Parse error: syntax error, unexpected token "&" line 369
+./con2_lrflimites002_2010.php :: Parse error: syntax error, unexpected token "&" line 452
+./con2_lrflimites002.php :: Parse error: syntax error, unexpected token "&" line 323
+./con2_lrfmdefundeb002_2008.php :: Parse error: syntax error, unexpected token "&" line 1317
+./con2_lrfmdefundeb002_2009.php :: Parse error: syntax error, unexpected token "&" line 1650
+./con2_lrfmdefundeb002.php :: Parse error: syntax error, unexpected token "&" line 1009
+./con2_lrfnominal002.php :: Parse error: syntax error, unexpected token "&" line 816
+./con2_lrfprimario002_2008.php :: Parse error: syntax error, unexpected token "&" line 1148
+./con2_lrfprimario002_2010.php :: Parse error: syntax error, unexpected token "&" line 1137
+./con2_lrfprimario002.php :: Parse error: syntax error, unexpected token "&" line 790
+./con2_lrfrecdesprpps002_2007.php :: Parse error: syntax error, unexpected token "&" line 1069
+./con2_lrfrecdesprpps002_2008.php :: Parse error: syntax error, unexpected token "&" line 1425
+./con2_lrfrecdesprpps002_2009.php :: Parse error: syntax error, unexpected token "&" line 1423
+./con2_lrfrecdesprpps002_2010.php :: Parse error: syntax error, unexpected token "&" line 1624
+./con2_lrfrecdesprpps002.php :: Parse error: syntax error, unexpected token "&" line 707
+./con2_lrfreceitacorrente002_2008.php :: Parse error: syntax error, unexpected token "&" line 924
+./con2_lrfreceitacorrente002_2009.php :: Parse error: syntax error, unexpected token "&" line 956
+./con2_lrfreceitacorrente002.php :: Parse error: syntax error, unexpected token "&" line 877
+./con2_lrfresumido002_2007.php :: Parse error: syntax error, unexpected token "&" line 1661
+./con2_lrfresumido002_2008.php :: Parse error: syntax error, unexpected token "&" line 1870
+./con2_lrfresumido002_2009.php :: Parse error: syntax error, unexpected token "&" line 1941
+./con2_lrfresumido002_2010.php :: Parse error: syntax error, unexpected token "&" line 1493
+./con2_lrfresumido002.php :: Parse error: syntax error, unexpected token "&" line 1541
+./con2_opercredito002_2008.php :: Parse error: syntax error, unexpected token "&" line 308
+./con2_opercredito002_2009.php :: Parse error: syntax error, unexpected token "&" line 454
+./con2_opercredito002_2010.php :: Parse error: syntax error, unexpected token "&" line 519
+./con2_opercredito002.php :: Parse error: syntax error, unexpected token "&" line 235
+./con2_varpatrimoniaisrpps_002_2008.php :: Parse error: syntax error, unexpected token "&" line 324
+./dbagata/classes/phpdocwriter/5/lib/phpdocwriter/pdw_document.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 381
+./dbagata/classes/phpdocwriter/lib/phpdocwriter/pdw_document.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 381
+./dbforms/db_virafolha.php :: Fatal error: 'break' not in the 'loop' or 'switch' context line 1058
+./duploscgs.php :: Parse error: syntax error, unexpected token "[", expecting "," or ";" line 483
+./duplos.php :: Parse error: syntax error, unexpected token "[", expecting "," or ";" line 1473
+./ext/php/Michelf/MarkdownExtra.php :: Parse error: syntax error, unexpected token "{" line 163
+./ext/php/Michelf/Markdown.php :: Parse error: syntax error, unexpected token "{" line 800
+./forms/db_frmcronogramabasereceita.php :: Parse error: syntax error, unexpected identifier "db_input" line 62
+./forms/db_frmorcprogramaorgao.php :: Parse error: syntax error, unexpected identifier "db_input" line 84
+./forms/db_frmorcprojativsubprojeto.php :: Parse error: syntax error, unexpected identifier "db_input" line 62
+./forms/db_frmppadotacao.php :: Parse error: syntax error, unexpected identifier "db_input" line 85
+./forms/db_frmrhlocaltrabcustoplano.php :: Parse error: syntax error, unexpected identifier "db_input" line 77
+./fpdf151/impmodelos/mod_imprime10.php :: Parse error: syntax error, unexpected token "{" line 415
+./fpdf151/impmodelos/mod_imprime12.php :: Parse error: syntax error, unexpected token "{" line 203
+./fpdf151/impmodelos/mod_imprime1333.php :: Parse error: syntax error, unexpected token "{" line 602
+./fpdf151/impmodelos/mod_imprime13.php :: Parse error: syntax error, unexpected token "{" line 579
+./func_calendario_atendimento_lembrete.php :: Parse error: syntax error, unexpected token "<", expecting end of file line 50
+./func_calendario_atendimento_relatorio.php :: Parse error: syntax error, unexpected token "<", expecting end of file line 151
+./func_issarquivoretencaodisarq.php :: Parse error: syntax error, unexpected token ";" line 33
+./integracao_externa/auditoria/auditoria_migracao_cursor.php :: Parse error: Invalid numeric literal line 271
+./integracao_externa/gissonline/iss4_gissonline002.php :: Parse error: syntax error, unexpected token "{" line 1767
+./lab1_lab_labresp002.php :: Parse error: syntax error, unexpected token "=" line 69
+./libs/jpgraph/jpgraph_gantt.php :: Fatal error: Declaration of TextPropertyBelow::GetColWidth($aImg, $margin) must be compatible with TextProperty::GetColWidth($aImg, $aMargin = 0) line 3260
+./libs/jpgraph/jpgraph_pie.php :: Fatal error: Declaration of PiePlotC::Stroke($img, $aaoption = 0) must be compatible with PiePlot::Stroke(&$img, $aaoption = 0) line 686
+./libs/jpgraph/jpgraph_radar.php :: Parse error: syntax error, unexpected token ";", expecting "->" or "?->" or "[" line 430
+./mat4_entratransfauto001.php :: Parse error: syntax error, unexpected token "&", expecting ")" line 177
+./mer1_mer_desper_und003.php :: Parse error: Unclosed '{' on line 57 line 174
+./pes2_araemitearqbanco002.php :: Parse error: syntax error, unexpected token "&" line 200
+./pes2_arrcontramatricial001.php :: Parse error: syntax error, unexpected token "&" line 447
+./pes2_arrcontramatricial002.php :: Parse error: syntax error, unexpected token "&" line 239
+./pes2_arremitearqbanco002.php :: Parse error: syntax error, unexpected token "&" line 224
+./pes2_carcontramatricial002.php :: Parse error: syntax error, unexpected token "&" line 238
+./pes2_emitearqbancocnab240_002.php :: Parse error: syntax error, unexpected token "&" line 204
+./pes2_emitebb200lay002.php :: Parse error: syntax error, unexpected token "&" line 134
+./pes2_mppiemitearqbanco002.php :: Parse error: syntax error, unexpected token "&" line 253
+./pes2_osocontramatricial002.php :: Parse error: syntax error, unexpected token "&" line 240
+./pro4_canarquiv002.php :: Fatal error: 'break' not in the 'loop' or 'switch' context line 118
+./securimage/securimage.php :: Parse error: syntax error, unexpected token "{" line 1915
+./securimage/WavFile.php :: Parse error: syntax error, unexpected token "{" line 1555
+./src/Financeiro/Contabilidade/Sagres/ArquivosSagresFiscalInterface.php :: Fatal error: Cannot use Cake\Utility\String as String because 'String' is a special class name line 30
+./src/Saude/Agendamento/Exame/Cota/Mensal/Municipio/Interface.php :: Parse error: syntax error, unexpected token "interface", expecting identifier line 29
+./src/Saude/Agendamento/Exame/Cota/Mensal/Prestador/Interface.php :: Parse error: syntax error, unexpected token "interface", expecting identifier line 29
+./sys4_criafontes_geral.php :: Parse error: Unclosed '{' on line 149 does not match ')' line 154
+./sys4_criafontes.php :: Parse error: Unclosed '{' on line 150 does not match ')' line 155
+./sys4_criafuncao_geral.php :: Parse error: Unclosed '{' on line 129 does not match ')' line 135
+./sys4_criafuncao.php :: Parse error: Unclosed '{' on line 169 does not match ')' line 175
+./sys4_geradebitos002.php :: Parse error: syntax error, unexpected identifier "db_log" line 76
+./sys4_processa008.php :: Parse error: Unclosed '{' on line 747 does not match ')' line 749
