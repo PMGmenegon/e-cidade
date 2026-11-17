@@ -1,0 +1,2 @@
+200 text/html; charset=ISO-8859-1
+<script>location.href='db_erros.php?fechar=true&db_erro=Undefined property: stdClass::$pessoal'</script>

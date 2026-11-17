@@ -1,0 +1,16 @@
+# nome <TAB> caminho?consulta  (executado com DB_anousu=2018; periodo 14 = 1o quadrimestre; instituicao 1 = PREFEITURA)
+# Os 5 relatorios que sobem o kernel HTTP do Laravel dentro da pagina. Para cada um: sem parametros e com os
+# parametros que a tela de filtro oferece. A base de exemplo nao tem dados contabeis: as respostas sao as mensagens de erro/validacao
+# que o proprio relatorio devolve DEPOIS de subir o kernel (ver docs/registro/relatorios-kernel-linha-de-base.md).
+lrfdivida_sem_param	con2_lrfdivida002_2018.php
+lrfdivida_periodo	con2_lrfdivida002_2018.php?periodo=14&db_selinstit=1
+lrfgarantias_sem_param	con2_lrfgarantias002_2018.php
+lrfgarantias_periodo	con2_lrfgarantias002_2018.php?periodo=14&db_selinstit=1
+opercredito_sem_param	con2_opercredito002_2018.php
+opercredito_periodo	con2_opercredito002_2018.php?periodo=14&db_selinstit=1
+anexovirgf_sem_param	con2_anexovirgf_002.php
+anexovirgf_periodo	con2_anexovirgf_002.php?periodo=14&db_selinstit=1
+anexovirgf_periodo_rcl	con2_anexovirgf_002.php?periodo=14&db_selinstit=1&rcl=1
+lrfresumido_balorc	con2_lrfresumido002_2018.php?db_selinstit=1&bimestre=1&emite_balorc=1&emite_desp_funcsub=0&emite_rcl=0&emite_rec_desp=0&emite_mde=0&emite_resultado=0&emite_rp=0&emite_saude=0&emite_oper=0&emite_proj=0&emite_alienacao=0&emite_ppp=0
+# FORA (lacuna): con2_lrfresumido002_2018.php sem emite_* gera o PDF e REGRAVA orcparamseqfiltropadrao (delete+insert dos filtros padrao,
+# com trilha em db_acount*): so pode rodar em banco descartavel. Ver o registro.

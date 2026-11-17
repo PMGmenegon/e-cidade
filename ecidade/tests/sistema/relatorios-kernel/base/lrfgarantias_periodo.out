@@ -1,0 +1,2 @@
+200 text/html; charset=ISO-8859-1
+Erro:(27) inserindo arquivo em db_usuariosonline: ERRO:  não é possível executar INSERT em uma transação de leitura-apenas
