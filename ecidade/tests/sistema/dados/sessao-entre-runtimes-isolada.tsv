@@ -1,0 +1,23 @@
+cenario	passo	http	redireciona	logado	tamanho
+login 56, controle no 56	sau2_cgsduplos001.php@56	200	-	SIM	271
+login 56, controle no 56	cai3_gerfinanc001.php@56	200	-	SIM	271
+login 56, controle no 56	pro4_canarquiv001.php@56	200	-	SIM	271
+login 56, mesmo cookie no 85	sau2_cgsduplos001.php@85	200	-	NAO	66
+login 56, mesmo cookie no 85	cai3_gerfinanc001.php@85	200	-	NAO	66
+login 56, mesmo cookie no 85	pro4_canarquiv001.php@85	200	-	NAO	66
+sem cookie no 85	sau2_cgsduplos001.php@85	200	-	NAO	66
+sem cookie no 85	cai3_gerfinanc001.php@85	200	-	NAO	66
+sem cookie no 85	pro4_canarquiv001.php@85	200	-	NAO	66
+login 85, controle no 85	sau2_cgsduplos001.php@85	200	-	SIM	271
+login 85, controle no 85	cai3_gerfinanc001.php@85	200	-	SIM	271
+login 85, controle no 85	pro4_canarquiv001.php@85	200	-	SIM	271
+login 85, mesmo cookie no 56	sau2_cgsduplos001.php@56	200	-	NAO	66
+login 85, mesmo cookie no 56	cai3_gerfinanc001.php@56	200	-	NAO	66
+login 85, mesmo cookie no 56	pro4_canarquiv001.php@56	200	-	NAO	66
+sem cookie no 56	sau2_cgsduplos001.php@56	200	-	NAO	66
+sem cookie no 56	cai3_gerfinanc001.php@56	200	-	NAO	66
+sem cookie no 56	pro4_canarquiv001.php@56	200	-	NAO	66
+token	emitir no 56	200	-	emitiu	-
+token	token do 56 usado no 56	200	-	-	-
+token	token do 56 usado no 85	500	-	-	-
+token	emitir no 85	500	-	nao-emitiu	-
