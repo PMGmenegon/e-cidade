@@ -1,0 +1,25 @@
+# rota<TAB>motivo. Gerado de get-classificacao.tsv (classifica-get.php): GET classificadas 'duvidosa' ficam fora da cobertura (T-012).
+/v4/api/assinador/obter-arquivo-base64/{eid}	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/assinantes	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/documentos-assinar/assinante	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/documentos-assinar/documento/{file_id}/assinado-por	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/documentos-assinar/documento/{file_id}/assinantes	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/documentos-assinar/{file_id}	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/usuario/assinantes	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/configuracao/usuario/{idUsuario}/assinantes	grava/duvidosa: verbo "assin" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/{tipoPlano}/{origem}/{exercicio}	grava/duvidosa: verbo "emitir" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/{tipo}/{exercicio}	grava/duvidosa: verbo "emitir" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/despesa/{estrutural}/{exercicio}	grava/duvidosa: verbo "exclu" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/receita/{estrutural}/{exercicio}	grava/duvidosa: verbo "exclu" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/pcasp/{estrutural}/{exercicio}	grava/duvidosa: verbo "exclu" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/contabilidade/procedimento/encerramento-periodo-contabil/{instituicao}	grava/duvidosa: verbo "encerr" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/orcamento/cadastro/recursos/inativar/{exercicio}	grava/duvidosa: verbo "inativar" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/tesouraria/processar	grava/duvidosa: verbo "processar" na rota; corpo sem escrita direta, delega a servico
+/v4/api/financeiro/tesouraria/processar/{processar}	grava/duvidosa: acao nao localizavel (App\Domain\Financeiro\Tesouraria\Controller\ProcessarArquivoTefController@show)
+/v4/api/recursos-humanos/pessoal/jetom/funcao/all	grava/duvidosa: acao nao localizavel (\App\Domain\RecursosHumanos\Pessoal\Controller\Jetom\FuncaoController@all)
+/v4/api/recursos-humanos/pessoal/jetom/funcao/find	grava/duvidosa: acao nao localizavel (\App\Domain\RecursosHumanos\Pessoal\Controller\Jetom\FuncaoController@find)
+/v4/api/recursos-humanos/pessoal/jetom/importar	grava/duvidosa: acao nao localizavel (\App\Domain\RecursosHumanos\Pessoal\Controller\Jetom\ArquivoPontoController@index)
+/v4/api/recursos-humanos/pessoal/jetom/importar/{importar}	grava/duvidosa: acao nao localizavel (\App\Domain\RecursosHumanos\Pessoal\Controller\Jetom\ArquivoPontoController@show)
+/v4/api/saude/ambulatorial/cid	grava/duvidosa: acao nao localizavel (Closure)
+/v4/api/user	grava/duvidosa: acao nao localizavel (Closure)
+/v4/oauth/authorize	grava/duvidosa: $request->session()->put('authRequest', $authRequest);

@@ -1,0 +1,36 @@
+# classe	arquivo	motivo
+kernel	con2_anexovirgf_002.php	sobe o kernel HTTP do Laravel dentro da pagina (require bootstrap/app.php); so roda no 5.6, nenhuma rota /v4 a comparar
+kernel	con2_lrfdivida002_2018.php	sobe o kernel HTTP do Laravel dentro da pagina (require bootstrap/app.php); so roda no 5.6, nenhuma rota /v4 a comparar
+kernel	con2_lrfgarantias002_2018.php	sobe o kernel HTTP do Laravel dentro da pagina (require bootstrap/app.php); so roda no 5.6, nenhuma rota /v4 a comparar
+kernel	con2_lrfresumido002_2018.php	sobe o kernel HTTP do Laravel dentro da pagina (require bootstrap/app.php); so roda no 5.6, nenhuma rota /v4 a comparar
+kernel	con2_opercredito002_2018.php	sobe o kernel HTTP do Laravel dentro da pagina (require bootstrap/app.php); so roda no 5.6, nenhuma rota /v4 a comparar
+v4-js	api/V1/Middleware/Session/MenuAcessadoSessionMiddleware.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	cai1_pix002.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	con4_ecidadeinfo.RPC.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	edu1_atividadecomplementarespecial001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	efd4_efdreinfconfiguracao001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	forms/db_frmarretipo002.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	forms/db_frmdb_bancos.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	lic4_integracaocomprasbr.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes3_consvantagemconf002.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes4_importacaoponto001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes4_jetomcomissao.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes4_jetomfuncao.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes4_jetomprocessamento.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pes4_jetomsessao.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro3_consultaprocesso002.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro3_listamovimentacoesprocesso.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro3_visualizardocumentos.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro4_andamento_processo.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro4_processo_externo.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	pro4_processo_recadastramento_externo.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	rec3_concultarconsvantagem001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	rec3_consvantagem001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	rec3_consvantagemdata001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	rec3_gerarconcport001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	rec3_relatorioconcessao001.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	scripts/classes/configuracao/DBViewAssinaturaDigital.js	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	scripts/classes/patrimonio/ouvidoria/processoeletronico/DBViewCamposDinamicosAndamentoPadrao.js	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	scripts/classes/recursoshumanos/concessaodireitos/script.js	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	scripts/session.js	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
+v4-js	templates/template_login_e-cidade.php	chama /v4 por JavaScript/XHR: exige navegador (sessao + DOM), nao ha como exercitar por linha de comando
