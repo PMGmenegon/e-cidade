@@ -148,7 +148,7 @@ $this->objpdf->Setfont('Arial', '', 6);
  * ao invés de termos vários \n ou \r, teremos apenas um \n
  */
 $Sresumo = "";
-$aResumo = array_unique(split("[\n\r]", $this->Sresumo));
+$aResumo = array_unique(preg_split("/[\n\r]/", $this->Sresumo));
 $Sresumo = implode("\n", $aResumo);
 $this->Sresumo = $Sresumo;
   $iSomaHeight = 0;
