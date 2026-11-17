@@ -1,0 +1,70 @@
+# Runtime NOVO (PHP 8.5) com vendor/, bootstrap/cache e storage/ PROPRIOS -- nao substitui nenhum outro compose.
+#
+# Por que existe: o 5.6 e o 8.5 montam o mesmo ecidade/vendor; atualizar o Laravel ali derruba o 5.6 (nenhuma
+# versao do Laravel roda nos dois PHPs; ver docs/registro/laravel.md, "vendor proprio do 8.5"). Este runtime monta
+# o MESMO codigo, mas com tres pastas sobrepostas so nele, tiradas de $RN_DIR (fora da arvore versionada):
+#
+#   $RN_DIR/vendor           -> /var/www/html/vendor           (o vendor do Laravel novo; hoje: copia do atual)
+#   $RN_DIR/bootstrap-cache  -> /var/www/html/bootstrap/cache  (o Laravel novo grava cache em outro formato)
+#   $RN_DIR/storage          -> /var/www/html/storage          (logs/cache/views do Laravel novo)
+#
+# As chaves OAuth NAO sao copiadas: os dois arquivos de ecidade/storage sao montados somente leitura por cima do
+# storage sobreposto. A configuracao local (.env, libs/db_conn.php, config/*.php) vem do proprio codigo montado.
+#
+# Preparar $RN_DIR (copia o vendor atual, cria storage/ e bootstrap-cache/):
+#   bash docker/runtime-novo/prepara.sh ecidade runtime-novo
+# Subir / derrubar (ambiente oficial: porta 8087, sessao e /tmp compartilhados com o 5.6 como o 8.5 de hoje):
+#   docker compose -f docker-compose.runtime-novo.yml up -d
+#   docker compose -f docker-compose.runtime-novo.yml down
+# Outro nome/porta/pasta (ex.: o ambiente de um agente; os volumes de sessao e /tmp precisam existir):
+#   RN_NOME=ecidade_back1_rn RN_PORTA=8112 RN_CODIGO=/caminho/ecidade RN_DIR=/caminho/runtime-novo \
+#   RN_VOL_SESSOES=meu_vol_sessoes RN_VOL_TMP=meu_vol_tmp \
+#   docker compose -p ecidade_back1_rn -f docker-compose.runtime-novo.yml up -d
+#
+# Requer a rede e o banco do ambiente de referencia (docker-compose.yml). Nunca use --remove-orphans.
+# Registro: docs/registro/runtime-novo.md
+
+services:
+
+  runtime_novo:
+    build:
+      context: ./docker/php85-apache
+    image: ecidade-login-php85
+    container_name: ${RN_NOME:-ecidade_runtime_novo}
+    ports:
+      - "${RN_PORTA:-8087}:80"
+    environment:
+      DB_HOST: ecidade_database
+      DB_PORT: 5432
+      DB_DATABASE: ecidade
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      # Somente leitura (regra do cliente, 13/11/2026): so para RELATORIO/documento sem triagem por leitura de codigo.
+      # Tela de menu e login/token rodam com o container que grava (padrao, vazio), a tela com o vigia-banco.sh em volta:
+      #   RN_PGOPTIONS='-c default_transaction_read_only=on'  -- igual ao SOMENTE_LEITURA=1 do sobe-ambiente.sh.
+      PGOPTIONS: ${RN_PGOPTIONS:-}
+    volumes:
+      - ${RN_CODIGO:-./ecidade}:/var/www/html/
+      - ${RN_DIR:-./runtime-novo}/vendor:/var/www/html/vendor
+      - ${RN_DIR:-./runtime-novo}/bootstrap-cache:/var/www/html/bootstrap/cache
+      - ${RN_DIR:-./runtime-novo}/storage:/var/www/html/storage
+      - ${RN_CODIGO:-./ecidade}/storage/oauth-private.key:/var/www/html/storage/oauth-private.key:ro
+      - ${RN_CODIGO:-./ecidade}/storage/oauth-public.key:/var/www/html/storage/oauth-public.key:ro
+      - sessoes:/var/lib/php/sessions
+      - tmp:/tmp
+      - ./docker/php85-apache/paridade-56.ini:/usr/local/etc/php/conf.d/zz-paridade-56.ini:ro
+    networks:
+      - ecidade
+
+networks:
+  ecidade:
+    external: true
+    name: e-cidade_ecidade
+
+volumes:
+  sessoes:
+    external: true
+    name: ${RN_VOL_SESSOES:-ecidade_sessions}
+  tmp:
+    external: true
+    name: ${RN_VOL_TMP:-ecidade_tmp}
