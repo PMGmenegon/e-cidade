@@ -1,0 +1,32 @@
+# tela	tipo(DIVERGE|TIMEOUT)	referencia	motivo
+agu1_aguaconsumo999.php	DIVERGE	docs/registro/area-tributario.md	fragmento incluido por agu1_aguaconsumo001/002/003
+agu4_cancelaleituras_classe.php	DIVERGE	docs/registro/area-tributario.md	fragmento: define cl_cancelaleituras
+bib1_emprestimo002.php	DIVERGE	docs/registro/area-educacao.md	artefato da bateria (chamada sem parametros); caminho real identico
+bib2_comprovantemodelo_80mm.php	DIVERGE	docs/registro/area-educacao.md	artefato da bateria (chamada sem parametros); caminho real identico
+bib2_comprovantemodelo_a4.php	DIVERGE	docs/registro/area-educacao.md	artefato da bateria (chamada sem parametros); caminho real identico
+cai2_receisub002.php	DIVERGE	docs/registro/area-tributario.md	quebra tambem no 5.6 (500 vazio)
+edu1_calendarioescola002.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu1_calendarioescola003.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu1_escolabase002.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu1_escolabase003.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu1_procescola002.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu1_procescola003.php	DIVERGE	docs/registro/area-educacao.md	objeto nunca instanciado; quebra tambem no 5.6
+edu4_atualizacadastrocenso002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_atualizacadastrocenso_2009_002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_exportarsituacaoaluno002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_importacaoatualizacaoaluno002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_importarcodigoinep002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_importarcodigoinep_2009_002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_importarmatriculainep002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+edu4_verifexportcenso002.php	TIMEOUT	docs/registro/area-educacao.md	laco eterno no 5.6 (feof(false)); 500 no 8.5
+fis1_sanitario004.php	DIVERGE	docs/registro/area-tributario.md	quebra nos dois (db_ancora() indefinida)
+iss4_issbasecaracteristicas001.php	DIVERGE	docs/registro/area-tributario.md	sem parametro: $oGrupo nulo; com ?q123_inscr= identica
+lab2_mapacoletaconsulta.php	DIVERGE	docs/registro/area-saude.md	caracterizada no lote da Saude
+lab4_resultadomodelo1.php	DIVERGE	docs/registro/area-saude.md	caracterizada no lote da Saude
+orc1_orcsuplem005.php	DIVERGE	docs/registro/area-financeiro.md	quebra nos dois runtimes
+orc2_orcprevmensalrec002.php	DIVERGE	docs/registro/area-financeiro.md	horario dentro do fluxo comprimido do PDF (intermitente)
+orc2_receitasDespesasPrevidenciariasServidores002.php	DIVERGE	docs/registro/area-financeiro.md	horario dentro do fluxo comprimido do PDF (intermitente)
+rec2_espelhoponto002.php	TIMEOUT	docs/registro/area-recursos-humanos.md	timeout de sempre na bateria
+sau2_bpa001.php	DIVERGE	docs/registro/area-saude.md	caracterizada no lote da Saude
+sys3_modulos002.php	DIVERGE	docs/registro/area-configuracao.md	PDF de 813 paginas; horario no rodape
+sys4_consultaXML.RPC.php	DIVERGE	docs/registro/area-configuracao.md	aberto sem sUrl: file_get_contents("") ValueError no 8
