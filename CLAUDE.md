@@ -223,11 +223,25 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `area-financeiro.md` | Financeiro (**concluída**, branch `5financeiro-migrado`): módulos, prefixos, divisão em lotes e as decisões do usuário (`cai` inteiro, `con` só pelas telas) |
 | `area-saude.md` | Saúde (**concluída**, branch `6saude-migrado`): módulos, prefixos, divisão em 7 lotes e as decisões do usuário |
 | `area-configuracao.md` | Configuração (**concluída**, branch `7configuracao-migrado`): prefixos, divisão em 3 lotes e as decisões do usuário |
+| `relatorios-kernel-linha-de-base.md` | T-023: linha de base (5.6) dos 5 relatórios que sobem o kernel do Laravel na página; módulo `ecidade/tests/sistema/relatorios-kernel/` (captura/compara), trava `SOMENTE_LEITURA=1` e o que ela esconde |
 | `dimensionamento.md` | dimensionamento das áreas restantes (13/10, 18/10, 22/10, 29/10, 30/10, 01/11 e 03/11) |
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `linha-de-base-telas.md` | linha de base das 4.569 telas de menu 5.6 x 8.5 (14/11/2026): 4.567 identicas, 2 novas caracterizadas (`con1_conrelinfo002`, `parse_str` de 1 argumento; `cai3_gerfinanc001`, copia antiga do cache do `modification()`), vigia do banco |
+| `sistema-telas.md` | camada sistema: `cmp.py` parametrizado (dois runtimes, seleção, vigia) e `divergencias_conhecidas.tsv` (T-011) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `testes-inventario.md` | inventário dos 46 arquivos de teste (5.6 × 8.5) pelo `rodar.sh`, PHPUnit 9.6 × 12.5 medido, lacunas e achados do 8.x (T-009) |
+| `testes-sistema-rotas.md` | camada sistema: rotas /v4, API V1 e login 5.6 × novo, GET só leitura (leitura dos controllers + trava SOMENTE_LEITURA=1), não cobertas e linha de base (T-012) |
+| `testes-sistema-api-v1-post.md` | API V1: POST de recibo e inscricao so nos caminhos de erro (16 casos iguais 5.6 x 8.5), caminho de sucesso como lacuna |
+| `sessao-entre-runtimes.md` | convivência de sessão 5.6 × 8.5 hoje (volume `ecidade_sessions` compartilhado; sem ele não vale), onde a sessão é guardada e token OAuth do `/v4` entre runtimes (T-032) |
+| `documentos-linha-de-base.md` | inventário das bibliotecas de documento (FPDF, dbagata, mPDF, Dompdf, PhpSpreadsheet, PhpWord, Pimaco, QR, barras), triagem dos emissores, linha de base 5.6 × 8.5 de 14 casos com vigia, divergências do vendor atual (mPDF, Dompdf, PhpSpreadsheet) e lacunas |
+| `testes-login-api-v1.md` | linha de base do login da API V1 (`POST /api/v1/auth/login`): 15 casos sem cliente válido (5.6 = 8.5); os casos com cliente válido ficam como lacuna porque gravam `api_clients` e `db_acount*` |
+| `testes-token-v4.md` | linha de base (5.6) do token `/v4`: emissão em `/v4/oauth/token`, uso na rota protegida, token adulterado/reaproveitado, `createToken` do `Client` (20 casos, 5.6 = 5.6, 8.5 = 500); lacunas: casos que dependem do ambiente, token expirado e usuário 6 × cliente pessoal 6 |
+| `suite-script.md` | script único da suíte de testes (`ecidade/tests/suite/rodar.sh`): PHPUnit por runtime em phar, camadas, relatórios, como escrever teste que roda no 5.6 e no 8.5 |
+| `telas-js.md` | bateria com navegador (Playwright + Chrome) das telas legadas que chamam `/v4/` por JavaScript, parte A (14 casos): lista do código, como rodar com o vigia, linha de base 5.6 (2 rodadas iguais) e 8.5 de hoje, pontos cegos |
+| `suite-testes.md` | linha de base da suíte (unitário + integração) nos dois runtimes, antes do upgrade do Laravel; guia para pessoas em `docs/suite-de-testes.md` |
+| `../migracao-laravel/api-v1-opcao-a.md` | T-050: opção A para a `api/V1` (Silex isolado, versões de hoje, container próprio), números da medição, o que a suíte cobre (4 GET, 16 casos de erro dos POST, 15 do login) com `SISTEMA_URL_API`, lacunas |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).

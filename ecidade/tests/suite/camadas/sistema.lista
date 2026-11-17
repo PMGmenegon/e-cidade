@@ -1,0 +1,7 @@
+# Camada de sistema (vazia): T-011/T-012 acrescentam as entradas aqui.
+# Mesmo formato de unitario.lista.
+tests/sistema/SistemaNaoCobertasTest.php|85
+tests/sistema/SistemaRotasTest.php|85
+tests/sistema/SistemaLoginTest.php|85
+tests/sistema/SistemaApiV1PostTest.php|85
+tests/sistema/SistemaLoginApiV1Test.php|85
