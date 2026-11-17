@@ -27,6 +27,7 @@
 
 namespace App\Domain\Financeiro\Planejamento\Relatorios;
 
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -134,8 +135,8 @@ class ProgramaGestaoXls
 
     private function imprimePlanejamento()
     {
-        $this->sheet->mergeCellsByColumnAndRow(1, $this->linha, 16, $this->linha);
-        $style = $this->sheet->getStyleByColumnAndRow(1, $this->linha, 1, $this->linha);
+        $this->mergeCellsByColumnAndRow(1, $this->linha, 16, $this->linha);
+        $style = $this->getStyleByColumnAndRow(1, $this->linha, 1, $this->linha);
         $this->setFontColor($style);
         $this->setBorder($style);
         $this->setBold($style);
@@ -150,10 +151,10 @@ class ProgramaGestaoXls
     {
         $columnIndexEnd = 2 + ($this->numeroExercicios);
         $coordinate = "A{$this->linha}";
-        $this->sheet->mergeCellsByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
+        $this->mergeCellsByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
 
         $this->sheet->setCellValue($coordinate, 'Programas de Gestão e Manutenção ao Estado');
-        $style = $this->sheet->getStyleByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
+        $style = $this->getStyleByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
         $this->setBold($style);
         $this->setBorder($style);
         $this->linha++;
@@ -167,17 +168,17 @@ class ProgramaGestaoXls
         $columnIndexEnd = 2 + ($this->numeroExercicios);
         $linhaInicio = $this->linha;
 
-        $this->sheet->mergeCellsByColumnAndRow(1, $this->linha, 2, $this->linha);
-        $this->sheet->mergeCellsByColumnAndRow(3, $this->linha, $columnIndexEnd, $this->linha);
-        $this->sheet->setCellValueByColumnAndRow(1, $this->linha, '1. Descrição do Programa');
-        $this->sheet->setCellValueByColumnAndRow(3, $this->linha, '1.1 Valor do programa');
+        $this->mergeCellsByColumnAndRow(1, $this->linha, 2, $this->linha);
+        $this->mergeCellsByColumnAndRow(3, $this->linha, $columnIndexEnd, $this->linha);
+        $this->setCellValueByColumnAndRow(1, $this->linha, '1. Descrição do Programa');
+        $this->setCellValueByColumnAndRow(3, $this->linha, '1.1 Valor do programa');
         $this->linha++;
 
         $colunas = array_merge(['Código', 'Título'], $this->exercicios);
         $this->adicionaColunas($colunas);
 
 
-        $style = $this->sheet->getStyleByColumnAndRow(1, $linhaInicio, $columnIndexEnd, $this->linha);
+        $style = $this->getStyleByColumnAndRow(1, $linhaInicio, $columnIndexEnd, $this->linha);
         $this->setBold($style);
         $this->setBorder($style);
         $this->setAlign($style, Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_CENTER);
@@ -199,7 +200,7 @@ class ProgramaGestaoXls
 
             foreach ($colunas as $key => $coluna) {
                 $columnIndex = $key + 1;
-                $this->sheet->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
+                $this->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
             }
             $this->linha++;
 
@@ -214,15 +215,15 @@ class ProgramaGestaoXls
     {
         $linhaInicio = $this->linha;
         //merge da celula 1.2 - Iniciativas
-        $this->sheet->mergeCellsByColumnAndRow(1, $this->linha, 2, ($this->linha + 1));
+        $this->mergeCellsByColumnAndRow(1, $this->linha, 2, ($this->linha + 1));
         //merge da celula Regionalização
-        $this->sheet->mergeCellsByColumnAndRow(3, $this->linha, 3, ($this->linha + 2));
+        $this->mergeCellsByColumnAndRow(3, $this->linha, 3, ($this->linha + 2));
         //merge da celula Produto
-        $this->sheet->mergeCellsByColumnAndRow(4, $this->linha, 4, ($this->linha + 2));
+        $this->mergeCellsByColumnAndRow(4, $this->linha, 4, ($this->linha + 2));
         //merge da celula Metas Financeiras
         $columnIndexFinalMetaFinanceira = 4 + $this->numeroExercicios;
         $columnIndexInicioMetaFinanceira = 5;
-        $this->sheet->mergeCellsByColumnAndRow(
+        $this->mergeCellsByColumnAndRow(
             $columnIndexInicioMetaFinanceira,
             $this->linha,
             $columnIndexFinalMetaFinanceira,
@@ -232,7 +233,7 @@ class ProgramaGestaoXls
         $columnIndexInicialMetaFisica = $columnIndexFinalMetaFinanceira + 1;
 
         $columnIndexFinalMetaFisica = $columnIndexFinalMetaFinanceira + ($this->numeroExercicios * 2);
-        $this->sheet->mergeCellsByColumnAndRow(
+        $this->mergeCellsByColumnAndRow(
             $columnIndexInicialMetaFisica,
             $this->linha,
             $columnIndexFinalMetaFisica,
@@ -240,38 +241,38 @@ class ProgramaGestaoXls
         );
 
         // priemira linha
-        $this->sheet->setCellValueByColumnAndRow(1, $this->linha, '1.3 Iniciativas');
-        $this->sheet->setCellValueByColumnAndRow(3, $this->linha, 'Regionalização');
-        $this->sheet->setCellValueByColumnAndRow(4, $this->linha, 'Produto');
-        $this->sheet->setCellValueByColumnAndRow($columnIndexInicioMetaFinanceira, $this->linha, 'Metas Financeiras');
-        $this->sheet->setCellValueByColumnAndRow($columnIndexInicialMetaFisica, $this->linha, 'Metas Física');
+        $this->setCellValueByColumnAndRow(1, $this->linha, '1.3 Iniciativas');
+        $this->setCellValueByColumnAndRow(3, $this->linha, 'Regionalização');
+        $this->setCellValueByColumnAndRow(4, $this->linha, 'Produto');
+        $this->setCellValueByColumnAndRow($columnIndexInicioMetaFinanceira, $this->linha, 'Metas Financeiras');
+        $this->setCellValueByColumnAndRow($columnIndexInicialMetaFisica, $this->linha, 'Metas Física');
 
         // segunda linha
         $this->linha++;
         $inicioMerge = $columnIndexInicialMetaFisica;
         foreach ($this->exercicios as $exercicio) {
-            $this->sheet->mergeCellsByColumnAndRow($inicioMerge, $this->linha, $inicioMerge + 1, $this->linha);
-            $this->sheet->setCellValueByColumnAndRow($inicioMerge, $this->linha, $exercicio);
+            $this->mergeCellsByColumnAndRow($inicioMerge, $this->linha, $inicioMerge + 1, $this->linha);
+            $this->setCellValueByColumnAndRow($inicioMerge, $this->linha, $exercicio);
             $inicioMerge += 2;
         }
 
         // terceira linha
         $this->linha++;
-        $this->sheet->setCellValueByColumnAndRow(1, $this->linha, 'Código');
-        $this->sheet->setCellValueByColumnAndRow(2, $this->linha, 'Descrição');
+        $this->setCellValueByColumnAndRow(1, $this->linha, 'Código');
+        $this->setCellValueByColumnAndRow(2, $this->linha, 'Descrição');
         $inicio = $columnIndexInicioMetaFinanceira;
         foreach ($this->exercicios as $exercicio) {
-            $this->sheet->setCellValueByColumnAndRow($inicio, $this->linha, $exercicio);
+            $this->setCellValueByColumnAndRow($inicio, $this->linha, $exercicio);
             $inicio++;
         }
         $inicio = $columnIndexInicialMetaFisica;
         foreach ($this->exercicios as $exercicio) {
-            $this->sheet->setCellValueByColumnAndRow($inicio, $this->linha, 'Unidade');
+            $this->setCellValueByColumnAndRow($inicio, $this->linha, 'Unidade');
             $inicio++;
-            $this->sheet->setCellValueByColumnAndRow($inicio, $this->linha, 'Valor');
+            $this->setCellValueByColumnAndRow($inicio, $this->linha, 'Valor');
             $inicio++;
         }
-        $style = $this->sheet->getStyleByColumnAndRow(1, $linhaInicio, $columnIndexFinalMetaFisica, $this->linha);
+        $style = $this->getStyleByColumnAndRow(1, $linhaInicio, $columnIndexFinalMetaFisica, $this->linha);
 
         $this->setBold($style);
         $this->setBorder($style);
@@ -321,7 +322,7 @@ class ProgramaGestaoXls
 
             foreach ($colunas as $key => $coluna) {
                 $columnIndex = $key + 1;
-                $this->sheet->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
+                $this->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
             }
             $this->linha++;
         }
@@ -332,10 +333,10 @@ class ProgramaGestaoXls
     {
         $columnIndexEnd = 2 + ($this->numeroExercicios);
         $coordinate = "A{$this->linha}";
-        $this->sheet->mergeCellsByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
+        $this->mergeCellsByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
         $this->sheet->setCellValue($coordinate, '1.2 Orgãos');
 
-        $style = $this->sheet->getStyleByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
+        $style = $this->getStyleByColumnAndRow(1, $this->linha, $columnIndexEnd, $this->linha);
         $this->setBold($style);
         $this->setBorder($style);
         $this->linha++;
@@ -347,8 +348,31 @@ class ProgramaGestaoXls
     {
         foreach ($colunas as $key => $coluna) {
             $columnIndex = $key + 1;
-            $this->sheet->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
+            $this->setCellValueByColumnAndRow($columnIndex, $this->linha, $coluna);
         }
+    }
+
+    /**
+     * Os metodos *ByColumnAndRow da planilha sairam do PhpSpreadsheet 2. Estes tres fazem o que os da 1.8.2 faziam:
+     * montam a coordenada com Coordinate::stringFromColumnIndex() e chamam o metodo por coordenada.
+     */
+    private function setCellValueByColumnAndRow($columnIndex, $row, $value)
+    {
+        $this->sheet->setCellValue(Coordinate::stringFromColumnIndex($columnIndex) . $row, $value);
+    }
+
+    private function mergeCellsByColumnAndRow($columnIndex1, $row1, $columnIndex2, $row2)
+    {
+        $this->sheet->mergeCells(
+            Coordinate::stringFromColumnIndex($columnIndex1) . $row1 . ':' . Coordinate::stringFromColumnIndex($columnIndex2) . $row2
+        );
+    }
+
+    private function getStyleByColumnAndRow($columnIndex1, $row1, $columnIndex2, $row2)
+    {
+        return $this->sheet->getStyle(
+            Coordinate::stringFromColumnIndex($columnIndex1) . $row1 . ':' . Coordinate::stringFromColumnIndex($columnIndex2) . $row2
+        );
     }
 
     /**

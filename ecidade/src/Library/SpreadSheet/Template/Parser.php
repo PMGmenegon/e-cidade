@@ -88,6 +88,19 @@ class Parser
         return $this->spreadsheet->getActiveSheet();
     }
 
+    /**
+     * Ultima coluna que o parser percorre: a mais alta da aba, como o getCellIterator() faz sem argumento.
+     * O PhpSpreadsheet 1.8.2 le um <col max="16384"> so ate a primeira coluna do intervalo; a 2.x em diante cria as
+     * colunas ate XFD, e percorrer 16.384 colunas criando celulas estoura a memoria (anexo12.xlsx). So nesse caso
+     * vai ate a ultima coluna com celula. Com a 1.8.2 a coluna mais alta nunca e XFD nos modelos: nada muda.
+     * @return string
+     */
+    private function ultimaColuna()
+    {
+        $coluna = $this->getActiveSheet()->getHighestColumn();
+        return $coluna === 'XFD' ? $this->getActiveSheet()->getHighestDataColumn() : $coluna;
+    }
+
     public function loadXLS($pathXls)
     {
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($pathXls);
@@ -112,7 +125,7 @@ class Parser
         $rowIterator = $this->getActiveSheet()->getRowIterator();
 
         foreach ($rowIterator as $row) {
-            $cellIterator = $row->getCellIterator();
+            $cellIterator = $row->getCellIterator('A', $this->ultimaColuna());
             $cellIterator->setIterateOnlyExistingCells(false);
 
             foreach ($cellIterator as $cell) {
@@ -144,7 +157,7 @@ class Parser
         $rowIterator = $this->getActiveSheet()->getRowIterator();
 
         foreach ($rowIterator as $row) {
-            $cellIterator = $row->getCellIterator();
+            $cellIterator = $row->getCellIterator('A', $this->ultimaColuna());
             $cellIterator->setIterateOnlyExistingCells(false);
 
             foreach ($cellIterator as $cell) {
