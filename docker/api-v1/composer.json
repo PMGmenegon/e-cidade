@@ -1,0 +1,42 @@
+{
+    "name": "dbseller/e-cidade-api-v1",
+    "description": "Dependencias so da API V1 (Silex), nas versoes de hoje (decisao k). Vendor proprio do container da API.",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/DBSeller/Session.git"
+        }
+    ],
+    "require": {
+        "cakephp/utility": "3.10.5",
+        "dbseller/legacy": "1.1.1",
+        "dbseller/session": "dev-master#f3020b4630fd29051afab65c75ffa1eec6e1f1a0",
+        "league/fractal": "0.11.0",
+        "silex/silex": "2.2.4",
+        "symfony/finder": "3.4.47",
+        "zendframework/zend-eventmanager": "2.2.10"
+    },
+    "autoload": {
+        "files": [
+            "app/Helpers/PostgresPls.php",
+            "app/Helpers/Functions.php",
+            "app/Helpers/Drive.php",
+            "app/Helpers/Orcamento/FiltrosOrcamento.php",
+            "app/Helpers/Orcamento/FuncoesOrcamento.php",
+            "app/Helpers/Planejamento/FiltrosDespesaPlanejamento.php",
+            "app/Helpers/Contabilidade/FuncoesContabilidade.php"
+        ],
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Fpdf\\": "fpdf/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}

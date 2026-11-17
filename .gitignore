@@ -3,3 +3,8 @@
 # Entrou por engano num `git add -- docker/` e foi removido por amend.
 docker/database/ecidade_base.sql
 scratchpad/__pycache__/
+
+# Runtime novo (docker-compose.runtime-novo.yml): vendor/, storage/ e bootstrap-cache/ proprios -- nunca versionar.
+/runtime-novo/
+# Vendor proprio do container da API V1 (docker/api-v1/composer.lock): gerado, nunca versionar.
+/runtime-api/
