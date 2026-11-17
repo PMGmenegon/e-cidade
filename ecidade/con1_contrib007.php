@@ -50,7 +50,7 @@ db_postmemory($HTTP_POST_VARS);
   $clcontrib->excluir($contri);
   if($clcontrib->erro_status=='0'){
     $sqlerro = true;
-     break;
+     exit;
   }
   $sqlerro=false;
   $vt=$HTTP_POST_VARS;

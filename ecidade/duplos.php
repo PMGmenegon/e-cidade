@@ -1470,33 +1470,33 @@ function db_fieldsmemory1($recordset,$indice,$formatar="",$mostravar=false) {
   $fm_numfields = pg_numfields($recordset);
   for ($i = 0; $i < $fm_numfields; $i++) {
     $matriz[$i] = pg_fieldname($recordset,$i);
-    global $$matriz[$i];
+    global ${$matriz[$i]};
     $aux = trim(pg_result($recordset,$indice,$matriz[$i]));
     if (!empty($formatar)) {
       switch (pg_fieldtype($recordset,$i)) {
       case "float8":
       case "float4":
       case "float":
-        $$matriz[$i] = number_format($aux,2,".","");
+        ${$matriz[$i]} = number_format($aux,2,".","");
         if ($mostravar==true) {
-          echo $matriz[$i]."->".$$matriz[$i]."<br>";
+          echo $matriz[$i]."->".${$matriz[$i]}."<br>";
         }
         break;
       case "date":
         if ($aux!="") {
           $data = split("-",$aux);
-          $$matriz[$i] = $data[2]."/".$data[1]."/".$data[0];
+          ${$matriz[$i]} = $data[2]."/".$data[1]."/".$data[0];
         } else {
-          $$matriz[$i] = "";
+          ${$matriz[$i]} = "";
         }
         if ($mostravar==true) {
-          echo $matriz[$i]."->".$$matriz[$i]."<br>";
+          echo $matriz[$i]."->".${$matriz[$i]}."<br>";
         }
         break;
       default:
-        $$matriz[$i] = $aux;
+        ${$matriz[$i]} = $aux;
         if ($mostravar==true) {
-          echo $matriz[$i]."->".$$matriz[$i]."<br>";
+          echo $matriz[$i]."->".${$matriz[$i]}."<br>";
         }
         break;
       }
@@ -1521,15 +1521,15 @@ case "date":
   if ($mostravar==true) {
     echo $split_data."->".$$split_data."<br>";
   }
-  $$matriz[$i] = $aux;
+  ${$matriz[$i]} = $aux;
   if ($mostravar==true) {
-    echo $matriz[$i]."->".$$matriz[$i]."<br>";
+    echo $matriz[$i]."->".${$matriz[$i]}."<br>";
   }
   break;
 default:
-  $$matriz[$i] = $aux;
+  ${$matriz[$i]} = $aux;
   if ($mostravar==true) {
-    echo $matriz[$i]."->".$$matriz[$i]."<br>";
+    echo $matriz[$i]."->".${$matriz[$i]}."<br>";
   }
   break;
     }

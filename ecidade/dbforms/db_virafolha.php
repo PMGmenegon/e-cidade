@@ -1055,7 +1055,7 @@ if (isset($desprocess) && $desprocess == "true") {
 
             $retorno = $ex->getMessage();
             $sqlerro = true;
-            break;
+            exit;
         }
     }
     flush();
