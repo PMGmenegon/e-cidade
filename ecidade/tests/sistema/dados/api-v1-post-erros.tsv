@@ -1,0 +1,17 @@
+rota	caso	status	tipo	mensagem	resultado_5.6_x_8.5
+/api/v1/tributario/recibo	corpo vazio	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	json vazio	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	json invalido	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	so id, sem hash	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	so hash, sem id	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	id nao numerico	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/tributario/recibo	cliente inexistente	500	application/json	Cliente não encontrado.	igual
+/api/v1/tributario/recibo	hash invalido, cliente existente	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	corpo vazio	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	json vazio	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	json invalido	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	so id, sem hash	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	so hash, sem id	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	id nao numerico	500	application/json	Sem permissão para acessar a API.	igual
+/api/v1/matriculaonline/inscricao	cliente inexistente	500	application/json	Cliente não encontrado.	igual
+/api/v1/matriculaonline/inscricao	hash invalido, cliente existente	500	application/json	Sem permissão para acessar a API.	igual
