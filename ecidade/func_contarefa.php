@@ -48,7 +48,7 @@ include(modification("classes/db_tarefacadsituacao_classe.php"));
 include(modification("classes/db_db_versaotarefa_classe.php"));
 include(modification("classes/db_db_depart_classe.php"));
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 
 $clrotulo      		= new rotulocampo;
 
@@ -786,7 +786,7 @@ function db_grid($sql, $leitura, $opcoes, $funcao_js,$todasprocedencias) {
   
   //cria nome da funcao com parametros
   if (isset($funcao_js) && trim($funcao_js) != "") {
-    $arrayFuncao = split("\|", $funcao_js);
+    $arrayFuncao = explode("|", $funcao_js);
     $quantidadeItemsArrayFuncao = sizeof($arrayFuncao);
   }
 
@@ -1236,7 +1236,7 @@ function db_grid($sql, $leitura, $opcoes, $funcao_js,$todasprocedencias) {
         if(strlen(strstr(pg_fieldname($result, $j), "db_")) == 0) {
           if(pg_fieldtype($result, $j) == "date") {
             if(pg_result($result, $i, $j) != "") {
-              $matriz_data = split("-", pg_result($result, $i, $j));
+              $matriz_data = explode("-", pg_result($result, $i, $j));
               $var_data = $matriz_data[2]."/".$matriz_data[1]."/".$matriz_data[0];
               $var_data = $matriz_data[2]."/".$matriz_data[1];
               $cor = "#FFFFFF";
@@ -1308,7 +1308,7 @@ function db_grid($sql, $leitura, $opcoes, $funcao_js,$todasprocedencias) {
                     } else {
                       if(pg_fieldname($result, $j) == "dl_criador" or pg_fieldname($result, $j) == "dl_envolvido") {
                         $mostrar = trim(pg_result($result, $i, $j));
-                        $mostra2 = split(" ", $mostrar);
+                        $mostra2 = explode(" ", $mostrar);
                         
                         if (sizeof($mostra2) == 0) {
                           $mostrar = "SEM CRIADOR";

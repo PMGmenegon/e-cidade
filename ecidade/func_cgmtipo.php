@@ -39,7 +39,8 @@ require_once(modification("classes/db_cgm_classe.php"));
 db_postmemory($HTTP_POST_VARS);
 
 if (!isset($pesquisar)) {
-  parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+  parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs);
+  extract($__qs);
 }
 
 $oGet = db_utils::postMemory($_GET);
@@ -63,7 +64,7 @@ if(isset($script) && !empty($script)) { ?>
   <?php
     $vals = "";
     $vir  = "";
-    $camp = split(",",$valores);
+    $camp = explode(",",$valores);
 
     for ($f = 0; $f < count($camp); $f++) {
       $vals .= $vir . "'" . $camp[$f] . "'";
@@ -78,7 +79,7 @@ exit;
 
 if (isset($testanome) && !isset($pesquisa_chave)) {
 
-  $funmat = split("\|",$funcao_js);
+  $funmat = explode("|",$funcao_js);
   $func_antes = $funmat[0];
   $valores = "";
   $camp = "";
