@@ -1,0 +1,57 @@
+# Laboratorio "Laravel 12" na porta 8087 (alvo padrao da bateria Laravel: REGRESSAO_LARAVEL_NOVO_URL).
+#
+# ESTADO HONESTO: ainda NAO existe codigo do e-Cidade em Laravel 12 (todas as branches usam
+# laravel/framework 5.4.*). Por isso o laboratorio sobe o runtime PHP 8.5 do projeto com o codigo
+# apontado por LAR12_CODIGO -- por padrao o ./ecidade atual (Laravel 5.4). Hoje ele mede, portanto,
+# "Laravel 5.4 sob PHP 8.5". Quando houver o Laravel 12 migrado, basta apontar LAR12_CODIGO para ele.
+# Ver regressao/lab/README.md.
+#
+# Uso (da raiz do repositorio):
+#   docker compose -f regressao/lab/docker-compose.lar12.yml up -d
+#   LAR12_CODIGO=/caminho/do/ecidade-laravel12 docker compose -f regressao/lab/docker-compose.lar12.yml up -d
+#   docker compose -f regressao/lab/docker-compose.lar12.yml down
+#
+# Caminhos relativos sao resolvidos a partir DESTA pasta (regressao/lab/): o padrao ../../ecidade e o
+# ./ecidade da raiz. Prefira caminho absoluto em LAR12_CODIGO.
+#
+# Requer a pilha de referencia no ar (rede e-cidade_ecidade, banco ecidade_database, volumes
+# ecidade_sessions/ecidade_tmp) e a imagem do PHP 8.5 ja construida por docker-compose.php85.yml.
+# A imagem e REUSADA (nao reconstruida): rebuild reinstalaria pacotes do apt em outras versoes e o
+# laboratorio deixaria de ter o mesmo runtime do ecidade_php85.
+
+name: ecidade-lab
+
+services:
+
+  ecidade_lar12:
+    image: ${LAR12_IMAGEM:-e-cidade-ecidade_php85}
+    pull_policy: never
+    container_name: ecidade_lar12
+    ports:
+      - "8087:80"
+    environment:
+      DB_HOST: ecidade_database
+      DB_PORT: 5432
+      DB_DATABASE: ecidade
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    volumes:
+      - ${LAR12_CODIGO:-../../ecidade}:/var/www/html/
+      # Mesmos volumes e ini do ecidade_php85 (docker-compose.php85.yml), para que a unica
+      # diferenca para ele seja o codigo montado.
+      - ecidade_sessions:/var/lib/php/sessions
+      - ecidade_tmp:/tmp
+      - ../../docker/php85-apache/paridade-56.ini:/usr/local/etc/php/conf.d/zz-paridade-56.ini:ro
+    networks:
+      - ecidade
+
+networks:
+  ecidade:
+    external: true
+    name: e-cidade_ecidade
+
+volumes:
+  ecidade_sessions:
+    external: true
+  ecidade_tmp:
+    external: true
