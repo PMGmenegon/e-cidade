@@ -168,7 +168,7 @@ if ( !$lErro ) {
 	   	  $sArquivoSxw      = "docTemplate".date("YmdHis").db_getsession("DB_id_usuario").".odt";
 	  	  $sCaminhoTemplate = "tmp/".$sArquivoSxw;
 
-	   	  $lGeraSxw 		= pg_lo_export($conn, $oArquivoSxw->db15_documento,$sCaminhoTemplate);
+	   	  try { $lGeraSxw 		= pg_lo_export($conn, $oArquivoSxw->db15_documento,$sCaminhoTemplate); } catch (\ValueError $oErroOid) { $lGeraSxw = false; }
 
 
 			$extensao = 'sxw';

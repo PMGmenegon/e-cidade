@@ -336,7 +336,8 @@ class IntegracaoContrato extends IntegracaoBase implements IItemIntegracao {
     for ($iIndice = 0; $iIndice < $iTotalDocumentos; $iIndice++) {
 
       $oDocumento       = db_utils::fieldsMemory($rsAcordoDocumentos, $iIndice);
-      if (!pg_lo_export($this->rsConexaoOrigem, $oDocumento->arquivo, ECIDADE_PATH."tmp/{$oDocumento->arquivo}.dat")) {
+      try { $bExportouDocumento = pg_lo_export($this->rsConexaoOrigem, $oDocumento->arquivo, ECIDADE_PATH."tmp/{$oDocumento->arquivo}.dat"); } catch (\ValueError $oErroOid) { $bExportouDocumento = false; }
+      if (!$bExportouDocumento) {
 
         $sErro      = pg_last_error($this->rsConexaoOrigem);
         $sMensagem  = "Erro na exportação de arquivo do e-cidade: Documento de id " . $oDocumento->id;

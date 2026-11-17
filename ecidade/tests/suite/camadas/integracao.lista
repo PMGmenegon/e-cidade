@@ -1,0 +1,6 @@
+tests/suite/integracao/DBLargeObjectLeituraTest.php
+# T-041: AgataReport, soma/variancia com celula nao numerica igual ao 5.6.
+tests/suite/dbagata/AgataReportSomaTest.php
+# T-028: pizza do jpgraph (PiePlot, PiePlotC, PiePlot3D) igual ao gabarito 5.6.
+tests/suite/jpgraph/JpgraphPizzaTest.php
+tests/suite/integracao/PgLoExportPontosTest.php

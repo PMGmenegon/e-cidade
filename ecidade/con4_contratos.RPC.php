@@ -1376,7 +1376,7 @@ switch ($oParam->exec) {
 
         // Abrindo o objeto no modo leitura "r" passando como parâmetro o OID.
         $sNomeArquivo = "tmp/{$oDocumento->getNomeArquivo()}";
-        pg_lo_export($conn, $oDocumento->getArquivo(), $sNomeArquivo);
+        try { pg_lo_export($conn, $oDocumento->getArquivo(), $sNomeArquivo); } catch (\ValueError $oErroOid) { }
         db_fim_transacao(true);
         $oRetorno->nomearquivo = $sNomeArquivo;
         // Setando Cabeçalho do browser para interpretar que o binário que será carregado é de uma foto do tipo JPEG.
@@ -1429,7 +1429,8 @@ switch ($oParam->exec) {
         }
 
         db_inicio_transacao();
-        if (pg_lo_export($membro->getArquivo(), $caminho)) {
+        try { $bExportouMembro = pg_lo_export($membro->getArquivo(), $caminho); } catch (\ValueError $oErroOid) { $bExportouMembro = false; }
+        if ($bExportouMembro) {
             header('Pragma: public');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

@@ -2742,7 +2742,7 @@ function db_logs($string = '', $codcam = 0, $chave = 0)
 
         $sql = "select nextval('db_logsacessa_codsequen_seq')";
         $result = db_query($sql);
-        $codsequen = pg_result($result, 0, 0);
+        $codsequen = $result ? pg_result($result, 0, 0) : false;
 
         // grava codigo na sessao
         db_putsession("DB_itemmenu_acessado",$item);
@@ -3732,7 +3732,7 @@ function db_buscaImagemBanco($cadban, $conn)
             // seta os dados para o boleto passando as informações do logo
             db_query($conn, "begin");
             $caminho = "tmp/" . $banco . ".jpg";
-            pg_lo_export($conn, "$db90_logo", $caminho);
+            try { pg_lo_export($conn, "$db90_logo", $caminho); } catch (\ValueError $oErroOid) { };
             db_query($conn, "commit");
 
             $arr = array(
@@ -3880,7 +3880,7 @@ function db_buscaImagemInstituicao($instit, $tipo)
         $arquivo = pg_result($rsSqlConfigArquivos, 0, "db38_arquivo");
         $caminho = "tmp/" . $arquivo . ".jpg";
         db_query($conn, "begin");
-    pg_lo_export($conn,$arquivo,$caminho);
+    try { pg_lo_export($conn,$arquivo,$caminho); } catch (\ValueError $oErroOid) { }
     db_query($conn,"commit");
     return $caminho;
   }else{

@@ -154,7 +154,7 @@ class AcordoComissaoMembro
         if($this->getNomeArquivo() != null && $this->getNomeArquivo() != "") {
         
           $sPathArquivo = "tmp/".$this->getNomeArquivo();
-          pg_lo_export($this->getArquivo(), $sPathArquivo);        
+          try { pg_lo_export($this->getArquivo(), $sPathArquivo); } catch (\ValueError $oErroOid) { }        
           $iTamanhoArquivo = file_exists($sPathArquivo)?filesize($sPathArquivo):0;
           $oDaoLicitaparam = new cl_licitaparam;
           $sSqlParametro   = $oDaoLicitaparam->sql_query(null, 'l12_limitetamanhoarquivo', '', "l12_instit=".db_getsession('DB_instit'));
