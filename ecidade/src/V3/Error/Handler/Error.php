@@ -16,15 +16,19 @@ class Error implements HandlerInterface {
 
   /**
    * Function to explicit return false and populate php_errormsg
+   * T-026: $context opcional -- o PHP 8 chama o callback do set_error_handler com 4 argumentos (o $errcontext saiu).
    */
-  public static function _handle($type, $message, $file, $line, $context) {
+  public static function _handle($type, $message, $file, $line, $context = null) {
     static::handle($type, $message, $file, $line, $context);
     return false;
   }
 
   public static function handle($type, $message, $file, $line, $context) {
 
-    $suppress = error_reporting() === 0;
+    // T-026: erro suprimido com @. No 5.6 o error_reporting() dentro do @ e 0; no PHP 8 ele mantem os bits de erro
+    // fatal (E_ERROR|E_CORE_ERROR|E_COMPILE_ERROR|E_USER_ERROR|E_RECOVERABLE_ERROR|E_PARSE = 4437). Suprimido = nenhum
+    // bit alem desses. Caso-limite: nivel posto pela aplicacao so com bits fatais (fora do @) tambem conta como suprimido.
+    $suppress = (error_reporting() & ~(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR | E_PARSE)) === 0;
 
     if ($suppress) {
       return false;

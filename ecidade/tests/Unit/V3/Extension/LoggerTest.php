@@ -4,17 +4,25 @@ namespace ECidade\V3\Extension;
 
 use \ECidade\V3\Extension\Logger;
 
-class LoggerTest extends \PHPUnit_Framework_TestCase
+class LoggerTest extends \PHPUnit\Framework\TestCase // T-026: era PHPUnit_Framework_TestCase (nao existe no PHPUnit 9)
 {
 
     protected $logger;
 
-    public function setUp()
+    /**
+     * T-026: era setUp(). O PHPUnit 9 exige setUp(): void, que nao compila no 5.6; @before existe no 5.7 e no 9.
+     * @before
+     */
+    public function preparaLogger()
     {
         $this->logger = new Logger('php://output', Logger::DEBUG);
     }
 
-    public function tearDown()
+    /**
+     * T-026: era tearDown() (mesmo motivo do preparaLogger).
+     * @after
+     */
+    public function descartaLogger()
     {
         $this->logger = null;
     }
@@ -58,11 +66,13 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
     }
 
   /**
-   * @expectedException \Exception
-   * @expectedExceptionMessage Não foi possível abrir o arquivo para escrita
+   * T-026: era @expectedException/@expectedExceptionMessage (removidos no PHPUnit 9); expectException() e
+   * expectExceptionMessage() existem no 5.7 e no 9. Mesma excecao, mesma mensagem.
    */
     public function testErrorOnNonExistingFile()
     {
+        $this->expectException('\\Exception');
+        $this->expectExceptionMessage('Não foi possível abrir o arquivo para escrita');
         $logger = new Logger('/path/to/invalid/file.txt', Logger::INFO);
     }
 }

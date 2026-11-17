@@ -32,6 +32,12 @@ class Logger {
     protected $file;
 
     /**
+     * T-026: declarada (era criada dinamicamente em setFile(); propriedade dinamica e Deprecated no PHP 8.2+)
+     * @var string
+     */
+    protected $filePath;
+
+    /**
      * @var integer
      */
     protected $verbosity = 0;
