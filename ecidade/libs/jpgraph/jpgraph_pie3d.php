@@ -24,7 +24,7 @@ class PiePlot3D extends PiePlot {
 	
 //---------------
 // CONSTRUCTOR
-    function PiePlot3d(&$data) {
+    function __construct(&$data) {
 	$this->radius = 0.5;
 	$this->data = $data;
 	$this->title = new Text("");
@@ -72,7 +72,7 @@ class PiePlot3D extends PiePlot {
 	    $this->angle = $a;
     }
 
-    function AddSliceToCSIM($i,$xc,$yc,$height,$width,$thick,$sa,$ea) {  //Slice number, ellipse centre (x,y), height, width, start angle, end angle
+    function AddSliceToCSIM($i,$xc,$yc,$height,$width,$thick,$sa=null,$ea=null) {  //Slice number, ellipse centre (x,y), height, width, start angle, end angle
 
 	$sa *= M_PI/180;
 	$ea *= M_PI/180;
@@ -754,7 +754,7 @@ class PiePlot3D extends PiePlot {
 	}
     }
 
-    function Stroke($img,$aaoption=0) {
+    function Stroke(&$img,$aaoption=0) {
 	$n = count($this->data);
 
 	// If user hasn't set the colors use the theme array

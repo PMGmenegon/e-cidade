@@ -6481,6 +6481,9 @@ DEFINE(\"USE_APPROX_COLORS\",true);
 	    // We add 2 pixels to make the Arc() better aligned with
 	    // the filled arc. 
 	    if( $GLOBALS['gd2'] ) {
+		// PHP 8 (T-028): nome de cor (string) onde o GD espera inteiro vira TypeError. No 5.6 o
+		// imagefilledarc() so emitia warning e nao desenhava; sem o if o 8.5 faz o mesmo (nao desenha).
+		if( is_numeric($this->current_color_name) )
 		imagefilledarc($this->img,$xc,$yc,2*$w,2*$h,$s,$e,$this->current_color_name,
 			       IMG_ARC_NOFILL | IMG_ARC_EDGED ) ;
 	    }
