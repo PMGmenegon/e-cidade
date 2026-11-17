@@ -223,12 +223,18 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `area-financeiro.md` | Financeiro (**concluída**, branch `5financeiro-migrado`): módulos, prefixos, divisão em lotes e as decisões do usuário (`cai` inteiro, `con` só pelas telas) |
 | `area-saude.md` | Saúde (**concluída**, branch `6saude-migrado`): módulos, prefixos, divisão em 7 lotes e as decisões do usuário |
 | `area-configuracao.md` | Configuração (**concluída**, branch `7configuracao-migrado`): prefixos, divisão em 3 lotes e as decisões do usuário |
+| `lint-universo.md` | T-003: `php -l` no universo (32.907 arquivos) em 5.6 e 8.5; 100 falham nos dois, 27 só no 8.5; o "depois" de cada tarefa de porte (T-021, T-019) |
 | `correcoes-transversais.md` | correções que valem para todas as áreas (branch `nucleo/correcoes-transversais`): cache do `modification()` versionado por engano, `pg_lo_export` na ordem antiga (14 pontos), `dbagata`, ambiente (LibreOffice) |
 | `dimensionamento.md` | dimensionamento das áreas restantes (13/10, 18/10, 22/10, 29/10, 30/10, 01/11 e 03/11) |
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `lint-universo-depois-t018.md` | T-018: os 6 arquivos que não compilavam no 8.5 (nome qualificado quebrado em 5 `use`; `use Cake\Utility\String`), correção, medidas e lacunas |
+| `auditoria-erro-igual-ao-56.md` | `db_logs()`: com o `nextval` do log de acesso falhando, o 8.5 dava 500 (`pg_result(false)`) e o 5.6 mostra a mensagem de auditoria (53 B); guarda de uma linha, teste `ro`/`rw` e medidas |
+| `pg-lo-export-oid-invalido.md` | T-027: `pg_lo_export` com OID inválido (5.6 `false`, 8.x `ValueError`) medido por valor, try/catch nos 14 pontos, 11 pontos fora do escopo, telas da amostra |
+| `handler-erro-php8.md` | T-026: handler de erro V3 e `Logger` no PHP 8 (`$context` opcional, `@` reconhecido pelos bits fatais, `$filePath` declarada), testes nos dois PHPUnit, 3 telas 5.6 × 8.5 com vigia, lacuna dos `trigger_error` |
+| `agatareport-soma.md` | T-041: `AgataReport` com célula não numérica (TypeError no 8.5, `pro1_relcgm002` dava 500): pontos do `dbagata/` com aritmética sobre célula, correção `CellNumber()` reproduzindo o 5.6, verificação |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
