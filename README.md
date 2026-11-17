@@ -155,6 +155,17 @@ sessão aberta pelo 8090 ou pelo 8080.
   ainda não foi subido.
 - **Mais detalhes do processo de migração** (estado, decisões, armadilhas): `CLAUDE.md` e `docs/registro/`.
 
+### Migração das janelas de pesquisa (`func_*.php`) — branch `feat/func-php85-migrated`
+
+Esta branch aplica a migração mecânica de `parse_str()` (1 argumento) e `split()` nos `ecidade/func_*.php` a partir da `base-php84` (`59ce71506`), mantendo a `base-php84` intocada para comparação e rollback:
+
+- **2.527 arquivos alterados** (de um total de 2.993 `func_*.php`): `2.496` apenas `parse_str()` (`parse_str(..., $__qs); extract($__qs);`), `20` com `split()` literal (`explode()`), e `11` da frente `split()` com regex (`explode()` para `\\|`, `[\|]`, `\.` e `preg_split('/[\/.-]/', ...)` para datas).
+- **463 arquivos intocados** porque já usavam `$__qs` (`253`), `parse_str()` com 2 argumentos (`71`) ou não chamavam `parse_str()`/`split()` (`139`).
+- **3 arquivos deixados fora** por já terem erro de sintaxe na própria `base-php84` (`func_calendario_atendimento_lembrete.php:50`, `func_calendario_atendimento_relatorio.php:151`, `func_issarquivoretencaodisarq.php:33`).
+- **Verificações na árvore unida:** `php -l` (`short_open_tag=1`) sem erros em PHP 5.6 e PHP 8.5 nos 2.527 arquivos, zero chamadas restantes de `split()` ou `parse_str()` de 1 argumento por tokenização, preservação de bytes/EOL/Latin-1, oráculo nativo PHP 5.6 para `split()` e amostragem HTTP diferencial no laboratório.
+
+Erros de runtime em PHP 8.5 fora dos `func_*.php` (como DAOs com construtor PHP 4, `pg_num_rows(false)` e tipagem estrita em modelos) não foram alterados nesta branch. Veja o detalhamento completo, armadilhas do parser e limites conhecidos em [docs/registro/migracao-func.md](docs/registro/migracao-func.md).
+
 ---
 
 ## 🐳 Instalação com Docker (Recomendado)
