@@ -210,6 +210,8 @@ arquivo indicado.
 
 Guias (para pessoas): `docs/migrar-um-modulo.md`, `docs/como-testamos.md`, `docs/migrar-laravel.md`,
 `docs/comparacao-tcc-referencia.md`. Procedimento executável: skill `migrar-modulo`.
+Migração do Laravel: `docs/migracao-laravel/` — **matriz de versões L12/L13 × PHP 8.4/8.5** (`matriz-versoes.md`, T-005) e **inventário do código próprio contra as quebras do 5.4 ao 13** (`inventario-codigo-proprio.md`: 599 itens dos guias de upgrade, onde o código usa cada um, 4 `Cache::put` que passam de minutos a segundos, agrupamento em 13 tarefas) e **SDK do Pix do BB com o Guzzle 7/8** (`sdk-pix-bb-guzzle13.md`: não roda só mudando a restrição; troca mínima de 26 linhas no SDK e pedidos iguais ao 5.6 contra um dublê).
+Migração do Laravel: `docs/migracao-laravel/` — **matriz de versões L12/L13 × PHP 8.4/8.5** (`matriz-versoes.md`, T-005) e **SuperClosure (`src/Task/Closure.php`) no 8.5** (`superclosure.md`: único chamador não alcança o ramo; funciona com o php-parser 4.19.5 do conjunto do 13, não muda código).
 
 Registro (o que antes ficava todo aqui), em `docs/registro/`:
 
@@ -226,8 +228,23 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `dimensionamento.md` | dimensionamento das áreas restantes (13/10, 18/10, 22/10, 29/10, 30/10, 01/11 e 03/11) |
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
-| `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`); atualização de 12/11/2026 da resolução (L12/L13 × PHP 8.4/8.5, T-005) |
+| `passport-esquema.md` | T-006: esquema atual de `oauth_*` (só leitura) e o que o Passport 12.4/13 lê e grava nele sem migration; prova em execução (13: login e `createToken` quebram, contorno sem migration) e alternativas para a decisão (a) |
+| `etiquetas-barras-qr-candidatas.md` | etiquetas Pimaco, barras Code 128 (picqer 0.2.2 -> 3.3.0) e QR (aferrandini 1.0.1) com as candidatas no 8.5: o que roda, conteudo dos codigos decodificado nas duas saidas, a barra da etiqueta que fica mais estreita e as mudancas de API |
+| `zend-eventmanager-runtime-novo.md` | T-054: `zend-eventmanager` 2.6.2 no runtime novo funciona igual ao 5.6 (trecho e 4 telas 5.6 × 8.5 × novo, vigia rc=0), só 4 `Deprecated` do `zend-stdlib` (arquivo:linha); usos no código; sem troca pelo `laminas` (medida à parte, registrada); abandonados só documentados |
+| `usos-pacotes-que-saem.md` | onde o legado usa Silex, Pimaco, Phinx, SDK Pix, mPDF 7, PhpSpreadsheet 1.8, PhpWord 0.17 e `zend-*` (arquivo:linha em `usos-pacotes-que-saem.tsv`), alcance e assunto dono |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `rector-varredura-t004.md` | T-004: Rector em dry-run fora das áreas 1–8 (20.183 arquivos): 4.090 precisam de trabalho (2.526 `func_*`), impacto medido por regra, `$$x[...]` não fiel, denylist recomendada; lista em `rector-varredura-t004-pendencias.tsv` |
+| `split-polyfill-t040.md` | T-040: `split()` no 8.5 vem do polyfill `dbseller/legacy` (`explode`): 2.309 chamadas, 41 com regex divergem em silêncio (40 ainda não servidas pelo 8.5; a do `mod_imprime11` corrigida à parte), CLI sem autoload; lista em `split-polyfill-t040-chamadas.tsv` |
+| `split-mod-imprime11.md` | T-052: `split("[\n\r]")` do resumo da Solicitação de Compra (`mod_imprime11.php`, modelo 11 do `db_impcarne`) divergia no 8.5 (polyfill `explode`); alcançável por `com2_emitesolicita002` e `pes1_rhempemitesolfolha002`; trocado por `preg_split`, igual ao 5.6 nos 6 casos |
+| `laravel-tarefas.md` | índice dos rótulos `T-0xx` citados nos registros: título, o que cada tarefa mediu ou mudou, registro e situação na integração (integrada, revertida, cancelada, fora) |
+| `inventario-branches.md` | T-017: todas as branches (locais e `origin/*`) contra `laravel/integracao` e `origin/base-php84`, classificadas; `correcoes-transversais` já integrada via T-001; comando `scratchpad/inventario_branches.sh` |
+| `varredura-variaveis-variaveis.md` | T-037: varredura por tokenizador de `$$a[..]` e formas parecidas (10 arquivos `VV`, 7 reescritas do Rector `${$a}[..]` que mudam de sentido nos dois runtimes), `str_contains`/`setcookie`; só medição |
+| `documentos-candidatas.md` | mPDF 8.3.1, PhpSpreadsheet 5.11.0 e PhpWord 1.4.0 no 8.5 contra a linha de base: xlsx igual (só metadado), docx com `<w:noWrap/>` nas células, leitura do `anexo12.xlsx` estoura a memória (coluna `XFD`), Pimaco para no picqer; mudanças de código necessárias (`ProgramaGestaoXls.php`, `Template/Parser.php`) |
+| `../migracao-laravel/compatibilidade-FrontController.md` | T-002: despacho do `FrontController.php` (`api/vN/`, `v4/`, `rest/v1/`, `app.php`) e compatibilidade dos pontos de entrada, da branch `origin/laravel-upgrade`, com correções datadas de 12/11/2026 |
+| `../migracao-laravel/silex-caminhos-e-suporte.md` | T-007: Silex 2 / `api/V1` (7 rotas, 33 arquivos), manter × atualizar × substituir, versão a versão × salto direto, datas de suporte Laravel 12/13 e PHP 8.4/8.5 (12/11/2026) |
+| `../migracao-laravel/api-v1-silex-85.md` | T-033: API V1 (Silex) no 8.5 com `vendor/` só dela (Silex 2.3.0 + Symfony 4.4, Composer no 8.5, `block-insecure`), 4 GET rota a rota 5.6 × 8.5 (iguais com a T-026; sem ela 2 diferem), o que mudaria (arquivo:linha), esforço A × C1 para a decisão (j) |
+| `../migracao-laravel/phinx-laravel13.md` | Phinx com o conjunto do Laravel 13: 4 alternativas rodadas no resolvedor e no comando (adaptador como está não resolve; adaptador atualizado, padrão e `vendor/` isolado resolvem), prova de `phinx --help`/`list` sem rede nem banco, diferenças do adaptador DBSeller lidas no código (arquivo:linha, 1.510 migrations) e recomendação |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
