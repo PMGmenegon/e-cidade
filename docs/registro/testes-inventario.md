@@ -15,7 +15,7 @@ PHPUnit 5.7.27) e `ecidade_front2_85` (PHP 8.5.12).
 Nenhum teste grava no banco nem chama terceiro (nenhum casa com DB/Eloquent/HTTP/curl/Pix/TEF; a suíte do 5.6 passa com
 `--network none`, sem o `ecidade_database` alcançável): **sem dublê a criar, sem lacuna de gravação**.
 
-## Versão do PHPUnit do 8.5: medida, não escolha (decisão do Lider)
+## Versão do PHPUnit do 8.5: medida, não escolha
 
 Testes existentes, só com a adaptação mecânica abaixo, **sem** alterar asserção, pelo mesmo bootstrap:
 
@@ -50,7 +50,7 @@ as classes de `src/` não carregam).
    5º argumento que o PHP 8 não passa mais; qualquer aviso com esse handler vira `ArgumentCountError` (defeito de portabilidade do núcleo).
 2. `V3/Error/Handler/ErrorTest::testHandleWithoutReporting`: usa `error_reporting(null)`; no PHP 8 `null` só consulta o nível.
 
-Aviso para quando os 36 arquivos entrarem: numa cópia adaptada descartada (decisão do Lider) medi que `assertEquals` de float e `assertContains`
+Aviso para quando os 36 arquivos entrarem: numa cópia adaptada descartada medi que `assertEquals` de float e `assertContains`
 do PHPUnit 9 são mais estritos que os do 5.7 e fariam falhar `CalculoPercentual` e `Economia` (o valor é o mesmo nos dois PHP). Isso deve
 aparecer como falha registrada, não ser mascarado.
 

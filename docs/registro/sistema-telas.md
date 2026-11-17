@@ -35,8 +35,7 @@ cliente em 13/11/2026 (revert `31e3e5e84`; será refeita à mão), então não h
 fazê-lo exigiria editar o script da suíte, que a spec proíbe. A camada roda pela mesma trava de concorrência da suíte:
 
 ```
-node /home/gustavo/git/ecidade-laravel/.quadro/ferramentas/suite.mjs \
-  python3 scratchpad/cmp.py --login-em 8160@ecidade_front3_56 --a 8160@ecidade_front3_56 --b 8161@ecidade_front3_85 \
+python3 scratchpad/cmp.py --login-em 8160@<container-5.6> --a 8160@<container-5.6> --b 8161@<container-8.5> \
   --menu --vigia --json relatorio-sistema.json
 ```
 
@@ -45,7 +44,7 @@ node /home/gustavo/git/ecidade-laravel/.quadro/ferramentas/suite.mjs \
 `CONHECIDA` casa por **tela + tipo** (DIVERGE/TIMEOUT), sem comparar o conteúdo. Uma divergência conhecida que piore (por
 exemplo, um erro novo no 8.5 na mesma tela) continua `CONHECIDA`. O relatório JSON traz o trecho de cada lado para conferir.
 
-## Medição (13/11/2026, Front3, :8160 x :8161, vigia OK)
+## Medição (13/11/2026, :8160 x :8161, vigia OK)
 
 48 telas dos registros das áreas, sem lista de conhecidas: 22 idênticas, 26 divergentes (bib, cai2, edu1, edu4, lab, orc,
 rec2, sau2, sys3, sys4). As 26 entraram no TSV, cada uma com o registro da área que a caracteriza; mais 5 de `docs/divergencias-conhecidas.md` (`iss4_issbasecaracteristicas001`, `agu1_aguaconsumo999`, `agu4_cancelaleituras_classe`, `fis1_sanitario004`, `edu4_exportarsituacaoaluno002`), confirmadas na bateria (5/5 divergem como descrito, vigia OK). O TSV tem 31 telas; a lista curada é `docs/divergencias-conhecidas.md`. Com o TSV: **22/48 idênticas, 26 conhecidas, 0 novas**, saída 0, vigia OK (só tabelas permitidas).

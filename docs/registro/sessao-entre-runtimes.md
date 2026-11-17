@@ -1,6 +1,6 @@
 # Convivência de sessão entre os runtimes hoje — linha de base (T-032, 13/11/2026)
 
-Pergunta da PB-009 (critério 4): a sessão aberta num runtime vale no outro? Medido **sem mudar nada** (Regra 3): é o comportamento
+Pergunta: a sessão aberta num runtime vale no outro? Medido **sem mudar nada** (Regra 3): é o comportamento
 herdado, não requisito novo. Script: `ecidade/tests/sistema/sessao-entre-runtimes.sh <agente>`; dados:
 `ecidade/tests/sistema/dados/sessao-entre-runtimes-{compartilhada,isolada}.tsv`.
 

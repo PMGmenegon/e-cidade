@@ -27,7 +27,7 @@ Sem `.agente`/variáveis os testes saem **pulados** com a mensagem do que defini
 - **Token válido** (pré-obtido por `prepara.php` e gravado em `/tmp/ecidade-sistema-segredos/{token,sessao-56,sessao-85}` dentro do container, modo 0600, fora do docroot e apagado ao fim da trava; em CLI apenas; o `.gitignore` de `tests/sistema/` só cobre `.agente`): `POST /v4/oauth/token` (password grant, usuário `dbseller`) no 5.6, enviado aos dois (banco e chave
   são compartilhados). Cliente/segredo lidos do config por `credenciais.php`, nunca impressos.
 - **Comparação:** status + tipo + corpo normalizado (JSON sem token/expiração/stacktrace; HTML sem espaços e sem o `sid` do captcha).
-- **Só GET, e só as comprovadamente de leitura** (decisão do Lider, 13/11): duas provas, ambas sem tocar no banco
+- **Só GET, e só as comprovadamente de leitura** (decisão de 13/11): duas provas, ambas sem tocar no banco
   (proibidos: `log_statement`/`ALTER DATABASE` e cópia `_teste`):
   1. **Leitura estática dos controllers** (`classifica-get.php`, roda no 5.6): as 186 GET (`dados/get-classificacao.tsv`, rota,
      ação, classe, trecho) → **162 "leitura"** e **24 "grava/duvidosa"**: 17 com verbo de efeito no nome (`assinar`, `emitir`,

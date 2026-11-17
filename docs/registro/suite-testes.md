@@ -8,7 +8,7 @@ Guia: `docs/suite-de-testes.md`. Script: `docs/registro/suite-script.md`. Invent
 - **Código medido:** `laravel/integracao` no commit `132fd39da` (T-008 e T-009 integradas; nenhuma tarefa de upgrade do Laravel).
 - **Comando** (da raiz da worktree, runtimes no ar por `sobe-ambiente.sh`; camadas `unitario,integracao`, os dois runtimes):
   `node <quadro>/ferramentas/suite.mjs bash ecidade/tests/suite/rodar.sh`
-- **Ambiente:** worktree do Front1; PHP 5.6.40 com PHPUnit 5.7 e PHP 8.5.12 com PHPUnit 9.6.38 (phars da T-008).
+- **Ambiente:** PHP 5.6.40 com PHPUnit 5.7 e PHP 8.5.12 com PHPUnit 9.6.38 (phars da T-008).
   Os testes desta suíte são unitários e de integração em memória: não usam banco nem terceiros.
 
 | | PHP 5.6.40 | PHP 8.5.12 |
@@ -52,7 +52,7 @@ A camada **sistema** está vazia nesta linha de base (T-011/T-012/T-016 acrescen
 ### O que a linha de base não prova
 
 Só o que está nos 46 testes existentes e nas amostras (classes de `V3`, `Agua`, RH, `Msc`, `LicitaCon`, helpers). Não cobre telas,
-rotas `/v4`, o Laravel inicializando nem banco; isso fica para a camada de sistema (PB-003/PB-004).
+rotas `/v4`, o Laravel inicializando nem banco; isso fica para a camada de sistema.
 
 ### Como reproduzir
 

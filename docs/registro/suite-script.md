@@ -1,7 +1,7 @@
 # Script único da suíte de testes (esqueleto, T-008)
 
 Um comando roda as camadas **unitária** e **de integração** (e, quando existir, a de **sistema**) no PHP 5.6 e no 8.5
-e gera um relatório por runtime. Origem: PB-003 (critérios 1 e 2). Linha de base e guia final: T-010; inventário dos
+e gera um relatório por runtime. Linha de base e guia final: T-010; inventário dos
 testes legados: T-009.
 
 ## Comando
