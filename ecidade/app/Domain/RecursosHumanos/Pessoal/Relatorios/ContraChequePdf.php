@@ -47,7 +47,7 @@ class ContraChequePdf
         /**
          * Carregar URL do processo eletrônico
          */
-        $dotenv = new \Dotenv\Dotenv('./');
+        $dotenv = method_exists('Dotenv\Dotenv', 'createUnsafeImmutable') ? \Dotenv\Dotenv::createUnsafeImmutable('./') : new \Dotenv\Dotenv('./');
         $dotenv->load();
         $this->urlAutenticidade = env('BASE_URL_AUTENTICIDADE') . "/contracheque";
     }

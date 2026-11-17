@@ -46,7 +46,7 @@ require_once(modification("classes/db_cfiptu_classe.php"));
 use App\Domain\Tributario\ISSQN\Services\WebIss\ConsultaSituacaoContribuinteService;
 parse_str($_SERVER['QUERY_STRING'], $__qs); extract($__qs);
 
-$dotenv = new \Dotenv\Dotenv('./');
+$dotenv = method_exists('Dotenv\Dotenv', 'createUnsafeImmutable') ? \Dotenv\Dotenv::createUnsafeImmutable('./') : new \Dotenv\Dotenv('./');
 $dotenv->load();
 
 if (session_is_registered("DB_tipodebitoparcel")) {

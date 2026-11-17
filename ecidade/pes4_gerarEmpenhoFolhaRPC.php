@@ -525,7 +525,7 @@ try {
                         && isset($configEstorage->url) && !empty($configEstorage->url)
                     ) {
 						$uuid = Ramsey\Uuid\Uuid::uuid4();
-						$dotenv = new \Dotenv\Dotenv('./');
+						$dotenv = method_exists('Dotenv\Dotenv', 'createUnsafeImmutable') ? \Dotenv\Dotenv::createUnsafeImmutable('./') : new \Dotenv\Dotenv('./');
 						$dotenv->load();
 						$empenho = new EmpenhoFinanceiro($numeroEmpenho);
 						$gerar_arquivo = "tmp/empenho_{$empenho->getCodigo()}_" . time() . ".pdf";

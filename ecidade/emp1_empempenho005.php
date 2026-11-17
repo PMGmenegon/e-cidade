@@ -315,7 +315,7 @@ if (isset($alterar)) {
         $documentoAndamento = $documentosAndamentoRepository->scopeCodigoOrigem($e60_numemp)->first();
         if (!is_null($documentoAndamento)) {
             $uuid = $documentoAndamento->p116_qrcode;
-            $dotenv = new \Dotenv\Dotenv('./');
+            $dotenv = method_exists('Dotenv\Dotenv', 'createUnsafeImmutable') ? \Dotenv\Dotenv::createUnsafeImmutable('./') : new \Dotenv\Dotenv('./');
             $dotenv->load();
             $gerar_arquivo = "tmp/empenho_" . time() . ".pdf";
             require_once("emp2_emitenotaemp002.php");
