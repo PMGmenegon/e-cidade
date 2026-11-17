@@ -99,9 +99,15 @@ if os.environ.get('ONLY'):
 # terceiros. iss4_siss002 tem fixo o IP do SISS (200.192.137.56); o pg_connect leva
 # ~134 s para desistir, igual nos dois runtimes -- nao e regressao, e rede.
 PULAR = {'iss4_siss002.php'}
+# Telas que DESTROEM a sessao autenticada do harness (session_destroy/logout): dispara-las invalida tudo o que
+# vem depois ("Sessao invalida" em massa). Achadas na rodada antes: edu4_informacoesdump.php e
+# cad4_geracarneiptutxt_cli.php. Espelha regressao/php/telas.py::PULAR_SESSAO.
+PULAR_SESSAO = {'edu4_informacoesdump.php', 'cad4_geracarneiptutxt_cli.php'}
 for f in sorted(set(files) & PULAR):
     print(f"  PULADA {f}  (contata servico externo)", flush=True)
-files = [f for f in files if f not in PULAR]
+for f in sorted(set(files) & PULAR_SESSAO):
+    print(f"  PULADA {f}  (destroi a sessao do harness)", flush=True)
+files = [f for f in files if f not in PULAR and f not in PULAR_SESSAO]
 
 print(f"{len(files)} telas\n", flush=True)
 div = []; tout = []

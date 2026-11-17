@@ -19,12 +19,15 @@ SCRATCH = RAIZ / "scratchpad"
 DIR_TELAS = RAIZ / "ecidade"
 # Telas que cmp.py nunca requisita (contatam servico externo); espelha PULAR de cmp.py.
 PULAR = {"iss4_siss002.php"}
+# Telas que DESTROEM a sessao autenticada (session_destroy): dispara-las mata tudo o que vem depois. Achadas na
+# rodada antes; espelha PULAR_SESSAO do cmp.py.
+PULAR_SESSAO = {"edu4_informacoesdump.php", "cad4_geracarneiptutxt_cli.php"}
 TIMEOUT_SID = 30
 TIMEOUT_CMP = 6 * 3600
 
 _DIVERGE = re.compile(r"^\s*DIVERGE\s+(\S+)\s+(56=\S+)\s+(85=\S+)")
 _TIMEOUT = re.compile(r"^\s*TIMEOUT\s+(\S+)\s+(56=\S+)\s+(85=\S+)")
-_PULADA = re.compile(r"^\s*PULADA\s+(\S+)")
+_PULADA = re.compile(r"^\s*PULADA\s+(\S+)(?:\s+\((.*)\))?")
 _RESUMO = re.compile(r"^=== (\d+)/(\d+) identicas, (\d+) divergentes, (\d+) timeout ===")
 
 
@@ -53,7 +56,8 @@ def parse_cmp(saida: str, area: str, telas: list[str] | None = None,
         elif m := _PULADA.match(linha):
             tela = m.group(1)
             vistas.add(tela)
-            casos.append(Caso(tela, area, Veredito.INCONCLUSIVO, "pulada (contata servico externo)"))
+            casos.append(Caso(tela, area, Veredito.INCONCLUSIVO,
+                              f"pulada ({m.group(2) or 'contata servico externo'})"))
         elif m := _RESUMO.match(linha):
             resumo = tuple(int(x) for x in m.groups())
     if resumo is None:
@@ -75,7 +79,8 @@ def parse_cmp(saida: str, area: str, telas: list[str] | None = None,
 def lista_telas(prefixo: str, diretorio: Path = DIR_TELAS) -> list[str]:
     """Mesma selecao de cmp.py: re.match(prefixo, IGNORECASE) e .php, menos PULAR."""
     return sorted(f for f in os.listdir(diretorio)
-                  if re.match(prefixo, f, re.IGNORECASE) and f.endswith(".php") and f not in PULAR)
+                  if re.match(prefixo, f, re.IGNORECASE) and f.endswith(".php")
+                  and f not in PULAR and f not in PULAR_SESSAO)
 
 
 def obtem_sid() -> str:

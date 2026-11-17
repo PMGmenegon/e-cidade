@@ -20,6 +20,20 @@ SAIDA = """3 telas
 TELAS = ["cem1_cadastro001.php", "cem1_lento002.php", "cem1_ok003.php"]
 
 
+def test_telas_que_destroem_a_sessao_nao_entram_na_lista_e_a_pulada_diz_o_motivo(tmp_path):
+    for n in ("edu4_informacoesdump.php", "cad4_geracarneiptutxt_cli.php", "cad4_ok001.php", "iss4_siss002.php"):
+        (tmp_path / n).write_text("x")
+    assert telas.lista_telas(r"^(edu4|cad4|iss4)_", tmp_path) == ["cad4_ok001.php"]
+    assert {"edu4_informacoesdump.php", "cad4_geracarneiptutxt_cli.php"} == telas.PULAR_SESSAO
+    saida = ("3 telas\n\n  PULADA iss4_siss002.php  (contata servico externo)\n"
+             "  PULADA cad4_geracarneiptutxt_cli.php  (destroi a sessao do harness)\n\n"
+             "=== 0/0 identicas, 0 divergentes, 0 timeout ===\n")
+    casos = {c.id: c for c in parse_cmp(saida, "x", [])}
+    assert "servico externo" in casos["iss4_siss002.php"].detalhe
+    assert "destroi a sessao" in casos["cad4_geracarneiptutxt_cli.php"].detalhe
+    assert all(c.veredito == Veredito.INCONCLUSIVO for c in casos.values())
+
+
 @pytest.fixture(autouse=True)
 def _sessao_ok(request):
     """Fora dos testes que tratam da sessao, a sonda de autenticacao diz OK."""
