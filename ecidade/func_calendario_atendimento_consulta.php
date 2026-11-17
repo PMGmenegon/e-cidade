@@ -31,7 +31,7 @@ include(modification("libs/db_sessoes.php"));
 include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']); // ta com o globals desativado no php -- Crestani
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); extract($__qs); // ta com o globals desativado no php -- Crestani
 
 db_postmemory($HTTP_POST_VARS); 
 
@@ -198,7 +198,7 @@ class calendario{
      $stra .= "<select class='font-size=\0' name=agenda_usuario onChange='js_troca_agenda(this.value);'>";
      $stra .= "<option value=\"0\">Escolha o Técnico</option><br>";
      for( $ixx = 0 ; $ixx < count($mostra_integrantes); $ixx ++ ){
-       $codigodep = split("-",key($mostra_integrantes));
+       $codigodep = explode("-",key($mostra_integrantes));
        $stra .= "<option value=\"".$codigodep[1]."\">".$mostra_integrantes[key($mostra_integrantes)]."</option><br>";
        next($mostra_integrantes);
      }

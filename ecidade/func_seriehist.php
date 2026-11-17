@@ -35,7 +35,7 @@ include(modification("classes/db_serie_classe.php"));
 include(modification("classes/db_historico_classe.php"));
 
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 
 $clserie     = new cl_serie;
 $clhistorico = new cl_historico;

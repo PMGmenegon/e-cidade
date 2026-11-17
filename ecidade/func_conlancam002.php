@@ -35,7 +35,7 @@ require_once(modification("classes/db_conlancamcompl_classe.php"));
 require_once(modification("classes/db_conlancamdig_classe.php"));
 require_once(modification("classes/db_conplano_classe.php"));
 
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 db_postmemory($HTTP_POST_VARS);
 db_postmemory($HTTP_GET_VARS);
 

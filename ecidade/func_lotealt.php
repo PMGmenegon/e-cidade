@@ -34,7 +34,8 @@ include(modification("classes/db_lote_classe.php"));
 db_postmemory($HTTP_POST_VARS);
 
 if (!isset($pesquisar)) {
-    parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+    parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs);
+    extract($__qs);
 }
 $cllote = new cl_lote;
 $cllote->rotulo->label();

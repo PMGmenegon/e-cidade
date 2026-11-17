@@ -32,7 +32,7 @@ include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_empempenho_classe.php"));
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $clempempenho = new cl_empempenho;
 $clempempenho->rotulo->label("e60_numemp");
 $clempempenho->rotulo->label("e60_codemp");
@@ -133,7 +133,7 @@ $rotulo->label("z01_cgccpf");
         }else if( isset($chave_e60_codemp) && (trim($chave_e60_codemp) != "" ) ){
 
 
-          $arr = split("/",$chave_e60_codemp);
+          $arr = explode("/",$chave_e60_codemp);
           
           if(count($arr) == 2  && isset($arr[1]) && $arr[1] != '' ){
 

@@ -32,7 +32,7 @@ include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_tarefa_classe.php"));
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $cor_livre   = "#0EB01F";
 $cor_ocupado = "#FF0000";
 
@@ -135,7 +135,7 @@ function mostra_calendario($cltarefa,$cols,$id_usuario,$mes,$ano,$cor_livre,$cor
 		for($j = 0; $j < $NumCampos; $j++) {
 			if(pg_fieldtype($rs_tarefa, $j) == "date") {
 				if(pg_result($rs_tarefa, $i, $j) != "") {
-					$matriz_data = split("-", pg_result($rs_tarefa, $i, $j));
+					$matriz_data = explode("-", pg_result($rs_tarefa, $i, $j));
 					$var_data = $matriz_data[2];
 				} else {
 					$var_data = "//";

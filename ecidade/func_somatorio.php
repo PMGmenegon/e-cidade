@@ -33,7 +33,7 @@ include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_db_syscampo_classe.php"));
 db_postmemory($HTTP_POST_VARS);
 //db_postmemory($HTTP_GET_VARS,2);exit;
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $cldb_syscampo = new cl_db_syscampo;
 $clrotulo = new rotulocampo;
 if(isset($campousar)){
@@ -75,7 +75,7 @@ function js_enviarvalor(){
 			    </legend>
 			    <table width='100%'>
    	      <?
-   	      $arr = split(",",$sel);
+   	      $arr = explode(",",$sel);
 		      $numrows = $cldb_syscampo->numrows;
 		      for($i=0;$i<$numrows;$i++){
 		      	db_fieldsmemory($result_campo, $i);

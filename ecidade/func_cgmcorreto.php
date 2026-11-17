@@ -34,7 +34,7 @@ include_once(modification("classes/db_cgmcorreto_classe.php"));
 
 db_postmemory($_POST);
 
-parse_str($_SERVER['QUERY_STRING']);
+parse_str($_SERVER['QUERY_STRING'], $__qs); extract($__qs);
 $clcgmcorreto = new cl_cgmcorreto;
 $clcgmcorreto->rotulo->label("z10_codigo");
 $clcgmcorreto->rotulo->label("z10_numcgm");

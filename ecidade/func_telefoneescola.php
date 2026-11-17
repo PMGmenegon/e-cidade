@@ -34,7 +34,7 @@ include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_telefoneescola_classe.php"));
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $cltelefoneescola = new cl_telefoneescola;
 $cltelefoneescola->rotulo->label("ed26_i_codigo");
 $cltelefoneescola->rotulo->label("ed26_i_codigo");

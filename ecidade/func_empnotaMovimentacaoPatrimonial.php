@@ -33,7 +33,7 @@ include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_empnota_classe.php"));
 db_postmemory($HTTP_POST_VARS);
 db_postmemory($HTTP_GET_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $clempnota = new cl_empnota;
 $clempnota->rotulo->label("e69_numero");
 $clempnota->rotulo->label("e69_dtnota");
@@ -143,7 +143,7 @@ $rotulo->label("e60_numemp");
         }       
         if (isset($chave_e60_codemp) && (trim($chave_e60_codemp)!="") ){
         	
-	      $arr = split("/",$chave_e60_codemp);
+	      $arr = explode("/",$chave_e60_codemp);
 	      if(count($arr) == 2  && isset($arr[1]) && $arr[1] != '' ){
 		       $dbwhere_ano = " and e60_anousu = ".$arr[1];
        	      }else{

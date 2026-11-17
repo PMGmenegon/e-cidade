@@ -51,7 +51,7 @@ if ( !isset($oPost->pesquisar) && empty($oPost->sd24_d_cadastro_fim) ) {
   $sd24_d_cadastro_fim_ano    = $oData->getAno();
 }
 
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $oDaoProntuarios = new cl_prontuarios;
 $oDaoProntuarios->rotulo->label();
 

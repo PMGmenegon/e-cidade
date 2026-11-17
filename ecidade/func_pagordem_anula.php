@@ -32,7 +32,7 @@ include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_pagordem_classe.php"));
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); extract($__qs);
 $clpagordem = new cl_pagordem;
 $clpagordem->rotulo->label("e50_codord");
 $clpagordem->rotulo->label("e50_numemp");
@@ -116,7 +116,7 @@ $rotulo->label("e60_numemp");
         if(isset($chave_e50_codord) && (trim($chave_e50_codord)!="") ){
 	         $sql = $clpagordem->sql_query_pagordemele($chave_e50_codord,$campos,"e50_codord");
         }else if(isset($chave_e60_codemp) && (trim($chave_e60_codemp)!="") ){
-	      $arr = split("/",$chave_e60_codemp);
+	      $arr = explode("/",$chave_e60_codemp);
 	      if(count($arr) == 2  && isset($arr[1]) && $arr[1] != '' ){
 		$dbwhere_ano = " and e60_anousu = ".$arr[1];
        	      }else{
