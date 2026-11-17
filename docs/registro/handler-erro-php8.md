@@ -1,6 +1,6 @@
 # Handler de erro e Logger do V3 no PHP 8 (T-026)
 
-> 13/11/2026, Back1. Origem: achados da T-009 (`testes-inventario.md`): dois testes do handler falhavam só no 8.5
+> 13/11/2026. Origem: achados da T-009 (`testes-inventario.md`): dois testes do handler falhavam só no 8.5
 > (`ErrorTest::testHandleWithoutReporting`, `ShutdownTest::testHandleExpectNothing`) e o `LoggerTest` estava em
 > `lacunas.lista`. Defeito de migração (passa no 5.6, quebra no 8.5); a correção reproduz o comportamento do 5.6.
 
@@ -17,10 +17,10 @@
 1. `_handle(…, $context = null)`: o parâmetro que o PHP 8 não passa ficou opcional. Nada mais muda.
 2. `$suppress = (error_reporting() & ~(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR |
    E_PARSE)) === 0`: suprimido quando não sobra nenhum bit além dos que o PHP 8 mantém sob `@`. No 5.6 o `@` dá `0`, que
-   continua suprimido. Decisão do Lider de 13/11 (restaura o comportamento antigo; Regra 3 permite).
+   continua suprimido. Decisão de 13/11 (restaura o comportamento antigo; Regra 3 permite).
 3. `Logger` declara `protected $filePath;` (sem mudar lógica).
 
-**Caso-limite (registrado, decisão do Lider):** um `error_reporting` posto de propósito **só** com bits fatais, fora de
+**Caso-limite (registrado, decisão de 13/11):** um `error_reporting` posto de propósito **só** com bits fatais, fora de
 `@`, passaria a contar como suprimido. Não acontece no projeto: `config/application.default.php:27` (e a cópia local
 `config/application.php:27`, não versionada) define `php.error_reporting => E_ALL & ~E_NOTICE & ~E_WARNING &
 ~E_DEPRECATED & ~E_STRICT` = 22517; tirados os bits fatais sobra 18080 (`E_CORE_WARNING`, `E_COMPILE_WARNING`,
@@ -31,7 +31,7 @@ Sem cópia em `extension/modification/` para esses arquivos (conferido).
 ## Testes (commit `PHP8-T026: Adapta os testes…`)
 
 - `ErrorTest::testHandleWithoutReporting`: preparo `error_reporting(null)` → `error_reporting(0)` (no PHP 8 `null` não
-  zera, devolve o nível atual; no 5.6 zerava). Asserção igual. Decisão do Lider (adaptação mecânica da T-009).
+  zera, devolve o nível atual; no 5.6 zerava). Asserção igual (adaptação mecânica da T-009).
 - `ErrorTest::testHandleSuppressedByAt` (novo): `@Error::handle(E_USER_WARNING, …)` devolve `false` e a mesma chamada sem
   `@` devolve uma `Entity`, nos dois runtimes.
 - `LoggerTest`: classe base `PHPUnit\Framework\TestCase`, `@before`/`@after` no lugar de `setUp()`/`tearDown()`,
@@ -60,11 +60,11 @@ bateria de tela; o caminho do handler em si fica provado pelos testes unitários
 | `pes4_gerafolha002.php:427` (`E_USER_ERROR`) | no `catch` do cálculo da folha: **grava no banco — não rodar** |
 | `securimage/securimage.php` (vários `E_USER_WARNING`/`E_USER_NOTICE`) | quase todos só com o banco do captcha ligado (`use_database`/`use_sqlite_db`); o projeto usa `new Securimage()` sem opções (`abrir.php:152`, `carregaCaptcha.php:30`), com os dois `false`. O de `:1897` é do áudio do captcha sem código na sessão: login, não tela de menu |
 
-**Bateria dirigida (opção aceita pelo Lider em 13/11):** 3 telas de menu que emitem aviso do PHP nos dois runtimes (passam
+**Bateria dirigida (opção aceita em 13/11):** 3 telas de menu que emitem aviso do PHP nos dois runtimes (passam
 pelo `bootstrap.php` com o handler registrado, fora da máscara), 5.6 (`:8110`) × 8.5 (`:8111`) em containers **que
 gravam**, com o vigia do banco antes/depois.
 
-Como as telas foram achadas: medição à parte, com `auto_prepend_file` só nos containers do Back1 (função de shutdown que
+Como as telas foram achadas: medição à parte, com `auto_prepend_file` só nos containers da medição (função de shutdown que
 grava `error_get_last()` em `/tmp`, sem imprimir nada), sobre as 233 telas de menu da T-022; depois o arquivo foi retirado
 e o Apache recarregado antes da comparação (conferido: nenhum `.ini` com `t026` nos dois).
 

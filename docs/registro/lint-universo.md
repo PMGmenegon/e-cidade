@@ -91,7 +91,7 @@ nos dois. Diff: 22 linhas em 2 arquivos (ASCII).
 
 Mesma forma `$$nome[...]` existe em outros arquivos (`grep -rn '\$\$[a-zA-Z_]*\[' ecidade --include=*.php`): `ate2_confereatend002.php`,
 `con3_acount.php`, `con2_lrfimpostossaude002_2007.php`, `duplos.php`, `func_consbens001.php`, `dbforms/db_classes_criaiframe.php`,
-`dbforms/db_classes_iframe_alterar_excluir.php`, `libs/db_stdlib.php` — **fora do escopo desta tarefa; não corrigidos**, avisados ao Lider.
+`dbforms/db_classes_iframe_alterar_excluir.php`, `libs/db_stdlib.php` — **fora do escopo desta tarefa; não corrigidos**.
 ## Depois da T-020 — 7 legados residuais (nenhum Rector, nenhuma outra branch)
 
 Os 7 arquivos compilavam no 5.6 e não no 8.5. T-004 (Rector em simulação) e T-017 (branches) ainda não tinham fechado quando
