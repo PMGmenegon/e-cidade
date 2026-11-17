@@ -1,0 +1,6 @@
+# A11 [entrada] entrada longa (1 MB) sem cliente valido
+status: 500
+tipo: application/json
+set-cookie: ECIDADEWINDOWMAIN
+location: (nenhum)
+corpo: {"statusCode":{"attributes":[],"request":[],"query":[],"server":[],"files":[],"cookies":[],"headers":[]},"message":"Sem permiss\u00e3o para acessar a API.","stacktrace":"<stacktrace omitido>"}

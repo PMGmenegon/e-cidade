@@ -1,0 +1,16 @@
+caso	status	tipo	origem	descricao
+A01	500	application/json	entrada	POST sem corpo
+A02	500	application/json	entrada	user e password sem id/hash
+A03	500	application/json	entrada	id nao numerico
+A04	500	application/json	entrada	id numerico inexistente
+A05	500	application/json	hash	id existente com hash invalido
+A06	405	application/json	metodo	GET (metodo errado)
+A07	405	application/json	metodo	PUT (metodo errado)
+A08	405	application/json	metodo	GET com user/password na query
+A09	500	application/json	entrada	corpo JSON (Content-Type application/json)
+A10	500	application/json	entrada	id como array (id[]=1)
+A11	500	application/json	entrada	entrada longa (1 MB) sem cliente valido
+A12	500	application/json	cabecalho	X-Forwarded-For com aspa, sem cliente valido
+A13	500	application/json	cookie	cookie de sessao ja existente, sem cliente valido
+A14	500	application/json	hash	hash valido sem o campo time
+A15	500	application/json	hash	hash valido com time antigo

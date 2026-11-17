@@ -1,0 +1,6 @@
+# A04 [entrada] id numerico inexistente
+status: 500
+tipo: application/json
+set-cookie: ECIDADEWINDOWMAIN
+location: (nenhum)
+corpo: {"statusCode":{"attributes":[],"request":[],"query":[],"server":[],"files":[],"cookies":[],"headers":[]},"message":"Cliente n\u00e3o encontrado.","stacktrace":"<stacktrace omitido>"}

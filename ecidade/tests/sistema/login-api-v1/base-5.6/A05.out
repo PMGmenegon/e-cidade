@@ -1,0 +1,6 @@
+# A05 [hash] id existente com hash invalido
+status: 500
+tipo: application/json
+set-cookie: ECIDADEWINDOWMAIN
+location: (nenhum)
+corpo: {"statusCode":{"attributes":[],"request":[],"query":[],"server":[],"files":[],"cookies":[],"headers":[]},"message":"Sem permiss\u00e3o para acessar a API.","stacktrace":"<stacktrace omitido>"}

@@ -1,0 +1,6 @@
+# A08 [metodo] GET com user/password na query
+status: 405
+tipo: application/json
+set-cookie: ECIDADEWINDOWMAIN
+location: (nenhum)
+corpo: {"statusCode":{"attributes":[],"request":[],"query":[],"server":[],"files":[],"cookies":[],"headers":[]},"message":"No route found for \"GET \/api\/v1\/auth\/login\": Method Not Allowed (Allow: POST)","stacktrace":"<stacktrace omitido>"}

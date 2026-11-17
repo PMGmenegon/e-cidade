@@ -1,0 +1,6 @@
+# A07 [metodo] PUT (metodo errado)
+status: 405
+tipo: application/json
+set-cookie: ECIDADEWINDOWMAIN
+location: (nenhum)
+corpo: {"statusCode":{"attributes":[],"request":[],"query":[],"server":[],"files":[],"cookies":[],"headers":[]},"message":"No route found for \"PUT \/api\/v1\/auth\/login\": Method Not Allowed (Allow: POST)","stacktrace":"<stacktrace omitido>"}
