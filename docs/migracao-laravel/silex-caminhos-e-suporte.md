@@ -1,6 +1,6 @@
 # Silex (API V1), caminho de atualização e datas de suporte
 
-Tarefa T-007 (origem PB-002, critérios 4–6). Spike: só relatório, nenhum código do sistema foi alterado e nada foi
+Tarefa T-007. Spike: só relatório, nenhum código do sistema foi alterado e nada foi
 instalado. Medições feitas em 12/11/2026 sobre a worktree `laravel/T-007-silex-caminhos` (= `laravel/integracao`, commit
 `59c46e20b`). O que não foi medido está marcado **[não medido]** ou **[estimativa]**.
 

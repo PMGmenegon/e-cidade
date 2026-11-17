@@ -1,7 +1,7 @@
 # Inventário de branches contra a integração (T-017)
 
-Medido em 13/11/2026, depois de `git fetch origin`. A tabela foi tirada com `laravel/integracao` em `d46b684c6`; o Lider mudou a
-integração durante a tarefa (decisão do cliente de 13/11, ver "Atualização" abaixo), então **as contagens atrás/frente envelhecem a
+Medido em 13/11/2026, depois de `git fetch origin`. A tabela foi tirada com `laravel/integracao` em `d46b684c6`; a integração mudou
+durante a tarefa (decisão do cliente de 13/11, ver "Atualização" abaixo), então **as contagens atrás/frente envelhecem a
 cada merge — rode o script para os números do momento**. Escopo: toda branch local e `origin/*`, exceto `equipe/*` (8 branches
 de apoio do Maestri) e `testes/rodada`. Somente leitura: nada foi mesclado, enviado ou apagado por esta tarefa.
 
@@ -29,7 +29,7 @@ integração só há `laravel-upgrade` (1 commit, já integrado por conteúdo pe
 `ae96652a7`. `origin/assistencia-social/migracao` **foi apagada do GitHub** por decisão do cliente (a área será refeita à mão) e o
 merge da T-001 foi **revertido** (`31e3e5e84`). Fora disso, só branches de tarefa locais e as três do login (decisão do cliente).
 
-## Ocorrências durante a medição (avisadas ao Lider em 13/11/2026)
+## Ocorrências durante a medição (13/11/2026)
 
 1. **`origin/nucleo/correcoes-transversais`** (1 commit, `fe5503916`, Diego, 12/11) não estava no inventário do `PROJETO.md`.
    Conteúdo: `pg_lo_export` na ordem antiga em 14 pontos, `dbagata` (`AgataQuery`, `pclzip`), remoção de 56 arquivos de cache do
@@ -40,14 +40,14 @@ merge da T-001 foi **revertido** (`31e3e5e84`). Fora disso, só branches de tare
    `MERGES.md` ("26 de 30 arquivos iguais") usa outra contagem. **Classificação: decidida pelo cliente em 13/11/2026 — integrada inteira em `ae96652a7` (ver Atualização).**
 2. **`origin/base-php84` estava 2 commits à frente** de `laravel/integracao` (`79958b1fb`, `36f42cefb`, 12/11:
    `docs/migrar-um-modulo.md`, skill `migrar-modulo`, `scratchpad/prefixos_area.py`). Só docs/ferramenta.
-   Resolvido pelo Lider em `d46b684c6`; hoje 0 atrás.
+   Resolvido em `d46b684c6`; hoje 0 atrás.
 3. **T-001 constava Feita mas o merge não estava na integração.** Resolvido em `0f862305d` — e depois revertido (ocorrência 4).
 4. **`origin/assistencia-social/migracao` não existe mais no GitHub** (`git ls-remote --heads origin` não a lista; o ref local é
    tracking velho, por isso o script traz a coluna `no_github`). Evidência do motivo:
    `fe5503916:docs/registro/correcoes-transversais.md`, linhas 3–5 — "em 12/11/2026 o usuário decidiu **refazer a Assistência Social
    à mão** e pediu para separar estas correções numa branch própria antes de apagar aquela". Isso conflitava com a premissa da
-   decisão (f) / T-001 (`BACKLOG.md`: integrar a Assistência Social por merge). **Classificação: decidida pelo cliente em 13/11/2026 (a Assistência Social sai da integração).** O Lider
-   resolveu em 13/11 (ver Atualização).
+   decisão (f) / T-001 (`BACKLOG.md`: integrar a Assistência Social por merge). **Classificação: decidida pelo cliente em 13/11/2026 (a Assistência Social sai da integração).** Resolvido
+   em 13/11 (ver Atualização).
 
 ## Atualização — decisão do cliente de 13/11/2026 (durante a T-017)
 
@@ -108,18 +108,18 @@ A integração passou a ser: `31e3e5e84` **reverte** o merge da Assistência Soc
 |---|---|---|---|
 | `laravel/T-006-passport-esquema`, `qa/T-006` | 52/0 | 0 | T-006, integrada em `bf9e07f56` (só documentação) |
 | `testes/T-023-linha-de-base-relatorios-kernel` | 52/0 | 0 | T-023, integrada em `25feaf5c1` |
-| `tributario/T-019-calculos-lote` | 52/3 | 3 | T-019 reaberta (Rev2): 22 `$$matriz[$i]` |
-| `nucleo/T-027-pg-lo-export-guarda` | 7/2 | 2 | T-027 (Back2), WIP |
-| `nucleo/T-028-jpgraph-pizza` | 9/3 | 3 | T-028 (Front1) |
+| `tributario/T-019-calculos-lote` | 52/3 | 3 | T-019 reaberta na revisão: 22 `$$matriz[$i]` |
+| `nucleo/T-027-pg-lo-export-guarda` | 7/2 | 2 | T-027, em andamento |
+| `nucleo/T-028-jpgraph-pizza` | 9/3 | 3 | T-028 |
 | `testes/T-032-sessao-entre-runtimes` | 5/3 | 3 | T-032 |
 | `testes/T-003-lint-universo`, `qa/T-003` | 49/1 e 14/2 | 1 e 2 | T-003 (QA); `qa/T-003` traz também um merge da integração |
-| `testes/T-012-sistema-rotas`, `qa/T-012` | 14/4 | 4 | T-012 (QA); dividir o commit grande antes de integrar (ordem do Lider) |
-| `testes/T-010-linha-de-base-guia` | 14/1 | 1 | T-010 (Front1) |
-| `testes/T-011-sistema-telas` | 50/2 | 2 | T-011 (Front3), WIP de parada de cota |
-| `laravel/T-022-vendor-proprio-runtime-novo` | 29/2 | 2 | T-022 (Back1), reprovada, refazendo a bateria |
-| `nucleo/T-026-handler-erro-php8` | 17/2 | 2 | T-026 (Back1) |
-| `nucleo/T-020-legados-residuais` | 14/1 | 1 | T-020 (Front2) |
-| `rector/T-004-varredura-simulacao` | 0/2 | 2 | T-004 (Banco1), WIP de parada de cota; só scripts e doc |
+| `testes/T-012-sistema-rotas`, `qa/T-012` | 14/4 | 4 | T-012 (validação); dividir o commit grande antes de integrar |
+| `testes/T-010-linha-de-base-guia` | 14/1 | 1 | T-010 |
+| `testes/T-011-sistema-telas` | 50/2 | 2 | T-011, em andamento |
+| `laravel/T-022-vendor-proprio-runtime-novo` | 29/2 | 2 | T-022, reprovada, refazendo a bateria |
+| `nucleo/T-026-handler-erro-php8` | 17/2 | 2 | T-026 |
+| `nucleo/T-020-legados-residuais` | 14/1 | 1 | T-020 |
+| `rector/T-004-varredura-simulacao` | 0/2 | 2 | T-004, em andamento; só scripts e doc |
 
 ### Decisão do cliente (login e Assistência Social; ficam fora da integração)
 
@@ -133,7 +133,7 @@ A integração passou a ser: `31e3e5e84` **reverte** o merge da Assistência Soc
 ### Obsoletas / abandonadas
 
 Nenhuma encontrada. `base-php84` local e `tmp-x` são só ponteiros atrasados; `qa/T-*` são cópias de revisão
-das mesmas tarefas e podem ser apagadas depois do merge (decisão do Lider, não desta tarefa).
+das mesmas tarefas e podem ser apagadas depois do merge (decisão fora desta tarefa).
 
 ## Conferência do critério 3
 

@@ -1,6 +1,6 @@
 # Passport sobre o esquema atual de `oauth_*`, sem migration (T-006)
 
-> Spike da PB-002 (critério 3), 12/11/2026. Pergunta da decisão **(a)**: existe Passport para o Laravel 13 (ou 12) que rode
+> Spike de 12/11/2026. Pergunta da decisão **(a)**: existe Passport para o Laravel 13 (ou 12) que rode
 > no esquema atual de `oauth_clients`, `oauth_access_tokens` etc., sem migration nem coluna nova?
 > Parte de `docs/registro/laravel.md` (token do Passport 4 aceito pelo `league/oauth2-server` novo; "usar Passport 12.4").
 > Matriz de versões: T-005 (`docs/migracao-laravel/matriz-versoes.md`, branch `laravel/T-005-matriz-versoes`).
