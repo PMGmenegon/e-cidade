@@ -240,9 +240,11 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   continuam comparadas. A classe da exceção (`exception`) e a `message` **continuam comparadas**: mudar a exceção é
   DIVERGE real. Consequência: um erro que só muda de arquivo/linha entre 5.4 e 12 não aparece como divergência.
 
-- **Laboratório Laravel 12 inexistente**: não há compose para o `:8087`. `comparar` no alvo padrão devolve **um**
-  `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem restaurar o banco) e a completa segue com as outras frentes. Só a
-  prova de estabilidade (5.4 contra ele mesmo) foi exercitada ao vivo.
+- **Não existe Laravel 12 do e-Cidade**: o laboratório do `:8087` (`regressao/lab/docker-compose.lar12.yml`) roda o
+  runtime PHP 8.5 sobre o código de `LAR12_CODIGO` (padrão: o `./ecidade` atual, Laravel 5.4). Hoje o Laravel 5.4 não
+  sobe em PHP 8.5, e `comparar` no alvo padrão devolve **um** `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem
+  restaurar o banco); a completa segue com as outras frentes. Causa e próximos passos em
+  `regressao/baseline/lab-lar12-resultado.md`.
 - **Integrações (11b), o que existe e o que não existe** (`laravel/integracao.py`, `laravel/stubs/`,
   `laravel/casos/integracao.yml`):
   - **Arquivo gerado por conteúdo**: 5 casos (`arquivo-vacinacao-pdf-*` x3, `arquivo-siconfi-csv`,
