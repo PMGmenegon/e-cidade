@@ -76,3 +76,22 @@ Estas correções foram verificadas **dentro da branch da Assistência Social**,
 (depois de todas elas): `map` **1.307/1.307**, `location` **9.439/9.470**, nenhuma diferença nova; saíram `cai3_gerfinanc001`,
 `iss1_tabalvara_depto001` e `iss3_emissaoalvaraeventos001`. Nesta branch, separada: lint dos arquivos alterados nos dois runtimes e
 as telas afetadas comparadas de novo (abaixo).
+
+### Conferido nesta branch (16/11/2026)
+
+Refeito sobre o código desta branch, com os dois runtimes servindo-a:
+
+- **`php -l` nos 17 arquivos alterados**, nos dois runtimes: 17/17 sem erro no 5.6 e no 8.5.
+- **Bateria (`cmp.py`) nas 28 telas afetadas: 27/28 idênticas.** As telas:
+  - a aba `iss1_tabalvara_depto001` sem parâmetro, com `dbopcao=1` e com `dbopcao=2`; `iss3_emissaoalvaraeventos001?codigoAlvara=1`;
+    e `iss1_isstipoalvara002`, que abre a aba;
+  - as 7 telas servidas que chamam `pg_lo_export`: `edu2_aluno002`, `edu2_fichaaluno002`, `edu3_alunos001`, `edu4_escola.RPC`,
+    `lab4_emissaoresult001`, `pes4_autprocvalores.RPC`, `sys4_cadastrotemplateRPC`;
+  - as 16 telas que tinham cópia no cache removido: `arr3_histocorrencia001`, `cai3_gerfinanc001`, `con4_trocadata`,
+    `iss2_simples002`, `con1_ativatrace.RPC`, `func_calendario`, `func_histocorrencia` e as 9 `pes4_*` de abertura, fechamento e
+    cancelamento da folha complementar/suplementar.
+- **A divergente, `func_histocorrencia.php` (5.6: 200; 8.5: 500), não é desta branch:** `parse_str() expects exactly 2 arguments`
+  na linha 41. É uma janela de pesquisa da frente `func_`, ainda não migrada e **servida pelo 5.6** (`X-Ecidade-Runtime: PHP-5.6`);
+  esta branch não altera o arquivo, só removeu a cópia dele que estava no cache. Some quando a frente `func_` for portada.
+- Merge simulado com a `base-php84` e com a branch do guia (`docs/ferramentas-do-lote`): limpo nas duas ordens, nenhum arquivo em
+  comum.
