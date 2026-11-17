@@ -1,0 +1,5 @@
+# E11 GET (metodo errado)
+status: 405
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":true,"message":"","file":"<omitido>","line":"<omitido>","code":0}

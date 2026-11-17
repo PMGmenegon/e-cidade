@@ -1,0 +1,5 @@
+# E06 client_secret errado
+status: 401
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":"invalid_client","message":"Client authentication failed"}

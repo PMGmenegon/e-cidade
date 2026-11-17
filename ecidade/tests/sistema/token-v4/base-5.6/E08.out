@@ -1,0 +1,5 @@
+# E08 grant_type invalido
+status: 400
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":"unsupported_grant_type","message":"The authorization grant type is not supported by the authorization server.","hint":"Check the `grant_type` parameter"}

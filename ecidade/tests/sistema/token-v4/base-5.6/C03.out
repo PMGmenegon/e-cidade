@@ -1,0 +1,5 @@
+# C03 client/auth/usuario com o cpf do usuario 1 (estrutura da resposta; valores mascarados)
+status: 200
+tipo: application/json
+set-cookie: PHPSESSID
+corpo: {"message":"<string len=0>","error":false,"data":{"id_usuario":"<integer>","login":"<string len=8>","usuext":"<integer>","z01_nome":"<string len=19>","z01_nomecomple":"<string len=19>","z01_ender":"<string len=40>","z01_numero":"<integer>","z01_compl":"<string len=3>","z01_bairro":"<string len=6>","z01_munic":"<string len=12>","z01_uf":"<string len=2>","z01_cep":"<string len=8>","z01_nasc":null,"access_token":"<string len=1071>"}}

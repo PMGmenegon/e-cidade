@@ -1,0 +1,5 @@
+# U01 token valido recem emitido
+status: 200
+tipo: application/json
+set-cookie: PHPSESSID
+corpo: {"message":"","error":false,"data":[{"ed178_codigo":8,"ed178_descricao":"Covid-19 - BioNTech\/Fosun Pharma\/Pfizer","ed178_sigla":"COV19 Biontech - Pfizer"},{"ed178_codigo":7,"ed178_descricao":"Covid-19 - Coronavac - Sinovac\/Butantan","ed178_sigla":"COV19 Coronavac - Sinovac\/Butantan"},{"ed178_codigo":6,"ed178_descricao":"Covid-19 - Covishield - Oxford\/AstraZeneca","ed178_sigla":"COV19 Oxford - AstraZeneca"},{"ed178_codigo":9,"ed178_descricao":"Covid-19 - Janssen-Cilag","ed178_sigla":"COV19 Janssen - Cilag"},{"ed178_codigo":5,"ed178_descricao":"Dengue 1, 2, 3 e 4","ed178_sigla":"Dengue"},{"ed178_codigo":4,"ed178_descricao":"Dupla Adulto - Difeteria e T\u00e9tano","ed178_sigla":"dT"},{"ed178_codigo":2,"ed178_descricao":"Febre Amarela","ed178_sigla":"FA"},{"ed178_codigo":1,"ed178_descricao":"Hepatite B","ed178_sigla":"HB"},{"ed178_codigo":10,"ed178_descricao":"Influenza Trivalente","ed178_sigla":"FLU3V"},{"ed178_codigo":3,"ed178_descricao":"Tr\u00edplice Viral  - Sarampo, Caxumba, Rub\u00e9ola","ed178_sigla":"SCR"}]}

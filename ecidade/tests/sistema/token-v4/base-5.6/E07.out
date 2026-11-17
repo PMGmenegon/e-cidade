@@ -1,0 +1,5 @@
+# E07 client_id inexistente
+status: 401
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":"invalid_client","message":"Client authentication failed"}

@@ -1,0 +1,21 @@
+caso	status	tipo	descricao
+E01	200	application/json	senha certa (dbseller)
+E03	401	application/json	usuario inexistente
+E04	401	application/json	username vazio
+E06	401	application/json	client_secret errado
+E07	401	application/json	client_id inexistente
+E08	400	application/json	grant_type invalido
+E09	400	application/json	grant_type ausente
+E10	400	application/json	scope inexistente
+E11	405	application/json	GET (metodo errado)
+E12	200	application/json	corpo JSON
+E13	401	application/json	username com 10 mil caracteres
+U01	200	application/json	token valido recem emitido
+U02	500	application/json	token adulterado: 1 caractere da assinatura
+U03	500	application/json	token adulterado: 1 caractere do payload
+U04	500	application/json	token sem assinatura (2 partes)
+U09	200	application/json	token emitido antes (rodada anterior ou outro runtime) reaproveitado
+C01	401	application/json	client/auth/usuario com cpfcnpj inexistente
+C02	401	application/json	client/auth/usuario sem cpfcnpj
+C03	200	application/json	client/auth/usuario com o cpf do usuario 1 (estrutura da resposta; valores mascarados)
+C04	200	application/json	uso do token gerado por createToken

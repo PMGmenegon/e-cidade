@@ -1,0 +1,5 @@
+# U03 token adulterado: 1 caractere do payload
+status: 500
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":true,"message":"Unauthenticated.","file":"<omitido>","line":"<omitido>","code":0}

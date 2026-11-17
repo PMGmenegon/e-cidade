@@ -1,0 +1,5 @@
+# E10 scope inexistente
+status: 400
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":"invalid_scope","message":"The requested scope is invalid, unknown, or malformed","hint":"Check the `escopo-inexistente` scope"}

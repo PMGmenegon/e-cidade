@@ -1,0 +1,5 @@
+# U02 token adulterado: 1 caractere da assinatura
+status: 500
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":true,"message":"Unauthenticated.","file":"<omitido>","line":"<omitido>","code":0}

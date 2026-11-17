@@ -1,0 +1,5 @@
+# U04 token sem assinatura (2 partes)
+status: 500
+tipo: application/json
+set-cookie: (nenhum)
+corpo: {"error":true,"message":"Unauthenticated.","file":"<omitido>","line":"<omitido>","code":0}

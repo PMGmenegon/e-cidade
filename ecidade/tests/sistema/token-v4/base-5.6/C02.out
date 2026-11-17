@@ -1,0 +1,5 @@
+# C02 client/auth/usuario sem cpfcnpj
+status: 401
+tipo: application/json
+set-cookie: PHPSESSID
+corpo: {"message":"Usu\u00e1rio n\u00e3o encontrado na base do e-cidade.","error":true,"data":null}
