@@ -1,0 +1,56 @@
+# Container proprio da API V1 (Silex) -- nao substitui nenhum outro compose.
+#
+# Por que existe: a API V1 fica com Silex 2.2.4 + Symfony 3.4, que nao convivem no mesmo processo com o Symfony do
+# Laravel novo. Este container monta o MESMO codigo, com a imagem do 8.5 de hoje, mas com o vendor/ so da API por cima
+# (docker/api-v1/composer.lock, 23 pacotes, instalado em $API_DIR/vendor). O proxy (docker/proxy/nginx.conf) manda
+# /api/v1/ para ele pelo nome ecidade_api_v1 na rede e-cidade_ecidade.
+#
+# A API valida a sessao legada (cookie ECIDADEWINDOWMAIN do login feito no 5.6): por isso monta o MESMO volume de
+# sessao do 5.6 (ecidade_sessions) e o mesmo /tmp (ecidade_tmp), como o 8.5 de hoje.
+#
+# Instalar o vendor da API (uma vez; comando em docs/migracao-laravel/api-v1-dependencias.md) e subir / derrubar:
+#   docker compose -f docker-compose.api-v1.yml up -d
+#   docker compose -f docker-compose.api-v1.yml down
+# Outro nome/porta/pasta/volumes (ex.: o ambiente de um agente):
+#   API_NOME=... API_PORTA=... API_DIR=/caminho/runtime-api API_VOL_SESSOES=... API_VOL_TMP=... \
+#   docker compose -p <projeto> -f docker-compose.api-v1.yml up -d
+#
+# Requer a rede e o banco do ambiente de referencia (docker-compose.yml). Nunca use --remove-orphans.
+# Registro: docs/migracao-laravel/api-v1-container.md
+
+services:
+
+  ecidade_api_v1:
+    build:
+      context: ./docker/php85-apache
+    image: ecidade-login-php85
+    container_name: ${API_NOME:-ecidade_api_v1}
+    ports:
+      - "${API_PORTA:-8086}:80"
+    environment:
+      DB_HOST: ecidade_database
+      DB_PORT: 5432
+      DB_DATABASE: ecidade
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    volumes:
+      - ./ecidade:/var/www/html/
+      - ${API_DIR:-./runtime-api}/vendor:/var/www/html/vendor:ro
+      - sessoes:/var/lib/php/sessions
+      - tmp:/tmp
+      - ./docker/php85-apache/paridade-56.ini:/usr/local/etc/php/conf.d/zz-paridade-56.ini:ro
+    networks:
+      - ecidade
+
+networks:
+  ecidade:
+    external: true
+    name: e-cidade_ecidade
+
+volumes:
+  sessoes:
+    external: true
+    name: ${API_VOL_SESSOES:-ecidade_sessions}
+  tmp:
+    external: true
+    name: ${API_VOL_TMP:-ecidade_tmp}
