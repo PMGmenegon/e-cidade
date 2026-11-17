@@ -4,7 +4,7 @@ namespace ECidade\V3\Extension;
 
 use \ECidade\V3\Extension\Registry as R;
 
-class RegistryTest extends \PHPUnit_Framework_TestCase
+class RegistryTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testGetSetHas()

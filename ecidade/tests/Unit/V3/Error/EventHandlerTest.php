@@ -7,7 +7,7 @@ use \ECidade\V3\Error\Entity;
 use Exception;
 use \Zend\EventManager\Event as ZendEvent;
 
-class EventHandlerTest extends \PHPUnit_Framework_TestCase
+class EventHandlerTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testExecuteShouldNotLog()

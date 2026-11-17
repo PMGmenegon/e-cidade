@@ -2,7 +2,7 @@
 
 namespace ECidade\V3\Modification\Data;
 
-class DataTest extends \PHPUnit_Framework_TestCase
+class FileTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
   /**

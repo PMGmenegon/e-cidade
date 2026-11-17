@@ -6,7 +6,7 @@ use \ECidade\V3\Error\Entity;
 use \ECidade\V3\Error\Trace;
 use \ECidade\V3\Error\EntityFactory;
 
-class EntityTest extends \PHPUnit_Framework_TestCase
+class EntityTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testGenerateId()

@@ -4,7 +4,7 @@ namespace ECidade\V3\Error\Handler;
 
 use \ECidade\V3\Error\Handler\Shutdown;
 
-class ShutdownTest extends \PHPUnit_Framework_TestCase
+class ShutdownTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testHandleExpectNothing()

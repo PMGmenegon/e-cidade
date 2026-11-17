@@ -5,7 +5,7 @@ namespace ECidade\V3\Error;
 use ECidade\V3\Error\Trace;
 use Exception;
 
-class TraceTeste extends \PHPUnit_Framework_TestCase
+class TraceTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testTraceFilter()

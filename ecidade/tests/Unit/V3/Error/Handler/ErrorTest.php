@@ -3,9 +3,9 @@
 namespace ECidade\V3\Error\Handler;
 
 use \ECidade\V3\Error\Handler\Error;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase; // T-009: alias namespaced (existe no 5.7 e no 9/12)
 
-class ErrorTest extends PHPUnit_Framework_TestCase
+class ErrorTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
 
     public function testHandle()

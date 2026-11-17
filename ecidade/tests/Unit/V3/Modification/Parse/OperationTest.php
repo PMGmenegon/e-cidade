@@ -4,14 +4,14 @@ namespace ECidade\V3\Modification\Parse;
 
 use DOMDocument;
 use DOMNode;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase; // T-009: alias namespaced (existe no 5.7 e no 9/12)
 
 /**
  * Class OperationTest
  * @package ECidade\V3\Modification\Parse
  * @todo Implementar testes para offset e limit
  */
-class OperationTest extends PHPUnit_Framework_TestCase
+class OperationTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
     /**
      *

@@ -8,7 +8,7 @@ use ECidade\V3\Error\Sanitizer;
  * Class ExceptionTest
  * @package ECidade\V3\Error\Handler
  */
-class ExceptionTest extends \PHPUnit_Framework_TestCase
+class ExceptionTest extends \PHPUnit\Framework\TestCase // T-009: era PHPUnit_Framework_TestCase
 {
     /**
      *

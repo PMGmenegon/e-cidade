@@ -1,0 +1,39 @@
+# Testes que NAO rodam na suite, com o motivo. Formato: arquivo|motivo
+# Aparecem no relatorio de cada runtime. (T-009 preencheu o 8.5 dos testes existentes.)
+tests/Unit/Configuracao/Api/Generator/HashGeneratorTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Configuracao/Model/DBRegistryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Core/Helpers/HourHelperTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/ExampleTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Financeiro/Contabilidade/Msc/LancamentoRepositoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Patrimonial/Licitacao/LicitaCon/JulgamentoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Patrimonial/Licitacao/LicitaCon/SituacaoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Patrimonial/Licitacao/LicitaCon/VersaoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/ESocial/Factory/EsocialPreenchimentoValidatorFactoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/ESocial/Factory/SugestaoPreenchimentoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/ESocial/Validators/ServidorPreenchimentoValidatorTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Model/ControleRubricasParametrosTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Model/PontoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Model/ServidorMovimentacaoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Model/ServidorTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Model/SindicatoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Repository/DependenteRepositoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Repository/ServidorMovimentacaoRepositoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Service/ControleRubricasCalculoServiceTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/RecursosHumanos/Pessoal/Service/ControleRubricasMatriculasServiceTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/CalculaConsumoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/CalcularConsumoLeituraTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/CalculoPercentualTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/CalculoTarifaBasicaTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Isencao/DescontoTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Isencao/ImuneTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Isencao/LeiOrganicaTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/IsencaoFactoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Leitura/Regra/PenalidadeTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Leitura/RegraFactoryTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Processamento/CondominioTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Processamento/EconomiaTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/Tributario/Agua/Repository/LeituraTest.php|85: estende Tests\TestCase -> Mockery antigo do vendor/ (MockeryTestCase::setUp() sem void), fatal no PHPUnit 9/12; migrar o Mockery depende da T-0xx do vendor
+tests/Unit/V3/Extension/ContainerTest.php|85: setUp() sem tipo de retorno (PHPUnit 9 exige ': void', que nao compila no 5.6)
+tests/Unit/V3/Extension/ParameterBagTest.php|85: setUp() sem tipo de retorno (PHPUnit 9 exige ': void', que nao compila no 5.6)
+tests/Unit/Recadastramento.php|fora do phpunit.xml (nome sem sufixo Test.php); 4/5 passam no 5.6, testCampoValor falha ja no 5.6
+tests/cypress/|camada sistema no navegador (Cypress): das T-011/T-012, nao desta camada
