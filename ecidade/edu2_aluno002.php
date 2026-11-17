@@ -136,7 +136,7 @@ if ($ed47_o_oid != 0) {
 	
   $arquivo = "tmp/".$ed47_c_foto;
   db_query("begin");
-  pg_lo_export($conn, $ed47_o_oid, $arquivo);
+  try { pg_lo_export($conn, $ed47_o_oid, $arquivo); } catch (\ValueError $oErroOid) { };
   db_query("end");
   $pdf->Image($arquivo,177,43,20);
   

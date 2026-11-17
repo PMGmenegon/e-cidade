@@ -465,7 +465,7 @@ class cl_db_bancos {
 
     $sCaminho = "tmp/".$iCodigoBanco.".jpg";
     global $conn;
-    pg_lo_export($conn, $iOidLogo, $sCaminho);
+    try { pg_lo_export($conn, $iOidLogo, $sCaminho); } catch (\ValueError $oErroOid) { };
     db_query("commit");
 
     return $sCaminho;

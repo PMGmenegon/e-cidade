@@ -98,7 +98,7 @@ abstract class DBLargeObject
         if (!db_utils::inTransaction($conn)) {
             throw new Exception("Sem transação Ativa.");
         }
-        $lEscritaArquivo = pg_lo_export($conn, $iOid, $sCaminhoArquivo);
+        try { $lEscritaArquivo = pg_lo_export($conn, $iOid, $sCaminhoArquivo); } catch (\ValueError $oErroOid) { $lEscritaArquivo = false; };
 
         return $lEscritaArquivo;
     }

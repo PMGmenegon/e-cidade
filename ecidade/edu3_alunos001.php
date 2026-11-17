@@ -165,7 +165,7 @@ if( isset( $chavepesquisa ) ) {
                                  $arquivo = "tmp/".$ed47_c_foto;
 
                                  db_query("begin");
-                                 $lResultExport = pg_lo_export($conn, $ed47_o_oid, $arquivo);
+                                 try { $lResultExport = pg_lo_export($conn, $ed47_o_oid, $arquivo); } catch (\ValueError $oErroOid) { $lResultExport = false; };
                                  db_query("end");
 
                                  if (!$lResultExport) {
