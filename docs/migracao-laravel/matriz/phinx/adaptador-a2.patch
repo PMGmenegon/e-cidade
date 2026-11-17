@@ -1,0 +1,56 @@
+diff -ruN a/classes/PostgresMigration.php b/classes/PostgresMigration.php
+--- a/classes/PostgresMigration.php
++++ b/classes/PostgresMigration.php
+@@ -9,7 +9,7 @@
+     /**
+      * {@inheritdoc}
+      */
+-    public function table($tableName, $options = array())
++    public function table(string $tableName, array $options = []): \Phinx\Db\Table
+     {
+         return new Table($tableName, $options, $this->getAdapter());
+     }
+diff -ruN a/classes/Table.php b/classes/Table.php
+--- a/classes/Table.php
++++ b/classes/Table.php
+@@ -22,7 +22,7 @@
+      * @param array $options
+      * @param AdapterInterface|null $adapter
+      */
+-    public function __construct($name, $options = [], AdapterInterface $adapter = null)
++    public function __construct($name, $options = [], ?AdapterInterface $adapter = null)
+     {
+         $name = trim($name);
+ 
+@@ -74,7 +74,7 @@
+     /**
+      *
+      */
+-    public function save()
++    public function save(): void
+     {
+         $this->setTableSchemaAdapter($this->getAdapter());
+         parent::save();
+@@ -85,8 +85,12 @@
+      * @param array $values
+      * @return BaseTable
+      */
+-    public function insert(array $columns, array $values)
++    public function insert(array $columns, ?array $values = null)
+     {
++        if ($values === null) {
++            return parent::insert($columns);
++        }
++
+         $count = count($columns);
+         $rows = [];
+ 
+@@ -126,7 +130,7 @@
+      * @param AdapterInterface|null $adapter
+      * @return string
+      */
+-    private function getSchemaName($table, AdapterInterface $adapter = null)
++    private function getSchemaName($table, ?AdapterInterface $adapter = null)
+     {
+         $adapter = $adapter ?: $this->getAdapter();
+ 
