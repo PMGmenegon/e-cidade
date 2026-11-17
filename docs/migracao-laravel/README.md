@@ -4,9 +4,12 @@ Esta pasta organiza o trabalho de avaliacao e planejamento para migrar o e-Cidad
 
 ## Como navegar
 
+- [Matriz de versoes e resolucao do Composer](matriz-versoes.md) (T-005, 12/11/2026): Laravel 12 e 13 x PHP 8.4 e 8.5 resolvidos de verdade numa copia descartavel; os 4 pacotes que impedem a resolucao e a alternativa de cada um. Scripts em [`matriz/`](matriz/).
 - [Auditoria revisada do Composer](auditoria/composer-compatibilidade-revisada.md): resumo dos bloqueios de resolucao ja identificados, das dependencias sem compatibilidade demonstrada e dos testes ainda necessarios.
 - [Plano de migracao](plano-de-migracao.md): fases propostas, dependencias entre atividades e criterios para avancar.
 - [Decisoes pendentes](decisoes-pendentes.md): alternativas e evidencias necessarias antes de escolher um alvo ou substituir bibliotecas.
+- [Compatibilidade do FrontController](compatibilidade-FrontController.md): como o `FrontController.php` despacha `api/vN/`, `v4/`, `rest/v1/` e o resto, e a compatibilidade de cada ponto de entrada (documento da branch `origin/laravel-upgrade`, com referencias aos registros que ja cobrem o assunto).
+- [Silex (API V1), caminho de atualizacao e datas de suporte](silex-caminhos-e-suporte.md): 7 rotas e 33 arquivos da `api/V1`, opcoes manter/atualizar/substituir, versao a versao x salto direto e datas oficiais de Laravel 12/13 e PHP 8.4/8.5 (consulta de 12/11/2026).
 
 ## Documentos de referencia
 
