@@ -4,12 +4,16 @@
         [--sem-fluxos] [--alvo-laravel URL]
     python -m regressao.completa.orquestra --comparar ANTES DEPOIS [--saida-comparacao DIR]
 
+Referencia (gabarito) = base PHP 7.4/Laravel 8 (`REGRESSAO_REF_URL`, padrao :8074); alvo PHP = 8.5
+(`REGRESSAO_PHP_NOVO_URL`, :8185); alvo Laravel = `--alvo-laravel` ou `REGRESSAO_LARAVEL_NOVO_URL` (padrao o
+laboratorio :8187, que hoje roda o Laravel 8 da base sob PHP 8.5: o Laravel 13 do grupo ainda nao existe).
+
 Ordem e higiene de estado: ambiente -> bateria PHP (restaura a baseline) -> bateria Laravel em
 `comparar` (restaura de novo) -> fluxos de navegador (restauram de novo e rodam por ULTIMO; o banco
 termina SUJO por construcao: a proxima bateria, qualquer que seja, restaura). Custo: ~3 restauracoes
-(~4 min cada) + o tempo de cada bateria. Uma frente que falha (inclusive "Laravel 12 nao existe",
-que vira UM ERRO_AMBIENTE `laravel:boot`) NAO aborta as outras: tudo e agregado e o codigo de saida
-e o PIOR das frentes (2 > 1 > 0, mesma semantica de `codigo_saida`).
+(~4 min cada) + o tempo de cada bateria. Uma frente que falha (inclusive "o Laravel do alvo nao autentica",
+que vira UM ERRO_AMBIENTE `laravel:banco`/`laravel:boot`) NAO aborta as outras: tudo e agregado e o codigo
+de saida e o PIOR das frentes (2 > 1 > 0, mesma semantica de `codigo_saida`).
 
 Saida: <saida>/php/, <saida>/laravel/, <saida>/fluxos/ (rodadas completas de cada frente) e, no topo,
 resultado.json + resumo.md (copia identica em relatorio.md). Ids dos casos ganham o prefixo da frente
@@ -43,14 +47,22 @@ FRENTES = ("php", "laravel", "fluxos")
 PREFIXO_ID = {"php": "php", "laravel": "laravel", "fluxos": "fluxo"}
 AREA_COMPLETA = "completa"
 LIMITE_LISTA = 60
-AVISO_ESCOPO_PHP = ("ESCOPO: ./ecidade e montado nos DOIS runtimes; a bateria PHP prova so paridade 5.6 x 8.5 sobre o "
-                    "codigo ATUAL e NAO detecta regressao de codigo comum aos dois. So Laravel e fluxos sao golden master.")
+AVISO_ESCOPO_PHP = ("ESCOPO: ./ecidade e montado nos DOIS runtimes; a bateria PHP prova so paridade referencia 7.4 x 8.5 "
+                    "sobre o codigo ATUAL e NAO detecta regressao de codigo comum aos dois. So Laravel e fluxos sao "
+                    "golden master.")
+AVISO_REFERENCIA = ("REFERENCIA: o gabarito e a base PHP 7.4/Laravel 8 (base-php74, PR #8); a base antiga virou "
+                    "historico. \"Igual\" quer dizer igual ao 7.4.")
+AVISO_VEREDITOS = ("INCONCLUSIVO e ERRO_AMBIENTE NUNCA sao aprovacao: INCONCLUSIVO e caso nao exercitado, ERRO_AMBIENTE e "
+                   "rodada que nao pode ser feita. Verde = saida 0 E leitura da Cobertura e dos INCONCLUSIVO.")
+AVISO_AUTOCONSISTENCIA = ("ALVO LARAVEL = REFERENCIA: a bateria Laravel comparou o Laravel 8 com a propria baseline "
+                          "(prova de estabilidade da medicao), nao a migracao.")
 
 
 # ------------------------------------------------------------------ ambiente e meta
 
 def _verifica_ambiente() -> list[str]:
-    """Docker, banco, :8080, :8085 e o proxy. O Laravel novo NAO entra: sua ausencia e um achado da
+    """Docker, banco, referencia 7.4 (:8074), PHP 8.5 (:8185) e o proxy (:8190), pelos nomes de
+    regressao/nucleo/ambiente.py. O Laravel novo NAO entra: sua ausencia e um achado da
     bateria Laravel (ERRO_AMBIENTE proprio), nao motivo para abortar a rodada completa."""
     alvos = alvos_do_ambiente()
     return verifica(replace(alvos, laravel_novo=alvos.ref))
@@ -65,6 +77,24 @@ def _meta_repo() -> dict:
     except Exception as e:
         meta["baseline_sha256"] = f"indisponivel: {type(e).__name__}"
     return meta
+
+
+def _mesma_url(a: str, b: str) -> bool:
+    return (a or "").rstrip("/") == (b or "").rstrip("/")
+
+
+def veredito_geral(meta: dict) -> str:
+    """Uma linha para quem so quer saber se a rodada e verde: o pior codigo das frentes e dos casos."""
+    t = meta.get("totais") or {}
+    if t.get("ERRO_AMBIENTE") or meta.get("comparavel") is False:
+        return ("ERRO (saida 2): a rodada nao pode ser concluida (ERRO_AMBIENTE ou sub-rodada nao comparavel); "
+                "nada se conclui, corrija o ambiente e rode de novo")
+    novas = (meta.get("divergencias") or {}).get("novas", 0)
+    if novas:
+        return f"VERMELHO (saida 1): {novas} divergencia(s) nova(s) em relacao a referencia 7.4"
+    n_inc = t.get("INCONCLUSIVO", 0)
+    return ("VERDE (saida 0): nenhuma divergencia nova" + (f"; {n_inc} caso(s) INCONCLUSIVO NAO foram verificados"
+                                                          if n_inc else ""))
 
 
 def prefixa(frente: str, id: str) -> str:
@@ -228,8 +258,12 @@ def agrega(frentes: dict[str, Frente], meta_repo: dict, tempos: dict, partes: li
         meta["alvo_laravel"] = lar.meta["alvo"]
 
     avisos = list(extra_avisos or [])
+    avisos.append(AVISO_REFERENCIA)
+    avisos.append(AVISO_VEREDITOS)
     if "php" in frentes:
         avisos.append(AVISO_ESCOPO_PHP)
+    if lar and lar.meta.get("alvo") and _mesma_url(lar.meta["alvo"], alvos_do_ambiente().ref):
+        avisos.append(AVISO_AUTOCONSISTENCIA)
     for n, b in baterias.items():
         if not b["comparavel"]:
             avisos.append(f"{n}: sub-rodada NAO COMPARAVEL"
@@ -258,7 +292,8 @@ def _lista(titulo: str, itens: list[Caso]) -> list[str]:
 
 
 def resumo_md(casos: list[Caso], meta: dict, avisos: list[str]) -> str:
-    L = ["# Resumo da bateria completa", ""]
+    L = ["# Resumo da bateria completa", "", f"**Resultado: {veredito_geral(meta)}**", "",
+         "Referencia (gabarito): PHP 7.4/Laravel 8. Alvo: PHP 8.5. Como ler: regressao/COMO-USAR.md.", ""]
     if avisos:
         L += ["## AVISOS", ""] + [f"- **{a}**" for a in avisos] + [""]
     L += ["## Meta", ""]
@@ -542,7 +577,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--area", action="append", default=None, help="repetivel; so a bateria PHP")
     ap.add_argument("--prefixo", action="append", default=None, metavar="RX", help="repetivel; so a bateria PHP")
     ap.add_argument("--sem-fluxos", action="store_true", help="nao roda os fluxos de navegador")
-    ap.add_argument("--alvo-laravel", default=None, metavar="URL", help="padrao: REGRESSAO_LARAVEL_NOVO_URL / :8087")
+    ap.add_argument("--alvo-laravel", default=None, metavar="URL", help="padrao: REGRESSAO_LARAVEL_NOVO_URL (:8187, laboratorio); "
+                         "a referencia (:8074) da a prova de estabilidade")
     ap.add_argument("--comparar", nargs=2, metavar=("ANTES", "DEPOIS"), type=Path)
     ap.add_argument("--saida-comparacao", type=Path, default=None, help="onde gravar comparacao.md/.json (padrao: DEPOIS)")
     try:

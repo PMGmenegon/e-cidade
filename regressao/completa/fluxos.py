@@ -1,23 +1,28 @@
-"""Fluxos de navegador (Playwright, headless) pelo proxy :8090, em modo golden-master.
+"""Fluxos de navegador (Playwright, headless) pelo proxy (REGRESSAO_PROXY_URL, padrao :8190), em modo golden-master.
 
     python -m regressao.completa.fluxos gravar   --saida DIR [--proxy URL] [--fluxo ID ...] [--confirmo-sobrescrever]
     python -m regressao.completa.fluxos comparar --saida DIR [--proxy URL] [--fluxo ID ...] [--sem-restaurar]
 
-O proxy (http://localhost:8090) e a entrada real do usuario: ele manda cada tela para o PHP 5.6 ou
-para o 8.5 e diz qual no cabecalho `X-Ecidade-Runtime`. Esse cabecalho e REGISTRADO em cada requisicao
-principal mas NUNCA e motivo de falha: ele vai mudar na migracao; aparece como INFO no detalhe.
+O proxy e a entrada real do usuario: ele manda cada tela para a referencia PHP 7.4 ou para o 8.5 e diz
+qual no cabecalho `X-Ecidade-Runtime`. Esse cabecalho e REGISTRADO em cada requisicao principal mas NUNCA
+e motivo de falha: ele vai mudar na migracao; aparece como INFO no detalhe.
+
+Base 7.4 (PR #8): o login abre o Desktop (`/extension/desktop`, ECIDADE_DESKTOP forcado). O usuario abre o
+MENU, escolhe instituicao, area e modulo, e cada item de menu abre uma JANELA do Desktop com o frame `corpo`
+(a tela). O menu de modulos so monta com as migrations Laravel do PR aplicadas no banco (dump v2,
+regressao/README.md secao 2).
 
 Fluxos (cada um com sua propria sessao de navegador, limite de 120 s):
-  navegacao         login -> atualiza-cadastro (Cancelar) -> instituicao -> area -> modulo Arrecadacao ->
-                    tela de cadastro (arr1_grupotaxa001) -> tela de relatorio (cai2_relcaixa_001) -> sair
+  navegacao         login (Desktop) -> MENU (instituicao) -> area -> modulo Arrecadacao ->
+                    tela de cadastro (arr1_grupotaxa001) -> tela de relatorio (cai2_relcaixa_001) -> sair (Logout)
   incluir-registro  entra no modulo, abre arr1_grupotaxa001, preenche pela UI (com a consulta de
                     "tipo de grupo"), clica Incluir; confere o alerta e o EFEITO NO BANCO
                     (hash_tabelas de arrecadacao.grupotaxa antes/depois)
   emitir-relatorio  entra no modulo, abre cai2_relcaixa_001?db_opcao=tabrecjm e clica Imprimir; confere
                     status/tipo/texto do PDF aberto na janela nova
 
-Por passo guardamos: DOM normalizado do frame `corpo` (sem scripts/estilos, datas, horas, ids de
-sessao, saudacao), status HTTP das requisicoes principais (documentos e XHR), runtime (info),
+Por passo guardamos: DOM normalizado do frame `corpo` da janela aberta (antes de abrir uma tela, o DOM
+do MENU do Desktop), sem scripts/estilos, datas, horas, ids de sessao, saudacao; status HTTP das requisicoes principais (documentos e XHR), runtime (info),
 alertas, valores digitados e efeito no banco. Console errors e requisicoes que falham sao coletados por
 fluxo e so viram veredito se DIFEREM da baseline. Nunca se grava senha, sessao, token ou cabecalho:
 `confere_sem_segredos` barra a gravacao.
@@ -55,8 +60,12 @@ LIMITE_CONTEUDO = 3_000
 PRAZO_FLUXO_S = 120
 TIMEOUT_ACAO_MS = 20_000
 TABELA_REGISTRO = "arrecadacao.grupotaxa"
-AREA_PADRAO = "DB:TRIBUTÁRIO"       # titulo do link da area na tela de areas
-MODULO_PADRAO = "Arrecadação"       # titulo do link do modulo
+INSTITUICAO_PADRAO = "1 - PREFEITURA DBSELLER"  # texto da instituicao no MENU do Desktop
+AREA_PADRAO = "DB:TRIBUTÁRIO"       # texto da area no MENU do Desktop
+MODULO_PADRAO = "Arrecadação"       # texto do modulo no MENU do Desktop
+# Requisicoes periodicas do Desktop (o "ping" da sessao): caem em qualquer passo conforme o relogio, entao
+# nao entram nas requisicoes por passo (senao o mesmo fluxo daria DIVERGE de uma rodada para outra).
+PERIODICAS = ("/extension/desktop/Window/ping/",)
 
 
 class SegredoNaBaseline(ValueError):
@@ -174,6 +183,8 @@ class Coletor:
     def resposta(self, metodo: str, url: str, status: int, tipo: str, runtime: str | None,
                  content_type: str | None = None) -> None:
         caminho = caminho_seguro(url)
+        if urlsplit(url).path.endswith(PERIODICAS):
+            return
         # `require_once` do e-cidade carrega scripts por XHR: sao estaticos, nao "requisicoes principais"
         principal = tipo in self.PRINCIPAIS and not urlsplit(url).path.lower().endswith(self.ESTATICOS)
         if principal:
@@ -362,7 +373,8 @@ class _Janela:
         self.ctx.on("weberror", lambda e: coletor.erro_console(f"pageerror: {e.error.message if e.error else ''}"))
         self.ctx.on("dialog", self._dialogo)
         self.login_pg = self.ctx.new_page()
-        self.main = None
+        self.main = None   # a pagina do Desktop (a mesma do login, depois do POST /v4/login)
+        self._corpo = None  # frame `corpo` da janela do Desktop em uso
 
     # eventos
     def _inicio(self, _r) -> None:
@@ -408,73 +420,106 @@ class _Janela:
                 return
 
     def corpo(self):
-        return self.main.frame("corpo")
+        """Frame `corpo` da ultima janela do Desktop aberta por `abre_menu` (a tela em uso)."""
+        if self._corpo is None:
+            raise RuntimeError("nenhuma tela aberta no Desktop")
+        return self._corpo
 
-    def dispensa_modal(self) -> None:
-        loc = self.corpo().locator(".db-modal-header .close")
-        if loc.count():
-            loc.first.click()
-            self.espera(600)
+    @staticmethod
+    def _sel_texto(seletor: str, texto: str) -> str:
+        return f"{seletor}:text-is({json.dumps(texto, ensure_ascii=False)})"
 
     # passos
     def login(self) -> None:
+        """login.php -> POST /v4/login -> Desktop (/extension/desktop) na mesma pagina."""
         self.login_pg.goto(f"{self.proxy}/login.php")
         self.login_pg.fill("#usu_login", "dbseller")
         self.login_pg.fill("#usu_senha", "dbseller")
         self.login_pg.click("#btnlogar")
-        for _ in range(60):
-            self.prazo()
-            achou = [q for q in self.ctx.pages if "inicio.php" in q.url]
-            if achou:
-                self.main = achou[0]
-                break
-            self.login_pg.wait_for_timeout(500)
-        if self.main is None:
-            raise RuntimeError("login nao abriu a janela principal (inicio.php)")
+        try:
+            self.login_pg.wait_for_url(lambda u: "/extension/desktop" in u)
+        except Exception as e:
+            raise RuntimeError("login nao abriu o Desktop (/extension/desktop)") from e
+        self.main = self.login_pg
         self.main.wait_for_load_state("load")
-        self.corpo().wait_for_selector("input[name=cancelar]")
+        self.main.wait_for_selector(".taskbar-menu-button")
         self.assenta()
 
-    def pula_atualiza_cadastro(self) -> None:
-        self.corpo().click("input[name=cancelar]")
-        self.corpo().wait_for_selector("a[title='PREFEITURA DBSELLER']")
-        self.assenta()
-        self.dispensa_modal()
-
-    def escolhe_instituicao(self, area: str = AREA_PADRAO) -> None:
-        self.corpo().click("a[title='PREFEITURA DBSELLER']")
-        self.corpo().wait_for_selector(f"a[title='{area}']")
+    def abre_menu_principal(self, instituicao: str = INSTITUICAO_PADRAO) -> None:
+        """Botao MENU do Desktop; escolhe a instituicao (a lista de areas recarrega)."""
+        if not self.main.locator("#menu.active").count():
+            self.main.click(".taskbar-menu-button")
+        self.main.wait_for_selector(self._sel_texto("#instituicoes span", instituicao))
+        self.main.click(self._sel_texto("#instituicoes span", instituicao))
+        self.main.wait_for_selector("#areas span")
         self.assenta()
 
     def escolhe_area(self, area: str = AREA_PADRAO, modulo: str = MODULO_PADRAO) -> None:
-        self.corpo().click(f"a[title='{area}']")
-        self.corpo().wait_for_selector(f"a[title='{modulo}'][id=link]")
+        self.main.click(self._sel_texto("#areas span", area))
+        self.main.wait_for_selector(self._sel_texto("#modulos span", modulo))
         self.assenta()
 
     def escolhe_modulo(self, modulo: str = MODULO_PADRAO) -> None:
-        self.corpo().click(f"a[title='{modulo}'][id=link]")
-        self.corpo().wait_for_selector("#db-menu")
+        self.main.click(self._sel_texto("#modulos span", modulo))
+        self.main.wait_for_selector(".menu-itens .menu-list > span")
         self.assenta()
 
-    def abre_menu(self, href: str) -> None:
-        self.corpo().evaluate(
-            "(h) => { const a = [...document.querySelectorAll('a')].find(x => x.getAttribute('href') === h);"
-            " if (!a) throw new Error('item de menu inexistente: ' + h); a.click(); }", href)
-        pagina = href.split("?")[0]
-        self.corpo().wait_for_url(lambda u: pagina in u)
+    _BUSCA_ITEM = """(acao) => {
+      const $ = window.jQuery;
+      const raiz = $('.menu-itens').first().find('.menu-list > span').map((i, s) => $(s).data('menu.filhos')).get();
+      function busca(nos, cam) {
+        for (const n of nos) {
+          if (n && n.action === acao) return [...cam, n.id];
+          if (n && n.filhos) { const r = busca(Object.values(n.filhos), [...cam, n.id]); if (r) return r; }
+        }
+        return null;
+      }
+      return busca(raiz, []);
+    }"""
+
+    def abre_menu(self, acao: str) -> None:
+        """Abre, pelo MENU do modulo atual, o item cuja action e `acao` (clica cada nivel, como o usuario);
+        a janela nova passa a ser a tela em uso (`corpo`)."""
+        if not self.main.locator("#menu.active").count():
+            self.main.click(".taskbar-menu-button")
+            self.main.wait_for_selector(".menu-itens .menu-list > span")
+        caminho = self.main.evaluate(self._BUSCA_ITEM, acao)
+        if not caminho:
+            raise RuntimeError(f"item de menu inexistente no modulo: {acao}")
+        antes = {id(f) for f in self.main.frames}
+        for mid in caminho:
+            # o evento vai direto ao item (o handler do menu e delegado): as listas deslizam/rolam com animacao
+            # e um clique por coordenada as vezes nao acha o item "estavel" a tempo
+            item = self.main.locator(f"#menu_id_{mid}")
+            item.wait_for(state="attached")
+            item.dispatch_event("click")
+        pagina = acao.split("?")[0]
+        for _ in range(80):
+            self.prazo()
+            novos = [f for f in self.main.frames if f.name == "corpo" and id(f) not in antes and pagina in f.url]
+            if novos:
+                self._corpo = novos[-1]
+                break
+            self.login_pg.wait_for_timeout(250)
+        else:
+            raise RuntimeError(f"a janela de {pagina} nao abriu")
+        self._corpo.wait_for_load_state("load")
         self.assenta()
 
     def entra_no_modulo(self, area: str = AREA_PADRAO, modulo: str = MODULO_PADRAO) -> None:
         self.login()
-        self.pula_atualiza_cadastro()
-        self.escolhe_instituicao(area)
+        self.abre_menu_principal()
         self.escolhe_area(area, modulo)
         self.escolhe_modulo(modulo)
 
     def snapshot(self) -> dict:
-        html = self.corpo().content()
+        """DOM da tela em uso; antes de abrir uma tela, o do MENU do Desktop (instituicoes/areas/modulos/itens)."""
+        if self._corpo is not None:
+            html, url = self._corpo.content(), self._corpo.url
+        else:
+            html, url = self.main.inner_html("#menu"), self.main.url
         dom = normaliza_dom(html)
-        return {"url": caminho_seguro(self.corpo().url), "dom": dom[:LIMITE_DOM], "dom_sha256": sha(dom),
+        return {"url": caminho_seguro(url), "dom": dom[:LIMITE_DOM], "dom_sha256": sha(dom),
                 "dom_truncado": len(dom) > LIMITE_DOM}
 
     def fecha(self) -> None:
@@ -525,13 +570,10 @@ def _f_navegacao():
     def login(j):
         j.login()
 
-    def instit(j):
-        j.pula_atualiza_cadastro()
+    def menu(j):
+        j.abre_menu_principal()
 
     def area(j):
-        j.escolhe_instituicao()
-
-    def modulo_lista(j):
         j.escolhe_area()
 
     def modulo(j):
@@ -545,18 +587,19 @@ def _f_navegacao():
         j.abre_menu("cai2_relcaixa_001.php?db_opcao=tabrecjm")
 
     def sair(j):
-        topo = j.main.frame("topo")
-        topo.evaluate("() => [...document.querySelectorAll('a')].find(a => (a.getAttribute('onclick')||'')"
-                      ".indexOf('Deseja realmente sair') >= 0).click()")
-        for _ in range(20):
-            if j.main.is_closed():
-                break
-            j.login_pg.wait_for_timeout(250)
-        return {"janela_principal_fechada": j.main.is_closed()}
+        # Menu do usuario (topo) -> Logout. Na referencia, no Chromium headless, o clique nao gera requisicao e o
+        # Desktop continua aberto (medido em 2026-11-18): o passo registra o que acontece, nao o que se espera.
+        j.main.click(".topbar .user-name")
+        j.main.click("#logout")
+        try:
+            j.main.wait_for_url(lambda u: "/extension/desktop" not in u, timeout=5000)
+        except Exception:
+            pass
+        j.assenta()
+        return {"saiu_do_desktop": "/extension/desktop" not in j.main.url}
 
-    return [("login", login, True), ("atualiza-cadastro", instit, True), ("instituicao", area, True),
-            ("area", modulo_lista, True), ("modulo", modulo, True), ("tela-cadastro", cadastro, True),
-            ("tela-relatorio", relatorio, True), ("sair", sair, False)]
+    return [("login", login, True), ("menu", menu, True), ("area", area, True), ("modulo", modulo, True),
+            ("tela-cadastro", cadastro, True), ("tela-relatorio", relatorio, True), ("sair", sair, False)]
 
 
 def _f_incluir():
@@ -647,7 +690,7 @@ def _inclui(j, tabelas: list[str], botao: str, sem_horas: bool = False) -> dict:
 
 def _f_financeiro():
     """Financeiro / Orcamento: inclui uma funcao orcamentaria (campos de uma linha `verificado` do catalogo)."""
-    area, modulo, tabela = "DB:FINANCEIRO", "Modulo Orcamento", "orcamento.orcfuncao"
+    area, modulo, tabela = "DB:FINANCEIRO", "Orçamento", "orcamento.orcfuncao"
 
     def entrada(j):
         j.entra_no_modulo(area, modulo)
@@ -673,7 +716,7 @@ def _f_financeiro():
 
 def _f_tributario():
     """Tributario / ISSQN: abre o formulario do relatorio de tipos de calculo e o emite (PDF)."""
-    area, modulo = "DB:TRIBUTÁRIO", "Módulo Issqn"
+    area, modulo = "DB:TRIBUTÁRIO", "ISSQN"
 
     def entrada(j):
         j.entra_no_modulo(area, modulo)
@@ -694,7 +737,7 @@ TABELAS_CGM = ["protocolo.cgm", "protocolo.cgmfisico", "protocolo.db_cgmcpf", "p
 
 def _f_cadastros():
     """Cadastros / Protocolo: inclui um CGM pessoa fisica (CPF -> formulario completo -> Incluir)."""
-    area, modulo = "DB:PATRIMONIAL", "Modulo Protocolo"
+    area, modulo = "DB:PATRIMONIAL", "Protocolo"
 
     def entrada(j):
         j.entra_no_modulo(area, modulo)
