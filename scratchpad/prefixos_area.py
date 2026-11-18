@@ -46,8 +46,11 @@ disco = {f.lower() for f in os.listdir("ecidade")}       # o banco guarda em min
 # o mesmo criterio do proxy: location por prefixo + map por nome exato
 # a alternancia de prefixos do `location ~* ^(?:/w/[0-9]+)?/(?:(?:cem|itbi?|...)[0-9]*_)`:
 # captura tudo ate o primeiro `)`, que fecha a lista (os prefixos nao tem parenteses)
-loc = re.search(r'location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)',
-                open("docker/proxy/nginx.conf").read()).group(1)
+# So a linha ATIVA (nao comentada): na base-php74 o bloco nasce comentado e nada vai ao 8.5; o marcador
+# (que nao casa com nenhuma tela) deixa a lista do location vazia.
+_m = re.search(r'^[ \t]*location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)',
+               open("docker/proxy/nginx.conf").read(), re.M)
+loc = _m.group(1) if _m else "nenhum_prefixo_no_85"
 LOC = re.compile(rf'^(?:{loc})[0-9]*_', re.I)
 # entradas do `map`: linhas indentadas `    <tela>    php85;`
 MAP = {m.group(1) for l in open("docker/proxy/faseb_map.conf") for m in [re.match(r'\s+(\S+)\s+php85;', l)] if m}

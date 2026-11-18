@@ -225,7 +225,10 @@ def telas_servidas():
     """As telas que o proxy manda ao 8.5, como no fluxo D do guia: as do `location` (prefixos lidos do
     nginx.conf) e as do `map` (faseb_map.conf, com a grafia do disco; o map guarda em minuscula)."""
     ng = ler(os.path.join(RAIZ, "docker", "proxy", "nginx.conf"))
-    pref = re.search(r"location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)\)", ng).group(1)
+    # So a linha ATIVA (nao comentada) do location. Na base-php74 o bloco nasce comentado: nada vai ao
+    # 8.5, e o marcador abaixo (que nao casa com nenhuma tela) faz a lista do location sair vazia.
+    m = re.search(r"^[ \t]*location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:([^)]+)\)", ng, re.M)
+    pref = m.group(1) if m else "nenhum_prefixo_no_85"
     rx = re.compile(rf"^(?:{pref})[0-9]*_", re.I)
     disco = {f.lower(): f for f in os.listdir(ECIDADE)}
     loc = sorted(f for f in disco.values() if f.endswith(".php") and rx.match(f))

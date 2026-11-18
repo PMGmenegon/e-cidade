@@ -24,11 +24,13 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECI = os.path.join(RAIZ, "ecidade")
 # inicio do nome (sem "DB:") das areas concluidas; casado com startswith, entao "SA"
 # pega SAUDE -- e qualquer outra area que comece por SA.
-JA = ("TRIBUT", "EDUCA", "RECURSOS", "PATRIM", "FINANC", "SA", "CONFIG") # areas concluidas
+JA = ()  # areas concluidas NA BASE-PHP74 (nenhuma ainda; a base-php84 tinha 7, que nao valem aqui)
 
 # o mesmo regex do `location` do nginx (docker/proxy/nginx.conf) -- COPIA: ao acrescentar
 # prefixo ao nginx, acrescentar aqui tambem (o rotear.py faz isso)
-LOC = re.compile(r"^(?:cem|itbi?|agua?|jur|div|mar|not|fis|iss|dvr|arr|tri|inf|tra|tre|esc|rel|sec|bib|mer|edu|rh|eso|rec|pes|ac|aco|ouv|lic|vei|pat|com|cus|pla|pl|tes|emp|orc|cai|fum|hip|age|amb|tfd|vac|lab|far|sau|sys)[0-9]*_", re.I)
+# base-php74: nada vai ao 8.5 ainda. "nenhum_prefixo_no_85" e um marcador que nao casa com nenhuma tela;
+# o rotear.py acrescenta os prefixos depois dele (ex.: nenhum_prefixo_no_85|soc|hab) ao rotear um lote.
+LOC = re.compile(r"^(?:nenhum_prefixo_no_85)[0-9]*_", re.I)
 # telas do `map` (faseb_map.conf): primeira palavra de cada linha que nao e comentario
 MAP = {l.split()[0] for l in open(os.path.join(RAIZ, "docker/proxy/faseb_map.conf"))
        if l.strip() and not l.startswith("#")}

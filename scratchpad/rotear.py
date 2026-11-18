@@ -63,10 +63,20 @@ ABAS = "docker/proxy/faseb_map_abas.txt"
 # `location ~* ^(?:/w/[0-9]+)?/(?:(?:` e os dos scripts casam `LOC = re.compile(r"^(?:`. A lista termina
 # no primeiro ")", entao nenhum prefixo pode conter parentese (os que usam "?" como itbi? funcionam).
 LISTAS = [
-    (NGINX, re.compile(r"(location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:)([^)]+)(\))")),
+    # So a linha ATIVA do location (re.M + ^ sem "#"): na base-php74 o bloco nasce comentado, e editar a linha
+    # comentada nao teria efeito no nginx. Sem linha ativa, modo_location cria o bloco (BLOCO_LOCATION).
+    (NGINX, re.compile(r"^([ \t]*location ~\* \^\(\?:/w/\[0-9\]\+\)\?/\(\?:\(\?:)([^)]+)(\))", re.M)),
     ("scratchpad/dimensiona.py", re.compile(r"(LOC = re\.compile\(r\"\^\(\?:)([^)]+)(\))")),
     ("scratchpad/redirecionamentos.py", re.compile(r"(LOC = re\.compile\(r\"\^\(\?:)([^)]+)(\))")),
 ]
+
+# Bloco do location criado quando o nginx.conf ainda nao tem um ativo (base-php74 no inicio): vai antes do
+# "location /" de tudo o mais, com os prefixos do primeiro lote roteado.
+BLOCO_LOCATION = ('    location ~* ^(?:/w/[0-9]+)?/(?:(?:{prefixos})[0-9]*_) {{\n'
+                  '        add_header X-Ecidade-Runtime "PHP-8.5 (migrado)" always;\n'
+                  '        proxy_pass http://php85;\n'
+                  '    }}\n\n')
+ANTES_DO_BLOCO = "    # ---- TUDO O MAIS"
 
 def erro(msg):
     """Erro de uso ou de pre-requisito: mensagem no stderr e saida com codigo 2."""
@@ -136,7 +146,7 @@ def aplicar(novos_conteudos, conferir):
     print("\nConferencia (cabecalho X-Ecidade-Runtime pelo proxy :8090):")
     for url, esperado in conferir:
         rt = runtime(url)
-        bate = (f"PHP-{esperado}" in rt)      # o cabecalho traz a versao, ex. "PHP-8.5..." ou "PHP-5.6..."
+        bate = (f"PHP-{esperado}" in rt)      # o cabecalho traz a versao, ex. "PHP-8.5..." ou "PHP-7.4..."
         falhas += not bate
         print(f"  {'ok ' if bate else 'ERRO'} /{url:50} {rt}   (esperado PHP-{esperado})")
     print("\nArquivos alterados: " + ", ".join(novos_conteudos) + " (entram no commit do lote).")
@@ -151,6 +161,14 @@ def modo_location(prefixos, aplicar_):
     for arq, rx in LISTAS:
         t = ler(arq)
         m = rx.search(t)
+        if not m and arq == NGINX:
+            # nenhum location ativo ainda (base-php74): cria o bloco com os prefixos pedidos
+            if ANTES_DO_BLOCO not in t:
+                erro(f"sem location ativo e sem o marcador '{ANTES_DO_BLOCO.strip()}' em {arq}: criar o bloco a mao")
+            i = t.index(ANTES_DO_BLOCO)
+            novos[arq] = t[:i] + BLOCO_LOCATION.format(prefixos="|".join(prefixos)) + t[i:]
+            mostrar.append(f"{arq}:\n  antes:  (nenhum location ativo)\n  depois: location novo com {'|'.join(prefixos)}")
+            continue
         if not m:
             erro(f"nao achei a lista de prefixos em {arq}")
         atuais = m.group(2).split("|")
@@ -172,7 +190,7 @@ def modo_location(prefixos, aplicar_):
     if not aplicar_:
         print("\nNada foi alterado. Para aplicar: o mesmo comando com --aplicar")
         return
-    conferir = [("login.php", "5.6")]
+    conferir = [("login.php", "7.4")]          # a referencia na base-php74 e o 7.4
     for p in prefixos:
         uma = next((f for f in telas if re.match(rf"^{re.escape(p)}[0-9]*_", f, re.I)), None)
         if uma:
@@ -219,7 +237,7 @@ def mostrar_e_aplicar_map(args_gera, extras, aplicar_):
         print("\nNada foi alterado. Para aplicar: o mesmo comando com --aplicar")
         return
     disco = {f.lower(): f for f in os.listdir(ECIDADE)}
-    conferir = [("login.php", "5.6")] + [(disco.get(n, n), "8.5") for n in novas[:4]] + \
+    conferir = [("login.php", "7.4")] + [(disco.get(n, n), "8.5") for n in novas[:4]] + \
                [(f"w/2/{disco.get(novas[0], novas[0])}", "8.5")]
     aplicar({MAP: novo_texto, **extras}, conferir)
 

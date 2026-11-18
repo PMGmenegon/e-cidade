@@ -4,6 +4,13 @@ Scripts e harnesses usados para migrar o e-cidade do PHP 5.6 para o 8.5, na orde
 O **como usar** de cada passo está no guia (`docs/migrar-um-modulo.md`); aqui está **o que cada arquivo faz, como faz e
 o que ele altera**. Cada arquivo também traz, no topo, um cabeçalho com uso, entradas e saídas.
 
+> **Na `base-php74`** (18/11/2026): a referência é o **PHP 7.4** (`ecidade_php74`, porta 8080), no papel que era
+> do 5.6 — onde este texto e as mensagens dos scripts dizem 5.6, leia 7.4. Adaptações feitas para esta base: o nome do
+> container de referência; a leitura do `location` no `nginx.conf` considera só a linha **ativa** (o bloco nasce
+> comentado, e sem linha ativa nada vai ao 8.5); o `rotear.py location` cria o bloco quando ele não existe; o
+> `dimensiona.py` começa sem nenhuma área concluída, e as cópias `LOC` começam com o marcador `nenhum_prefixo_no_85`.
+> As ferramentas ainda **não foram exercitadas** com o 7.4 em Docker.
+
 Todos rodam **da raiz do repositório**. Os `.php` são *harnesses*: são copiados para dentro dos containers e rodados nos
 **dois** runtimes (5.6 e 8.5), e o que se compara é a saída de um com a do outro.
 
