@@ -128,8 +128,11 @@ def le_inventario(arquivo: Path = ARQ_INVENTARIO) -> list[Rota]:
     for l in linhas:
         if not l.strip():
             continue
-        metodo, uri, mw, acao, origem = l.split("\t")
-        rotas.append(Rota(metodo, uri, [m for m in mw.split(",") if m], acao, origem))
+        campos = l.split("\t")
+        if len(campos) == 5:  # inventario anterior, sem a coluna erro_controller
+            campos.append("")
+        metodo, uri, mw, acao, origem, erro = campos
+        rotas.append(Rota(metodo, uri, [m for m in mw.split(",") if m], acao, origem, erro))
     return rotas
 
 

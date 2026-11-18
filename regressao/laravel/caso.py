@@ -1,4 +1,4 @@
-"""Bateria Laravel: casos HTTP, gravar a baseline (5.4) e comparar (alvo novo).
+"""Bateria Laravel: casos HTTP, gravar a baseline (referencia Laravel 8) e comparar (alvo novo).
 
 Modelo de estado: SEM snapshot por caso. `gravar` e `comparar` restauram o dump UMA vez e
 rodam os casos numa ordem FIXA sobre esse unico estado; as duas execucoes percorrem a mesma
@@ -70,7 +70,7 @@ class CasoHttp:
     form: bool = False  # corpo como application/x-www-form-urlencoded (senao JSON)
     sql_antes: list[str] = field(default_factory=list)  # preparacao no banco; `{jti}` = id do token @novo
     espera_escrita: bool = False  # INCONCLUSIVO se nao escrever nada nos dois lados
-    # Status documentado do comportamento da referencia (ex.: 500 "Unauthenticated" do 5.4):
+    # Status documentado do comportamento da referencia (ex.: 500 "Unauthenticated" do Laravel 8 da base 7.4):
     # igual nos dois lados e com o mesmo corpo => IDENTICO em vez de INCONCLUSIVO (5xx).
     espera_status: int | None = None
     # Arquivo gerado (PDF/CSV/XLS): caminho pontilhado, na resposta JSON, do arquivo a baixar; o TEXTO extraido
@@ -412,7 +412,7 @@ def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Re
     marcador inicial, entao nao entra no SQL capturado. `token` = o token valido compartilhado."""
     if caso.console is not None:
         try:
-            container = integracao.container_console(base_url)  # 5.4 na referencia; no alvo novo, so por variavel
+            container = integracao.container_console(base_url)  # referencia, laboratorio ou variavel
             codigo, saida = integracao.roda_console(caso.console, caso.console_modo, container=container)
         except integracao.ErroConsole as e:  # container ausente/allowlist/alvo sem container: ambiente, nao veredito
             raise ErroRequisicao(f"console {' '.join(caso.console)}: {e}") from None
@@ -594,7 +594,7 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
     gravada com outro dump, se algum caso antigo perdeu o registro ou se nao ha caso novo. Devolve os ids."""
     diretorio = Path(diretorio)
     if _tipo_alvo(base_url) != "ref":
-        raise ErroGravacao(f"gravar_novos so grava contra a referencia 5.4 ({alvos_do_ambiente().ref}); "
+        raise ErroGravacao(f"gravar_novos so grava contra a referencia Laravel 8 ({alvos_do_ambiente().ref}); "
                            f"recebeu {base_url}: a baseline nunca nasce do sistema migrado")
     boot = laravel_sobe(base_url)
     if boot is not None:

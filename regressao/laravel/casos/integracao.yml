@@ -33,8 +33,8 @@
   arquivo: data.csv
   campos_volateis: [data.csv, data.csvLinkExterno]
 
-# console: `php artisan` no container ecidade_php56 (REGRESSAO_LARAVEL_CONSOLE_CONTAINER troca o container
-# para o laboratorio novo). So comandos SEM efeito: list, env, migrate:status. Comandos de dominio
+# console: `php artisan` no container do alvo (referencia: ecidade74_php74; laboratorio: ecidade74_lar12; outro
+# alvo: REGRESSAO_LARAVEL_CONSOLE_CONTAINER). So comandos SEM efeito: list, env, migrate:status. Comandos de dominio
 # (agendamento:inativarvinculoprofessor, matriculaonline:alteracaoinscricao, payroll:*) escrevem no banco e ficam
 # de fora. Comando que nao carrega no Laravel 12 muda o codigo de saida/saida => DIVERGE.
 - id: console-list

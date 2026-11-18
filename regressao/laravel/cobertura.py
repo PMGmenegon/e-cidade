@@ -79,7 +79,10 @@ def cobertura_rotas(rotas: list[Rota], casos: list[CasoHttp], dir_baseline: Path
                 "inconclusivos_5xx": [c.id for c in c5 if c.id not in esperados],
                 "rejeicao_esperada_5xx": esperados}
     colapsados = sum(1 for x in cobertas if "|" in x["metodo"] and x["metodo"] != "GET|HEAD")
+    quebradas = [{"metodo": r.metodo, "uri": r.caminho, "erro": r.erro}
+                 for r in sorted(rotas, key=lambda r: (r.origem, r.caminho, r.metodo)) if r.erro]
     return {"total": len(rotas), "por_origem": origens, "classes": classes, "casos": por_caso,
+            "controller_quebrado_na_referencia": quebradas,
             "notas": {"metodos_colapsados": colapsados,
                       "head": "rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); "
                               "PUT|PATCH, se permitido, so por PUT"},
@@ -93,7 +96,7 @@ def _md(rel: dict) -> str:
     for o, v in rel["por_origem"].items():
         L.append(f"| {o} | {v['total']} | {v['cobertas']} | {v['nao_cobertas']} |")
     c = rel["classes"]
-    L += ["", "## Resposta da referencia (Laravel 5.4) nas rotas cobertas", "",
+    L += ["", "## Resposta da referencia (Laravel 8) nas rotas cobertas", "",
           f"2xx: {c['2xx']}  3xx: {c['3xx']}  4xx: {c['4xx']}  5xx: {c['5xx']}  "
           f"sem baseline: {c['sem_baseline']}", "",
           f"**5xx na referencia: {c['5xx']}.** Rota quebrada ou que precisa de dados em dev; "
@@ -105,8 +108,14 @@ def _md(rel: dict) -> str:
           f"Casos carregados: {k['total']}; com 5xx na referencia: {k['5xx']} = "
           f"{len(k['inconclusivos_5xx'])} que terminam INCONCLUSIVO (500 x 500, nao exercitados) + "
           f"{len(k['rejeicao_esperada_5xx'])} de rejeicao esperada (`espera_status`: IDENTICO, "
-          "comportamento documentado do 5.4).", ""]
+          "comportamento documentado da referencia).", ""]
     L += [f"- rejeicao esperada: `{i}`" for i in k["rejeicao_esperada_5xx"]]
+    q = rel.get("controller_quebrado_na_referencia") or []
+    L += ["", f"## Controller quebrado na referencia: {len(q)} rota(s)", "",
+          "O controller nao instancia nem no Laravel 8 de referencia (classe/funcao inexistente na base 7.4): "
+          "o `route:list` do Laravel 8 nao lista nada por causa delas, e o inventario usa a listagem tolerante. "
+          "A rota segue no inventario; se for gerada, responde 500 e o caso fica INCONCLUSIVO.", ""]
+    L += [f"- {x['metodo']} `{x['uri']}`: {x['erro']}" for x in q] or ["- (nenhuma)"]
     L += ["", f"Notas: {rel['notas']['head']}. Rotas com metodo colapsado alem de HEAD: "
               f"{rel['notas']['metodos_colapsados']}.", "", "## Nao cobertas", ""]
     por_motivo: dict[str, list[dict]] = {}

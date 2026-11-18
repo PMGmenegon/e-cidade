@@ -171,10 +171,14 @@ def _cobertura(f: Frente) -> dict:
 
 def _versoes(frentes: dict[str, Frente]) -> dict:
     v: dict = {}
-    for nome in ("php", "laravel"):
-        for k in ("php_ref", "php_56", "php_85", "laravel_alvo"):  # php_56: meta da bateria Laravel ate a task 3
-            if k in frentes.get(nome, Frente(nome, 0, [], {}, 0)).meta and k not in v:
-                v[k] = frentes[nome].meta[k]
+    # (frente, chave no meta da frente, chave em `versoes`): o php_alvo da bateria Laravel e o PHP do alvo
+    # Laravel (laboratorio), que nao e necessariamente o php_85 da bateria PHP
+    for nome, k, destino in (("php", "php_ref", "php_ref"), ("php", "php_85", "php_85"),
+                             ("laravel", "php_ref", "php_ref"), ("laravel", "laravel_ref", "laravel_ref"),
+                             ("laravel", "php_alvo", "php_alvo_laravel"), ("laravel", "laravel_alvo", "laravel_alvo")):
+        meta = frentes.get(nome, Frente(nome, 0, [], {}, 0)).meta
+        if k in meta and destino not in v:
+            v[destino] = meta[k]
     fl = frentes.get("fluxos")
     if fl and isinstance(fl.meta.get("versoes"), dict):
         v.update(fl.meta["versoes"])

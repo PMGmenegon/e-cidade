@@ -45,20 +45,6 @@ def test_mascara_nao_muta_a_entrada():
     assert list(obj) == ["b", "a"]
 
 
-def test_inventario_parseia_tabela_route_list():
-    texto = (FIXTURES / "route_list.txt").read_text(encoding="utf-8")
-    lista = rotas.parseia_route_list(texto)
-    assert len(lista) == 12
-    r0 = lista[0]
-    assert (r0.metodo, r0.caminho, r0.middleware, r0.origem) == (
-        "GET|HEAD", "/rest/v1/enderecopessoa/{cgm}", ["AuthSim"], "rest")
-    assert r0.controller.endswith("PessoasController@pesquisaEndereco")
-    assert {r.origem for r in lista} == {"rest", "laravel"}
-    clos = [r for r in lista if r.controller == "Closure"][0]
-    assert clos.middleware == ["api", "auth:api"] and clos.caminho.startswith("/v4/api/")
-    assert [r for r in lista if "assinantes" in r.caminho][0].middleware == []
-
-
 def test_inventario_silex_varre_providers(tmp_path):
     prov = tmp_path / "ecidade/api/V1/Providers/Controller"
     prov.mkdir(parents=True)
@@ -75,13 +61,13 @@ def test_inventario_silex_varre_providers(tmp_path):
 
 
 def test_grava_tsv_deterministico_e_contagem(tmp_path):
-    texto = (FIXTURES / "route_list.txt").read_text(encoding="utf-8")
-    lista = rotas.parseia_route_list(texto)
+    texto = (FIXTURES / "route_list_l8.json").read_text(encoding="utf-8")
+    lista = rotas.parseia_route_list_json(texto)
     a, b = tmp_path / "a.tsv", tmp_path / "b.tsv"
     rotas.grava_tsv(lista, a)
     rotas.grava_tsv(list(reversed(lista)), b)
     assert a.read_bytes() == b.read_bytes()
-    assert rotas.contagem(lista) == {"laravel": 9, "rest": 3, "silex": 0}
+    assert rotas.contagem(lista) == {"laravel": 7, "rest": 1, "silex": 0}
 
 
 class _Servidor:
@@ -171,6 +157,7 @@ def test_5xx_anexa_cauda_do_log_redigida(servidor_factory, monkeypatch):
              "eco VALORREAL-9Z8Y7X e dbseller aqui\n" + "y" * 400 + "\n").encode()
     monkeypatch.setattr(token, "_docker", lambda *a, **k: bruto)
     s = servidor_factory(500, {"message": "boom"})
+    monkeypatch.setenv("REGRESSAO_LARAVEL_NOVO_URL", s.url)  # o log lido e o do container do alvo
     r = token.laravel_sobe(s.url)
     assert r.veredito == Veredito.ERRO_AMBIENTE
     for proibido in ("ABC123SECRET", "eyJ0eXAi", "c2ln", "VALORREAL-9Z8Y7X"):
@@ -181,11 +168,13 @@ def test_5xx_anexa_cauda_do_log_redigida(servidor_factory, monkeypatch):
     assert len(r.detalhe.split("antigas e nao relacionadas):\n")[1].splitlines()) <= 5
 
 
-def test_cauda_do_log_vazia_quando_docker_falha(servidor_factory):
-    r = token.laravel_sobe(servidor_factory(500, "x").url)
+def test_cauda_do_log_vazia_quando_docker_falha(servidor_factory, monkeypatch):
+    s = servidor_factory(500, "x")
+    monkeypatch.setenv("REGRESSAO_LARAVEL_NOVO_URL", s.url)
+    r = token.laravel_sobe(s.url)
     assert r.veredito == Veredito.ERRO_AMBIENTE
     assert "php_errors.log" not in r.detalhe
-    assert token._cauda_php_errors() == ""
+    assert token._cauda_php_errors(s.url) == ""
 
 
 @pytest.mark.parametrize("marca", ["Fatal error", "Parse error", "Uncaught",

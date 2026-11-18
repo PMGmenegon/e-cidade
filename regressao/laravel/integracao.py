@@ -1,11 +1,11 @@
 """Integracoes da bateria Laravel (Task 11b): arquivo gerado (PDF/CSV/XLS) por CONTEUDO, console/artisan,
 e-mail capturado por SMTP de teste, PIX contra stub. Tudo roda dentro da bateria existente: baseline
-golden master gravada no 5.4 e comparada no alvo novo.
+golden master gravada na referencia (Laravel 8 da base 7.4) e comparada no alvo novo.
 
 - `segue_arquivo`: rotas que respondem JSON com o caminho do arquivo gerado (`data.path`, `data.csv`...)
   baixam o arquivo e comparam o TEXTO extraido (`extrai_conteudo`: pypdf/openpyxl/xlrd/CSV), nunca os bytes.
-- `roda_console`: `php artisan <args>` no container configurado (REGRESSAO_LARAVEL_CONSOLE_CONTAINER, padrao
-  `ecidade_php56`); so comandos sem efeito (list, env, migrate:status): a saida e normalizada.
+- `roda_console`: `php artisan <args>` no container do alvo (`container_console`: referencia, laboratorio ou
+  REGRESSAO_LARAVEL_CONSOLE_CONTAINER); so comandos sem efeito (list, env, migrate:status): a saida e normalizada.
 - `compara_email` / `stubs.smtp_stub`: normaliza Date/Message-ID/fronteiras MIME.
 - `stubs.pix_stub`: servidor HTTP que responde como o PSP e registra o que a aplicacao enviou.
   LIMITE REAL (README): o app tem as URLs do BB fixas em constantes HTTPS (`BancoDoBrasil::BASE_URL`), entao
@@ -23,9 +23,9 @@ from email import message_from_bytes
 import requests
 
 from regressao.laravel.mascara import _texto as _normaliza_caminhos
+from regressao.nucleo.ambiente import alvos_do_ambiente, containers_do_ambiente
 from regressao.nucleo.veredito import Caso, Veredito
 
-CONTAINER_CONSOLE_PADRAO = "ecidade_php56"
 DIR_APP_PADRAO = "/var/www/html"
 TIMEOUT_CONSOLE = 120
 LIMITE_ARQUIVO = 20_000
@@ -78,9 +78,10 @@ def normaliza_saida_console(texto: str, modo: str | None = None) -> str:
         return "\n".join(sorted({l.split()[0] for l in linhas if l.strip()})) + "\n"
     if modo == "migracoes":
         # `migrate:status`: o CONJUNTO de migrations (estado + nome), sem depender da largura da tabela nem da
-        # ordem, e sem truncar: cabecalho com contagem e sha256 do conjunto completo
-        itens = sorted({f"{m.group(1)} {m.group(2)}" for l in linhas
-                        for m in [re.match(r"^\|\s*([YN])\s*\|\s*(\S+)\s*\|", l)] if m})
+        # ordem, e sem truncar: cabecalho com contagem e sha256 do conjunto completo. Laravel 8 escreve
+        # Yes/No (o 5.4 escrevia Y/N): os dois viram Y/N, a coluna Batch e ignorada.
+        itens = sorted({f"{m.group(1)[0]} {m.group(2)}" for l in linhas
+                        for m in [re.match(r"^\|\s*(Yes|No|Y|N)\s*\|\s*(\S+)\s*\|", l)] if m})
         corpo = "\n".join(itens)
         ran = sum(1 for i in itens if i.startswith("Y "))
         return (f"migrations={len(itens)} ran={ran} sha256={hashlib.sha256(corpo.encode()).hexdigest()}\n"
@@ -99,26 +100,36 @@ _RE_DOCKER_ERRO = re.compile(rb"No such container|Error response from daemon|is 
 
 
 def container_console(base_url: str) -> str:
-    """Container do `artisan` para ESTE alvo. Na referencia (o 5.4 em REGRESSAO_REF_URL) e sempre o do 5.4:
-    gravar nunca usa um container novo. Em qualquer outro alvo a variavel REGRESSAO_LARAVEL_CONSOLE_CONTAINER e
-    OBRIGATORIA: sem ela comparar executaria no 5.4 e daria falso IDENTICO."""
-    from regressao.nucleo.ambiente import alvos_do_ambiente
-    if base_url.rstrip("/") == alvos_do_ambiente().ref.rstrip("/"):
-        return CONTAINER_CONSOLE_PADRAO
+    """Container do `artisan` para ESTE alvo (nomes em nucleo/ambiente.py). Na referencia (REGRESSAO_REF_URL) e
+    sempre o container de referencia: gravar nunca usa um container novo. Em outro alvo: a variavel
+    REGRESSAO_LARAVEL_CONSOLE_CONTAINER, ou, sem ela, o container do laboratorio se o alvo for
+    REGRESSAO_LARAVEL_NOVO_URL. Alvo desconhecido sem a variavel, ou um alvo novo que caia no container de
+    referencia, e ErroConsole: o console rodaria na referencia e daria falso IDENTICO."""
+    alvos, containers = alvos_do_ambiente(), containers_do_ambiente()
+    u = base_url.rstrip("/")
+    if u == alvos.ref.rstrip("/"):
+        return containers.ref
     container = os.environ.get("REGRESSAO_LARAVEL_CONSOLE_CONTAINER")
+    if not container and u == alvos.laravel_novo.rstrip("/"):
+        container = containers.laravel_novo
     if not container:
-        raise ErroConsole(f"alvo {base_url} nao e o 5.4 de referencia: defina REGRESSAO_LARAVEL_CONSOLE_CONTAINER "
-                          "com o container do artisan do alvo (senao o console rodaria no 5.4: falso IDENTICO)")
+        raise ErroConsole(f"alvo {base_url} nao e a referencia nem o laboratorio: defina "
+                          "REGRESSAO_LARAVEL_CONSOLE_CONTAINER com o container do artisan do alvo "
+                          "(senao o console rodaria na referencia: falso IDENTICO)")
+    if container == containers.ref:
+        raise ErroConsole(f"alvo {base_url} nao e a referencia, mas o console cairia no container de referencia "
+                          f"({container}): falso IDENTICO")
     return container
 
 
 def roda_console(args: list[str], modo: str | None = None, runner=None,
                  container: str | None = None) -> tuple[int, str]:
-    """(codigo de saida, saida normalizada) de `php artisan <args>` no container de console. Comando fora da
-    allowlist ou falha do `docker exec` (125/126/127, container inexistente) levanta ErroConsole."""
+    """(codigo de saida, saida normalizada) de `php artisan <args>` no container de console (padrao: o de
+    referencia). Comando fora da allowlist ou falha do `docker exec` (125/126/127, container inexistente)
+    levanta ErroConsole."""
     if not args or args[0] not in COMANDOS_PERMITIDOS:
         raise ErroConsole(f"comando artisan fora da allowlist {sorted(COMANDOS_PERMITIDOS)}: {args[:1]}")
-    container = container or os.environ.get("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", CONTAINER_CONSOLE_PADRAO)
+    container = container or containers_do_ambiente().ref
     cmd = ["docker", "exec", "-w", DIR_APP_PADRAO, container, "php", "artisan", *args]
     r = (runner or _roda)(cmd)
     erro = r.stderr or b""
@@ -173,13 +184,13 @@ def normaliza_email(bruto: bytes) -> dict:
     return {"cabecalhos": cab, "partes": partes}
 
 
-def compara_email(msg56: bytes, msg_novo: bytes, id: str = "email") -> Caso:
-    a, b = normaliza_email(msg56), normaliza_email(msg_novo)
+def compara_email(msg_ref: bytes, msg_novo: bytes, id: str = "email") -> Caso:
+    a, b = normaliza_email(msg_ref), normaliza_email(msg_novo)
     if a == b:
         return Caso(id, "laravel", Veredito.IDENTICO)
     dif = [k for k in ("cabecalhos", "partes") if a[k] != b[k]]
     return Caso(id, "laravel", Veredito.DIVERGE, "e-mail difere em: " + ", ".join(dif),
-                f"5.4: {a}\nnovo: {b}\n")
+                f"ref: {a}\nnovo: {b}\n")
 
 
 @contextlib.contextmanager

@@ -1,17 +1,23 @@
-"""Token Passport (password grant) e deteccao de Laravel fora do ar."""
+"""Token Passport (password grant) e deteccao de Laravel fora do ar.
+
+Referencia: Laravel 8.73 + Passport 10.4 (league/oauth2-server 8): `POST /v4/oauth/token` com o cliente
+`9999999` (password client que ja vem no dump da base 7.4; o segredo fica em `config/application.php`, chave
+`api.client.secret`, nunca gravado). O access_token e um JWT RS256 com `jti`, `exp`, `nbf`, `iat`, `sub`,
+`scopes`; o `jti` e o id em `oauth_access_tokens`. Rota protegida sem token valido responde HTTP 500
+`{"error":true,"message":"Unauthenticated."}` (handler da aplicacao, igual ao 5.4)."""
 import re
 from pathlib import Path
 
 import requests
 
+from regressao.nucleo.ambiente import container_do_alvo
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
 from regressao.nucleo.veredito import Caso, Veredito
 
 RAIZ_REPO = Path(__file__).resolve().parents[2]
 ARQ_CONFIG = RAIZ_REPO / "ecidade" / "config" / "application.php"
 CLIENT_ID = "9999999"
-CONTAINER_PHP = "ecidade_php56"
-LOG_ERROS = "/var/log/php_errors.log"
+LOG_ERROS = "/var/log/php_errors.log"  # error_log dos dois runtimes (7.4 e 8.5)
 TIMEOUT = 15
 REDIGIDO = "<redigido>"
 LIMITE_REDIGE = 20000
@@ -82,9 +88,14 @@ def redige(texto: str) -> str:
     return texto
 
 
-def _cauda_php_errors(linhas: int = 5) -> str:
+def _cauda_php_errors(base_url: str = "", linhas: int = 5) -> str:
+    """Ultimas linhas do php_errors.log do container que ATENDE `base_url` (nucleo/ambiente.py);
+    URL desconhecida ou proxy: nada (nunca mostra o log de outro runtime como se fosse do alvo)."""
+    container = container_do_alvo(base_url) if base_url else None
+    if not container:
+        return ""
     try:
-        saida = _docker(["exec", CONTAINER_PHP, "tail", "-n", str(linhas), LOG_ERROS], 15)
+        saida = _docker(["exec", container, "tail", "-n", str(linhas), LOG_ERROS], 15)
     except ErroAmbienteBanco:
         return ""
     brutas = saida.decode("utf-8", errors="replace").strip().splitlines()[-linhas:]
@@ -92,10 +103,10 @@ def _cauda_php_errors(linhas: int = 5) -> str:
 
 
 def _boot_falho(base_url: str, detalhe: str) -> Caso:
-    log = _cauda_php_errors()
+    log = _cauda_php_errors(base_url)
     if log:
-        detalhe += ("\nphp_errors.log (ultimas linhas do log global do php; podem ser "
-                    "antigas e nao relacionadas):\n" + log)
+        detalhe += (f"\nphp_errors.log de {container_do_alvo(base_url)} (ultimas linhas do log global do php; "
+                    "podem ser antigas e nao relacionadas):\n" + log)
     return Caso("laravel:boot", "laravel", Veredito.ERRO_AMBIENTE, detalhe)
 
 

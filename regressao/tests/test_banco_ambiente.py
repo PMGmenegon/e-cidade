@@ -27,7 +27,7 @@ def test_confere_baseline_aceita_dump_igual(tmp_path, monkeypatch):
 _VARS_URL = ("REGRESSAO_REF_URL", "REGRESSAO_PHP_NOVO_URL", "REGRESSAO_NOVO_URL",
              "REGRESSAO_LARAVEL_NOVO_URL", "REGRESSAO_PROXY_URL")
 _VARS_CONTAINER = ("REGRESSAO_CONTAINER_REF", "REGRESSAO_CONTAINER_PHP_NOVO",
-                   "REGRESSAO_CONTAINER_BANCO", "REGRESSAO_CONTAINER_PROXY")
+                   "REGRESSAO_CONTAINER_BANCO", "REGRESSAO_CONTAINER_PROXY", "REGRESSAO_CONTAINER_LARAVEL_NOVO")
 
 
 @pytest.fixture
@@ -75,7 +75,9 @@ def test_containers_usam_variaveis_de_ambiente(sem_variaveis):
     sem_variaveis.setenv("REGRESSAO_CONTAINER_PHP_NOVO", "n")
     sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "b")
     sem_variaveis.setenv("REGRESSAO_CONTAINER_PROXY", "p")
-    assert ambiente.containers_do_ambiente() == ambiente.Containers(ref="r", php_novo="n", banco="b", proxy="p")
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_LARAVEL_NOVO", "l")
+    assert ambiente.containers_do_ambiente() == ambiente.Containers(ref="r", php_novo="n", banco="b", proxy="p",
+                                                                    laravel_novo="l")
 
 
 def test_verifica_procura_o_container_de_banco_configurado(sem_variaveis):

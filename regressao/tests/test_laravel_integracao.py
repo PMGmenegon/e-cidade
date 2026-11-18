@@ -176,24 +176,27 @@ def test_roda_console_usa_o_container_informado(monkeypatch):
     assert vistos[0][:5] == ["docker", "exec", "-w", "/var/www/html", "lab12"] and vistos[0][-3:] == ["artisan", "list", "--raw"]
 
 
-def test_container_do_console_na_referencia_e_sempre_o_54_e_no_alvo_novo_exige_a_variavel(monkeypatch):
-    monkeypatch.delenv("REGRESSAO_REF_URL", raising=False)
+def test_container_do_console_na_referencia_e_sempre_o_de_referencia_e_no_alvo_novo_acompanha_o_alvo(monkeypatch):
+    for v in ("REGRESSAO_REF_URL", "REGRESSAO_LARAVEL_NOVO_URL", "REGRESSAO_CONTAINER_REF",
+              "REGRESSAO_CONTAINER_LARAVEL_NOVO"):
+        monkeypatch.delenv(v, raising=False)
     monkeypatch.setenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", "lab12")
-    assert integracao.container_console("http://localhost:8074") == "ecidade_php56"   # gravar/ref ignora a variavel
+    assert integracao.container_console("http://localhost:8074") == "ecidade74_php74"   # gravar/ref ignora a variavel
     assert integracao.container_console("http://localhost:8187/") == "lab12"
     monkeypatch.delenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER")
+    assert integracao.container_console("http://localhost:8187") == "ecidade74_lar12"
     with pytest.raises(integracao.ErroConsole, match="REGRESSAO_LARAVEL_CONSOLE_CONTAINER"):
-        integracao.container_console("http://localhost:8187")
-    assert integracao.container_console("http://localhost:8074/") == "ecidade_php56"
+        integracao.container_console("http://localhost:9999")
+    assert integracao.container_console("http://localhost:8074/") == "ecidade74_php74"
 
 
 def test_comparar_console_em_alvo_novo_sem_container_vira_erro_ambiente_e_nao_falso_identico(monkeypatch):
     monkeypatch.delenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", raising=False)
     monkeypatch.delenv("REGRESSAO_REF_URL", raising=False)
-    monkeypatch.setattr(integracao, "_roda", lambda cmd: pytest.fail("nao pode executar no container do 5.4"))
+    monkeypatch.setattr(integracao, "_roda", lambda cmd: pytest.fail("nao pode executar no container de referencia"))
     c = CasoHttp(id="console-env", metodo="CONSOLE", caminho="artisan", corpo=None, console=["env"])
     with pytest.raises(mod_caso.ErroRequisicao, match="CONSOLE_CONTAINER"):
-        mod_caso.executa(c, "http://localhost:8187", "tok", banco=False)
+        mod_caso.executa(c, "http://localhost:9999", "tok", banco=False)
 
 
 @pytest.mark.parametrize("rc,err", [(125, b""), (126, b""), (127, b""), (1, b"Error response from daemon: No such container: x"),

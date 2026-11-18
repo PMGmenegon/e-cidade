@@ -1,15 +1,16 @@
-"""Orquestrador da bateria Laravel (5.4 x 12): meta, rodada, codigo de saida e protecao da baseline.
+"""Orquestrador da bateria Laravel (referencia Laravel 8 x alvo novo): meta, rodada, codigo de saida e
+protecao da baseline.
 
     python -m regressao.laravel.bateria gravar   --saida DIR [--alvo URL] [--confirmo-sobrescrever]
     python -m regressao.laravel.bateria comparar --saida DIR [--alvo URL] [--sem-restaurar]
 
-`gravar` grava a baseline (regressao/baseline/laravel/) contra `Alvos.ref` (:8080, Laravel 5.4);
-`comparar` roda os casos contra `Alvos.laravel_novo` (REGRESSAO_LARAVEL_NOVO_URL, padrao :8087), ou
-contra `--alvo URL` (usado para provar a estabilidade contra o proprio :8080).
+`gravar` grava a baseline (regressao/baseline/laravel/) contra `Alvos.ref` (REGRESSAO_REF_URL, padrao :8074,
+PHP 7.4/Laravel 8); `comparar` roda os casos contra `Alvos.laravel_novo` (REGRESSAO_LARAVEL_NOVO_URL, padrao
+:8187, laboratorio), ou contra `--alvo URL` (usado para provar a estabilidade contra a propria referencia).
 
 A baseline e a REFERENCIA PRE-MIGRACAO. Regrava-la com um sistema ja migrado destroi a comparacao;
 por isso `gravar` recusa (RecusaBaseline, exit 2) sobrescrever uma baseline existente e gravar contra
-um alvo que nao seja o 5.4 sem `--confirmo-sobrescrever` (e, para outro alvo, `--alvo` explicito).
+um alvo que nao seja a referencia sem `--confirmo-sobrescrever` (e, para outro alvo, `--alvo` explicito).
 Um `gravar` bem-sucedido NAO produz casos (so meta + a linha GRAVACAO no resumo): nada foi comparado.
 
 Ordem de `comparar`: boot do alvo (se fora do ar: UM caso ERRO_AMBIENTE `laravel:boot`, o banco NAO
@@ -37,10 +38,10 @@ from pathlib import Path
 
 from regressao.laravel import caso
 from regressao.laravel.caso import DIR_BASELINE, DIR_CASOS, ErroGravacao, ErroRequisicao, carrega_casos
-from regressao.laravel.rotas import CONTAINER_PHP, DIR_APP
+from regressao.laravel.rotas import DIR_APP
 from regressao.laravel.token import laravel_sobe, redige
 from regressao.nucleo import git
-from regressao.nucleo.ambiente import alvos_do_ambiente, verifica
+from regressao.nucleo.ambiente import alvos_do_ambiente, container_do_alvo, containers_do_ambiente, verifica
 from regressao.nucleo.banco import ARQ_SHA256, BancoDiferente, ErroAmbienteBanco, _docker
 from regressao.nucleo.conhecidas import carregar_conhecidas, marcar
 from regressao.nucleo.relatorio import RodadaInvalida
@@ -68,20 +69,35 @@ def _baseline_existe() -> bool:
     return d.is_dir() and ((d / "_meta.json").exists() or any(d.glob("*.json")))
 
 
-def _metadados_ambiente(alvo: str) -> dict:
-    meta: dict = {}
+def _versao_php(container: str) -> str:
     try:
-        meta["php_56"] = _docker(["exec", CONTAINER_PHP, "php", "-r", "echo PHP_VERSION;"], 30).decode().strip()
+        return _docker(["exec", container, "php", "-r", "echo PHP_VERSION;"], 30).decode().strip()
     except Exception as e:
-        meta["php_56"] = f"indisponivel: {type(e).__name__}"
-    if _norm(alvo) == _norm(alvos_do_ambiente().ref):
-        try:
-            saida = _docker(["exec", "-w", DIR_APP, CONTAINER_PHP, "php", "artisan", "--version"], 60)
-            meta["laravel_alvo"] = saida.decode(errors="replace").strip().splitlines()[-1]
-        except Exception as e:
-            meta["laravel_alvo"] = f"indisponivel: {type(e).__name__}"
+        return f"indisponivel: {type(e).__name__}"
+
+
+def _versao_laravel(container: str) -> str:
+    try:
+        saida = _docker(["exec", "-w", DIR_APP, container, "php", "artisan", "--version"], 60)
+        return saida.decode(errors="replace").strip().splitlines()[-1]
+    except Exception as e:
+        return f"indisponivel: {type(e).__name__}"
+
+
+def _metadados_ambiente(alvo: str) -> dict:
+    """Versoes da referencia (php_ref, laravel_ref) e do alvo (php_alvo, laravel_alvo), cada uma lida no
+    container que atende a URL (nucleo/ambiente.py); alvo sem container conhecido fica `indisponivel`."""
+    meta: dict = {}
+    ref = containers_do_ambiente().ref
+    meta["php_ref"] = _versao_php(ref)
+    meta["laravel_ref"] = _versao_laravel(ref)
+    container = container_do_alvo(alvo)
+    if container == ref:
+        meta["php_alvo"], meta["laravel_alvo"] = meta["php_ref"], meta["laravel_ref"]
+    elif container:
+        meta["php_alvo"], meta["laravel_alvo"] = _versao_php(container), _versao_laravel(container)
     else:
-        meta["laravel_alvo"] = "indisponivel (alvo nao e o 5.4 de referencia)"
+        meta["php_alvo"] = meta["laravel_alvo"] = "indisponivel (alvo sem container conhecido em nucleo/ambiente.py)"
     meta["git_commit"] = git.commit(caso.RAIZ_REPO)
     meta.update(git.sujo(caso.RAIZ_REPO))
     try:
@@ -224,16 +240,16 @@ def _executa(diretorio_saida: Path, modo: str, alvo: str | None, confirmo_sobres
     if modo == "gravar":
         if alvo is not None and _norm(alvo) != _norm(alvos.ref) and not confirmo_sobrescrever:
             raise RecusaBaseline(
-                f"gravar contra {alvo} recusado: a baseline e a referencia do Laravel 5.4 ({alvos.ref}). "
+                f"gravar contra {alvo} recusado: a baseline e a referencia Laravel 8 ({alvos.ref}). "
                 "Gravar contra outro alvo exige --alvo explicito E --confirmo-sobrescrever.")
         if apenas_novos and not confirmo_sobrescrever:
             raise RecusaBaseline("gravar --apenas-novos acrescenta casos a baseline pre-migracao: exige "
-                                 "--confirmo-sobrescrever (confira antes que o alvo e o 5.4 de referencia).")
+                                 "--confirmo-sobrescrever (confira antes que o alvo e a referencia Laravel 8).")
         if _baseline_existe() and not confirmo_sobrescrever:
             raise RecusaBaseline(
                 f"gravar recusado: {DIR_BASELINE} ja tem baseline. Ela e a referencia pre-migracao; "
                 "sobrescreve-la com um sistema migrado destroi a comparacao. Se tem certeza "
-                "(ex.: regravar no 5.4 apos mudar os casos), use --confirmo-sobrescrever.")
+                "(ex.: regravar na referencia Laravel 8 apos mudar os casos), use --confirmo-sobrescrever.")
     url = _norm(alvo if alvo is not None else (alvos.ref if modo == "gravar" else alvos.laravel_novo))
     estado["url"] = url
     meta["alvo"] = url
@@ -290,7 +306,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--saida", required=True, type=Path)
     ap.add_argument("--alvo", default=None, metavar="URL")
     ap.add_argument("--confirmo-sobrescrever", action="store_true",
-                    help="permite gravar sobre baseline existente / contra alvo diferente do 5.4")
+                    help="permite gravar sobre baseline existente / contra alvo diferente da referencia")
     ap.add_argument("--sem-restaurar", action="store_true",
                     help="SO desenvolvimento (comparar): nao restaura o banco; resultado nao comparavel")
     ap.add_argument("--apenas-novos", action="store_true",

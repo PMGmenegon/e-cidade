@@ -63,9 +63,9 @@ def test_agrega_resultados_das_tres_frentes(tmp_path):
                        Caso("post:c.php", "x", N, "sem escrita")],
              "meta": {"catalogo_posts": {"verificado": 32, "nao_verificado": 2, "nao_verificado_pulados": 2},
                       "catalogo_relatorios": {"verificado": 17, "nao_verificado": 3, "nao_verificado_pulados": 3},
-                      "php_56": "5.6.40", "php_85": "8.5.0"}},
+                      "php_ref": "7.4.33", "php_85": "8.5.0"}},
         laravel={"casos": [Caso("rota:GET:/a", "laravel", I), Caso("rota:GET:/b", "laravel", N, "HTTP 500 nos dois lados")],
-                 "meta": {"cobertura": {"rotas_cobertas": 366, "rotas_total": 568}, "laravel_alvo": "Laravel 5.4"}},
+                 "meta": {"cobertura": {"rotas_cobertas": 366, "rotas_total": 568}, "laravel_alvo": "Laravel 8"}},
         fluxos={"casos": [Caso("fluxo:nav:login", "fluxos", I), Caso("fluxo:nav:sair", "fluxos", D, "dom")]})
     assert roda(tmp_path, executores=ex) == 1
     dados = carrega(tmp_path)
@@ -79,7 +79,7 @@ def test_agrega_resultados_das_tres_frentes(tmp_path):
     assert meta["totais"]["DIVERGE"] == 2 and meta["totais"]["IDENTICO"] == 3
     assert meta["cobertura"]["php"]["posts"]["verificado"] == 32
     assert meta["cobertura"]["laravel"] == {"rotas_cobertas": 366, "rotas_total": 568}
-    assert meta["versoes"]["php_56"] == "5.6.40" and meta["versoes"]["laravel_alvo"] == "Laravel 5.4"
+    assert meta["versoes"]["php_ref"] == "7.4.33" and meta["versoes"]["laravel_alvo"] == "Laravel 8"
     assert meta["git_commit"] == "abc123" and meta["git_sujo"] is True
     assert meta["git_sujo_regressao"] is False
     assert meta["baseline_sha256"] == "f" * 64

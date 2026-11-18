@@ -2,7 +2,8 @@
 
 Os padroes sao os do ambiente isolado da base PHP 7.4 (projeto compose `e74`,
 regressao/lab/docker-compose.e74.yml): referencia PHP 7.4/Laravel 8 em :8074, PHP 8.5 em :8185,
-laboratorio Laravel 12 em :8187, proxy em :8190. Tudo pode ser trocado por variavel de ambiente,
+laboratorio Laravel 12 em :8187 (container ecidade74_lar12, regressao/lab/docker-compose.lar12.yml),
+proxy em :8190. Tudo pode ser trocado por variavel de ambiente,
 lida a cada chamada (nada fica preso no import).
 """
 import os
@@ -26,6 +27,7 @@ class Containers:
     php_novo: str
     banco: str
     proxy: str
+    laravel_novo: str  # laboratorio Laravel 12 (regressao/lab/docker-compose.lar12.yml)
 
 
 def alvos_do_ambiente() -> Alvos:
@@ -47,7 +49,20 @@ def containers_do_ambiente() -> Containers:
         php_novo=os.environ.get("REGRESSAO_CONTAINER_PHP_NOVO", "ecidade74_php85"),
         banco=os.environ.get("REGRESSAO_CONTAINER_BANCO", "ecidade74_database"),
         proxy=os.environ.get("REGRESSAO_CONTAINER_PROXY", "ecidade74_proxy"),
+        laravel_novo=os.environ.get("REGRESSAO_CONTAINER_LARAVEL_NOVO", "ecidade74_lar12"),
     )
+
+
+def container_do_alvo(url: str) -> str | None:
+    """Container PHP que atende a URL de um alvo do ambiente (ref, PHP novo, laboratorio Laravel);
+    None para o proxy (nginx, nao roda PHP) e para URL desconhecida: quem chama nunca deve cair, sem
+    saber, no container de outro runtime."""
+    a, c = alvos_do_ambiente(), containers_do_ambiente()
+    u = url.rstrip("/")
+    for alvo, container in ((a.ref, c.ref), (a.php_novo, c.php_novo), (a.laravel_novo, c.laravel_novo)):
+        if u == alvo.rstrip("/"):
+            return container
+    return None
 
 
 def containers_ativos() -> set[str] | None:

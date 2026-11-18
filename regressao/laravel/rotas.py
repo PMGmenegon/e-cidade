@@ -1,14 +1,60 @@
-"""Inventario de rotas: Laravel 5.4 (route:list, inclui rest/v1), Silex api/V1."""
+"""Inventario de rotas: Laravel 8 (`artisan route:list --json`, inclui rest/v1) e Silex api/V1.
+
+O `route:list` do Laravel 8 INSTANCIA cada controller para juntar o middleware dele
+(`Route::gatherMiddleware` -> `controllerMiddleware`): um unico controller que nao constroi na
+referencia (classe inexistente, funcao indefinida...) derruba a listagem inteira. Quando isso acontece,
+o inventario usa uma listagem TOLERANTE com o mesmo formato (mesmo `getRouteInformation` do comando,
+com `flushMiddlewareGroups`), que captura o erro POR ROTA: a rota continua no inventario (vira caso;
+na referencia ela responde 500 e o caso fica INCONCLUSIVO) e o erro vai para a coluna `erro_controller`.
+"""
+import json
 import re
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
-from regressao.nucleo.banco import _docker
+from regressao.nucleo.ambiente import containers_do_ambiente
 
-CONTAINER_PHP = "ecidade_php56"
 DIR_APP = "/var/www/html"
 ARQ_INVENTARIO = Path(__file__).resolve().parent / "casos" / "_inventario.tsv"
 ORIGENS = ("laravel", "rest", "silex")
+TIMEOUT_LISTAGEM = 300
+LIMITE_ERRO = 200
+COLUNAS_TSV = ("metodo", "uri", "middleware", "action", "origem", "erro_controller")
+
+# Mesma informacao de RouteListCommand::getRouteInformation (Laravel 8.73), com o erro por rota.
+SCRIPT_TOLERANTE = r"""<?php
+require getcwd() . '/vendor/autoload.php';
+$app = require getcwd() . '/bootstrap/app.php';
+$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+$router = $app['router'];
+$router->flushMiddlewareGroups();
+$saida = [];
+foreach ($router->getRoutes() as $route) {
+    $erro = null;
+    try {
+        $mw = $router->gatherRouteMiddleware($route);
+    } catch (Throwable $e) {
+        $mw = $route->middleware();
+        $erro = get_class($e) . ': ' . $e->getMessage();
+    }
+    $mw = array_map(function ($m) { return $m instanceof Closure ? 'Closure' : $m; }, $mw);
+    $saida[] = [
+        'domain' => $route->domain(),
+        'method' => implode('|', $route->methods()),
+        'uri' => $route->uri(),
+        'name' => $route->getName(),
+        'action' => ltrim($route->getActionName(), '\\'),
+        'middleware' => implode("\n", $mw),
+        'erro' => $erro,
+    ];
+}
+echo json_encode($saida);
+"""
+
+
+class ErroInventario(RuntimeError):
+    """Nao foi possivel listar as rotas da referencia."""
 
 
 @dataclass
@@ -18,37 +64,58 @@ class Rota:
     middleware: list[str]
     controller: str
     origem: str  # "laravel" | "rest" | "silex"
+    erro: str = ""  # controller que nao instancia na referencia (listagem tolerante)
 
 
-def parseia_route_list(texto: str) -> list[Rota]:
-    """Tabela do `artisan route:list` (5.4): Domain|Method|URI|Name|Action|Middleware.
-    Colunas pelas posicoes da linha de borda (Method tem `|`, ex.: GET|HEAD)."""
-    linhas = texto.splitlines()
-    borda = next((l for l in linhas if l.startswith("+-")), None)
-    if borda is None:
-        return []
-    cortes = [i for i, c in enumerate(borda) if c == "+"]
+def _limpa_erro(erro) -> str:
+    return re.sub(r"\s+", " ", str(erro or "")).strip()[:LIMITE_ERRO]
+
+
+def parseia_route_list_json(texto: str) -> list[Rota]:
+    """Saida de `route:list --json` (Laravel 8: lista de {domain, method, uri, name, action, middleware};
+    middleware separado por quebra de linha) ou da listagem tolerante (mais a chave `erro`)."""
+    try:
+        dados = json.loads(texto)
+    except ValueError:
+        raise ErroInventario(f"saida do route:list nao e JSON: {texto.strip()[:150]!r}") from None
+    if not isinstance(dados, list):
+        raise ErroInventario("saida do route:list nao e uma lista de rotas")
     rotas: list[Rota] = []
-    for l in linhas:
-        if not l.startswith("|") or len(l) < cortes[-1]:
-            continue
-        cel = [l[a + 1:b].strip() for a, b in zip(cortes, cortes[1:])]
-        if len(cel) != 6 or cel[1] == "Method":
-            continue
-        _dom, metodo, uri, _nome, acao, mw = cel
-        if not metodo and not uri and rotas:  # continuacao de linha
-            if mw:
-                rotas[-1].middleware += [m for m in mw.split(",") if m]
-            continue
-        caminho = "/" + uri.lstrip("/")
+    for d in dados:
+        caminho = "/" + str(d["uri"]).lstrip("/")
+        mw = [m.strip() for m in str(d.get("middleware") or "").split("\n") if m.strip()]
         origem = "rest" if caminho.startswith("/rest/") else "laravel"
-        rotas.append(Rota(metodo, caminho, [m for m in mw.split(",") if m], acao, origem))
+        rotas.append(Rota(str(d["method"]), caminho, mw, str(d.get("action") or ""), origem,
+                          _limpa_erro(d.get("erro"))))
     return rotas
 
 
-def rotas_laravel() -> list[Rota]:
-    saida = _docker(["exec", "-w", DIR_APP, CONTAINER_PHP, "php", "artisan", "route:list"], 180)
-    return parseia_route_list(saida.decode("utf-8", errors="replace"))
+def _roda(cmd: list[str], entrada: bytes | None = None):
+    try:
+        return subprocess.run(cmd, input=entrada, capture_output=True, timeout=TIMEOUT_LISTAGEM)
+    except (OSError, subprocess.SubprocessError) as e:
+        raise ErroInventario(f"docker indisponivel ({type(e).__name__})") from None
+
+
+def rotas_laravel(runner=None) -> tuple[list[Rota], str]:
+    """(rotas, fonte) da referencia (container `containers_do_ambiente().ref`). Fonte e
+    `route:list --json` ou, se ele falhar, `tolerante (...)` com o motivo."""
+    runner = runner or _roda
+    container = containers_do_ambiente().ref
+    r = runner(["docker", "exec", "-w", DIR_APP, container, "php", "artisan", "route:list", "--json"])
+    if r.returncode == 0:
+        try:
+            return parseia_route_list_json((r.stdout or b"").decode("utf-8", errors="replace")), "route:list --json"
+        except ErroInventario:
+            pass
+    motivo = _limpa_erro((r.stderr or b"").decode("utf-8", errors="replace") or f"codigo {r.returncode}")
+    t = runner(["docker", "exec", "-i", "-w", DIR_APP, container, "php", "-d", "display_errors=stderr"],
+               SCRIPT_TOLERANTE.encode("utf-8"))
+    if t.returncode != 0:
+        raise ErroInventario(f"route:list falhou ({motivo}) e a listagem tolerante tambem (codigo {t.returncode}): "
+                             + _limpa_erro((t.stderr or b"").decode("utf-8", errors="replace")))
+    return (parseia_route_list_json((t.stdout or b"").decode("utf-8", errors="replace")),
+            f"tolerante (route:list --json falhou: {motivo})")
 
 
 _MOUNT = re.compile(r"""->mount\(\s*\$prefix\s*\.\s*['"]([^'"]*)['"]\s*,\s*new\s+(\w+)""")
@@ -80,9 +147,10 @@ def _chave(r: Rota):
 
 
 def grava_tsv(rotas: list[Rota], destino: Path = ARQ_INVENTARIO) -> None:
-    linhas = ["metodo\turi\tmiddleware\taction\torigem"]
+    linhas = ["\t".join(COLUNAS_TSV)]
     for r in sorted(rotas, key=_chave):
-        linhas.append("\t".join([r.metodo, r.caminho, ",".join(r.middleware), r.controller, r.origem]))
+        linhas.append("\t".join([r.metodo, r.caminho, ",".join(r.middleware), r.controller, r.origem,
+                                 _limpa_erro(r.erro)]))
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_bytes(("\n".join(linhas) + "\n").encode("utf-8"))
 
@@ -94,10 +162,14 @@ def contagem(rotas: list[Rota]) -> dict[str, int]:
 def inventario(raiz: Path) -> list[Rota]:
     """Inventario completo (laravel + rest + silex); grava `casos/_inventario.tsv` e imprime
     a contagem por origem (entra no resumo.md como limite de cobertura)."""
-    rotas = rotas_laravel() + varre_silex(raiz)
+    laravel, fonte = rotas_laravel()
+    rotas = laravel + varre_silex(raiz)
     grava_tsv(rotas)
     c = contagem(rotas)
-    print("inventario de rotas: " + ", ".join(f"{o}={c[o]}" for o in ORIGENS) + f", total={len(rotas)}")
+    quebradas = sum(1 for r in rotas if r.erro)
+    print(f"fonte: {fonte}")
+    print("inventario de rotas: " + ", ".join(f"{o}={c[o]}" for o in ORIGENS) + f", total={len(rotas)}"
+          + f"; com controller quebrado na referencia={quebradas}")
     return sorted(rotas, key=_chave)
 
 

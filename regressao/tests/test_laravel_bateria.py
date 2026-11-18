@@ -11,8 +11,8 @@ from regressao.nucleo.relatorio import RodadaInvalida
 from regressao.nucleo.veredito import Caso, Veredito, codigo_saida
 
 V = Veredito
-REF = "http://ref:8080"
-NOVO = "http://novo:8087"
+REF = "http://ref:8074"
+NOVO = "http://novo:8187"
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def amb(monkeypatch, tmp_path):
     m.setattr(bateria, "CONHECIDAS", conhecidas)
     m.setattr(bateria, "alvos_do_ambiente", lambda: Alvos(REF, "http://x:8085", NOVO, "http://x:8090"))
     m.setattr(bateria, "carrega_casos", lambda d: [CasoHttp("rota:GET:/a", "GET", "/a", None)])
-    m.setattr(bateria, "_metadados_ambiente", lambda alvo: {"php_56": "5.6.40", "laravel_alvo": "5.4.x",
+    m.setattr(bateria, "_metadados_ambiente", lambda alvo: {"php_ref": "7.4.33", "laravel_alvo": "8.73.2",
                                                            "git_commit": "abc", "dump_sha256": "ff"})
 
     def verifica(alvos):
@@ -100,7 +100,7 @@ def test_gravar_recusa_alvo_diferente_do_5_4_sem_confirmacao(amb, tmp_path):
     assert bateria.roda_bateria_laravel(tmp_path / "s3", "gravar", alvo="http://outro:9000",
                                         confirmo_sobrescrever=True) == 0
     assert ("gravar", "http://outro:9000", True) in amb
-    # alvo explicito igual a :8080 nao exige confirmacao (baseline vazia)
+    # alvo explicito igual a referencia nao exige confirmacao (baseline vazia)
     assert bateria.roda_bateria_laravel(tmp_path / "s4", "gravar", alvo=REF + "/") == 0
 
 
