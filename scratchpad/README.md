@@ -96,8 +96,6 @@ comentários.
 
 | Arquivo | Defeito | Efeito |
 | --- | --- | --- |
-| `verifica_lote.py` | no passo 7, o `if sumiram:` e o `else:` ficaram presos ao `if tout_56:` (indentação) | as conhecidas que voltaram a ficar idênticas só aparecem se houver timeout no 5.6; com a lista carregada, o relatório pode dizer "sem lista de conhecidas" |
-| `rotear.py` | o modo `abas` grava o `faseb_map_abas.txt` antes de guardar a cópia de segurança | se o `nginx -t` falhar, o desfazer não restaura esse arquivo |
 | `redirecionamentos.py`, `payload_auto.py`, `demo_nivel3.sh` | restauram a sessão de um `.bak` que eles mesmos não criam | se o `.bak` for de outra sessão, sobrescreve a sessão atual |
 | `demo_nivel3.sh` | acha a sessão com `sess_*` em vez de `sess_?*` | pode pegar o arquivo `sess_` vazio |
 | `escrita_post.py` | ABORTADO sai com o mesmo código de DIVERGE; nele, as tabelas `_n3snap_*` ficam no banco; payload com `'` quebra o comando | resultado ambíguo e resíduo no banco |
@@ -105,6 +103,25 @@ comentários.
 | `gera_map_faseb.py` | não confere se o `psql` funcionou | pode reaproveitar sem aviso uma exportação antiga |
 | `residuo.py` | usa só as frentes antigas de enumeração | mede um universo menor que o do `enumera.py` |
 | `enumera.py` | imprime "universo (6 frentes)", mas percorre nove | só o rótulo está errado |
+
+**Corrigidos em 18/11/2026** (cada um com um teste em `testes/` que falhava antes da correção e passa depois):
+
+| Arquivo | Defeito | Teste |
+| --- | --- | --- |
+| `verifica_lote.py` | no passo 7, o `if sumiram:` e o `else:` estavam presos ao `if tout_56:`: as conhecidas que voltaram a ficar idênticas só apareciam com timeout no 5.6, e com a lista carregada o relatório podia dizer "sem lista de conhecidas" | `testes/test_verifica_relatorio.py` |
+| `rotear.py` | o modo `abas` gravava o `faseb_map_abas.txt` antes de guardar a cópia de segurança: se o `nginx -t` falhasse, ou com "Nada a mudar"/"RECUSADO" sob `--aplicar`, a lista ficava alterada | `testes/test_rotear_abas.py` |
+| `rotear.py` | na `base-php74` o `faseb_map.conf` nasce sem o comando do gerador: o modo `map` recusava o primeiro lote, e o `abas` parava deixando a lista alterada. Agora o primeiro `map` começa do zero e o `abas` recusa antes de mexer em qualquer arquivo | `testes/test_rotear_abas.py` (caso 0) |
+
+## Testes (`testes/`)
+
+Rodam sem Docker e sem banco, sobre cópias temporárias e com dublês no lugar do que é externo; nada real é alterado.
+
+```bash
+python3 scratchpad/testes/test_verifica_relatorio.py     # relatório do passo 7: conhecidas x novas
+python3 scratchpad/testes/test_rotear_abas.py            # rotear.py abas: a lista nunca fica alterada sem aplicar
+```
+
+Cada um imprime `OK` (código 0) ou para num `AssertionError` que diz o que quebrou.
 
 ## Como conferir que um arquivo mudou só nos comentários
 

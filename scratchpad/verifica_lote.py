@@ -667,15 +667,17 @@ def passo_7(ctx, args):
                 + ". So as novas sao possivel regressao e so elas sao diagnosticadas.")
         if velhas:
             det += "\n\nJa conhecidas (nao diagnosticadas): " + ", ".join(velhas)
-    if tout_56:
-        det += ("\n\nTimeout so no 5.6 (laco eterno da referencia; o 8.5 respondeu) -- pre-existente, nao conta: "
-                + ", ".join(tout_56))
         if sumiram:
             det += ("\n\nConhecidas que agora saem **identicas** (foram corrigidas? atualize a lista): "
                     + ", ".join(sumiram))
     else:
         det += ("\n\nSem lista de divergencias conhecidas (`--conhecidas`, ou docs/divergencias-conhecidas.md): "
                 "toda divergencia e tratada como nova.")
+    # Independe da lista de conhecidas: timeout so no 5.6 e sempre pre-existente. (O `if sumiram` e o `else`
+    # acima ja estiveram presos a este `if` por engano -- ver scratchpad/testes/test_verifica_relatorio.py.)
+    if tout_56:
+        det += ("\n\nTimeout so no 5.6 (laco eterno da referencia; o 8.5 respondeu) -- pre-existente, nao conta: "
+                + ", ".join(tout_56))
     det += ("\n\nCada divergencia nova precisa de diagnostico (guia, passo 7: tabela de decisao): pode ser regressao "
             "(quebra so no 8.5) ou defeito pre-existente (quebra igual, ou so no 5.6).")
     if linhas_div:

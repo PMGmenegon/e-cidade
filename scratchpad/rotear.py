@@ -103,8 +103,14 @@ def runtime(url):
 
 def comando_do_map():
     """Os argumentos do gera_map_faseb.py que geraram o faseb_map.conf atual (linha 2 do arquivo)."""
-    m = re.search(r"gera_map_faseb\.py\s+(.+)", ler(MAP).splitlines()[1])
+    linhas = ler(MAP).splitlines()
+    m = re.search(r"gera_map_faseb\.py\s+(.+)", linhas[1]) if len(linhas) > 1 else None
     if not m:
+        # Map nunca gerado (base-php74 no inicio: so comentarios, nenhuma entrada): nao ha lote anterior a
+        # preservar, e o primeiro `map` comeca do zero. Com entradas e sem o comando, recusar: regenerar
+        # sem o comando apagaria os lotes ja roteados.
+        if not entradas_map():
+            return []
         erro(f"nao achei o comando na linha 2 de {MAP}")
     return m.group(1).split()
 
@@ -215,11 +221,12 @@ def comparar_map(novo_texto):
     atual = entradas_map()
     return sorted(novo - atual), sorted(atual - novo)
 
-def mostrar_e_aplicar_map(args_gera, extras, aplicar_):
+def mostrar_e_aplicar_map(args_gera, extras, aplicar_, novo_texto=None):
     """Comum a map e abas: regenera o map com args_gera, mostra o que entra e RECUSA (sai 1) se alguma tela
     sairia dele. Com --aplicar, grava o map e os arquivos de `extras` ({arquivo: texto}) via aplicar().
     O map guarda os nomes em minuscula; `disco` devolve a grafia real para pedir a URL na conferencia."""
-    novo_texto = regenerar_map(args_gera)
+    if novo_texto is None:                   # o modo abas ja regenerou (com a lista nova no disco)
+        novo_texto = regenerar_map(args_gera)
     novas, sairam = comparar_map(novo_texto)
     print(f"Comando do gerador: python3 scratchpad/gera_map_faseb.py {' '.join(args_gera)}")
     print(f"Entradas no map: {len(entradas_map())} -> {len(entradas_map()) + len(novas) - len(sairam)} "
@@ -275,14 +282,21 @@ def modo_abas(telas, aplicar_):
     if not novas:
         print("Todas ja estao em " + ABAS + ".")
         return
+    args_gera = comando_do_map()
+    if not args_gera:
+        erro("o map ainda nao tem nenhum lote (nada foi roteado por lista): as abas entram junto com um lote -- "
+             "rode antes `rotear.py map <area>:<pref>`")
     novo_abas = texto.rstrip("\n") + "\n" + "\n".join(novas) + "\n"
-    antigo = ler(ABAS)
-    gravar(ABAS, novo_abas)          # o gerador le a lista do disco
+    # O gerador le a lista do DISCO: grava a nova so para regenerar o map e devolve a original LOGO EM SEGUIDA,
+    # aconteca o que acontecer. Quem grava de verdade e o aplicar(), que assim guarda a lista ORIGINAL para
+    # desfazer se o nginx -t falhar. (Antes a lista era devolvida so sem --aplicar, e com --aplicar o aplicar()
+    # guardava a lista ja alterada como "antiga" -- ver scratchpad/testes/test_rotear_abas.py.)
+    gravar(ABAS, novo_abas)
     try:
-        mostrar_e_aplicar_map(comando_do_map(), {ABAS: novo_abas}, aplicar_)
+        novo_texto = regenerar_map(args_gera)
     finally:
-        if not aplicar_:
-            gravar(ABAS, antigo)
+        gravar(ABAS, texto)
+    mostrar_e_aplicar_map(args_gera, {ABAS: novo_abas}, aplicar_, novo_texto)
 
 def modo_8b(areas, todas):
     """Abas e redirecionamentos que voltam ao 5.6 (passo 8b), sem alterar nada."""
