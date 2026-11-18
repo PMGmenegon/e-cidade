@@ -5,7 +5,7 @@
 # Uso (da raiz da worktree): bash ecidade/tests/sistema/trava-leitura.sh <Agente> <porta-base> <pasta-saida>
 set -e
 A=$(echo ${1:?agente} | tr 'A-Z' 'a-z'); P=${2:?porta-base}; OUT=${3:?saida}; W="$(cd "$(dirname "$0")/../../.." && pwd)"
-Q=/home/gustavo/git/ecidade-laravel/.quadro/ferramentas; N=$(command -v node)
+Q=${QUADRO:?defina QUADRO com a pasta que contem ferramentas/vigia-banco.sh}/ferramentas; N=$(command -v node)
 S="$N $Q/suite.mjs bash ecidade/tests/suite/rodar.sh --camada sistema --runtime 85 --agente $A"
 mkdir -p "$OUT/normal" "$OUT/ro"
 bash $Q/sobe-ambiente.sh $A "$W" $P >/dev/null

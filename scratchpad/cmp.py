@@ -33,7 +33,7 @@ import argparse, hashlib, json, os, re, shlex, subprocess, sys, time
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCROOT = os.path.join(RAIZ, 'ecidade')
-VIGIA = '/home/gustavo/git/ecidade-laravel/.quadro/ferramentas/vigia-banco.sh'
+VIGIA = os.environ.get('VIGIA', '')  # caminho do vigia-banco.sh
 CONHECIDAS_PADRAO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sistema', 'divergencias_conhecidas.tsv')
 
 # Prefixos que o location do nginx serve (CLAUDE.md, "Rota no nginx").

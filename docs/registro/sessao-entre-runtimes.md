@@ -63,7 +63,7 @@ que não sobe. Se o `/v4` rodasse no 8.5, um token do 5.6 poderia ser aceito (me
   `/var/lib/php/sessions`; o script não monta volume de sessão).
 - **Volume compartilhado:** o mesmo, mas subindo os containers à mão com um volume comum (o `sobe-ambiente.sh` não o faz):
   ```bash
-  A=<agente>; W=<worktree>; R=/home/gustavo/git/ecidade-laravel
+  A=<agente>; W=<worktree>; R=<repositorio>
   docker volume create ecidade_${A}_sessions
   E=(-e DB_HOST=ecidade_database -e DB_PORT=5432 -e DB_DATABASE=ecidade -e DB_USERNAME=postgres -e DB_PASSWORD=postgres)
   docker run -d --name ecidade_${A}_56 --network e-cidade_ecidade -p <base>:80 "${E[@]}" -v $W/ecidade:/var/www/html \

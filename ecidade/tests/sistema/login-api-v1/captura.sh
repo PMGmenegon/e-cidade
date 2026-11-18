@@ -6,7 +6,7 @@
 # NAO sao permitidos: qualquer alteracao => exit 3: interrompa e investigue. 'db172_ultima_utilizacao' e lida so para provar que nao mudou.
 set -u
 AG=${1:?agente}; RT=${2:?56|85}; DEST=${3:?pasta}
-C=ecidade_${AG}_${RT}; V=/home/gustavo/git/ecidade-laravel/.quadro/ferramentas/vigia-banco.sh
+C=ecidade_${AG}_${RT}; V=${VIGIA:?defina VIGIA com o caminho do vigia-banco.sh}
 FOTO=$(mktemp); trap 'rm -f $FOTO' EXIT
 ult(){ docker exec ecidade_database psql -U postgres -d ecidade -tAc "select db172_ultima_utilizacao from configuracoes.api_clients order by db172_sequencial limit 1"; }
 mkdir -p "$DEST"

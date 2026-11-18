@@ -5,7 +5,7 @@
 # O vigia usa a lista padrao (db_logsacessa, db_usuariosonline, oauth_*): qualquer outra tabela alterada => exit 3 (interrompa e investigue).
 set -u
 AG=${1:?agente}; RT=${2:?56|85}; DEST=${3:?pasta}; ANT=${4:-}
-C=ecidade_${AG}_${RT}; V=/home/gustavo/git/ecidade-laravel/.quadro/ferramentas/vigia-banco.sh
+C=ecidade_${AG}_${RT}; V=${VIGIA:?defina VIGIA com o caminho do vigia-banco.sh}
 FOTO=$(mktemp); trap 'rm -f $FOTO' EXIT
 mkdir -p "$DEST"
 docker exec $C rm -rf /tmp/token-v4-out /tmp/token-v4-ant /tmp/token-v4-ant.novo
