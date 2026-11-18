@@ -213,9 +213,10 @@ def test_cobertura_sem_baseline_conta_a_parte(tmp_path):
 
 def test_ajustes_yml_real_e_valido():
     aj = gerador.le_ajustes()
-    assert set(aj) <= {"volateis", "instaveis", "perigosas"}
-    for caminhos in aj.get("volateis", {}).values():
-        assert isinstance(caminhos, list)
+    assert set(aj) <= {"volateis", "instaveis", "perigosas", "sem_ordem"}
+    for chave in ("volateis", "sem_ordem"):
+        for caminhos in (aj.get(chave) or {}).values():
+            assert isinstance(caminhos, list)
     assert isinstance(yaml.safe_dump(aj), str)
 
 
