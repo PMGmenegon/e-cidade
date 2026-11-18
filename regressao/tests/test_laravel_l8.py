@@ -147,6 +147,13 @@ def test_tsv_guarda_o_erro_do_controller_e_le_os_dois_formatos(tmp_path):
     assert gerador.le_inventario(antigo)[0].erro == ""
 
 
+def test_rota_com_espaco_ou_caractere_estranho_na_uri_nao_vira_caso_e_aparece_com_motivo():
+    r = rotas.Rota("POST", "/v4/api/educacao/transporte-escolar/emitir-carteira ", ["api"], "App\\C@emitir", "laravel")
+    assert "caractere" in gerador.motivo_nao_gerada(r)
+    assert gerador.gera([r])["laravel"] == []
+    assert [m for _, m in gerador.nao_geradas([r])] == [gerador.motivo_nao_gerada(r)]
+
+
 def test_cobertura_lista_rotas_com_controller_quebrado_na_referencia(tmp_path):
     lista = [rotas.Rota("GET|HEAD", "/v4/api/b", ["api"], "App\\B@i", "laravel", "Error: Class 'X' not found"),
              rotas.Rota("GET|HEAD", "/v4/api/a", ["api"], "App\\A@i", "laravel")]
