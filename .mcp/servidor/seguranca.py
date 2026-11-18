@@ -5,7 +5,9 @@ arquivos de segredo (.env, chaves, db_conn.php). Erros viram `ErroFerramenta` (r
 """
 from __future__ import annotations
 
+import os
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any, Literal
 
@@ -13,9 +15,14 @@ MAX_CAMINHO = 1024
 MAX_REGEX = 300
 
 _SEGREDOS_NOME = re.compile(
-    r"^(\.env(\..+)?|db_conn\.php|auth\.json|id_rsa.*|.*\.(key|pem|p12|pfx|crt))$", re.IGNORECASE
+    r"^(\.env.*|db_conn\.php|db_acessa\.php|auth\.json|id_rsa.*|.*\.(key|pem|p12|pfx|crt|log))$", re.IGNORECASE
 )
-_NAO_SEGREDO = {".env.example", ".env.dist", ".env.testing.example", "db_conn.php.dist"}
+# negacao por CAMINHO (nao so pelo nome): diretorios com dados de execucao, logs, sessoes, caches e configs com senha
+_DIRS_NEGADOS = {".git", "storage", "tmp"}
+_SEQUENCIAS_NEGADAS = (("bootstrap", "cache"), ("extension", "log"))
+_FINAIS_NEGADOS = (("config", "application.php"), ("config", "ecidade_config.php"))
+_ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)|\x1b[@-_]")
+_METACARACTERES = re.compile(r"[;&|$`<>(){}*?!'\"\\\x00-\x1f\x7f]")
 
 
 class ErroFerramenta(Exception):
@@ -35,10 +42,35 @@ class ErroFerramenta(Exception):
 
 
 def eh_segredo(rel: Path) -> bool:
-    nome = rel.name
-    if nome.lower() in _NAO_SEGREDO:
+    """So pelo nome (.env*, chaves, db_conn.php, *.log...)."""
+    return bool(_SEGREDOS_NOME.match(rel.name))
+
+
+def eh_negado(rel: Path) -> bool:
+    """Caminho relativo a raiz que nenhuma tool le nem varre (nome de segredo OU caminho negado)."""
+    partes = tuple(p.lower() for p in rel.parts)
+    if not partes:
         return False
-    return bool(_SEGREDOS_NOME.match(nome))
+    if any(p in _DIRS_NEGADOS for p in partes):
+        return True
+    pares = set(zip(partes, partes[1:]))
+    if any(s in pares for s in _SEQUENCIAS_NEGADAS):
+        return True
+    if partes[-2:] in _FINAIS_NEGADOS:
+        return True
+    return eh_segredo(Path(partes[-1]))
+
+
+def tem_metacaractere(s: str) -> bool:
+    return bool(_METACARACTERES.search(s))
+
+
+def limpar_texto(s: str | None, maximo: int) -> str:
+    """Texto livre de terceiros (motivo, observacao, quem): sem ANSI, sem controles, uma linha, tamanho limitado."""
+    s = _ANSI.sub("", s or "")
+    s = "".join(" " if c in "\t\r\n" else c for c in s
+                if unicodedata.category(c) not in ("Cc", "Cf") or c in "\t\r\n")
+    return " ".join(s.split())[:maximo]
 
 
 def resolver_caminho(
@@ -55,14 +87,17 @@ def resolver_caminho(
     if ".." in p.parts:
         raise ErroFerramenta("caminho_fora_da_raiz", "nao use '..': informe o caminho relativo a raiz do repositorio")
     raiz_r = raiz.resolve(strict=True)
-    alvo = (p if p.is_absolute() else raiz_r / p).resolve(strict=False)
+    pedido = Path(os.path.abspath(p if p.is_absolute() else raiz_r / p))  # sem resolver symlinks
+    alvo = pedido.resolve(strict=False)
     if alvo != raiz_r and raiz_r not in alvo.parents:
         raise ErroFerramenta("caminho_fora_da_raiz", f"{caminho!r} fica fora do repositorio")
     rel = alvo.relative_to(raiz_r)
     if ".git" in rel.parts:
         raise ErroFerramenta("caminho_proibido", "o diretorio .git nao e acessivel pelas tools")
-    if eh_segredo(rel):
-        raise ErroFerramenta("caminho_proibido", f"{rel.as_posix()} parece arquivo de segredo e nao e lido")
+    rel_pedido = pedido.relative_to(raiz_r) if (pedido == raiz_r or raiz_r in pedido.parents) else rel
+    if eh_negado(rel) or eh_negado(rel_pedido):  # o pedido E o alvo resolvido (symlink interno para .env)
+        raise ErroFerramenta("caminho_proibido",
+                             f"{rel_pedido.as_posix()} e segredo, log, cache ou dado de execucao e nao e lido")
     if deve_existir and not alvo.exists():
         raise ErroFerramenta("caminho_inexistente", f"{rel.as_posix() or '.'} nao existe")
     if tipo == "arquivo" and alvo.exists() and not alvo.is_file():

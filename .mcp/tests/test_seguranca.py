@@ -6,8 +6,11 @@ import pytest
 from servidor.config import Config, carregar_config
 from servidor.seguranca import (
     ErroFerramenta,
+    eh_negado,
     eh_segredo,
     limitar,
+    limpar_texto,
+    tem_metacaractere,
     relativo,
     resolver_caminho,
     validar_regex,
@@ -100,9 +103,57 @@ def test_bloqueia_git_e_segredos(config, caminho):
     assert e.value.codigo == "caminho_proibido"
 
 
-def test_env_example_nao_e_segredo():
-    assert not eh_segredo(Path("ecidade/.env.example"))
-    assert eh_segredo(Path("ecidade/.env"))
+def test_env_qualquer_variante_e_segredo():
+    for nome in (".env", ".env.example", ".env.local", "laravel.log", "auth.json", "oauth-public.key", "a.pem"):
+        assert eh_segredo(Path("ecidade") / nome), nome
+    assert not eh_segredo(Path("ecidade/db_conn.php.dist"))
+
+
+@pytest.mark.parametrize("caminho", [
+    "ecidade/config/application.php", "ecidade/config/ecidade_config.php", "ecidade/storage/logs/laravel.log",
+    "ecidade/storage/app/x.php", "ecidade/extension/log/error.log", "ecidade/tmp/relatorio.php",
+    "ecidade/bootstrap/cache/config.php", "ecidade/auth.json", "ecidade/qualquer.log", "ecidade/.env.local",
+])
+def test_negado_por_caminho(config, caminho):
+    alvo = config.raiz / caminho
+    alvo.parent.mkdir(parents=True, exist_ok=True)
+    alvo.write_text("<?php $senha = 'x';")
+    assert eh_negado(alvo.relative_to(config.raiz))
+    with pytest.raises(ErroFerramenta) as e:
+        resolver_caminho(config.raiz, caminho)
+    assert e.value.codigo == "caminho_proibido"
+
+
+def test_config_comum_nao_e_negado(config):
+    for c in ("ecidade/config/app.php", "ecidade/libs/db_stdlib.php", "ecidade/bootstrap/app.php"):
+        assert not eh_negado(Path(c)), c
+
+
+def test_symlink_interno_para_env_e_negado(config):
+    (config.raiz / "ecidade" / ".env").write_text("DB_PASSWORD=x")
+    os.symlink(config.raiz / "ecidade" / ".env", config.raiz / "ecidade" / "inocente.php")
+    with pytest.raises(ErroFerramenta) as e:
+        resolver_caminho(config.raiz, "ecidade/inocente.php")
+    assert e.value.codigo == "caminho_proibido"
+
+
+def test_symlink_com_nome_de_segredo_para_arquivo_comum_e_negado(config):
+    os.symlink(config.raiz / "ecidade" / "tela001.php", config.raiz / "ecidade" / "x.log")
+    with pytest.raises(ErroFerramenta):
+        resolver_caminho(config.raiz, "ecidade/x.log")
+
+
+def test_limpar_texto():
+    assert limpar_texto("a\r\nb\x1b[31mvermelho\x1b[0m\x07‮!", 100) == "a bvermelho!"
+    assert limpar_texto("<<<<<<< x", 100) == "<<<<<<< x"
+    assert len(limpar_texto("x" * 500, 80)) == 80
+    assert limpar_texto(None, 10) == ""
+
+
+def test_metacaracteres():
+    assert not tem_metacaractere("ecidade/arr1_grupotaxa001.php")
+    for ruim in ("a;rm", "a$(x)", "a`x`", "a|b", "a'b", "a\nb", "a&b", "a>b"):
+        assert tem_metacaractere(ruim), ruim
 
 
 def test_inexistente_e_tipo(config):

@@ -1,4 +1,5 @@
 import os
+import time
 
 import pytest
 
@@ -102,6 +103,65 @@ def test_symlink_para_fora_e_ignorado_na_varredura(repo, tmp_path):
 def test_prazo_esgotado_devolve_parcial(repo):
     r = buscar(repo, padrao="parse_str_1_arg", prazo_s=0)
     assert r["truncado"] is True and "tempo" in r["motivo_truncado"]
+
+
+def test_regex_nao_le_segredos_logs_nem_configs(repo):
+    e = repo.raiz / "ecidade"
+    for rel in ("config/application.php", "config/ecidade_config.php", "storage/logs/laravel.log",
+                "storage/framework/x.php", "extension/log/error.php", "tmp/t.php", "bootstrap/cache/config.php"):
+        (e / rel).parent.mkdir(parents=True, exist_ok=True)
+        (e / rel).write_text("<?php $SENHA_SECRETA = 'x';\n")
+    (e / "laravel.log").write_text("SENHA_SECRETA\n")
+    r = buscar(repo, regex="SENHA_SECRETA", extensoes=(".php", ".log"))
+    assert r["ocorrencias"] == []
+    for c in ("ecidade/config/application.php", "ecidade/storage/logs/laravel.log", "ecidade/laravel.log"):
+        with pytest.raises(ErroFerramenta) as ex:
+            buscar(repo, regex=".", caminho=c, extensoes=(".php", ".log"))
+        assert ex.value.codigo == "caminho_proibido"
+
+
+def test_symlink_interno_para_env_nao_e_varrido(repo):
+    os.symlink(repo.raiz / "ecidade" / ".env", repo.raiz / "ecidade" / "inocente.php")
+    r = buscar(repo, regex="senha")
+    assert r["ocorrencias"] == []
+
+
+def test_arquivo_explicito_respeita_extensao(repo):
+    (repo.raiz / "ecidade" / "dados.json").write_text('{"senha": 1}')
+    with pytest.raises(ErroFerramenta) as e:
+        buscar(repo, regex=".", caminho="ecidade/dados.json")
+    assert e.value.codigo == "extensao_nao_permitida"
+
+
+def test_regex_ponto_nao_vira_leitura_do_arquivo(repo):
+    (repo.raiz / "ecidade" / "grande.php").write_text("".join(f"linha {i}\n" for i in range(500)))
+    r = buscar(repo, regex=".", caminho="ecidade/grande.php", limite=2000)
+    assert len(r["ocorrencias"]) == 20
+    assert r["arquivos_com_linhas_omitidas"] == ["ecidade/grande.php"]
+
+
+def test_regex_teto_de_bytes(repo):
+    for i in range(80):
+        (repo.raiz / "ecidade" / f"g{i:02}.php").write_text("".join(f"{'x' * 190} {j}\n" for j in range(30)))
+    r = buscar(repo, regex=".", limite=2000)
+    assert r["truncado"] and "KB" in r["motivo_truncado"]
+    assert sum(len(o["trecho"]) for o in r["ocorrencias"]) <= 60_000
+
+
+def test_regex_catastrofica_responde_no_prazo_e_mata_o_processo(repo):
+    (repo.raiz / "ecidade" / "redos.php").write_text("a" * 40 + "!\n")
+    t = time.monotonic()
+    r = buscar(repo, regex="(a+)+$", caminho="ecidade/redos.php", prazo_s=2)
+    assert time.monotonic() - t < 6
+    assert r["truncado"] and "tempo" in r["motivo_truncado"]
+    from servidor import busca as b
+    assert not os.path.exists(f"/proc/{b.ULTIMO_WORKER_PID}")  # morto e colhido: nao fica CPU presa
+
+
+def test_padrao_tambem_limita_linhas_por_arquivo(repo):
+    (repo.raiz / "ecidade" / "muitos.php").write_text("<?php\n" + "parse_str($a);\n" * 50)
+    r = buscar(repo, padrao="parse_str_1_arg", caminho="ecidade/muitos.php")
+    assert len(r["ocorrencias"]) == 20 and r["totais_por_padrao"]["parse_str_1_arg"] == 50
 
 
 def test_iterar_ignora_git(repo):
