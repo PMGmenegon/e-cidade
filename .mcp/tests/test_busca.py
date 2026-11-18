@@ -47,6 +47,13 @@ def test_todos(repo):
     assert "count_null" not in r["totais_por_padrao"]
 
 
+def test_todos_com_ruidosos(repo):
+    (repo.raiz / "ecidade" / "pg.php").write_text("<?php\n$n = pg_numrows($rs); $c = count($x);\n")
+    assert "pg_aliases" not in buscar(repo, padrao="todos")["totais_por_padrao"]
+    r = buscar(repo, padrao="todos", incluir_ruidosos=True)
+    assert r["totais_por_padrao"]["pg_aliases"] == 1 and r["totais_por_padrao"]["count_null"] == 1
+
+
 def test_regex_livre(repo):
     r = buscar(repo, regex=r"\$__qs")
     assert [(o["arquivo"], o["linha"]) for o in r["ocorrencias"]] == [("ecidade/tela002.php", 3)]

@@ -32,12 +32,14 @@ class Padrao:
     flags: int = 0
     detector: Callable[[str], list[int]] | None = field(default=None, compare=False)
     filtro: tuple[str, ...] = ()  # substrings: arquivo sem nenhuma delas e pulado (velocidade)
+    ruidoso: bool = False  # fora de 'todos' (milhares de ocorrencias ou muito falso positivo)
 
     def como_dict(self) -> dict[str, Any]:
         return {
             "nome": self.nome, "titulo": self.titulo, "alvo": self.alvo, "origem": self.origem,
             "correcao": self.correcao, "exemplo_antes": self.exemplo_antes, "exemplo_depois": self.exemplo_depois,
             "mecanico": self.mecanico, "confianca": self.confianca, "prioridade": self.prioridade,
+            "ruidoso": self.ruidoso,
         }
 
 
@@ -210,6 +212,21 @@ CATALOGO: tuple[Padrao, ...] = (
         regex=r"function\b[^(]*\([^)]*?(?<![?|\w\\])(?!mixed\b|null\b)[A-Za-z_\\][\w\\]*\s+&?(?:\.\.\.)?\$\w+\s*=\s*null\b",
     ),
     Padrao(
+        "pg_aliases", "apelidos antigos de pg_* (pg_numrows, pg_exec, pg_result, pg_fieldname...)", "php",
+        "depreciados desde o 8.0; o 8.5 emite `Function pg_numrows() is deprecated since 8.0` (verificado no "
+        "ecidade74_php85). Ainda funcionam: e aviso, nao quebra",
+        "Troque pelo nome atual: pg_numrows->pg_num_rows, pg_numfields->pg_num_fields, pg_fieldname->pg_field_name, "
+        "pg_result->pg_fetch_result, pg_exec->pg_query, pg_freeresult->pg_free_result, pg_cmdtuples->"
+        "pg_affected_rows, pg_errormessage->pg_last_error, pg_getlastoid->pg_last_oid (mesma assinatura).",
+        "$n = pg_numrows($rs); $v = pg_result($rs, 0, 'codigo');",
+        "$n = pg_num_rows($rs); $v = pg_fetch_result($rs, 0, 'codigo');",
+        "sim", "alta", 57,
+        regex=FN + r"pg_(?:numrows|numfields|fieldname|fieldsize|fieldtype|fieldnum|fieldprtlen|fieldisnull|"
+                   r"freeresult|getlastoid|cmdtuples|errormessage|exec|result|clientencoding|setclientencoding|"
+                   r"loreadall|lounlink|loread|lowrite|locreate|loopen|loclose|loimport|loexport)\s*\(",
+        filtro=("pg_",), ruidoso=True,
+    ),
+    Padrao(
         "utf8_encode_decode", "utf8_encode()/utf8_decode()", "php",
         "depreciadas no 8.2 (base LATIN1 usa muito)",
         "mb_convert_encoding($s, 'UTF-8', 'ISO-8859-1') no lugar de utf8_encode; invertido para utf8_decode.",
@@ -250,7 +267,7 @@ CATALOGO: tuple[Padrao, ...] = (
         "Se a variavel pode ser null/false/escalar: `count($x ?? [])` ou `is_countable($x) ? count($x) : 0`. "
         "Nao troque as que ja sao sempre array (a busca acha TODAS: muitos falsos positivos).",
         "$n = count($linhas);", "$n = is_countable($linhas) ? count($linhas) : 0;",
-        "nao", "baixa", 90, regex=FN + r"(?:count|sizeof)\s*\(\s*@?\$", filtro=("count", "sizeof"),
+        "nao", "baixa", 90, regex=FN + r"(?:count|sizeof)\s*\(\s*@?\$", filtro=("count", "sizeof"), ruidoso=True,
     ),
     # ---------------- Laravel 8 -> 12 ----------------
     Padrao(
@@ -309,7 +326,7 @@ CATALOGO: tuple[Padrao, ...] = (
         "instalada do symfony/http-foundation)",
         "Prefira $request->input('x') (body+query) ou $request->query('x')/$request->route('x').",
         "$id = $request->get('id');", "$id = $request->input('id');",
-        "sim", "baixa", 91, regex=r"\$request->get\s*\(|\brequest\(\)->get\s*\(", filtro=("->get",),
+        "sim", "baixa", 91, regex=r"\$request->get\s*\(|\brequest\(\)->get\s*\(", filtro=("->get",), ruidoso=True,
     ),
 )
 
@@ -326,10 +343,10 @@ def ocorrencias(padrao: Padrao, texto: str) -> list[int]:
     return [m.start() for m in _COMPILADAS[padrao.nome].finditer(texto)]
 
 
-def padroes_para(nome: str, incluir_baixa: bool = False) -> list[Padrao]:
-    """`todos` -> catalogo (sem os de confianca baixa, a menos que pedidos); senao o padrao pelo nome."""
+def padroes_para(nome: str, incluir_ruidosos: bool = False) -> list[Padrao]:
+    """`todos` -> catalogo (sem os ruidosos, a menos que pedidos); senao o padrao pelo nome."""
     if nome == "todos":
-        return [p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if incluir_baixa or p.confianca != "baixa"]
+        return [p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if incluir_ruidosos or not p.ruidoso]
     if nome not in PADROES:
         from servidor.seguranca import ErroFerramenta
         raise ErroFerramenta("padrao_desconhecido", f"padrao {nome!r}; validos: todos, {', '.join(PADROES)}")

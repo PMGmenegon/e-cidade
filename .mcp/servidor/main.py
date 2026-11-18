@@ -91,7 +91,7 @@ def criar_servidor() -> MCPServer:
     @mcp.tool(name="buscar_codigo_legado", annotations=LEITURA,
               description="Busca estatica de codigo legado com padroes nomeados (parse_str_1_arg, construtor_php4, "
                           "split, each, ereg, create_function, count_null, pg_resultado_false, reflection_getclass, "
-                          "laravel_dates_property...; 'todos' = catalogo sem os de baixa confianca) ou regex livre. "
+                          "laravel_dates_property...; 'todos' = catalogo sem os ruidosos) ou regex livre. "
                           "Sem padrao nem regex devolve o catalogo. Ex.: buscar_codigo_legado(padrao='parse_str_1_arg', "
                           "caminho='ecidade/classes', limite=50)")
     def t_buscar(
@@ -99,10 +99,10 @@ def criar_servidor() -> MCPServer:
         regex: Annotated[str | None, Field(max_length=300, description="regex Python aplicada linha a linha")] = None,
         caminho: Annotated[str | None, Field(max_length=1024, description="arquivo ou diretorio (padrao: ecidade)")] = None,
         limite: Annotated[int, Field(ge=1, le=2000)] = 100,
-        incluir_baixa_confianca: bool = False,
+        incluir_ruidosos: Annotated[bool, Field(description="com 'todos', inclui tambem count_null, request_get e pg_aliases (dezenas de milhares de ocorrencias)")] = False,
     ) -> Resposta:
         return executar("buscar_codigo_legado", buscar, padrao=padrao, regex=regex, caminho=caminho, limite=limite,
-                        incluir_baixa_confianca=incluir_baixa_confianca)
+                        incluir_ruidosos=incluir_ruidosos)
 
     @mcp.tool(name="validar_arquivo_php", annotations=LEITURA,
               description="Roda php -l (e opcionalmente phpstan, pint, phpcs) no arquivo DENTRO dos conteineres do "

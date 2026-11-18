@@ -23,6 +23,8 @@ def acha(nome: str, codigo: str) -> int:
     ("create_function", "$f = create_function('$a', 'return $a;');", "$f = function ($a) { return $a; };"),
     ("pg_resultado_false", "$n = pg_numrows(db_query($sql));", "$rs = db_query($sql); if ($rs) { $n = pg_num_rows($rs); }"),
     ("pg_resultado_false", "$l = pg_fetch_object(pg_query($c, $s));", "$l = pg_fetch_object($rs);"),
+    ("pg_aliases", "$n = pg_numrows($rs); $v = pg_result($rs, 0, 0); pg_exec($c, $s);",
+     "$n = pg_num_rows($rs); $e = pg_result_error($rs); pg_execute($c, 'q', []); pg_fetch_result($rs, 0, 0);"),
     ("is_resource_pgsql", "if (!is_resource($rs)) { return; }", "if ($rs === false) { return; }"),
     ("reflection_getclass", "$c = $param->getClass();", "$c = $obj->getClassName();"),
     ("removidas_php8", "$v = money_format('%i', $x); get_magic_quotes_gpc();", "$v = number_format($x, 2);"),

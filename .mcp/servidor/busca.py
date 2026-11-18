@@ -80,7 +80,7 @@ def buscar(
     caminho: str | None = None,
     extensoes: tuple[str, ...] = EXTENSOES_PADRAO,
     limite: int = 100,
-    incluir_baixa_confianca: bool = False,
+    incluir_ruidosos: bool = False,
     ignorar_arquivos: set[str] | None = None,
     prazo_s: float | None = None,
 ) -> dict[str, Any]:
@@ -92,7 +92,7 @@ def buscar(
     if not (1 <= limite <= 2000):
         raise ErroFerramenta("parametro_invalido", "limite precisa estar entre 1 e 2000")
     exts = tuple(e if e.startswith(".") else "." + e for e in extensoes)
-    lista: list[Padrao] = padroes_para(padrao, incluir_baixa_confianca) if padrao else []
+    lista: list[Padrao] = padroes_para(padrao, incluir_ruidosos) if padrao else []
     rx = validar_regex(regex) if regex else None
     base = resolver_caminho(config.raiz, caminho or config.dir_codigo)
     prazo = config.timeout_busca_s if prazo_s is None else prazo_s

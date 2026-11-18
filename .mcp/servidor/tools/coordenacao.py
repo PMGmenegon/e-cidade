@@ -97,7 +97,7 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
     eu = quem_sou(config, quem)
     est = _estado(config)
     candidatos = padroes_para(padrao) if padrao else [
-        p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if p.mecanico in ("sim", "semi") and p.confianca != "baixa"]
+        p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if p.mecanico in ("sim", "semi") and p.confianca != "baixa" and not p.ruidoso]
     ativos = est.reivindicados_ativos()
     de_outros = {c for c, r in ativos.items() if r["quem"] != eu}
     feitos = est.concluidos_por_padrao()
