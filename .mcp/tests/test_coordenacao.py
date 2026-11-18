@@ -40,7 +40,61 @@ def test_sugestoes_de_commit_com_aspas_de_shell(repo):
     assert partes[-2:] == ["-m", "estado: reivindica ecidade/t1.php"]
     r = co.liberar_arquivo(repo, "ecidade/t1.php", quem="ana", concluido=True, padroes_corrigidos=["split"])
     assert shlex.split(r["commit_do_codigo"]) == ["git", "add", "--", "ecidade/t1.php", "&&", "git", "commit", "-m",
-                                                  "migra(split): ecidade/t1.php"]
+                                                  "Corrige split em 1 arquivo (ecidade/t1.php)",
+                                                  "-m", "Padrao-MCP: split"]
+    assert "Rector" in r["lembrete"]
+
+
+def test_area_do_arquivo_pela_tabela_do_grupo():
+    from servidor.areas import area_do_arquivo
+    casos = {"ecidade/con2_conhist002.php": "financeiro", "ecidade/cai4_x.php": "financeiro",
+             "ecidade/edu1_aluno001.php": "educacao", "ecidade/pes1_reajusteprog001.php": "pessoal",
+             "ecidade/cad1_lote002.php": "tributario_patrimonial", "ecidade/sau1_x.php": "saude_demais",
+             "ecidade/libs/db_stdlib.php": "nucleo", "ecidade/dbforms/db_funcoes.php": "nucleo",
+             "ecidade/login.php": "nucleo", "ecidade/src/Educacao/X.php": "educacao",
+             "ecidade/src/RecursosHumanos/Y.php": "pessoal", "ecidade/prot1_x.php": None,
+             "ecidade/app/Http/Kernel.php": None, "ecidade/tela001.php": None}
+    for rel, area in casos.items():
+        assert area_do_arquivo(rel) == area, rel
+
+
+def test_reivindicar_arquivo_de_outra_area(repo):
+    (repo.raiz / "ecidade" / "con1_x.php").write_text("<?php")
+    with pytest.raises(ErroFerramenta) as e:
+        co.reivindicar_arquivo(repo, "ecidade/con1_x.php", "x", quem="ana", minha_area="educacao")
+    assert e.value.codigo == "outra_area" and e.value.detalhes["area_do_arquivo"] == "financeiro"
+    assert "dono" in e.value.mensagem
+    r = co.reivindicar_arquivo(repo, "ecidade/con1_x.php", "x", quem="ana", minha_area="educacao",
+                               combinado_com_dono=True)
+    assert r["area"] == "financeiro" and r["area_do_arquivo"] == "financeiro"
+    r = co.reivindicar_arquivo(repo, "ecidade/t1.php", "x", quem="ana")
+    assert "aviso_area" in r
+    with pytest.raises(ErroFerramenta):
+        co.reivindicar_arquivo(repo, "ecidade/t2.php", "x", quem="ana", minha_area="inventada")
+
+
+def test_area_pelo_ambiente(repo):
+    from dataclasses import replace
+    (repo.raiz / "ecidade" / "con1_x.php").write_text("<?php")
+    with pytest.raises(ErroFerramenta) as e:
+        co.reivindicar_arquivo(replace(repo, area="pessoal"), "ecidade/con1_x.php", "x", quem="ana")
+    assert e.value.codigo == "outra_area"
+
+
+def test_proximo_trabalho_respeita_area_e_prioriza_o_que_nao_compila(repo):
+    e = repo.raiz / "ecidade"
+    (e / "con1_a.php").write_text("<?php\nparse_str($q);\n")
+    (e / "con1_b.php").write_text("<?php\n$c = $s{0};\n")          # nao compila no 8.5
+    (e / "edu1_c.php").write_text("<?php\n$c = $s{0};\nparse_str($q);\n")
+    r = co.proximo_trabalho(repo, quem="ana", minha_area="financeiro")
+    assert r["padrao"]["nome"] == "chaves_offset_string"
+    assert [a["arquivo"] for a in r["arquivos"]] == ["ecidade/con1_b.php"]
+    assert r["arquivos"][0]["area"] == "financeiro"
+    assert r["arquivos_de_outras_areas_pulados"]["educacao"] == 1
+    r = co.proximo_trabalho(repo, quem="ana", minha_area="financeiro", padrao="parse_str_1_arg", reivindicar=True)
+    assert [a["arquivo"] for a in r["arquivos"]] == ["ecidade/con1_a.php"]
+    assert co.quadro(repo)["reivindicacoes_ativas"][0]["area"] == "financeiro"
+    assert any("ISO-8859-1" in p for p in r["passos"]) and any("base-php84" in p for p in r["passos"])
 
 
 @pytest.mark.parametrize("nome", ["a;rm -rf ~.php", "a$(id).php", "a`id`.php", "a'b.php", "a|b.php"])

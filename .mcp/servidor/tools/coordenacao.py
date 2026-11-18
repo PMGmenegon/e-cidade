@@ -7,13 +7,15 @@ from __future__ import annotations
 import re
 import shlex
 import subprocess
+import time
 from collections.abc import Callable
 from typing import Any
 
-from servidor.busca import buscar
+from servidor.busca import EXTENSOES_PADRAO, _Linhas, buscar, iterar_arquivos, ler_texto
 from servidor.config import Config
 from servidor.estado import MAX_QUEM, Estado, mesma_pessoa
-from servidor.padroes import CATALOGO, PADROES, padroes_para
+from servidor.areas import AREAS_GRUPO, area_do_arquivo, validar_area
+from servidor.padroes import CATALOGO, PADROES, nome_canonico, ocorrencias, ordem_trabalho, padroes_para
 from servidor.seguranca import ErroFerramenta, limpar_texto, relativo, resolver_caminho, tem_metacaractere
 from servidor.tools.regressao import ler_resultado_regressao
 
@@ -59,19 +61,40 @@ def _sugestao(acao: str, caminho: str) -> str:
             f"{shlex.quote(f'estado: {acao} {caminho}')}")
 
 
+def _minha_area(config: Config, minha_area: str | None) -> str | None:
+    return validar_area(minha_area or config.area)
+
+
+def _aviso_outra_area(area_arq: str) -> str:
+    return (f"o arquivo e da area '{area_arq}' ({AREAS_GRUPO[area_arq]['titulo']}): pela regra 5 do grupo, peca ao "
+            "dono da area (ou combine com ele e passe combinado_com_dono=true)")
+
+
 def reivindicar_arquivo(config: Config, caminho: str, motivo: str, quem: str | None = None,
-                        horas: float | None = None) -> dict[str, Any]:
+                        horas: float | None = None, minha_area: str | None = None,
+                        combinado_com_dono: bool = False) -> dict[str, Any]:
     rel = _caminho_seguro(config, caminho, tipo="arquivo")
     eu = quem_sou(config, quem)
-    r = _estado(config).reivindicar(rel, eu, motivo or "", horas)
-    return {**r, "sugestao_commit": _sugestao("reivindica", rel),
-            "lembrete": "renove chamando de novo antes de expirar; libere com liberar_arquivo ao terminar"}
+    area_arq = area_do_arquivo(rel)
+    minha = _minha_area(config, minha_area)
+    if minha and area_arq and area_arq != minha and not combinado_com_dono:
+        raise ErroFerramenta("outra_area", _aviso_outra_area(area_arq), area_do_arquivo=area_arq, sua_area=minha)
+    r = _estado(config).reivindicar(rel, eu, motivo or "", horas, area=area_arq)
+    out = {**r, "area_do_arquivo": area_arq, "sugestao_commit": _sugestao("reivindica", rel),
+           "lembrete": "renove chamando de novo antes de expirar; libere com liberar_arquivo ao terminar"}
+    if not minha:
+        out["aviso_area"] = ("defina sua area (minha_area ou ECIDADE_MCP_AREA) para o MCP aplicar a regra 'cada pessoa "
+                             "na sua area'")
+    elif area_arq is None:
+        out["aviso_area"] = "arquivo fora da tabela de areas do grupo: combine com o coordenador"
+    return out
 
 
 def liberar_arquivo(config: Config, caminho: str, quem: str | None = None, concluido: bool = False,
                     padroes_corrigidos: list[str] | None = None, observacao: str = "") -> dict[str, Any]:
     rel = _caminho_seguro(config, caminho, deve_existir=False)
-    for p in padroes_corrigidos or []:
+    padroes_corrigidos = [nome_canonico(p) for p in padroes_corrigidos or []]
+    for p in padroes_corrigidos:
         if p not in PADROES:
             raise ErroFerramenta("padrao_desconhecido", f"padrao {p!r}; validos: {', '.join(PADROES)}")
     eu = quem_sou(config, quem)
@@ -79,9 +102,12 @@ def liberar_arquivo(config: Config, caminho: str, quem: str | None = None, concl
                                 observacao=observacao or "")
     acao = "conclui" if concluido else "libera"
     padrao = (padroes_corrigidos or ["<padrao>"])[0]
-    dica = (f"git add -- {shlex.quote(rel)} && git commit -m {shlex.quote(f'migra({padrao}): {rel}')}"
-            if concluido else "")
-    return {**r, "sugestao_commit": _sugestao(acao, rel), "commit_do_codigo": dica}
+    # formato do historico do grupo: verbo no presente, sem acento, com numeros; o trailer deixa o MCP contar
+    assunto = f"Corrige {padrao} em 1 arquivo ({rel})"
+    dica = (f"git add -- {shlex.quote(rel)} && git commit -m {shlex.quote(assunto)} "
+            f"-m {shlex.quote('Padrao-MCP: ' + padrao)}" if concluido else "")
+    return {**r, "sugestao_commit": _sugestao(acao, rel), "commit_do_codigo": dica,
+            "lembrete": "mudanca feita pelo Rector vai em commit separado da manual (regra 4 do grupo)"}
 
 
 def quadro(config: Config) -> dict[str, Any]:
@@ -102,42 +128,80 @@ def quadro(config: Config) -> dict[str, Any]:
 
 
 def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | None = None, limite: int = 10,
-                     quem: str | None = None, reivindicar: bool = False) -> dict[str, Any]:
+                     quem: str | None = None, reivindicar: bool = False,
+                     minha_area: str | None = None) -> dict[str, Any]:
+    """Proximo lote: nao compila no 8.5 > quebra em execucao > silencioso (> obsoleto); so arquivos da sua area."""
     if not (1 <= limite <= 50):
         raise ErroFerramenta("parametro_invalido", "limite entre 1 e 50 arquivos")
     eu = quem_sou(config, quem)
+    minha = _minha_area(config, minha_area)
     est = _estado(config)
     candidatos = padroes_para(padrao) if padrao else [
-        p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if p.mecanico in ("sim", "semi") and p.confianca != "baixa" and not p.ruidoso]
+        p for p in sorted(CATALOGO, key=ordem_trabalho)
+        if p.mecanico in ("sim", "semi") and p.confianca != "baixa" and p.severidade != "laravel"
+        and (not p.ruidoso or p.severidade in ("quebra_8_5", "silenciosa"))]
     ativos = est.reivindicados_ativos()
     de_outros = {c for c, r in ativos.items() if not mesma_pessoa(r["quem"], eu)}
-    feitos = est.concluidos_por_padrao()
+    feitos = {k: set(v) for k, v in est.concluidos_por_padrao().items()}
+    # UMA varredura para todos os candidatos (arquivos de outra area nem sao lidos)
+    base = resolver_caminho(config.raiz, caminho or config.dir_codigo)
+    achados: dict[str, dict[str, list[int]]] = {p.nome: {} for p in candidatos}
+    outras_areas: dict[str, int] = {}
+    fim = time.monotonic() + config.timeout_busca_s
+    truncado = False
+    for arq in iterar_arquivos(config, base, EXTENSOES_PADRAO):
+        if time.monotonic() > fim:
+            truncado = True
+            break
+        rel = relativo(config.raiz, arq)
+        if rel in de_outros or tem_metacaractere(rel):  # nome estranho nao entra em lote (iria para comando git)
+            continue
+        area_arq = area_do_arquivo(rel)
+        if minha and area_arq != minha:
+            outras_areas[area_arq or "sem_area"] = outras_areas.get(area_arq or "sem_area", 0) + 1
+            continue
+        texto = ler_texto(arq, config.max_arquivo)
+        if texto is None:
+            continue
+        linhas = None
+        for p in candidatos:
+            if len(achados[p.nome]) >= limite or rel in feitos.get(p.nome, ()) or (p.so_em and not p.so_em(rel)):
+                continue
+            offs = ocorrencias(p, texto)
+            if offs:
+                linhas = linhas or _Linhas(texto)
+                achados[p.nome][rel] = sorted({linhas.linha(o) for o in offs})
+        if len(achados[candidatos[0].nome]) >= limite:  # o de maior prioridade ja encheu o lote
+            break
     for p in candidatos:
-        res = buscar(config, padrao=p.nome, caminho=caminho, limite=min(2000, limite * 40),
-                     ignorar_arquivos=de_outros | set(feitos.get(p.nome, [])))
-        por_arquivo: dict[str, list[int]] = {}
-        for o in res["ocorrencias"]:
-            if not tem_metacaractere(o["arquivo"]):  # nome estranho nao entra em lote (iria para comando git)
-                por_arquivo.setdefault(o["arquivo"], []).append(o["linha"])
+        por_arquivo = achados[p.nome]
         if not por_arquivo:
             continue
-        arquivos = [{"arquivo": a, "ocorrencias": len(ls), "linhas": ls[:20], "ja_e_seu": a in ativos}  # de_outros ja fora
-                    for a, ls in list(por_arquivo.items())[:limite]]
+        arquivos = [{"arquivo": a, "area": area_do_arquivo(a), "ocorrencias": len(ls), "linhas": ls[:20],
+                     "ja_e_seu": a in ativos} for a, ls in list(por_arquivo.items())[:limite]]
         out: dict[str, Any] = {
-            "padrao": p.como_dict(), "arquivos": arquivos, "quem": eu,
+            "padrao": p.como_dict(), "arquivos": arquivos, "quem": eu, "sua_area": minha,
+            "ordem": "nao compila no 8.5 > quebra em execucao > silencioso > obsoleto",
             "passos": ["reivindique (reivindicar=true ou reivindicar_arquivo)",
-                       "aplique a correcao EXATA do padrao (exemplo_depois), sem refatorar o resto",
+                       "prove ANTES: a tela/classe no 7.4 x 8.5 (rodar_regressao ou escrita.php do grupo)",
+                       "mexa o MINIMO no arquivo do PR; nunca copie o arquivo inteiro da base-php84; salve em ISO-8859-1",
                        "validar_arquivo_php(versao='ambas') em cada arquivo",
-                       "rodar_regressao(bateria='php', prefixo=[...]) cobrindo as telas tocadas",
-                       "liberar_arquivo(concluido=true, padroes_corrigidos=[padrao]) e commit por caminho"],
+                       "prove DEPOIS: a mesma comparacao 7.4 x 8.5 tem de ficar igual",
+                       "defeito que ja existe no 7.4: registre e avise o dono, nao corrija",
+                       "liberar_arquivo(concluido=true, padroes_corrigidos=[padrao]); commit do Rector separado do manual"],
         }
-        if res["truncado"] and "tempo" in res["motivo_truncado"]:
-            out["aviso"] = res["motivo_truncado"]
+        if not minha:
+            out["aviso_area"] = "sem sua area definida (minha_area ou ECIDADE_MCP_AREA) o lote pode ter arquivo de outra area"
+        if outras_areas:
+            out["arquivos_de_outras_areas_pulados"] = outras_areas
+            out["outras_areas"] = "achou trabalho em area de outro? so registre e avise o dono (regra do grupo)"
+        if truncado:
+            out["aviso"] = f"varredura parou em {config.timeout_busca_s:.0f}s (resultado parcial; restrinja `caminho`)"
         if reivindicar:
             ok, recusados = [], []
             for a in arquivos:
                 try:
-                    est.reivindicar(a["arquivo"], eu, p.nome)
+                    est.reivindicar(a["arquivo"], eu, p.nome, area=a["area"])
                     ok.append(a["arquivo"])
                 except ErroFerramenta as e:
                     recusados.append({"arquivo": a["arquivo"], "erro": e.como_dict()})
@@ -145,9 +209,10 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
             out["recusados"] = recusados
             out["sugestao_commit"] = _sugestao("reivindica lote", p.nome)
         return out
-    return {"padrao": None, "arquivos": [], "quem": eu,
-            "mensagem": "nenhum arquivo pendente para os padroes pedidos (fora os reivindicados por outros e os ja "
-                        "concluidos)"}
+    return {"padrao": None, "arquivos": [], "quem": eu, "sua_area": minha,
+            "arquivos_de_outras_areas_pulados": outras_areas,
+            "mensagem": "nenhum arquivo pendente para os padroes pedidos (fora os reivindicados por outros, os ja "
+                        "concluidos e os de outras areas)"}
 
 
 def padroes_ja_corrigidos(config: Config, contar_em: str | None = None,
@@ -155,14 +220,20 @@ def padroes_ja_corrigidos(config: Config, contar_em: str | None = None,
     avisos: list[str] = []
     registrados = _estado(config).concluidos_por_padrao()
     commits: dict[str, list[dict[str, str]]] = {}
-    r = _git(config, ["log", "-n", "500", "-E", "--grep=^migra\\(", "--format=%h%x09%an%x09%s"], git_runner)
+    r = _git(config, ["log", "-n", "500", "-E", "--grep=^migra\\(", "--grep=^Padrao-MCP: ",
+                      "--format=%h%x09%an%x09%s%x09%(trailers:key=Padrao-MCP,valueonly,separator=%x2C)"], git_runner)
     if r is None or r.returncode != 0:
-        avisos.append("git log indisponivel: commits `migra(<padrao>): ...` nao foram contados")
+        avisos.append("git log indisponivel: commits com 'Padrao-MCP: <padrao>' nao foram contados")
     else:
         for linha in r.stdout.splitlines():
-            partes = linha.split("\t", 2)
-            if len(partes) == 3 and (m := _COMMIT_MIGRA.match(partes[2])):
-                commits.setdefault(m.group(1), []).append({"hash": partes[0], "autor": partes[1], "assunto": partes[2]})
+            partes = linha.split("\t", 3)
+            if len(partes) < 3:
+                continue
+            nomes = [n.strip() for n in (partes[3] if len(partes) > 3 else "").split(",") if n.strip()]
+            if (m := _COMMIT_MIGRA.match(partes[2])):
+                nomes.append(m.group(1))
+            for n in dict.fromkeys(nome_canonico(x) for x in nomes):
+                commits.setdefault(n, []).append({"hash": partes[0], "autor": partes[1], "assunto": partes[2]})
     restantes: dict[str, int] = {}
     if contar_em:
         res = buscar(config, padrao="todos", caminho=contar_em, limite=2000)
@@ -170,9 +241,10 @@ def padroes_ja_corrigidos(config: Config, contar_em: str | None = None,
         if res["truncado"]:
             avisos.append(f"contagem parcial em {contar_em}: {res['motivo_truncado']}")
     padroes = []
-    for p in sorted(CATALOGO, key=lambda p: p.prioridade):
+    for p in sorted(CATALOGO, key=ordem_trabalho):
         item: dict[str, Any] = {
-            "nome": p.nome, "titulo": p.titulo, "correcao": p.correcao, "forma_canonica": p.exemplo_depois,
+            "nome": p.nome, "titulo": p.titulo, "severidade": p.severidade, "correcao": p.correcao,
+            "forma_canonica": p.exemplo_depois,
             "registrados_no_estado": len(registrados.get(p.nome, [])),
             "arquivos_registrados": registrados.get(p.nome, [])[:50],
             "commits": commits.get(p.nome, [])[:10],
@@ -181,4 +253,6 @@ def padroes_ja_corrigidos(config: Config, contar_em: str | None = None,
             item["restantes_em_contar_em"] = restantes.get(p.nome, 0)
         padroes.append(item)
     return {"padroes": padroes, "avisos": avisos,
-            "convencao_commit": "migra(<nome_do_padrao>): <o que mudou> — um padrao por commit, so os caminhos tocados"}
+            "convencao_commit": "assunto no formato do grupo (verbo no presente, sem acento, com numeros: 'Troca $s{i} "
+                                "por $s[i] em 20 arquivos (20 linhas)') + linha 'Padrao-MCP: <nome>' no corpo; um "
+                                "padrao por commit; Rector em commit separado do manual; so os caminhos tocados"}

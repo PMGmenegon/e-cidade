@@ -32,6 +32,7 @@ class Config:
     max_arquivo: int = 3_000_000             # bytes: arquivos maiores sao pulados na busca
     expira_horas: float = 4.0
     usuario: str | None = None
+    area: str | None = None                  # sua area no grupo (ECIDADE_MCP_AREA): nucleo, educacao, pessoal...
 
     @property
     def arquivo_estado(self) -> Path:
@@ -77,4 +78,5 @@ def carregar_config(env: Mapping[str, str] | None = None) -> Config:
         timeout_phpstan_s=int(_num(env, "ECIDADE_MCP_TIMEOUT_PHPSTAN", 600, int)),
         expira_horas=float(_num(env, "ECIDADE_MCP_EXPIRA_HORAS", 4.0)),
         usuario=env.get("ECIDADE_MCP_USUARIO") or None,
+        area=env.get("ECIDADE_MCP_AREA") or None,
     )

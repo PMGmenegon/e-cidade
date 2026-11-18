@@ -63,6 +63,8 @@ def _validar_forma(dados: Any, nome: str) -> None:
     for c, r in dados["reivindicacoes"].items():
         if not isinstance(r, dict) or not all(isinstance(r.get(k), str) for k in ("quem", "expira")):
             raise ruim(f"reivindicacao de {c[:100]!r} sem 'quem'/'expira' texto")
+        if not isinstance(r.get("area", ""), str):
+            raise ruim(f"reivindicacao de {c[:100]!r} com 'area' que nao e texto")
     for c, v in dados["concluidos"].items():
         if (not isinstance(v, dict) or not isinstance(v.get("quem"), str)
                 or not isinstance(v.get("padroes", []), list)
@@ -166,7 +168,8 @@ class Estado:
 
     # ---------- operacoes ----------
 
-    def reivindicar(self, caminho: str, quem: str, motivo: str, horas: float | None = None) -> dict[str, Any]:
+    def reivindicar(self, caminho: str, quem: str, motivo: str, horas: float | None = None,
+                    area: str | None = None) -> dict[str, Any]:
         horas = self.expira_horas if horas is None else horas
         if not (0 < horas <= 72):
             raise ErroFerramenta("parametro_invalido", "horas precisa estar entre 0 e 72")
@@ -179,6 +182,8 @@ class Estado:
                                      quem=atual["quem"], expira=atual["expira"], motivo=atual.get("motivo", ""))
             novo = {"quem": quem, "motivo": motivo, "desde": atual["desde"] if atual else _iso(agora),
                     "expira": _iso(agora + timedelta(hours=horas))}
+            if area:
+                novo["area"] = limpar_texto(area, 40)
             dados["reivindicacoes"][caminho] = novo
             return {"caminho": caminho, **novo, "renovada": bool(atual)}
 
