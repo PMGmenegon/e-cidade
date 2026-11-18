@@ -12,9 +12,11 @@ da raiz do repositório, dentro do WSL/Linux, contra o ambiente Docker **isolado
 | **Completa** (`regressao/completa/orquestra.py`) | tudo junto, e antes × depois | roda as três, agrega num relatório só e compara duas rodadas completas |
 
 > **Base 7.4.** A suíte veio da branch `regressao`, onde o gabarito era PHP 5.6/Laravel 5.4 (:8080/:8085/:8090).
-> Nesta branch o gabarito é a **base PHP 7.4/Laravel 8** e os padrões são os do ambiente `e74` (tabela abaixo). As
-> seções 3 a 9 ainda descrevem a medição antiga em vários pontos ("5.6", "5.4", `ecidade_php56`): elas são
-> reescritas à medida que cada bateria é adaptada (bateria PHP, Laravel, fluxos). As baselines em
+> Nesta branch o gabarito é a **base PHP 7.4/Laravel 8** e os padrões são os do ambiente `e74` (tabela abaixo). A
+> **bateria PHP já está adaptada** (referência 7.4 × 8.5; containers e portas só em `regressao/nucleo/ambiente.py`,
+> inclusive para `scratchpad/cmp.py` e `scratchpad/escrita_post.py`; catálogos reverificados ao vivo em 2026-11-18).
+> As partes de Laravel e fluxos nas seções 3 a 9 ainda descrevem a medição antiga ("5.4", `ecidade_php56`): elas são
+> reescritas quando cada bateria for adaptada. As baselines em
 > `regressao/baseline/laravel/` e `regressao/baseline/fluxos/` ainda são as gravadas no 5.4 sobre o dump antigo: com o
 > dump novo (`baseline.dump.sha256` da 7.4) `comparar` as recusa até serem regravadas contra a referência 7.4.
 
@@ -150,7 +152,7 @@ Sempre da raiz do repositório, com `regressao/.venv/bin/python -m …`. Cada co
 `resultado.json`, `resumo.md` e `diffs/`.
 
 ```bash
-# PHP 5.6 x 8.5. Rodada completa de telas leva HORAS (~0,83 s/tela; 12 mil telas ≈ 3 h): para fumaça use --area/--prefixo
+# PHP: referencia 7.4 x 8.5. Rodada completa de telas leva HORAS (~0,83 s/tela; 12 mil telas ≈ 3 h): para fumaça use --area/--prefixo
 python -m regressao.php.bateria --saida /tmp/php --prefixo '^arr1_(procjurtipo|grupotaxa)001\.php$'
 python -m regressao.php.bateria --saida /tmp/php --area tributario            # uma área (≈ 5,5 mil telas)
 # opções: --sem-normalizar, --incluir-nao-verificados, --sem-restaurar (só desenvolvimento: rodada NÃO comparável)
@@ -170,8 +172,10 @@ python -m regressao.completa.orquestra --saida /tmp/completa [--area A ...] [--p
 python -m regressao.completa.orquestra --comparar /tmp/antes /tmp/depois
 ```
 
-URLs dos alvos vêm de `REGRESSAO_REF_URL` (:8080), `REGRESSAO_PHP_NOVO_URL` (:8085), `REGRESSAO_LARAVEL_NOVO_URL`
-(:8087) e `REGRESSAO_PROXY_URL` (:8090).
+URLs dos alvos vêm de `REGRESSAO_REF_URL` (:8074), `REGRESSAO_PHP_NOVO_URL` (:8185), `REGRESSAO_LARAVEL_NOVO_URL`
+(:8187) e `REGRESSAO_PROXY_URL` (:8190); containers de `REGRESSAO_CONTAINER_*` (seção acima). A bateria PHP loga **na
+referência** (o login direto no 8.5 quebra em `abrir.php`, achado da migração) e usa a mesma sessão nos dois runtimes
+(volume de sessões compartilhado). Nas saídas, `ref` é a referência 7.4 e `85`/`8.5` o alvo.
 
 ### Fluxos de navegador (o que cobrem)
 
@@ -195,8 +199,8 @@ fluxos: o PNG `/228358.png` do formulário de Orçamento responde HTTP 500 (vis�
 ## 4. Ler os resultados
 
 > **ESCOPO DA BATERIA PHP (leia antes de confiar no verde).** `./ecidade` é montado nos **dois** runtimes
-> (`docker-compose.yml` e `docker-compose.php85.yml`): o mesmo código roda em 5.6 e em 8.5. A bateria PHP prova
-> **paridade 5.6 × 8.5 sobre o código ATUAL**; ela **não detecta** uma regressão introduzida num código comum aos dois
+> (`ecidade74_php74` e `ecidade74_php85`, `regressao/lab/docker-compose.e74.yml`): o mesmo código roda em 7.4 e em 8.5.
+> A bateria PHP prova **paridade referência 7.4 × 8.5 sobre o código ATUAL**; ela **não detecta** uma regressão introduzida num código comum aos dois
 > (um bug que apareça igual nos dois lados dá IDENTICO). Só o **Laravel** e os **fluxos de navegador** são *golden master*
 > contra uma gravação anterior. O `compara_hashes` das telas **não** entra no `--comparar`. Esse aviso fixo também sai no
 > `resumo.md` da completa.
@@ -228,7 +232,7 @@ selecionadas por `--area/--prefixo`, **não** classes, `libs/` nem models. `--se
 - **POST real (PHP)**: uma linha em `regressao/php/catalogo_posts.tsv`: `tela<TAB>tabelas (filhas antes da mãe, separadas por
   vírgula)<TAB>campos (querystring)<TAB>area<TAB>verificado|nao-verificado`. Use os campos reais do formulário
   (nomes dos `input`). Rode a linha ao vivo: `verificado` quer dizer *"o caso é válido e o veredito é confiável"* (a
-  referência 5.6 respondeu com conteúdo real), **qualquer que seja o veredito**: um `verificado` que dá `DIVERGE` é
+  referência 7.4 respondeu com conteúdo real), **qualquer que seja o veredito**: um `verificado` que dá `DIVERGE` é
   achado e deixa a rodada vermelha. `nao-verificado` é pulado (a menos de `--incluir-nao-verificados`).
   Cuidado com as tabelas filhas: um POST que aborta numa FK deixa resíduo (o próximo restore limpa).
 - **Relatório (PHP)**: `regressao/php/catalogo_relatorios.tsv` (`tela<TAB>query<TAB>pdf|xls|html|doc<TAB>area<TAB>status`).
@@ -264,7 +268,7 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
 > Lembrete de escopo (§4): como `./ecidade` é compartilhado pelos dois runtimes, a rodada PHP "antes" **não** é uma
 > fotografia do comportamento pré-migração; só Laravel e fluxos guardam referência gravada. Para PHP, o "antes × depois"
-> mede a paridade 5.6 × 8.5 em cada momento.
+> mede a paridade referência 7.4 × 8.5 em cada momento.
 
 **ANTES de migrar** (no sistema de referência, ambiente recém-subido, nada rodado ao vivo antes do dump):
 
@@ -298,7 +302,7 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
 ## 9. Limitações conhecidas
 
-- **A bateria PHP só prova paridade 5.6 × 8.5 sobre o código atual** (código compartilhado, ver §4); não detecta regressão
+- **A bateria PHP só prova paridade referência 7.4 × 8.5 sobre o código atual** (código compartilhado, ver §4); não detecta regressão
   de código comum aos dois runtimes.
 - **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (115 de 381 registros trazem caminhos do servidor 5.4,
   p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
@@ -351,19 +355,21 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   gravaram. `rest/v1` só com rotas parametrizadas (nenhum caso gerado); `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os
   casos de rota protegida dão HTTP 500 (não 401) no 5.4 e usam `espera_status`; ~100 casos são `INCONCLUSIVO`
   (5xx nos dois lados). `dbseller` com senha errada recebe token no 5.4 (achado do app legado, gravado como referência).
-- PHP: o catálogo de POSTs (52 linhas, 50 `verificado`) **não tem CGM como linha rodável**: o `DELETE` em `cgm` falha fora
-  do app (trigger `tg_atualiza_issbaseintegracaoexterna`: EXECUTE com argumento nulo), então o restore por diferença do
-  `escrita_post.py` aborta. O CGM foi verificado à mão com 2 restaurações completas do dump: os 3 INSERTs de negócio
-  (`cgm`, `cgmfisico`, `db_cgmcpf`) são idênticos em 5.6 e 8.5, exceto `z01_hora` (relógio). Além dele, só `*001`
-  (inclusão) em Orçamento/Arrecadação; as linhas novas de Caixa/Água (18) são todas IDENTICO. Alguns cadastros não
-  restauram a `sequence` (ex.: `cai1_bancoshistmovcategoria001` dá DIVERGE falso por id 3 × 4) e ficaram de fora.
-  `nao-verificado`: 2 POSTs e 2 relatórios (`func_cgm.php`, que devolve só a página de pesquisa, e o CSV
-  `balrec.csv`, só com cabeçalho). `cem2_renovacoes` é `verificado` com evidência fraca (modelo de PDF em branco). Os
-  relatórios `db_download.php` (CSV) provam só o *serving* do arquivo.
-- **11 relatórios PDF dão HTTP 500 no PHP 8.5** e funcionam no 5.6 (`mat2_cadunidade002`, `prot2_cadcgm002`,
-  `con2_relinstituicoes002`, `con2_conhist002`, `con2_conhistdoc002`, `con2_balancrece002` e, na rodada pós-entrega A,
-  `con2_balancdespele002`, `con2_balancrecu002`, `con2_contasrecdesp002`, `con2_relrec002`, `cad2_loteam002`): são regressões **reais**
-  da migração e mantêm a bateria PHP vermelha (saída 1) até serem corrigidas ou aceitas em `conhecidas.tsv`.
+- PHP, catálogos **reverificados ao vivo na base 7.4** (2026-11-18, linha a linha, dump restaurado; cabeçalho de cada
+  `.tsv` traz o detalhe). **POSTs**: 52 linhas, 47 `verificado` (13 IDENTICO, 34 DIVERGE) e 5 `nao-verificado` (a
+  referência 7.4 não gravou nada com o payload atual: `pes1_pensao001`, `rec1_assentamentos.RPC`, `rec4_rpcexame`,
+  `rec1_rhestagioresultado001`, `cai1_caiparametro001`). Quase todo DIVERGE é "o 8.5 não grava" ou "grava 0 no lugar do
+  valor" (o idioma `$this->campo == "" ? POST : $this->campo` com `0 == ""`, que mudou no PHP 8). O CGM continua fora
+  (o `DELETE` em `cgm` falha fora do app pelo trigger `tg_atualiza_issbaseintegracaoexterna`, e o restore por diferença do
+  `escrita_post.py` aborta). Cadastros que não restauram a `sequence` (ex.: `cai1_bancoshistmovcategoria001`) ficaram de fora.
+  **Relatórios**: 42 linhas, 37 `verificado` (36 DIVERGE: referência 200 com PDF × 8.5 500; `func_orcfuncao` IDENTICO) e 5
+  `nao-verificado` (os 3 `db_download.php` dão 302 porque os CSVs não existem em `ecidade/tmp/` desta base;
+  `orc2_despsecretaria002` dá 500 na própria referência; `func_cgm` só devolve a página de pesquisa). `cem2_renovacoes` é
+  `verificado` com evidência fraca (modelo de PDF em branco).
+- **Os PDFs dão HTTP 500 no PHP 8.5** e funcionam na referência 7.4: a causa comum é `ParseError` em
+  `fpdf151/fpdf.php:614` (offset de string com chaves, removido no PHP 8); alguns também chamam `parse_str()` com 1
+  argumento. São regressões **reais** da migração e mantêm a bateria PHP vermelha (saída 1) até serem corrigidas ou
+  aceitas em `conhecidas.tsv`.
 - O PHP não cobre ainda a rodada de **área inteira** quanto à memória (corpos ficam em memória por prefixo): prefixos
   enormes (`con`, `edu`) usam mais RAM.
 - Fluxos: 6 fluxos (Arrecadação, Orçamento, ISSQN, Protocolo/CGM), só inclusão e emissão; DOM compara estrutura (scripts inline e estilos são removidos),
