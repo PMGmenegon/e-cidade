@@ -1,0 +1,141 @@
+"""Servidor MCP pelo cliente oficial, EM PROCESSO (Client(MCPServer))."""
+import json
+
+import anyio
+import pytest
+from mcp import Client
+
+from servidor.main import criar_servidor
+
+TOOLS = {"analisar_composer", "buscar_codigo_legado", "validar_arquivo_php", "rodar_regressao",
+         "ler_resultado_regressao", "ler_triagem", "reivindicar_arquivo", "liberar_arquivo", "quadro",
+         "proximo_trabalho", "padroes_ja_corrigidos"}
+PROMPTS = {"migrar-arquivo", "auditar-model", "corrigir-padrao-mecanico", "verificar-com-regressao"}
+RESOURCES = {"ecidade://docs/regras-arquitetura", "ecidade://docs/breaking-changes", "ecidade://regressao/como-usar",
+             "ecidade://regressao/triagem", "ecidade://regressao/decisoes", "ecidade://estado/trabalho",
+             "ecidade://padroes"}
+
+
+@pytest.fixture
+def ambiente(raiz, monkeypatch, tmp_path):
+    docker = tmp_path / "docker_falso"
+    docker.write_text("#!/bin/sh\necho 'lixo no stdout do docker'\necho 'Error: No such object: x' >&2\nexit 1\n")
+    docker.chmod(0o755)
+    monkeypatch.setenv("ECIDADE_MCP_RAIZ", str(raiz))
+    monkeypatch.setenv("ECIDADE_MCP_DOCKER", str(docker))
+    monkeypatch.setenv("ECIDADE_MCP_USUARIO", "tester")
+    (raiz / ".mcp" / "docs" / "regras-arquitetura.md").write_text("# Regras\ndeclare(strict_types=1)\n")
+    return raiz
+
+
+def chama(coro_fn):
+    return anyio.run(coro_fn)
+
+
+def dados(r):
+    assert r.is_error is False, r.content
+    return r.structured_content
+
+
+def test_lista_tools_com_schema(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            return (await c.list_tools()).tools
+    tools = chama(go)
+    assert {t.name for t in tools} == TOOLS
+    for t in tools:
+        assert t.description and t.input_schema["type"] == "object"
+        assert set(t.output_schema["properties"]) >= {"ok", "dados", "erro"}
+    buscar = next(t for t in tools if t.name == "buscar_codigo_legado")
+    assert "parse_str_1_arg" in json.dumps(buscar.input_schema)
+
+
+def test_chamada_valida(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            return await c.call_tool("buscar_codigo_legado", {"padrao": "parse_str_1_arg"})
+    r = dados(chama(go))
+    assert r["ok"] is True
+    assert r["dados"]["ocorrencias"][0]["arquivo"] == "ecidade/tela001.php"
+
+
+@pytest.mark.parametrize("args", [{"limite": 0}, {"padrao": "inventado"}, {"limite": "muito"}])
+def test_entrada_invalida_e_rejeitada_pela_validacao(ambiente, args):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            return await c.call_tool("buscar_codigo_legado", args)
+    r = chama(go)
+    assert r.is_error is True
+
+
+def test_confinamento_vira_erro_estruturado(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            return [await c.call_tool("buscar_codigo_legado", {"padrao": "split", "caminho": "../../"}),
+                    await c.call_tool("reivindicar_arquivo", {"caminho": "/etc/passwd"}),
+                    await c.call_tool("ler_resultado_regressao", {"pasta": "/tmp"})]
+    for r in chama(go):
+        d = dados(r)
+        assert d["ok"] is False and d["erro"]["codigo"] == "caminho_fora_da_raiz"
+
+
+def test_conteiner_ausente_nao_derruba(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            r1 = await c.call_tool("validar_arquivo_php", {"caminho": "ecidade/tela001.php"})
+            r2 = await c.call_tool("rodar_regressao", {"bateria": "laravel"})
+            r3 = await c.call_tool("quadro", {})
+            return r1, r2, r3
+    r1, r2, r3 = chama(go)
+    v = dados(r1)
+    assert v["ok"] is True and v["dados"]["ok"] is False
+    assert {x["erro"]["codigo"] for x in v["dados"]["resultados"]} == {"conteiner_indisponivel"}
+    assert dados(r2)["erro"]["codigo"] in ("venv_regressao_ausente", "conteiner_indisponivel")
+    assert dados(r3)["ok"] is True  # servidor segue respondendo
+
+
+def test_reivindicar_liberar_pelo_mcp(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            a = await c.call_tool("reivindicar_arquivo", {"caminho": "ecidade/tela001.php", "motivo": "parse_str"})
+            b = await c.call_tool("reivindicar_arquivo", {"caminho": "ecidade/tela001.php", "quem": "outra"})
+            q = await c.call_tool("quadro", {})
+            d = await c.call_tool("liberar_arquivo", {"caminho": "ecidade/tela001.php", "concluido": True,
+                                                      "padroes_corrigidos": ["parse_str_1_arg"]})
+            return a, b, q, d
+    a, b, q, d = chama(go)
+    assert dados(a)["dados"]["quem"] == "tester"
+    assert dados(b)["erro"]["codigo"] == "ja_reivindicado"
+    assert dados(q)["dados"]["reivindicacoes_ativas"][0]["quem"] == "tester"
+    assert dados(d)["dados"]["concluido"] is True
+    salvo = json.loads((ambiente / ".mcp" / "estado" / "trabalho.json").read_text())
+    assert salvo["concluidos"]["ecidade/tela001.php"]["padroes"] == ["parse_str_1_arg"]
+
+
+def test_resources(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            lista = (await c.list_resources()).resources
+            regras = await c.read_resource("ecidade://docs/regras-arquitetura")
+            como = await c.read_resource("ecidade://regressao/como-usar")
+            estado = await c.read_resource("ecidade://estado/trabalho")
+            return lista, regras, como, estado
+    lista, regras, como, estado = chama(go)
+    assert {str(r.uri) for r in lista} == RESOURCES
+    assert "strict_types" in regras.contents[0].text
+    assert "indisponivel" in como.contents[0].text
+    assert json.loads(estado.contents[0].text)["reivindicacoes_ativas"] == []
+
+
+def test_prompts(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            lista = (await c.list_prompts()).prompts
+            p = await c.get_prompt("migrar-arquivo", {"caminho": "ecidade/x.php"})
+            q = await c.get_prompt("corrigir-padrao-mecanico", {"padrao": "split"})
+            return lista, p, q
+    lista, p, q = chama(go)
+    assert {x.name for x in lista} == PROMPTS
+    texto = p.messages[0].content.text
+    assert "ecidade/x.php" in texto and "reivindicar_arquivo" in texto and "git add -A" in texto
+    assert "migra(split)" in q.messages[0].content.text
