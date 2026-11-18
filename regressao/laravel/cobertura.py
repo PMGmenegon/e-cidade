@@ -111,10 +111,12 @@ def _md(rel: dict) -> str:
           "comportamento documentado da referencia).", ""]
     L += [f"- rejeicao esperada: `{i}`" for i in k["rejeicao_esperada_5xx"]]
     q = rel.get("controller_quebrado_na_referencia") or []
-    L += ["", f"## Controller quebrado na referencia: {len(q)} rota(s)", "",
-          "O controller nao instancia nem no Laravel 8 de referencia (classe/funcao inexistente na base 7.4): "
-          "o `route:list` do Laravel 8 nao lista nada por causa delas, e o inventario usa a listagem tolerante. "
-          "A rota segue no inventario; se for gerada, responde 500 e o caso fica INCONCLUSIVO.", ""]
+    L += ["", f"## Controller quebrado na referencia (console): {len(q)} rota(s)", "",
+          "O controller nao instancia no CONSOLE do Laravel 8 de referencia (classe/funcao que o console nao "
+          "carrega: modelos `cl_*` do legado, classes inexistentes na base 7.4...): o `route:list` do Laravel 8 "
+          "nao lista nada por causa delas, e o inventario usa a listagem tolerante. A rota segue no inventario e, "
+          "se for gerada, vira caso normal: pela HTTP algumas funcionam (o legado e carregado no request) e outras "
+          "dao 500 (ver a classe de cada caso acima).", ""]
     L += [f"- {x['metodo']} `{x['uri']}`: {x['erro']}" for x in q] or ["- (nenhuma)"]
     L += ["", f"Notas: {rel['notas']['head']}. Rotas com metodo colapsado alem de HEAD: "
               f"{rel['notas']['metodos_colapsados']}.", "", "## Nao cobertas", ""]

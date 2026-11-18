@@ -1,11 +1,12 @@
 """Inventario de rotas: Laravel 8 (`artisan route:list --json`, inclui rest/v1) e Silex api/V1.
 
 O `route:list` do Laravel 8 INSTANCIA cada controller para juntar o middleware dele
-(`Route::gatherMiddleware` -> `controllerMiddleware`): um unico controller que nao constroi na
-referencia (classe inexistente, funcao indefinida...) derruba a listagem inteira. Quando isso acontece,
-o inventario usa uma listagem TOLERANTE com o mesmo formato (mesmo `getRouteInformation` do comando,
-com `flushMiddlewareGroups`), que captura o erro POR ROTA: a rota continua no inventario (vira caso;
-na referencia ela responde 500 e o caso fica INCONCLUSIVO) e o erro vai para a coluna `erro_controller`.
+(`Route::gatherMiddleware` -> `controllerMiddleware`): um unico controller que nao constroi no console
+da referencia (classe inexistente, modelo `cl_*` do legado que so o request carrega...) derruba a listagem
+inteira. Quando isso acontece, o inventario usa uma listagem TOLERANTE com o mesmo formato (mesmo
+`getRouteInformation` do comando, com `flushMiddlewareGroups`), que captura o erro POR ROTA: a rota continua
+no inventario (vira caso normal; pela HTTP ela pode funcionar ou dar 500) e o erro vai para a coluna
+`erro_controller`.
 """
 import json
 import re
