@@ -12,6 +12,11 @@ perigosas:
   rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/slips: DELETE e UPDATE em contabilidade.conlancamrecurso (rotina de correcao em massa) com corpo vazio (200, Laravel 8)
   rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/suplementacoes: UPDATE em massa em contabilidade.conlancamrecurso com corpo vazio (200, Laravel 8)
   rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/virada-rp: INSERT em configuracoes.db_virada e DELETE em empenho.empresto com corpo vazio (500, Laravel 8)
+  # Banco v2 (migrations do PR aplicadas, 2026-11-18): as tabelas novas fazem estas sondas chegarem ao INSERT/DELETE
+  rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao: INSERT em escola.cboocupacao com titulo NULL e corpo vazio (500, banco v2)
+  rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao: INSERT em escola.criteriostransposicaoordenacao com corpo vazio (500, banco v2)
+  rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial: DELETE em contabilidade.conplanoexecontacorrente da instituicao 1 com corpo vazio (200, banco v2)
+  rota:POST:/v4/api/recursos-humanos/e-social/store: INSERT em recursoshumanos.informacoes_complementares com corpo vazio (500, banco v2)
 # volateis: campo mascarado no JSON, achado comparando duas gravacoes independentes (restauracoes distintas) da
 # referencia Laravel 8 (python -m regressao.laravel.estabilidade A B). /v4/api/user (que devolvia o hash da
 # senha no 5.4) nao existe na base 7.4; a mascara de SEGURANCA fica, caso a rota volte.

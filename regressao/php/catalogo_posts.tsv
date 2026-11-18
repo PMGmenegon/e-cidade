@@ -5,6 +5,9 @@
 #   'verificado' = a referencia (PHP 7.4) emitiu escrita de negocio e o veredito e IDENTICO ou DIVERGE. Resultado: 47 verificado
 #   (13 IDENTICO, 34 DIVERGE) e 5 nao-verificado (nenhuma escrita de negocio na referencia: pes1_pensao001, rec1_assentamentos.RPC,
 #   rec4_rpcexame, rec1_rhestagioresultado001, cai1_caiparametro001; payload/fixture do banco da base 7.4 a refazer).
+# RECONFERIDO no dump v2 (migrations do PR aplicadas, 2026-11-18): 51 de 52 linhas com o mesmo resultado; rec1_assentamentos.RPC
+#   passou a gravar na referencia (3 statements de negocio; o 8.5 grava 0: DIVERGE) e virou 'verificado'. Hoje: 48 verificado
+#   (13 IDENTICO, 35 DIVERGE) e 4 nao-verificado.
 #   Os DIVERGE sao achados reais do PHP 8.5 sobre a base 7.4 (o codigo desta base nao tem as correcoes da branch antiga): a maioria
 #   e "8.5 nao grava nada" (ex.: pes1_pesdiver001: atualizacampos() usa `$this->campo == ""`, e 0 == "" deixou de ser true no PHP 8,
 #   a validacao recusa em silencio) ou o valor submetido vira 0 (pes1_relrub004: rh45_selecao 1 x 0); parse_str() com 1 argumento
@@ -47,7 +50,7 @@ pes1_rhipe001.php	rhipenumcgm,rhiperegist,rhipe	rh14_sequencia=1&rh62_regist=1&z
 pes1_tipoagrupamentorubrica.RPC.php	tipoagrupamentorubrica	json={"exec":"save","iCodigo":"","sDescricao":"TESTE_N3"}	rh	verificado
 pes1_rhrubricas.RPC.php	regrapontorhrubricas,regraponto	json={"sExecucao":"incluir","sDescricao":"TESTE_N3","iSelecao":"901","aRubricas":["0001","0002"],"iComportamento":"1"}	rh	verificado
 pes1_rhempenhofolhaexcecaorubrica.RPC.php	rhempenhofolhaexcecaorubrica,rhempenhofolhaexcecaoregra	json={"sExecucao":"salvar","iSequencial":"","sDescricao":"TESTE_N3","iOrgao":"","iUnidade":"","iProjetoAtividade":"","iRecurso":"","iPrograma":"","iFuncao":"","iSubFuncao":"","iCaracteristica":"000","iDesdobramento":"","iTipoFolha":"1","aRubricas":[]}	rh	verificado
-rec1_assentamentos.RPC.php	assentamentofuncional,assenta	acao=incluiAssentamento&h16_codigo=&h16_regist=1&h12_codigo=1&h16_assent=1&h16_dtconc=31/12/2026&h16_dtterm=31/12/2026&h16_quant=1&h16_nrport=1&h16_atofic=TESTE_N3&h16_anoato=2026&h16_histor=TESTE_N3&sOpcaoAssentamento=2&iPeriodoAquisitivo=	rh	nao-verificado
+rec1_assentamentos.RPC.php	assentamentofuncional,assenta	acao=incluiAssentamento&h16_codigo=&h16_regist=1&h12_codigo=1&h16_assent=1&h16_dtconc=31/12/2026&h16_dtterm=31/12/2026&h16_quant=1&h16_nrport=1&h16_atofic=TESTE_N3&h16_anoato=2026&h16_histor=TESTE_N3&sOpcaoAssentamento=2&iPeriodoAquisitivo=	rh	verificado
 rec4_rpcexame.php	rhestagioavaliacaoresposta,rhestagioavaliacao	json={"method":"getDadosExame","iCodExame":"901","iCodQuesito":"","refresh":"1"}|||json={"method":"salvarResposta","iCodExame":"901","iCodQuestao":"901","iResposta":"901","iTipo":"1","sObsPergunta":"","sObsRecomendacao":""}|||json={"method":"salvarExame","iCodExame":"901","h56_estagiocomissao":"901","h56_avaliador":"1"}	rh	nao-verificado
 rec1_rhestagioresultado001.php	rhestagioresultado,portariaassenta,assenta,portaria	incluir=Incluir&h65_rhestagioagenda=901&h65_resultado=A&h65_data=31/12/2026&h31_numero=901&h65_pontos=10&h65_observacao=TESTE_N3	rh	nao-verificado
 arr1_procjurtipo001.php	procjurtipo	v66_sequencial=&v66_descr=TESTE_N3&v66_procjurtiporegra=1&incluir=Incluir	arrecadacao	verificado

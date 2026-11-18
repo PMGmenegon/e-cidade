@@ -343,10 +343,6 @@
 - id: rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao
   metodo: GET
   caminho: /v4/api/educacao/escola/ocupacoes/ocupacao
-- id: rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao
-  metodo: POST
-  caminho: /v4/api/educacao/escola/ocupacoes/ocupacao
-  corpo: {}
 - id: rota:POST:/v4/api/educacao/escola/procedimento/troca-de-turma
   metodo: POST
   caminho: /v4/api/educacao/escola/procedimento/troca-de-turma
@@ -438,10 +434,6 @@
 - id: rota:POST:/v4/api/educacao/escola/transposicao/buscar-candidatos
   metodo: POST
   caminho: /v4/api/educacao/escola/transposicao/buscar-candidatos
-  corpo: {}
-- id: rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao
-  metodo: POST
-  caminho: /v4/api/educacao/escola/transposicao/criterios-ordenacao
   corpo: {}
 - id: rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados
   metodo: POST
@@ -912,10 +904,6 @@
 - id: rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia
   metodo: GET
   caminho: /v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia
-- id: rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial
-  metodo: POST
-  caminho: /v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial
-  corpo: {}
 - id: rota:GET:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/virada-rp
   metodo: GET
   caminho: /v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/virada-rp
@@ -2101,10 +2089,6 @@
 - id: rota:GET:/v4/api/recursos-humanos/e-social/index
   metodo: GET
   caminho: /v4/api/recursos-humanos/e-social/index
-- id: rota:POST:/v4/api/recursos-humanos/e-social/store
-  metodo: POST
-  caminho: /v4/api/recursos-humanos/e-social/store
-  corpo: {}
 - id: rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/config-salvar
   metodo: POST
   caminho: /v4/api/recursos-humanos/pessoal/ajudacusto/config-salvar
