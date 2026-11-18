@@ -8,6 +8,9 @@ REGRESSAO_CONTAINER_REF (padrao :8074 / ecidade74_php74) e REGRESSAO_PHP_NOVO_UR
 REGRESSAO_CONTAINER_PHP_NOVO (padrao :8185 / ecidade74_php85). A saida marca a referencia com `ref=`
 e o alvo com `85=`; regressao/php/telas.py interpreta essas linhas.
 
+Pilha do compose da raiz (a do grupo, base-php74): mesmos argumentos, com as variaveis REGRESSAO_* apontando
+para os containers e portas dela (tabela em regressao/COMO-USAR.md, "Usar com a pilha do grupo").
+
 Restaura uma sessao autenticada antes de CADA requisicao (uma requisicao a
 consome/reescreve) e normaliza os identificadores aleatorios, que senao geram
 falsos positivos -- alguns deles INTERMITENTES, que e o pior tipo.

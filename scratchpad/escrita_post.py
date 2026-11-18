@@ -11,6 +11,8 @@ Alvos, container das sessoes (o da referencia) e container do banco vem de
 regressao/nucleo/ambiente.py (REGRESSAO_REF_URL, REGRESSAO_PHP_NOVO_URL, REGRESSAO_CONTAINER_REF,
 REGRESSAO_CONTAINER_BANCO; padroes do ambiente e74). A saida marca a referencia com `ref` e o alvo com
 `8.5`; regressao/php/posts.py interpreta essas linhas.
+Pilha do compose da raiz (a do grupo, base-php74): as mesmas variaveis REGRESSAO_* apontando para ela
+(tabela em regressao/COMO-USAR.md, "Usar com a pilha do grupo").
 
 Exige log_statement ligado:
     ALTER DATABASE ecidade SET log_statement = 'all';
