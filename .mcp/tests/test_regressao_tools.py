@@ -319,3 +319,41 @@ def test_triagem_inexistente(cfg):
     with pytest.raises(ErroFerramenta) as e:
         ler_triagem(cfg, documento="como_usar")
     assert e.value.codigo == "documento_inexistente"
+
+
+TRIAGEM_COM_RESUMO = """# Triagem das divergencias da rodada "antes" (referencia PHP 7.4 x PHP 8.5)
+
+## Resumo (10 linhas)
+
+1. linha um.
+2. linha dois.
+
+## Por causa
+
+tabela.
+"""
+
+
+def test_ler_triagem_devolve_o_resumo_do_topo(cfg):
+    (cfg.raiz / "regressao" / "baseline" / "triagem-divergencias.md").write_text(TRIAGEM_COM_RESUMO)
+    r = ler_triagem(cfg)
+    assert r["base"] == "7.4 x 8.5"
+    assert r["resumo"].startswith("## Resumo") and "linha dois" in r["resumo"] and "tabela" not in r["resumo"]
+    r = ler_triagem(cfg, busca="dois")
+    assert "resumo" in r and r["linhas"][0]["texto"] == "2. linha dois."
+
+
+def test_documento_historico_5_6_continua_marcado(cfg):
+    (cfg.raiz / "regressao" / "baseline" / "triagem-divergencias.md").write_text(
+        "# Triagem dos 781 DIVERGE (bateria PHP)\n\nFonte: gabarito PHP 5.6.\n")
+    r = ler_triagem(cfg)
+    assert r["base"].startswith("5.6 x 8.5 (historico") and r["resumo"] is None
+
+
+@pytest.mark.parametrize("documento", ["triagem", "decisoes"])
+def test_documentos_reais_sao_da_base_7_4_e_tem_resumo(documento):
+    """Os documentos do repositorio (rodada antes74) substituiram os da migracao 5.6: sem rotulo historico."""
+    from servidor.config import carregar_config
+    r = ler_triagem(carregar_config({}), documento=documento)
+    assert r["base"] == "7.4 x 8.5", r["base"]
+    assert r["resumo"] and "historico" not in r["base"]

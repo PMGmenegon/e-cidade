@@ -347,8 +347,16 @@ def ler_triagem(config: Config, documento: str = "triagem", secao: str | None = 
         if m:
             secoes.append({"titulo": m.group(2), "nivel": len(m.group(1)), "linha": i})
     cab = " ".join(linhas[:3])
+    # os documentos da rodada "antes74" (gabarito 7.4) substituiram os da migracao 5.6 -> 8.5; o rotulo historico
+    # so aparece se alguem ler um documento antigo (outra branch)
     base = "7.4 x 8.5" if "7.4" in cab else ("5.6 x 8.5 (historico: gabarito antigo)" if "5.6" in cab else "?")
-    r: dict[str, Any] = {"documento": rel, "base": base, "secoes": secoes}
+    resumo = None
+    for k, s in enumerate(secoes):
+        if s["nivel"] == 2 and _norm(s["titulo"]).startswith("resumo"):
+            fim = next((t["linha"] - 1 for t in secoes[k + 1:] if t["nivel"] <= 2), len(linhas))
+            resumo = limitar("\n".join(linhas[s["linha"] - 1:fim]).strip(), 6000)[0]
+            break
+    r: dict[str, Any] = {"documento": rel, "base": base, "resumo": resumo, "secoes": secoes}
     if secao:
         alvo = _norm(secao)
         partes = []

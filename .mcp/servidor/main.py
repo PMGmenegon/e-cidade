@@ -221,9 +221,10 @@ def criar_servidor() -> MCPServer:
                         max_itens=max_itens, veredito=veredito)
 
     @_tool(mcp, name="ler_triagem", annotations=LEITURA,
-              description="Le a triagem das divergencias e as decisoes da migracao (regressao/baseline). Filtra por "
+              description="Le a triagem das divergencias referencia 7.4 x 8.5 (rodada 'antes') e as decisoes da "
+                          "migracao (regressao/baseline); devolve sempre o resumo do topo (`resumo`). Filtra por "
                           "secao (titulo) ou por busca de texto. Ex.: ler_triagem(documento='decisoes', "
-                          "secao='Causa por causa') ou ler_triagem(busca='parse_str')")
+                          "secao='O que corrigir primeiro') ou ler_triagem(busca='parse_str')")
     def t_ler_triagem(
         documento: Literal["triagem", "decisoes", "lab_lar12", "como_usar"] = "triagem",
         secao: Annotated[str | None, Field(max_length=200)] = None,

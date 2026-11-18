@@ -54,24 +54,31 @@ Prioridade: se o PR já resolveu e roda no 8.5, fica o do PR; se resolveu mas n�
 PR; só se o PR não mexeu e o ponto quebra no 8.5 a `base-php84` serve de modelo, adaptada. Antes de aplicar, rode o
 trecho no 7.4 e no 8.5: se o 8.5 já se comporta como o 7.4, não mexa.
 
-## 0. O que a migração anterior ensinou (5.6 → 8.5, branch `regressao`)
+## 0. O que a rodada "antes" mediu na base 7.4 (18/11/2026)
 
-A suíte já mediu uma migração deste mesmo código (gabarito PHP 5.6). Detalhes em `ecidade://regressao/triagem` e
-`ecidade://regressao/decisoes`. O que vale levar:
+A suíte rodou inteira sobre a `base-php74` (referência 7.4 × 8.5, causa de cada tela lida ao vivo no log do 8.5).
+Detalhes em `ecidade://regressao/triagem` e `ecidade://regressao/decisoes` (tool `ler_triagem`). O que vale levar:
 
-1. **Duas causas mecânicas explicavam ~85% das 941 divergências**: `parse_str()` com 1 argumento e construtor
-   estilo PHP 4. A terceira (`split`/`each`/`ereg`) ficava **escondida** atrás delas.
-2. **Efeito cebola**: cada correção revela a próxima quebra da mesma tela. Uma tela que vira de "500" para "500 com
-   outra mensagem" não é regressão nova: é a suíte enxergando mais. Rode a regressão **depois de cada passo**.
-3. **Ordem que deu certo**: (1) `parse_str` em todo o código, inclusive as janelas `func_*`; (2) construtores PHP 4;
-   (3) `split`/`each`/`ereg`; (4) erros de compilação e casos isolados; (5) triagem caso a caso com parâmetros reais.
-4. **As janelas de pesquisa `func_*.php` (as "lupas") não entram na bateria PHP** e tinham o mesmo `parse_str`. A
-   suíte pode ficar verde com as pesquisas quebradas: rode `--prefixo '^func_'` quando mexer nelas.
-5. **"Aceitar" em `conhecidas.tsv` não conserta nada**: só silencia o alarme e manda funcionalidade quebrada para
+1. **9.206 divergências; três causas explicam 90% das 6.635 telas e relatórios**: `parse_str()` com 1 argumento
+   (3.585 casos; 7.645 chamadas em 7.560 arquivos; o guia do grupo não a cita), `fpdf151/fpdf.php:614` (1.425) e
+   `libs/JSON.php:188` (985; derruba também o login no 8.5). As duas últimas são 2 dos 32 arquivos que não compilam:
+   **corrija-as primeiro**.
+2. **Silencioso**: `0 == ""` em `atualizacampos()` faz 2.478 classes e 19 dos 35 cadastros testados não gravarem nada
+   no 8.5, sem erro. Construtor antigo: 101 telas (`label() on null`) e 53 classes. SQL que falha (`pg_*(false)`): 428.
+3. **Efeito cebola**: cada correção revela a próxima quebra da mesma tela (760 telas de PDF têm `parse_str` logo
+   depois do `fpdf.php`). Uma tela que vira de "500" para "500 com outra mensagem" não é regressão nova: é a suíte
+   enxergando mais. Rode a regressão **depois de cada passo**.
+4. **Ordem do grupo**: não compila (as 2 linhas, depois os outros 30) → quebra ao rodar (`parse_str`, construtor,
+   `each`, `count`, `pg_lo_export`) → silencioso (`0 == ""` com a regra Rector do grupo). `each()` não foi a primeira
+   quebra de nenhuma tela: está atrás das outras ou em linhas que a bateria não executa.
+5. **As janelas de pesquisa `func_*.php` (as "lupas") não entram na bateria PHP**: 2.920 das 3.154 têm o mesmo
+   `parse_str` (amostra ao vivo: 8 de 8 quebram). Rode `--prefixo '^func_'` quando mexer nelas.
+6. A migração anterior (gabarito 5.6, branch `regressao`) chegou às mesmas lições; os números dela não valem mais.
+7. **"Aceitar" em `conhecidas.tsv` não conserta nada**: só silencia o alarme e manda funcionalidade quebrada para
    produção. Divergência nascida na migração se corrige.
-6. **SQL que falha** (`pg_*` recebendo `false`): no 5.6/7.4 a tela seguia vazia em silêncio; no 8.x aborta. A
-   correção é decisão de negócio (reproduzir o vazio ou mostrar erro claro).
-7. A bateria abre as telas **sem parâmetros**: ela prova que a tela "abre igual", não que os números batem.
+8. **SQL que falha** (`pg_*` recebendo `false`): no 7.4 a tela seguia vazia em silêncio; no 8.x aborta. Pela regra
+   "funciona igual ao 7.4", reproduzir o vazio; mostrar erro claro é decisão do grupo.
+9. A bateria abre as telas **sem parâmetros**: ela prova que a tela "abre igual", não que os números batem.
 
 ## 1. O que muda partindo do 7.4 (e não mais do 5.6)
 

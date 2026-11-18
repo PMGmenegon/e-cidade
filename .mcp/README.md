@@ -96,7 +96,7 @@ Toda resposta vem no formato `{"ok": true|false, "dados": {...}, "erro": {"codig
 | `analisar_composer` | O que no `composer.json`/`composer.lock` trava o PHP 8.5/Laravel 13 (inclui os 2 bloqueios medidos: Pix e Pimaco) | `analisar_composer()` |
 | `rodar_regressao` | Dispara a regressão em segundo plano e devolve o id (uma por vez; **restaura o banco de teste**). Baterias: `php` (com `prefixo` ou `area`), `laravel` (só compara; pede `confirmo_rodada_longa=true`), `fluxos` (só compara; sem `fluxo` pede confirmação), `completa` | `rodar_regressao(bateria="php", prefixo=["^arr1_grupotaxa001\\.php$"])` |
 | `ler_resultado_regressao` | Andamento e resultado de uma rodada (sem id: lista as rodadas) | `ler_resultado_regressao(id="20261117-153000-php-1a2b")` |
-| `ler_triagem` | Lê a triagem das divergências e as decisões da migração, por seção ou busca | `ler_triagem(documento="decisoes", secao="Resumo executivo")` |
+| `ler_triagem` | Lê a triagem das divergências 7.4 × 8.5 da rodada "antes" e as decisões da migração (sempre com o resumo do topo), por seção ou busca | `ler_triagem(documento="decisoes", secao="O que corrigir primeiro")` |
 | `regras_do_grupo` | As regras do grupo, inteiras ou por tópico | `regras_do_grupo(topico="base-php84")` |
 | `ferramentas_do_grupo` | As ferramentas do grupo em `scratchpad/` (cmp.py, escrita.php, regras do Rector...) com a descrição de cada uma, inclusive as que só estão na `origin/base-php74` | `ferramentas_do_grupo()` |
 

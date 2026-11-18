@@ -27,9 +27,11 @@ DOCUMENTOS: dict[str, tuple[str, str, str]] = {
     "ecidade://regressao/como-usar": ("regressao/COMO-USAR.md", "regressao-como-usar",
                                       "Como rodar e ler a suite de regressao (para dev, QA e gestor)"),
     "ecidade://regressao/triagem": ("regressao/baseline/triagem-divergencias.md", "triagem-divergencias",
-                                    "Triagem das divergencias da rodada 'antes' (causas e exemplos)"),
+                                    "Triagem das divergencias referencia 7.4 x PHP 8.5 da rodada 'antes' "
+                                    "(causa raiz, contagens, exemplos e o que a suite nao exercitou)"),
     "ecidade://regressao/decisoes": ("regressao/baseline/decisoes-migracao.md", "decisoes-migracao",
-                                     "Decisoes da migracao: impacto, ordem recomendada e esforco"),
+                                     "Decisoes da migracao 7.4 -> 8.5 para o gestor: o que corrigir primeiro, "
+                                     "esforco, risco e ordem recomendada"),
 }
 
 
