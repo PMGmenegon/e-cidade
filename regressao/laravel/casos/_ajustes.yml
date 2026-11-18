@@ -27,6 +27,11 @@ volateis:
   # a mensagem de erro (SQLSTATE 22007, data vazia) traz o SQL com a tabela w_ajuste_conlancamrecurso_<ts unix>;
   # status, `error` e o tipo da mensagem continuam comparados
   rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/conlancamrecurso: [message]
+  # Banco v2 (2026-11-18). O GET cria a configuracao padrao na primeira chamada (INSERT em mensageriaacordo,
+  # comparado em sql_negocio): created_at/updated_at sao o relogio da gravacao
+  rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes: [data.created_at, data.updated_at]
+  # o CSV gerado leva o timestamp unix no nome (tmp/relatrio-inscritos-<ts>.csv)
+  rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos: [data.path, data.url]
 instaveis: {}
 # sem_ordem: listas que a API devolve sem ordem garantida; comparadas como conjunto ordenado.
 sem_ordem:

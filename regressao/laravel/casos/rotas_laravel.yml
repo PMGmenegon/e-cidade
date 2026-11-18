@@ -447,6 +447,9 @@
   metodo: POST
   caminho: /v4/api/educacao/escola/transposicao/relatorio-inscritos
   corpo: {}
+  campos_volateis:
+  - data.path
+  - data.url
 - id: rota:POST:/v4/api/educacao/escola/transposicao/salvar-candidatos
   metodo: POST
   caminho: /v4/api/educacao/escola/transposicao/salvar-candidatos
@@ -1696,6 +1699,9 @@
 - id: rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes
   metodo: GET
   caminho: /v4/api/patrimonial/contratos/acordo/buscar-configuracoes
+  campos_volateis:
+  - data.created_at
+  - data.updated_at
 - id: rota:POST:/v4/api/patrimonial/contratos/consulta/acordos
   metodo: POST
   caminho: /v4/api/patrimonial/contratos/consulta/acordos
