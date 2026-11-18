@@ -27,7 +27,7 @@ class Config:
     python_regressao: str = "regressao/.venv/bin/python"
     timeout_lint_s: int = 60
     timeout_phpstan_s: int = 600
-    timeout_busca_s: float = 90.0
+    timeout_busca_s: float = 120.0
     max_saida: int = 60_000                  # caracteres devolvidos por saida de comando/texto
     max_arquivo: int = 3_000_000             # bytes: arquivos maiores sao pulados na busca
     expira_horas: float = 4.0
