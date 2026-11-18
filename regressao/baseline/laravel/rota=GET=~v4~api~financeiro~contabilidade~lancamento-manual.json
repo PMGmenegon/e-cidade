@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.resumo_consulta_lancamento_manual\"\nLINE 1: select * from \"contabilidade\".\"resumo_consulta_lancamento_ma...\n                      ^ (SQL: select * from \"contabilidade\".\"resumo_consulta_lancamento_manual\" order by \"c160_codigo\" asc)"
+    "data": [],
+    "error": false,
+    "message": "Lançamentos encontrados."
   },
-  "sha256": "20c06f64602bc00552602c8b6e40a54ca859ea22b224153f34a100cec0c21170",
+  "sha256": "cb946f1cd69a218c6d5373925b4cab6f972d0ad3c836807abae9cd3057fdb6ab",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

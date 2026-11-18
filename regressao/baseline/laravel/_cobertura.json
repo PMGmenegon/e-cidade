@@ -1,6 +1,6 @@
 {
   "casos": {
-    "5xx": 333,
+    "5xx": 276,
     "inconclusivos_5xx": [
       "auth-client-secret-errado",
       "auth-usuario-inexistente",
@@ -17,20 +17,15 @@
       "rota:POST:/v4/api/configuracao/jobs",
       "rota:GET:/v4/api/configuracao/jobs/create",
       "rota:POST:/v4/api/configuracao/jobs/failed",
-      "rota:GET:/v4/api/configuracao/menu/buscar-favoritos",
       "rota:POST:/v4/api/configuracao/organograma/filtrar",
       "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template",
       "rota:GET:/v4/api/configuracao/usuario/assinantes",
-      "rota:GET:/v4/api/configuracao/usuario/notificacoes",
       "rota:POST:/v4/api/dbpref/dbpref-pix/validar",
-      "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
-      "rota:GET:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares",
       "rota:POST:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares/salvar",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/campos-opcionais",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/configuracoes-gerais",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/cores",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/documentos",
-      "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/imagens",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/mensagens",
       "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/noticias",
@@ -40,14 +35,9 @@
       "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-origem",
       "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-por-bairro",
       "rota:POST:/v4/api/educacao/central-de-matriculas/processo-inscricao/inscricao",
-      "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais",
-      "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes",
       "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/redes-origem",
-      "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar",
       "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/tem-fase-abeta",
-      "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas",
       "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/atualizar",
-      "rota:GET:/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos",
       "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/edita-recursos",
       "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/salva-recursos",
       "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/save",
@@ -64,11 +54,8 @@
       "rota:POST:/v4/api/educacao/escola/diario-classe/registro-aula/update-conteudos-lote",
       "rota:POST:/v4/api/educacao/escola/etapas/etapas-intervalo",
       "rota:POST:/v4/api/educacao/escola/notas-parciais/periodo",
-      "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao",
-      "rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao",
       "rota:GET:/v4/api/educacao/escola/profissionais-geral",
       "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao",
-      "rota:GET:/v4/api/educacao/escola/recursos-humanos/profissional",
       "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao",
       "rota:POST:/v4/api/educacao/escola/regencia/adicionar-avaliacoes-periodo",
       "rota:POST:/v4/api/educacao/escola/regencia/avaliacoes-periodo",
@@ -81,10 +68,8 @@
       "rota:POST:/v4/api/educacao/escola/resultado-parcial/reabrir-todos",
       "rota:POST:/v4/api/educacao/escola/tipoausencia/ausencia",
       "rota:POST:/v4/api/educacao/escola/transposicao/aluno-designado",
-      "rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao",
       "rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados",
       "rota:POST:/v4/api/educacao/escola/transposicao/relatorio",
-      "rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos",
       "rota:POST:/v4/api/educacao/escola/transposicao/salvar-candidatos",
       "rota:POST:/v4/api/educacao/escola/transposicao/salvar-criterios-ordenacao",
       "rota:POST:/v4/api/educacao/escola/transposicao/toggle",
@@ -93,15 +78,12 @@
       "rota:POST:/v4/api/educacao/escola/turmas/usuario",
       "rota:GET:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/getParametros",
       "rota:POST:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/salvar",
-      "rota:GET:/v4/api/educacao/secretaria/bloqueio-notas/listagem-excecoes",
       "rota:POST:/v4/api/educacao/secretaria/cursos/salvar",
-      "rota:GET:/v4/api/educacao/secretaria/parametros/bloqueio-notas/buscar",
       "rota:POST:/v4/api/educacao/secretaria/parametros/bloqueio-notas/salvar",
       "rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes",
       "rota:POST:/v4/api/educacao/secretaria/relatorios/alunos/alunos-estrangeiros",
       "rota:POST:/v4/api/educacao/secretaria/relatorios/funcionarios-ativos-escola",
       "rota:GET:/v4/api/educacao/secretaria/relatorios/funcoes-atividades",
-      "rota:GET:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos",
       "rota:POST:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos/salvar",
       "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos",
       "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info",
@@ -118,10 +100,8 @@
       "rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/estoque-patrimonio",
       "rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/recurso-empenho",
       "rota:GET:/v4/api/financeiro/contabilidade/historico",
-      "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual",
       "rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual",
       "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/nota-lancamento",
-      "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote",
       "rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual/retificar",
       "rota:POST:/v4/api/financeiro/contabilidade/msc/emitir",
       "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade",
@@ -138,21 +118,13 @@
       "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra",
       "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas",
       "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular",
-      "rota:POST:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores",
-      "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia",
-      "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia",
-      "rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial",
-      "rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
       "rota:POST:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
       "rota:POST:/v4/api/financeiro/contabilidade/relatorio-legal/emissao/publicar",
       "rota:GET:/v4/api/financeiro/contabilidade/relatorio-legal/emissoes",
       "rota:POST:/v4/api/financeiro/contabilidade/relatorio/atributos-plano-conas",
       "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-plano-padrao",
       "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento",
-      "rota:GET:/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora",
       "rota:GET:/v4/api/financeiro/empenho/empenhos/dialog-pesquisa",
-      "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos",
-      "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/naturezas",
       "rota:POST:/v4/api/financeiro/empenho/relatorio/relatorio-subcontratacao",
       "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf",
       "rota:GET:/v4/api/financeiro/orcamento/buscar-filtros-dotacoes",
@@ -189,16 +161,13 @@
       "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico",
       "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso",
       "rota:POST:/v4/api/financeiro/tesouraria/decendio/gerar-slips",
-      "rota:GET:/v4/api/financeiro/tesouraria/decendio/receitas",
       "rota:POST:/v4/api/financeiro/tesouraria/decendio/relatorio",
-      "rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
       "rota:POST:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
       "rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria",
       "rota:POST:/v4/api/financeiro/tesouraria/slip/cobertura-recurso-extra/gerar",
       "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save",
       "rota:GET:/v4/api/integracoes/efd-reinf/retencao/get-retencoes",
       "rota:POST:/v4/api/integracoes/efd-reinf/retencao/save-retencao",
-      "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes",
       "rota:POST:/v4/api/patrimonial/contratos/enviar-evento-automatico",
       "rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados",
       "rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/detalhamento-caracteristicas",
@@ -209,7 +178,6 @@
       "rota:POST:/v4/api/patrimonial/pncp/ataRegistroPreco/retificar",
       "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscar-documentos",
       "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarAmparosLegais",
-      "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras",
       "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarEditais",
       "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarLicitacao",
       "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarModoDisputa",
@@ -251,19 +219,8 @@
       "rota:GET:/v4/api/patrimonial/protocolo/processo/search",
       "rota:POST:/v4/api/patrimonial/protocolo/processo/vincularDespachoMensagem",
       "rota:POST:/v4/api/patrimonial/protocolo/salvar-cgm",
-      "rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index",
-      "rota:GET:/v4/api/recursos-humanos/e-social/index",
-      "rota:POST:/v4/api/recursos-humanos/e-social/store",
-      "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
       "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento/create",
       "rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/relatorio",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos",
-      "rota:GET:/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showAssentamentos",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showCargos",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showLocais",
-      "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showRubricaAbatimento",
       "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao",
       "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/show",
       "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update",
@@ -282,13 +239,10 @@
       "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent",
       "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao",
       "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/stopsprocessamento",
-      "rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig",
       "rota:POST:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/saveConfig",
       "rota:GET:/v4/api/saude/ambulatorial/consulta/especialidadeprofissionais/ativas",
       "rota:GET:/v4/api/saude/ambulatorial/consulta/setoresambulatoriais",
       "rota:POST:/v4/api/saude/ambulatorial/consulta/statuspaciente",
-      "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras",
-      "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem",
       "rota:GET:/v4/api/saude/ambulatorial/parametros",
       "rota:POST:/v4/api/saude/ambulatorial/procedimento/unificacao-cgs/listar-unificacoes",
       "rota:POST:/v4/api/saude/farmacia/consulta/bnafar/inconsistencias",
@@ -296,30 +250,19 @@
       "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar",
       "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar-requisicoes",
       "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/exportar-pendencias",
-      "rota:POST:/v4/api/tributario/arrecadacao/grupotaxas/buscar",
-      "rota:GET:/v4/api/tributario/arrecadacao/grupotaxas/rotulos",
       "rota:POST:/v4/api/tributario/arrecadacao/pix/gerar",
-      "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar",
-      "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos",
       "rota:GET:/v4/api/tributario/cadastro/buscar-condominios",
       "rota:GET:/v4/api/tributario/cadastro/buscar-logradouro",
       "rota:GET:/v4/api/tributario/cadastro/buscar-loteamento",
-      "rota:POST:/v4/api/tributario/cadastro/get-macrozonas",
-      "rota:POST:/v4/api/tributario/cadastro/get-zonas",
-      "rota:POST:/v4/api/tributario/cadastro/next-id-macrozona",
-      "rota:POST:/v4/api/tributario/cadastro/next-id-zona",
-      "rota:GET:/v4/api/tributario/cemiterio/parametros/busca-parametros",
       "rota:POST:/v4/api/tributario/divida-ativa/lancamento-historico/dividas",
       "rota:POST:/v4/api/tributario/issqn/buscar-historico-inscricoes",
       "rota:POST:/v4/api/tributario/issqn/buscar-iscr-salao-parceiro",
       "rota:GET:/v4/api/tributario/issqn/buscar-setor-fiscal",
-      "rota:POST:/v4/api/tributario/issqn/get-inscr-dialog",
       "rota:GET:/v4/api/tributario/issqn/redesim/dados-estabelecimento",
       "rota:POST:/v4/api/tributario/issqn/redesim/enviar-resposta",
       "rota:GET:/v4/api/tributario/issqn/redesim/eventos",
       "rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao",
       "rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes",
-      "rota:GET:/v4/api/tributario/issqn/simples-nacional/busca-arquivos",
       "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo",
       "rota:GET:/v4/oauth/authorize",
       "rota:POST:/v4/oauth/authorize",
@@ -338,13 +281,13 @@
       "auth-token-expirado",
       "auth-token-revogado"
     ],
-    "total": 996
+    "total": 992
   },
   "classes": {
-    "2xx": 199,
+    "2xx": 250,
     "3xx": 0,
-    "4xx": 450,
-    "5xx": 324,
+    "4xx": 452,
+    "5xx": 267,
     "sem_baseline": 0
   },
   "cobertas": [
@@ -632,10 +575,10 @@
       "casos": [
         "rota:GET:/v4/api/configuracao/menu/buscar-favoritos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/configuracao/menu/buscar-favoritos"
     },
     {
@@ -732,10 +675,10 @@
       "casos": [
         "rota:GET:/v4/api/configuracao/usuario/notificacoes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/configuracao/usuario/notificacoes"
     },
     {
@@ -772,10 +715,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao"
     },
     {
@@ -802,10 +745,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/censo/tabelas-censo/unidades-curriculares"
     },
     {
@@ -862,10 +805,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes"
     },
     {
@@ -1002,10 +945,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais"
     },
     {
@@ -1032,10 +975,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes"
     },
     {
@@ -1052,10 +995,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar"
     },
     {
@@ -1082,10 +1025,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas"
     },
     {
@@ -1132,10 +1075,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos"
     },
     {
@@ -1342,20 +1285,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
-      "uri": "/v4/api/educacao/escola/ocupacoes/ocupacao"
-    },
-    {
-      "casos": [
-        "rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao"
-      ],
-      "classe": "5xx",
-      "metodo": "POST",
-      "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/escola/ocupacoes/ocupacao"
     },
     {
@@ -1402,10 +1335,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/escola/recursos-humanos/profissional"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/escola/recursos-humanos/profissional"
     },
     {
@@ -1603,16 +1536,6 @@
     },
     {
       "casos": [
-        "rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao"
-      ],
-      "classe": "5xx",
-      "metodo": "POST",
-      "origem": "laravel",
-      "status": 500,
-      "uri": "/v4/api/educacao/escola/transposicao/criterios-ordenacao"
-    },
-    {
-      "casos": [
         "rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados"
       ],
       "classe": "5xx",
@@ -1635,10 +1558,10 @@
       "casos": [
         "rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/escola/transposicao/relatorio-inscritos"
     },
     {
@@ -2195,10 +2118,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/secretaria/bloqueio-notas/listagem-excecoes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/secretaria/bloqueio-notas/listagem-excecoes"
     },
     {
@@ -2265,10 +2188,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/secretaria/parametros/bloqueio-notas/buscar"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/secretaria/parametros/bloqueio-notas/buscar"
     },
     {
@@ -2395,10 +2318,10 @@
       "casos": [
         "rota:GET:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos"
     },
     {
@@ -2595,10 +2518,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/contabilidade/lancamento-manual"
     },
     {
@@ -2625,10 +2548,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote"
     },
     {
@@ -2876,41 +2799,31 @@
       "casos": [
         "rota:POST:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores"
       ],
-      "classe": "5xx",
+      "classe": "4xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 406,
       "uri": "/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores"
     },
     {
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia"
       ],
-      "classe": "5xx",
+      "classe": "4xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 406,
       "uri": "/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia"
     },
     {
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia"
       ],
-      "classe": "5xx",
+      "classe": "4xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 403,
       "uri": "/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia"
-    },
-    {
-      "casos": [
-        "rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial"
-      ],
-      "classe": "5xx",
-      "metodo": "POST",
-      "origem": "laravel",
-      "status": 500,
-      "uri": "/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial"
     },
     {
       "casos": [
@@ -3006,10 +2919,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual"
     },
     {
@@ -3502,10 +3415,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora"
     },
     {
@@ -3552,20 +3465,20 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/empenho/naturezarendimentos/grupos"
     },
     {
       "casos": [
         "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/naturezas"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/empenho/naturezarendimentos/naturezas"
     },
     {
@@ -3602,10 +3515,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/empenho/sigfis/tipodocliquidacao"
       ],
-      "classe": "4xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 401,
+      "status": 200,
       "uri": "/v4/api/financeiro/empenho/sigfis/tipodocliquidacao"
     },
     {
@@ -4802,10 +4715,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/tesouraria/decendio/receitas"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/tesouraria/decendio/receitas"
     },
     {
@@ -4832,10 +4745,10 @@
       "casos": [
         "rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento"
     },
     {
@@ -5022,10 +4935,10 @@
       "casos": [
         "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/patrimonial/contratos/acordo/buscar-configuracoes"
     },
     {
@@ -5292,10 +5205,10 @@
       "casos": [
         "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras"
     },
     {
@@ -6042,10 +5955,10 @@
       "casos": [
         "rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/e-social/exame-toxicologico/index"
     },
     {
@@ -6062,21 +5975,11 @@
       "casos": [
         "rota:GET:/v4/api/recursos-humanos/e-social/index"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/e-social/index"
-    },
-    {
-      "casos": [
-        "rota:POST:/v4/api/recursos-humanos/e-social/store"
-      ],
-      "classe": "5xx",
-      "metodo": "POST",
-      "origem": "laravel",
-      "status": 500,
-      "uri": "/v4/api/recursos-humanos/e-social/store"
     },
     {
       "casos": [
@@ -6092,10 +5995,10 @@
       "casos": [
         "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento"
     },
     {
@@ -6132,20 +6035,20 @@
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos"
     },
     {
       "casos": [
         "rota:GET:/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig"
     },
     {
@@ -6202,50 +6105,50 @@
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showAssentamentos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showAssentamentos"
     },
     {
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showCargos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showCargos"
     },
     {
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes"
     },
     {
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showLocais"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showLocais"
     },
     {
       "casos": [
         "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showRubricaAbatimento"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showRubricaAbatimento"
     },
     {
@@ -6955,10 +6858,10 @@
       "casos": [
         "rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig"
     },
     {
@@ -7105,10 +7008,10 @@
       "casos": [
         "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras"
     },
     {
@@ -7125,10 +7028,10 @@
       "casos": [
         "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/saude/ambulatorial/consulta/unidades-origem"
     },
     {
@@ -7545,20 +7448,20 @@
       "casos": [
         "rota:POST:/v4/api/tributario/arrecadacao/grupotaxas/buscar"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/arrecadacao/grupotaxas/buscar"
     },
     {
       "casos": [
         "rota:GET:/v4/api/tributario/arrecadacao/grupotaxas/rotulos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/arrecadacao/grupotaxas/rotulos"
     },
     {
@@ -7675,20 +7578,20 @@
       "casos": [
         "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar"
     },
     {
       "casos": [
         "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos"
     },
     {
@@ -7865,10 +7768,10 @@
       "casos": [
         "rota:POST:/v4/api/tributario/cadastro/get-macrozonas"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/cadastro/get-macrozonas"
     },
     {
@@ -7885,10 +7788,10 @@
       "casos": [
         "rota:POST:/v4/api/tributario/cadastro/get-zonas"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/cadastro/get-zonas"
     },
     {
@@ -7915,20 +7818,20 @@
       "casos": [
         "rota:POST:/v4/api/tributario/cadastro/next-id-macrozona"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/cadastro/next-id-macrozona"
     },
     {
       "casos": [
         "rota:POST:/v4/api/tributario/cadastro/next-id-zona"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/cadastro/next-id-zona"
     },
     {
@@ -8025,10 +7928,10 @@
       "casos": [
         "rota:GET:/v4/api/tributario/cemiterio/parametros/busca-parametros"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/cemiterio/parametros/busca-parametros"
     },
     {
@@ -8315,10 +8218,10 @@
       "casos": [
         "rota:POST:/v4/api/tributario/issqn/get-inscr-dialog"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "POST",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/issqn/get-inscr-dialog"
     },
     {
@@ -8435,10 +8338,10 @@
       "casos": [
         "rota:GET:/v4/api/tributario/issqn/simples-nacional/busca-arquivos"
       ],
-      "classe": "5xx",
+      "classe": "2xx",
       "metodo": "GET|HEAD",
       "origem": "laravel",
-      "status": 500,
+      "status": 200,
       "uri": "/v4/api/tributario/issqn/simples-nacional/busca-arquivos"
     },
     {
@@ -10618,20 +10521,15 @@
     "rota:POST:/v4/api/configuracao/jobs",
     "rota:GET:/v4/api/configuracao/jobs/create",
     "rota:POST:/v4/api/configuracao/jobs/failed",
-    "rota:GET:/v4/api/configuracao/menu/buscar-favoritos",
     "rota:POST:/v4/api/configuracao/organograma/filtrar",
     "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template",
     "rota:GET:/v4/api/configuracao/usuario/assinantes",
-    "rota:GET:/v4/api/configuracao/usuario/notificacoes",
     "rota:POST:/v4/api/dbpref/dbpref-pix/validar",
-    "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
-    "rota:GET:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares",
     "rota:POST:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares/salvar",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/campos-opcionais",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/configuracoes-gerais",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/cores",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/documentos",
-    "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/imagens",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/mensagens",
     "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/noticias",
@@ -10641,14 +10539,9 @@
     "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-origem",
     "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-por-bairro",
     "rota:POST:/v4/api/educacao/central-de-matriculas/processo-inscricao/inscricao",
-    "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais",
-    "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes",
     "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/redes-origem",
-    "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar",
     "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/tem-fase-abeta",
-    "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas",
     "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/atualizar",
-    "rota:GET:/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos",
     "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/edita-recursos",
     "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/salva-recursos",
     "rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/save",
@@ -10665,11 +10558,8 @@
     "rota:POST:/v4/api/educacao/escola/diario-classe/registro-aula/update-conteudos-lote",
     "rota:POST:/v4/api/educacao/escola/etapas/etapas-intervalo",
     "rota:POST:/v4/api/educacao/escola/notas-parciais/periodo",
-    "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao",
-    "rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao",
     "rota:GET:/v4/api/educacao/escola/profissionais-geral",
     "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao",
-    "rota:GET:/v4/api/educacao/escola/recursos-humanos/profissional",
     "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao",
     "rota:POST:/v4/api/educacao/escola/regencia/adicionar-avaliacoes-periodo",
     "rota:POST:/v4/api/educacao/escola/regencia/avaliacoes-periodo",
@@ -10681,10 +10571,8 @@
     "rota:POST:/v4/api/educacao/escola/resultado-parcial/reabrir-todos",
     "rota:POST:/v4/api/educacao/escola/tipoausencia/ausencia",
     "rota:POST:/v4/api/educacao/escola/transposicao/aluno-designado",
-    "rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao",
     "rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados",
     "rota:POST:/v4/api/educacao/escola/transposicao/relatorio",
-    "rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos",
     "rota:POST:/v4/api/educacao/escola/transposicao/salvar-candidatos",
     "rota:POST:/v4/api/educacao/escola/transposicao/salvar-criterios-ordenacao",
     "rota:POST:/v4/api/educacao/escola/transposicao/toggle",
@@ -10693,15 +10581,12 @@
     "rota:POST:/v4/api/educacao/escola/turmas/usuario",
     "rota:GET:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/getParametros",
     "rota:POST:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/salvar",
-    "rota:GET:/v4/api/educacao/secretaria/bloqueio-notas/listagem-excecoes",
     "rota:POST:/v4/api/educacao/secretaria/cursos/salvar",
-    "rota:GET:/v4/api/educacao/secretaria/parametros/bloqueio-notas/buscar",
     "rota:POST:/v4/api/educacao/secretaria/parametros/bloqueio-notas/salvar",
     "rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes",
     "rota:POST:/v4/api/educacao/secretaria/relatorios/alunos/alunos-estrangeiros",
     "rota:POST:/v4/api/educacao/secretaria/relatorios/funcionarios-ativos-escola",
     "rota:GET:/v4/api/educacao/secretaria/relatorios/funcoes-atividades",
-    "rota:GET:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos",
     "rota:POST:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos/salvar",
     "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos",
     "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info",
@@ -10718,10 +10603,8 @@
     "rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/estoque-patrimonio",
     "rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/recurso-empenho",
     "rota:GET:/v4/api/financeiro/contabilidade/historico",
-    "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual",
     "rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual",
     "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/nota-lancamento",
-    "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote",
     "rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual/retificar",
     "rota:POST:/v4/api/financeiro/contabilidade/msc/emitir",
     "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade",
@@ -10737,11 +10620,6 @@
     "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra",
     "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas",
     "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular",
-    "rota:POST:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores",
-    "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia",
-    "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia",
-    "rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial",
-    "rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
     "rota:POST:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
     "rota:POST:/v4/api/financeiro/contabilidade/relatorio-legal/emissao/publicar",
     "rota:GET:/v4/api/financeiro/contabilidade/relatorio-legal/emissoes",
@@ -10749,10 +10627,7 @@
     "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-plano-padrao",
     "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento",
     "auth-sem-token",
-    "rota:GET:/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora",
     "rota:GET:/v4/api/financeiro/empenho/empenhos/dialog-pesquisa",
-    "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos",
-    "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/naturezas",
     "rota:POST:/v4/api/financeiro/empenho/relatorio/relatorio-subcontratacao",
     "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf",
     "rota:GET:/v4/api/financeiro/orcamento/buscar-filtros-dotacoes",
@@ -10789,16 +10664,13 @@
     "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico",
     "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso",
     "rota:POST:/v4/api/financeiro/tesouraria/decendio/gerar-slips",
-    "rota:GET:/v4/api/financeiro/tesouraria/decendio/receitas",
     "rota:POST:/v4/api/financeiro/tesouraria/decendio/relatorio",
-    "rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
     "rota:POST:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
     "rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria",
     "rota:POST:/v4/api/financeiro/tesouraria/slip/cobertura-recurso-extra/gerar",
     "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save",
     "rota:GET:/v4/api/integracoes/efd-reinf/retencao/get-retencoes",
     "rota:POST:/v4/api/integracoes/efd-reinf/retencao/save-retencao",
-    "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes",
     "rota:POST:/v4/api/patrimonial/contratos/enviar-evento-automatico",
     "rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados",
     "rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/detalhamento-caracteristicas",
@@ -10809,7 +10681,6 @@
     "rota:POST:/v4/api/patrimonial/pncp/ataRegistroPreco/retificar",
     "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscar-documentos",
     "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarAmparosLegais",
-    "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras",
     "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarEditais",
     "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarLicitacao",
     "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarModoDisputa",
@@ -10851,19 +10722,8 @@
     "rota:GET:/v4/api/patrimonial/protocolo/processo/search",
     "rota:POST:/v4/api/patrimonial/protocolo/processo/vincularDespachoMensagem",
     "rota:POST:/v4/api/patrimonial/protocolo/salvar-cgm",
-    "rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index",
-    "rota:GET:/v4/api/recursos-humanos/e-social/index",
-    "rota:POST:/v4/api/recursos-humanos/e-social/store",
-    "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
     "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento/create",
     "rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/relatorio",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos",
-    "rota:GET:/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showAssentamentos",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showCargos",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showLocais",
-    "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showRubricaAbatimento",
     "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao",
     "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/show",
     "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update",
@@ -10882,13 +10742,10 @@
     "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent",
     "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao",
     "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/stopsprocessamento",
-    "rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig",
     "rota:POST:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/saveConfig",
     "rota:GET:/v4/api/saude/ambulatorial/consulta/especialidadeprofissionais/ativas",
     "rota:GET:/v4/api/saude/ambulatorial/consulta/setoresambulatoriais",
     "rota:POST:/v4/api/saude/ambulatorial/consulta/statuspaciente",
-    "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras",
-    "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem",
     "rota:GET:/v4/api/saude/ambulatorial/parametros",
     "rota:POST:/v4/api/saude/ambulatorial/procedimento/unificacao-cgs/listar-unificacoes",
     "rota:POST:/v4/api/saude/farmacia/consulta/bnafar/inconsistencias",
@@ -10896,30 +10753,19 @@
     "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar",
     "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar-requisicoes",
     "rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/exportar-pendencias",
-    "rota:POST:/v4/api/tributario/arrecadacao/grupotaxas/buscar",
-    "rota:GET:/v4/api/tributario/arrecadacao/grupotaxas/rotulos",
     "rota:POST:/v4/api/tributario/arrecadacao/pix/gerar",
-    "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar",
-    "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos",
     "rota:GET:/v4/api/tributario/cadastro/buscar-condominios",
     "rota:GET:/v4/api/tributario/cadastro/buscar-logradouro",
     "rota:GET:/v4/api/tributario/cadastro/buscar-loteamento",
-    "rota:POST:/v4/api/tributario/cadastro/get-macrozonas",
-    "rota:POST:/v4/api/tributario/cadastro/get-zonas",
-    "rota:POST:/v4/api/tributario/cadastro/next-id-macrozona",
-    "rota:POST:/v4/api/tributario/cadastro/next-id-zona",
-    "rota:GET:/v4/api/tributario/cemiterio/parametros/busca-parametros",
     "rota:POST:/v4/api/tributario/divida-ativa/lancamento-historico/dividas",
     "rota:POST:/v4/api/tributario/issqn/buscar-historico-inscricoes",
     "rota:POST:/v4/api/tributario/issqn/buscar-iscr-salao-parceiro",
     "rota:GET:/v4/api/tributario/issqn/buscar-setor-fiscal",
-    "rota:POST:/v4/api/tributario/issqn/get-inscr-dialog",
     "rota:GET:/v4/api/tributario/issqn/redesim/dados-estabelecimento",
     "rota:POST:/v4/api/tributario/issqn/redesim/enviar-resposta",
     "rota:GET:/v4/api/tributario/issqn/redesim/eventos",
     "rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao",
     "rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes",
-    "rota:GET:/v4/api/tributario/issqn/simples-nacional/busca-arquivos",
     "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo",
     "rota:GET:/v4/oauth/authorize",
     "rota:POST:/v4/oauth/authorize",
@@ -11516,6 +11362,12 @@
     },
     {
       "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT em escola.cboocupacao com titulo NULL e corpo vazio (500, banco v2)",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/ocupacoes/ocupacao"
+    },
+    {
+      "metodo": "POST",
       "motivo": "parametro de caminho {item}: nao se envia id real",
       "origem": "laravel",
       "uri": "/v4/api/educacao/escola/ocupacoes/ocupacao/{item}"
@@ -11657,6 +11509,12 @@
       "motivo": "rota perigosa (cancel): nao e sondada",
       "origem": "laravel",
       "uri": "/v4/api/educacao/escola/transposicao/cancelar-designacao"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT em escola.criteriostransposicaoordenacao com corpo vazio (500, banco v2)",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/transposicao/criterios-ordenacao"
     },
     {
       "metodo": "POST",
@@ -12149,6 +12007,12 @@
       "motivo": "parametro de caminho {instituicao}: nao se envia id real",
       "origem": "laravel",
       "uri": "/v4/api/financeiro/contabilidade/procedimento/encerramento-periodo-contabil/{instituicao}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): DELETE em contabilidade.conplanoexecontacorrente da instituicao 1 com corpo vazio (200, banco v2)",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial"
     },
     {
       "metodo": "POST",
@@ -12887,6 +12751,12 @@
       "motivo": "parametro de caminho {periodo}: nao se envia id real",
       "origem": "laravel",
       "uri": "/v4/api/recursos-humanos/e-social/index/{periodo}/{empregador}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT em recursoshumanos.informacoes_complementares com corpo vazio (500, banco v2)",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/e-social/store"
     },
     {
       "metodo": "GET|HEAD",
@@ -13705,8 +13575,8 @@
   },
   "por_origem": {
     "laravel": {
-      "cobertas": 968,
-      "nao_cobertas": 455,
+      "cobertas": 964,
+      "nao_cobertas": 459,
       "total": 1423
     },
     "rest": {

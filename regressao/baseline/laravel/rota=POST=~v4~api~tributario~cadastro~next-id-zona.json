@@ -1,16 +1,13 @@
 {
   "cabecalhos": {
     "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
-    "content-type": "application/json"
+    "content-type": "text/html; charset=UTF-8"
   },
   "id": "rota:POST:/v4/api/tributario/cadastro/next-id-zona",
-  "json": {
-    "error": true,
-    "message": "Undefined offset: 0"
-  },
-  "sha256": "a655ed4d1a9c7ec84ac8c0aefefffa101bf9b24685ab1ac29c2b4d3a0c6a6892",
+  "json": 1,
+  "sha256": "df3023d2980a5f3b810f6edd61350226e317c52e28655e0fa16776416d13a599",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

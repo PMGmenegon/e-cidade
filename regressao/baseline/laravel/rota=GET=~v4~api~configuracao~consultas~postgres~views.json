@@ -7,9 +7,6 @@
   "json": {
     "data": [
       {
-        "nome": "averbacoes"
-      },
-      {
         "nome": "cadastro_pessoal_2008"
       },
       {
@@ -23,9 +20,6 @@
       },
       {
         "nome": "far_retiradaitensdepartamento"
-      },
-      {
-        "nome": "proprietario"
       },
       {
         "nome": "proprietario_ender"
@@ -44,9 +38,6 @@
       },
       {
         "nome": "v_suplementacao"
-      },
-      {
-        "nome": "venal"
       },
       {
         "nome": "vs_conlancam"
@@ -70,7 +61,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "06bf3575e246267eeb7bc507e9118b8ba0591c86f87fd5c40ca51e134ad9e121",
+  "sha256": "ad22c0b20c9599f1e0a3d9fe420de0f556f3d303f0c1019272f2302c5c4fa160",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

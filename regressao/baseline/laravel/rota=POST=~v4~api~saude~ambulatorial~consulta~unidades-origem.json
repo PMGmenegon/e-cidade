@@ -5,12 +5,13 @@
   },
   "id": "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"ambulatorial.unidadesorigem\"\nLINE 1: ...ao\" as \"descricao\", \"sd113_ativo\" as \"ativo\" from \"ambulator...\n                                                             ^ (SQL: select \"sd113_sequencial\" as \"codigo\", \"sd113_descricao\" as \"descricao\", \"sd113_ativo\" as \"ativo\" from \"ambulatorial\".\"unidadesorigem\" order by \"sd113_sequencial\" desc)"
+    "data": [],
+    "error": false,
+    "message": "Unidades de origem listadas com sucesso!"
   },
-  "sha256": "3070da86918e3193c2a06d4962a97a46d3e5f18fbfd57cd9afa667dcbc72db6c",
+  "sha256": "9f59c8aecaee8e61bd5ced0b3843a5095c865b59f86f18f8a03c7bfa2a401b79",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

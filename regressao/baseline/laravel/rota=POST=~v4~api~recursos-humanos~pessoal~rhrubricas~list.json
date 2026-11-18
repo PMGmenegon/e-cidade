@@ -470,12 +470,17 @@
         "rh27_descr": "ISENÇÃO IR AUX. DOENÇA E AC. TRABALHO",
         "rh27_instit": 1,
         "rh27_rubric": "R960"
+      },
+      {
+        "rh27_descr": "Diferença de Deducoes",
+        "rh27_instit": 1,
+        "rh27_rubric": "R957"
       }
     ],
     "error": false,
     "message": ""
   },
-  "sha256": "1efb0969d97c493f68d79d222a069ebc3a304286511b0d2a14d46d4d9efde67d",
+  "sha256": "373851d126b0cf3c793ba9a068738850c69e2703347ce8d905409becd16dfbbf",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/financeiro/tesouraria/decendio/receitas",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"caixa.receitadescendio\"\nLINE 1: ..._codigo\" and \"exercicio\" = \"o70_anousu\" left join \"caixa\".\"r...\n                                                             ^ (SQL: select \"o70_anousu\", \"o70_codrec\", \"o70_instit\", \"o70_codigo\", \"o57_fonte\", \"o57_descr\", \"k224_tipodesdobramento\", \"codigo_siconfi\", \"gestao\", \"o15_complemento\", \"o15_recurso\" from \"orcamento\".\"orcfontes\" inner join \"orcamento\".\"orcreceita\" on \"o70_codfon\" = \"o57_codfon\" and \"o70_anousu\" = \"o57_anousu\" inner join \"orcamento\".\"orctiporec\" on \"o15_codigo\" = \"o70_codigo\" inner join \"orcamento\".\"fonterecurso\" on \"orctiporec_id\" = \"o15_codigo\" and \"exercicio\" = \"o70_anousu\" left join \"caixa\".\"receitadescendio\" on \"k224_reduz\" = \"o70_codrec\" and \"k224_anousu\" = \"o70_anousu\" where (o57_fonte like '4%' or  o57_fonte like '9%') order by \"o57_fonte\" asc)"
+    "data": [],
+    "error": false,
+    "message": "Receitas encontradas."
   },
-  "sha256": "d19c46c2e04893350f4d5de0099e64fbe376870838c4b6f1df6b8406c91e3710",
+  "sha256": "29d60c6dd73a45b7f936e001627122c5334511b6880680a7ba246ef9e417c20f",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

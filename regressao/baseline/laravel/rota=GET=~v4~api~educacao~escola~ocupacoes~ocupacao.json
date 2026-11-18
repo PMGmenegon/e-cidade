@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.cboocupacao\"\nLINE 1: select * from \"escola\".\"cboocupacao\"\n                      ^ (SQL: select * from \"escola\".\"cboocupacao\")"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "72d2417641e076b3871806573058541d7550e46d5a3324596dc79a14fefd5d7c",
+  "sha256": "1bd420ab914c6365ca4234ff03282cdb86d36d168f65824ab46fe08b3af37517",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

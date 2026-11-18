@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"matriculaonline.duvidas_frequentes\"\nLINE 1: select * from \"matriculaonline\".\"duvidas_frequentes\" where \"...\n                      ^ (SQL: select * from \"matriculaonline\".\"duvidas_frequentes\" where \"mo15_ativo\" = 1 order by \"mo15_ordem\" asc)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "d0dd4dec059cc3880602e5561f855daab8d0abae861476240af0fc69eddfc534",
+  "sha256": "10f18af7c11222167630d4470409d3f8c1ac0804f772b9a5a920e91dff761373",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

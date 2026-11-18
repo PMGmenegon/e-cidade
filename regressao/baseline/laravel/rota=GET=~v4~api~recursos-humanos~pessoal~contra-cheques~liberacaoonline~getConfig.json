@@ -4,13 +4,23 @@
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig",
-  "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"pessoal.rhliberacontracheque\"\nLINE 1: select * from \"pessoal\".\"rhliberacontracheque\" where \"rh301_...\n                      ^ (SQL: select * from \"pessoal\".\"rhliberacontracheque\" where \"rh301_instituicao\" = 1 order by \"rh301_ano\" desc, \"rh301_mes\" desc)"
-  },
-  "sha256": "72b1de45063981f6960a8d9daae47eccba50848baad888cf6f68c9d37ac848cc",
+  "json": [
+    {
+      "adiantamento": true,
+      "ano": 2013,
+      "codigo": 1,
+      "complementar": true,
+      "decimo": true,
+      "instituicao": 1,
+      "mes": 2,
+      "rescisao": true,
+      "salario": true,
+      "suplementar": true
+    }
+  ],
+  "sha256": "2c8f11c6ac31675fef5a9479d2fa7293f1f5bc03c77b01b4cd7eeb3ac5e1188b",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

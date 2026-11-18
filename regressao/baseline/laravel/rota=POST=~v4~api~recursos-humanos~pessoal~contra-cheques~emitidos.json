@@ -5,12 +5,13 @@
   },
   "id": "rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contracheques_batches\"\nLINE 1: select * from \"contracheques_batches\" where \"rh269_instit\" =...\n                      ^ (SQL: select * from \"contracheques_batches\" where \"rh269_instit\" = 1 order by \"rh269_codigo\" desc)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "512f1073680c1abaa7872cf54e160b212a5fbe1869f36d67827c5e4f43c9d7a4",
+  "sha256": "62f59fb677c7652f33adae64dd20c39b4daba67796194f2abd2d64b5dd4dfccb",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

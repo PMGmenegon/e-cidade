@@ -5,12 +5,25 @@
   },
   "id": "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.censoareaspos\"\nLINE 1: select * from \"escola\".\"censoareaspos\"\n                      ^ (SQL: select * from \"escola\".\"censoareaspos\")"
+    "data": {
+      "1": "Educação",
+      "10": "Serviços",
+      "2": "Artes e humanidades",
+      "3": "Ciências sociais, comunicação e informação",
+      "4": "Negócios, administração e direito",
+      "5": "Ciências naturais, matemática e estatística",
+      "6": "Computação e Tecnologias da Informação e Comunicação (TIC)",
+      "7": "Engenharia, produção e construção",
+      "8": "Agricultura, silvicultura, pesca e veterinária",
+      "9": "Saúde e bem-estar",
+      "99": "Programas básicos"
+    },
+    "error": false,
+    "message": ""
   },
-  "sha256": "ef0bae518ea5461a35d7ba9c64d296cbf70ff049d07537eb3d54996808c5b253",
+  "sha256": "cf81c07aa832a935c841c0417e2b788ede937dc04f936757c8f9612991e190d3",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

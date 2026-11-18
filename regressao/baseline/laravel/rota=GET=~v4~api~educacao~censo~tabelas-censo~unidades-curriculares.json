@@ -5,12 +5,46 @@
   },
   "id": "rota:GET:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"secretariadeeducacao.unidadescurriculares\"\nLINE 1: select * from \"secretariadeeducacao\".\"unidadescurriculares\"\n                      ^ (SQL: select * from \"secretariadeeducacao\".\"unidadescurriculares\")"
+    "data": [
+      {
+        "codigo": 1,
+        "nome": "Eletivas"
+      },
+      {
+        "codigo": 2,
+        "nome": "Libras"
+      },
+      {
+        "codigo": 3,
+        "nome": "Língua Indígena"
+      },
+      {
+        "codigo": 4,
+        "nome": "Língua/Literatura estrangeira - Espanhol"
+      },
+      {
+        "codigo": 5,
+        "nome": "Língua/Literatura estrangeira - Francês"
+      },
+      {
+        "codigo": 6,
+        "nome": "Língua/Literatura estrangeira - Outra"
+      },
+      {
+        "codigo": 7,
+        "nome": "Projeto de Vida"
+      },
+      {
+        "codigo": 8,
+        "nome": "Trilhas de aprofundamento/aprendizagens"
+      }
+    ],
+    "error": false,
+    "message": ""
   },
-  "sha256": "aa8b57f080b4c5de5b70dfb26b6c8a91ad16ba721d019e0d0f8f81e3274a8796",
+  "sha256": "194111561eaca7b53b4a7039fc14b7e1e3e6ea0ee4de60395b7351080b82462a",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

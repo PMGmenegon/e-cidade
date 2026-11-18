@@ -5,12 +5,16 @@
   },
   "id": "rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"configassentperiodo\"\nLINE 1: select * from \"configassentperiodo\" where \"rh512_instit\" is ...\n                      ^ (SQL: select * from \"configassentperiodo\" where \"rh512_instit\" is null limit 1)"
+    "data": {
+      "config": null,
+      "institDescr": " - "
+    },
+    "error": false,
+    "message": ""
   },
-  "sha256": "1768dedbc117b0f78273d85b50df3d7e25de5bbb4064a74bfb3672803adbb54e",
+  "sha256": "cd98b94af031502be9a9506a08760b7e07ac118c431bc2825e1b15372c3fdf4b",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

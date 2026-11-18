@@ -6,9 +6,9 @@
   "id": "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/nota-lancamento",
   "json": {
     "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.resumo_consulta_lancamento_manual\"\nLINE 1: select * from \"contabilidade\".\"resumo_consulta_lancamento_ma...\n                      ^ (SQL: select * from \"contabilidade\".\"resumo_consulta_lancamento_manual\" order by \"c160_codigo\" asc)"
+    "message": "Trying to get property 'lancamentos' of non-object"
   },
-  "sha256": "5a0aa241817a1f29247765958159b9abb0c259226fab222d68b7637ee4f758a6",
+  "sha256": "4a5e45cb600cca804ebad2751164876ba9d0500964f67f50b74e6f5a60297850",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

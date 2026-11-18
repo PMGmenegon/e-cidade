@@ -5,12 +5,50 @@
   },
   "id": "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar",
   "json": {
-    "error": true,
-    "message": "pg_query(): Query failed: ERRO:  n�o existe a rela��o &quot;tipoordenacaocgf&quot;\nLINE 1: select *   from tipoordenacaocgf \n                        ^"
+    "data": [
+      {
+        "descricao": "Numpre",
+        "sequencial": "1"
+      },
+      {
+        "descricao": "Numpar",
+        "sequencial": "2"
+      },
+      {
+        "descricao": "Receita",
+        "sequencial": "3"
+      },
+      {
+        "descricao": "Data de Vencimento",
+        "sequencial": "4"
+      },
+      {
+        "descricao": "Data de Operação",
+        "sequencial": "5"
+      },
+      {
+        "descricao": "Origem",
+        "sequencial": "6"
+      },
+      {
+        "descricao": "Inicial",
+        "sequencial": "7"
+      },
+      {
+        "descricao": "Data Inicial",
+        "sequencial": "8"
+      },
+      {
+        "descricao": "Processo do Foro",
+        "sequencial": "9"
+      }
+    ],
+    "error": false,
+    "message": ""
   },
-  "sha256": "13ec30763802c7dad6681311d0e6c979ea6fb75b1ba1f4f2cbaabfd17def3db2",
+  "sha256": "b47cdbca9bb60dc3a430b5884dc1ab6c8002f1ae4369afbfecfb4efadb256d6e",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.lotelancamentos\"\nLINE 1: select count(*) as aggregate from \"contabilidade\".\"lotelanca...\n                                          ^ (SQL: select count(*) as aggregate from \"contabilidade\".\"lotelancamentos\" where \"c160_exercicio\" is null and \"c160_instituicao\" is null)"
+    "data": "0000001",
+    "error": false,
+    "message": "Número do próximo Lote"
   },
-  "sha256": "e783d51625f710af48238ddd9aa02236f8b59bddea885a9d76c6e84d3a40dee0",
+  "sha256": "599e801f3324a86d8ab1d1cd893a3ac43999096bf6d62a3132c2a75952b6ca64",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

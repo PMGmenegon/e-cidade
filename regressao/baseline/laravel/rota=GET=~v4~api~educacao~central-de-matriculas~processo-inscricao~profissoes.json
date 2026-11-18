@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.cboocupacao\"\nLINE 1: ...odigo\" as \"codigo\", \"mo304_titulo\" as \"nome\" from \"escola\".\"...\n                                                             ^ (SQL: select \"mo304_codigo\" as \"codigo\", \"mo304_titulo\" as \"nome\" from \"escola\".\"cboocupacao\" order by \"mo304_titulo\" asc)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "57e416c95015eaf4c6e0dc5b2caf4a12b774d01f8a07e81564f50f154c5ae137",
+  "sha256": "7a0dcdac77fff78ca41c7228ad306f78f2afcadf8844048e146e5b1d20d6ad0d",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

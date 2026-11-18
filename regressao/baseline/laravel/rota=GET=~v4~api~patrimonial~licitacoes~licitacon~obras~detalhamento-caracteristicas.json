@@ -6,9 +6,9 @@
   "id": "rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/detalhamento-caracteristicas",
   "json": {
     "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"licitacao.licitaconusuarios\"\nLINE 1: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_in...\n                      ^ (SQL: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_instituicao\" = 1) limit 1)"
+    "message": "No query results for model [App\\Domain\\Patrimonial\\Licitacoes\\Models\\LicitaconUsuario]."
   },
-  "sha256": "a6b4e1ee49888c4cecebc52de5b470844531c7465e6f90faad8de9dc302035fe",
+  "sha256": "75a7422c36d05c2fd5cba6301c2b39c602a80223ec32c288453d788bd272e052",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

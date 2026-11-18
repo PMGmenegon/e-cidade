@@ -5,12 +5,69 @@
   },
   "id": "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.necessidadesubdivisao\"\nLINE 1: select * from \"escola\".\"necessidadesubdivisao\" where \"escola...\n                      ^ (SQL: select * from \"escola\".\"necessidadesubdivisao\" where \"escola\".\"necessidadesubdivisao\".\"ed185_necessidade\" = 101 and \"escola\".\"necessidadesubdivisao\".\"ed185_necessidade\" is not null)"
+    "data": [
+      {
+        "codigo": 101,
+        "nome": "CEGUEIRA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 102,
+        "nome": "BAIXA VISAO",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 103,
+        "nome": "SURDEZ",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 104,
+        "nome": "DEFICIENCIA AUDITIVA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 105,
+        "nome": "SURDOCEGUEIRA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 106,
+        "nome": "DEFICIENCIA FISICA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 108,
+        "nome": "DEFICIENCIA MULTIPLA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 113,
+        "nome": "ALTAS HABILIDADES/SUPERDOTACAO",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 107,
+        "nome": "DEFICIENCIA INTELECTUAL",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 109,
+        "nome": "TRANSTORNO DO ESPECTRO AUTISTA",
+        "subdivisoes": []
+      },
+      {
+        "codigo": 114,
+        "nome": "VISÃO MONOCULAR",
+        "subdivisoes": []
+      }
+    ],
+    "error": false,
+    "message": ""
   },
-  "sha256": "09582ba42f796b2f765734be8b665489abeb5207e12a8d3eb0790bba7c33e0c8",
+  "sha256": "969a879a3942083bcfe09832b7a666601aa2335ad95d3574da3cc3e95b190181",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

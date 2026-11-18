@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"pessoal.ajudacusto\"\nLINE 1: select * from \"pessoal\".\"ajudacusto\" where \"rh312_instit\" = ...\n                      ^ (SQL: select * from \"pessoal\".\"ajudacusto\" where \"rh312_instit\" = 1)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "0f3559130031372c2fa1250237ee572a9f59589d549676ad2cc63088503790e7",
+  "sha256": "d6c16a6f0dba79b2618c249cce0bee5f5ea0556cca798d9e90e8cc455f319a59",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

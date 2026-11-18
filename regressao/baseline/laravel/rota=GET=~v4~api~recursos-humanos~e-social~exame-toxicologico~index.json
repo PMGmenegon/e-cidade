@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"esocial.exametoxicologico\"\nLINE 1: ...lect \"exametoxicologico\".*, \"cgm\".\"z01_nome\" from \"esocial\"....\n                                                             ^ (SQL: select \"exametoxicologico\".*, \"cgm\".\"z01_nome\" from \"esocial\".\"exametoxicologico\" inner join \"rhpessoal\" on \"rh01_regist\" = \"eso41_matricula\" inner join \"protocolo\".\"cgm\" on \"cgm\".\"z01_numcgm\" = \"rhpessoal\".\"rh01_numcgm\" where \"eso41_instit\" = 1)"
+    "data": [],
+    "error": false,
+    "message": "200"
   },
-  "sha256": "3b9d7689c820536ec1669522407e66115fbc17ec41fc951dce648783f3213d5f",
+  "sha256": "3c9a51c2d5d2abf794200037f29f9e109f9d13c39cc401cde66cec6a6430b7cd",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

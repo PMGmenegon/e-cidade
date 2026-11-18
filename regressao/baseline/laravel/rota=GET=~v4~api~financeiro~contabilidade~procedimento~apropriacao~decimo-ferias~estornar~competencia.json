@@ -6,11 +6,11 @@
   "id": "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia",
   "json": {
     "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.apropriacaodecimoferias\"\nLINE 1: select * from \"contabilidade\".\"apropriacaodecimoferias\" wher...\n                      ^ (SQL: select * from \"contabilidade\".\"apropriacaodecimoferias\" where \"c145_instituicao\" = 1 and \"c145_processado\" = 1 order by \"id\" desc limit 1)"
+    "message": "Não existe nenhuma competência de Apropriação de 13ª ou férias processada."
   },
-  "sha256": "8a0e864e56274cd69a91f32d3ee393635471ed70a49750a7d91b7dad7325448a",
+  "sha256": "fb75a84920a2a5f33bab3888e8cca0ecc0e7b177005dedd6b20c6c924a8fa453",
   "sql_negocio": [],
-  "status": 500,
+  "status": 403,
   "tabelas": {},
   "texto": "",
   "tipos": {}

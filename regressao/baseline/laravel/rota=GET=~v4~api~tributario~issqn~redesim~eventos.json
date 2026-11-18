@@ -6,9 +6,9 @@
   "id": "rota:GET:/v4/api/tributario/issqn/redesim/eventos",
   "json": {
     "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"processed_establishments\"\nLINE 1: select * from \"processed_establishments\" where \"q190_process...\n                      ^ (SQL: select * from \"processed_establishments\" where \"q190_process_id\" is null limit 1)"
+    "message": "Estabelecimento não encontrado."
   },
-  "sha256": "6c9d06f7382075f395e59e43f8da36b3044be3a5e5fee4324194fb0970d554be",
+  "sha256": "6ba79218c1317ab3aa7fbbe847ceade67a23d7eef9b4557c83f89475b60e34eb",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -5,12 +5,46 @@
   },
   "id": "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"empenho.naturezarendimento\"\nLINE 1: ...elect distinct e167_codigo::char(2) as grupo from \"empenho\"....\n                                                             ^ (SQL: select distinct e167_codigo::char(2) as grupo from \"empenho\".\"naturezarendimento\" where e167_codigo::char(2) <> '10' order by \"grupo\" asc)"
+    "data": {
+      "grupos": [
+        {
+          "grupo": "11"
+        },
+        {
+          "grupo": "12"
+        },
+        {
+          "grupo": "13"
+        },
+        {
+          "grupo": "14"
+        },
+        {
+          "grupo": "15"
+        },
+        {
+          "grupo": "16"
+        },
+        {
+          "grupo": "17"
+        },
+        {
+          "grupo": "18"
+        },
+        {
+          "grupo": "19"
+        },
+        {
+          "grupo": "20"
+        }
+      ]
+    },
+    "error": false,
+    "message": ""
   },
-  "sha256": "a0d6cacb84579a0de1106c3426ac9034777e28bc555461c64a43370e4c13eed5",
+  "sha256": "974615c6a899fab95f8e04813e108d9d60f1a11dce6339476bcf7d169d1b27fa",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

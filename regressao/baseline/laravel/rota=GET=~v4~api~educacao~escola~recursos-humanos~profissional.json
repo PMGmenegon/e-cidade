@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/educacao/escola/recursos-humanos/profissional",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.profissionais_escolas\"\nLINE 1: select * from \"escola\".\"profissionais_escolas\" where exists ...\n                      ^ (SQL: select * from \"escola\".\"profissionais_escolas\" where exists (select * from \"escola\".\"rechumanoescola\" where \"escola\".\"profissionais_escolas\".\"cod_rechumano_escola\" = \"escola\".\"rechumanoescola\".\"ed75_i_codigo\" and \"ed75_i_saidaescola\" is null) and exists (select * from \"protocolo\".\"cgm\" where \"escola\".\"profissionais_escolas\".\"cod_cgm\" = \"protocolo\".\"cgm\".\"z01_numcgm\" and exists (select * from \"configuracoes\".\"db_usuacgm\" where \"protocolo\".\"cgm\".\"z01_numcgm\" = \"configuracoes\".\"db_usuacgm\".\"cgmlogin\" and exists (select * from \"configuracoes\".\"db_usuarios\" where \"configuracoes\".\"db_usuacgm\".\"id_usuario\" = \"configuracoes\".\"db_usuarios\".\"id_usuario\" and \"usuarioativo\" = 1 and \"usuext\" = 0))) and \"cod_cgm\" = 1 and \"cod_escola\" is null)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "69bb50d469cb8b3dc52b924f05768b59f7f29dbaf06cf15663f75f5843560f98",
+  "sha256": "00608faf6a021e1eeb2c56c79bb41632a6683d1d942472f83987cabe6ed06827",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

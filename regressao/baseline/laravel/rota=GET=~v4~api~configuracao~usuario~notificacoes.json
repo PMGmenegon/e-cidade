@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/configuracao/usuario/notificacoes",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"notifications\"\nLINE 1: select * from \"notifications\" where \"notifications\".\"notifia...\n                      ^ (SQL: select * from \"notifications\" where \"notifications\".\"notifiable_id\" = 1 and \"notifications\".\"notifiable_id\" is not null and \"notifications\".\"notifiable_type\" = App\\Domain\\Configuracao\\Usuario\\Models\\Usuario and \"read_at\" is null order by \"created_at\" desc)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "7e2a0473182393ff8010f42884724aab0e3e6af5a2934d19069d7692570e9015",
+  "sha256": "7ad496e55423e5f5155f378ad4ba12ac4220e6f6f638a1bb20c54e36049893e4",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

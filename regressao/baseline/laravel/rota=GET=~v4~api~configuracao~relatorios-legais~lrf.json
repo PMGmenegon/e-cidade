@@ -15,6 +15,70 @@
         "o42_orcparamrelgrupo": 1
       },
       {
+        "codigo": 276,
+        "descricao": "RGF - ANEXO I - ED 14 Demonstrativo da Despesa com Pessoal - MDF",
+        "o42_codparrel": 276,
+        "o42_descrrel": "RGF - ANEXO I - ED 14 Demonstrativo da Despesa com Pessoal - MDF",
+        "o42_notapadrao": "",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 275,
+        "descricao": "ANEXO III - ED. 14 RECEITA CORRENTE LÍQUIDA - MDF",
+        "o42_codparrel": 275,
+        "o42_descrrel": "ANEXO III - ED. 14 RECEITA CORRENTE LÍQUIDA - MDF",
+        "o42_notapadrao": "Fonte: Sistema E-Cidade, Unidade Responsável [nome_departamento], Data de emissão [data_emissao] e hora de emissão [hora_emissao]",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 274,
+        "descricao": "RGF - ANEXO I - ED 13 Demonstrativo da Despesa com Pessoal - MDF",
+        "o42_codparrel": 274,
+        "o42_descrrel": "RGF - ANEXO I - ED 13 Demonstrativo da Despesa com Pessoal - MDF",
+        "o42_notapadrao": "",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 273,
+        "descricao": "ANEXO XII - ED. 13 - Despesas com saúde",
+        "o42_codparrel": 273,
+        "o42_descrrel": "ANEXO XII - ED. 13 - Despesas com saúde",
+        "o42_notapadrao": "Fonte: Sistema E-Cidade, Unidade Responsável [nome_departamento], Data de emissão [data_emissao] e hora de emissão [hora_emissao].",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 272,
+        "descricao": "ANEXO VIII - ED. 13 - DEM DAS REC E DESP COM MDE",
+        "o42_codparrel": 272,
+        "o42_descrrel": "ANEXO VIII - ED. 13 - DEM DAS REC E DESP COM MDE",
+        "o42_notapadrao": "FONTE: Sistema E-Cidade, Unidade Responsável: [nome_departamento]. Emissão: [data_emissao], às [hora_emissao]. Assinado Digitalmente no dia [data_emissao], às [hora_emissao].",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 271,
+        "descricao": "ANEXO VI - ED.13 - DEMONS. RESULT. PRIMÁRIO E NOMINAL",
+        "o42_codparrel": 271,
+        "o42_descrrel": "ANEXO VI - ED.13 - DEMONS. RESULT. PRIMÁRIO E NOMINAL",
+        "o42_notapadrao": "FONTE: Sistema E-Cidade, Unidade Responsável: [nome_departamento]. Emissão: [data_emissao], às [hora_emissao]. Assinado Digitalmente no dia [data_emissao], às [hora_emissao].",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 270,
+        "descricao": "ANEXO III - ED. 13 RECEITA CORRENTE LÍQUIDA - MDF",
+        "o42_codparrel": 270,
+        "o42_descrrel": "ANEXO III - ED. 13 RECEITA CORRENTE LÍQUIDA - MDF",
+        "o42_notapadrao": "Fonte: Sistema E-Cidade, Unidade Responsável [nome_departamento], Data de emissão [data_emissao] e hora de emissão [hora_emissao]",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
+        "codigo": 269,
+        "descricao": "ANEXO I - ED. 13 - BALANÇO ORÇAMENTÁRIO",
+        "o42_codparrel": 269,
+        "o42_descrrel": "ANEXO I - ED. 13 - BALANÇO ORÇAMENTÁRIO",
+        "o42_notapadrao": "Fonte: Sistema E-Cidade, Unidade Responsável [nome_departamento], Data de emissão [data_emissao] e hora de emissão [hora_emissao]",
+        "o42_orcparamrelgrupo": 1
+      },
+      {
         "codigo": 268,
         "descricao": "Anexo I - ED. 12 - Balanço Orçamentário",
         "o42_codparrel": 268,
@@ -1066,7 +1130,7 @@
     "error": false,
     "message": "Relatórios"
   },
-  "sha256": "2507bceb0eec068045bb7b81b6e7956a241fc2f5d8f019f94efc012d54d4c461",
+  "sha256": "ae578e2c9bf04661c2d288aae1af568a63eb0c86b45a9a9bf64292b507a23968",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

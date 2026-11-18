@@ -5,12 +5,50 @@
   },
   "id": "rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"caixa.tipodesdobramento\"\nLINE 1: select * from \"caixa\".\"tipodesdobramento\"\n                      ^ (SQL: select * from \"caixa\".\"tipodesdobramento\")"
+    "data": [
+      {
+        "codigo": 1,
+        "descricao": "MDE",
+        "percentual": 0,
+        "recursos": []
+      },
+      {
+        "codigo": 2,
+        "descricao": "ASPS",
+        "percentual": 0,
+        "recursos": []
+      },
+      {
+        "codigo": 3,
+        "descricao": "FUNDEB",
+        "percentual": 0,
+        "recursos": []
+      },
+      {
+        "codigo": 4,
+        "descricao": "MDE",
+        "percentual": 0,
+        "recursos": []
+      },
+      {
+        "codigo": 5,
+        "descricao": "ASPS",
+        "percentual": 0,
+        "recursos": []
+      },
+      {
+        "codigo": 6,
+        "descricao": "FUNDEB",
+        "percentual": 0,
+        "recursos": []
+      }
+    ],
+    "error": false,
+    "message": "Tipos de desdobramento"
   },
-  "sha256": "1a2bc1ccd922173b05933fbd0de5f593d4b6caee9d560cc71c9d6113505c9f35",
+  "sha256": "dfb9ff90591ecc5d8be0e47d225efbfa641d98caff85484b5673ceba32e87272",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

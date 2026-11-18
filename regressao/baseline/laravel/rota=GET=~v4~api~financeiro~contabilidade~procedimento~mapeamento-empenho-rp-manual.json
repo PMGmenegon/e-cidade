@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.conplanoexeconciliarp\"\nLINE 1: select * from \"contabilidade\".\"conplanoexeconciliarp\" where ...\n                      ^ (SQL: select * from \"contabilidade\".\"conplanoexeconciliarp\" where \"c162_exercicio\" is null)"
+    "data": [],
+    "error": false,
+    "message": "Valores"
   },
-  "sha256": "3d7a115bf8aed30edb0f4cc4a353c2d481837db13d2e6224fd536321da572762",
+  "sha256": "6d77dd859f06d2aaee6801295cacdecec0e5e20df9cf62704c67557559f6344c",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

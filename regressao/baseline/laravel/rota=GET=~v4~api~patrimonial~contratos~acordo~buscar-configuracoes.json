@@ -5,13 +5,31 @@
   },
   "id": "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42703]: Undefined column: 7 ERRO:  não existe a coluna \"instituicao_id\"\nLINE 1: select * from \"mensageriaacordo\" where (\"instituicao_id\" = $...\n                                                ^ (SQL: select * from \"mensageriaacordo\" where (\"instituicao_id\" = 1) limit 1)"
+    "data": {
+      "ac51_assunto": "Contrato [numero]/[ano] irá vencer",
+      "ac51_mensagem": "O contrato [numero]/[ano] irá vencer em [dias] dias.\n            Vigência: [data_inicial] - [data_final]",
+      "ac51_sequencial": 2,
+      "created_at": "<X>",
+      "dias": [],
+      "instituicao_id": 1,
+      "updated_at": "<X>"
+    },
+    "error": false,
+    "message": ""
   },
-  "sha256": "c422eb3b971e3355950c2d15b03fe030a1e756260fb0917e06355ae57fe2bf8a",
-  "sql_negocio": [],
-  "status": 500,
+  "sha256": "8aba837145ebdea91ac333641cb29411ef3b5d69d50e7a7fc20c2e878fe7d745",
+  "sql_negocio": [
+    "insert into \"mensageriaacordo\" (\"instituicao_id\", \"ac51_assunto\", \"ac51_mensagem\", \"updated_at\", \"created_at\") values ($1, $2, $3, $4, $5) returning \"ac51_sequencial\" parameters: $1 = '1', $2 = 'Contrato [numero]/[ano] ir� vencer', $3 = 'O contrato [numero]/[ano] ir� vencer em [dias] dias."
+  ],
+  "status": 200,
   "tabelas": {},
   "texto": "",
-  "tipos": {}
+  "tipos": {
+    "data.created_at": [
+      "str"
+    ],
+    "data.updated_at": [
+      "str"
+    ]
+  }
 }

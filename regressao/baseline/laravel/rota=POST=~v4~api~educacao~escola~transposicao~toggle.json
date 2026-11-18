@@ -6,9 +6,9 @@
   "id": "rota:POST:/v4/api/educacao/escola/transposicao/toggle",
   "json": {
     "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.transposicao\"\nLINE 1: select * from \"escola\".\"transposicao\" where \"escola\".\"transp...\n                      ^ (SQL: select * from \"escola\".\"transposicao\" where \"escola\".\"transposicao\".\"ed353_codigo\" is null limit 1)"
+    "message": "Trying to get property 'ed353_ativa' of non-object"
   },
-  "sha256": "d4635eb50932e3a3206e3567cadbce02e86f4fee36c4d5ccaf638ee57fcef5da",
+  "sha256": "3c229b3b9c795c8ed2a60a60134df020eee2a72878282eab290af6aeda66485f",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

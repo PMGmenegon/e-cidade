@@ -5,12 +5,13 @@
   },
   "id": "rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"compraspncp\"\nLINE 1: select * from \"compraspncp\" inner join \"unidadespncp\" on \"pn...\n                      ^ (SQL: select * from \"compraspncp\" inner join \"unidadespncp\" on \"pn02_unidade\" = \"pn03_unidade\" left join \"liclicita\" on \"l20_codigo\" = \"pn03_liclicita\" left join \"cflicita\" on \"l20_codtipocom\" = \"l03_codigo\" left join \"licsituacao\" on \"l08_sequencial\" = \"l20_licsituacao\" where \"pn03_instituicao\" = 1)"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "fb93a07cc2a3bed38c44ff80f67e4ca3e6ee0528b2140fe8a489c6b2f8041b90",
+  "sha256": "ed8425307052b04c6998e83278bc83b2dc6799da4851bbd456e4bc0e770a1407",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

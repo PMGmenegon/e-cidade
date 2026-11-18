@@ -6,9 +6,9 @@
   "id": "rota:POST:/v4/api/saude/farmacia/procedimento/bnafar/salvar-movimentacao",
   "json": {
     "error": true,
-    "message": "pg_query(): Query failed: ERRO:  n�o existe a coluna &quot;fa02_utiliza_bnafar&quot;\nLINE 1: select fa02_utiliza_bnafar   from far_parametros \n               ^"
+    "message": "Parâmetro BNAFAR não está ativo."
   },
-  "sha256": "84c5b822beda08fea6d41059e59b17c31e2f06b590b5024fb91e5075f1f756ef",
+  "sha256": "6142302834c315da6be54d815076d01c866f699c250f9f5b4e63e64c33f99841",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

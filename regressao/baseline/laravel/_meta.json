@@ -1,8 +1,8 @@
 {
   "alvo": "ref",
-  "commit": "462ca387c",
-  "data": "2026-11-18T02:12:33-03:00",
-  "dump_sha256": "15cd994a5326b3ec25c523f49f9ebe52f65e19d3ee3e58d715d625b2a10a444d",
+  "commit": "9889fbaef",
+  "data": "2026-11-18T05:57:22-03:00",
+  "dump_sha256": "972515745567622ce8394d91e63c481a50d3500104c115c170ba95544b8b0fad",
   "ids": [
     "auth-token-valido",
     "auth-client-secret-errado",
@@ -127,7 +127,6 @@
     "rota:POST:/v4/api/educacao/escola/etapas/etapas-intervalo",
     "rota:POST:/v4/api/educacao/escola/notas-parciais/periodo",
     "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao",
-    "rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao",
     "rota:POST:/v4/api/educacao/escola/procedimento/troca-de-turma",
     "rota:GET:/v4/api/educacao/escola/profissionais-geral",
     "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao",
@@ -152,7 +151,6 @@
     "rota:GET:/v4/api/educacao/escola/tiposAtendimentos",
     "rota:POST:/v4/api/educacao/escola/transposicao/aluno-designado",
     "rota:POST:/v4/api/educacao/escola/transposicao/buscar-candidatos",
-    "rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao",
     "rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados",
     "rota:POST:/v4/api/educacao/escola/transposicao/relatorio",
     "rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos",
@@ -282,7 +280,6 @@
     "rota:POST:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores",
     "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia",
     "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia",
-    "rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial",
     "rota:GET:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/virada-rp",
     "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/atualizarComplemento",
     "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/despesa/lancamentos",
@@ -598,7 +595,6 @@
     "rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index",
     "rota:POST:/v4/api/recursos-humanos/e-social/exame-toxicologico/store",
     "rota:GET:/v4/api/recursos-humanos/e-social/index",
-    "rota:POST:/v4/api/recursos-humanos/e-social/store",
     "rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/config-salvar",
     "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
     "rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
@@ -1001,5 +997,11 @@
     "rota:GET:/api/v1/protocolo/cgm",
     "rota:POST:/api/v1/tributario/recibo"
   ],
-  "n_casos": 996
+  "n_casos": 992,
+  "novos_gravados": [
+    "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes",
+    "rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos"
+  ],
+  "novos_gravados_no_commit": "d05818582",
+  "removidos_no_commit": "d05818582"
 }

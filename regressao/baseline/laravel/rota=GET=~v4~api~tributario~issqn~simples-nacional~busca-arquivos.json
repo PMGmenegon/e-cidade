@@ -5,12 +5,13 @@
   },
   "id": "rota:GET:/v4/api/tributario/issqn/simples-nacional/busca-arquivos",
   "json": {
-    "error": true,
-    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"arqsimples\"\nLINE 1: select * from \"arqsimples\"\n                      ^ (SQL: select * from \"arqsimples\")"
+    "data": [],
+    "error": false,
+    "message": ""
   },
-  "sha256": "da8a4293073dbf4472fd3289d7fcf2a44e2f283c138ce86026648d915192e7c3",
+  "sha256": "7e47582d5a7c58153417b11014a8d41ae9886ad770472342d4ee337971bde801",
   "sql_negocio": [],
-  "status": 500,
+  "status": 200,
   "tabelas": {},
   "texto": "",
   "tipos": {}

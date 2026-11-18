@@ -4,15 +4,15 @@ Rotas no inventario: **1434**.
 
 | origem | total | cobertas | nao cobertas |
 |---|---:|---:|---:|
-| laravel | 1423 | 968 | 455 |
+| laravel | 1423 | 964 | 459 |
 | rest | 4 | 0 | 4 |
 | silex | 7 | 5 | 2 |
 
 ## Resposta da referencia (Laravel 8) nas rotas cobertas
 
-2xx: 199  3xx: 0  4xx: 450  5xx: 324  sem baseline: 0
+2xx: 250  3xx: 0  4xx: 452  5xx: 267  sem baseline: 0
 
-**5xx na referencia: 324.** Rota quebrada ou que precisa de dados em dev; o caso e IDENTICO nos dois lados mas termina INCONCLUSIVO (500 x 500): a rota nao foi exercitada, so o seu roteamento/erro. Lista:
+**5xx na referencia: 267.** Rota quebrada ou que precisa de dados em dev; o caso e IDENTICO nos dois lados mas termina INCONCLUSIVO (500 x 500): a rota nao foi exercitada, so o seu roteamento/erro. Lista:
 
 - `rota:POST:/v4/api/configuracao/assinantes`
 - `rota:GET:/v4/api/configuracao/bancos`
@@ -26,20 +26,15 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/configuracao/jobs`
 - `rota:GET:/v4/api/configuracao/jobs/create`
 - `rota:POST:/v4/api/configuracao/jobs/failed`
-- `rota:GET:/v4/api/configuracao/menu/buscar-favoritos`
 - `rota:POST:/v4/api/configuracao/organograma/filtrar`
 - `rota:POST:/v4/api/configuracao/relatorios-legais/upload/template`
 - `rota:GET:/v4/api/configuracao/usuario/assinantes`
-- `rota:GET:/v4/api/configuracao/usuario/notificacoes`
 - `rota:POST:/v4/api/dbpref/dbpref-pix/validar`
-- `rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao`
-- `rota:GET:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares`
 - `rota:POST:/v4/api/educacao/censo/tabelas-censo/unidades-curriculares/salvar`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/campos-opcionais`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/configuracoes-gerais`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/cores`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/documentos`
-- `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/imagens`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/mensagens`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/noticias`
@@ -49,14 +44,9 @@ Rotas no inventario: **1434**.
 - `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-origem`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/escolas-por-bairro`
 - `rota:POST:/v4/api/educacao/central-de-matriculas/processo-inscricao/inscricao`
-- `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais`
-- `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/profissoes`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/redes-origem`
-- `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar`
 - `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/tem-fase-abeta`
-- `rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas`
 - `rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/atualizar`
-- `rota:GET:/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos`
 - `rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/edita-recursos`
 - `rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/salva-recursos`
 - `rota:POST:/v4/api/educacao/escola/alunoAtendimentosEspecial/save`
@@ -73,11 +63,8 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/educacao/escola/diario-classe/registro-aula/update-conteudos-lote`
 - `rota:POST:/v4/api/educacao/escola/etapas/etapas-intervalo`
 - `rota:POST:/v4/api/educacao/escola/notas-parciais/periodo`
-- `rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao`
-- `rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao`
 - `rota:GET:/v4/api/educacao/escola/profissionais-geral`
 - `rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao`
-- `rota:GET:/v4/api/educacao/escola/recursos-humanos/profissional`
 - `rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao`
 - `rota:POST:/v4/api/educacao/escola/regencia/adicionar-avaliacoes-periodo`
 - `rota:POST:/v4/api/educacao/escola/regencia/avaliacoes-periodo`
@@ -89,10 +76,8 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/educacao/escola/resultado-parcial/reabrir-todos`
 - `rota:POST:/v4/api/educacao/escola/tipoausencia/ausencia`
 - `rota:POST:/v4/api/educacao/escola/transposicao/aluno-designado`
-- `rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao`
 - `rota:POST:/v4/api/educacao/escola/transposicao/matriculas-designados`
 - `rota:POST:/v4/api/educacao/escola/transposicao/relatorio`
-- `rota:POST:/v4/api/educacao/escola/transposicao/relatorio-inscritos`
 - `rota:POST:/v4/api/educacao/escola/transposicao/salvar-candidatos`
 - `rota:POST:/v4/api/educacao/escola/transposicao/salvar-criterios-ordenacao`
 - `rota:POST:/v4/api/educacao/escola/transposicao/toggle`
@@ -101,15 +86,12 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/educacao/escola/turmas/usuario`
 - `rota:GET:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/getParametros`
 - `rota:POST:/v4/api/educacao/matricula-online/configuracoes/parametros-notificacoes/salvar`
-- `rota:GET:/v4/api/educacao/secretaria/bloqueio-notas/listagem-excecoes`
 - `rota:POST:/v4/api/educacao/secretaria/cursos/salvar`
-- `rota:GET:/v4/api/educacao/secretaria/parametros/bloqueio-notas/buscar`
 - `rota:POST:/v4/api/educacao/secretaria/parametros/bloqueio-notas/salvar`
 - `rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes`
 - `rota:POST:/v4/api/educacao/secretaria/relatorios/alunos/alunos-estrangeiros`
 - `rota:POST:/v4/api/educacao/secretaria/relatorios/funcionarios-ativos-escola`
 - `rota:GET:/v4/api/educacao/secretaria/relatorios/funcoes-atividades`
-- `rota:GET:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos`
 - `rota:POST:/v4/api/educacao/secretaria/tipos-insturmentos-avaliativos/salvar`
 - `rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos`
 - `rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info`
@@ -126,10 +108,8 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/estoque-patrimonio`
 - `rota:POST:/v4/api/financeiro/contabilidade/fix/lancamento/recurso-empenho`
 - `rota:GET:/v4/api/financeiro/contabilidade/historico`
-- `rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual`
 - `rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual`
 - `rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/nota-lancamento`
-- `rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/proximo-lote`
 - `rota:POST:/v4/api/financeiro/contabilidade/lancamento-manual/retificar`
 - `rota:POST:/v4/api/financeiro/contabilidade/msc/emitir`
 - `rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade`
@@ -145,11 +125,6 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra`
 - `rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas`
 - `rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular`
-- `rota:POST:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/buscarValores`
-- `rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/competencia`
-- `rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia`
-- `rota:POST:/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial`
-- `rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual`
 - `rota:POST:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual`
 - `rota:POST:/v4/api/financeiro/contabilidade/relatorio-legal/emissao/publicar`
 - `rota:GET:/v4/api/financeiro/contabilidade/relatorio-legal/emissoes`
@@ -157,10 +132,7 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-plano-padrao`
 - `rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento`
 - `auth-sem-token`
-- `rota:GET:/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora`
 - `rota:GET:/v4/api/financeiro/empenho/empenhos/dialog-pesquisa`
-- `rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos`
-- `rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/naturezas`
 - `rota:POST:/v4/api/financeiro/empenho/relatorio/relatorio-subcontratacao`
 - `rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf`
 - `rota:GET:/v4/api/financeiro/orcamento/buscar-filtros-dotacoes`
@@ -197,16 +169,13 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico`
 - `rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso`
 - `rota:POST:/v4/api/financeiro/tesouraria/decendio/gerar-slips`
-- `rota:GET:/v4/api/financeiro/tesouraria/decendio/receitas`
 - `rota:POST:/v4/api/financeiro/tesouraria/decendio/relatorio`
-- `rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento`
 - `rota:POST:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento`
 - `rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria`
 - `rota:POST:/v4/api/financeiro/tesouraria/slip/cobertura-recurso-extra/gerar`
 - `rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save`
 - `rota:GET:/v4/api/integracoes/efd-reinf/retencao/get-retencoes`
 - `rota:POST:/v4/api/integracoes/efd-reinf/retencao/save-retencao`
-- `rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes`
 - `rota:POST:/v4/api/patrimonial/contratos/enviar-evento-automatico`
 - `rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados`
 - `rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/detalhamento-caracteristicas`
@@ -217,7 +186,6 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/patrimonial/pncp/ataRegistroPreco/retificar`
 - `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscar-documentos`
 - `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarAmparosLegais`
-- `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarCompras`
 - `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarEditais`
 - `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarLicitacao`
 - `rota:POST:/v4/api/patrimonial/pncp/compraEditalAviso/buscarModoDisputa`
@@ -259,19 +227,8 @@ Rotas no inventario: **1434**.
 - `rota:GET:/v4/api/patrimonial/protocolo/processo/search`
 - `rota:POST:/v4/api/patrimonial/protocolo/processo/vincularDespachoMensagem`
 - `rota:POST:/v4/api/patrimonial/protocolo/salvar-cgm`
-- `rota:GET:/v4/api/recursos-humanos/e-social/exame-toxicologico/index`
-- `rota:GET:/v4/api/recursos-humanos/e-social/index`
-- `rota:POST:/v4/api/recursos-humanos/e-social/store`
-- `rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento`
 - `rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento/create`
 - `rota:POST:/v4/api/recursos-humanos/pessoal/ajudacusto/relatorio`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos`
-- `rota:GET:/v4/api/recursos-humanos/pessoal/contra-cheques/liberacaoonline/getConfig`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showAssentamentos`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showCargos`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showLocais`
-- `rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showRubricaAbatimento`
 - `rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao`
 - `rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/show`
 - `rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update`
@@ -290,13 +247,10 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent`
 - `rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao`
 - `rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/stopsprocessamento`
-- `rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig`
 - `rota:POST:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/saveConfig`
 - `rota:GET:/v4/api/saude/ambulatorial/consulta/especialidadeprofissionais/ativas`
 - `rota:GET:/v4/api/saude/ambulatorial/consulta/setoresambulatoriais`
 - `rota:POST:/v4/api/saude/ambulatorial/consulta/statuspaciente`
-- `rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras`
-- `rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem`
 - `rota:GET:/v4/api/saude/ambulatorial/parametros`
 - `rota:POST:/v4/api/saude/ambulatorial/procedimento/unificacao-cgs/listar-unificacoes`
 - `rota:POST:/v4/api/saude/farmacia/consulta/bnafar/inconsistencias`
@@ -304,30 +258,19 @@ Rotas no inventario: **1434**.
 - `rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar`
 - `rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/buscar-requisicoes`
 - `rota:POST:/v4/api/saude/laboratorio/triagem-laboratorial/exportar-pendencias`
-- `rota:POST:/v4/api/tributario/arrecadacao/grupotaxas/buscar`
-- `rota:GET:/v4/api/tributario/arrecadacao/grupotaxas/rotulos`
 - `rota:POST:/v4/api/tributario/arrecadacao/pix/gerar`
-- `rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar`
-- `rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos`
 - `rota:GET:/v4/api/tributario/cadastro/buscar-condominios`
 - `rota:GET:/v4/api/tributario/cadastro/buscar-logradouro`
 - `rota:GET:/v4/api/tributario/cadastro/buscar-loteamento`
-- `rota:POST:/v4/api/tributario/cadastro/get-macrozonas`
-- `rota:POST:/v4/api/tributario/cadastro/get-zonas`
-- `rota:POST:/v4/api/tributario/cadastro/next-id-macrozona`
-- `rota:POST:/v4/api/tributario/cadastro/next-id-zona`
-- `rota:GET:/v4/api/tributario/cemiterio/parametros/busca-parametros`
 - `rota:POST:/v4/api/tributario/divida-ativa/lancamento-historico/dividas`
 - `rota:POST:/v4/api/tributario/issqn/buscar-historico-inscricoes`
 - `rota:POST:/v4/api/tributario/issqn/buscar-iscr-salao-parceiro`
 - `rota:GET:/v4/api/tributario/issqn/buscar-setor-fiscal`
-- `rota:POST:/v4/api/tributario/issqn/get-inscr-dialog`
 - `rota:GET:/v4/api/tributario/issqn/redesim/dados-estabelecimento`
 - `rota:POST:/v4/api/tributario/issqn/redesim/enviar-resposta`
 - `rota:GET:/v4/api/tributario/issqn/redesim/eventos`
 - `rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao`
 - `rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes`
-- `rota:GET:/v4/api/tributario/issqn/simples-nacional/busca-arquivos`
 - `rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo`
 - `rota:GET:/v4/oauth/authorize`
 - `rota:POST:/v4/oauth/authorize`
@@ -341,7 +284,7 @@ Rotas no inventario: **1434**.
 
 ## Por caso (explica a diferenca rotas x casos)
 
-Casos carregados: 996; com 5xx na referencia: 333 = 329 que terminam INCONCLUSIVO (500 x 500, nao exercitados) + 4 de rejeicao esperada (`espera_status`: IDENTICO, comportamento documentado da referencia).
+Casos carregados: 992; com 5xx na referencia: 276 = 272 que terminam INCONCLUSIVO (500 x 500, nao exercitados) + 4 de rejeicao esperada (`espera_status`: IDENTICO, comportamento documentado da referencia).
 
 - rejeicao esperada: `auth-sem-token`
 - rejeicao esperada: `auth-token-invalido`
@@ -561,7 +504,7 @@ Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH
 - parametro de caminho {vacina}: 1
 - parametro de caminho {viagem}: 3
 - parametro de caminho {visto}: 1
-- rota perigosa: 156
+- rota perigosa: 160
 
 | origem | metodo | uri | motivo |
 |---|---|---|---|
@@ -662,6 +605,7 @@ Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH
 | laravel | GET|HEAD | `/v4/api/educacao/escola/ocupacao-limpar/{aluno}/{column}` | parametro de caminho {aluno}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/ocupacao/{aluno}` | parametro de caminho {aluno}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/ocupacao/{aluno}/{column}/{value}` | parametro de caminho {aluno}: nao se envia id real |
+| laravel | POST | `/v4/api/educacao/escola/ocupacoes/ocupacao` | rota perigosa (provada ao vivo): INSERT em escola.cboocupacao com titulo NULL e corpo vazio (500, banco v2) |
 | laravel | POST | `/v4/api/educacao/escola/ocupacoes/ocupacao/{item}` | parametro de caminho {item}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/ocupacoes/{codigo}` | parametro de caminho {codigo}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/ocupacoes/{ocupacao}/deletar` | parametro de caminho {ocupacao}: nao se envia id real |
@@ -686,6 +630,7 @@ Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH
 | laravel | GET|HEAD | `/v4/api/educacao/escola/tipoausencia/{codigo}` | parametro de caminho {codigo}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/tipoausencia/{codigo}/deletar` | parametro de caminho {codigo}: nao se envia id real |
 | laravel | POST | `/v4/api/educacao/escola/transposicao/cancelar-designacao` | rota perigosa (cancel): nao e sondada |
+| laravel | POST | `/v4/api/educacao/escola/transposicao/criterios-ordenacao` | rota perigosa (provada ao vivo): INSERT em escola.criteriostransposicaoordenacao com corpo vazio (500, banco v2) |
 | laravel | POST | `/v4/api/educacao/escola/transposicao/processar` | rota perigosa (processar): nao e sondada |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/turma/{codigo}` | parametro de caminho {codigo}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/educacao/escola/turma/{codigo}/disciplinas` | parametro de caminho {codigo}: nao se envia id real |
@@ -768,6 +713,7 @@ Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH
 | laravel | POST | `/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/apropriar/processar` | rota perigosa (processar): nao e sondada |
 | laravel | POST | `/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/processar` | rota perigosa (estorn): nao e sondada |
 | laravel | GET|HEAD | `/v4/api/financeiro/contabilidade/procedimento/encerramento-periodo-contabil/{instituicao}` | parametro de caminho {instituicao}: nao se envia id real |
+| laravel | POST | `/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/implantar-saldo-inicial` | rota perigosa (provada ao vivo): DELETE em contabilidade.conplanoexecontacorrente da instituicao 1 com corpo vazio (200, banco v2) |
 | laravel | POST | `/v4/api/financeiro/contabilidade/procedimento/escrituracao-contabil/virada-rp` | rota perigosa (provada ao vivo): INSERT em configuracoes.db_virada e DELETE em empenho.empresto com corpo vazio (500, Laravel 8) |
 | laravel | DELETE | `/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-conta` | metodo destrutivo sem allowlist: DELETE/PUT/PATCH nao sao sondados |
 | laravel | DELETE | `/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-conta/empenhos` | metodo destrutivo sem allowlist: DELETE/PUT/PATCH nao sao sondados |
@@ -891,6 +837,7 @@ Notas: rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH
 | laravel | GET|HEAD | `/v4/api/patrimonial/protocolo/processo/{tipo_processo}/andamento-padrao/campos-dinamicos` | parametro de caminho {tipo_processo}: nao se envia id real |
 | laravel | POST | `/v4/api/patrimonial/protocolo/processo/{tipo_processo}/andamento-padrao/campos-dinamicos/{ordem}` | parametro de caminho {tipo_processo}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/recursos-humanos/e-social/index/{periodo}/{empregador}` | parametro de caminho {periodo}: nao se envia id real |
+| laravel | POST | `/v4/api/recursos-humanos/e-social/store` | rota perigosa (provada ao vivo): INSERT em recursoshumanos.informacoes_complementares com corpo vazio (500, banco v2) |
 | laravel | GET|HEAD | `/v4/api/recursos-humanos/pessoal/ajudacusto/config-buscar/{instituicao}` | parametro de caminho {instituicao}: nao se envia id real |
 | laravel | DELETE | `/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento/{lancamento}` | parametro de caminho {lancamento}: nao se envia id real |
 | laravel | GET|HEAD | `/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento/{lancamento}` | parametro de caminho {lancamento}: nao se envia id real |
