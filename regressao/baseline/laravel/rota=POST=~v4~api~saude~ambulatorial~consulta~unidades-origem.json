@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-origem",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"ambulatorial.unidadesorigem\"\nLINE 1: ...ao\" as \"descricao\", \"sd113_ativo\" as \"ativo\" from \"ambulator...\n                                                             ^ (SQL: select \"sd113_sequencial\" as \"codigo\", \"sd113_descricao\" as \"descricao\", \"sd113_ativo\" as \"ativo\" from \"ambulatorial\".\"unidadesorigem\" order by \"sd113_sequencial\" desc)"
+  },
+  "sha256": "3070da86918e3193c2a06d4962a97a46d3e5f18fbfd57cd9afa667dcbc72db6c",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

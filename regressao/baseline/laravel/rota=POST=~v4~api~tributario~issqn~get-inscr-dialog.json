@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/issqn/get-inscr-dialog",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"issqn.issbasesalaoparceiro\"\nLINE 1: ...\"q177_issbase\" = \"issbase\".\"q02_inscr\" inner join \"issqn\".\"i...\n                                                             ^ (SQL: select count(*) as aggregate from \"issbase\" inner join \"cgm\" on \"cgm\".\"z01_numcgm\" = \"issbase\".\"q02_numcgm\" left join \"issveiculo\" on \"issveiculo\".\"q172_issbase\" = \"issbase\".\"q02_inscr\" left join \"isssetorfiscal\" on \"isssetorfiscal\".\"q177_issbase\" = \"issbase\".\"q02_inscr\" inner join \"issqn\".\"issbasesalaoparceiro\" on \"issbasesalaoparceiro\".\"q202_inscr\" = \"issbase\".\"q02_inscr\" where  1 = 1)"
+  },
+  "sha256": "fb5452fde41148fc3c73e54f0135913af21d09fc82e9759d36be6b48fbc7b24f",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

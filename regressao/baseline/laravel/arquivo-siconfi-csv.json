@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "arquivo-siconfi-csv",
@@ -12,7 +12,7 @@
     "error": false,
     "message": "Lista de Recursos"
   },
-  "sha256": "9299f558ea5a3c9f018cc423c2051553e0598fb2b3794d7ff0d77aa635f9b3ab",
+  "sha256": "05e1249652a6ab427aa9b7fc1240ff313eb2308259b851c3ef15164991252cc3",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

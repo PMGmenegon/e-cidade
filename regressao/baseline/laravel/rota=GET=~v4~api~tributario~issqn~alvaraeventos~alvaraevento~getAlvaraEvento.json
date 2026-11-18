@@ -1,15 +1,18 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/issqn/alvaraeventos/alvaraevento/getAlvaraEvento",
   "json": {
-    "q170_codigo": [
-      "O campo q170 codigo é obrigatório."
-    ]
+    "errors": {
+      "q170_codigo": [
+        "O campo q170 codigo é obrigatório."
+      ]
+    },
+    "message": "The given data was invalid."
   },
-  "sha256": "45e8e3cbac6114851f147af10d79584dacd7eb049cc1ef2c89a021b8df2ce5ec",
+  "sha256": "238194a31d67c99c9367ed93bbc5c86fce5c51c08f7c08bfa5ffbf86ef635abd",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

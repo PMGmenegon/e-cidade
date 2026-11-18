@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/recursos-humanos/pessoal/ajudacusto/lancamento",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"pessoal.ajudacusto\"\nLINE 1: select * from \"pessoal\".\"ajudacusto\" where \"rh312_instit\" = ...\n                      ^ (SQL: select * from \"pessoal\".\"ajudacusto\" where \"rh312_instit\" = 1)"
+  },
+  "sha256": "0f3559130031372c2fa1250237ee572a9f59589d549676ad2cc63088503790e7",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

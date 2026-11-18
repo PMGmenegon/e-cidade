@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/client/auth/usuario",
@@ -9,7 +9,7 @@
     "error": true,
     "message": "Usuário não encontrado na base do e-cidade."
   },
-  "sha256": "5e51a3100a265b43bb46eef9e82a7946efbd0af236fd8b932a4b21c912f6f873",
+  "sha256": "9bb5411a8ab1ed7c5c05d0e9c2f33b5993a55f2e5969ea9d439c70664a27d882",
   "sql_negocio": [],
   "status": 401,
   "tabelas": {},

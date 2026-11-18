@@ -1,15 +1,18 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/itbi/autenticacao",
   "json": {
-    "numeroGuia": [
-      "O campo numero guia é obrigatório."
-    ]
+    "errors": {
+      "numeroGuia": [
+        "O campo numero guia é obrigatório."
+      ]
+    },
+    "message": "The given data was invalid."
   },
-  "sha256": "d7d9dd71bb37ba1a89d1dddcefa43e98b6337558f3c29ece66303db79cd459e1",
+  "sha256": "590480ff2c615cf6d92880b35b4bcba1729092f1ffb727962ebd4e9f72209e06",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

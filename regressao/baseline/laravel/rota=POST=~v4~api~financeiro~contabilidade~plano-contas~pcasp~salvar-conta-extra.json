@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/PcaspService.php",
-    "line": 187,
-    "message": "Undefined index: DB_instit"
+    "message": "Undefined index: estrutural"
   },
-  "sha256": "dab3dac42cd523fdc83144d906451eb7f2bab8f52747376643a7972f65b7bc7c",
+  "sha256": "0e3aee73e1dbcf07cc85b148b7d5f7e9e6535d0242521880c9a112fede498099",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

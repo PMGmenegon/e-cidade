@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/issqn/veiculos/condutorauxiliar",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "b59a485f1f6fa54a4e856a0ce97ea67253501bb68fa7a88bd31e035b45f63ec6",
+  "sha256": "62ea4563763c741764411ecc9b95c8c6795863ed547c435c54e395ef7a8b5141",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

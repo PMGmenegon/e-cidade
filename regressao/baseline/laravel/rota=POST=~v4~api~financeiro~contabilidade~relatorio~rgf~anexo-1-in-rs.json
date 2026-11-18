@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-in-rs",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo d b anousu é obrigatório."
-      ],
+    "errors": {
       "codigo_relatorio": [
         "O campo codigo relatorio é obrigatório."
       ],
@@ -19,12 +16,11 @@
         "O campo periodo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo codigo relatorio é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "963b541c1fe6418290c899a9e1b214f202947c1ac24c757e48d59989fab42cbd",
+  "sha256": "212c7c6fbf6952df70b7a4f93ec57f0fe98ee6c1f81809943e38698c00df9281",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

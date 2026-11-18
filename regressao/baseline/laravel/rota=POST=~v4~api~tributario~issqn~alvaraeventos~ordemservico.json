@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/issqn/alvaraeventos/ordemservico",
   "json": {
-    "data": {
+    "errors": {
       "q168_cgm": [
         "CGM ou Inscrição devem ser informados!"
       ],
@@ -43,12 +43,11 @@
         "Processo ou Processo Externo devem ser informados!"
       ]
     },
-    "error": true,
-    "message": "Processo ou Processo Externo devem ser informados!"
+    "message": "The given data was invalid."
   },
-  "sha256": "84ed18b89a8948de4c26cb09fc12644464c99b32bd29d42395b4d397d6cbcf8f",
+  "sha256": "be690c97d660ee64fa308fce9e1a3104794e8f3aa7b02a22c9cb69ee296057ff",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/atualizarComplemento",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "Deve ser informado o ano que esta trabalhando."
-      ],
+    "errors": {
       "itens": [
         "Deve ser informado os empenhos/lançamentos em um array de itens."
       ],
@@ -16,12 +13,11 @@
         "Deve ser informado a origem dos dados. Despesa ou Receita."
       ]
     },
-    "error": true,
-    "message": "Deve ser informado a origem dos dados. Despesa ou Receita."
+    "message": "The given data was invalid."
   },
-  "sha256": "87b8a93e655c94b98a603ced414a56b03b12c406428e36632ea7e1e699174721",
+  "sha256": "7b58cd24e4c4836d13575f1f0f42d34374b1cd6a6cec0c82eea10c9369509603",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

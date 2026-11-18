@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/despesa/detalhamento/salvar",
   "json": {
-    "data": {
+    "errors": {
       "pl20_anoorcamento": [
         "O campo \"Exercício do Orçamento\" deve ser informado."
       ],
@@ -46,12 +46,11 @@
         "Deve ser informado uma coleção de valores."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código da Instituição\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "fe4b0252ce1fe0fced9fcea466621f48179e71cc85abd3292160615283a4676d",
+  "sha256": "baa6ea0802767828b750f9f8d497e5c9c2b7fb0e26a28b3e1cd91ebca4d2d2cf",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

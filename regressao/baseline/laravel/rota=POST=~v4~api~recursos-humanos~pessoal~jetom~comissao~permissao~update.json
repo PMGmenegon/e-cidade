@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao/update",
   "json": {
-    "data": {
+    "errors": {
       "comissao": [
         "Comissão não informada para o cadastro da comissão."
       ],
@@ -16,12 +16,11 @@
         "É necessário informar a Matricula da comissão."
       ]
     },
-    "error": true,
-    "message": "Código da Permissão não informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "09aa4b88fcf8fc44382812922a148424c37b68d90097f621a804485d91d204b4",
+  "sha256": "1b3eada5cd9be455c60e9e3144fd013d7ffe5c8f895a11d166080913dc1393c0",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

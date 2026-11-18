@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/cadastro/get-zonas",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"zonasdesenvolvimento\"\nLINE 1: select count(*) as aggregate from \"zonasdesenvolvimento\" as ...\n                                          ^ (SQL: select count(*) as aggregate from \"zonasdesenvolvimento\" as \"z\" inner join \"macrozonas\" as \"m\" on \"m\".\"j224_sequencial\" = \"z\".\"j224_sequencial\" where  1 = 1)"
+  },
+  "sha256": "b52eb4921599310b21b1c51481e1533c457a4268711b7030a0e41d6c1290c7c5",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

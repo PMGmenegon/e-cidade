@@ -1,33 +1,32 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/despesa/lancamentos",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo d b anousu é obrigatório."
-      ],
+    "errors": {
       "dataFinal": [
         "Data Final é obrigatório quando não informado empenho."
       ],
       "dataInicio": [
         "Data Inicial é obrigatória quando não informado empenho."
       ],
+      "gestao": [
+        "A Fonte de Gestão é obrigatório quando não informado o empenho."
+      ],
       "idEmpenho": [
         "O código do empenho deve ser preenchido se não informado o recurso."
       ],
-      "recurso": [
-        "O recurso é obrigatório quando não informado o empenho."
+      "subrecurso": [
+        "O subrecurso é obrigatório quando não informado o empenho."
       ]
     },
-    "error": true,
-    "message": "O recurso é obrigatório quando não informado o empenho."
+    "message": "The given data was invalid."
   },
-  "sha256": "c355df79a7a29fbed5d1f7fdb9c715400d103fa77eb81a213c80ac8773ecdfdf",
+  "sha256": "1f132039b9550f58911e6ed369e5a001dcf1a629fc19f8f981d14622bb8c36ef",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

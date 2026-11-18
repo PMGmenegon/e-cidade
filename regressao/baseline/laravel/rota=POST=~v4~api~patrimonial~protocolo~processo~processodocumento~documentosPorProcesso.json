@@ -1,21 +1,20 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/patrimonial/protocolo/processo/processodocumento/documentosPorProcesso",
   "json": {
-    "data": {
+    "errors": {
       "codigoProcesso": [
         "CÃ³digo do processo nÃ£o informado."
       ]
     },
-    "error": true,
-    "message": "CÃ³digo do processo nÃ£o informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "b311ba3e60a36a9dedee574854b1fd312e8cd1ba784fd3f0e39a55de4af0bbdd",
+  "sha256": "7a0394fd23e47da81b47a2ea532cd0290d7398a3fd2cb6133ad1963b7787e2d5",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

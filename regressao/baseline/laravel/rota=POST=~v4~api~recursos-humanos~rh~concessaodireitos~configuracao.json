@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Controllers/AssentConfigController.php",
-    "line": 69,
     "message": "Undefined index: rh500_sequencial"
   },
-  "sha256": "964a972371a593fdc37e0e42890202182b9d8200e1e456921c3621b164514cd6",
+  "sha256": "0777356d639a81115b1f1a249b87de23fc1c67083c3fb9be0df71e2a9b78c9ed",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

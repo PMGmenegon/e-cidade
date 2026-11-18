@@ -1,21 +1,20 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/config/show",
   "json": {
-    "data": {
+    "errors": {
       "id": [
         "Código não informado da configuração da rubrica da comissão."
       ]
     },
-    "error": true,
-    "message": "Código não informado da configuração da rubrica da comissão."
+    "message": "The given data was invalid."
   },
-  "sha256": "138ed9984c985dffe354e2be9d8d0df19a39954a89f92f40fbc164d87435a4e2",
+  "sha256": "41af4cc5d5e359333bfd168ef0d2dc95a5b6db90f01f92d51287e773aa3b598d",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

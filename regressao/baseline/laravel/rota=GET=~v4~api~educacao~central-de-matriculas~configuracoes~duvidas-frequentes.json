@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/central-de-matriculas/configuracoes/duvidas-frequentes",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"matriculaonline.duvidas_frequentes\"\nLINE 1: select * from \"matriculaonline\".\"duvidas_frequentes\" where \"...\n                      ^ (SQL: select * from \"matriculaonline\".\"duvidas_frequentes\" where \"mo15_ativo\" = 1 order by \"mo15_ordem\" asc)"
+  },
+  "sha256": "d0dd4dec059cc3880602e5561f855daab8d0abae861476240af0fc69eddfc534",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

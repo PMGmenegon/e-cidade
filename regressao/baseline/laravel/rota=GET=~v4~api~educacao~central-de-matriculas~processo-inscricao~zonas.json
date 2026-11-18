@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/zonas",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"secretariadeeducacao.zonas_residencia\"\nLINE 1: select * from \"secretariadeeducacao\".\"zonas_residencia\"\n                      ^ (SQL: select * from \"secretariadeeducacao\".\"zonas_residencia\")"
+  },
+  "sha256": "dc205c32b0cc5b68b630a0fb6aa2a0375e7e467a2f8972e0aa1f6cdc168a9680",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

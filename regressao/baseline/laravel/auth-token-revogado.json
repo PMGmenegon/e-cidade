@@ -5,13 +5,10 @@
   },
   "id": "auth-token-revogado",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
-    "line": 66,
     "message": "Unauthenticated."
   },
-  "sha256": "7a136896cb276f582eb2599dc3bf8166ee976a91ac0158a7b980c0ea547c4b04",
+  "sha256": "5f8a752f0f453397f9367c3ab1cd741a9a86c59b8d754d9417b3aa50266d8a4c",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

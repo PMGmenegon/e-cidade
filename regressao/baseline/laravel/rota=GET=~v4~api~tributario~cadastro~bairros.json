@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/cadastro/bairros",
@@ -34,7 +34,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "e934dded72ea5cfd907b486540e97bb87065baf5eff3af65d9b1a25cbc5bb75f",
+  "sha256": "b9152e7ba9688243fcfc087aadb484cefdece5849a55bbc5cb0cd9431033d950",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

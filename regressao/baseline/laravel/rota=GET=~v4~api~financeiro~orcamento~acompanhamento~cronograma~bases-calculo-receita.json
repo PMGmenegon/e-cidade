@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-receita",
@@ -22,7 +22,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "a2a28ab951120e62fbd8f163da487c88426f3f70402cb594adcf0a2f9d3e9ddf",
+  "sha256": "8ea9d2cd5c02feb65244791221b32ea6996d5f108cbd55d7fe0265d8911ef194",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

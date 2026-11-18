@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/patrimonial/protocolo/atividades-execucao",
@@ -30,7 +30,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "9b81993fc04c93433f0463f6e61e447db0d8f14b1948030c12323d2ff38168d5",
+  "sha256": "0dbfd15919ff83a911332a8eefea7a157b97d469de237b427579629aac49a15b",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

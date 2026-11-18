@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/educacao/escola/relatorios/diarioclasse/turmasEscolarizacao",
   "json": {
-    "data": {
+    "errors": {
       "apenasAlunosAtivos": [
         "O campo apenas alunos ativos é obrigatório."
       ],
@@ -73,12 +73,11 @@
         "Tipo da turma não informado."
       ]
     },
-    "error": true,
-    "message": "Tipo da turma não informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "1fca8a548d6127ba183b70e46d9c60fe143da1de74c3fba354adc9b699fe86a7",
+  "sha256": "7542e5a435abde43db5792fcf77016cc46946190f7ac3b69a2a5495065bb8105",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

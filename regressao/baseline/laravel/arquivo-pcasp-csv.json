@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "arquivo-pcasp-csv",
@@ -10,13 +10,13 @@
       "csvLinkExterno": "<X>"
     },
     "error": false,
-    "message": "Mapeamento das contas vículadas."
+    "message": "Mapeamento das contas vinculadas."
   },
-  "sha256": "b9f463cecd988d1533197d61f3fd903d89507e5b854c4ac5fa917791779de859",
+  "sha256": "a369fb25ad4507bb52c39fe21bc62a77a6df9d6e60a1f074034b36ff8b735129",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},
-  "texto": "[arquivo csv status=200 ct=text/csv]\ncsv|1|1|Exercício\ncsv|1|2|2026\ncsv|2|1|Plano\ncsv|2|2|Estadual / Regional",
+  "texto": "[arquivo csv status=200 ct=text/csv]\ncsv|1|1|Exercício\ncsv|1|2|2026\ncsv|2|1|Plano\ncsv|2|2|Estadual / Regional\ncsv|4|2|Contas do e-cidade com Movimentação não vinculadas ao plano de governo\ncsv|5|1|Estrutural\ncsv|5|2|Nome\ncsv|7|2|Contas do e-cidade não vinculadas ao plano de governo\ncsv|8|1|Estrutural\ncsv|8|2|Nome\ncsv|10|2|Contas do e-cidade vinculadas ao plano de governo\ncsv|11|1|Estrutural e-Cidade\ncsv|11|2|Nome e-Cidade\ncsv|11|3|Estrutural Governo\ncsv|11|4|Nome Governo",
   "tipos": {
     "data.csv": [
       "str"

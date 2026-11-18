@@ -1,15 +1,18 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/itbi/benfeitoria/especie",
   "json": {
-    "tipoItbi": [
-      "O campo tipo itbi é obrigatório."
-    ]
+    "errors": {
+      "tipoItbi": [
+        "O campo tipo itbi é obrigatório."
+      ]
+    },
+    "message": "The given data was invalid."
   },
-  "sha256": "ba5210d13fb7713d0b26e936e8178aee490c0d6fbd17b099638052714de8cdc2",
+  "sha256": "9fce39bf6e3cbe49950a2d333253af3a1e8b3fc589f07f3c8d4e5849f538dbf7",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

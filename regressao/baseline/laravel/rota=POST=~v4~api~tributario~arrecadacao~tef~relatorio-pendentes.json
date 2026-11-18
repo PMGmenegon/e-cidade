@@ -1,16 +1,13 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/arrecadacao/tef/relatorio-pendentes",
   "json": {
-    "data": {
+    "errors": {
       "DB_itemmenu_acessado": [
         "Menu não informado."
-      ],
-      "DB_modulo": [
-        "Módulo não informado."
       ],
       "dataFim": [
         "Data Fim não informada."
@@ -19,12 +16,11 @@
         "Data Inicio não informada."
       ]
     },
-    "error": true,
-    "message": "Data Inicio não informada."
+    "message": "The given data was invalid."
   },
-  "sha256": "19e0f968f79395eadc58bcfc3057c833cd173a2417530e31c7f4e4557bbe229a",
+  "sha256": "22195c4585d470b39936b376a1e32144ca290dd3042b911a425655275d3e73d4",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

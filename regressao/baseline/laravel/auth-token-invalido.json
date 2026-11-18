@@ -5,13 +5,10 @@
   },
   "id": "auth-token-invalido",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
-    "line": 66,
     "message": "Unauthenticated."
   },
-  "sha256": "b5afac549cf35ce9a2637c39174c1b138c07fb497ce4ce880c381e9a9769ea6a",
+  "sha256": "bba148e32b5e04a112618bcbd6a02eae4d102fad29cdb3cb60d75d47af4d8489",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

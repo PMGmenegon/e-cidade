@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/necessidades-especiais",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.necessidadesubdivisao\"\nLINE 1: select * from \"escola\".\"necessidadesubdivisao\" where \"escola...\n                      ^ (SQL: select * from \"escola\".\"necessidadesubdivisao\" where \"escola\".\"necessidadesubdivisao\".\"ed185_necessidade\" = 101 and \"escola\".\"necessidadesubdivisao\".\"ed185_necessidade\" is not null)"
+  },
+  "sha256": "09582ba42f796b2f765734be8b665489abeb5207e12a8d3eb0790bba7c33e0c8",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

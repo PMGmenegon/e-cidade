@@ -1,21 +1,20 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/funcao",
   "json": {
-    "data": {
+    "errors": {
       "instituicao": [
         "Instituição não informada."
       ]
     },
-    "error": true,
-    "message": "Instituição não informada."
+    "message": "The given data was invalid."
   },
-  "sha256": "f5b5e225bfd429ea9cd06dab6a2d493659f177e7c52aa98c8101f096cd41f9b8",
+  "sha256": "2d87fdc3fd23d858afde527414ef1499812c0d33da1ca4ffea63620e5d00637a",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

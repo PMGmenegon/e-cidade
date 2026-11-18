@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-um",
   "json": {
-    "data": {
+    "errors": {
       "codigo_relatorio": [
         "O Código do Relatório deve ser informado."
       ],
@@ -19,12 +19,11 @@
         "O campo \"Código\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "55ae76a7080ceffcd4fe644994edd34b7bcca4a8e0f146c551343aee383c8c12",
+  "sha256": "2f2329a0fd1a23b6b7a7aa689ccaa7d07dc9f3c5e097894e84a603127f06244e",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

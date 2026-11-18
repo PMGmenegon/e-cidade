@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentamentos",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "f750984e4e4b607ce89794196974b850d6c4d7926f31436cc62aa1b2366db133",
+  "sha256": "034612582685ac06acb6655adfa851423733474aeaa8fe739404de895077172d",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

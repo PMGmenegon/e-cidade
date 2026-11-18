@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/empenho/conferencia-extra-orcamentaria/exportar",
   "json": {
-    "data": {
+    "errors": {
       "data1": [
         "O campo data1 é obrigatório."
       ],
@@ -16,12 +16,11 @@
         "O campo tipo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo data1 é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "c24e1341c8075b39633fa13a00ee65b25edb44a3f6e91fab8bcd04d16b0ac494",
+  "sha256": "6bbbc20ed79710f84edbb997e0dc5d6716adb16b37419f1e3e34f597cff3b1eb",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

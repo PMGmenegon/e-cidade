@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/tfd/relatorio/viagens-por-motorista",
   "json": {
-    "data": {
+    "errors": {
       "ordem": [
         "O campo ordem é obrigatório."
       ],
@@ -19,12 +19,11 @@
         "O campo tipo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo periodo inicial é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "b84bd8fd9629f1ea1594b4c6772285a3ca900b76b61e0469243d0fd57dd7ea51",
+  "sha256": "f1bde66dd896e21dea1e055b021b1aaa89d35c0f2a2ebfc38936ca635b8fc0e6",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

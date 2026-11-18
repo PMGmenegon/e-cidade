@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/fundeb/rhparametrosfundeb/showFuncoes",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"pessoal.rhparametrosfundeb\"\nLINE 1: select * from \"pessoal\".\"rhparametrosfundeb\" where \"rh284_in...\n                      ^ (SQL: select * from \"pessoal\".\"rhparametrosfundeb\" where \"rh284_instituicao\" = 1)"
+  },
+  "sha256": "b3a52f427b8629e84057b24dca9e7e5396eb96623adc9b6c2ef3c469605ab862",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

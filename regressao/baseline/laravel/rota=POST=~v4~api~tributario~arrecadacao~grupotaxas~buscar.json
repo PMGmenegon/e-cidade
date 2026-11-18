@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/arrecadacao/grupotaxas/buscar",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"arrecadacao.grupotaxas\"\nLINE 1: select count(*) as aggregate from \"arrecadacao\".\"grupotaxas\"...\n                                          ^ (SQL: select count(*) as aggregate from \"arrecadacao\".\"grupotaxas\" where 1 = 1)"
+  },
+  "sha256": "88e8f92f156fb9347d5eeb77be73587edb97e8f595707da49961fec132329efc",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

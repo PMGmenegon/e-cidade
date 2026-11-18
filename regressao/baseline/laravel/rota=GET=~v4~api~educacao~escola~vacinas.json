@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/educacao/escola/vacinas",
@@ -60,7 +60,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "a21edd6408afcd6b2a8024e0e5836869ec3758958d0731034f15914dd82f287e",
+  "sha256": "c4b301aa4790772007ab0ef9dc814bcbbb4a78a86bc6bd2f9895360620cf8bf0",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

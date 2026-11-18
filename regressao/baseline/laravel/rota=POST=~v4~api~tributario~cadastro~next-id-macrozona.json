@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/cadastro/next-id-macrozona",
+  "json": {
+    "error": true,
+    "message": "Undefined offset: 0"
+  },
+  "sha256": "0b9abea992f59dc161cec41ade6264d332690c1ec48a5d5a4b860e05f2caa0ab",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

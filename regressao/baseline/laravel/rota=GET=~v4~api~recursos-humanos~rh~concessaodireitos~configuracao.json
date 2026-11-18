@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "66c42dc579c4fbe1efcad5cbab19e233f2b2cf6fd588fb8fa76ab3a795e82820",
+  "sha256": "0ba1d3652ac7e2e957ab75ec5ff9e480d328fb838ee8803aca566beb78bc93a4",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

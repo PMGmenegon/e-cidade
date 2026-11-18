@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/ocupacoes/ocupacao",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.cboocupacao\"\nLINE 1: insert into \"escola\".\"cboocupacao\" (\"mo304_titulo\") values (...\n                    ^ (SQL: insert into \"escola\".\"cboocupacao\" (\"mo304_titulo\") values (?))"
+  },
+  "sha256": "041a9cc51563c47f0f82126ca5a9dbca292a00da73da212e563838d46cabc346",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

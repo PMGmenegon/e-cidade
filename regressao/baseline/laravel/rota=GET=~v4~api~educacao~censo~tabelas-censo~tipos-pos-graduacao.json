@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/educacao/censo/tabelas-censo/tipos-pos-graduacao",
@@ -13,7 +13,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "aae70d8a234f5a90022191cd9f68a79c5d7a8234eea3230ae6923d7ceaf27dc1",
+  "sha256": "70c2625494fdadc9ac6315aa7f9834a8606628f0fa64eb874aa5a86801d0ecc8",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

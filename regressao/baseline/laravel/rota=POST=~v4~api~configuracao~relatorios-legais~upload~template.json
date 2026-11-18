@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Configuracao/RelarorioLegal/Services/TemplatesXlsRelatoriosLegaisService.php",
-    "line": 86,
     "message": "Undefined index: file"
   },
-  "sha256": "da9a53125f711b128adb102f13d540c9438b6268fec3f2ddd289098a241e1e29",
+  "sha256": "7578a495ef306abaa6863ba26ef03358853e9b1e309a85fef0167e0a2f4fbad5",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

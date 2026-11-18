@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/orcamento/tipos-detalhamento",
@@ -14,7 +14,7 @@
     "error": false,
     "message": "Recursos atualizados"
   },
-  "sha256": "261ebd402ea1d282836cf103232d021956f0a54b19b6fd6fb47a76b0da068434",
+  "sha256": "7647b7d9f7edbfbe47e21a99ea8d105f05b5cecb2a897683531c235f453901fd",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

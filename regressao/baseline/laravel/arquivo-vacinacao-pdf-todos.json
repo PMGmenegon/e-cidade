@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "arquivo-vacinacao-pdf-todos",
@@ -12,7 +12,7 @@
     "error": false,
     "message": "Emitindo relatório em PDF"
   },
-  "sha256": "d1f2268b00ef81ebae33a4816791a259ca0051bdc00ced917fa2da7093c21e36",
+  "sha256": "228fa5873ff94a150982cea227f2be2d6a485baa3d4fe9e045ca1da859bc7091",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

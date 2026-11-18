@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/acoes",
@@ -22,7 +22,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "2b9f0f4974d364f094f9162587b4f44b597d41c3973b2be9a8b0492d20cd8ad8",
+  "sha256": "c97a7be57c46dd64ec97687f479c3c5fa9d57a40fe3e36b3deedb15f4b7bd4ce",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

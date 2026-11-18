@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/vincular",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
-    "line": 71,
     "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
   },
-  "sha256": "8e3e7d3428d6ba7639f2825e42678a734e1b0e2e7562e4fcebc81c9b0c5b56fb",
+  "sha256": "18114303cedc744c12b4865bda865379a850be0d40b852049e80df67c645ab24",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

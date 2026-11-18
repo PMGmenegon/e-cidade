@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/escola/alunoAtendimentosEspecial/busca-recursos",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.recursosutilizados\"\nLINE 1: select distinct * from \"escola\".\"recursosutilizados\" order b...\n                               ^ (SQL: select distinct * from \"escola\".\"recursosutilizados\" order by \"ed198_codigo\" asc)"
+  },
+  "sha256": "28d4159b692e62149c01a4aa2b94cdd7924d70e3a2b1a88857595c2d309c1e4f",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

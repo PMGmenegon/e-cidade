@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/contratos/acordo/buscar-configuracoes",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42703]: Undefined column: 7 ERRO:  não existe a coluna \"instituicao_id\"\nLINE 1: select * from \"mensageriaacordo\" where (\"instituicao_id\" = $...\n                                                ^ (SQL: select * from \"mensageriaacordo\" where (\"instituicao_id\" = 1) limit 1)"
+  },
+  "sha256": "c422eb3b971e3355950c2d15b03fe030a1e756260fb0917e06355ae57fe2bf8a",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

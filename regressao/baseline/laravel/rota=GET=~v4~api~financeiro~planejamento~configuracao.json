@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/planejamento/configuracao",
@@ -12,7 +12,7 @@
     "error": false,
     "message": "Configuração"
   },
-  "sha256": "a6511f6b09920dfb400ef8c139fce68310070bf31ad8fa839dc9d039b0e5542f",
+  "sha256": "9cb512816de07790c9bdb634d1f69069cb0bfa82281e0a07622cd48dd1e68ece",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

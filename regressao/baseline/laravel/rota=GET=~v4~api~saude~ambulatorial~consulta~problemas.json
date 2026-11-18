@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/saude/ambulatorial/consulta/problemas",
@@ -98,7 +98,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "c27ad77462ed59d61f47f8aff089f7300c8bd8940fd6b34732c6c105b101ddf6",
+  "sha256": "df35e30c89e3e0493624eee9590453aca433ab4738e962b302d9ea50746038e6",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

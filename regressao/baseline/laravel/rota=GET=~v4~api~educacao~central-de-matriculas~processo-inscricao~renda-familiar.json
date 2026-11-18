@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/central-de-matriculas/processo-inscricao/renda-familiar",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"matriculaonline.renda_familiar\"\nLINE 1: select * from \"matriculaonline\".\"renda_familiar\"\n                      ^ (SQL: select * from \"matriculaonline\".\"renda_familiar\")"
+  },
+  "sha256": "a4af4e51b80518a2ce51bbf78460da99592ed56091a9bc6e111e6dffe1dbd138",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/integracoes/efd-reinf/unidaderesponsavel/get",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "2cf875115ffce1a3cc3e60e6e9ea868f2a1559552fff7ee1b790f77c30a9ba38",
+  "sha256": "c081cfde5d9b136be0614f12dbacda81b00cb71ea98507b25b8352013d1570a6",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

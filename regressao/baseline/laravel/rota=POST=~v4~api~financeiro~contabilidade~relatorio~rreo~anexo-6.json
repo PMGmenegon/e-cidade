@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-6",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo d b anousu é obrigatório."
-      ],
+    "errors": {
       "codigo_relatorio": [
         "O campo codigo relatorio é obrigatório."
       ],
@@ -16,12 +13,11 @@
         "O campo periodo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo codigo relatorio é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "8ffed7fd0b9da568491426f60129e609e9574ea6f07d0be3c4d140b529d2742e",
+  "sha256": "ae84eefe961d18f5ef2738d73b3d7f0902d6a9a145dd83d4af15c5b34f2388bb",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

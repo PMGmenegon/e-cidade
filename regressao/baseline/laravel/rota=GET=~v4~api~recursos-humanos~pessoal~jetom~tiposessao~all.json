@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/tiposessao/all",
@@ -22,7 +22,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "d884d86de5ba09273e2f6df18fcbcb84fe2e92c1d1f16e6ed99f0413a3b07b98",
+  "sha256": "bf908160329e8799c36f4d00145f79a8de2f38c10c3c0a3fbf9ba81b16fba22d",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

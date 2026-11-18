@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/VincularPlanoOrcamentarioDespesaService.php",
-    "line": 86,
     "message": "Undefined index: exercicio"
   },
-  "sha256": "ed3cd094296740368b6b7acc30169eaea129df97f3d84143d88455f3037b9b97",
+  "sha256": "a5bb5a53478c20897af23e7edfb6ac36bbf26b9228a469944a068e4bfaeb6167",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

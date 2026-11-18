@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/recursos-humanos/rh/relatorios/configassentperiodo/getConfig",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"configassentperiodo\"\nLINE 1: select * from \"configassentperiodo\" where \"rh512_instit\" is ...\n                      ^ (SQL: select * from \"configassentperiodo\" where \"rh512_instit\" is null limit 1)"
+  },
+  "sha256": "1768dedbc117b0f78273d85b50df3d7e25de5bbb4064a74bfb3672803adbb54e",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

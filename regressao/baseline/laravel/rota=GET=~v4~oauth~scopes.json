@@ -5,13 +5,10 @@
   },
   "id": "rota:GET:/v4/oauth/scopes",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/GuardHelpers.php",
-    "line": 39,
     "message": "Unauthenticated."
   },
-  "sha256": "9df8ec3aac767af8517a4b3c5c352e3e80935a0f3819b75e01e21a9d3cd174ae",
+  "sha256": "1efc56f7d842cbcde49ceb25ef1bdf0407724f718c0a8c1f7149f190dd899fea",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/fator-correcao/despesa",
   "json": {
-    "data": {
+    "errors": {
       "deflator": [
         "O campo deflator é obrigatório."
       ],
@@ -19,12 +19,11 @@
         "O campo valores é obrigatório."
       ]
     },
-    "error": true,
-    "message": "Planejamento deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "25c3a241807c4290fa4931759a950fa7cfb309a3a87afbcb1ba2448c2439ddd8",
+  "sha256": "3d58bc51cf14edd68084e8f217167e95917a315f79fb5764c321831d895d4439",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

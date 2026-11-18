@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/contabilidade/tce/rj/sigfis/unidadegestora",
+  "json": {
+    "data": null,
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.sigfisunidadegestora\"\nLINE 1: ...esa || ' - ' || z01_nome AS cgmnomeordenador from \"contabili...\n                                                             ^ (SQL: select \"c179_sequencial\" as \"sequencial\", \"c179_codigo\" as \"codigo\", \"c179_instit\" as \"instit\", \"c179_responsavelfolha\" as \"responsavelfolha\", \"c179_codigofolha\" as \"codigofolha\", \"c179_cgmordenadordespesa\" as \"cgmordenadordespesa\", c179_instit || ' - ' || nomeinst AS codnomeinstit, c179_cgmordenadordespesa || ' - ' || z01_nome AS cgmnomeordenador from \"contabilidade\".\"sigfisunidadegestora\" inner join \"db_config\" on \"db_config\".\"codigo\" = \"c179_instit\" inner join \"cgm\" on \"c179_cgmordenadordespesa\" = \"z01_numcgm\" order by \"c179_instit\" asc)"
+  },
+  "sha256": "0b2324aeafc1d6f2096814e0f8e888f94ffdd7d728bba000a7c01fef7bc792fe",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

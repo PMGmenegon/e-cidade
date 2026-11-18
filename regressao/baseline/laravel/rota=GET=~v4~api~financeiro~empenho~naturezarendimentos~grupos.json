@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/grupos",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"empenho.naturezarendimento\"\nLINE 1: ...elect distinct e167_codigo::char(2) as grupo from \"empenho\"....\n                                                             ^ (SQL: select distinct e167_codigo::char(2) as grupo from \"empenho\".\"naturezarendimento\" where e167_codigo::char(2) <> '10' order by \"grupo\" asc)"
+  },
+  "sha256": "a0d6cacb84579a0de1106c3426ac9034777e28bc555461c64a43370e4c13eed5",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

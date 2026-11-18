@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/esf/relatorio/indicador-desempenho",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Saude/ESF/Middlewares/AuthEsfMiddleware.php",
-    "line": 12,
     "message": "Plugin ESF não instalado."
   },
-  "sha256": "6744d8e35d7a609668a1c4d3d1a4b24bbcfbaa1fefc27b0dfffb563e63dc87cd",
+  "sha256": "a472d9b1381d5963cd756f04a4fea2450c30a9ce93af2856c3e99d253d76adad",
   "sql_negocio": [],
   "status": 406,
   "tabelas": {},

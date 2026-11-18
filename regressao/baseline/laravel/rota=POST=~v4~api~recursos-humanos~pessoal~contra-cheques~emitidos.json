@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/contra-cheques/emitidos",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contracheques_batches\"\nLINE 1: select * from \"contracheques_batches\" where \"rh269_instit\" =...\n                      ^ (SQL: select * from \"contracheques_batches\" where \"rh269_instit\" = 1 order by \"rh269_codigo\" desc)"
+  },
+  "sha256": "512f1073680c1abaa7872cf54e160b212a5fbe1869f36d67827c5e4f43c9d7a4",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

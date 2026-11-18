@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio-conferencia-por-recurso",
   "json": {
-    "code": 406,
     "error": true,
-    "file": "/var/www/html/app/Helpers/Functions.php",
-    "line": 113,
     "message": "O campo data inicial é obrigatório."
   },
-  "sha256": "390a76fecdc00c72542f7681200ad63ad19a3b3139ff1539c6efc875ad9d0827",
+  "sha256": "f85cc7681847699278ade942d9dc9ec2c604a35fd994dc4ff13e76b855760148",
   "sql_negocio": [],
   "status": 406,
   "tabelas": {},

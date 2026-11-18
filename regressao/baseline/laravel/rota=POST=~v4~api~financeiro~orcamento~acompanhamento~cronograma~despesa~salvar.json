@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/orcamento/acompanhamento/cronograma/despesa/salvar",
   "json": {
-    "data": {
+    "errors": {
       "abril": [
         "O valor de \"Abril\" deve ser informado."
       ],
@@ -52,12 +52,11 @@
         "O valor de \"Setembro\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Detalhamento\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "0c5b9cb4dd19b5dc4c5e3fafee292877e37370b582f85a12859c5ebef6bb4816",
+  "sha256": "871aa4c305aa506e29327115ae59b0f8e7bb5276131f052a572b5438ef869003",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

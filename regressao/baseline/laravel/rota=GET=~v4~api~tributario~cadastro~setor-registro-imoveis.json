@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/cadastro/setor-registro-imoveis",
@@ -18,7 +18,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "f8ea12c881f279bccec9939583651e83904e06ddd65c4eaef8dafa627d5fef1f",
+  "sha256": "96d4927fd3fbc8866572021d0a3be1ddffdb147be8429f11ce7b992d962231b9",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

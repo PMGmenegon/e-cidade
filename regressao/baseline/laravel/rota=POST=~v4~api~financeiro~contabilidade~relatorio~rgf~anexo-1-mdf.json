@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-mdf",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo d b anousu é obrigatório."
-      ],
+    "errors": {
       "codigo_relatorio": [
         "O campo codigo relatorio é obrigatório."
       ],
@@ -19,12 +16,11 @@
         "O campo periodo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo codigo relatorio é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "4a40d11892be68a3c978813b53dcc43c390a839d6f833e63f9d96e807e2e6db1",
+  "sha256": "41841765ca899e1708b77847db95d9a44b4d5cff49825defeab53a69d6984a7d",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

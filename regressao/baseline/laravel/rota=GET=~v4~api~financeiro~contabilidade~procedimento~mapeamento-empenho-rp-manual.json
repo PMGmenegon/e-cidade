@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/contabilidade/procedimento/mapeamento-empenho-rp-manual",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.conplanoexeconciliarp\"\nLINE 1: select * from \"contabilidade\".\"conplanoexeconciliarp\" where ...\n                      ^ (SQL: select * from \"contabilidade\".\"conplanoexeconciliarp\" where \"c162_exercicio\" is null)"
+  },
+  "sha256": "3d7a115bf8aed30edb0f4cc4a353c2d481837db13d2e6224fd536321da572762",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

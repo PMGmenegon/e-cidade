@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/previsao-rcl-outros-anexos",
   "json": {
-    "data": {
+    "errors": {
       "codigo_relatorio": [
         "O Código do Relatório deve ser informado."
       ],
@@ -19,12 +19,11 @@
         "O campo \"Código\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "43c850f0cea342676b22c05998aa9dc7e1e42ef277e581ba15782f8bea1511cc",
+  "sha256": "4c38bb965e5b1509a2910d903f68bf48e37bd12ff115d324732799b825446cae",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

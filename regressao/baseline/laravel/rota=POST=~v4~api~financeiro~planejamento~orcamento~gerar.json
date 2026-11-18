@@ -1,21 +1,20 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/orcamento/gerar",
   "json": {
-    "data": {
+    "errors": {
       "planejamento_id": [
         "O campo \"Código\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "557e71f023c4a80cc8faeeeca877719e8b03fdd22dc0c9b37bdfaf683179d4b7",
+  "sha256": "80ca98cd697983098f6b398b1d1f0c6f331f6835767def13abff5e1f923573b0",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

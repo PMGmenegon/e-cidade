@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/ambulatorial/relatorio/acompanhamento-acs",
   "json": {
-    "code": 406,
     "error": true,
-    "file": "/var/www/html/app/Helpers/Functions.php",
-    "line": 113,
     "message": "O campo ids é obrigatório."
   },
-  "sha256": "b303be1a34d5f353ed588fc0c01aba55dbbe7a81dc4ef6a058db42f946af6bad",
+  "sha256": "86f0f5990d5e7b4d4983b139b28fc6ce85029e04aadf0b7998824cc711de8a63",
   "sql_negocio": [],
   "status": 406,
   "tabelas": {},

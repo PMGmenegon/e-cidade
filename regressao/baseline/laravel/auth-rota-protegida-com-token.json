@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "auth-rota-protegida-com-token",
@@ -60,7 +60,7 @@
     "error": false,
     "message": "Sistemas de Identificações das Contas"
   },
-  "sha256": "fa337ff2e8b4c9d4f4574bd4e3e15542677b13178ffa696538c6eff447cb834d",
+  "sha256": "50efa1b4948d65474e6ce2ff69b2f2e95c5fdab0b3975d9b60a603d5fe4ddae6",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

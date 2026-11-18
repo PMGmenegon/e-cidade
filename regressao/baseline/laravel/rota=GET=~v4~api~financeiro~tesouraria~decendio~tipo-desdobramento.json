@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/tesouraria/decendio/tipo-desdobramento",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"caixa.tipodesdobramento\"\nLINE 1: select * from \"caixa\".\"tipodesdobramento\"\n                      ^ (SQL: select * from \"caixa\".\"tipodesdobramento\")"
+  },
+  "sha256": "1a2bc1ccd922173b05933fbd0de5f593d4b6caee9d560cc71c9d6113505c9f35",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

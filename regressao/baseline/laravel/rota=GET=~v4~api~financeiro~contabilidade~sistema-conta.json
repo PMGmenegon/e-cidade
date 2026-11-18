@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/contabilidade/sistema-conta",
@@ -30,7 +30,7 @@
     "error": false,
     "message": "Sistema de contas"
   },
-  "sha256": "1b682220292a7af0032e8613d1919a2896d126e546d2087c37402dde122ea4eb",
+  "sha256": "9888da0e72073e23b8fb84c273be8b28fcd3a56f5f7243b45c4b5fd093731517",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

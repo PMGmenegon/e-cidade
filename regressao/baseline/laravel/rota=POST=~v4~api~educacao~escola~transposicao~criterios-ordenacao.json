@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/transposicao/criterios-ordenacao",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.criteriostransposicao\"\nLINE 1: select * from \"escola\".\"criteriostransposicao\"\n                      ^ (SQL: select * from \"escola\".\"criteriostransposicao\")"
+  },
+  "sha256": "953228aff3e5c860070a8f8310e0e4feae13b6a9bf4ebed3691a2b3f6d6b153a",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

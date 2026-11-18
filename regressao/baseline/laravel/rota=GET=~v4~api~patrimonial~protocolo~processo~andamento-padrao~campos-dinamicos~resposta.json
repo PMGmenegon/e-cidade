@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Patrimonial/Protocolo/Controller/Processo/AndamentoPadrao/CamposDinamicosRespostaController.php",
-    "line": 69,
     "message": "Informe o código do vínculo do campo"
   },
-  "sha256": "b0a11b871173bbe259f3e9d864d826f9189bcb46a6b2460a10d20de4b7f2601e",
+  "sha256": "c316c97639b7450a3678d4937950e234902c39343c7f19c7144769a8d25554f9",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

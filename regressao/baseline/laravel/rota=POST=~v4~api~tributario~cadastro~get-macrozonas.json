@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/cadastro/get-macrozonas",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"cadastro.macrozonas\"\nLINE 1: select count(*) as aggregate from \"cadastro\".\"macrozonas\" wh...\n                                          ^ (SQL: select count(*) as aggregate from \"cadastro\".\"macrozonas\" where  1 = 1)"
+  },
+  "sha256": "3c513823d20b87ce99fd0f851ff6fc08acd47d88c0e9caaf756a41afbf34cada",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

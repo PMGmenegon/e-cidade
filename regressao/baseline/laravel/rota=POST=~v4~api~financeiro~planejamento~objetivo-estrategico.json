@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/objetivo-estrategico",
   "json": {
-    "data": {
+    "errors": {
       "pl5_arearesultado": [
         "O campo \"Código\" deve ser informado."
       ],
@@ -13,12 +13,11 @@
         "Deve ser informado um título para a área."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "24595bafff09f1ce83742772b496569e35d3d32dbea45f90a9e427cda9e7aa49",
+  "sha256": "c1dfee938b1b9d80bcb8328a0034a8896f4b86a72f194e3c1cd871edaf30ea74",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

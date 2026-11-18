@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Patrimonial/Protocolo/Controller/Processo/AndamentoPadrao/CamposDinamicosRespostaController.php",
-    "line": 37,
     "message": "Informe os campos que devem ser salvos"
   },
-  "sha256": "5ae37e38cb6162373e8b630a17cc21cbffd3a84f478afb314e0c2ffbf82754d1",
+  "sha256": "e0f46ffc87683f192bfcac0f52df4a6715a23d5b42f894a9c36ef9b8780ead69",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

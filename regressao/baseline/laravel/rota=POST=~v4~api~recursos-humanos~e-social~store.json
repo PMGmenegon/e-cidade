@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/e-social/store",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"recursoshumanos.informacoes_complementares\"\nLINE 1: insert into \"recursoshumanos\".\"informacoes_complementares\" (...\n                    ^ (SQL: insert into \"recursoshumanos\".\"informacoes_complementares\" (\"eso40_tp_insc\", \"eso40_nr_insc\", \"eso40_num_insc\", \"eso40_ind_subst_patr\", \"eso40_perc_red_contrib\", \"eso40_cod_lotacao\", \"eso40_fator_mes\", \"eso40_fator_13\", \"eso40_perc_transf\", \"eso40_cod_inst\", \"eso40_periodo\") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning \"eso40_sequencial\")"
+  },
+  "sha256": "fab74e40fcf06be264a8632147253cb22d75f0e71156b1bdb098ea4bd13313ac",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

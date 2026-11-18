@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/receita/previsao/salvar",
   "json": {
-    "data": {
+    "errors": {
       "anoorcamento": [
         "O campo \"Exercício do Orçamento\" deve ser informado."
       ],
@@ -40,12 +40,11 @@
         "Deve ser informado uma coleção de valores."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código da Instituição\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "de42623699a1478d1c4192ffd1c5267a57ddcacc38d54360163efc11e6531caa",
+  "sha256": "d2e1a5697d5f68f67f4af003f726ebacb274dded61e31329150c9ed619396483",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

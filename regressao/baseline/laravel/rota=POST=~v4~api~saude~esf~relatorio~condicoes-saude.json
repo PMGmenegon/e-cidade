@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/esf/relatorio/condicoes-saude",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Saude/ESF/Middlewares/AuthEsfMiddleware.php",
-    "line": 12,
     "message": "Plugin ESF não instalado."
   },
-  "sha256": "8e6113106dc4ae9c137465d574b63b60083bfa0cf9ac97e72be169953874aabb",
+  "sha256": "5a96980a4c213cb38a1c481d933c40d83cd63536c86a316cfd29ecc37f36d20b",
   "sql_negocio": [],
   "status": 406,
   "tabelas": {},

@@ -1,21 +1,20 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/update",
   "json": {
-    "data": {
+    "errors": {
       "instituicao": [
         "Instituição da comissão não informada."
       ]
     },
-    "error": true,
-    "message": "Instituição da comissão não informada."
+    "message": "The given data was invalid."
   },
-  "sha256": "74558f176d66708b95eb61489dc6fbb82d1c86e7bbd31d0e6c3e81fdd4735666",
+  "sha256": "dd076d6261923d10d6c4bbeb553301021784232319ea5e85d3ec2ade35120c09",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

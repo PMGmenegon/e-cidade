@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/issqn/redesim/dados-estabelecimento",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"processed_establishments\"\nLINE 1: select * from \"processed_establishments\" where \"q190_process...\n                      ^ (SQL: select * from \"processed_establishments\" where \"q190_process_id\" is null limit 1)"
+  },
+  "sha256": "b43302ab1c9394313a119015c4f6b7a7f2c2c212a777a3d8ad1e78da6d6158da",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

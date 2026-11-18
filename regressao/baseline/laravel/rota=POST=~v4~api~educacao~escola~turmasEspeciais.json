@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/educacao/escola/turmasEspeciais",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "652aea4c0bda289cd75d5b10dfc129312c4d0f10e1c1318555d7b50622cf9983",
+  "sha256": "b8480ef19181096f9fbf46e736eaf502758d5aad14f053fb83a1276d22744ec9",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

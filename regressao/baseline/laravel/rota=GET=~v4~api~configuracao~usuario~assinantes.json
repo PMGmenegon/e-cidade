@@ -5,13 +5,10 @@
   },
   "id": "rota:GET:/v4/api/configuracao/usuario/assinantes",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/src/Lib/Request/Storage/Curl/Autenticacao.php",
-    "line": 175,
     "message": "Propriedades de autenticação não existentes."
   },
-  "sha256": "c78f9d32cfa903ca636f1c075ba0116e75f24bd8521e32df1c6ef1cf491059e7",
+  "sha256": "0ab6c60fef2f3045660ada8ee931321a739ed6a325fc0402887f82fca254f86d",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/recursos",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/ConsultaLancamentoPcaspService.php",
-    "line": 140,
     "message": "implode(): Invalid arguments passed"
   },
-  "sha256": "48f1c90eecf0b0505fe0e795c7d142faa737df90db2ca3de9cc234777748b774",
+  "sha256": "ca34a88395d022c27908d749b92eb4bc4a832fefec192fbc51b71c8bf3a6a63d",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

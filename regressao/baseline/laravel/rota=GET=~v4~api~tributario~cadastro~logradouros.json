@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/cadastro/logradouros",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "2e11e754d6f52aa45c69b548f121861dccb008bea0dfb61670e40e91220d52f3",
+  "sha256": "281ccfedeca2aad7c5c64096000fc2e24292fa99bd29bee4ec8ece5702924b92",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

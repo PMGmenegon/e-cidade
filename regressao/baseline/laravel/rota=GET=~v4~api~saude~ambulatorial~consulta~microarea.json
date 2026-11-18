@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/saude/ambulatorial/consulta/microarea",
@@ -22,7 +22,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "b7a2028d76744e07772149f0057f378034c2b6acc3e989dce7168a0d2e557967",
+  "sha256": "3648bd2227ef9a1948c61511b21aee9d1948d327939e06f3306b3cd447911c4e",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

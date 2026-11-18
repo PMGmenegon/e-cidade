@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-arrecadacao",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
-    "line": 71,
     "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
   },
-  "sha256": "c6e90b94e23e76f8d71e044ce9df5327e0283ddbb26913ed544d91534ae76533",
+  "sha256": "06f92e414885b47f6baa79e385eae597d6fb1982259a3ff72df937434f766e33",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

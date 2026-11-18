@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/rotulos",
+  "json": {
+    "error": true,
+    "message": "Call to a member function toArray() on null"
+  },
+  "sha256": "82e8f6584cee0741faa020f675d73b6a2ba113496e990ce20f8513afc8448384",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

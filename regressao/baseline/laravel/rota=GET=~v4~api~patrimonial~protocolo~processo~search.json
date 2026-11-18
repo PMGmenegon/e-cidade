@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/protocolo/processo/search",
+  "json": {
+    "error": true,
+    "message": "pg_query(): Query failed: ERRO:  n�o existe a rela��o &quot;acordos.acordoparam&quot;\nLINE 1:  SELECT ac59_permiteporinstit    FROM acordos.acordoparam   ...\n                                              ^"
+  },
+  "sha256": "454958eabc532067bd7d983b7c62606c7807136f682e2146c15bf7d40a5cbefd",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

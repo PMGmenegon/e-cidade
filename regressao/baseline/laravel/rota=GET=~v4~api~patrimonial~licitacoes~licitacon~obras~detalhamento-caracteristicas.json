@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/detalhamento-caracteristicas",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"licitacao.licitaconusuarios\"\nLINE 1: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_in...\n                      ^ (SQL: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_instituicao\" = 1) limit 1)"
+  },
+  "sha256": "a6b4e1ee49888c4cecebc52de5b470844531c7465e6f90faad8de9dc302035fe",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

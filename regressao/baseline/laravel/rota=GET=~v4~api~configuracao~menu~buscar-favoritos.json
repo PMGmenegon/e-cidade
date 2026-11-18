@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/configuracao/menu/buscar-favoritos",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"configuracoes.itens_menu_usuario_favoritos\"\nLINE 1: select * from \"configuracoes\".\"itens_menu_usuario_favoritos\"...\n                      ^ (SQL: select * from \"configuracoes\".\"itens_menu_usuario_favoritos\" where \"id_usuario\" = 1)"
+  },
+  "sha256": "63ed90d42a7eb6ca5109fbdf3d51f185bcbb189210778a0ba3045cc325d48859",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

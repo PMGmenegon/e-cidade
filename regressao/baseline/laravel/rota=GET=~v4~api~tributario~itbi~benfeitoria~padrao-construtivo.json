@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Tributario/ITBI/Repositories/ParitbiRepository.php",
-    "line": 28,
     "message": "Erro ao bsucar os parâmetros do ITBI."
   },
-  "sha256": "1e7da925794db45912fa5512e98384875bb377165c7c436aecbbdc7607931599",
+  "sha256": "2ac9361996b623402dde3695936011119c85f9dff3b25f68fb2b3d560c514d45",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

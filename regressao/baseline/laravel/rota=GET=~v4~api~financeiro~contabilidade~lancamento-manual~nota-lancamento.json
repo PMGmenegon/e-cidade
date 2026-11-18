@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/contabilidade/lancamento-manual/nota-lancamento",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.resumo_consulta_lancamento_manual\"\nLINE 1: select * from \"contabilidade\".\"resumo_consulta_lancamento_ma...\n                      ^ (SQL: select * from \"contabilidade\".\"resumo_consulta_lancamento_manual\" order by \"c160_codigo\" asc)"
+  },
+  "sha256": "5a0aa241817a1f29247765958159b9abb0c259226fab222d68b7637ee4f758a6",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/filtros",
@@ -9,7 +9,7 @@
     "error": false,
     "message": "Programas Estratégicos cadastrados."
   },
-  "sha256": "2f1e3d02807e6c9021260a62f6d6d4cfe2d01e77245429c0890d1051f6428130",
+  "sha256": "87d8e3dc9669d4556275dd3b086e18e6fd3a4c89b30dd5c94a0270ecfdce6a54",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

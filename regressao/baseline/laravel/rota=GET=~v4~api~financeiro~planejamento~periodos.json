@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/planejamento/periodos",
@@ -46,7 +46,7 @@
     "error": false,
     "message": "Períodos cadastrados."
   },
-  "sha256": "2facd2dba5bd63a3af096104dbb6d48323135eb6f8762eb9ff83c8b4e7250daa",
+  "sha256": "43fb99f0533a3840618f1f7b803102e505c6f8d4bbbe7ca0ce4bf938be9289bb",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/configuracao/relatorios-legais/lrf",
@@ -1066,7 +1066,7 @@
     "error": false,
     "message": "Relatórios"
   },
-  "sha256": "498a01abb718afa1dbebb6c1b09477d9e38010eedb7ce6160e2e34b0e04110f9",
+  "sha256": "2507bceb0eec068045bb7b81b6e7956a241fc2f5d8f019f94efc012d54d4c461",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

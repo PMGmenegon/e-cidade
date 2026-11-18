@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-objetivo/buscar",
   "json": {
-    "data": {
+    "errors": {
       "objetivo": [
         "O campo \"Objetivo Estratégico\" deve ser informada."
       ],
@@ -13,12 +13,11 @@
         "O campo \"Planejamento\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Planejamento\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "68d5e203b7512e83bb286f95c30dd27b2449382b2972b254ffc822474e304da2",
+  "sha256": "76a1d02945acdd8a807211db6c9f379460b27aca58784b13952ef3e01c8df543",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

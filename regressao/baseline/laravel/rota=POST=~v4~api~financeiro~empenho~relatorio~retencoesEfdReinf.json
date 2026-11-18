@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Empenho/Services/RelatorioRetencoesEfdReinf/RelatorioRetencoesEfdReinfService.php",
-    "line": 25,
     "message": "Undefined index: dataInicial"
   },
-  "sha256": "ce3248524f5079b61b84ab68a502a187a72019cdb1494f002477f343c64b66b9",
+  "sha256": "c0e531fd2c6907a3ee0df81f5df6453313fa77391c43e359ae94c1c54e62127e",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

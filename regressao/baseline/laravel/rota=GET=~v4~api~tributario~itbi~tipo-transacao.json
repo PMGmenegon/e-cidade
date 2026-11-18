@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/itbi/tipo-transacao",
@@ -26,7 +26,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "a1e9a7283ddd44d274e937536ec6b088e9650d2596bfa4c8a4241ca50f6cac30",
+  "sha256": "591fa8abbae3934254ac00bfd1919f9b28561c5678543ba7c66e3587c1e0f6c1",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

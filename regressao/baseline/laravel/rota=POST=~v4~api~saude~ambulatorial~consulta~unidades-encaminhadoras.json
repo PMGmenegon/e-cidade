@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/saude/ambulatorial/consulta/unidades-encaminhadoras",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"ambulatorial.unidadesencaminhadoras\"\nLINE 1: ...ao\" as \"descricao\", \"sd112_ativo\" as \"ativo\" from \"ambulator...\n                                                             ^ (SQL: select \"sd112_sequencial\" as \"codigo\", \"sd112_descricao\" as \"descricao\", \"sd112_ativo\" as \"ativo\" from \"ambulatorial\".\"unidadesencaminhadoras\" order by \"sd112_sequencial\" desc)"
+  },
+  "sha256": "603349956629690c6cefebfaf8775dff2bb35d9a0bebd879102b0dfc188320e3",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

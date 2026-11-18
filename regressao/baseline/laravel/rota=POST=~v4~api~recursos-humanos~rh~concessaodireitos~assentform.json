@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentform",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Controllers/AssentFormController.php",
-    "line": 67,
     "message": "Undefined index: rh502_seqassentconf"
   },
-  "sha256": "e07923311d65819bcd2f26e63c9a6322c5d2648ead303f53df3a5493246734a4",
+  "sha256": "c95863949377c4d9b8b3bb22cdae96c3e0971efb1531abfd2296395beedaff10",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/saude/ambulatorial/cid",
@@ -210,7 +210,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "f5e5389e5899514cf78bc47023f3f5e0febd8644be0728b4b61ddd66b4fc0616",
+  "sha256": "74a4e51dc84771db69634f898a69d5ec19b4d34241860a4eecdd3233b4d8afa0",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

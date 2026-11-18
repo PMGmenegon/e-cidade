@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/despesa/mapeamento",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/Relatorios/MapeamentoPlanoDespesaService.php",
-    "line": 70,
     "message": "Undefined index: exercicio"
   },
-  "sha256": "5117ccdb96fe51655c304a82a0ba0930917fa42b2370130b14c9e0cc1fb125bb",
+  "sha256": "11dad9285bdcb9e314e5a3b296ed4fc3dfde387cb33f6a89993259e3fcc45ef1",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

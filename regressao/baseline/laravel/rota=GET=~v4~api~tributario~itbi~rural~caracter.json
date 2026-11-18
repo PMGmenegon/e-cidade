@@ -1,15 +1,18 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/itbi/rural/caracter",
   "json": {
-    "tipo": [
-      "O campo tipo é obrigatório."
-    ]
+    "errors": {
+      "tipo": [
+        "O campo tipo é obrigatório."
+      ]
+    },
+    "message": "The given data was invalid."
   },
-  "sha256": "0baa5424b8024464635d79ee983862ae9f60f4b83338b321a62487018ef1feb4",
+  "sha256": "eebee1e1fe98f7b128399fbf2dc001ada86c390e4db6dba404e9b1783758b83d",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

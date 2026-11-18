@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/patrimonial/protocolo/processo/processo",
@@ -32,7 +32,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "60a3983d80e90c1e0928137231002cfe57b5ae18dd37319927c5f18d6c6a244f",
+  "sha256": "d1b02fe0b690515a93456da65c6e2dfcb5d36213bd61c9bc8a3fda27ab305767",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/escola/ocupacoes/ocupacao",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.cboocupacao\"\nLINE 1: select * from \"escola\".\"cboocupacao\"\n                      ^ (SQL: select * from \"escola\".\"cboocupacao\")"
+  },
+  "sha256": "72d2417641e076b3871806573058541d7550e46d5a3324596dc79a14fefd5d7c",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

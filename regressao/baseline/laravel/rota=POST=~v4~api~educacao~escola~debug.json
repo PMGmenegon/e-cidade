@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/educacao/escola/debug",
   "json": true,
-  "sha256": "83a924d6cd68388129f365cfb574252b1fcaf644b12a45485166e69ae3d8e119",
+  "sha256": "bde559a639addd0c6caeb8fbb7fb4a8adead7c4f3cceb77a87de7620914abed8",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

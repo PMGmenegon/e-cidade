@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/empenho/naturezarendimentos/naturezas",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"empenho.naturezarendimento\"\nLINE 1: ...digo || ' - ' || e167_descricao as descricao from \"empenho\"....\n                                                             ^ (SQL: select \"e167_sequencial\", e167_codigo || ' - ' || e167_descricao as descricao from \"empenho\".\"naturezarendimento\" where e167_codigo::char(2) <> '10')"
+  },
+  "sha256": "36824ecee19435c150a7838b2b41dce1ac6d3cecaa9de1df1d180063219be8a8",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

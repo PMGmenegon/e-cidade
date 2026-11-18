@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/ambulatorial/cgs/find-or-create",
   "json": {
-    "data": {
+    "errors": {
       "municipio": [
         "O campo municipio é obrigatório."
       ],
@@ -13,12 +13,11 @@
         "O campo tipo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo tipo é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "92fc7321b13ece800478b0a32b96d259cf7aeae833212e1d9f78b298502a6227",
+  "sha256": "a7538022253dac4fd0ccb259c4e75e075a22a31b12b15fbcbe5f97a432a4e6e8",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

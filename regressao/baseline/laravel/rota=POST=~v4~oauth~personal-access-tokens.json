@@ -5,13 +5,10 @@
   },
   "id": "rota:POST:/v4/oauth/personal-access-tokens",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php",
-    "line": 68,
-    "message": ""
+    "message": "Unauthenticated."
   },
-  "sha256": "eea58e1efce72be952a12d5e90970500700fa08f47b42e9963bb08c765d118ca",
+  "sha256": "18deb080d32350b86ba9b7d75f2bab138f8566b227b8022ce1eb45a1da9dbde8",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

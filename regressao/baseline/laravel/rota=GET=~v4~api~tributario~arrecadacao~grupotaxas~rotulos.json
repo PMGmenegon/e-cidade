@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/arrecadacao/grupotaxas/rotulos",
+  "json": {
+    "error": true,
+    "message": "Call to a member function toArray() on null"
+  },
+  "sha256": "0d22a7cc2ee677137b9f032ea4ef0276de211d1a2387a3bbd45254cb16b93354",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

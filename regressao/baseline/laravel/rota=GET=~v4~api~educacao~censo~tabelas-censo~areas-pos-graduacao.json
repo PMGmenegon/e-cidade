@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
   "json": {
-    "code": "42P01",
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
-    "line": 647,
     "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.censoareaspos\"\nLINE 1: select * from \"escola\".\"censoareaspos\"\n                      ^ (SQL: select * from \"escola\".\"censoareaspos\")"
   },
-  "sha256": "2a021836c30d1f4769645ce82682fe7769db35a713e1ca9a756dded798bd9240",
+  "sha256": "ef0bae518ea5461a35d7ba9c64d296cbf70ff049d07537eb3d54996808c5b253",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

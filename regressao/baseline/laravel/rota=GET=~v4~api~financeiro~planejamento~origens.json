@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/planejamento/origens",
@@ -52,7 +52,7 @@
     "error": false,
     "message": "Origens cadastradas"
   },
-  "sha256": "db454c75f29fad1a113b131f8009261f9de8c55742d420f852742840f4a910ed",
+  "sha256": "ae436ec6c9a01e7f05d3cb56b15bba18f5b11375636ceeac0997fe630bca39e8",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/receita/cronograma/buscar",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
-    "line": 71,
     "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
   },
-  "sha256": "87b465190a3f62394aff560e0eb4a8293634cfcd2e85b46968c21b35c22b647e",
+  "sha256": "b14bf86bb3e0caac554b784791082c7c050786ef7c0a349a3ab0ba4eb96efb1b",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/transposicao/relatorio",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.candidatotransposicao\"\nLINE 1: select * from \"escola\".\"candidatotransposicao\" where \"ed349_...\n                      ^ (SQL: select * from \"escola\".\"candidatotransposicao\" where \"ed349_etapa\" = 0 and \"ed349_ano\" = 0 and \"ed349_escolaorigem\" = 0)"
+  },
+  "sha256": "3c7699752054acacbb9947ef15fc5ebd094112b98571ab1e57e50d7dec97acf6",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

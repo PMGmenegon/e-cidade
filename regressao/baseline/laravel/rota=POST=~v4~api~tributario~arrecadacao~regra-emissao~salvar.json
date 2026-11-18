@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/arrecadacao/regra-emissao/salvar",
@@ -12,7 +12,7 @@
     },
     "status": "Error"
   },
-  "sha256": "8cf9a3b91aba7642de116fadcceb6b509f49529d79072fdbac75b951062c5307",
+  "sha256": "846e5290854fddb5f8a7e581db5507af5be84cdcf99999837ff6596b47ba6ace",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

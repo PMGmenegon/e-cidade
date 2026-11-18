@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-3-in-rs",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo d b anousu é obrigatório."
-      ],
+    "errors": {
       "codigo_relatorio": [
         "O campo codigo relatorio é obrigatório."
       ],
@@ -16,12 +13,11 @@
         "O campo periodo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo codigo relatorio é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "9d1e30458adf61943e29139166616ef7c461ccc4487d9849f469bc782bc2f633",
+  "sha256": "ec1a578bdb1c9f731235a38a2b97fd58d4e43e1caa9056bf2fa59eeb6741ed35",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

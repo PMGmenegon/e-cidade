@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/planejamento/consulta/ods",
@@ -129,7 +129,7 @@
     "error": false,
     "message": "Lista de Objetivos de Desenvolvimento Sustentável (ODS)"
   },
-  "sha256": "f82831c48b33aa2ef1ed6138b01b88ad4198c64692369a5cbac38dcf62d5e45f",
+  "sha256": "63d17c6522fb326daec7c2e61d334718e8a40328a4de19f914cb8b7960d0b9b1",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

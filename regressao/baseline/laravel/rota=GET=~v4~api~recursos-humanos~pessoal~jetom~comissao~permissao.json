@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao",
@@ -11,7 +11,7 @@
     "error": true,
     "message": "Permissões não foram encontradas"
   },
-  "sha256": "ae506e3df6d54cd9bd3f0c3d1bd5b7913d4cee743142b399c6ed61c22ca233b7",
+  "sha256": "97354b0716aae0596464c151fb1ddf0765d16abfe17b4b9038da4cb035559ff7",
   "sql_negocio": [],
   "status": 406,
   "tabelas": {},

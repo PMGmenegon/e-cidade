@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/orcamento/cadastro/complemento",
@@ -58,7 +58,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "1f7feafcd967ea2a52b5c8b40dc3a190ca4bbe1aa57648303f6e7cbb68c05f09",
+  "sha256": "53c959017c9ef259e91f1247fc63dab4ae29c32b975d8fe8bb4cfcb5e168195c",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

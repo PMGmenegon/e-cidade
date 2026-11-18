@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/fator-correcao/receita",
   "json": {
-    "data": {
+    "errors": {
       "deflator": [
         "O campo deflator é obrigatório."
       ],
@@ -19,12 +19,11 @@
         "O campo valores é obrigatório."
       ]
     },
-    "error": true,
-    "message": "Planejamento deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "e27bec47478ac3c3348b2142ef2ac0996eaa047c55097530a0c1edc1b0c0298d",
+  "sha256": "b884aefe3a54c93f37a977faa06ea0cdad2186a1268bc45638a1ec920f660f14",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/arrecadacao/tipos-ordenacao-cgf/buscar",
+  "json": {
+    "error": true,
+    "message": "pg_query(): Query failed: ERRO:  n�o existe a rela��o &quot;tipoordenacaocgf&quot;\nLINE 1: select *   from tipoordenacaocgf \n                        ^"
+  },
+  "sha256": "13ec30763802c7dad6681311d0e6c979ea6fb75b1ba1f4f2cbaabfd17def3db2",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

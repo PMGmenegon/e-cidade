@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/financeiro/contabilidade/sistemas",
@@ -60,7 +60,7 @@
     "error": false,
     "message": "Sistemas de Identificações das Contas"
   },
-  "sha256": "47a77a53830fff97491544ecfecc72ccd4f569bc57f0be24953b2857f8a2eb32",
+  "sha256": "8ad6cadc211eba9deac4f194029d968ae436f71852b69da0f36699841d8f9e0a",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

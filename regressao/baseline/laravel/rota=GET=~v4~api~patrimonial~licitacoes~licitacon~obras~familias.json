@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/licitacoes/licitacon/obras/familias",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"licitacao.licitaconusuarios\"\nLINE 1: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_in...\n                      ^ (SQL: select * from \"licitacao\".\"licitaconusuarios\" where (\"l50_instituicao\" = 1) limit 1)"
+  },
+  "sha256": "01e71d81b56bd3e46f9a31c1b0f0efc4c4f34224c11ddb15431d8da23409052b",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

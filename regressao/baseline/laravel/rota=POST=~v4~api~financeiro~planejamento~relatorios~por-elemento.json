@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/por-elemento",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/RelatorioProjecaoPorElementoService.php",
-    "line": 67,
     "message": "Undefined index: planejamento_id"
   },
-  "sha256": "811d0f8bc250fffa3289b112cceaea54681819fec8f8e487c0f675923fad8da7",
+  "sha256": "b22496c91d3981e33b3006d74d825196a7d8525fa32fa495b818c98e3dced925",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

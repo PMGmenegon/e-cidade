@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/configuracao/salvar",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Financeiro/Planejamento/Services/ConfiguracaoService.php",
-    "line": 65,
     "message": "Undefined index: apenas_valor_analitico"
   },
-  "sha256": "8422739b1660dafe0dd6a0bf00a3881ac7213db8b343cf752162b5962b816f42",
+  "sha256": "0c4af619873977a3e8122dff74f1d3b215762554423f6097e4d61b7d8bc22137",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

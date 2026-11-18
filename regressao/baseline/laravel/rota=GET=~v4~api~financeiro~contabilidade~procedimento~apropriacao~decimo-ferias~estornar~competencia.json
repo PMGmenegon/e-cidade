@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/contabilidade/procedimento/apropriacao/decimo-ferias/estornar/competencia",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"contabilidade.apropriacaodecimoferias\"\nLINE 1: select * from \"contabilidade\".\"apropriacaodecimoferias\" wher...\n                      ^ (SQL: select * from \"contabilidade\".\"apropriacaodecimoferias\" where \"c145_instituicao\" = 1 and \"c145_processado\" = 1 order by \"id\" desc limit 1)"
+  },
+  "sha256": "8a0e864e56274cd69a91f32d3ee393635471ed70a49750a7d91b7dad7325448a",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

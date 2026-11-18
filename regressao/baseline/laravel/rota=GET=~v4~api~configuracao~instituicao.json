@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/configuracao/instituicao",
@@ -126,7 +126,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "c426548db32fbd37397307eee87e0602bd8eb03ce607dea60e76cfaa14d86ba1",
+  "sha256": "8a3cfd45a92d1635c4696b13d5e43490c164b3ff1fd5b9eed0c934ecf295074e",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/pib",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
-    "line": 71,
     "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
   },
-  "sha256": "097fa64adee42578a1b2699b41d6cf2bb50d473fe58cdc2912b75451578d5fc5",
+  "sha256": "becb41d42aeb3020db8968b2444992949e3a8c612507d12931b2b914cb638a9a",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

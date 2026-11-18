@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/tesouraria/contas-pendentes",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "d52ee10b9ac337f353d4afdbfb6a82a04da213a3b82d90ece220d58abc176c2a",
+  "sha256": "1a2ed2993a4a4c511a92664ad5bfa5b1515278a1dbd875e3179db4d9170aee88",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

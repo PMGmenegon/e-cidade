@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/recursos-humanos/e-social/index",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"recursoshumanos.informacoes_complementares\"\nLINE 1: select * from \"recursoshumanos\".\"informacoes_complementares\"...\n                      ^ (SQL: select * from \"recursoshumanos\".\"informacoes_complementares\" where \"eso40_cod_inst\" = 1)"
+  },
+  "sha256": "352e8685793e951f7347aade36ec454fb458e8a27d643f2f3ac62c1aafc92c7a",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

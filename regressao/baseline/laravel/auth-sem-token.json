@@ -5,13 +5,10 @@
   },
   "id": "auth-sem-token",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
-    "line": 66,
     "message": "Unauthenticated."
   },
-  "sha256": "ea8091f69189dcec95976c74a1b865a3cdd7355d2d08f2be22e855f72bb26c92",
+  "sha256": "187e78ab88f469dc25eea7569defb0ffbae35971c672daf679a35de2814d8ad1",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

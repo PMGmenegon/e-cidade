@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/itbi/situacao",
@@ -22,7 +22,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "5dc67b05735a8861d3d3effb9834f842007ee2a1e83ad76fcec4e0c3fe98b154",
+  "sha256": "e5f07942740ea5e3c0d285e48ace1c5eca0fc939a9d046c80b9d5208b85ecc88",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

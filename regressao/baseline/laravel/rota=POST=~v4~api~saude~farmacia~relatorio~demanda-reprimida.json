@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/saude/farmacia/relatorio/demanda-reprimida",
   "json": {
-    "data": {
+    "errors": {
       "exibeObservacao": [
         "O campo exibe observacao é obrigatório."
       ],
@@ -19,12 +19,11 @@
         "O campo somente total é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo periodo inicial é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "f0d78b477cf0aa3306e22b0e59729c537228b29f0fa3b3f0aa01de8fe7e7012c",
+  "sha256": "19266121f7e5dc66e862ca2899da35e0735934c1f7962414f694322871def76f",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

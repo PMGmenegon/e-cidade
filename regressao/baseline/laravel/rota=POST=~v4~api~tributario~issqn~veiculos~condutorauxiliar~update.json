@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/issqn/veiculos/condutorauxiliar/update",
   "json": {
-    "data": {
+    "errors": {
       "q173_cgm": [
         "Cgm não informado."
       ],
@@ -16,12 +16,11 @@
         "Sequencial não informado."
       ]
     },
-    "error": true,
-    "message": "Sequencial não informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "720bac3f7d712bd0656d465b30715da025f639f7a8e3176671fd108c15c5c9f8",
+  "sha256": "1ff5bb85a76bd9a1cbd67841b70bfdd9a267d2f02a865ee8517f26aed1429903",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

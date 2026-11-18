@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/tributario/issqn/alvaraeventos/ordemservico",
@@ -9,7 +9,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "ee708b52b6da2432feb02b6f88b2f36727f5aa25c7497ad73b3d0bb71c25e21e",
+  "sha256": "0317f4145ece7f0bb33e5110a69fe0b6b3a59f025d45fcf0f24ac5a9cf49e913",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

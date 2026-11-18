@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-despena-por-complemento",
   "json": {
-    "data": {
+    "errors": {
       "dataFinal": [
         "O campo data final é obrigatório."
       ],
@@ -22,12 +22,11 @@
         "O campo modelo é obrigatório."
       ]
     },
-    "error": true,
-    "message": "O campo modelo é obrigatório."
+    "message": "The given data was invalid."
   },
-  "sha256": "a693633c0beeb2e8c46a728aada18094ec8c9982fef02b0823d757d680998174",
+  "sha256": "187809bfa6c4609401bbb07cff8f1ca397ec82e7b5c24815bca4d2d80def8748",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

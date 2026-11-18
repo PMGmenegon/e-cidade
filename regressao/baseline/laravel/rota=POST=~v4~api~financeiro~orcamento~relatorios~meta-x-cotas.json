@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-x-cotas",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
-    "line": 71,
     "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
   },
-  "sha256": "ee307ff40d16d27d9e91a1c03f31a32dab89f29d2a2512e5c2c327baa57a55a7",
+  "sha256": "3b1e7cb779da9e0e0cc1e1026533b625546c40ec098953a4bebbab0603333b0c",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/tributario/arrecadacao/tipo-debito/salvar",
@@ -8,14 +8,11 @@
     "message": {
       "k00_tipo": [
         "O campo k00 tipo é obrigatório."
-      ],
-      "qtdemissao": [
-        "O campo qtdemissao é obrigatório."
       ]
     },
     "status": "Error"
   },
-  "sha256": "4af19afcdc49f1be34f75fbeb3fdccaf0f910468a3f2202038ca52f4c82bd015",
+  "sha256": "8f1d8c67b81a377af8c2a7a3ea82f90c5a24277679f0953f97fca2cc181bd09a",
   "sql_negocio": [],
   "status": 422,
   "tabelas": {},

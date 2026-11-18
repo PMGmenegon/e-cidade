@@ -5,13 +5,10 @@
   },
   "id": "rota:POST:/v4/api/configuracao/documento-assinado",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/Configuracao/DocumentosAssinatura/Controller/DocumentosAssinatura.php",
-    "line": 269,
     "message": "Pelo menos um arquivo deve ser informado."
   },
-  "sha256": "8dd9b11d051be76f53a29bec9a8b47db60ebca25d28f1e9044fdf19e5bce2300",
+  "sha256": "8bf9cda0082cc132b81b44c84d3f10fc3ddce67f102faef3bdc7abba167e0aa6",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

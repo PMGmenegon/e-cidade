@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-seis",
   "json": {
-    "data": {
+    "errors": {
       "codigo_relatorio": [
         "O Código do Relatório deve ser informado."
       ],
@@ -19,12 +19,11 @@
         "O campo \"Código\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "9c092a6cb3c376ab402e80a34894aa860caf4f33da9b9dd42f2ae09c461b58f1",
+  "sha256": "4e392fed38a52453333c6b21fe4d9e34edf6fd7c8b2dadc51ddb06ad0f553901",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

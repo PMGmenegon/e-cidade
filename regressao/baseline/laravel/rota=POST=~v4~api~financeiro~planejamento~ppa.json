@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/ppa",
   "json": {
-    "data": {
+    "errors": {
       "pl2_ano_final": [
         "Campo \"Ano Final\" deve ser informado."
       ],
@@ -25,12 +25,11 @@
         "Campo \"Título\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "Tipo do planejamento deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "ffd553ea73024ee2f5d63e8fbcc698e68f7ec332b8445e5e9a1d6795f4ab32bd",
+  "sha256": "fb901cd6072fde71ac2841ecde8b17313ba6ff6fe947f29686eadca59595cbd6",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

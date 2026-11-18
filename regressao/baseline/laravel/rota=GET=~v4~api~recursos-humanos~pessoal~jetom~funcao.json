@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao",
@@ -14,7 +14,7 @@
     "error": false,
     "message": ""
   },
-  "sha256": "b5f1e276efbc2dced6d944d76b2f3e6a3c5ffba3aa98146b993236fd13a8316d",
+  "sha256": "bf4abbc62ef495c24b4a508e64397e436db7c26a736ea5aea91d33d091b5d60c",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

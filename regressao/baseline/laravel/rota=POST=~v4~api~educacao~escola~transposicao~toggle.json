@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/transposicao/toggle",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"escola.transposicao\"\nLINE 1: select * from \"escola\".\"transposicao\" where \"escola\".\"transp...\n                      ^ (SQL: select * from \"escola\".\"transposicao\" where \"escola\".\"transposicao\".\"ed353_codigo\" is null limit 1)"
+  },
+  "sha256": "d4635eb50932e3a3206e3567cadbce02e86f4fee36c4d5ccaf638ee57fcef5da",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

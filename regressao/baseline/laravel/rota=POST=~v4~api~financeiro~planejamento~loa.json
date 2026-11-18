@@ -1,11 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/loa",
   "json": {
-    "data": {
+    "errors": {
       "pl2_ano_final": [
         "Campo \"Ano Final\" deve ser informado."
       ],
@@ -28,12 +28,11 @@
         "Campo \"Título\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "Tipo do planejamento deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "b6d3fed877b9d98734ebdbb0d0e2a1907e334bc5a62504e3a4ed347e5178ece9",
+  "sha256": "a82fa67da824787c2fa9100777a9b9f09f1fc0fd8898a74eb4ac673fab8dc70f",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

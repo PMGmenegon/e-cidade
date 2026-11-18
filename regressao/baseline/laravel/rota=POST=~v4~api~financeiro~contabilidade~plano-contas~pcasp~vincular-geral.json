@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular-geral",
@@ -9,7 +9,7 @@
     "error": false,
     "message": "Contas vinculadas com sucesso."
   },
-  "sha256": "feec760ee877f4dbf5c4098e7dad9feaa525a1167a467476b563820b725356fd",
+  "sha256": "deb97621025768523d7ef0a57e13d6dd984ffb6ad48111dc2918993dd0ed0f64",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},

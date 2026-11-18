@@ -1,0 +1,17 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/cemiterio/parametros/busca-parametros",
+  "json": {
+    "error": true,
+    "message": "SQLSTATE[42P01]: Undefined table: 7 ERRO:  não existe a relação \"cemiterio.parametroscemiterio\"\nLINE 1: select * from \"cemiterio\".\"parametroscemiterio\" where \"cem36...\n                      ^ (SQL: select * from \"cemiterio\".\"parametroscemiterio\" where \"cem36_ano\" is null)"
+  },
+  "sha256": "a05796e49a4ab5db45a99e1cbd101c01733015fe4b52a67d255faa4f60c8ef50",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

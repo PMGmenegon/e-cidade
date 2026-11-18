@@ -1,17 +1,14 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculo",
   "json": {
-    "code": 0,
     "error": true,
-    "file": "/var/www/html/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Controllers/ConcessaoCalculoController.php",
-    "line": 30,
     "message": "Undefined index: assentconf"
   },
-  "sha256": "3566b8dd71942d07c2f63fc537c995a4269280f2c0cc118dca4e4b03c59dc2bf",
+  "sha256": "389d23ce069ae391000f49fb76701719f026cf565fae22e70b68169daea110da",
   "sql_negocio": [],
   "status": 500,
   "tabelas": {},

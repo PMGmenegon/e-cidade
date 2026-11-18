@@ -5,13 +5,12 @@
   },
   "id": "rota:POST:/v4/oauth/token",
   "json": {
-    "error": "unsupported_grant_type",
-    "hint": "Check the `grant_type` parameter",
+    "error": true,
     "message": "The authorization grant type is not supported by the authorization server."
   },
-  "sha256": "edabd28f66218737517f9e81413306044e7143166f62888f4677956a5afc0138",
+  "sha256": "5576c9d5dd7151969873d31a577be0962b4edbe89d0179434b2e085c515272d0",
   "sql_negocio": [],
-  "status": 400,
+  "status": 500,
   "tabelas": {},
   "texto": "",
   "tipos": {}

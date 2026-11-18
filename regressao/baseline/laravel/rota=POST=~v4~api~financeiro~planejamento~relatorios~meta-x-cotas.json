@@ -1,14 +1,11 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "rota:POST:/v4/api/financeiro/planejamento/relatorios/meta-x-cotas",
   "json": {
-    "data": {
-      "DB_anousu": [
-        "O campo \"Ano da Sessão\" deve ser informado."
-      ],
+    "errors": {
       "agruparPor": [
         "O campo \"Agrupar por\" deve ser informado."
       ],
@@ -25,12 +22,11 @@
         "O campo \"Código\" deve ser informado."
       ]
     },
-    "error": true,
-    "message": "O campo \"Código\" deve ser informado."
+    "message": "The given data was invalid."
   },
-  "sha256": "60b56a133e58ffd2e847cd8cb471075d01e79f7feee48e38f5b4b5c3e3727638",
+  "sha256": "078b2a31c8a089d2a93343602d9bfcbb8a9d867a180b0d3e892c2c6114e14391",
   "sql_negocio": [],
-  "status": 406,
+  "status": 422,
   "tabelas": {},
   "texto": "",
   "tipos": {}

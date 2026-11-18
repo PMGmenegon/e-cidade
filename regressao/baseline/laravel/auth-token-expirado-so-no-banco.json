@@ -1,6 +1,6 @@
 {
   "cabecalhos": {
-    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "cache-control": "no-store, no-cache, must-revalidate, no-cache, private",
     "content-type": "application/json"
   },
   "id": "auth-token-expirado-so-no-banco",
@@ -60,7 +60,7 @@
     "error": false,
     "message": "Sistemas de Identificações das Contas"
   },
-  "sha256": "d9d916ce432041adae94318c6c53f62c45bdb14d7d8abb1e3cec7fbf8657580b",
+  "sha256": "01d8a6e2f54e85e49fddd9d50531847cf389f3aceb8458a97de27868c6bfab27",
   "sql_negocio": [],
   "status": 200,
   "tabelas": {},
