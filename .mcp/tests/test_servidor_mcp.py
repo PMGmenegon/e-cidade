@@ -9,11 +9,12 @@ from servidor.main import criar_servidor
 
 TOOLS = {"analisar_composer", "buscar_codigo_legado", "validar_arquivo_php", "rodar_regressao",
          "ler_resultado_regressao", "ler_triagem", "reivindicar_arquivo", "liberar_arquivo", "quadro",
-         "proximo_trabalho", "padroes_ja_corrigidos"}
+         "proximo_trabalho", "padroes_ja_corrigidos", "regras_do_grupo", "ferramentas_do_grupo"}
 PROMPTS = {"migrar-arquivo", "auditar-model", "corrigir-padrao-mecanico", "verificar-com-regressao"}
 RESOURCES = {"ecidade://docs/regras-arquitetura", "ecidade://docs/breaking-changes", "ecidade://regressao/como-usar",
              "ecidade://regressao/triagem", "ecidade://regressao/decisoes", "ecidade://estado/trabalho",
-             "ecidade://padroes"}
+             "ecidade://padroes", "ecidade://grupo/regras", "ecidade://grupo/guia-7.4-para-8.5"}
+DOCS_REAIS = __import__("pathlib").Path(__file__).resolve().parents[1] / "docs"
 
 
 @pytest.fixture
@@ -176,4 +177,36 @@ def test_prompts(ambiente):
     assert {x.name for x in lista} == PROMPTS
     texto = p.messages[0].content.text
     assert "ecidade/x.php" in texto and "reivindicar_arquivo" in texto and "git add -A" in texto
-    assert "migra(split)" in q.messages[0].content.text
+    lote = q.messages[0].content.text
+    assert "Padrao-MCP: split" in lote
+    for t in (texto, lote):  # lembretes do grupo nos dois roteiros
+        for frase in ("MINIMO no arquivo do PR", "base-php84", "ANTES", "DEPOIS", "ISO-8859-1", "Rector",
+                      "REGISTRADO e avisado ao dono"):
+            assert frase in t, frase
+
+
+def test_grupo_pelo_mcp_e_alvo_laravel_13(ambiente):
+    for nome in ("regras-do-grupo.md", "guia-7.4-para-8.5.md"):
+        (ambiente / ".mcp" / "docs" / nome).write_text((DOCS_REAIS / nome).read_text(encoding="utf-8"))
+
+    async def go():
+        async with Client(criar_servidor()) as c:
+            tools = (await c.list_tools()).tools
+            prompts = [await c.get_prompt(n, {"caminho": "a.php", "padrao": "split", "alvo": "x"}
+                                          if n == "x" else {"caminho": "a.php"} if n in ("migrar-arquivo", "auditar-model")
+                                          else {"padrao": "split"} if n == "corrigir-padrao-mecanico" else {"alvo": "x"})
+                       for n in sorted(PROMPTS)]
+            regras = await c.read_resource("ecidade://grupo/regras")
+            guia = await c.read_resource("ecidade://grupo/guia-7.4-para-8.5")
+            r = await c.call_tool("regras_do_grupo", {"topico": "metodo"})
+            f = await c.call_tool("ferramentas_do_grupo", {"ref": ""})
+            p = await c.call_tool("buscar_codigo_legado", {"padrao": "construtor_antigo"})
+            return c.instructions, tools, prompts, regras, guia, r, f, p
+    instr, tools, prompts, regras, guia, r, f, p = chama(go)
+    textos = [instr, *(t.description for t in tools), *(m.messages[0].content.text for m in prompts)]
+    assert all("Laravel 12" not in t for t in textos)
+    assert "Laravel 13" in instr and "Passport 13" in instr
+    assert "ISO-8859-1" in regras.contents[0].text and "PR #8" in guia.contents[0].text
+    assert "Só atualizar" in dados(r)["dados"]["texto"]
+    assert dados(f)["ok"] is True
+    assert dados(p)["ok"] is True

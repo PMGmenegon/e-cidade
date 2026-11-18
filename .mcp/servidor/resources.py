@@ -17,7 +17,13 @@ DOCUMENTOS: dict[str, tuple[str, str, str]] = {
                                           "Regras de codigo e de trabalho da migracao (strict_types, DTOs, Actions, "
                                           "injecao no construtor, commits por caminho, regressao)"),
     "ecidade://docs/breaking-changes": (".mcp/docs/guia-breaking-changes.md", "guia-breaking-changes",
-                                        "Guia de quebras PHP 7.4 -> 8.5 e Laravel 8 -> 12 com a correcao padrao"),
+                                        "Guia de quebras PHP 7.4 -> 8.5 e Laravel 8 -> 13 com a correcao padrao"),
+    "ecidade://grupo/regras": (".mcp/docs/regras-do-grupo.md", "regras-do-grupo",
+                               "Regras do grupo (CONTRIBUINDO.md) e de metodo, fluxo de branch e o que copiar da "
+                               "base-php84"),
+    "ecidade://grupo/guia-7.4-para-8.5": (".mcp/docs/guia-7.4-para-8.5.md", "guia-7.4-para-8.5",
+                                          "Guia do grupo: Migracao do PHP 7.4 para o 8.5 a partir do PR #8 "
+                                          "(18/11/2026), na integra"),
     "ecidade://regressao/como-usar": ("regressao/COMO-USAR.md", "regressao-como-usar",
                                       "Como rodar e ler a suite de regressao (para dev, QA e gestor)"),
     "ecidade://regressao/triagem": ("regressao/baseline/triagem-divergencias.md", "triagem-divergencias",

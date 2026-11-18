@@ -33,4 +33,4 @@ def test_config_valida_e_sobe(arquivo, chave):
         async with Client(StdioServerParameters(command=comando, args=args, cwd=str(RAIZ))) as c:
             return c.server_info.name, len((await c.list_tools()).tools)
     nome, n = anyio.run(go)
-    assert nome == "ecidade-migracao" and n == 11
+    assert nome == "ecidade-migracao" and n == 13

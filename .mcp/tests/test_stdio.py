@@ -37,10 +37,10 @@ def test_cliente_oficial_por_stdio(env):
             pr = (await c.list_prompts()).prompts
             return tools, r, v, res, pr
     tools, r, v, res, pr = anyio.run(go)
-    assert len(tools) == 11
+    assert len(tools) == 13
     assert r.structured_content["dados"]["ocorrencias"][0]["linha"] == 2
     assert v.structured_content["dados"]["resultados"][0]["erro"]["codigo"] == "conteiner_indisponivel"
-    assert len(res) == 7 and len(pr) == 4
+    assert len(res) == 9 and len(pr) == 4
 
 
 class Sessao:
@@ -84,12 +84,12 @@ def _sessao_completa(s: Sessao):
                                     "clientInfo": {"name": "teste-cru", "version": "0"}})
     assert init["result"]["serverInfo"]["name"] == "ecidade-migracao"
     s.envia({"jsonrpc": "2.0", "method": "notifications/initialized"})
-    assert len(s.pede(2, "tools/list")["result"]["tools"]) >= 11
+    assert len(s.pede(2, "tools/list")["result"]["tools"]) >= 13
     r = s.pede(3, "tools/call", {"name": "validar_arquivo_php", "arguments": {"caminho": "ecidade/tela001.php"}})
     assert r["result"]["structuredContent"]["ok"] is True
     r = s.pede(4, "tools/call", {"name": "buscar_codigo_legado", "arguments": {"padrao": "split", "caminho": "../.."}})
     assert r["result"]["structuredContent"]["erro"]["codigo"] == "caminho_fora_da_raiz"
-    assert len(s.pede(5, "resources/list")["result"]["resources"]) == 7
+    assert len(s.pede(5, "resources/list")["result"]["resources"]) == 9
     assert len(s.pede(6, "prompts/list")["result"]["prompts"]) == 4
     s.pede(7, "resources/read", {"uri": "ecidade://estado/trabalho"})
     s.pede(8, "tools/call", {"name": "quadro", "arguments": {}})

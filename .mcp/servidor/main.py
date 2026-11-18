@@ -26,7 +26,9 @@ from pydantic import BaseModel, Field  # noqa: E402
 from servidor import prompts, resources  # noqa: E402
 from servidor.busca import buscar  # noqa: E402
 from servidor.config import carregar_config  # noqa: E402
-from servidor.padroes import PADROES  # noqa: E402
+from servidor.padroes import APELIDOS, PADROES, SEVERIDADES  # noqa: E402
+from servidor.areas import AREAS_GRUPO  # noqa: E402
+from servidor.tools import grupo  # noqa: E402
 from servidor.seguranca import ErroFerramenta  # noqa: E402
 from servidor.tools import coordenacao, regressao  # noqa: E402
 from servidor.tools.composer import analisar_composer  # noqa: E402
@@ -35,13 +37,19 @@ from servidor.tools.validar import validar_arquivo_php  # noqa: E402
 log = logging.getLogger("ecidade-mcp")
 VERSAO = "0.1.0"
 
-NomePadrao = Literal[("todos", *PADROES)]  # type: ignore[valid-type]
+NomePadrao = Literal[("todos", *SEVERIDADES, *PADROES, *APELIDOS)]  # type: ignore[valid-type]
 Caminho = Annotated[str, Field(min_length=1, max_length=1024,
                                description="caminho relativo a raiz do repositorio, ex.: ecidade/arr1_grupotaxa001.php")]
+Area = Literal[tuple(AREAS_GRUPO)]  # type: ignore[valid-type]
 Quem = Annotated[str | None, Field(default=None, max_length=80,
                                    description="seu nome (padrao: ECIDADE_MCP_USUARIO ou git config user.name)")]
 
-INSTRUCOES = """Servidor da migracao do e-Cidade (base PHP 7.4/Laravel 8 -> PHP 8.5/Laravel 12).
+INSTRUCOES = """Servidor da migracao do e-Cidade (base PHP 7.4/Laravel 8 do PR #8 -> PHP 8.5 com Laravel 13 +
+Passport 13; o 7.4 fica intacto com o Laravel 8 e o 8.5 tem composer proprio).
+REGRAS DO GRUPO (leia ecidade://grupo/regras ou a tool regras_do_grupo): referencia = 7.4 do PR; mexa o MINIMO no
+arquivo do PR e nunca copie arquivo inteiro da base-php84; prova 7.4 x 8.5 antes e depois; codigo em ISO-8859-1
+(nao salve em UTF-8); commit do Rector separado do manual; cada pessoa na sua area; defeito que ja existe no 7.4 e
+registrado e avisado ao dono, nao corrigido; composer.json/lock/vendor sao do grupo Laravel.
 Antes de mexer em codigo: leia ecidade://docs/regras-arquitetura e ecidade://docs/breaking-changes, veja o `quadro`
 e reivindique o arquivo (`reivindicar_arquivo`). PHP/PHPStan/Pint rodam no Docker do projeto (`validar_arquivo_php`);
 a regressao roda com `rodar_regressao` e se le com `ler_resultado_regressao`. INCONCLUSIVO/ERRO_AMBIENTE nunca sao
@@ -132,11 +140,12 @@ def _tool(mcp: MCPServer, *, name: str, annotations: ToolAnnotations, descriptio
 
 
 def criar_servidor() -> MCPServer:
-    mcp = MCPServer(name="ecidade-migracao", title="e-Cidade: migracao PHP 8.5 / Laravel 12", version=VERSAO,
+    mcp = MCPServer(name="ecidade-migracao", title="e-Cidade: migracao PHP 8.5 / Laravel 13", version=VERSAO,
                     instructions=INSTRUCOES)
 
     @_tool(mcp, name="analisar_composer", annotations=LEITURA,
-              description="Le composer.json/composer.lock e aponta o que trava a ida para PHP 8.5/Laravel 12: "
+              description="Le composer.json/composer.lock e aponta o que trava a ida para PHP 8.5/Laravel 13 (bloqueios Pix e "
+                          "Pimaco medidos pelo grupo; composer e do grupo Laravel): "
                           "restricao de PHP de cada pacote do lock, pacotes abandonados/antigos e a sugestao. "
                           "Ex.: analisar_composer() ou analisar_composer(caminho='ecidade/composer.json')")
     def t_analisar_composer(caminho: Caminho = "ecidade/composer.json") -> Resposta:
@@ -149,7 +158,9 @@ def criar_servidor() -> MCPServer:
                           "Sem padrao nem regex devolve o catalogo. Ex.: buscar_codigo_legado(padrao='parse_str_1_arg', "
                           "caminho='ecidade/classes', limite=50)")
     def t_buscar(
-        padrao: Annotated[NomePadrao | None, Field(description="nome do padrao ou 'todos'")] = None,
+        padrao: Annotated[NomePadrao | None, Field(description="nome do padrao, apelido do guia do grupo, 'todos' "
+                                                         "ou uma severidade (quebra_8_5, silenciosa, obsoleto, laravel)")
+                          ] = None,
         regex: Annotated[str | None, Field(max_length=300, description="regex Python aplicada linha a linha")] = None,
         caminho: Annotated[str | None, Field(max_length=1024, description="arquivo ou diretorio (padrao: ecidade)")] = None,
         limite: Annotated[int, Field(ge=1, le=2000)] = 100,
@@ -230,9 +241,11 @@ def criar_servidor() -> MCPServer:
         motivo: Annotated[str, Field(max_length=200)] = "",
         quem: Quem = None,
         horas: Annotated[float | None, Field(gt=0, le=72)] = None,
+        minha_area: Annotated[Area | None, Field(description="sua area no grupo (padrao: ECIDADE_MCP_AREA)")] = None,
+        combinado_com_dono: Annotated[bool, Field(description="arquivo de outra area ja combinado com o dono")] = False,
     ) -> Resposta:
         return executar("reivindicar_arquivo", coordenacao.reivindicar_arquivo, caminho=caminho, motivo=motivo,
-                        quem=quem, horas=horas)
+                        quem=quem, horas=horas, minha_area=minha_area, combinado_com_dono=combinado_com_dono)
 
     @_tool(mcp, name="liberar_arquivo", annotations=ESCRITA_ESTADO,
               description="Libera um arquivo que voce reivindicou; com concluido=true registra os padroes corrigidos. "
@@ -241,7 +254,7 @@ def criar_servidor() -> MCPServer:
     def t_liberar(
         caminho: Caminho,
         concluido: bool = False,
-        padroes_corrigidos: Annotated[list[Literal[tuple(PADROES)]], Field(max_length=30)] = [],  # type: ignore[valid-type]  # noqa: B006
+        padroes_corrigidos: Annotated[list[Literal[(*PADROES, *APELIDOS)]], Field(max_length=30)] = [],  # type: ignore[valid-type]  # noqa: B006
         observacao: Annotated[str, Field(max_length=500)] = "",
         quem: Quem = None,
     ) -> Resposta:
@@ -255,7 +268,8 @@ def criar_servidor() -> MCPServer:
         return executar("quadro", coordenacao.quadro)
 
     @_tool(mcp, name="proximo_trabalho", annotations=ESCRITA_ESTADO,
-              description="Proximo lote mecanico: arquivos com o padrao de maior prioridade (ou o pedido) que ninguem "
+              description="Proximo lote mecanico, na ordem do grupo (nao compila no 8.5 > quebra em execucao > silencioso), so da "
+                          "sua area: arquivos com o padrao de maior prioridade (ou o pedido) que ninguem "
                           "reivindicou e ninguem concluiu, com as linhas. reivindicar=true ja reivindica o lote. Ex.: "
                           "proximo_trabalho(padrao='parse_str_1_arg', limite=10, reivindicar=true)")
     def t_proximo(
@@ -264,9 +278,11 @@ def criar_servidor() -> MCPServer:
         limite: Annotated[int, Field(ge=1, le=50)] = 10,
         reivindicar: bool = False,
         quem: Quem = None,
+        minha_area: Annotated[Area | None, Field(description="sua area no grupo (padrao: ECIDADE_MCP_AREA); so "
+                                                             "devolve arquivos dela")] = None,
     ) -> Resposta:
         return executar("proximo_trabalho", coordenacao.proximo_trabalho, padrao=None if padrao == "todos" else padrao,
-                        caminho=caminho, limite=limite, quem=quem, reivindicar=reivindicar)
+                        caminho=caminho, limite=limite, quem=quem, reivindicar=reivindicar, minha_area=minha_area)
 
     @_tool(mcp, name="padroes_ja_corrigidos", annotations=LEITURA,
               description="Para cada padrao: a forma canonica de corrigir, os arquivos registrados como concluidos e "
@@ -274,6 +290,22 @@ def criar_servidor() -> MCPServer:
                           "padroes_ja_corrigidos(contar_em='ecidade/classes')")
     def t_padroes(contar_em: Annotated[str | None, Field(max_length=1024)] = None) -> Resposta:
         return executar("padroes_ja_corrigidos", coordenacao.padroes_ja_corrigidos, contar_em=contar_em)
+
+    @_tool(mcp, name="regras_do_grupo", annotations=LEITURA,
+           description="Regras de trabalho e de metodo do grupo (CONTRIBUINDO.md + guia 7.4 -> 8.5): git add por "
+                       "arquivo, WSL, ISO-8859-1, Rector separado, area, composer do grupo Laravel, codigo do PR "
+                       "primeiro, so atualizar, o que copiar da base-php84. Ex.: regras_do_grupo(topico='base-php84')")
+    def t_regras(topico: Annotated[str | None, Field(max_length=100)] = None) -> Resposta:
+        return executar("regras_do_grupo", grupo.regras_do_grupo, topico=topico)
+
+    @_tool(mcp, name="ferramentas_do_grupo", annotations=LEITURA,
+           description="Lista as ferramentas do grupo em scratchpad/ (cmp.py, escrita.php, regras do Rector...) com "
+                       "a descricao do cabecalho de cada uma; inclui as que so existem na branch `ref` (padrao "
+                       "origin/base-php74). Ex.: ferramentas_do_grupo()")
+    def t_ferramentas(ref: Annotated[str | None, Field(max_length=100, description="branch para comparar; vazio = "
+                                                                                    "so a arvore de trabalho")]
+                      = "origin/base-php74") -> Resposta:
+        return executar("ferramentas_do_grupo", grupo.ferramentas_do_grupo, ref=ref or None)
 
     resources.registrar(mcp)
     prompts.registrar(mcp)
