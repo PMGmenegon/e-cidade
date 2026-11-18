@@ -84,6 +84,8 @@ def test_todos_os_comandos_das_ferramentas_passam_na_allowlist(config):
 @pytest.mark.parametrize("argv", [["sh", "-c", "rm -rf /"], ["bash"], ["php", "-r", "system('id');"],
                                   ["php", "a\x00b"], [],
                                   ["php", "-l", "/etc/passwd"], ["php", "-l", "/var/www/html/../../etc/passwd"],
+                                  ["php", "-d", "auto_prepend_file=/tmp/x", "-l", "/var/www/html/a.php"],
+                                  ["php", "-d", "display_errors=stderr", "-l", "/etc/passwd"],
                                   ["php", "-d", "auto_prepend_file=/tmp/x", "-d", "display_errors=stderr",
                                    "vendor/bin/phpstan", "analyse", "/var/www/html/a.php"],
                                   ["php", "-d", "memory_limit=1G", "-d", "display_errors=stderr",
@@ -118,7 +120,10 @@ def test_caminho_no_conteiner(config):
 
 
 def test_comando_ferramenta():
-    assert comando_ferramenta("lint", "/var/www/html/a.php") == ["php", "-l", "/var/www/html/a.php"]
+    # display_errors=stderr: os conteineres tem display_errors=Off (paridade) e o motivo do erro de sintaxe so iria
+    # para o log do PHP; sem isso o lint diria "Errors parsing" sem a linha nem a causa (visto ao vivo na task 6)
+    assert comando_ferramenta("lint", "/var/www/html/a.php") == ["php", "-d", "display_errors=stderr", "-l",
+                                                                 "/var/www/html/a.php"]
     stan = comando_ferramenta("phpstan", "/var/www/html/a.php", nivel=5)
     assert stan[:5] == ["php", "-d", "memory_limit=1G", "-d", "display_errors=stderr"]
     assert "--level=5" in stan and "--error-format=json" in stan

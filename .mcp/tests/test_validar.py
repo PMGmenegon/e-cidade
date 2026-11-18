@@ -84,7 +84,7 @@ def test_lint_nas_duas_versoes(config):
     assert por["8.5 (alvo)"]["ok"] is False and "line 2" in por["8.5 (alvo)"]["saida"]
     assert r["ok"] is False and "8.5" in r["resumo"]
     cmds = [c for c in fake.chamadas if c[1] == "exec"]
-    assert all(c[-3:] == ["php", "-l", "/var/www/html/tela001.php"] for c in cmds)
+    assert all(c[-5:] == ["php", "-d", "display_errors=stderr", "-l", "/var/www/html/tela001.php"] for c in cmds)
 
 
 def test_so_alvo(config):

@@ -60,7 +60,9 @@ def caminho_no_conteiner(config: Config, absoluto: Path) -> str:
 
 def comando_ferramenta(ferramenta: str, arquivo: str, nivel: int | None = None) -> list[str]:
     if ferramenta == "lint":
-        return ["php", "-l", arquivo]
+        # display_errors=stderr: os conteineres tem display_errors=Off (paridade 7.4 x 8.5); sem isso o motivo e a
+        # linha do erro de sintaxe so vao para o log do PHP e o lint diz apenas "Errors parsing <arquivo>"
+        return ["php", "-d", "display_errors=stderr", "-l", arquivo]
     if ferramenta == "phpstan":
         # display_errors=stderr: avisos do proprio PHPStan (ex.: Deprecated no 8.5) nao sujam o JSON do stdout
         cmd = ["php", "-d", "memory_limit=1G", "-d", "display_errors=stderr", "vendor/bin/phpstan", "analyse",
@@ -87,7 +89,7 @@ def _validar_argv(argv: list[str], base: str) -> None:
     match argv:
         case ["php", "-v"] | ["php", "-m"] | ["test", "-x", "vendor/bin/pint" | "vendor/bin/phpcs" | "vendor/bin/phpstan"]:
             return
-        case ["php", "-l", arq] if _caminho_ok(arq, base):
+        case ["php", "-l", arq] | ["php", "-d", "display_errors=stderr", "-l", arq] if _caminho_ok(arq, base):
             return
         case ["php", "-d", d, "-d", "display_errors=stderr", "vendor/bin/phpstan", "analyse", *resto] if (
                 _D_PERMITIDO.match(d) and resto):
