@@ -7,6 +7,25 @@ Docker do projeto), a mesma regressão e um quadro de quem está mexendo em quê
 Ele roda **na sua máquina** (nada de servidor central) e conversa com a IA pelo terminal (stdio). Não faz push, não
 apaga nada, não roda comando livre.
 
+**Alvo:** PHP 8.5 com **Laravel 13 + Passport 13**, partindo da `base-php74` (PR #8: PHP 7.4 + Laravel 8). O 7.4 fica
+intacto como referência; o 8.5 terá composer próprio.
+
+## Regras do grupo (o essencial)
+
+O servidor ensina à sua IA as regras do `CONTRIBUINDO.md` e do guia do grupo (íntegra: tool `regras_do_grupo`,
+resources `ecidade://grupo/regras` e `ecidade://grupo/guia-7.4-para-8.5`):
+
+- `git add` arquivo por arquivo (nunca `-A`/`.`); trabalhe no WSL, nunca em `C:\`; **não salve em UTF-8** (o
+  código é ISO-8859-1).
+- Rector num commit, correção manual em outro; pull request pequeno; nunca `push --force`/`reset --hard` sem avisar.
+- **Cada pessoa na sua área** (defina `ECIDADE_MCP_AREA`: `nucleo`, `educacao`, `pessoal`, `financeiro`,
+  `tributario_patrimonial`, `saude_demais`); `composer.json`/`composer.lock`/`vendor/` são do grupo Laravel.
+- **O código do PR manda**: mexa o mínimo, nunca copie arquivo inteiro da `base-php84`; se o 8.5 já se comporta
+  como o 7.4, não mexa; **prove 7.4 × 8.5 antes e depois**.
+- **Só atualizar**: defeito que já existe no 7.4 (até de segurança) é registrado e avisado ao dono, não corrigido.
+- Fluxo: `git checkout base-php74 && git pull && git checkout -b area/assunto` → commits (verbo no presente, sem
+  acento, com números) → `git pull origin base-php74` → pull request para `base-php74`.
+
 ## Em 3 passos
 
 Tudo no **WSL/Linux**, na **raiz do repositório**.
@@ -68,20 +87,27 @@ Toda resposta vem no formato `{"ok": true|false, "dados": {...}, "erro": {"codig
 | Tool | Para que serve | Exemplo de pedido |
 |---|---|---|
 | `quadro` | Quem está mexendo em quê, o que já foi concluído, últimas rodadas da regressão | `quadro()` |
-| `reivindicar_arquivo` | "Estou mexendo neste arquivo" (vale 4 h; chamar de novo renova). Recusa se outra pessoa já pegou | `reivindicar_arquivo(caminho="ecidade/mat2_cadunidade002.php", motivo="parse_str")` |
+| `reivindicar_arquivo` | "Estou mexendo neste arquivo" (vale 4 h; chamar de novo renova). Recusa se outra pessoa já pegou ou se o arquivo é de outra área (`minha_area`/`ECIDADE_MCP_AREA`) | `reivindicar_arquivo(caminho="ecidade/mat2_cadunidade002.php", motivo="parse_str")` |
 | `liberar_arquivo` | Solta o arquivo; com `concluido=true` registra o que foi corrigido | `liberar_arquivo(caminho="ecidade/mat2_cadunidade002.php", concluido=true, padroes_corrigidos=["parse_str_1_arg"])` |
-| `proximo_trabalho` | Próximo lote de arquivos de um problema mecânico, pulando os de outros e os já feitos (`reivindicar=true` já pega o lote) | `proximo_trabalho(padrao="parse_str_1_arg", limite=10, reivindicar=true)` |
+| `proximo_trabalho` | Próximo lote da **sua área**, na ordem do grupo (não compila no 8.5 > quebra em execução > silencioso), pulando os de outros e os já feitos (`reivindicar=true` já pega o lote) | `proximo_trabalho(padrao="parse_str_1_arg", limite=10, reivindicar=true)` |
 | `buscar_codigo_legado` | Procura código antigo por **nome de problema** (`parse_str_1_arg`, `construtor_php4`, `split`, `each`, `ereg`, `create_function`, `count_null`, `pg_resultado_false`, `reflection_getclass`, `laravel_dates_property`… ou `todos`) ou por regex. Sem nada, lista o catálogo | `buscar_codigo_legado(padrao="todos", caminho="ecidade/con2_balancrece002.php")` |
 | `padroes_ja_corrigidos` | Como cada problema é corrigido no repositório (forma padrão), o que já foi feito e quanto falta | `padroes_ja_corrigidos(contar_em="ecidade/classes")` |
 | `validar_arquivo_php` | `php -l`, PHPStan, Pint ou PHPCS **dentro do Docker**: PHP 7.4 (referência), 8.5 (alvo) ou os dois | `validar_arquivo_php(caminho="ecidade/con2_conhist002.php", versao="ambas")` |
-| `analisar_composer` | O que no `composer.json`/`composer.lock` trava o PHP 8.5/Laravel 12 | `analisar_composer()` |
+| `analisar_composer` | O que no `composer.json`/`composer.lock` trava o PHP 8.5/Laravel 13 (inclui os 2 bloqueios medidos: Pix e Pimaco) | `analisar_composer()` |
 | `rodar_regressao` | Dispara a regressão em segundo plano e devolve o id (uma por vez; **restaura o banco de teste**). Baterias: `php` (com `prefixo` ou `area`), `laravel` (só compara; pede `confirmo_rodada_longa=true`), `fluxos` (só compara; sem `fluxo` pede confirmação), `completa` | `rodar_regressao(bateria="php", prefixo=["^arr1_grupotaxa001\\.php$"])` |
 | `ler_resultado_regressao` | Andamento e resultado de uma rodada (sem id: lista as rodadas) | `ler_resultado_regressao(id="20261117-153000-php-1a2b")` |
 | `ler_triagem` | Lê a triagem das divergências e as decisões da migração, por seção ou busca | `ler_triagem(documento="decisoes", secao="Resumo executivo")` |
+| `regras_do_grupo` | As regras do grupo, inteiras ou por tópico | `regras_do_grupo(topico="base-php84")` |
+| `ferramentas_do_grupo` | As ferramentas do grupo em `scratchpad/` (cmp.py, escrita.php, regras do Rector...) com a descrição de cada uma, inclusive as que só estão na `origin/base-php74` | `ferramentas_do_grupo()` |
 
 **Resources** (a IA lê como documentos): `ecidade://docs/regras-arquitetura`, `ecidade://docs/breaking-changes`,
 `ecidade://regressao/como-usar`, `ecidade://regressao/triagem`, `ecidade://regressao/decisoes`,
-`ecidade://estado/trabalho`, `ecidade://padroes`.
+`ecidade://estado/trabalho`, `ecidade://padroes`, `ecidade://grupo/regras`, `ecidade://grupo/guia-7.4-para-8.5`.
+
+**Padrões de `buscar_codigo_legado`** têm severidade (`quebra_8_5`, `silenciosa`, `obsoleto`, `laravel`) e a
+resposta traz o resumo por severidade; `padrao` aceita um nome, um apelido do guia do grupo (`chave_offset`,
+`each_removido`, `construtor_antigo`, `utf8_encode`, `string_interp_dolar`, `dates_model`...), `todos` ou uma
+severidade. O código é lido como ISO-8859-1.
 
 **Prompts** (roteiros prontos; no Claude Code aparecem como `/mcp__ecidade__...`): `migrar-arquivo`,
 `auditar-model`, `corrigir-padrao-mecanico`, `verificar-com-regressao`.
@@ -93,8 +119,9 @@ Toda resposta vem no formato `{"ok": true|false, "dados": {...}, "erro": {"codig
   impede ninguém de usar outro nome. Controle de acesso de verdade é o do Git/GitHub.
 - O quadro fica em `.mcp/estado/trabalho.json`, **no Git**. Depois de reivindicar/liberar, faça commit **só desse
   arquivo** (`git add .mcp/estado/trabalho.json`). Detalhes e o que fazer em conflito: `.mcp/estado/README.md`.
-- Commit de código: **só os arquivos que você mexeu** (`git add <arquivo>`), nunca `git add -A`. Mensagem
-  `migra(<problema>): <o que mudou>`. Regras completas: `.mcp/docs/regras-arquitetura.md`.
+- Commit de código: **só os arquivos que você mexeu** (`git add <arquivo>`), nunca `git add -A`. Assunto no formato
+  do grupo (verbo no presente, sem acento, com números) e a linha `Padrao-MCP: <padrao>` no corpo; Rector num
+  commit só dele. Regras completas: `.mcp/docs/regras-arquitetura.md` e `ecidade://grupo/regras`.
 
 ## Onde cada coisa roda
 
@@ -123,6 +150,7 @@ Toda resposta vem no formato `{"ok": true|false, "dados": {...}, "erro": {"codig
 | Variável | Padrão | Para que |
 |---|---|---|
 | `ECIDADE_MCP_USUARIO` | `git config user.name` | seu nome no quadro |
+| `ECIDADE_MCP_AREA` | (nenhuma) | sua área no grupo: o MCP recusa reivindicar arquivo de outra área e o `proximo_trabalho` só traz a sua |
 | `ECIDADE_MCP_EXPIRA_HORAS` | `4` | validade da reivindicação |
 | `REGRESSAO_CONTAINER_REF` / `REGRESSAO_CONTAINER_PHP_NOVO` / `REGRESSAO_CONTAINER_BANCO` | `ecidade74_php74` / `ecidade74_php85` / `ecidade74_database` | nomes dos contêineres (os mesmos da suíte `regressao/`) |
 | `ECIDADE_MCP_TIMEOUT_PHPSTAN` | `600` | segundos |
@@ -147,6 +175,7 @@ código.
 | `quem_desconhecido` | passe `quem="seu nome"` ou defina `ECIDADE_MCP_USUARIO` |
 | `ja_reivindicado` | outra pessoa está no arquivo até a hora em `detalhes.expira`; escolha outro (`proximo_trabalho`) |
 | `rodada_em_andamento` | espere a rodada atual (`ler_resultado_regressao`) |
+| `outra_area` | o arquivo é de outra área: peça ao dono (ou, combinado, `combinado_com_dono=true`) |
 | `estado_corrompido` | `trabalho.json` com conflito do Git ou formato inválido (veja `.mcp/estado/README.md`), ou `meta.json`/`resultado.json` de rodada estragado (apague a pasta da rodada em `.mcp/rodadas/`) |
 | `confirmacao_necessaria` | a rodada pedida é longa (PHP sem filtro: horas; laravel: ~12 min; fluxos sem `fluxo`): restrinja ou confirme com `confirmo_rodada_longa=true` |
 | `caminho_proibido` | o arquivo é segredo, log, cache ou dado de execução (lista em "O que o servidor NUNCA faz") |
@@ -160,7 +189,7 @@ código.
 - Código em `.mcp/servidor/` (`main.py` registra tools/resources/prompts; `seguranca.py` confina caminhos;
   `docker_exec.py` tem a lista de comandos permitidos; `estado.py` a escrita atômica com trava; `padroes.py` o
   catálogo). SDK oficial `mcp` 2.x (`MCPServer`, o antigo FastMCP) e `pydantic`, versões fixas em `requirements.txt`.
-- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest`. Inclui cliente MCP em processo, o
+- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest` (295 testes, ~20 s). Inclui cliente MCP em processo, o
   servidor de verdade por stdio, a garantia de que o stdout só tem JSON-RPC e uma corrida com 2 processos no estado.
 - Teste manual com o inspetor oficial: `npx @modelcontextprotocol/inspector .mcp/.venv/bin/python .mcp/servidor/main.py`;
   no Claude Code, `claude mcp list` mostra se o `ecidade` conectou.
