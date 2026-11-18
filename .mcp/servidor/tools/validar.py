@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import re
+from pathlib import Path
 from typing import Any
 
 from servidor.config import Config
@@ -10,6 +12,56 @@ from servidor.seguranca import ErroFerramenta, limitar, relativo, resolver_camin
 
 VERSOES = {"referencia": "7.4 (referencia)", "alvo": "8.5 (alvo)"}
 MAX_MENSAGENS = 100
+CONFIGS_PHPSTAN = ("phpstan.neon", "phpstan.neon.dist", "phpstan.dist.neon")
+# chaves cujos itens o PHPStan EXECUTA (bootstrapFiles) ou carrega (includes, autoload/scan)
+_CHAVES_ARQUIVO = {"bootstrapfiles", "bootstrap", "includes", "autoload_files", "autoload_directories",
+                   "scanfiles", "scandirectories"}
+_CHAVE = re.compile(r"^(\s*)([A-Za-z_]+)\s*:\s*(.*?)\s*$")
+_ITEM = re.compile(r"^(\s*)-\s*(.+?)\s*$")
+
+
+def _itens_de_arquivo(texto: str) -> list[str]:
+    """Itens das chaves perigosas de um .neon (lista em bloco `- x` ou inline `[a, b]`)."""
+    itens, chave_ind = [], None
+    for linha in texto.splitlines():
+        if not linha.strip() or linha.lstrip().startswith("#"):
+            continue
+        m = _CHAVE.match(linha)
+        if m and not linha.lstrip().startswith("-"):
+            ind, chave, valor = len(m.group(1)), m.group(2).lower(), m.group(3)
+            chave_ind = ind if chave in _CHAVES_ARQUIVO else None
+            if chave_ind is not None and valor:
+                itens += [v.strip().strip("'\"") for v in valor.strip("[]").split(",") if v.strip()]
+            continue
+        mi = _ITEM.match(linha)
+        if mi and chave_ind is not None and len(mi.group(1)) > chave_ind:
+            itens.append(mi.group(2).strip("'\""))
+        elif mi is None:
+            chave_ind = None
+    return itens
+
+
+def conferir_config_phpstan(config: Config) -> None:
+    """Recusa rodar o PHPStan se a config do repo manda carregar/executar arquivo fora da raiz do repositorio
+    (bootstrapFiles roda PHP; um commit malicioso poderia apontar para fora). Dentro da raiz e permitido."""
+    codigo = (config.raiz / config.dir_codigo).resolve()
+    raiz = config.raiz.resolve()
+    for nome in CONFIGS_PHPSTAN:
+        arq = codigo / nome
+        if not arq.is_file():
+            continue
+        for item in _itens_de_arquivo(arq.read_text(encoding="utf-8", errors="replace")):
+            v = (item.replace("%currentWorkingDirectory%", str(codigo))
+                 .replace("%rootDir%", str(codigo / "vendor" / "phpstan" / "phpstan")))
+            if v.startswith(config.dir_no_conteiner + "/") or v == config.dir_no_conteiner:
+                v = str(codigo) + v[len(config.dir_no_conteiner):]
+            if "%" in v:
+                raise ErroFerramenta("config_phpstan_recusada", f"{nome}: item {item!r} com variavel desconhecida")
+            alvo = (Path(v) if Path(v).is_absolute() else arq.parent / v).resolve()
+            if alvo != raiz and raiz not in alvo.parents:
+                raise ErroFerramenta("config_phpstan_recusada",
+                                     f"{nome} manda o PHPStan carregar {item!r}, fora do repositorio; revise o arquivo "
+                                     "(bootstrapFiles executa PHP)")
 
 
 def _phpstan(stdout: str) -> tuple[bool | None, list[dict[str, Any]]]:
@@ -46,6 +98,8 @@ def _um(docker: DockerExec, conteiner: str, ferramenta: str, arquivo: str, nivel
                 raise ErroFerramenta("ferramenta_indisponivel",
                                      f"{binario} nao esta instalado em {conteiner} (dependencia de dev do composer); "
                                      "instalar e decisao da equipe")
+        if ferramenta == "phpstan":
+            conferir_config_phpstan(config)
         timeout = config.timeout_phpstan_s if ferramenta == "phpstan" else config.timeout_lint_s
         r = docker.executar(conteiner, comando_ferramenta(ferramenta, arquivo, nivel), timeout=timeout)
     except ErroFerramenta as e:

@@ -5,7 +5,46 @@ import pytest
 
 from servidor.docker_exec import DockerExec
 from servidor.seguranca import ErroFerramenta
-from servidor.tools.validar import validar_arquivo_php
+from servidor.tools.validar import conferir_config_phpstan, validar_arquivo_php
+
+NEON_PROJETO = """parameters:
+    bootstrapFiles:
+        - libs/db_stdlib.php
+        - dbforms/db_funcoes.php
+        - bootstrap.php
+
+    fileExtensions:
+        - php
+"""
+
+
+def test_config_phpstan_do_projeto_e_aceita(config):
+    (config.raiz / "ecidade" / "phpstan.neon").write_text(NEON_PROJETO)
+    conferir_config_phpstan(config)
+
+
+@pytest.mark.parametrize("neon", [
+    "parameters:\n    bootstrapFiles:\n        - /tmp/mal.php\n",
+    "parameters:\n    bootstrapFiles:\n        - ../../fora.php\n",
+    "includes:\n    - /home/alguem/x.neon\n",
+    "parameters:\n    bootstrapFiles: [ok.php, /etc/x.php]\n",
+    "parameters:\n    bootstrapFiles:\n        - %env.HOME%/x.php\n",
+])
+def test_config_phpstan_apontando_para_fora_e_recusada(config, neon):
+    (config.raiz / "ecidade" / "phpstan.neon").write_text(neon)
+    with pytest.raises(ErroFerramenta) as e:
+        conferir_config_phpstan(config)
+    assert e.value.codigo == "config_phpstan_recusada"
+    item = roda(config, FakeDocker(), caminho="ecidade/tela001.php", ferramentas=["phpstan"],
+                versao="alvo")["resultados"][0]
+    assert item["erro"]["codigo"] == "config_phpstan_recusada"
+
+
+def test_config_phpstan_caminho_do_conteiner_e_includes_do_vendor(config):
+    (config.raiz / "ecidade" / "phpstan.neon").write_text(
+        "includes:\n    - %rootDir%/conf/bleedingEdge.neon\nparameters:\n    bootstrapFiles:\n"
+        "        - /var/www/html/bootstrap.php\n")
+    conferir_config_phpstan(config)
 
 
 class FakeDocker:
