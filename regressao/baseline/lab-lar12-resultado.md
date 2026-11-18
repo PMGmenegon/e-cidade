@@ -1,70 +1,94 @@
-# Laboratório :8087: Laravel 5.4 sob PHP 8.5 (17/11/2026)
+# Laboratório :8187: Laravel 8 da base 7.4 sob PHP 8.5 (18/11/2026)
 
-Primeira rodada real da bateria Laravel contra um alvo que não é a referência. **Não é Laravel 12**: não existe
-código do e-Cidade em Laravel 12 (todas as branches do upstream usam `laravel/framework 5.4.*`). O laboratório
-(`regressao/lab/docker-compose.lar12.yml`) roda o runtime do `ecidade_php85` sobre o `./ecidade` atual. A baseline
-Laravel gravada no 5.4 não foi alterada.
+Rodada da bateria Laravel contra o laboratório `ecidade74_lar12` (`regressao/lab/docker-compose.lar12.yml`). **Não é
+Laravel 12**: não existe código do e-Cidade em Laravel 12. O laboratório roda o **mesmo runtime do `ecidade74_php85`**
+(imagem `ecidade74-php85:latest`, mesmo `paridade-74.ini`, mesmos volumes) sobre o `./ecidade` atual, ou seja, o
+**Laravel 8.73.2 / Passport 10.4.2 da base 7.4 sob PHP 8.5.12**. A baseline Laravel (gravada na referência :8074) não
+foi alterada. (O resultado anterior deste arquivo, "Laravel 5.4 sob PHP 8.5" na porta :8087, era da branch antiga.)
 
 ## Comandos
 
 ```bash
-docker compose -f regressao/lab/docker-compose.lar12.yml up -d        # container ecidade_lar12, PHP 8.5.12
-REGRESSAO_LARAVEL_CONSOLE_CONTAINER=ecidade_lar12 \
-  regressao/.venv/bin/python -m regressao.laravel.bateria comparar \
-  --saida ~/rodadas/lar12-sobre-php85 --alvo http://localhost:8087    # saída 2, 0,9 s
+docker compose -p e74-lar12 -f regressao/lab/docker-compose.lar12.yml up -d     # container ecidade74_lar12, PHP 8.5.12
+regressao/.venv/bin/python -m regressao.laravel.bateria comparar \
+  --saida ~/e74-logs/task3/lab1 --alvo http://localhost:8187                   # saída 2
 ```
 
-Rodada arquivada em `~/rodadas/lar12-sobre-php85/` (commit `6248e399d`, dump `af43b090…`).
+Commit `cf5670b02`, baseline de 996 casos (`_meta.json`: `alvo: ref`, dump `15cd994a…`). Rodada arquivada em
+`~/e74-logs/task3/lab1/` (WSL). O console `artisan` usou o `ecidade74_lar12` sozinho (alvo = `REGRESSAO_LARAVEL_NOVO_URL`).
 
 ## Resultado
 
 | IDENTICO | DIVERGE | INCONCLUSIVO | ERRO_AMBIENTE |
 |---|---|---|---|
-| 0 | 0 | 0 | **1** (`laravel:boot`: HTTP 500 em `/v4/oauth/token`) |
+| 0 | 0 | 0 | **1** (`laravel:banco`: `POST /v4/oauth/token` devolveu HTTP 500) |
 
-A bateria para no portão de boot, como foi desenhada: o banco não foi restaurado e nenhum dos 389 casos rodou.
+Diferente do 5.4, **o Laravel 8 sobe no PHP 8.5**: o portão de boot passou (`GET /v4/oauth/token` → 405 JSON, igual à
+referência), o banco foi restaurado (190 s) e a bateria parou no **preparo**: sem token OAuth nenhum dos 996 casos roda
+(todos os casos de rota usam o token compartilhado). Nenhum caso foi avaliado; nada aqui é aprovação.
 
-O que responde em :8087:
+O que responde em :8187 (comparado com a referência :8074, mesmas requisições):
 
-- `/` → 302 para `login.php`, e `login.php` → 200 (12 009 bytes, igual ao :8085). O PHP legado funciona.
-- `/v4/oauth/token` e `/v4/api/financeiro/contabilidade/sistemas` (a rota de controle) → **HTTP 500 com corpo
-  vazio**. Na referência (:8080), sem token, elas dão 405 (JSON `{"error":true,…}` do `RouteCollection`) e
-  500 com JSON `{"error":true,"message":"Unauthenticated."…}`.
-- Varredura sem autenticação das 108 rotas GET da baseline: **as 106 `/v4` dão 500 com corpo vazio**. As 2 Silex
-  `/api/v1` respondem com o mesmo status e a mesma mensagem do 5.4 (500 "Sem permissão para acessar a API." e
-  403 "Sessão inválida ou expirada."); só o `stacktrace` muda (nome de closure no PHP 8).
-- `php artisan --version` no container: saída 255, nada no stdout.
+| Requisição | Referência 7.4 | Laboratório 8.5 |
+|---|---|---|
+| `php artisan --version` / `env` / `list --raw` | Laravel 8.73.2 / `local` / 111 linhas | **igual** (o console funciona) |
+| `GET /v4/oauth/token` | 405 JSON | 405 JSON (igual) |
+| `POST /v4/oauth/token` (password grant do cliente 9999999) | 200 com token | **500** `{"error":true,"message":"It was not possible to parse your key, reason: "}` |
+| `GET` rota protegida **sem** token | 500 `Unauthenticated.` | 500 `Unauthenticated.` (igual) |
+| `GET` rota protegida com token **emitido pela referência** | 200 com dados | **500** `It was not possible to parse your key, reason: error:1E08010C:DECODER routines::unsupported` |
+| `GET /api/v1/protocolo/cgm` (Silex) | 500 "Notificação do Sistema" | igual |
 
-**O Laravel 5.4 não sobe sob PHP 8.5.**
+## Causa exata
 
-## Causa exata (de `/var/log/php_errors.log` do `ecidade_lar12`)
+**`lcobucci/jwt` 3.4.0** (dependência do `league/oauth2-server` 8.3.2 / `laravel/passport` 10.4.2 no `composer.lock` da
+base 7.4; o próprio pacote declara `"php": "^5.6 || ^7.0"`) valida a chave assim
+(`vendor/lcobucci/jwt/src/Signer/OpenSSL.php:82-86`):
 
-1. No boot, `HandleExceptions` do Laravel 5.4 chama `error_reporting(-1)` e transforma **qualquer** aviso, inclusive
-   `E_DEPRECATED`, em `ErrorException`. O PHP 8.4+ emite deprecations ao carregar classes do próprio framework. A
-   primeira, no console (verificada com um script de boot pelo stdin, sem gravar nada):
-   `Illuminate\Http\Request::duplicate(): Implicitly marking parameter $query as nullable is deprecated`
-   (`vendor/laravel/framework/src/Illuminate/Http/Request.php:369`, ao carregar `Request` em `SetRequestForConsole`).
-2. Para renderizar essa exceção, o Laravel resolve o `App\Exceptions\Handler` pelo container, e
-   `Container::resolveDependencies` usa `ReflectionParameter::getClass()`, depreciado desde o PHP 8.0
-   (`Illuminate/Container/Container.php:788`). Isso vira outra `ErrorException` dentro do handler, que acaba em
-   **`PHP Fatal error: Uncaught ErrorException: Method ReflectionParameter::getClass() is deprecated`**.
-3. O shutdown handler do e-Cidade (`src/V3/Error/Handler/Shutdown.php`) tenta disparar `app.error` e carrega
-   `Zend\Stdlib\PriorityQueue`, cujo `count()` não declara `: int`. Terceiro fatal:
-   `Return type of Zend\Stdlib\PriorityQueue::count() should either be compatible with Countable::count(): int`.
-   O Apache devolve 500 com corpo vazio.
+```php
+private function validateKey($key)
+{
+    if (! is_resource($key)) {
+        throw InvalidKeyProvided::cannotBeParsed(openssl_error_string());
+    }
+```
 
-O resto do log são deprecations do PHP 8.4/8.5 em `vendor/` (guzzle/promises, psysh, zend-diactoros, helpers do
-Laravel) e em código próprio (`ECidade\V3\Extension\ParameterBag::getIterator()/count()` sem tipo de retorno e
-`E_STRICT` em `config/application*.php`). Elas só não derrubam o legado porque lá ninguém as converte em exceção.
+Desde o PHP 8.0, `openssl_pkey_get_private()`/`openssl_pkey_get_public()` devolvem um objeto `OpenSSLAsymmetricKey`, não
+mais um `resource`. Conferido nos dois containers, com as mesmas `storage/oauth-{private,public}.key` (sem imprimir as
+chaves):
 
-## O que falta para um Laravel 12 de verdade
+```
+8.5.12 OpenSSL 3.5.7: privada=OpenSSLAsymmetricKey is_resource=false; publica=OpenSSLAsymmetricKey is_resource=false
+7.4.33 OpenSSL 3.0.2: privada=resource is_resource=true; publica=resource is_resource=true
+```
 
-- **Código**: subir a escada do framework (5.4 → … → 12) num branch próprio, com PHP ≥ 8.2, `composer.json` novo
-  e um `vendor/` compatível. Isso inclui trocar ou atualizar os pacotes que travam no PHP 8 (zendframework → laminas,
-  guzzle 6 → 7, Passport compatível e as demais dependências abandonadas), corrigir as assinaturas próprias
-  (`ParameterBag`, `E_STRICT`) e revisar a ponte `FrontController`/`src/V3` → Laravel. Nada disso existe hoje.
-- **Laboratório**: já está pronto. É só apontar `LAR12_CODIGO` para esse código (com `vendor/` e `.env`) e recriar o
-  container (`regressao/lab/README.md`).
-- **Bateria**: rodar `comparar` como acima. Só quando o boot passar a rodada restaura o banco e avalia os 389 casos.
-  Então os `DIVERGE` serão os achados reais do 5.4 → 12. O console (`list`, `env`, `migrate:status`) vai divergir
-  por natureza (lista de comandos e versão do framework) e pede triagem.
+Logo, no PHP 8.5 **toda** assinatura (emitir access token) e **toda** verificação (validar o Bearer) de JWT do Passport
+lança `Lcobucci\JWT\Signer\InvalidKeyProvided`, que o handler da aplicação devolve como HTTP 500. A "reason" vem vazia
+(emissão) ou com um erro antigo da fila do OpenSSL 3 (`DECODER routines::unsupported`, na verificação), que **não** é a
+causa: a chave é lida corretamente, só o `is_resource` falha. O instalador não barrou isso porque o `vendor/` foi
+instalado no PHP 7.4 (o `platform_check.php` do Composer só confere o mínimo `>= 7.4`).
+
+Efeitos colaterais vistos no mesmo teste (não derrubam o request, mas poluem):
+
+- `storage/logs/laravel.log` (o **mesmo arquivo** da referência, porque o código montado é o mesmo) ganha a cada request
+  `laravel.EMERGENCY: Unable to create configured logger … Log [deprecations] is not defined` seguido de cada
+  deprecation do PHP 8.x convertida em `laravel.WARNING`: o Laravel 8.73 manda deprecations para o canal `deprecations`
+  e, sem ele, copia `logging.channels.<logging.deprecations ?? 'null'>` (`HandleExceptions::ensureDeprecationLoggerIsConfigured`);
+  a base não tem `config/logging.php`, então nem `deprecations` nem `null` existem. Exemplos: `Carbon\Carbon::createFromTimestamp()` sem tipo de
+  retorno compatível com `DateTime::createFromTimestamp()` (nesbot/carbon 2.72.5), parâmetros implicitamente nullable
+  (`Illuminate\Log\Logger::__construct`, `Lcobucci\JWT\Validation\Constraint\ValidAt`), `pg_query()` sem conexão explícita
+  em `app/Http/Middleware/DatabaseMiddleware.php:48`.
+- `/var/log/php_errors.log` do `ecidade74_lar12`: só `Illuminate\Log\Logger::__construct(): Implicitly marking parameter
+  $dispatcher as nullable is deprecated` (antes de o handler do Laravel assumir).
+
+## O que falta para a bateria avaliar os casos
+
+- **Migração** (não é tarefa da suíte): `lcobucci/jwt` 4.x (o `laravel/passport` 10.4.2 e o `league/oauth2-server`
+  8.3.2 instalados já aceitam `^3.4|^4.0`; o 4.x trata `OpenSSLAsymmetricKey`) ou subir direto para Passport 11/12 +
+  Laravel 9+ no caminho do Laravel 12; criar `config/logging.php` com os canais `null`/`deprecations` para o log não
+  virar ruído; atualizar Carbon. Só depois disso o
+  `POST /v4/oauth/token` passa e a rodada avalia os 996 casos; então os `DIVERGE` serão os achados reais do PHP 8.5 (e,
+  quando houver, do Laravel 12) contra a referência.
+- **Laboratório**: pronto. Para um Laravel 12 de verdade basta apontar `LAR12_CODIGO` para o código (com `vendor/` e
+  `.env`) e recriar o container (`regressao/lab/README.md`).
+- **Bateria**: nada a mudar. O console (`list`, `env`, `migrate:status`) já roda no container do laboratório; quando o
+  framework mudar ele vai divergir por natureza (lista de comandos, versão) e pede triagem.

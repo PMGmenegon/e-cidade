@@ -15,10 +15,10 @@ da raiz do repositório, dentro do WSL/Linux, contra o ambiente Docker **isolado
 > Nesta branch o gabarito é a **base PHP 7.4/Laravel 8** e os padrões são os do ambiente `e74` (tabela abaixo). A
 > **bateria PHP já está adaptada** (referência 7.4 × 8.5; containers e portas só em `regressao/nucleo/ambiente.py`,
 > inclusive para `scratchpad/cmp.py` e `scratchpad/escrita_post.py`; catálogos reverificados ao vivo em 2026-11-18).
-> As partes de Laravel e fluxos nas seções 3 a 9 ainda descrevem a medição antiga ("5.4", `ecidade_php56`): elas são
-> reescritas quando cada bateria for adaptada. As baselines em
-> `regressao/baseline/laravel/` e `regressao/baseline/fluxos/` ainda são as gravadas no 5.4 sobre o dump antigo: com o
-> dump novo (`baseline.dump.sha256` da 7.4) `comparar` as recusa até serem regravadas contra a referência 7.4.
+> A **bateria Laravel também está adaptada** (2026-11-18): inventário pelo `route:list --json` do Laravel 8, baseline
+> `regressao/baseline/laravel/` **regravada contra a referência :8074** e laboratório `ecidade74_lar12` (:8187); detalhes
+> na seção 9 ("Laravel"). Os **fluxos** de navegador ainda descrevem a medição antiga e a baseline
+> `regressao/baseline/fluxos/` ainda é a do 5.4 sobre o dump antigo (`comparar` a recusa até ser regravada).
 
 ### Versões medidas (ambiente `e74`, 2026-11-17)
 
@@ -26,13 +26,14 @@ da raiz do repositório, dentro do WSL/Linux, contra o ambiente Docker **isolado
 |---|---|---|---|
 | **Referência** (gabarito) | `ecidade74_php74` | http://localhost:8074 | PHP 7.4.33 (Ubuntu 22.04, ppa ondrej, Apache 2.4.52), Laravel 8.73.2, Passport 10.4.2, league/oauth2-server 8.3.2, PHPUnit 8.5.39 |
 | **Alvo PHP** | `ecidade74_php85` | http://localhost:8185 | PHP 8.5.12 (imagem `php:8.5-apache`, mesmo Dockerfile da branch antiga), `regressao/lab/php85/paridade-74.ini` |
-| **Alvo Laravel** (laboratório) | `ecidade74_lar12` | http://localhost:8187 | ainda não existe Laravel 12 do e-Cidade (ver `regressao/lab/README.md`) |
+| **Alvo Laravel** (laboratório) | `ecidade74_lar12` | http://localhost:8187 | mesmo runtime do PHP 8.5 acima sobre `LAR12_CODIGO` (padrão `./ecidade`, Laravel 8): ainda não existe Laravel 12 do e-Cidade (`regressao/lab/README.md`) |
 | **Proxy** (uma origem) | `ecidade74_proxy` | http://localhost:8190 | nginx 1.27; hoje manda **tudo** para a referência (`regressao/lab/proxy/map-e74.conf` vazio) |
 | **Banco** | `ecidade74_database` | sem porta publicada | PostgreSQL 16.16 (`docker/database`), LATIN1/pt_BR, dump `ecidade/docker/ecidade_base.sql.gz` |
 
 Variáveis (lidas a cada chamada, em `regressao/nucleo/ambiente.py`): `REGRESSAO_REF_URL`, `REGRESSAO_PHP_NOVO_URL`
 (apelido: `REGRESSAO_NOVO_URL`), `REGRESSAO_LARAVEL_NOVO_URL`, `REGRESSAO_PROXY_URL`, e os containers
-`REGRESSAO_CONTAINER_REF`, `REGRESSAO_CONTAINER_PHP_NOVO`, `REGRESSAO_CONTAINER_BANCO`, `REGRESSAO_CONTAINER_PROXY`.
+`REGRESSAO_CONTAINER_REF`, `REGRESSAO_CONTAINER_PHP_NOVO`, `REGRESSAO_CONTAINER_BANCO`, `REGRESSAO_CONTAINER_PROXY`,
+`REGRESSAO_CONTAINER_LARAVEL_NOVO` (padrão `ecidade74_lar12`).
 
 ## 1. Pré-requisitos
 
@@ -157,11 +158,15 @@ python -m regressao.php.bateria --saida /tmp/php --prefixo '^arr1_(procjurtipo|g
 python -m regressao.php.bateria --saida /tmp/php --area tributario            # uma área (≈ 5,5 mil telas)
 # opções: --sem-normalizar, --incluir-nao-verificados, --sem-restaurar (só desenvolvimento: rodada NÃO comparável)
 
-# Laravel (a baseline é gravada no 5.4 e comparada com o alvo novo)
-python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g                # no :8080 (5.4); recusa sobrescrever (seção 6)
+# Laravel (a baseline é gravada na referência Laravel 8 e comparada com o alvo novo)
+python -m regressao.laravel.rotas                                              # inventário (route:list --json na referência)
+python -m regressao.laravel.gerador                                            # casos/rotas_*.yml a partir do inventário
+python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g                # no :8074 (referência); recusa sobrescrever (seção 6)
+python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g --alvo http://localhost:8074 --confirmo-sobrescrever   # regravar
 python -m regressao.laravel.bateria gravar   --saida /tmp/lar-g --apenas-novos --confirmo-sobrescrever   # só casos novos (11b)
-python -m regressao.laravel.bateria comparar --saida /tmp/lar                  # alvo = REGRESSAO_LARAVEL_NOVO_URL (padrão :8087)
-python -m regressao.laravel.bateria comparar --saida /tmp/lar --alvo http://localhost:8080   # prova de estabilidade (5.4 contra ele mesmo)
+python -m regressao.laravel.cobertura                                          # baseline/laravel/_cobertura.{json,md}
+python -m regressao.laravel.bateria comparar --saida /tmp/lar                  # alvo = REGRESSAO_LARAVEL_NOVO_URL (padrão :8187, laboratório)
+python -m regressao.laravel.bateria comparar --saida /tmp/lar --alvo http://localhost:8074   # prova de estabilidade (referência contra ela mesma)
 
 # Fluxos de navegador
 python -m regressao.completa.fluxos gravar   --saida /tmp/fl-g
@@ -238,13 +243,16 @@ selecionadas por `--area/--prefixo`, **não** classes, `libs/` nem models. `--se
 - **Relatório (PHP)**: `regressao/php/catalogo_relatorios.tsv` (`tela<TAB>query<TAB>pdf|xls|html|doc<TAB>area<TAB>status`).
   Mesma semântica de `verificado`. No e-Cidade, "xls" é CSV via `db_download.php`.
 - **Telas / lint / classes** não precisam de cadastro: vêm do que existe em `ecidade/` (`--area`/`--prefixo` escolhem).
-- **Laravel**: o gerador cria um caso por rota (GET autenticado; sonda `{}` nas demais) a partir do inventário do
-  `route:list`: `python -m regressao.laravel.gerador` (regera `casos/rotas_*.yml`); a cobertura sai de
+- **Laravel**: o inventário vem de `python -m regressao.laravel.rotas` (`php artisan route:list --json` no container de
+  referência; se um controller da própria referência não instancia, o `route:list` do Laravel 8 cai inteiro e o
+  inventário usa a listagem tolerante de mesmo formato, que grava o erro na coluna `erro_controller` de
+  `casos/_inventario.tsv`). O gerador cria um caso por rota (GET autenticado; sonda `{}` nas demais) a partir do
+  inventário: `python -m regressao.laravel.gerador` (regera `casos/rotas_*.yml`); a cobertura sai de
   `python -m regressao.laravel.cobertura`. Casos escritos à mão ficam em `casos/auth.yml` e `casos/escrita.yml`.
   `casos/_ajustes.yml` guarda o que a regeneração preserva: `volateis` (campos JSON mascarados), `instaveis`,
   `perigosas` (sondas que **escreveram** ao vivo: deixam de ser geradas) e `permitidas` (allowlist de
   DELETE/PUT/PATCH, vazia por padrão). `espera_status: N` declara que uma rejeição é esperada (ex.: 500 de rota
-  protegida no 5.4): o caso vira IDENTICO só se a **referência** confirmar esse status na gravação.
+  protegida na referência): o caso vira IDENTICO só se a **referência** confirmar esse status na gravação.
   Depois de mudar casos, **regrave** a baseline (abaixo).
 - **Fluxo de navegador**: uma função em `regressao/completa/fluxos.py` (lista de passos `(nome, função, tira_snapshot)`)
   registrada em `FLUXOS`; rode `gravar --fluxo <id> --confirmo-sobrescrever`.
@@ -254,9 +262,10 @@ selecionadas por `--area/--prefixo`, **não** classes, `libs/` nem models. `--se
 As baselines (`regressao/baseline/laravel/`, `regressao/baseline/fluxos/`, o dump) são a **referência pré-migração**.
 Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
-- `gravar` **recusa** (saída 2) sobrescrever baseline existente, e gravar contra um alvo que não seja o 5.4/proxy de
-  referência, sem `--confirmo-sobrescrever` (e `--alvo` explícito para outro alvo). Só use a flag para regravar
-  **no sistema ainda não migrado** depois de mudar casos.
+- `gravar` **recusa** (saída 2) sobrescrever baseline existente, e gravar contra um alvo que não seja a referência
+  Laravel 8 (`REGRESSAO_REF_URL`, :8074), sem `--confirmo-sobrescrever` (e `--alvo` explícito para outro alvo). Só use a
+  flag para regravar **na referência, que não é migrada** (o `_meta.json` registra `"alvo": "ref"`), depois de mudar
+  casos ou o dump.
 - `gravar` não produz "casos IDENTICO": nada foi comparado; o resumo diz `GRAVACAO ... nao e comparacao`.
 - `comparar` recusa baseline gravada com outro sha256 de dump.
 - O repositório no GitHub (`Segunddo/e-cidade`) é **PÚBLICO** e as baselines contêm **dados do banco de desenvolvimento**
@@ -273,10 +282,10 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 **ANTES de migrar** (no sistema de referência, ambiente recém-subido, nada rodado ao vivo antes do dump):
 
 1. Gerar o dump (seção 2) e commitar `baseline.dump.sha256`.
-2. `python -m regressao.laravel.bateria gravar --saida /tmp/lar-g` (Laravel 5.4 em :8080) e
+2. `python -m regressao.laravel.bateria gravar --saida /tmp/lar-g` (Laravel 8 de referência em :8074) e
    `python -m regressao.completa.fluxos gravar --saida /tmp/fl-g`; commitar as baselines.
 3. Rodada completa de referência, arquivada: `python -m regressao.completa.orquestra --saida ~/regressao/antes
-   --alvo-laravel http://localhost:8080` (o Laravel 5.4 contra ele mesmo: todos IDENTICO/INCONCLUSIVO).
+   --alvo-laravel http://localhost:8074` (o Laravel 8 contra ele mesmo: todos IDENTICO/INCONCLUSIVO).
 
 **DEPOIS de migrar** (Laravel 12 de pé em `REGRESSAO_LARAVEL_NOVO_URL`):
 
@@ -293,7 +302,7 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
 - **Restauração ≈ 3,5–4,5 min** cada. A completa restaura **3 vezes** (PHP, Laravel, fluxos): ≈ 12 min só de restore.
 - PHP: ~0,83 s/tela, POSTs 4–17 s cada, relatórios ~1 s; uma rodada de fumaça (`--prefixo`) leva ~5–6 min no total. Áreas
-  inteiras levam **horas**. Laravel: ≈ 8 min de casos (381 casos) + restore. Fluxos: ≈ 1 min + restore.
+  inteiras levam **horas**. Laravel (base 7.4): ≈ 10,5–11 min de casos (996 casos) + ≈ 3,2 min de restore. Fluxos: ≈ 1 min + restore.
 - A memória do host é apertada: antes de rodadas longas, solte o cache de arquivos do WSL
   (`wsl -d Ubuntu-24.04 -u root -- sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'`). Um `.wslconfig` com `memory=6GB` e
   `autoMemoryReclaim=gradual` ajuda; fica a critério do usuário. Os fluxos usam um Chromium só, fechado ao fim.
@@ -304,9 +313,36 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 
 - **A bateria PHP só prova paridade referência 7.4 × 8.5 sobre o código atual** (código compartilhado, ver §4); não detecta regressão
   de código comum aos dois runtimes.
-- **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (115 de 381 registros trazem caminhos do servidor 5.4,
-  p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
-  aplicada só na comparação; a baseline bruta não foi regravada) — **escopo estreito**: só em **respostas de erro**
+- **Laravel na base 7.4 (o que a bateria mede hoje).** Referência = `ecidade74_php74` (:8074): PHP 7.4.33, Laravel
+  8.73.2, Passport 10.4.2 (league/oauth2-server 8.3.2). Baseline `regressao/baseline/laravel/` gravada em 2026-11-18 com
+  `gravar --alvo http://localhost:8074 --confirmo-sobrescrever` (`_meta.json`: `alvo: ref`, dump `15cd994a…`, 996 casos).
+  - **Inventário**: o `route:list --json` do Laravel 8 instancia cada controller e **cai inteiro** na base 7.4
+    (`ParametrosEnvioNotificacoesController` usa `ECidade\Educacao\MatriculaOnline\Repository\ConfiguracaoRepository`,
+    que não existe). `rotas.py` então usa a listagem tolerante de mesmo formato: **1434 rotas** (laravel 1423, rest 4,
+    silex 7), **101** com `erro_controller` (o controller não instancia no console: modelos `cl_*` do legado, classes
+    `TraceLog`, `DefaultSession`, `ECidade\Pdf\Pdf`… inexistentes; pela HTTP 16 delas respondem 2xx, 19 4xx e 26 5xx).
+  - **Cobertura** (`_cobertura.md`): 973 rotas com caso (laravel 968/1423, silex 5/7, rest 0/4) + 23 casos escritos à
+    mão (12 auth, 3 escrita, 8 integração). Fora: 290 rotas com parâmetro de caminho, 156 perigosas por nome ou provadas
+    ao vivo (8 sondas que escreveram com corpo vazio, 4 delas na base 7.4: `baseEscola/atos/salvar`,
+    `fix/lancamento/slips`, `fix/lancamento/suplementacoes`, `escrituracao-contabil/virada-rp`), 14 DELETE/PUT/PATCH e 1
+    rota com espaço no fim da URI (`emitir-carteira `, erro do arquivo de rotas). As 108 rotas `GET /web/...` respondem
+    404 à bateria (não exercitadas além do roteamento). Na referência: 199 casos 2xx, 450 4xx, 333 5xx (329 viram
+    INCONCLUSIVO, 4 são a rejeição documentada `espera_status: 500`).
+  - **Passport 10 se comporta como o 5.4 nos casos de auth**: rota protegida sem token, com token inválido, expirado
+    (JWT re-assinado com a chave local) ou revogado → **HTTP 500** `{"error":true,"message":"Unauthenticated."}` (handler
+    da aplicação); token expirado só em `oauth_access_tokens.expires_at` continua aceito; `dbseller` com senha errada
+    continua recebendo token; usuário inexistente → 500 "The user credentials were incorrect.".
+  - **Estabilidade**: três gravações independentes da referência (duas exploratórias + a oficial) só diferiram em 3
+    casos, todos tratados em `_ajustes.yml`: `volateis` (timestamp unix no nome do CSV de `ddr/template` e da tabela
+    `w_ajuste_conlancamrecurso_<ts>` na mensagem de erro de `fix/lancamento/conlancamrecurso`) e o novo **`sem_ordem`**
+    (`postgres/views` faz `select … from pg_views` sem ORDER BY: mesmas 20 views em ordens diferentes; a lista é comparada
+    como conjunto ordenado, conteúdo diferente continua DIVERGE). **Prova**: duas comparações seguidas da referência
+    contra a baseline (`comparar --alvo http://localhost:8074`, cada uma restaurando o dump) deram exatamente o mesmo
+    resultado, caso a caso: **666 IDENTICO, 0 DIVERGE, 330 INCONCLUSIVO (329 "5xx nos dois lados", 1 "resposta sem
+    conteúdo"), 0 ERRO_AMBIENTE**, saída 0.
+- **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (12 de 996 registros da base 7.4 trazem caminhos do
+  servidor, p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
+  aplicada só na comparação; a baseline bruta guarda o registro inteiro) — **escopo estreito**: só em **respostas de erro**
   (status >= 400 ou objeto com `exception`), só no `json` (e no `texto` de respostas 5xx); nunca em `sql_negocio`,
   cabeçalhos, tipos, hashes de tabela nem em respostas de sucesso. Em objetos com cara de erro (têm `exception`/`trace`/
   `stacktrace`, ou o envelope do app `error: true`) os campos `file`, `line`, `trace`, `stacktrace`/`stack_trace` viram
@@ -314,12 +350,14 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   servidor** (`/var/www/html`, `/var/www`, `/app`, `/srv/<x>`) seguida de `vendor/`, `app/`, `bootstrap/`, `storage/`,
   `ecidade/`, `libs/`… viram `<caminho>` e `on line N` vira `on line <N>`; URLs como `/storage/a.pdf` ou `/public/x.png`
   continuam comparadas. A classe da exceção (`exception`) e a `message` **continuam comparadas**: mudar a exceção é
-  DIVERGE real. Consequência: um erro que só muda de arquivo/linha entre 5.4 e 12 não aparece como divergência.
+  DIVERGE real. Consequência: um erro que só muda de arquivo/linha entre o Laravel 8 e o 12 não aparece como divergência.
 
-- **Não existe Laravel 12 do e-Cidade**: o laboratório do `:8087` (`regressao/lab/docker-compose.lar12.yml`) roda o
-  runtime PHP 8.5 sobre o código de `LAR12_CODIGO` (padrão: o `./ecidade` atual, Laravel 5.4). Hoje o Laravel 5.4 não
-  sobe em PHP 8.5, e `comparar` no alvo padrão devolve **um** `ERRO_AMBIENTE` (`laravel:boot`, saída 2, sem
-  restaurar o banco); a completa segue com as outras frentes. Causa e próximos passos em
+- **Não existe Laravel 12 do e-Cidade**: o laboratório `ecidade74_lar12` (:8187, `regressao/lab/docker-compose.lar12.yml`,
+  projeto `e74-lar12`) roda o runtime do `ecidade74_php85` (mesma imagem e `paridade-74.ini`) sobre o código de
+  `LAR12_CODIGO` (padrão: o `./ecidade` atual, Laravel 8). O Laravel 8 **sobe** no PHP 8.5 (boot e console funcionam),
+  mas `comparar` no alvo padrão devolve **um** `ERRO_AMBIENTE` (`laravel:banco`, saída 2, depois de restaurar o banco):
+  `POST /v4/oauth/token` dá 500 porque o `lcobucci/jwt` 3.4.0 testa a chave com `is_resource()` e no PHP 8 ela é um
+  `OpenSSLAsymmetricKey` (nenhum JWT é emitido nem validado). Causa exata e próximos passos em
   `regressao/baseline/lab-lar12-resultado.md`.
 - **Integrações (11b), o que existe e o que não existe** (`laravel/integracao.py`, `laravel/stubs/`,
   `laravel/casos/integracao.yml`):
@@ -330,11 +368,14 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
     domínio (planejamento existente, instituição na sessão legada `DB_instit`, filtros) que o banco de dev não tem
     (`Undefined index: DB_instit`/`planejamento_id`...). Nenhum caso XLSX real: o app serve CSV.
   - **Console**: 3 casos (`console-list` só pelos nomes dos comandos, `console-env`, `console-migrate-status`),
-    executados com `docker exec ... php artisan`. **O container acompanha o alvo**: na referência (5.4) é sempre
-    `ecidade_php56`; em qualquer outro alvo `REGRESSAO_LARAVEL_CONSOLE_CONTAINER` é **obrigatória** (sem ela o caso vira
-    `ERRO_AMBIENTE`, para nunca comparar o 5.4 com ele mesmo e dar falso IDENTICO). Falha do `docker exec` (125/126/127,
-    "No such container") também é `ERRO_AMBIENTE`; só `list`, `env` e `migrate:status` passam pela allowlist.
-    `console-migrate-status` compara o **conjunto completo** de migrations (contagem + sha256 + lista, sem truncar).
+    executados com `docker exec ... php artisan` (Laravel 8). **O container acompanha o alvo** (nomes em
+    `nucleo/ambiente.py`): na referência é sempre `REGRESSAO_CONTAINER_REF` (`ecidade74_php74`); no laboratório
+    (`REGRESSAO_LARAVEL_NOVO_URL`) é `REGRESSAO_CONTAINER_LARAVEL_NOVO` (`ecidade74_lar12`); em qualquer outro alvo
+    `REGRESSAO_LARAVEL_CONSOLE_CONTAINER` é **obrigatória**, e um alvo que não é a referência nunca pode cair no container
+    de referência (o caso vira `ERRO_AMBIENTE` em vez de falso IDENTICO). Falha do `docker exec` (125/126/127, "No such
+    container") também é `ERRO_AMBIENTE`; só `list`, `env` e `migrate:status` passam pela allowlist.
+    `console-migrate-status` compara o **conjunto completo** de migrations (contagem + sha256 + lista, sem truncar; o
+    `Yes`/`No` do Laravel 8 e o `Y`/`N` do 5.4 viram o mesmo `Y`/`N`): na base 7.4 são 1191 migrations, 455 rodadas.
     Comandos de domínio (`agendamento:inativarvinculoprofessor`,
     `matriculaonline:alteracaoinscricao`, `payroll:*`) **escrevem** no banco e não foram incluídos.
   - **SMTP de teste e stub PIX**: servidores locais (`SmtpStub`, `PixStub`), sobem e param por `com_stubs()`; o
@@ -348,13 +389,14 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
     stub já está pronto para receber o caso.
   - **Adicionar sem regravar**: `python -m regressao.laravel.bateria gravar --saida DIR --apenas-novos
     --confirmo-sobrescrever` roda só os casos **ausentes do `_meta`** (restaurando o dump) e acrescenta à baseline; os
-    registros existentes não são tocados. Recusa: alvo que não seja a referência 5.4, dump diferente, registros
+    registros existentes não são tocados. Recusa: alvo que não seja a referência Laravel 8, dump diferente, registros
     **perdidos** (id no `_meta` sem arquivo) e arquivo órfão. Para refazer um registro: `python -m regressao.laravel.caso
     remove <id>` (apaga o arquivo e tira o id do `_meta`) e depois `--apenas-novos`.
-- Laravel: cobre 366 de 568 rotas; ficam de fora rotas com parâmetro de caminho, perigosas por nome e 4 sondas que
-  gravaram. `rest/v1` só com rotas parametrizadas (nenhum caso gerado); `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os
-  casos de rota protegida dão HTTP 500 (não 401) no 5.4 e usam `espera_status`; ~100 casos são `INCONCLUSIVO`
-  (5xx nos dois lados). `dbseller` com senha errada recebe token no 5.4 (achado do app legado, gravado como referência).
+- Laravel: cobre 973 de 1434 rotas (números acima); `rest/v1` só com rotas parametrizadas (nenhum caso gerado);
+  `PATCH`/`HEAD` colapsam em `PUT`/`GET`. Os casos de rota protegida dão HTTP 500 (não 401) na referência e usam
+  `espera_status`; ~330 casos são `INCONCLUSIVO` (5xx nos dois lados): **não são aprovação**, são rotas que com corpo
+  vazio/sem dados de domínio não chegam à regra de negócio. `dbseller` com senha errada recebe token (achado do app,
+  gravado como referência).
 - PHP, catálogos **reverificados ao vivo na base 7.4** (2026-11-18, linha a linha, dump restaurado; cabeçalho de cada
   `.tsv` traz o detalhe). **POSTs**: 52 linhas, 47 `verificado` (13 IDENTICO, 34 DIVERGE) e 5 `nao-verificado` (a
   referência 7.4 não gravou nada com o payload atual: `pes1_pensao001`, `rec1_assentamentos.RPC`, `rec4_rpcexame`,
