@@ -1,57 +1,59 @@
-# Laboratorio "Laravel 12" na porta 8087 (alvo padrao da bateria Laravel: REGRESSAO_LARAVEL_NOVO_URL).
+# Laboratorio "Laravel 12" na porta 8187 (alvo padrao da bateria Laravel: REGRESSAO_LARAVEL_NOVO_URL).
 #
-# ESTADO HONESTO: ainda NAO existe codigo do e-Cidade em Laravel 12 (todas as branches usam
-# laravel/framework 5.4.*). Por isso o laboratorio sobe o runtime PHP 8.5 do projeto com o codigo
-# apontado por LAR12_CODIGO -- por padrao o ./ecidade atual (Laravel 5.4). Hoje ele mede, portanto,
-# "Laravel 5.4 sob PHP 8.5". Quando houver o Laravel 12 migrado, basta apontar LAR12_CODIGO para ele.
-# Ver regressao/lab/README.md.
+# ESTADO HONESTO: ainda NAO existe codigo do e-Cidade em Laravel 12. A base de referencia desta branch e
+# PHP 7.4 / Laravel 8.73 (laravel/framework ^8.0, Passport ^10.0). Por isso o laboratorio sobe o MESMO runtime
+# PHP 8.5 do ecidade74_php85 (mesma imagem, mesmos volumes, mesmo paridade-74.ini) com o codigo apontado por
+# LAR12_CODIGO -- por padrao o ./ecidade atual (Laravel 8). Hoje ele mede, portanto, "Laravel 8 sob PHP 8.5".
+# Quando houver o Laravel 12 migrado, basta apontar LAR12_CODIGO para ele. Ver regressao/lab/README.md e o
+# resultado em regressao/baseline/lab-lar12-resultado.md.
 #
-# Uso (da raiz do repositorio):
-#   docker compose -f regressao/lab/docker-compose.lar12.yml up -d
-#   LAR12_CODIGO=/caminho/do/ecidade-laravel12 docker compose -f regressao/lab/docker-compose.lar12.yml up -d
-#   docker compose -f regressao/lab/docker-compose.lar12.yml down
+# Uso (da raiz do repositorio; requer o ambiente e74 no ar: rede e74_ecidade74, volumes e74_sessions/e74_tmp,
+# banco ecidade74_database e a imagem ecidade74-php85:latest):
+#   docker compose -p e74-lar12 -f regressao/lab/docker-compose.lar12.yml up -d
+#   LAR12_CODIGO=/caminho/do/ecidade-laravel12 docker compose -p e74-lar12 -f regressao/lab/docker-compose.lar12.yml up -d --force-recreate
+#   docker compose -p e74-lar12 -f regressao/lab/docker-compose.lar12.yml stop     # para so o ecidade74_lar12
+#
+# Projeto compose PROPRIO (e74-lar12): `down` aqui remove so o container do laboratorio; a rede e os volumes do
+# e74 sao externos e nunca sao removidos por este arquivo. Nao toca no ecidade_lar12 (:8087) da pilha antiga.
 #
 # Caminhos relativos sao resolvidos a partir DESTA pasta (regressao/lab/): o padrao ../../ecidade e o
 # ./ecidade da raiz. Prefira caminho absoluto em LAR12_CODIGO.
-#
-# Requer a pilha de referencia no ar (rede e-cidade_ecidade, banco ecidade_database, volumes
-# ecidade_sessions/ecidade_tmp) e a imagem do PHP 8.5 ja construida por docker-compose.php85.yml.
-# A imagem e REUSADA (nao reconstruida): rebuild reinstalaria pacotes do apt em outras versoes e o
-# laboratorio deixaria de ter o mesmo runtime do ecidade_php85.
+# A imagem e REUSADA (pull_policy: never, sem build): rebuild reinstalaria pacotes do apt em outras versoes e o
+# laboratorio deixaria de ter o mesmo runtime do ecidade74_php85.
 
-name: ecidade-lab
+name: e74-lar12
 
 services:
 
-  ecidade_lar12:
-    image: ${LAR12_IMAGEM:-e-cidade-ecidade_php85}
+  ecidade74_lar12:
+    image: ${LAR12_IMAGEM:-ecidade74-php85:latest}
     pull_policy: never
-    container_name: ecidade_lar12
+    container_name: ecidade74_lar12
     ports:
-      - "8087:80"
+      - "8187:80"
     environment:
-      DB_HOST: ecidade_database
+      DB_HOST: ecidade74_database
       DB_PORT: 5432
       DB_DATABASE: ecidade
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
     volumes:
       - ${LAR12_CODIGO:-../../ecidade}:/var/www/html/
-      # Mesmos volumes e ini do ecidade_php85 (docker-compose.php85.yml), para que a unica
-      # diferenca para ele seja o codigo montado.
-      - ecidade_sessions:/var/lib/php/sessions
-      - ecidade_tmp:/tmp
-      - ../../docker/php85-apache/paridade-56.ini:/usr/local/etc/php/conf.d/zz-paridade-56.ini:ro
+      # Mesmos volumes e ini do ecidade74_php85 (docker-compose.e74.yml): a unica diferenca para ele e o
+      # codigo montado (e a porta).
+      - e74_sessions:/var/lib/php/sessions
+      - e74_tmp:/tmp
+      - ./php85/paridade-74.ini:/usr/local/etc/php/conf.d/zz-paridade-74.ini:ro
     networks:
-      - ecidade
+      - e74
 
 networks:
-  ecidade:
+  e74:
     external: true
-    name: e-cidade_ecidade
+    name: e74_ecidade74
 
 volumes:
-  ecidade_sessions:
+  e74_sessions:
     external: true
-  ecidade_tmp:
+  e74_tmp:
     external: true
