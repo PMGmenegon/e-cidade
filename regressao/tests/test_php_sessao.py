@@ -161,7 +161,7 @@ def test_reavalia_pdf_so_vale_para_pdf_200_nos_dois_lados(par):
 
 
 def test_roda_telas_rebaixa_diverge_200x200_de_pdf_quando_o_texto_e_igual():
-    saida = "2 telas\n\n  DIVERGE a.php 56=200/636B  85=200/609B\n  DIVERGE b.php 56=200/10B  85=200/11B\n\n=== 0/2 identicas, 2 divergentes, 0 timeout ===\n"
+    saida = "2 telas\n\n  DIVERGE a.php ref=200/636B  85=200/609B\n  DIVERGE b.php ref=200/10B  85=200/11B\n\n=== 0/2 identicas, 2 divergentes, 0 timeout ===\n"
     with patch.object(telas, "lista_telas", return_value=["a.php", "b.php"]), \
          patch.object(telas, "sessao_autenticada", return_value=True), \
          patch.object(telas, "_roda_cmp", return_value=saida), \
@@ -173,7 +173,7 @@ def test_roda_telas_rebaixa_diverge_200x200_de_pdf_quando_o_texto_e_igual():
 
 
 def test_roda_telas_nao_reavalia_diverge_de_status_http():
-    saida = "1 telas\n\n  DIVERGE a.php 56=200/636B  85=500/3721B\n\n=== 0/1 identicas, 1 divergentes, 0 timeout ===\n"
+    saida = "1 telas\n\n  DIVERGE a.php ref=200/636B  85=500/3721B\n\n=== 0/1 identicas, 1 divergentes, 0 timeout ===\n"
     chamadas = []
     with patch.object(telas, "lista_telas", return_value=["a.php"]), \
          patch.object(telas, "sessao_autenticada", return_value=True), \
@@ -196,7 +196,7 @@ def test_roda_telas_sessao_perdida_ao_buscar_corpo_vira_erro_de_sessao_para_a_ba
 
 
 def test_timeout_de_tela_ganha_uma_retentativa_e_o_resultado_substitui_o_timeout():
-    s1 = "3 telas\n\n  TIMEOUT b.php 56=000  85=500\n\n=== 2/3 identicas, 0 divergentes, 1 timeout ===\n"
+    s1 = "3 telas\n\n  TIMEOUT b.php ref=000  85=500\n\n=== 2/3 identicas, 0 divergentes, 1 timeout ===\n"
     s2 = "1 telas\n\n=== 1/1 identicas, 0 divergentes, 0 timeout ===\n"
     chamadas = []
 
@@ -216,7 +216,7 @@ def test_timeout_de_tela_ganha_uma_retentativa_e_o_resultado_substitui_o_timeout
 
 
 def test_timeout_que_persiste_apos_a_retentativa_continua_erro_de_ambiente_e_nao_retenta_de_novo():
-    s = "1 telas\n\n  TIMEOUT b.php 56=000  85=500\n\n=== 0/1 identicas, 0 divergentes, 1 timeout ===\n"
+    s = "1 telas\n\n  TIMEOUT b.php ref=000  85=500\n\n=== 0/1 identicas, 0 divergentes, 1 timeout ===\n"
     chamadas = []
     with patch.object(telas, "lista_telas", return_value=["b.php"]), \
          patch.object(telas, "sessao_autenticada", return_value=True), \

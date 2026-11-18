@@ -1,4 +1,4 @@
-"""Orquestrador da bateria PHP (5.6 x 8.5): ambiente -> baseline -> restauracao -> sessao ->
+"""Orquestrador da bateria PHP (referencia PHP 7.4 x alvo PHP 8.5): ambiente -> baseline -> restauracao -> sessao ->
 sintaxe -> classes -> telas -> POSTs -> relatorios -> conhecidas -> escreve_rodada.
 
     python -m regressao.php.bateria --saida DIR [--area NOME ...] [--sem-normalizar]
@@ -25,7 +25,7 @@ from dataclasses import replace
 from pathlib import Path
 
 from regressao.nucleo import git
-from regressao.nucleo.ambiente import alvos_do_ambiente, verifica
+from regressao.nucleo.ambiente import alvos_do_ambiente, containers_do_ambiente, verifica
 from regressao.nucleo.banco import (ARQ_DUMP, ARQ_SHA256, BancoDiferente, ErroAmbienteBanco,
                                     _docker, confere_baseline, restaura_dump)
 from regressao.nucleo.conhecidas import carregar_conhecidas, marcar
@@ -149,7 +149,8 @@ def _classes_das_telas(telas: list[str]) -> list[str]:
 
 def _metadados_ambiente() -> dict:
     meta: dict = {}
-    for nome, cont in (("php_56", "ecidade_php56"), ("php_85", "ecidade_php85")):
+    conts = containers_do_ambiente()
+    for nome, cont in (("php_ref", conts.ref), ("php_85", conts.php_novo)):
         try:
             meta[nome] = _docker(["exec", cont, "php", "-r", "echo PHP_VERSION;"], 30).decode().strip()
         except Exception as e:
@@ -301,7 +302,7 @@ def roda_bateria_php(diretorio_saida: Path, areas: list[str] | None = None, norm
         meta.update(_metadados_ambiente())
         return termina([Caso(f"passo:{nome}", AREA_BATERIA, Veredito.ERRO_AMBIENTE, detalhe)])
 
-    # 1. ambiente: so ref (:8080), php_novo (:8085) e o banco; laravel e proxy nao fazem parte
+    # 1. ambiente: so ref (referencia PHP 7.4), php_novo (PHP 8.5) e o banco; laravel e proxy nao fazem parte
     alvos = alvos_do_ambiente()
     problemas = verifica(replace(alvos, laravel_novo=alvos.ref, proxy=alvos.ref))
     if problemas:

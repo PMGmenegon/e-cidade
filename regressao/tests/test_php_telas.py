@@ -12,8 +12,8 @@ from regressao.php.telas import parse_cmp
 
 SAIDA = """3 telas
 
-  DIVERGE cem1_cadastro001.php  56=200/18668B  85=500/4558B
-  TIMEOUT cem1_lento002.php  56=000  85=200  (nao conta como identica)
+  DIVERGE cem1_cadastro001.php  ref=200/18668B  85=500/4558B
+  TIMEOUT cem1_lento002.php  ref=000  85=200  (nao conta como identica)
 
 === 1/3 identicas, 1 divergentes, 1 timeout ===
 """
@@ -51,7 +51,7 @@ def _por_id(casos):
 def test_parse_cmp_divergente_vira_diverge():
     c = _por_id(parse_cmp(SAIDA, "configuracao", TELAS))["cem1_cadastro001.php"]
     assert c.veredito == Veredito.DIVERGE
-    assert "56=200/18668B" in c.detalhe and "85=500/4558B" in c.detalhe
+    assert "ref=200/18668B" in c.detalhe and "85=500/4558B" in c.detalhe
     assert c.area == "configuracao"
 
 
@@ -119,7 +119,7 @@ def test_roda_telas_erro_de_docker_vira_erro_ambiente():
 
 
 def test_roda_telas_junta_lista_de_telas_e_saida_do_cmp():
-    saida = ("2 telas\n\n  DIVERGE cem1_a.php  56=200/1B  85=200/2B\n"
+    saida = ("2 telas\n\n  DIVERGE cem1_a.php  ref=200/1B  85=200/2B\n"
              "\n=== 1/2 identicas, 1 divergentes, 0 timeout ===\n")
     with patch.object(telas, "lista_telas", return_value=["cem1_a.php", "cem1_b.php"]), \
          patch.object(telas, "_roda_cmp", return_value=saida), \

@@ -1,12 +1,20 @@
 import subprocess
 
+from regressao.nucleo.ambiente import containers_do_ambiente
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
 from regressao.nucleo.veredito import Caso, Veredito
 
 AREA = "php-sintaxe"
-CONTAINERS = ("ecidade_php56", "ecidade_php85")
 TIMEOUT_LINT = 60
 _OK = "No syntax errors detected"
+ROTULO_REF = "referencia (7.4)"
+ROTULO_NOVO = "php8.5"
+
+
+def containers_php() -> tuple[str, str]:
+    """(referencia, alvo PHP 8.5), lidos de regressao/nucleo/ambiente.py a cada chamada."""
+    c = containers_do_ambiente()
+    return c.ref, c.php_novo
 
 
 def _lint(container: str, arquivo: str) -> tuple[bool, str]:
@@ -21,20 +29,21 @@ def _lint(container: str, arquivo: str) -> tuple[bool, str]:
 
 
 def roda_lint(arquivos: list[str]) -> list[Caso]:
+    ref, novo = containers_php()
     casos = []
     for arq in arquivos:
         try:
-            ok56, msg56 = _lint(CONTAINERS[0], arq)
-            ok85, msg85 = _lint(CONTAINERS[1], arq)
+            ok_ref, msg_ref = _lint(ref, arq)
+            ok85, msg85 = _lint(novo, arq)
         except ErroAmbienteBanco as e:
             casos.append(Caso(arq, AREA, Veredito.ERRO_AMBIENTE, str(e)))
             continue
-        if ok56 and ok85:
+        if ok_ref and ok85:
             casos.append(Caso(arq, AREA, Veredito.IDENTICO))
-        elif ok56 != ok85:
-            falha = f"php8.5: {msg85}" if ok56 else f"php5.6: {msg56}"
+        elif ok_ref != ok85:
+            falha = f"{ROTULO_NOVO}: {msg85}" if ok_ref else f"{ROTULO_REF}: {msg_ref}"
             casos.append(Caso(arq, AREA, Veredito.DIVERGE, falha))
         else:
             casos.append(Caso(arq, AREA, Veredito.INCONCLUSIVO,
-                              f"nao compila em nenhum runtime. php5.6: {msg56} | php8.5: {msg85}"))
+                              f"nao compila em nenhum runtime. {ROTULO_REF}: {msg_ref} | {ROTULO_NOVO}: {msg85}"))
     return casos

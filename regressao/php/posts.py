@@ -13,18 +13,18 @@ TIMEOUT_POST = 900  # dois POSTs + snapshot/restore de tabelas
 
 # O que escrita_post.py REALMENTE imprime (verificado no codigo, nao so na doc):
 #   "  == SQL de escrita de NEGOCIO IDENTICO nos dois runtimes ==" (exit 0)
-#   "  == DIVERGE ==" seguido de pares "    5.6: <sql>" / "    8.5: <sql>" (exit 1)
+#   "  == DIVERGE ==" seguido de pares "    ref: <sql>" (referencia PHP 7.4) / "    8.5: <sql>" (exit 1)
 #   "  == INCONCLUSIVO: nenhuma escrita de negocio nos DOIS runtimes ==" (exit 2)
 #   "ABORTADO: <motivo>" via sys.exit(str): vai para STDERR, exit 1
 #   "  ATENCAO: a tela gravou tambem em <t1, t2>, que NAO e restaurada." (informativo)
-# Os marcadores sao ancorados no inicio da linha: as linhas de SQL ("    5.6> ...") podem
+# Os marcadores sao ancorados no inicio da linha: as linhas de SQL ("    ref> ...") podem
 # conter qualquer texto, inclusive essas frases.
 _IDENTICO = re.compile(r"^\s*== SQL de escrita de NEGOCIO IDENTICO nos dois runtimes ==\s*$", re.M)
 _DIVERGE = re.compile(r"^\s*== DIVERGE ==\s*$", re.M)
 _INCONCLUSIVO = re.compile(r"^\s*== INCONCLUSIVO\b", re.M)
 _ABORTADO = re.compile(r"^ABORTADO:\s*(.*)$", re.M)
 _ATENCAO = re.compile(r"^\s*ATENCAO: a tela gravou tambem em (.+?), que NAO e restaurada", re.M)
-_PAR_SQL = re.compile(r"^\s{4}(5\.6|8\.5): .*$", re.M)
+_PAR_SQL = re.compile(r"^\s{4}(ref|8\.5): .*$", re.M)
 # Tabela REFERENCIANTE (a filha) = a que segue o nome da constraint. Ingles:
 #   violates foreign key constraint "fk" on table "filha"
 # pt_BR REAL (capturado do servidor, lc_messages=pt_BR.ISO-8859-1, DELETE em cgm com ROLLBACK):
@@ -72,9 +72,9 @@ def parse_post(saida: str, caso: PostCaso, codigo: int | None = None) -> Caso:
         motivo = m.group(1).strip()
         filhas = _TABELA_FK.findall(motivo) or _TABELA_DETALHE.findall(motivo)
         dica = (f"; acrescentar a tabela filha {filhas[-1]!r} ao catalogo (antes da mae) e conferir "
-                f"se o POST do 5.6 deixou linha de teste") if filhas else \
-               ("; tabela filha nao identificada: ver motivo acima; conferir o banco: o POST do 5.6 "
-                "pode ter gravado antes do abort")
+                f"se o POST da referencia (7.4) deixou linha de teste") if filhas else \
+               ("; tabela filha nao identificada: ver motivo acima; conferir o banco: o POST da referencia "
+                "(7.4) pode ter gravado antes do abort")
         return Caso(caso.tela, caso.area, Veredito.ERRO_AMBIENTE, f"ABORTADO: {motivo}{dica}")
     esperado = (0 if _IDENTICO.search(saida) else 1 if _DIVERGE.search(saida)
                 else 2 if _INCONCLUSIVO.search(saida) else None)

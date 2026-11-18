@@ -47,7 +47,7 @@ def amb(monkeypatch, tmp_path):
         return [nome] if not mm.group(1) or re.match(mm.group(1), nome, re.I) else []
     m.setattr(bateria, "lista_telas", fake_lista)
     m.setattr(bateria, "_classes_das_telas", lambda t: ["classes/db_a_classe.php"])
-    m.setattr(bateria, "_metadados_ambiente", lambda: {"php_56": "5.6.40", "php_85": "8.5.0",
+    m.setattr(bateria, "_metadados_ambiente", lambda: {"php_ref": "7.4.33", "php_85": "8.5.0",
                                                        "git_commit": "abc", "baseline_sha256": "ff"})
     m.setattr(bateria, "roda_lint", reg("lint", lambda arqs: [Caso(a, "php-sintaxe", V.IDENTICO) for a in arqs]))
     m.setattr(bateria, "roda_classes", reg("classes", lambda l: [Caso(c, "php-classes", V.IDENTICO) for c in l]))
@@ -77,7 +77,7 @@ def test_fluxo_completo_na_ordem(amb, tmp_path):
                      "lint", "classes", "telas", "post", "relatorio"]
     assert amb.count("restaura_dump") == 1
     meta = le(tmp_path)["meta"]
-    assert meta["php_56"] == "5.6.40" and meta["php_85"] == "8.5.0" and meta["areas"] == ["tributario"]
+    assert meta["php_ref"] == "7.4.33" and meta["php_85"] == "8.5.0" and meta["areas"] == ["tributario"]
     assert meta["git_commit"] == "abc" and meta["baseline_sha256"] == "ff" and meta["comparavel"] is True
     assert {"catalogo_posts", "catalogo_relatorios"} <= set(meta)
     assert "restauracao_s" in meta and "sintaxe_s" in meta["tempos_s"]

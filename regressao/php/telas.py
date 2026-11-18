@@ -9,7 +9,7 @@ from pathlib import Path
 
 import requests
 
-from regressao.nucleo.ambiente import alvos_do_ambiente
+from regressao.nucleo.ambiente import alvos_do_ambiente, containers_do_ambiente
 from regressao.nucleo.banco import ErroAmbienteBanco, _docker
 from regressao.nucleo.normaliza import normaliza
 from regressao.nucleo.veredito import Caso, Veredito
@@ -25,8 +25,9 @@ PULAR_SESSAO = {"edu4_informacoesdump.php", "cad4_geracarneiptutxt_cli.php"}
 TIMEOUT_SID = 30
 TIMEOUT_CMP = 6 * 3600
 
-_DIVERGE = re.compile(r"^\s*DIVERGE\s+(\S+)\s+(56=\S+)\s+(85=\S+)")
-_TIMEOUT = re.compile(r"^\s*TIMEOUT\s+(\S+)\s+(56=\S+)\s+(85=\S+)")
+# cmp.py marca o lado da referencia (PHP 7.4) com `ref=` e o alvo (PHP 8.5) com `85=`.
+_DIVERGE = re.compile(r"^\s*DIVERGE\s+(\S+)\s+(ref=\S+)\s+(85=\S+)")
+_TIMEOUT = re.compile(r"^\s*TIMEOUT\s+(\S+)\s+(ref=\S+)\s+(85=\S+)")
 _PULADA = re.compile(r"^\s*PULADA\s+(\S+)(?:\s+\((.*)\))?")
 _RESUMO = re.compile(r"^=== (\d+)/(\d+) identicas, (\d+) divergentes, (\d+) timeout ===")
 
@@ -83,10 +84,16 @@ def lista_telas(prefixo: str, diretorio: Path = DIR_TELAS) -> list[str]:
                   and f not in PULAR and f not in PULAR_SESSAO)
 
 
+def _container_ref() -> str:
+    """Container da referencia (PHP 7.4): dono do volume de sessoes e do /tmp/_sess.bak (os dois sao
+    compartilhados com o alvo PHP 8.5). Lido de regressao/nucleo/ambiente.py a cada chamada."""
+    return containers_do_ambiente().ref
+
+
 def obtem_sid() -> str:
-    """Sessao autenticada mais recente (a que contem DB_modulo) no container 5.6."""
+    """Sessao autenticada mais recente (a que contem DB_modulo) no container da referencia."""
     saida = _docker(
-        ["exec", "ecidade_php56", "sh", "-c",
+        ["exec", _container_ref(), "sh", "-c",
          "ls -t $(grep -la DB_modulo /var/lib/php/sessions/sess_*) | head -1"],
         TIMEOUT_SID,
     ).decode("utf-8", errors="replace").strip()
@@ -102,8 +109,9 @@ TIMEOUT_CORPO = 90
 
 def _roda_cmp(sid: str, prefixo: str) -> str:
     """Unico ponto que executa cmp.py (mockavel nos testes). cmp.py fala com o docker por
-    conta propria; aqui so se captura a saida. ONLY/PORTA_B/NORM_MENU do ambiente de quem
-    chama mudariam a selecao/lado B/normalizacao do cmp.py, entao sao removidos."""
+    conta propria; aqui so se captura a saida. ONLY/NORM_MENU do ambiente de quem chama mudariam a
+    selecao/normalizacao do cmp.py, entao sao removidos (PORTA_B era o lado B da pilha antiga; tambem
+    sai). As REGRESSAO_* passam: cmp.py le os mesmos alvos/containers de nucleo/ambiente.py."""
     env = {k: v for k, v in os.environ.items() if k not in _ENV_PROIBIDO}
     r = subprocess.run(["python3", str(SCRATCH / "cmp.py"), sid, prefixo],
                        capture_output=True, timeout=TIMEOUT_CMP, env=env)
@@ -116,15 +124,15 @@ class SessaoPerdida(ErroAmbienteBanco):
 
 
 def restaura_sessao(sid: str) -> None:
-    """Restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa em
-    ecidade_php56; o volume de sessoes e compartilhado com o php85), pois cada requisicao
+    """Restaura a sessao a partir de /tmp/_sess.bak (backup que o proprio cmp.py deixa no container da
+    referencia; o volume de sessoes e o /tmp sao compartilhados com o PHP 8.5), pois cada requisicao
     consome/reescreve a sessao. Sessao inexistente -> SessaoPerdida (nunca forja uma); backup ausente ou
     vazio (o /tmp e limpo) e recriado a partir da propria sessao viva."""
     sess = f"/var/lib/php/sessions/sess_{sid}"
     # `exit 3`: so restaura sobre uma sessao que existe; senao um SID qualquer ganharia, a partir de um
     # backup velho, uma sessao autenticada forjada.
     try:
-        _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
+        _docker(["exec", "-u", "root", _container_ref(), "sh", "-c",
                  f"[ -f {sess} ] || exit 3; [ -s /tmp/_sess.bak ] || cp {sess} /tmp/_sess.bak; "
                  f"cp /tmp/_sess.bak {sess} && chown www-data:www-data {sess} && chmod 600 {sess}"],
                 TIMEOUT_CORPO)
@@ -181,7 +189,7 @@ def login_http(base: str | None = None, usuario: str = "dbseller", senha: str = 
 
 def _atualiza_backup(sid: str) -> None:
     sess = f"/var/lib/php/sessions/sess_{sid}"
-    _docker(["exec", "-u", "root", "ecidade_php56", "sh", "-c",
+    _docker(["exec", "-u", "root", _container_ref(), "sh", "-c",
              f"cp {sess} {ARQ_BACKUP_SESSAO} && chmod 600 {ARQ_BACKUP_SESSAO}"], TIMEOUT_CORPO)
 
 
@@ -224,7 +232,7 @@ class Sessao:
 
 
 def busca_corpo(sid: str, tela: str) -> bytes:
-    """Corpo cru da tela no lado 5.6 (o lado ja sabido identico ao 8.5). Espelha o fetch do
+    """Corpo cru da tela no lado da referencia (o lado ja sabido identico ao 8.5). Espelha o fetch do
     cmp.py: restaura a sessao antes da requisicao; depois curl com o cookie
     ECIDADEWINDOWMAIN, -m 60 e teto de 5 MB. A requisicao parte de dentro do container (porta
     80 do apache), via banco._docker."""
@@ -232,18 +240,18 @@ def busca_corpo(sid: str, tela: str) -> bytes:
     return _requisita(sid, tela)
 
 
-def _requisita(sid: str, tela: str, container: str = "ecidade_php56") -> bytes:
-    return _docker(["exec", container, "sh", "-c",
+def _requisita(sid: str, tela: str, container: str | None = None) -> bytes:
+    return _docker(["exec", container or _container_ref(), "sh", "-c",
                     f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' "
                     f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
                    TIMEOUT_CORPO)
 
 
-def _requisita_status(sid: str, tela: str, container: str = "ecidade_php56") -> tuple[int, bytes]:
+def _requisita_status(sid: str, tela: str, container: str | None = None) -> tuple[int, bytes]:
     """Como _requisita, mas devolve (codigo HTTP, corpo cru). O codigo vem num trailer
     `\n@@<codigo>` (como no cmp.py), removido do corpo sem perder bytes. Teto de 5 MB no
     pipe: se o corpo estourar, o trailer se perde e o codigo e 0 (resposta truncada)."""
-    saida = _docker(["exec", container, "sh", "-c",
+    saida = _docker(["exec", container or _container_ref(), "sh", "-c",
                      f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={sid}' -w '\n@@%{{http_code}}' "
                      f"{shlex.quote(f'http://localhost/{tela}')} | head -c 5000000"],
                     TIMEOUT_CORPO)
@@ -305,7 +313,7 @@ def sessao_autenticada(sid: str) -> bool:
 def roda_telas(sid: str, prefixo: str, area: str, _retenta: bool = True) -> tuple[list[Caso], dict[str, bytes]]:
     """Roda cmp.py e devolve (casos, corpos). Um IDENTICO vindo so do cmp.py nunca significou
     "exercitada": uma tela vazia ou que falha igual nos dois lados tambem e "identica". Este
-    passo busca UM corpo (lado 5.6) de cada tela que cmp.py nao acusou e, se o corpo
+    passo busca UM corpo (lado da referencia) de cada tela que cmp.py nao acusou e, se o corpo
     normalizado tem 0 bytes, rebaixa a INCONCLUSIVO. `corpos` mapeia tela -> corpo cru dessas
     telas (entrada de grava_hashes/cobertura_telas); telas DIVERGE/TIMEOUT/PULADA nao tem corpo.
     Falha ao buscar corpo ou total do resumo != len(telas) -> um unico ERRO_AMBIENTE."""
@@ -356,7 +364,7 @@ def roda_telas(sid: str, prefixo: str, area: str, _retenta: bool = True) -> tupl
 
 
 # DIVERGE do cmp.py com 200 nos dois lados: so ai pode haver "diferenca de bytes sem diferenca de conteudo"
-_RE_200X200 = re.compile(r"56=200/\d+B\s+85=200/\d+B")
+_RE_200X200 = re.compile(r"ref=200/\d+B\s+85=200/\d+B")
 
 
 def _reavalia_pdf_impl(sid: str, tela: str) -> bool:
@@ -367,7 +375,8 @@ def _reavalia_pdf_impl(sid: str, tela: str) -> bool:
     from regressao.php.relatorios import extrai_conteudo
     textos = []
     try:
-        for container in ("ecidade_php56", "ecidade_php85"):
+        conts = containers_do_ambiente()
+        for container in (conts.ref, conts.php_novo):
             restaura_sessao(sid)
             status, corpo = _requisita_status(sid, tela, container=container)
             if status != 200 or not corpo.lstrip().startswith(b"%PDF"):

@@ -11,16 +11,16 @@ from regressao.php.posts import PostCaso, carrega_catalogo, parse_post, roda_pos
 CASO = PostCaso("hrs1_assenta001.php", ["assentamentofuncional", "assenta"], "db_opcao=Incluir", "rh", True)
 
 IDENTICO = """  snapshot: assentamentofuncional=0 linhas  assenta=0 linhas  | sequencias=1
-  statements: 5.6=9  8.5=9
-  destes, INSERT/UPDATE/DELETE: 5.6=5  8.5=5
-  destes, escrita de NEGOCIO: 5.6=3  8.5=3
-    5.6> insert into assenta( h16_codigo ) values ( 4 )
+  statements: ref=9  8.5=9
+  destes, INSERT/UPDATE/DELETE: ref=5  8.5=5
+  destes, escrita de NEGOCIO: ref=3  8.5=3
+    ref> insert into assenta( h16_codigo ) values ( 4 )
     8.5> insert into assenta( h16_codigo ) values ( 4 )
   == SQL de escrita de NEGOCIO IDENTICO nos dois runtimes ==
 """
-DIVERGE = """  destes, escrita de NEGOCIO: 5.6=1  8.5=1
+DIVERGE = """  destes, escrita de NEGOCIO: ref=1  8.5=1
   == DIVERGE ==
-    5.6: insert into x(a) values ( 'v' )
+    ref: insert into x(a) values ( 'v' )
     8.5: insert into x(a) values ( 0 )
 """
 INCONCLUSIVO = """  == INCONCLUSIVO: nenhuma escrita de negocio nos DOIS runtimes ==
@@ -131,7 +131,7 @@ def test_caso_verificado_nao_marca_detalhe(monkeypatch):
 
 
 def test_parse_post_sql_com_a_palavra_identico_nao_engana():
-    saida = "    5.6> insert into t values ('SQL de escrita de NEGOCIO IDENTICO')\n  == DIVERGE ==\n"
+    saida = "    ref> insert into t values ('SQL de escrita de NEGOCIO IDENTICO')\n  == DIVERGE ==\n"
     assert parse_post(saida, CASO).veredito == Veredito.DIVERGE
 
 

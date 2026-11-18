@@ -99,20 +99,20 @@ def _fake(resp):
 
 def test_lint_ambos_compilam():
     ok = "No syntax errors detected in a.php\n"
-    with patch.object(sintaxe, "_docker", _fake({"ecidade_php56": ok, "ecidade_php85": ok})):
+    with patch.object(sintaxe, "_docker", _fake({"ecidade74_php74": ok, "ecidade74_php85": ok})):
         assert roda_lint(["a.php"])[0].veredito == Veredito.IDENTICO
 
 
 def test_lint_so_85_falha_diverge():
     with patch.object(sintaxe, "_docker", _fake({
-            "ecidade_php56": "No syntax errors detected in a.php\n",
-            "ecidade_php85": "PHP Parse error: syntax error in a.php on line 3\n"})):
+            "ecidade74_php74": "No syntax errors detected in a.php\n",
+            "ecidade74_php85": "PHP Parse error: syntax error in a.php on line 3\n"})):
         c = roda_lint(["a.php"])[0]
     assert c.veredito == Veredito.DIVERGE and "Parse error" in c.detalhe
 
 
 def test_lint_ambos_falham_e_inconclusivo():
     err = "PHP Parse error: syntax error in a.php on line 3\n"
-    with patch.object(sintaxe, "_docker", _fake({"ecidade_php56": err, "ecidade_php85": err})):
+    with patch.object(sintaxe, "_docker", _fake({"ecidade74_php74": err, "ecidade74_php85": err})):
         c = roda_lint(["a.php"])[0]
     assert c.veredito == Veredito.INCONCLUSIVO and "Parse error" in c.detalhe

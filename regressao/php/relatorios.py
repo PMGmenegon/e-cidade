@@ -7,6 +7,7 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
+from regressao.nucleo.ambiente import containers_do_ambiente
 from regressao.nucleo.banco import ErroAmbienteBanco
 from regressao.nucleo.normaliza import normaliza
 from regressao.nucleo.veredito import Caso, Veredito
@@ -15,10 +16,10 @@ from regressao.php.telas import _requisita_status, corpo_de_sessao_invalida, res
 CATALOGO = Path(__file__).resolve().parent / "catalogo_relatorios.tsv"
 TIPOS = ("html", "pdf", "xls", "doc")
 LIMITE_DIFF = 200
-# php56 e php85 enxergam o mesmo volume de sessoes e /tmp; cada um recebe a requisicao na
-# propria porta 80 (o cmp.py usa localhost:8080 / localhost:8085 a partir do host).
-CONTAINER_56 = "ecidade_php56"
-CONTAINER_85 = "ecidade_php85"
+# Referencia (PHP 7.4) e alvo (PHP 8.5) enxergam o mesmo volume de sessoes e /tmp; cada um recebe a
+# requisicao na propria porta 80, de dentro do container (nomes em regressao/nucleo/ambiente.py).
+ROTULO_REF = "ref (7.4)"
+ROTULO_NOVO = "8.5"
 
 # Pagina de erro do PHP (display_errors) identica nos dois runtimes: nao e relatorio.
 _ERRO_PHP = re.compile(r"(?:Fatal error|Parse error|Uncaught \w*(?:Error|Exception)"
@@ -139,67 +140,69 @@ def extrai_conteudo(corpo: bytes, tipo: str) -> str:
 
 
 def _diff(a: str, b: str) -> str:
-    linhas = list(difflib.unified_diff(a.splitlines(), b.splitlines(), "5.6", "8.5", lineterm="", n=1))
+    linhas = list(difflib.unified_diff(a.splitlines(), b.splitlines(), ROTULO_REF, ROTULO_NOVO, lineterm="", n=1))
     if len(linhas) > LIMITE_DIFF:
         resto = len(linhas) - LIMITE_DIFF
         linhas = linhas[:LIMITE_DIFF] + [f"... ({resto} linhas omitidas)"]
     return "\n".join(linhas)
 
 
-def compara_relatorio(corpo56: bytes, corpo85: bytes, caso: RelCaso,
-                      status56: int = 200, status85: int = 200) -> Caso:
+def compara_relatorio(corpo_ref: bytes, corpo85: bytes, caso: RelCaso,
+                      status_ref: int = 200, status85: int = 200) -> Caso:
+    """corpo_ref/status_ref = referencia (PHP 7.4, o gabarito); corpo85/status85 = alvo PHP 8.5."""
     id_ = caso.url
-    if corpo_de_sessao_invalida(corpo56) or corpo_de_sessao_invalida(corpo85):
+    if corpo_de_sessao_invalida(corpo_ref) or corpo_de_sessao_invalida(corpo85):
         return Caso(id_, caso.area, Veredito.ERRO_AMBIENTE, "sessao invalida (pagina 'Sessao invalida')")
-    if status56 != status85:  # ex.: 5.6=200 (PDF) e 8.5=500 (pagina de erro): a regressao a detectar
+    if status_ref != status85:  # ex.: ref=200 (PDF) e 8.5=500 (pagina de erro): a regressao a detectar
         try:
-            c56, c85 = extrai_conteudo(corpo56, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
+            c_ref, c85 = extrai_conteudo(corpo_ref, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
         except Exception:
-            c56, c85 = corpo56[:300].decode("latin-1"), corpo85[:300].decode("latin-1")
+            c_ref, c85 = corpo_ref[:300].decode("latin-1"), corpo85[:300].decode("latin-1")
         return Caso(id_, caso.area, Veredito.DIVERGE,
-                    f"codigo HTTP diverge: 5.6={status56} 8.5={status85}; "
-                    f"inicio 5.6={corpo56[:60]!r} 8.5={corpo85[:60]!r}", _diff(c56, c85))
-    if status56 != 200:
-        return Caso(id_, caso.area, Veredito.INCONCLUSIVO, f"nao exercitado: ambos {status56}")
-    pdf56, pdf85 = (c.lstrip().startswith(b"%PDF") for c in (corpo56, corpo85))
-    if caso.tipo == "pdf" and not (pdf56 or pdf85):
+                    f"codigo HTTP diverge: ref={status_ref} 8.5={status85}; "
+                    f"inicio ref={corpo_ref[:60]!r} 8.5={corpo85[:60]!r}", _diff(c_ref, c85))
+    if status_ref != 200:
+        return Caso(id_, caso.area, Veredito.INCONCLUSIVO, f"nao exercitado: ambos {status_ref}")
+    pdf_ref, pdf85 = (c.lstrip().startswith(b"%PDF") for c in (corpo_ref, corpo85))
+    if caso.tipo == "pdf" and not (pdf_ref or pdf85):
         return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "esperava PDF e nenhum dos lados devolveu PDF")
     try:
-        c56, c85 = extrai_conteudo(corpo56, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
+        c_ref, c85 = extrai_conteudo(corpo_ref, caso.tipo), extrai_conteudo(corpo85, caso.tipo)
     except Exception as e:  # xlsx/xls corrompido etc.: o conteudo nao pode ser lido, nao e aprovado
         return Caso(id_, caso.area, Veredito.INCONCLUSIVO, f"conteudo ilegivel ({type(e).__name__}: {e})")
-    ileg56, ileg85 = c56.startswith(_PDF_ILEGIVEL), c85.startswith(_PDF_ILEGIVEL)
-    if ileg56 and ileg85:
+    ileg_ref, ileg85 = c_ref.startswith(_PDF_ILEGIVEL), c85.startswith(_PDF_ILEGIVEL)
+    if ileg_ref and ileg85:
         return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "pdf ilegivel nos dois lados")
-    if c56 == c85:
-        if not c56:
+    if c_ref == c85:
+        if not c_ref:
             return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "sem dados (relatorio vazio) nos dois lados")
-        if not pdf56 and _ERRO_PHP.search(c56):
+        if not pdf_ref and _ERRO_PHP.search(c_ref):
             return Caso(id_, caso.area, Veredito.INCONCLUSIVO, "pagina de erro identica nos dois lados; nao e relatorio")
         return Caso(id_, caso.area, Veredito.IDENTICO)
-    return Caso(id_, caso.area, Veredito.DIVERGE, f"conteudo diverge ({len(c56)} vs {len(c85)} caracteres)",
-                _diff(c56, c85))
+    return Caso(id_, caso.area, Veredito.DIVERGE, f"conteudo diverge ({len(c_ref)} vs {len(c85)} caracteres)",
+                _diff(c_ref, c85))
 
 
 def roda_relatorio(sid: str, caso: RelCaso) -> Caso:
-    """GET com a query nos dois runtimes (:8080 php56 e :8085 php85, cada um pela porta 80 do
+    """GET com a query nos dois runtimes (referencia PHP 7.4 e alvo PHP 8.5, cada um pela porta 80 do
     proprio container), com a sessao restaurada antes de CADA requisicao: cada requisicao
     consome/reescreve a sessao, como no cmp.py. Os codigos HTTP dos dois lados entram na
     comparacao."""
+    conts = containers_do_ambiente()
     try:
         respostas = []
-        for container in (CONTAINER_56, CONTAINER_85):
+        for container in (conts.ref, conts.php_novo):
             restaura_sessao(sid)
             respostas.append(_requisita_status(sid, caso.url, container))
     except (ErroAmbienteBanco, OSError, subprocess.TimeoutExpired) as e:
         return Caso(caso.url, caso.area, Veredito.ERRO_AMBIENTE,
                     ("" if caso.verificado else "[nao-verificado] ") + str(e))
-    (s56, b56), (s85, b85) = respostas
-    if 0 in (s56, s85):
+    (s_ref, b_ref), (s85, b85) = respostas
+    if 0 in (s_ref, s85):
         return Caso(caso.url, caso.area, Veredito.ERRO_AMBIENTE,
                     ("" if caso.verificado else "[nao-verificado] ") +
-                    f"resposta sem codigo HTTP (truncada ou curl falhou): 5.6={s56} 8.5={s85}")
-    resultado = compara_relatorio(b56, b85, caso, s56, s85)
+                    f"resposta sem codigo HTTP (truncada ou curl falhou): ref={s_ref} 8.5={s85}")
+    resultado = compara_relatorio(b_ref, b85, caso, s_ref, s85)
     if not caso.verificado:
         resultado.detalhe = ("[nao-verificado] " + resultado.detalhe).rstrip()
     return resultado

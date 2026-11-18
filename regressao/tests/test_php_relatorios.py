@@ -152,8 +152,8 @@ def test_roda_relatorio_restaura_sessao_antes_de_cada_runtime():
                       side_effect=lambda sid, url, container: chamadas.append((container, url)) or (200, pdf)):
         c = roda_relatorio("sid1", PDF)
     assert c.veredito == Veredito.IDENTICO and c.id == "cem2_x.php?cod=1"
-    assert chamadas == [("restaura", "sid1"), ("ecidade_php56", "cem2_x.php?cod=1"),
-                        ("restaura", "sid1"), ("ecidade_php85", "cem2_x.php?cod=1")]
+    assert chamadas == [("restaura", "sid1"), ("ecidade74_php74", "cem2_x.php?cod=1"),
+                        ("restaura", "sid1"), ("ecidade74_php85", "cem2_x.php?cod=1")]
 
 
 def test_roda_relatorio_nao_verificado_e_erro_de_docker():
@@ -182,7 +182,7 @@ def test_um_lado_200_e_outro_500_e_diverge_com_codigos():
     pdf = (FIX / "relatorio_a.pdf").read_bytes()
     r = compara_relatorio(pdf, PAGINA_500, PDF, 200, 500)
     assert r.veredito == Veredito.DIVERGE
-    assert "5.6=200" in r.detalhe and "8.5=500" in r.detalhe and "%PDF" in r.detalhe
+    assert "ref=200" in r.detalhe and "8.5=500" in r.detalhe and "%PDF" in r.detalhe
     assert "Erro interno" in r.diff
     with patch.object(relatorios, "restaura_sessao"), \
          patch.object(relatorios, "_requisita_status", side_effect=[(200, pdf), (500, PAGINA_500)]):
