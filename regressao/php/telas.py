@@ -272,7 +272,10 @@ _A_AGUDO = rb"(?:\xe1|\xc1|\xc3\xa1|\xc3\x81|a)"    # á / Á
 _INVALIDA = re.compile(
     rb"sess" + _A_TIL + rb"o inv" + _A_AGUDO + rb"lida"   # libs/db_conecta.php:43 e db_sessoes.php:41 (sessao invalida (12)/(14))
     rb"|sess" + _A_TIL + rb"o terminada"                  # libs/db_conecta.php:76 e :309 (conexao invalida / sistema desativado); db_conecta_cli.php:48, db_conecta_plugin.php:49
-    rb"|feche seu navegador",                             # frase comum a todas as variantes acima; cobre texto reescrito no db_erros.php?fechar=true
+    rb"|feche seu navegador"                              # frase comum a todas as variantes acima; cobre texto reescrito no db_erros.php?fechar=true
+    # libs/db_usuariosonline.php:49/58 e topo.php:43: a sessao nao abriu conexao com o banco (a pagina tem 50 B, sem
+    # '<'); visto na rodada pequena de 2026-11-18, logo depois de um restore, com todas as telas da referencia assim
+    rb"|Erro:?\(2[67]\) (?:inserindo arquivo em|atualizando) db_usuariosonline",
     re.IGNORECASE,
 )
 

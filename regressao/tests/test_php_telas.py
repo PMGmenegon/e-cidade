@@ -236,7 +236,18 @@ VARIANTES = {
     "db_sessoes (14)": "Sessão Inválida!(14)<br>Feche seu navegador e faça login novamente.<Br>\n",
     "terminada": "Contate com Administrador do Sistema! (Conexão Inválida.)   <br>Sessão terminada, feche seu navegador!\n",
     "desativado": "Sistema desativado pelo administrador!   <br>Sessão terminada, feche seu navegador!\n",
+    # libs/db_usuariosonline.php:49 e topo.php:43: a sessao nao abre conexao com o banco (rodada pequena de
+    # 2026-11-18: 50 B, sem '<', aceitos como sessao valida e todas as telas da referencia vieram assim)
+    "usuariosonline (27)": "Erro:(27) inserindo arquivo em db_usuariosonline: ",
+    "usuariosonline (26)": "Erro(26) atualizando db_usuariosonline",
 }
+
+
+@pytest.mark.parametrize("corpo", [b"Erro:(27) inserindo arquivo em db_usuariosonline: ",
+                                   b"Erro(26) atualizando db_usuariosonline"])
+def test_sessao_autenticada_false_quando_a_sessao_nao_conecta_no_banco(corpo):
+    with patch.object(telas, "_docker", return_value=corpo):
+        assert telas.sessao_autenticada("x") is False
 
 
 @pytest.mark.parametrize("codificacao", ["iso-8859-1", "utf-8"])
