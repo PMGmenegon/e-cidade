@@ -1,51 +1,119 @@
-# Regressão da migração (PHP 5.6 → 8.5 e Laravel 5.4 → 12)
+# Regressão da migração (base PHP 7.4/Laravel 8 → PHP 8.5 e Laravel 12)
 
 Baterias que dizem, com evidência, se o e-Cidade migrado **se comporta como o de referência**. Tudo roda
-da raiz do repositório, dentro do WSL/Linux, contra a pilha Docker descrita no `README.md` da raiz.
+da raiz do repositório, dentro do WSL/Linux, contra o ambiente Docker **isolado** `e74`
+(`regressao/lab/docker-compose.e74.yml`).
 
 | Bateria | Pergunta que responde | Como compara |
 |---|---|---|
-| **PHP** (`regressao/php`) | PHP 8.5 (:8085) responde como PHP 5.6 (:8080)? | roda a mesma coisa nos dois runtimes sobre o mesmo banco: lint, classes, telas (GET), POSTs reais, relatórios (PDF/CSV/HTML por conteúdo), hashes e cobertura |
-| **Laravel** (`regressao/laravel`) | o Laravel novo responde como o 5.4? | *golden master*: grava as respostas do 5.4 em `regressao/baseline/laravel/` e compara o alvo novo contra elas (rotas `/v4`, `rest/v1`, Silex, token Passport, escritas com SQL de negócio) |
-| **Fluxos de navegador** (`regressao/completa/fluxos.py`) | o usuário, no navegador, vê o mesmo? | Playwright pelo proxy `:8090`: login → módulo → telas → inclusão → relatório → sair; golden master em `regressao/baseline/fluxos/` |
+| **PHP** (`regressao/php`) | PHP 8.5 (:8185) responde como a referência PHP 7.4 (:8074)? | roda a mesma coisa nos dois runtimes sobre o mesmo banco: lint, classes, telas (GET), POSTs reais, relatórios (PDF/CSV/HTML por conteúdo), hashes e cobertura |
+| **Laravel** (`regressao/laravel`) | o Laravel novo responde como o Laravel 8 de referência? | *golden master*: grava as respostas da referência em `regressao/baseline/laravel/` e compara o alvo novo contra elas (rotas `/v4`, `rest/v1`, Silex, token Passport, escritas com SQL de negócio) |
+| **Fluxos de navegador** (`regressao/completa/fluxos.py`) | o usuário, no navegador, vê o mesmo? | Playwright pelo proxy `:8190`: login → módulo → telas → inclusão → relatório → sair; golden master em `regressao/baseline/fluxos/` |
 | **Completa** (`regressao/completa/orquestra.py`) | tudo junto, e antes × depois | roda as três, agrega num relatório só e compara duas rodadas completas |
+
+> **Base 7.4.** A suíte veio da branch `regressao`, onde o gabarito era PHP 5.6/Laravel 5.4 (:8080/:8085/:8090).
+> Nesta branch o gabarito é a **base PHP 7.4/Laravel 8** e os padrões são os do ambiente `e74` (tabela abaixo). As
+> seções 3 a 9 ainda descrevem a medição antiga em vários pontos ("5.6", "5.4", `ecidade_php56`): elas são
+> reescritas à medida que cada bateria é adaptada (bateria PHP, Laravel, fluxos). As baselines em
+> `regressao/baseline/laravel/` e `regressao/baseline/fluxos/` ainda são as gravadas no 5.4 sobre o dump antigo: com o
+> dump novo (`baseline.dump.sha256` da 7.4) `comparar` as recusa até serem regravadas contra a referência 7.4.
+
+### Versões medidas (ambiente `e74`, 2026-11-17)
+
+| Papel | Container | URL / porta | Versões |
+|---|---|---|---|
+| **Referência** (gabarito) | `ecidade74_php74` | http://localhost:8074 | PHP 7.4.33 (Ubuntu 22.04, ppa ondrej, Apache 2.4.52), Laravel 8.73.2, Passport 10.4.2, league/oauth2-server 8.3.2, PHPUnit 8.5.39 |
+| **Alvo PHP** | `ecidade74_php85` | http://localhost:8185 | PHP 8.5.12 (imagem `php:8.5-apache`, mesmo Dockerfile da branch antiga), `regressao/lab/php85/paridade-74.ini` |
+| **Alvo Laravel** (laboratório) | `ecidade74_lar12` | http://localhost:8187 | ainda não existe Laravel 12 do e-Cidade (ver `regressao/lab/README.md`) |
+| **Proxy** (uma origem) | `ecidade74_proxy` | http://localhost:8190 | nginx 1.27; hoje manda **tudo** para a referência (`regressao/lab/proxy/map-e74.conf` vazio) |
+| **Banco** | `ecidade74_database` | sem porta publicada | PostgreSQL 16.16 (`docker/database`), LATIN1/pt_BR, dump `ecidade/docker/ecidade_base.sql.gz` |
+
+Variáveis (lidas a cada chamada, em `regressao/nucleo/ambiente.py`): `REGRESSAO_REF_URL`, `REGRESSAO_PHP_NOVO_URL`
+(apelido: `REGRESSAO_NOVO_URL`), `REGRESSAO_LARAVEL_NOVO_URL`, `REGRESSAO_PROXY_URL`, e os containers
+`REGRESSAO_CONTAINER_REF`, `REGRESSAO_CONTAINER_PHP_NOVO`, `REGRESSAO_CONTAINER_BANCO`, `REGRESSAO_CONTAINER_PROXY`.
 
 ## 1. Pré-requisitos
 
-- Docker com Compose v2, WSL Ubuntu (ou Linux), e a **pasta do repositório chamada `e-cidade`** (a rede do Compose
-  usa esse nome). Passos 1–8 do `README.md` da raiz (volumes `ecidade_sessions`/`ecidade_tmp`, PHP 5.6 + banco,
-  PHP 8.5, proxy). Containers esperados: `ecidade_php56` (:8080), `ecidade_php85` (:8085), `ecidade_proxy` (:8090),
-  `ecidade_database`.
+- Docker com Compose v2 e WSL Ubuntu (ou Linux). O ambiente é o projeto Compose **`e74`**, com rede (`e74_ecidade74`),
+  volumes (`e74_sessions`, `e74_tmp`), nomes (`ecidade74_*`) e portas próprios: ele **não** para nem reusa os
+  containers da pilha antiga (`ecidade_*`) nem de outros projetos do host (o :8080 pode estar ocupado por outro
+  serviço; por isso a referência fica em :8074).
+
+  ```bash
+  # imagens: banco e PHP 7.4 a partir dos Dockerfiles da base (docker/), PHP 8.5 de regressao/lab/php85.
+  # Para reaproveitar a imagem PHP 8.5 da branch antiga sem rebuild: docker tag e-cidade-ecidade_php85 ecidade74-php85:latest
+  docker compose -p e74 -f regressao/lab/docker-compose.e74.yml build
+  docker compose -p e74 -f regressao/lab/docker-compose.e74.yml up -d ecidade74_database ecidade74_php74
+  ```
+
+- **Banco** (o que o `ecidade/docker/install.sh` faz na seção "Criando Banco de Dados", ≈ 6 min, ~1 GB), direto no
+  container do banco e sem descompactar o `.sql.gz` no disco:
+
+  ```bash
+  cd ecidade
+  docker exec -i ecidade74_database psql -U postgres -v ON_ERROR_STOP=1 < docker/init.sql      # roles ecidade, plugin, dbseller + banco
+  zcat docker/ecidade_base.sql.gz | sed -e 's/^SET default_with_oids = true;$/SET default_with_oids = false;/' \
+      -e '/^GRANT SELECT ON TABLE pg_catalog.pg_pltemplate TO plugin;$/d' \
+      -e '/^CREATE AGGREGATE public.array_accum(anyelement)/,/^);$/ { s/anyelement/anycompatible/g; s/anyarray/anycompatiblearray/g; }' \
+      -e 's/^ALTER AGGREGATE public.array_accum(anyelement)/ALTER AGGREGATE public.array_accum(anycompatible)/' \
+    | docker exec -i ecidade74_database psql -q -v ON_ERROR_STOP=1 -U postgres ecidade
+  docker exec -i ecidade74_database psql -U postgres -v ON_ERROR_STOP=1 ecidade < docker/pos.sql
+  cd ..
+  ```
+
+  O dump da base 7.4 já traz a senha do `dbseller` como **`sha1(md5("dbseller"))`** (o que o login web confere) e os
+  clientes OAuth (inclusive o `9999999` usado pela bateria Laravel). Por isso **não** rode `php artisan passport:install`:
+  ele falha (chave duplicada em `oauth_clients`) e não acrescenta nada. Conferir a senha sem imprimir o hash:
+
+  ```bash
+  H=$(printf dbseller | md5sum | cut -d' ' -f1 | tr -d '\n' | sha1sum | cut -d' ' -f1)
+  docker exec ecidade74_database psql -U postgres -d ecidade -Atc "select senha = '$H' from configuracoes.db_usuarios where login = 'dbseller'"   # t
+  ```
+
+- **Arquivos locais do app** (todos **ignorados pelo git**; sem eles o login dá 404/500). Grave-os como o seu usuário
+  (não como root) e com `LC_ALL=C`: no locale UTF-8 o `.*` do `sed` para no primeiro byte LATIN1 do `db_conn.php.dist`
+  e deixa lixo depois do `;` (erro de sintaxe no PHP). É o que o `install.sh` faz dentro do container:
+
+  ```bash
+  cd ecidade
+  export LC_ALL=C
+  cp -a .env.example .env
+  sed -i 's/DB_HOST=.*/DB_HOST=ecidade74_database/; s/DB_DATABASE=.*/DB_DATABASE=ecidade/; s/DB_PORT=.*/DB_PORT=5432/; s/DB_USERNAME=.*/DB_USERNAME=postgres/; s/DB_PASSWORD=.*/DB_PASSWORD=postgres/' .env
+  cp -a libs/db_conn.php.dist libs/db_conn.php
+  sed -i 's/\$DB_BASE.*/$DB_BASE = "ecidade";/; s/\$DB_SERVIDOR.*/$DB_SERVIDOR = "ecidade74_database";/; s/\$DB_PORTA.*/$DB_PORTA = "5432";/; s/\$DB_USUARIO.*/$DB_USUARIO = "postgres";/; s/\$DB_SENHA.*/$DB_SENHA = "postgres";/; s/DB_VALIDA_REQUISITOS.*/DB_VALIDA_REQUISITOS = false;/' libs/db_conn.php
+  cp config/require_extensions.xml.dist config/require_extensions.xml
+  cp libs/db_acessa.php.dist            libs/db_acessa.php
+  mkdir -p extension/log && chmod 777 extension/log
+  touch extension/log/error.log extension/log/application.log && chmod 666 extension/log/*.log
+  cd ..
+  # dependencias e chaves (uid 1000 = seu usuario no WSL; nada de root na worktree)
+  E="docker exec -u 1000:1000 -e HOME=/tmp/e74-composer -e COMPOSER_HOME=/tmp/e74-composer -w /var/www/html ecidade74_php74"
+  $E composer install --no-interaction
+  $E composer configure-desktop                 # copia os demais *.dist (plugins.json, application.php, ecidade_config.php)
+  docker exec -u root -w /var/www/html ecidade74_php74 sh -c 'chgrp -R www-data storage bootstrap/cache tmp && chmod -R g+rwX storage bootstrap/cache tmp && find storage bootstrap/cache tmp -type d -exec chmod g+s {} +'
+  $E php artisan key:generate --force
+  $E php artisan passport:keys --force
+  docker exec -u root -w /var/www/html ecidade74_php74 sh -c 'chgrp www-data storage/oauth-*.key && chmod 640 storage/oauth-*.key'
+  ```
+
+  (`php artisan cache:clear` diz "Failed to clear cache" com o cache vazio: inofensivo.) Só então gere o dump da seção 2.
+
 - Python 3.12 e o venv do projeto (não versionado):
 
   ```bash
   python3 -m venv regressao/.venv
   regressao/.venv/bin/pip install -r regressao/requirements.txt
+  regressao/.venv/bin/python -m pytest regressao/tests -q                # unitarios, sem Docker
   regressao/.venv/bin/python -m playwright install chromium          # ~700 MB em ~/.cache/ms-playwright
   wsl -u root -- /caminho/e-cidade/regressao/.venv/bin/python -m playwright install-deps chromium   # bibliotecas do sistema (apt), se faltarem
   ```
 
-- **Login web funcionando** (o `README.md` da raiz tem lacunas; ele não é editado por este plano, ver `docs/`). Três
-  arquivos **ignorados pelo git** precisam existir, senão o login dá 404/500:
-
-  ```bash
-  cp ecidade/config/require_extensions.xml.dist ecidade/config/require_extensions.xml
-  cp ecidade/libs/db_acessa.php.dist            ecidade/libs/db_acessa.php
-  mkdir -p ecidade/extension/log && chmod 777 ecidade/extension/log
-  touch ecidade/extension/log/error.log ecidade/extension/log/application.log && chmod 666 ecidade/extension/log/*.log
-  ```
-
-  E a senha do usuário `dbseller` no banco precisa ser **`sha1(md5("dbseller"))`**, que é o que o login web confere. O
-  `update` do passo 5 do `README.md` da raiz grava `sha1("dbseller")` (`699f20e7…`) e o login web recusa. Use:
-
-  ```bash
-  H=$(printf dbseller | md5sum | cut -d' ' -f1 | tr -d '\n' | sha1sum | cut -d' ' -f1)
-  docker exec ecidade_database psql -U postgres -d ecidade -c "update configuracoes.db_usuarios set senha='$H' where id_usuario=1"
-  ```
-
-  (Só então gere o dump da seção 2: ele carrega a senha correta.)
-
-- O proxy precisa estar de pé: `curl -sI http://localhost:8090/login.php | grep -i x-ecidade`.
+- Depois do dump, suba o resto e confira: `docker compose -p e74 -f regressao/lab/docker-compose.e74.yml up -d`;
+  `curl -sI http://localhost:8190/login.php | grep -i x-ecidade` deve dizer `PHP-7.4 (referencia)`.
+- O PHP 8.5 lê `regressao/lab/php85/paridade-74.ini` (bind mount): as diretivas do php.ini da referência 7.4 que mudam
+  saída (output_buffering, default_charset, error_reporting, memory_limit, max_execution_time, variables_order,
+  expose_php, zend.assertions, GC de sessão...). O motivo de cada uma está no próprio arquivo.
+- Parar só este ambiente: `docker compose -p e74 -f regressao/lab/docker-compose.e74.yml stop`.
 
 ## 2. A baseline do banco (o dump)
 
@@ -66,8 +134,12 @@ sha256** ao ser rodado de novo (metadados e ordem mudam): se o arquivo se perder
 obriga a regravar Laravel e fluxos.
 
 **Restaurar num container de banco NOVO** exige o que o dump não leva: as *roles* são globais ao cluster. As roles do
-ambiente atual (`\du`) são `dbseller` (sem atributos), `ecidade` e `plugin` (superusuários) e `postgres`; crie-as
-(com as senhas do seu `.env`/`libs/db_conn.php`, que **não** estão aqui) antes do `pg_restore`. O `search_path` real é
+ambiente `e74` (`\du`) são `dbseller` (sem atributos), `ecidade` e `plugin` (superusuários) e `postgres`; crie-as antes
+do `pg_restore` com `ecidade/docker/init.sql` **sem** a linha `CREATE DATABASE` (o `pg_restore --create` cria o banco).
+
+**Dump da base 7.4 (2026-11-17)**: gerado com os runtimes **parados** (o healthcheck do `ecidade74_php74` faz `GET /` a
+cada 5 s), logo depois da carga do `ecidade_base.sql.gz`, sem nenhum acesso HTTP antes. Cópia fora do git em
+`C:\Users\kauab\ecidade74-baseline.dump` (sha256 igual ao de `baseline.dump.sha256`). O `search_path` real é
 configurado **por banco** (`ALTER DATABASE ecidade SET search_path = "$user", public, teleatend, acordos, …` com ~70
 schemas) e vem no dump porque ele é gerado com `--create`; não há `ALTER ROLE … SET`. Confira com
 `psql -c '\du'` e `select * from pg_db_role_setting`.
