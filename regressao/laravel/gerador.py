@@ -11,6 +11,7 @@ Ajustes que a regeneracao preserva ficam em `casos/_ajustes.yml`:
   instaveis: {<id do caso>: "motivo"}   # vao para `_instaveis.yml` (nao carregado por padrao)
   perigosas: {<id do caso>: "motivo"}   # sonda que ESCREVEU ao vivo: deixa de ser gerada
   permitidas: [<id do caso>, ...]       # allowlist de DELETE/PUT/PATCH (vazia por padrao)
+  sem_ordem: {<id do caso>: [caminhos de listas]}  # API sem ordem garantida: compara o conjunto ordenado
 
 Uso: python -m regressao.laravel.gerador
 """
@@ -82,7 +83,8 @@ def caso_para(r: Rota, ajustes: dict) -> CasoHttp:
         corpo=None if metodo == "GET" else {},
         autenticado=r.origem != "silex",  # Silex nao usa Bearer: id+hash no corpo
         campos_volateis=list((ajustes.get("volateis") or {}).get(cid, [])),
-        espera_escrita=False)
+        espera_escrita=False,
+        listas_sem_ordem=list((ajustes.get("sem_ordem") or {}).get(cid, [])))
 
 
 def _ordem(r: Rota):
@@ -147,7 +149,7 @@ def le_ajustes(arquivo: Path = ARQ_AJUSTES) -> dict:
         return {}
     if not isinstance(dados, dict):
         raise ValueError(f"{Path(arquivo).name}: esperava um mapa")
-    extra = set(dados) - {"volateis", "instaveis", "perigosas", "permitidas"}
+    extra = set(dados) - {"volateis", "instaveis", "perigosas", "permitidas", "sem_ordem"}
     if extra:
         raise ValueError(f"{Path(arquivo).name}: chaves desconhecidas {sorted(extra)}")
     return dados
@@ -161,6 +163,8 @@ def _bloco(c: CasoHttp, comentario: str = "") -> str:
         d["autenticado"] = False
     if c.campos_volateis:
         d["campos_volateis"] = list(c.campos_volateis)
+    if c.listas_sem_ordem:
+        d["listas_sem_ordem"] = list(c.listas_sem_ordem)
     texto = yaml.safe_dump([d], sort_keys=False, allow_unicode=True, width=10000)
     return (f"# {comentario}\n" if comentario else "") + texto
 

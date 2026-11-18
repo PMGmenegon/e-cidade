@@ -80,6 +80,9 @@ class CasoHttp:
     # os nomes dos comandos (list --raw). Status = codigo de saida; texto = saida normalizada.
     console: list[str] | None = None
     console_modo: str | None = None
+    # Listas do JSON que a API devolve SEM ordem garantida (ex.: SQL sem ORDER BY): comparadas como conjunto
+    # ordenado (mascara.ordena_listas) antes da mascara de volateis. Vem de `sem_ordem` em _ajustes.yml.
+    listas_sem_ordem: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -465,6 +468,8 @@ def executa(caso: CasoHttp, base_url: str, token: str, banco: bool = True) -> Re
         bruto = r.json()
     except ValueError:
         bruto = None
+    if bruto is not None and caso.listas_sem_ordem:
+        bruto = mascara.ordena_listas(bruto, caso.listas_sem_ordem)
     texto = "" if bruto is not None else _limpa(r.text or "")[:LIMITE_TEXTO]
     if caso.arquivo and r.status_code < 400:
         try:

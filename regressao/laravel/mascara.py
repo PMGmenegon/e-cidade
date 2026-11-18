@@ -1,5 +1,6 @@
 """Mascara de campos volateis em JSON para comparar respostas de API."""
 import copy
+import json
 import re
 
 MARCA = "<X>"
@@ -67,6 +68,29 @@ def normaliza_erro(obj):
         erro = _tem_cara_de_erro(obj)
         return {k: (MARCA if erro and k in CAMPOS_DE_ERRO else normaliza_erro(v)) for k, v in obj.items()}
     return obj
+
+
+def _ordena_em(no, partes):
+    if not partes or partes == [""]:
+        if isinstance(no, list):
+            return sorted(no, key=lambda x: json.dumps(x, sort_keys=True, ensure_ascii=False))
+        return no
+    p, resto = partes[0], partes[1:]
+    if p == "*":
+        return [_ordena_em(x, resto) for x in no] if isinstance(no, list) else no
+    if isinstance(no, dict) and p in no:
+        no[p] = _ordena_em(no[p], resto)
+    return no
+
+
+def ordena_listas(obj, caminhos: list[str]):
+    """Copia de `obj` com as listas nos caminhos dados (pontos; `*` = cada elemento; "" = a raiz) ordenadas pelo
+    JSON canonico de cada item. Para APIs que NAO prometem ordem (ex.: `select ... from pg_views` sem ORDER BY):
+    compara o CONJUNTO (com repeticoes) em vez da ordem acidental do banco. Caminho ausente e ignorado."""
+    novo = copy.deepcopy(obj)
+    for caminho in caminhos:
+        novo = _ordena_em(novo, caminho.split(".") if caminho else [""])
+    return novo
 
 
 def mascara_json(obj, campos_volateis: list[str]):

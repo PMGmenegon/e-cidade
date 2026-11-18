@@ -154,6 +154,46 @@ def test_rota_com_espaco_ou_caractere_estranho_na_uri_nao_vira_caso_e_aparece_co
     assert [m for _, m in gerador.nao_geradas([r])] == [gerador.motivo_nao_gerada(r)]
 
 
+def test_lista_sem_ordem_e_comparada_como_conjunto_ordenado():
+    from regressao.laravel.mascara import ordena_listas
+    a = {"data": [{"nome": "b"}, {"nome": "a"}, {"nome": "c"}], "error": False}
+    b = {"data": [{"nome": "c"}, {"nome": "b"}, {"nome": "a"}], "error": False}
+    assert ordena_listas(a, ["data"]) == ordena_listas(b, ["data"])
+    assert ordena_listas(a, ["data"])["data"] == [{"nome": "a"}, {"nome": "b"}, {"nome": "c"}]
+    assert a["data"][0] == {"nome": "b"}                                   # nao muta a entrada
+    assert ordena_listas(a, ["nao.existe"]) == a and ordena_listas([3, 1], [""]) == [1, 3]
+    # conteudo diferente continua diferente
+    assert ordena_listas(a, ["data"]) != ordena_listas({"data": [{"nome": "a"}, {"nome": "x"}, {"nome": "c"}],
+                                                        "error": False}, ["data"])
+
+
+def test_gerador_leva_sem_ordem_do_ajuste_ao_caso(tmp_path):
+    r = rotas.Rota("GET|HEAD", "/v4/api/views", ["api"], "App\\V@index", "laravel")
+    aj = {"sem_ordem": {"rota:GET:/v4/api/views": ["data"]}}
+    c = gerador.gera([r], aj)["laravel"][0]
+    assert c.listas_sem_ordem == ["data"]
+    gerador.escreve(tmp_path, [r], aj)
+    from regressao.laravel.caso import carrega_casos
+    assert carrega_casos(tmp_path)[0].listas_sem_ordem == ["data"]
+    arq = tmp_path / "aj.yml"
+    arq.write_text("sem_ordem:\n  rota:GET:/v4/api/views: [data]\n", encoding="utf-8")
+    assert gerador.le_ajustes(arq) == aj
+
+
+def test_executa_ordena_a_lista_sem_ordem_antes_de_gravar(monkeypatch):
+    from regressao.laravel import caso as mod_caso
+    from regressao.laravel.caso import CasoHttp
+
+    class R:
+        status_code, headers, text = 200, {"content-type": "application/json"}, ""
+
+        def json(self):
+            return {"data": [{"nome": "z"}, {"nome": "a"}]}
+    monkeypatch.setattr(mod_caso.requests, "request", lambda *a, **k: R())
+    c = CasoHttp(id="rota:GET:/v", metodo="GET", caminho="/v", corpo=None, listas_sem_ordem=["data"])
+    assert mod_caso.executa(c, "http://x", "tok", banco=False).json == {"data": [{"nome": "a"}, {"nome": "z"}]}
+
+
 def test_cobertura_lista_rotas_com_controller_quebrado_na_referencia(tmp_path):
     lista = [rotas.Rota("GET|HEAD", "/v4/api/b", ["api"], "App\\B@i", "laravel", "Error: Class 'X' not found"),
              rotas.Rota("GET|HEAD", "/v4/api/a", ["api"], "App\\A@i", "laravel")]
