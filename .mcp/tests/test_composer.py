@@ -44,7 +44,10 @@ def test_analisa_composer(composer):
     assert r["php_requerido"] == ">=7.4"
     assert r["laravel_framework"] == {"restricao": "^8.0", "instalado": "v8.73.2"}
     nomes = {p["nome"]: p for p in r["alertas"]}
-    assert "laravel/framework" in nomes and "^12" in nomes["laravel/framework"]["sugestao"]
+    assert "laravel/framework" in nomes and "^13" in nomes["laravel/framework"]["sugestao"]
+    assert "Laravel 12" not in json.dumps(r)
+    assert "grupo Laravel" in r["dono"]
+    assert r["bloqueios_conhecidos"] == []
     assert "fzaninotto/faker" in nomes and "fakerphp/faker" in nomes["fzaninotto/faker"]["sugestao"]
     assert "phpunit/phpunit" in nomes
     assert "ext-pgsql" not in nomes
@@ -52,6 +55,18 @@ def test_analisa_composer(composer):
     assert lock["total_pacotes"] == 4
     assert [p["nome"] for p in lock["php_85_fora_da_restricao"]] == ["velho/pacote"]
     assert lock["sem_restricao_php"] == 1
+
+
+def test_bloqueios_pix_e_pimaco_e_composer_latin1(config):
+    e = config.raiz / "ecidade"
+    texto = json.dumps({"description": "Gestão pública",
+                        "require": {"php": ">=7.4", "dbseller/sdk-api-pix-bb": "^2.0", "proner/phppimaco": "1.4.5"}},
+                       ensure_ascii=False)
+    (e / "composer.json").write_bytes(texto.encode("latin-1"))
+    r = analisar_composer(config)
+    assert {b["nome"] for b in r["bloqueios_conhecidos"]} == {"dbseller/sdk-api-pix-bb", "proner/phppimaco"}
+    nomes = {p["nome"]: p for p in r["alertas"]}
+    assert "Guzzle 7.5.0" in nomes["dbseller/sdk-api-pix-bb"]["problema"]
 
 
 def test_sem_lock(config):

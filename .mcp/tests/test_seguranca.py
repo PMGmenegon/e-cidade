@@ -6,6 +6,7 @@ import pytest
 from servidor.config import Config, carregar_config
 from servidor.seguranca import (
     ErroFerramenta,
+    decodificar,
     eh_negado,
     eh_segredo,
     limitar,
@@ -15,6 +16,13 @@ from servidor.seguranca import (
     resolver_caminho,
     validar_regex,
 )
+
+
+def test_decodificar_iso_8859_1_por_padrao():
+    assert decodificar("Situação débito".encode("iso-8859-1")) == "Situação débito"
+    assert decodificar(b"ascii puro") == "ascii puro"
+    assert decodificar("Gestão".encode("utf-8")) == "Gestão"  # arquivo novo em UTF-8 valido
+    assert decodificar(b"\xff\xfe\x80") == "\xff\xfe\x80"  # latin-1 nunca falha
 
 
 def test_config_padroes_do_ambiente_e74(raiz):

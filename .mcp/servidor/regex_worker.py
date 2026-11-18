@@ -18,10 +18,13 @@ def _texto(caminho: str, max_bytes: int):
         return None
     if len(dados) > max_bytes:
         return None
+    # mesma regra de servidor.seguranca.decodificar: ISO-8859-1 por padrao; UTF-8 so se valido
+    if dados.isascii():
+        return dados.decode("ascii")
     try:
         return dados.decode("utf-8")
     except UnicodeDecodeError:
-        return dados.decode("latin-1")
+        return dados.decode("latin-1", errors="replace")
 
 
 def main() -> None:

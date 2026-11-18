@@ -1,4 +1,8 @@
-"""analisar_composer: le composer.json/.lock (so leitura) e aponta o que trava a ida para PHP 8.5/Laravel 12."""
+"""analisar_composer: le composer.json/.lock (so leitura) e aponta o que trava a ida para PHP 8.5/Laravel 13.
+
+Estrategia do grupo: o 7.4 fica INTACTO com o Laravel 8 do PR; o 8.5 ganha um composer proprio (Laravel 13 +
+Passport 13). composer.json, composer.lock e vendor/ sao do grupo Laravel (regra 6 do CONTRIBUINDO.md).
+"""
 from __future__ import annotations
 
 import json
@@ -7,20 +11,32 @@ from pathlib import Path
 from typing import Any
 
 from servidor.config import Config
-from servidor.seguranca import ErroFerramenta, relativo, resolver_caminho
+from servidor.seguranca import ErroFerramenta, decodificar, relativo, resolver_caminho
 
 ALVO_PHP = (8, 5, 0)
 
+# Medido pelo grupo (guia 7.4 -> 8.5, 18/11/2026, Composer com PHP 8.5.12): com Laravel 12/13 e as versoes
+# liberadas sobram 2 bloqueios, cada um com solucao ja medida.
+BLOQUEIOS_CONHECIDOS: dict[str, str] = {
+    "dbseller/sdk-api-pix-bb": "2.0.0 exige o Guzzle 7.5.0 exato. Solucao medida: ajuste minimo aplicado na "
+                               "instalacao, so no 8.5, com prova contra duble de que os pedidos saem identicos.",
+    "proner/phppimaco": "1.4.5 puxa endroid/qr-code ^2.5 e bacon-qr-code 1.0.3. Solucao medida: mantem a etiqueta "
+                        "com o mesmo tamanho impresso.",
+}
+
 # pacote -> (problema, sugestao). Conhecimento curado; confirme no UPGRADE de cada pacote antes de subir.
 ALERTAS: dict[str, tuple[str, str]] = {
-    "laravel/framework": ("Laravel 8 esta sem suporte desde 2023; o alvo e Laravel 12 (exige PHP >= 8.2)",
-                          "^12.0, subindo uma major por vez (9, 10, 11, 12) com o guia de upgrade oficial de cada uma"),
+    "laravel/framework": ("Laravel 8 nao roda oficialmente no PHP 8.5 (so 12 e 13 tem suporte); o alvo do grupo e "
+                          "Laravel 13 (exige PHP >= 8.3)",
+                          "^13.0 num composer SO do 8.5; o 7.4 fica com o Laravel 8 do PR (os degraus 9-11 nao tem "
+                          "suporte no 8.5)"),
     "laravel/passport": ("Passport 10 acompanha Laravel 8/9; o 11 removeu Passport::routes()",
-                         "major compativel com Laravel 12 (^12 ou ^13): leia o UPGRADE.md do Passport a cada major"),
-    "laravel/tinker": ("versao antiga", "^2.10 (compativel com Laravel 12)"),
-    "fzaninotto/faker": ("pacote ABANDONADO (2020)", "trocar por fakerphp/faker ^1.23"),
-    "phpunit/phpunit": ("PHPUnit 8 nao e suportado pelo Laravel 12",
-                        "^11.5: setUp(): void, anotacoes viram atributos, assertions removidas"),
+                         "^13 (alvo do grupo): enablePasswordGrant(), OAuthenticatable no model de usuario, "
+                         "Passport::ignoreRoutes(), ids inteiros dos clientes sobre as tabelas oauth_* de hoje"),
+    "laravel/tinker": ("versao antiga", "versao compativel com Laravel 13"),
+    "fzaninotto/faker": ("pacote ABANDONADO (2020); exclui o PHP 8.5", "trocar por fakerphp/faker"),
+    "phpunit/phpunit": ("PHPUnit 8 nao e suportado pelo Laravel 13",
+                        "versao suportada pelo Laravel 13: setUp(): void, anotacoes viram atributos"),
     "mockery/mockery": ("versao fixa antiga (1.3.0)", "^1.6"),
     "doctrine/dbal": ("DBAL 2 sem suporte; o Laravel 11+ nao usa mais DBAL no Schema",
                       "remova se so servia ao ->change() de migrations; se o codigo usa DBAL direto, ^3.x/^4.x"),
@@ -31,8 +47,12 @@ ALERTAS: dict[str, tuple[str, str]] = {
                                 "laravel/serializable-closure (ou opis/closure)"),
     "symfony/polyfill-php56": ("polyfill inutil em PHP 8", "remova"),
     "symfony/polyfill-php70": ("polyfill inutil em PHP 8", "remova"),
-    "symfony/console": ("fixado em 5.x; Laravel 12 usa Symfony 7.x", "solte a fixacao (o framework traz ^7)"),
-    "symfony/process": ("fixado em 5.x; Laravel 12 usa Symfony 7.x", "solte a fixacao (o framework traz ^7)"),
+    "symfony/console": ("fixado em 5.x; o Laravel 13 traz Symfony bem mais novo", "solte a fixacao"),
+    "symfony/process": ("fixado em 5.x; o Laravel 13 traz Symfony bem mais novo", "solte a fixacao"),
+    "dbseller/sdk-api-pix-bb": ("BLOQUEIO medido: " + BLOQUEIOS_CONHECIDOS["dbseller/sdk-api-pix-bb"],
+                                "siga a solucao do grupo Laravel; nao troque o pacote por conta propria"),
+    "proner/phppimaco": ("BLOQUEIO medido: " + BLOQUEIOS_CONHECIDOS["proner/phppimaco"],
+                         "siga a solucao do grupo Laravel; confira a etiqueta impressa contra o 7.4"),
     "symfony/filesystem": ("fixado em 5.x", "^7.0"),
     "symfony/yaml": ("fixado em 5.x", "^7.0"),
     "dompdf/dompdf": ("0.8 e antigo (falhas de seguranca conhecidas, PHP 8 parcial)", "^3.0 (confira a saida dos PDFs)"),
@@ -123,7 +143,7 @@ def aceita_versao(restricao: str, versao: tuple[int, int, int]) -> bool | None:
 
 def _ler_json(p: Path, rel: str) -> dict[str, Any]:
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
+        return json.loads(decodificar(p.read_bytes()))
     except json.JSONDecodeError as e:
         raise ErroFerramenta("json_invalido", f"{rel} nao e JSON valido: {e}") from None
 
@@ -177,11 +197,15 @@ def analisar_composer(config: Config, caminho: str = "ecidade/composer.json") ->
                 alertas.append(item)
             elif nome.startswith(PREFIXOS_INTERNOS):
                 item["problema"] = "pacote interno"
-                item["sugestao"] = "confira a compatibilidade com PHP 8.5/Laravel 12 no repositorio do pacote"
+                item["sugestao"] = "confira a compatibilidade com PHP 8.5/Laravel 13 no repositorio do pacote"
                 alertas.append(item)
 
     php_req = req.get("php")
+    presentes = set(req) | set(dev) | set(instalados)
     return {
+        "dono": "composer.json, composer.lock e vendor/ sao do grupo Laravel: ninguem mexe sem combinar "
+                "(CONTRIBUINDO.md, regra 6). O 7.4 fica com o Laravel 8 do PR; o 8.5 tera composer proprio.",
+        "bloqueios_conhecidos": [{"nome": n, "situacao": s} for n, s in BLOQUEIOS_CONHECIDOS.items() if n in presentes],
         "arquivo": rel,
         "php_requerido": php_req,
         "php_requerido_aceita_85": aceita_versao(php_req, ALVO_PHP) if php_req else None,

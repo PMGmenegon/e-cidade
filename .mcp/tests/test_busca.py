@@ -35,6 +35,16 @@ def test_latin1_nao_quebra(repo):
     assert r["ocorrencias"][0]["linha"] == 3
 
 
+def test_latin1_com_acentos_e_decodificado_como_iso_8859_1(repo):
+    (repo.raiz / "ecidade" / "acentos.php").write_bytes(
+        "<?php\n// Situação do débito: não há\nif ($x == \"\") { echo 'Atualização'; }\n"
+        .encode("iso-8859-1"))
+    r = buscar(repo, regex="Situa", caminho="ecidade/acentos.php")
+    assert r["ocorrencias"][0]["trecho"] == "// Situação do débito: não há"
+    r = buscar(repo, padrao="comparacao_vazio", caminho="ecidade/acentos.php")
+    assert "Atualização" in r["ocorrencias"][0]["trecho"]
+
+
 def test_pula_vendor_segredos_e_extensoes(repo):
     r = buscar(repo, padrao="parse_str_1_arg")
     nomes = {o["arquivo"] for o in r["ocorrencias"]}
@@ -53,6 +63,19 @@ def test_todos_com_ruidosos(repo):
     assert "pg_aliases" not in buscar(repo, padrao="todos")["totais_por_padrao"]
     r = buscar(repo, padrao="todos", incluir_ruidosos=True)
     assert r["totais_por_padrao"]["pg_aliases"] == 1 and r["totais_por_padrao"]["count_null"] == 1
+
+
+def test_resumo_por_severidade_e_env_fora_de_configuration(repo):
+    e = repo.raiz / "ecidade"
+    (e / "configuration").mkdir()
+    (e / "configuration" / "database.php").write_text("<?php return ['p' => env('DB_PASSWORD', '')];\n")
+    (e / "app").mkdir()
+    (e / "app" / "Servico.php").write_text("<?php $u = env('PIX_URL'); Cache::put('k', 1, 10);\n")
+    r = buscar(repo, padrao="laravel")
+    assert {o["arquivo"] for o in r["ocorrencias"] if o["padrao"] == "env_fora_config"} == {"ecidade/app/Servico.php"}
+    assert r["resumo_por_severidade"]["laravel"]["padroes"] == {"cache_put_ttl": 1, "env_fora_config": 1}
+    t = buscar(repo, padrao="todos")["resumo_por_severidade"]
+    assert t["quebra_8_5"]["padroes"]["split"] == 1 and t["silenciosa"]["padroes"]["construtor_php4"] == 1
 
 
 def test_regex_livre(repo):

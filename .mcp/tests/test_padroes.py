@@ -1,6 +1,6 @@
 import pytest
 
-from servidor.padroes import CATALOGO, PADROES, ocorrencias
+from servidor.padroes import CATALOGO, PADROES, SEVERIDADES, ocorrencias, padroes_para
 
 
 def acha(nome: str, codigo: str) -> int:
@@ -46,6 +46,22 @@ def acha(nome: str, codigo: str) -> int:
     ("doctrine_dbal", "$sm = $conn->getDoctrineSchemaManager();", "$sm = Schema::getColumnListing('t');"),
     ("request_get", "$x = $request->get('id');", "$x = $request->input('id');"),
     ("count_null", "$n = count($lista);", "$n = count([1, 2]);"),
+    # guia do grupo (18/11/2026)
+    ("cast_real", "$v = (real) $x; $w = (REAL)$y;", "$v = (float) $x; $real = 1; f($real);"),
+    ("ternario_encadeado", "$x = $a ? 1 : $b ? 2 : 3;", "$x = ($a ? 1 : $b) ? 2 : 3; $y = $a ?: $b; $z = $a ?? $b;"),
+    ("ternario_encadeado", "echo $t == 1 ? 'a' : $t == 2 ? 'b' : 'c';", "$x = $a ? 1 : ($b ? 2 : 3);"),
+    ("pg_lo_export_ordem_antiga", "pg_lo_export($oid, $arquivo, $conn);",
+     "pg_lo_export($conn, $oid, $arquivo); pg_lo_export($oid, $arquivo);"),
+    ("pg_lo_export_ordem_antiga", "pg_lo_import(\"/tmp/x\", $oidArq, $conexao);", "pg_lo_import($conexao, \"/tmp/x\");"),
+    ("get_magic_quotes", "if (get_magic_quotes_gpc()) {} get_magic_quotes_runtime();", "$x->get_magic_quotes_gpc();"),
+    ("comparacao_vazio", "$this->x = ($this->x == \"\" ? $p : $this->x);", "if ($x === \"\" || $x != \"\") {}"),
+    ("comparacao_vazio", "if ('' == $y) {}", "if ($y == '0') {}"),
+    ("db_raw", "$q->select(DB::raw('count(*)'));", "$q->selectRaw('count(*)');"),
+    ("validated", "$d = $request->validated();", "$d = $request->all();"),
+    ("env_fora_config", "$u = env('PIX_URL');", "$u = config('pix.url'); $this->env('x'); $environment = 1;"),
+    ("cache_put_ttl", "Cache::put('k', $v, 10); cache()->remember('k', 5, $f);", "Cache::get('k'); Cache::forget('k');"),
+    ("array_pluck", "$ids = array_pluck($lista, 'id');", "$ids = Arr::pluck($lista, 'id');"),
+    ("str_random", "$t = str_random(40);", "$t = Str::random(40);"),
 ])
 def test_padrao_positivo_e_negativo(nome, positivo, negativo):
     assert acha(nome, positivo) >= 1, f"{nome} nao achou: {positivo}"
@@ -79,3 +95,35 @@ def test_catalogo_completo_e_documentado():
         assert p.mecanico in {"sim", "semi", "nao"} and p.confianca in {"alta", "media", "baixa"}
         assert p.alvo in {"php", "laravel"}
         assert (p.regex is None) != (p.detector is None)
+        assert p.severidade in SEVERIDADES
+        assert (p.severidade == "laravel") == (p.alvo == "laravel")
+        assert "Laravel 12" not in p.origem + p.correcao
+
+
+def test_padroes_do_guia_do_grupo_e_apelidos():
+    pedidos = {"chave_offset", "ternario_encadeado", "cast_real", "each_removido", "pg_lo_export_ordem_antiga",
+               "create_function", "get_magic_quotes", "comparacao_vazio", "construtor_antigo", "utf8_encode",
+               "utf8_decode", "string_interp_dolar", "strftime", "filter_sanitize_string", "dates_model", "db_raw",
+               "validated", "env_fora_config", "cache_put_ttl", "array_pluck", "str_random"}
+    for nome in pedidos:
+        assert padroes_para(nome), nome
+    assert padroes_para("construtor_antigo")[0].nome == "construtor_php4"
+    assert PADROES["construtor_php4"].severidade == "silenciosa"
+    assert PADROES["comparacao_vazio"].severidade == "silenciosa"
+    assert PADROES["utf8_encode_decode"].severidade == "obsoleto"
+    assert PADROES["each"].severidade == "quebra_8_5"
+    assert PADROES["cast_real"].nao_compila and PADROES["chaves_offset_string"].nao_compila
+
+
+def test_ordem_de_trabalho_nao_compila_execucao_silenciosa():
+    ordem = [p.nome for p in padroes_para("todos", incluir_ruidosos=True)]
+    i = ordem.index
+    assert i("cast_real") < i("parse_str_1_arg") < i("construtor_php4") < i("utf8_encode_decode") < i("db_raw")
+    assert i("chaves_offset_string") < i("each")
+    assert [p.severidade for p in padroes_para("silenciosa")] == ["silenciosa"] * len(padroes_para("silenciosa"))
+
+
+def test_env_fora_config_so_vale_fora_de_configuration():
+    p = PADROES["env_fora_config"]
+    assert not p.so_em("ecidade/configuration/database.php")
+    assert p.so_em("ecidade/app/Http/Controllers/X.php")

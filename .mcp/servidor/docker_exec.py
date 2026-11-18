@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from servidor.config import Config
-from servidor.seguranca import ErroFerramenta, limitar
+from servidor.seguranca import ErroFerramenta, decodificar, limitar
 
 _NOME_CONTEINER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 _D_PERMITIDO = re.compile(r"^memory_limit=\d+[MG]$")
@@ -108,8 +108,13 @@ class DockerExec:
 
     def _run(self, argv: list[str], timeout: float) -> subprocess.CompletedProcess:
         try:
-            return self.runner(argv, capture_output=True, text=True, encoding="utf-8", errors="replace",
-                               timeout=timeout, stdin=subprocess.DEVNULL, check=False)
+            r = self.runner(argv, capture_output=True, timeout=timeout, stdin=subprocess.DEVNULL, check=False)
+            # bytes -> texto com a regra do repositorio (ISO-8859-1 por padrao; UTF-8 so se valido)
+            for campo in ("stdout", "stderr"):
+                v = getattr(r, campo)
+                if isinstance(v, bytes):
+                    setattr(r, campo, decodificar(v))
+            return r
         except FileNotFoundError:
             raise ErroFerramenta("docker_indisponivel",
                                  f"comando {self.config.docker!r} nao encontrado (Docker instalado e no PATH?)") from None

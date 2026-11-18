@@ -121,6 +121,19 @@ def validar_regex(rx: str, flags: int = 0) -> re.Pattern[str]:
         raise ErroFerramenta("regex_invalida", f"regex invalida: {e}") from None
 
 
+def decodificar(dados: bytes) -> str:
+    """Texto de arquivo do repositorio. O codigo do e-Cidade e ISO-8859-1 (regra do grupo: nao salvar em UTF-8):
+    o padrao e latin-1, que nunca falha. So um arquivo que e UTF-8 VALIDO e tem bytes nao-ASCII (arquivos novos
+    do Laravel, JSON) e lido como UTF-8 -- num arquivo ISO-8859-1 de verdade, acento solto (0xE7, 0xE3...) nunca
+    forma UTF-8 valido, entao ele cai no latin-1."""
+    if dados.isascii():
+        return dados.decode("ascii")
+    try:
+        return dados.decode("utf-8")
+    except UnicodeDecodeError:
+        return dados.decode("latin-1", errors="replace")
+
+
 def limitar(texto: str, maximo: int) -> tuple[str, bool]:
     if len(texto) <= maximo:
         return texto, False

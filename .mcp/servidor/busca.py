@@ -20,8 +20,8 @@ from pathlib import Path
 from typing import Any
 
 from servidor.config import Config
-from servidor.padroes import CATALOGO, Padrao, ocorrencias, padroes_para
-from servidor.seguranca import ErroFerramenta, eh_negado, relativo, resolver_caminho, validar_regex
+from servidor.padroes import CATALOGO, PADROES, Padrao, ocorrencias, ordem_trabalho, padroes_para
+from servidor.seguranca import ErroFerramenta, decodificar, eh_negado, relativo, resolver_caminho, validar_regex
 
 EXTENSOES_PADRAO = (".php", ".inc", ".class", ".phtml", ".module")
 DIRS_IGNORADOS = {".git", "vendor", "node_modules", ".venv", "__pycache__", ".mcp", ".idea", ".pytest_cache"}
@@ -69,10 +69,7 @@ def ler_texto(p: Path, max_bytes: int) -> str | None:
         dados = p.read_bytes()
     except OSError:
         return None
-    try:
-        return dados.decode("utf-8")
-    except UnicodeDecodeError:
-        return dados.decode("latin-1")  # base do e-Cidade e LATIN1
+    return decodificar(dados)  # ISO-8859-1 por padrao (base do e-Cidade)
 
 
 class _Linhas:
@@ -181,6 +178,17 @@ def _regex_em_processo(config: Config, regex: str, arquivos: list[tuple[str, str
     return varridos, motivo
 
 
+def _resumo(totais: Counter[str]) -> dict[str, dict[str, Any]]:
+    """{severidade: {total, padroes: {nome: n}}} (contagem ate onde a varredura foi)."""
+    out: dict[str, dict[str, Any]] = {}
+    for nome, n in sorted(totais.items()):
+        sev = PADROES[nome].severidade if nome in PADROES else "regex"
+        grupo = out.setdefault(sev, {"total": 0, "padroes": {}})
+        grupo["total"] += n
+        grupo["padroes"][nome] = n
+    return out
+
+
 def buscar(
     config: Config,
     *,
@@ -196,7 +204,7 @@ def buscar(
     if padrao and regex:
         raise ErroFerramenta("parametro_invalido", "informe `padrao` OU `regex`, nao os dois")
     if not padrao and not regex:
-        return {"catalogo": [p.como_dict() for p in sorted(CATALOGO, key=lambda p: p.prioridade)],
+        return {"catalogo": [p.como_dict() for p in sorted(CATALOGO, key=ordem_trabalho)],
                 "dica": "chame de novo com padrao=<nome> (ou 'todos') ou regex=<expressao>"}
     if not (1 <= limite <= 2000):
         raise ErroFerramenta("parametro_invalido", "limite precisa estar entre 1 e 2000")
@@ -238,6 +246,8 @@ def buscar(
             linhas = None
             encontrados: list[tuple[int, str]] = []
             for pd in lista:
+                if pd.so_em is not None and not pd.so_em(rel):
+                    continue
                 offs = ocorrencias(pd, texto)
                 if offs:
                     linhas = linhas or _Linhas(texto)
@@ -251,6 +261,7 @@ def buscar(
     return {
         "padrao": padrao, "regex": regex, "caminho": relativo(config.raiz, base),
         "ocorrencias": coleta.achados, "totais_por_padrao": dict(coleta.totais),
+        "resumo_por_severidade": _resumo(coleta.totais),
         "arquivos_com_ocorrencia": len(set(coleta.por_arquivo) | set(coleta.omitidas)),
         "arquivos_com_linhas_omitidas": sorted(coleta.omitidas)[:200],
         "arquivos_varridos": varridos, "truncado": truncado, "motivo_truncado": motivo,
