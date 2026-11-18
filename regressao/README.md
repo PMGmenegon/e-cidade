@@ -332,6 +332,8 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 ## 8. Custos, tempos e memória
 
 - **Restauração ≈ 3,5–4,5 min** cada. A completa restaura **3 vezes** (PHP, Laravel, fluxos): ≈ 12 min só de restore.
+  A rodada pequena do atalho (3 prefixos PHP + Laravel inteiro + 6 fluxos) leva ≈ 23 min (PHP 4,2, Laravel 14,2,
+  fluxos 4,4); resultado em 2026-11-18: VERMELHO, PHP 15/15/0/0, Laravel 719/0/273/0, fluxos 32 IDENTICO.
 - PHP: ~0,83 s/tela, POSTs 4–17 s cada, relatórios ~1 s; uma rodada de fumaça (`--prefixo`) leva ~5–6 min no total. Áreas
   inteiras levam **horas**. Laravel (base 7.4): ≈ 10,5–11 min de casos (996 casos) + ≈ 3,2 min de restore. Fluxos: ≈ 1 min + restore.
 - A memória do host é apertada: antes de rodadas longas, solte o cache de arquivos do WSL
@@ -450,6 +452,12 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   **Reconferido no banco v2** (2026-11-18, as 94 linhas, 767 s): 93 com o mesmo resultado; `rec1_assentamentos.RPC`
   passou a gravar na referência (3 statements de negócio × 0 no 8.5: DIVERGE) e virou `verificado`. POSTs hoje: **48
   `verificado` (13 IDENTICO, 35 DIVERGE) e 4 `nao-verificado`**; relatórios sem mudança.
+- **Login HTTP da bateria PHP no banco v2.** `abrir.php` da referência termina em `ArgumentCountError`
+  (`db_verifica_ip_banco()` chamada sem argumento, linha 372) **depois** de gravar a sessão; o resto do login
+  (`inicio`/`topo`/área/módulo) funciona e as telas abrem. Numa rodada (2026-11-18, logo depois do restore) a sessão
+  saiu sem conexão com o banco: toda tela da referência respondeu `Erro:(27) inserindo arquivo em db_usuariosonline`
+  (50 B), que passava pela sonda de sessão. Desde então essa página conta como **sessão inválida** (`telas._INVALIDA`):
+  a bateria renova o login em vez de medir com ela. Causa da sessão sem conexão não isolada (não se repetiu).
 - **Os PDFs dão HTTP 500 no PHP 8.5** e funcionam na referência 7.4: a causa comum é `ParseError` em
   `fpdf151/fpdf.php:614` (offset de string com chaves, removido no PHP 8); alguns também chamam `parse_str()` com 1
   argumento. São regressões **reais** da migração e mantêm a bateria PHP vermelha (saída 1) até serem corrigidas ou

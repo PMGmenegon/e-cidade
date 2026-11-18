@@ -51,7 +51,7 @@ Sempre da raiz do repositório, no WSL:
 
 ```bash
 regressao/bin/regressao ambiente-sobe      # 1. sobe 7.4 (:8074), 8.5 (:8185), proxy (:8190), laboratório (:8187) e banco
-regressao/bin/regressao rodada-pequena     # 2. ~30 min, em segundo plano: confere que tudo funciona
+regressao/bin/regressao rodada-pequena     # 2. ~25 min, em segundo plano: confere que tudo funciona
 regressao/bin/regressao ver-ultimo         #    andamento; quando acabar, mostra o resumo
 regressao/bin/regressao rodada-completa    # 3. a rodada de verdade: HORAS (todas as telas), em segundo plano
 ```
@@ -83,6 +83,12 @@ com o próprio `resumo.md`, `resultado.json` e `diffs/`.
 5. **INCONCLUSIVO por motivo** — por que cada grupo não foi verificado.
 6. **Divergências novas / conhecidas** e **ERRO_AMBIENTE** — a lista do que olhar. O diff de cada divergência está em
    `<bateria>/diffs/`.
+
+Exemplo real (rodada pequena de 18/11/2026, 23 min): `Resultado: VERMELHO (saida 1): 15 divergencia(s) nova(s)`.
+PHP 30 casos: 15 IDENTICO, 15 DIVERGE (classes com `0 == ""`, `cem1_cemiterio003` com `parse_str`, 2 PDFs que dão 500
+no 8.5, 2 cadastros que o 8.5 não grava). Laravel 992 casos contra a própria referência: 719 IDENTICO, 273 INCONCLUSIVO,
+0 DIVERGE (a medição é estável). Fluxos: 32 IDENTICO (o proxy ainda manda tudo ao 7.4). Ou seja: o vermelho vem todo do
+PHP 8.5, que ainda não foi adaptado.
 
 ## Os quatro vereditos (com exemplos reais deste projeto)
 
@@ -159,6 +165,8 @@ da regressão já vem assim (versão 2; ver [`README.md`, seção 2](README.md#2
 | Login no 8.5 dá "Erro interno" | Defeito real do 8.5 (`abrir.php`, `libs/JSON.php`) | Esperado hoje; a suíte loga no 7.4 |
 | `ver-ultimo` diz "ainda em andamento" há muito tempo | Rodada completa (horas) ou travada | `tail -f ~/rodadas/<pasta>/execucao.log`; se o processo morreu, apague `~/rodadas/.em-andamento` e rode de novo |
 | `falta o venv da regressao` | Preparação não feita | Seção "Preparar uma vez" |
+| `a rodada terminou logo ao iniciar` | Atalho chamado de fora (`wsl -- regressao/bin/regressao ...` no PowerShell) e o WSL encerrou a sessão junto | Rode de dentro de um terminal do WSL; veja `execucao.log` da pasta da rodada |
+| Todas as telas da referência com "Erro:(27) inserindo arquivo em db_usuariosonline" | A sessão do login não abriu conexão com o banco (visto uma vez logo depois de restaurar) | A bateria trata isso como sessão inválida e faz login de novo; se ainda aparecer, rode de novo |
 
 ## Usar com a pilha do grupo
 

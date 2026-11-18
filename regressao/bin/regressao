@@ -25,7 +25,7 @@ Uso: regressao/bin/regressao <comando>
 
   ambiente-sobe            sobe o ambiente da regressao (7.4 :8074, 8.5 :8185, proxy :8190, laboratorio :8187, banco)
   ambiente-para            para so os conteineres ecidade74_* (nada e apagado)
-  rodada-pequena [args]    rodada completa reduzida (~30 min): 3 grupos de telas PHP, Laravel contra a
+  rodada-pequena [args]    rodada completa reduzida (~25 min): 3 grupos de telas PHP, Laravel contra a
                            propria referencia, 6 fluxos de navegador. Roda em segundo plano.
   rodada-completa [args]   rodada completa (HORAS): todas as telas PHP, Laravel contra o laboratorio
                            (ou --alvo-laravel URL), fluxos. Roda em segundo plano.
@@ -96,7 +96,16 @@ rodada() {  # rodada <nome> <args do orquestrador...>
         "$1" -m regressao.completa.orquestra --saida "$2" "${@:4}"
         echo "fim: saida $? em $(date -Is)"
         rm -f "$3"' _ "$PY" "$saida" "$TRAVA" "$@" > "$saida/execucao.log" 2>&1 < /dev/null &
-    printf '%s\t%s\n' "$!" "$saida" > "$TRAVA"
+    local pid=$!
+    disown "$pid" 2>/dev/null || true
+    printf '%s\t%s\n' "$pid" "$saida" > "$TRAVA"
+    # confere que a rodada ficou de pe (ex.: chamada por `wsl -- ...` que fecha logo em seguida)
+    sleep 5
+    if ! kill -0 "$pid" 2>/dev/null && ! grep -q '^fim:' "$saida/execucao.log"; then
+        rm -f "$TRAVA"
+        echo "erro: a rodada terminou logo ao iniciar; veja $saida/execucao.log" >&2
+        exit 2
+    fi
     echo "rodada iniciada em segundo plano: $saida"
     echo "acompanhe com: regressao/bin/regressao ver-ultimo"
 }
