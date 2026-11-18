@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/tesouraria/contatesouraria/buscar",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
+    "line": 71,
+    "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
+  },
+  "sha256": "ea5670270825d9cd6a368dd376e752b64eec341fecd9427558018a1d132b835d",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

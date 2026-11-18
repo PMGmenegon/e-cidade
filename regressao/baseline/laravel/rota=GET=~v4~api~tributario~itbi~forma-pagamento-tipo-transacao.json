@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/itbi/forma-pagamento-tipo-transacao",
+  "json": {
+    "tipoTransacao": [
+      "O campo tipo transacao é obrigatório."
+    ]
+  },
+  "sha256": "419da1d0b292496c357392c2d631a96003b8f63da08cec47fff225546b60030f",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/show",
+  "json": {
+    "data": {
+      "id": [
+        "CÃ³digo da comissÃ£o nÃ£o informado."
+      ]
+    },
+    "error": true,
+    "message": "CÃ³digo da comissÃ£o nÃ£o informado."
+  },
+  "sha256": "764476202d4be7008eb6e35531815ea4b400b347c0b233b0b36e0f4259181a4d",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

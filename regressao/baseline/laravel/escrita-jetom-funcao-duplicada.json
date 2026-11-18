@@ -1,0 +1,24 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "escrita-jetom-funcao-duplicada",
+  "json": {
+    "data": {
+      "descricao": [
+        "Descrição da função já cadastrada."
+      ]
+    },
+    "error": true,
+    "message": "Descrição da função já cadastrada."
+  },
+  "sha256": "58d8cbaeebe32b30b029a1035475a4e7704f9840096020e20f1cc608963f9578",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {
+    "pessoal.jetomfuncao": "42a814c6bcda8b189927168ac6d01b60"
+  },
+  "texto": "",
+  "tipos": {}
+}

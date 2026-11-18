@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/issqn/veiculos/veiculo/update",
+  "json": {
+    "data": {
+      "q172_datacadastro": [
+        "Data de cadastro não informada."
+      ],
+      "q172_issbase": [
+        "Inscrição não informada."
+      ],
+      "q172_sequencial": [
+        "Sequencial não informado."
+      ]
+    },
+    "error": true,
+    "message": "Sequencial não informado."
+  },
+  "sha256": "41b0f6b440a9ad052ffcd8dda9b1068cae2d88116f12ecd54f34c0bba662865a",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

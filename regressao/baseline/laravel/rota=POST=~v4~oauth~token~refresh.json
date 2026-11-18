@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/oauth/token/refresh",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php",
+    "line": 68,
+    "message": ""
+  },
+  "sha256": "8040cb4d9eefdaa7cfdbe878c418f1e5f8e4ceb6b00a37e17e4a7eb4a1cf7bc6",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

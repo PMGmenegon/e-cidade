@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/demonstrativo-evolucao-receita",
+  "json": {
+    "code": 406,
+    "error": true,
+    "file": "/var/www/html/app/Helpers/Functions.php",
+    "line": 113,
+    "message": "O Mês deve ser selecionado."
+  },
+  "sha256": "a6cdb5569a1a9ce026bd48a9da532d0e49334e11929dbc67bc33493d8ee2b556",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

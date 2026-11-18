@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/educacao/censo/tabelas-censo/tipos-pos-graduacao",
+  "json": {
+    "data": {
+      "1": "Especialização",
+      "2": "Mestrado",
+      "3": "Doutorado"
+    },
+    "error": false,
+    "message": ""
+  },
+  "sha256": "aae70d8a234f5a90022191cd9f68a79c5d7a8234eea3230ae6923d7ceaf27dc1",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "arquivo-vacinacao-pdf-tipo2",
+  "json": {
+    "data": {
+      "name": "Relatório de Vacinação PDF",
+      "path": "<X>"
+    },
+    "error": false,
+    "message": "Emitindo relatório em PDF"
+  },
+  "sha256": "0c96d1e7fa94778799510b952b7b9f467fe38eafcf8e4bc1b9c34bb8250f1a4a",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "[arquivo pdf status=200 ct=application/pdf]\n=== pagina 1 ===\nPREFEITURA DBSELLER\nRUA GENERAL CAMARA, 406\nPORTO ALEGRE - RS\n05130765101   -    CNPJ : 00.000.000/0000-00\nwww.dbseller.com.br\nRelatório de Vacinação\nApenas profissionais vacinados\nNenhum registro encontrado\nPág 1/1",
+  "tipos": {
+    "data.path": [
+      "str"
+    ]
+  }
+}

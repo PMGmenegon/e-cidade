@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/configuracao/documentos-assinar/assinante",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Configuracao/DocumentosAssinatura/Controller/DocumentosAssinatura.php",
+    "line": 25,
+    "message": "Informe o CPF/CNPJ"
+  },
+  "sha256": "52aa9f3c268fe61a50126918c97b941a42ae7b459bef8549fe448bd621adfe5c",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

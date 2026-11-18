@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update",
+  "json": {
+    "data": [],
+    "error": true,
+    "message": "Código da função do servidor não informado."
+  },
+  "sha256": "c7ec8b9fcd20611ce704f8116b6bb2cd7fcbad73de53c336ce4572cb30b18bbc",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

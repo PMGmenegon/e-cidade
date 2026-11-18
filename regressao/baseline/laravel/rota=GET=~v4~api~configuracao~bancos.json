@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/configuracao/bancos",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php",
+    "line": 2445,
+    "message": "Call to undefined method Illuminate\\Database\\Query\\Builder::all()"
+  },
+  "sha256": "53112069d439b54ade20add292dd3a927326ecbdecd534fb9568fff072b2bdcb",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

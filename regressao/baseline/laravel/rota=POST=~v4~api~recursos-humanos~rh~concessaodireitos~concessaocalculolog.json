@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculolog",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Controllers/ConcessaoCalculoLogController.php",
+    "line": 23,
+    "message": "Undefined index: acao"
+  },
+  "sha256": "65528d519425497e1ee86cbdd2a7662ebabca5492ea0151490692560d4557437",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

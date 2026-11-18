@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "auth-token-expirado",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
+    "line": 66,
+    "message": "Unauthenticated."
+  },
+  "sha256": "454afa4230e78dfd6945f491c8135c37cbcfdebabc86df3bdc122a27a98ac164",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

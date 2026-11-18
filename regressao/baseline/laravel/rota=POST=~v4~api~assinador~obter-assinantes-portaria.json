@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/assinador/obter-assinantes-portaria",
+  "json": {
+    "code": "42601",
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+    "line": 647,
+    "message": "SQLSTATE[42601]: Syntax error: 7 ERRO:  erro de sintaxe no fim da entrada\nLINE 8:             WHERE h31_sequencial = \n                                           ^ (SQL: SELECT DISTINCT cgm.z01_cgccpf AS cpf_cnpj,\n            cgm.z01_nome AS nome\n            FROM portaria\n            JOIN portariatipo ON portariatipo.h30_sequencial = portaria.h31_portariatipo\n            JOIN assinaturadocumentodesignacao ON h30_sequencial = h31_portariatipo\n            JOIN db_usuacgm ON db_usuacgm.id_usuario = assinaturadocumentodesignacao.db59_usuario\n            JOIN cgm ON cgm.z01_numcgm = db_usuacgm.cgmlogin\n            WHERE h31_sequencial = )"
+  },
+  "sha256": "d4760c0e0e35c644f0bd5f8ee8796a0224bba4a788307717f2b8145d85a3a7cf",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

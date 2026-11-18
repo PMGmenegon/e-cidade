@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/central-de-matriculas/escolas-disponiveis",
+  "json": {
+    "data": {
+      "etapa": [
+        "Código etapa deve ser informado."
+      ],
+      "fase": [
+        "Código fase deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "Código etapa deve ser informado."
+  },
+  "sha256": "7690756fdb365fcf8890b96d93dc6cc2e43771ff877b59aef77b19a249b7054a",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

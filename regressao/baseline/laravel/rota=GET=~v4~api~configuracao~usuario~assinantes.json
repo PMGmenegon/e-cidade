@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/configuracao/usuario/assinantes",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/src/Lib/Request/Storage/Curl/Autenticacao.php",
+    "line": 175,
+    "message": "Propriedades de autenticação não existentes."
+  },
+  "sha256": "c78f9d32cfa903ca636f1c075ba0116e75f24bd8521e32df1c6ef1cf491059e7",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/iniciativa/salvar",
+  "json": {
+    "data": {
+      "pl12_anoorcamento": [
+        "O campo \"Ano do Orçamento\" deve ser informado."
+      ],
+      "pl12_orcprojativ": [
+        "O campo \"Ação\" deve ser informado."
+      ],
+      "pl12_programaestrategico": [
+        "O campo \"Programa Estratégico\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Ação\" deve ser informado."
+  },
+  "sha256": "f312095688b96d65f56c8f7ce006eb2056d8461678e5506b377b31d590a83c02",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

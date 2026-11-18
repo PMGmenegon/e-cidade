@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/financeiro/tesouraria/processar",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": "Linhas para processar."
+  },
+  "sha256": "9df17f61ee9969c8009d067f464fc768e906be13d0fc142001fac2b42bf0dc45",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

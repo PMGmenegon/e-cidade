@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/sessao",
+  "json": {
+    "errors": {
+      "rh247_comissao": [
+        "Comissão não informada."
+      ]
+    },
+    "message": "Comissão não informada.",
+    "status": 406
+  },
+  "sha256": "83f2c49bbd63a2397f54bcd44b2caa67353b32919449e088cead34be2be19045",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

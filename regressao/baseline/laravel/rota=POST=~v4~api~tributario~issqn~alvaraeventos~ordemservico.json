@@ -1,0 +1,55 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/tributario/issqn/alvaraeventos/ordemservico",
+  "json": {
+    "data": {
+      "q168_cgm": [
+        "CGM ou Inscrição devem ser informados!"
+      ],
+      "q168_datafim": [
+        "Data de fim não informada."
+      ],
+      "q168_datainicio": [
+        "Data de inicio não informada."
+      ],
+      "q168_dataprocessoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ],
+      "q168_descricao": [
+        "Descricao não informada."
+      ],
+      "q168_horafim": [
+        "Hora final não informada."
+      ],
+      "q168_horainicio": [
+        "Hora de inicio não informada."
+      ],
+      "q168_inscricao": [
+        "CGM ou Inscrição devem ser informados!"
+      ],
+      "q168_localizacao": [
+        "Localização não informada."
+      ],
+      "q168_processo": [
+        "Processo ou Processo Externo devem ser informados!"
+      ],
+      "q168_processoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ],
+      "q168_titularprocessoexterno": [
+        "Processo ou Processo Externo devem ser informados!"
+      ]
+    },
+    "error": true,
+    "message": "Processo ou Processo Externo devem ser informados!"
+  },
+  "sha256": "84ed18b89a8948de4c26cb09fc12644464c99b32bd29d42395b4d397d6cbcf8f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

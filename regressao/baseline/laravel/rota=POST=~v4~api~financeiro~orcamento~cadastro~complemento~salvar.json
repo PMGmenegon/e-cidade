@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/orcamento/cadastro/complemento/salvar",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Http/JsonResponse.php",
+    "line": 71,
+    "message": "Malformed UTF-8 characters, possibly incorrectly encoded"
+  },
+  "sha256": "351685b7e20be9c6890a204d982c9d81bba670837f4080360aed0be87bef4e37",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

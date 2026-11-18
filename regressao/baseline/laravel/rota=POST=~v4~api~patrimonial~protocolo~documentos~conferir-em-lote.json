@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/protocolo/documentos/conferir-em-lote",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": "Nenhum documento informado."
+  },
+  "sha256": "f51133237e7023f51a6cdc2ba5a7ebab8bfbda5b041a5c4432fc41b6dd530d67",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/itbi/transmitente-principal",
+  "json": {
+    "matricula": [
+      "O campo matricula é obrigatório."
+    ]
+  },
+  "sha256": "8c17542a4e6da4fe82ac755ce78c5c0f07d28d2e277fbc4d91c15b11b6e94360",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,5137 @@
+{
+  "casos": {
+    "5xx": 104,
+    "inconclusivos_5xx": [
+      "rota:POST:/v4/api/assinador/obter-assinantes-portaria",
+      "rota:POST:/v4/api/assinador/recuperar-pfx",
+      "rota:POST:/v4/api/configuracao/assinantes",
+      "rota:GET:/v4/api/configuracao/bancos",
+      "rota:POST:/v4/api/configuracao/documento-assinado",
+      "rota:GET:/v4/api/configuracao/documentos-assinar/assinante",
+      "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinado-por",
+      "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinantes",
+      "rota:POST:/v4/api/configuracao/documentos-assinar/novo-documento",
+      "rota:POST:/v4/api/configuracao/organograma/filtrar",
+      "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template",
+      "rota:GET:/v4/api/configuracao/usuario/assinantes",
+      "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
+      "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao",
+      "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao",
+      "rota:POST:/v4/api/educacao/escola/relatorios/emitirRelatorioTurmasAee",
+      "rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes",
+      "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos",
+      "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info",
+      "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/recursos",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/ecidade",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/despesa/mapeamento",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/receita/mapeamento",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/mapeamento",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vincular",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vincular",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/editar-estruturais",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-bancaria",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-caixa",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas",
+      "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular",
+      "rota:POST:/v4/api/financeiro/contabilidade/relatorio/atributos-plano-conas",
+      "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento",
+      "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf",
+      "rota:POST:/v4/api/financeiro/orcamento/cadastro/complemento/salvar",
+      "rota:POST:/v4/api/financeiro/orcamento/relatorios/cotas-despesa",
+      "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-arrecadacao",
+      "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-x-cotas",
+      "rota:POST:/v4/api/financeiro/orcamento/relatorios/siconfi-recursos-2022",
+      "rota:POST:/v4/api/financeiro/planejamento/configuracao/salvar",
+      "rota:POST:/v4/api/financeiro/planejamento/despesa/cronograma/buscar",
+      "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/buscar",
+      "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/vincular",
+      "rota:POST:/v4/api/financeiro/planejamento/pib",
+      "rota:GET:/v4/api/financeiro/planejamento/programas-estrategico",
+      "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/salvar",
+      "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/projecao",
+      "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/salvar-projecao",
+      "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-exercicio",
+      "rota:POST:/v4/api/financeiro/planejamento/receita/cronograma/buscar",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/cotas-despesa",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/por-elemento",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-estrategico",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-gestao",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico",
+      "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso",
+      "rota:POST:/v4/api/financeiro/tesouraria/contatesouraria/buscar",
+      "rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria",
+      "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save",
+      "rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados",
+      "rota:POST:/v4/api/patrimonial/patrimonio/relatorio/transferencia-bens-aberto",
+      "rota:POST:/v4/api/patrimonial/protocolo/documentos/atividades-executadas",
+      "rota:POST:/v4/api/patrimonial/protocolo/documentos/buscar-por-identificador",
+      "rota:POST:/v4/api/patrimonial/protocolo/documentos/conferir",
+      "rota:POST:/v4/api/patrimonial/protocolo/documentos/salvar-documento-assinado",
+      "rota:GET:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
+      "rota:POST:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
+      "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao",
+      "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/update",
+      "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/all",
+      "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/find",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentconcedeconfig",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentform",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentperc",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculo",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculolog",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent",
+      "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao",
+      "rota:GET:/v4/api/saude/ambulatorial/parametros",
+      "rota:POST:/v4/api/tributario/arrecadacao/pix/gerar",
+      "rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao",
+      "rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes",
+      "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo",
+      "rota:GET:/v4/oauth/authorize",
+      "rota:POST:/v4/oauth/authorize",
+      "rota:GET:/v4/oauth/clients",
+      "rota:POST:/v4/oauth/clients",
+      "rota:GET:/v4/oauth/personal-access-tokens",
+      "rota:POST:/v4/oauth/personal-access-tokens",
+      "rota:GET:/v4/oauth/scopes",
+      "rota:POST:/v4/oauth/token/refresh",
+      "rota:GET:/v4/oauth/tokens",
+      "rota:POST:/api/v1/auth/login",
+      "rota:GET:/api/v1/matriculaonline/emissaoProtocolo",
+      "rota:POST:/api/v1/matriculaonline/inscricao",
+      "rota:POST:/api/v1/tributario/recibo"
+    ],
+    "rejeicao_esperada_5xx": [
+      "auth-sem-token",
+      "auth-token-invalido",
+      "auth-token-expirado",
+      "auth-token-revogado"
+    ],
+    "total": 381
+  },
+  "classes": {
+    "2xx": 83,
+    "3xx": 0,
+    "4xx": 182,
+    "5xx": 101,
+    "sem_baseline": 0
+  },
+  "cobertas": [
+    {
+      "casos": [
+        "rota:POST:/v4/api/assinador/obter-assinantes-portaria"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/assinador/obter-assinantes-portaria"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/assinador/obter-configuracao"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/assinador/obter-configuracao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/assinador/recuperar-pfx"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/assinador/recuperar-pfx"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/client/auth/usuario"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 401,
+      "uri": "/v4/api/client/auth/usuario"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/assinantes"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/configuracao/assinantes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/assinantes"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/assinantes"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/banco-pix/listar"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/configuracao/banco-pix/listar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/bancos"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/bancos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/documento-assinado"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/documento-assinado"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/documentos-assinar/assinante"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/documentos-assinar/assinante"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinado-por"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/documentos-assinar/atualizar-assinado-por"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinantes"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/documentos-assinar/atualizar-assinantes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/documentos-assinar/novo-documento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/documentos-assinar/novo-documento"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/instituicao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/configuracao/instituicao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/organograma/filtrar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/organograma/filtrar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/organograma/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/configuracao/organograma/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/relatorios-legais/lrf"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/configuracao/relatorios-legais/lrf"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/relatorios-legais/upload/template"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/configuracao/usuario/assinantes"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/configuracao/usuario/assinantes"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/censo/tabelas-censo/tipos-pos-graduacao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/censo/tabelas-censo/tipos-pos-graduacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/central-de-matriculas/emissao-protocolo"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 400,
+      "uri": "/v4/api/educacao/central-de-matriculas/emissao-protocolo"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/central-de-matriculas/escolas-disponiveis"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/educacao/central-de-matriculas/escolas-disponiveis"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/central-de-matriculas/inscricao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 400,
+      "uri": "/v4/api/educacao/central-de-matriculas/inscricao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/debug"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/escola/debug"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/procedimento/troca-de-turma"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/educacao/escola/procedimento/troca-de-turma"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-formacoes-superior-profissional"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/escola/recursos-humanos/buscar-formacoes-superior-profissional"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/relatorios/diarioclasse/turmasEscolarizacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/educacao/escola/relatorios/diarioclasse/turmasEscolarizacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/relatorios/diarioclasse/turmasEspeciais"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/educacao/escola/relatorios/diarioclasse/turmasEspeciais"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/relatorios/emitirRelatorioTurmasAee"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/educacao/escola/relatorios/emitirRelatorioTurmasAee"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/relatorios/vacinacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/educacao/escola/relatorios/vacinacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/escola/turmasEspeciais"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/escola/turmasEspeciais"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/escola/vacinas"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/escola/vacinas"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/parametros/notificacoes"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/parametros/notificacoes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/educacao/secretaria/parametros/notificacoes"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/tipo-base/buscarTodos"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/tipo-base/buscarTodos"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/tipo-base/composicoes-itinerario-inegrado"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/tipo-base/composicoes-itinerario-inegrado"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/tipo-base/estrutura-curricular"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/tipo-base/estrutura-curricular"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/tipo-base/tipos-curso-formacao-tec-prof"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/tipo-base/tipos-curso-formacao-tec-prof"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/educacao/secretaria/tipo-base/tipos-itinerario"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/educacao/secretaria/tipo-base/tipos-itinerario"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/recursos"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/recursos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/obter-dados-conferencia-por-recurso"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/obter-dados-conferencia-por-recurso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/padrao"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/padrao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/ecidade"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/ecidade"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/padrao"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/padrao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/ecidade"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/ecidade"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/padrao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/padrao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/despesa/mapeamento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/despesa/mapeamento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/receita/mapeamento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/receita/mapeamento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/mapeamento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/mapeamento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vincular"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vinculo-geral"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vinculo-geral"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vincular"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vinculo-geral"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vinculo-geral"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/conta-corrente/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/conta-corrente/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/editar-estruturais"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/editar-estruturais"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-bancaria"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-bancaria"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-caixa"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-caixa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular-geral"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular-geral"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/atualizarComplemento"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/atualizarComplemento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/despesa/lancamentos"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/despesa/lancamentos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/receita/lancamentos"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/procedimento/manutencao/fonte-recurso/receita/lancamentos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio-conferencia-por-recurso"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio-conferencia-por-recurso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio-tce/buscar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio-tce/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio-tce/exportar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio-tce/exportar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/atributos-plano-conas"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/atributos-plano-conas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-despena-por-complemento"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/balancete-despena-por-complemento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/demonstrativo-evolucao-despesa"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/demonstrativo-evolucao-despesa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/demonstrativo-evolucao-receita"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/demonstrativo-evolucao-receita"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-in-rs"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-in-rs"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-mdf"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-1-mdf"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-2"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-2"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-5"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rgf/anexo-5"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-1"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-1"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-3-in-rs"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-3-in-rs"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-3-mdf"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-3-mdf"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-4"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-4"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-6"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-6"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-8"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-8"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/contabilidade/sistema-conta"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/contabilidade/sistema-conta"
+    },
+    {
+      "casos": [
+        "auth-sem-token",
+        "auth-token-invalido",
+        "auth-token-expirado",
+        "auth-token-expirado-so-no-banco",
+        "auth-token-revogado",
+        "auth-rota-protegida-com-token",
+        "rota:GET:/v4/api/financeiro/contabilidade/sistemas"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/contabilidade/sistemas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/empenho/conferencia-extra-orcamentaria/exportar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/empenho/conferencia-extra-orcamentaria/exportar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-despesa"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-despesa"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-receita"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/bases-calculo-receita"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/acompanhamento/cronograma/despesa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/despesa/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/acompanhamento/cronograma/receita/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 403,
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/receita/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/orcamento/cadastro/complemento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/orcamento/cadastro/complemento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/cadastro/complemento/salvar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/orcamento/cadastro/complemento/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/cadastro/especificacao-recurso/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 412,
+      "uri": "/v4/api/financeiro/orcamento/cadastro/especificacao-recurso/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/cadastro/recurso/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recurso/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/cadastro/recurso/salvar-atualizado"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recurso/salvar-atualizado"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/orcamento/classificacao/com-siconfi"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/orcamento/classificacao/com-siconfi"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/relatorios/cotas-despesa"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/orcamento/relatorios/cotas-despesa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-arrecadacao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/orcamento/relatorios/meta-arrecadacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-x-cotas"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/orcamento/relatorios/meta-x-cotas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/orcamento/relatorios/siconfi-recursos-2022"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/orcamento/relatorios/siconfi-recursos-2022"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/orcamento/tipos-detalhamento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/orcamento/tipos-detalhamento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/abrangencia/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/abrangencia/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/area-resultado/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/area-resultado/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/areas-resultado/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/areas-resultado/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/comissao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/comissao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/planejamento/configuracao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/configuracao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/configuracao/salvar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/configuracao/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/planejamento/consulta/ods"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/consulta/ods"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/criarVinculo"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/criarVinculo"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/despesa/cronograma/buscar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/despesa/cronograma/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/despesa/cronograma/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/despesa/cronograma/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/despesa/detalhamento/buscar"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/despesa/detalhamento/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/despesa/detalhamento/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/despesa/detalhamento/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/fator-correcao/despesa"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/fator-correcao/despesa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/fator-correcao/index"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/fator-correcao/index"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/fator-correcao/receita"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/fator-correcao/receita"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/identidade-organizacional"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/identidade-organizacional"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/indicador-programa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/indicador-programa/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/buscar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/vincular"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/iniciativa/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/iniciativa/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/iniciativa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/iniciativa/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/ldo"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/ldo"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/loa"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/loa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/meta-objetivo/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/meta-objetivo/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/metas-iniciativa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/metas-iniciativa/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/objetivo-estrategico"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/objetivo-estrategico"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/objetivo-programa/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/objetivo-programa/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/objetivo-programa/saldo/iniciativas"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/objetivo-programa/saldo/iniciativas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/objetivo-programa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/objetivo-programa/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/objetivos-estrategicos/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/objetivos-estrategicos/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/orcamento/gerar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/orcamento/gerar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/orgao-programa/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/orgao-programa/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/orgao-programa/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/orgao-programa/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/planejamento/origens"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/origens"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/planejamento/periodos"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/periodos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/pib"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/pib"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/ppa"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/ppa"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/planejamento/programas-estrategico"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/filtros"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico/filtros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/saldo/iniciativas"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico/saldo/iniciativas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/salvar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-area/buscar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/programas-vincular-area/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-area/vincular"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/programas-vincular-area/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-objetivo/buscar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/programas-vincular-objetivo/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/programas-vincular-objetivo/vincular"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/programas-vincular-objetivo/vincular"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/projecao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/projecao-despesa/projecao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/salvar-projecao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/projecao-despesa/salvar-projecao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-base"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-base"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-exercicio"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-exercicio"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/buscar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/projecao/receita/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/receita/cronograma/buscar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/receita/cronograma/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/receita/cronograma/salvar-metas"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 403,
+      "uri": "/v4/api/financeiro/planejamento/receita/cronograma/salvar-metas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/receita/previsao/buscar"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/planejamento/receita/previsao/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/receita/previsao/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/receita/previsao/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/regionalizacao/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/regionalizacao/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-cinco"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-cinco"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-dois"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-dois"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-oito"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-oito"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-quatro"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-quatro"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-seis"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-seis"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-sete"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-sete"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-tres"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-tres"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/anexo-um"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/anexo-um"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/cotas-despesa"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/cotas-despesa"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/meta-arrecadacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/meta-arrecadacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/meta-x-cotas"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/meta-x-cotas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/por-elemento"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/por-elemento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/previsao-rcl-outros-anexos"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/previsao-rcl-outros-anexos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-estrategico"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/programa-estrategico"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-gestao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/programa-gestao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-receita"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 403,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/projecao-receita"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-receita-recurso"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 403,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/projecao-receita-recurso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/relatorios/resumo-projecao-receita"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 403,
+      "uri": "/v4/api/financeiro/planejamento/relatorios/resumo-projecao-receita"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/planejamento/status-planejamento/situacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/planejamento/status-planejamento/situacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/tesouraria/contas-pendentes"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/tesouraria/contas-pendentes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/tesouraria/contatesouraria/alterar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/financeiro/tesouraria/contatesouraria/alterar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/tesouraria/contatesouraria/buscar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/tesouraria/contatesouraria/buscar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/financeiro/tesouraria/processar"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/financeiro/tesouraria/processar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/get"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/integracoes/efd-reinf/configuracao/get"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/integracoes/efd-reinf/configuracao/save"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/integracoes/efd-reinf/unidaderesponsavel/get"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/integracoes/efd-reinf/unidaderesponsavel/get"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/integracoes/efd-reinf/unidaderesponsavel/save"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/integracoes/efd-reinf/unidaderesponsavel/save"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/licitacoes/integracaocomprasbr/exportar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/licitacoes/integracaocomprasbr/exportar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/licitacoes/itensBloqueados"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/licitacoes/registrosDePreco"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/licitacoes/registrosDePreco"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/material/relatorios/controle-estoque"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/material/relatorios/controle-estoque"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/material/relatorios/rastreabilidade"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/material/relatorios/rastreabilidade"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/material/relatorios/resumo-contabil-estoque"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/material/relatorios/resumo-contabil-estoque"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/atendimento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarProcessosOuvidoria"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarProcessosOuvidoria"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarSolicitacaoOuvidoria"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarSolicitacaoOuvidoria"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarSolicitacaoOuvidoriaPorProcesso"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarSolicitacaoOuvidoriaPorProcesso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/existeInscricao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/existeInscricao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/atendimentos"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/atendimentos"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/dependente/servidor/cpf"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/dependente/servidor/cpf"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/menu"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/menu"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/servidor/cpf"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/servidor/cpf"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/solicitacao-atendimento"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 400,
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/solicitacao-atendimento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/patrimonio/consulta/bem/buscar"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/patrimonio/consulta/bem/buscar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/patrimonio/etiquetas/imprimir"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/patrimonio/etiquetas/imprimir"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/patrimonio/relatorio/transferencia-bens-aberto"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/patrimonio/relatorio/transferencia-bens-aberto"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/atividades-execucao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/protocolo/atividades-execucao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/atividades-execucao/reordenar-vinculos"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/atividades-execucao/reordenar-vinculos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/atividades-execucao/vincular"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/atividades-execucao/vincular"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/cgm"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/cgm"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/cgm-cpf-cnpj"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/cgm-cpf-cnpj"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/atividades-executadas"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/atividades-executadas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/atualizar-documento-assinado"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/atualizar-documento-assinado"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/buscar-por-identificador"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/buscar-por-identificador"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/conferir"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/conferir"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/conferir-em-lote"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/conferir-em-lote"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/salvar-documento-assinado"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/salvar-documento-assinado"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/documentos/usuario"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/protocolo/documentos/usuario"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/processo/processo"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/protocolo/processo/processo"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/processo/processodocumento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/patrimonial/protocolo/processo/processodocumento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/processo/processodocumento/documentosPorProcAndamInt"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/patrimonial/protocolo/processo/processodocumento/documentosPorProcAndamInt"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/processo/processodocumento/documentosPorProcesso"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/processo/processodocumento/documentosPorProcesso"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/patrimonial/protocolo/processo/processodocumento/download"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/processo/processodocumento/download"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/rua-cep"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/rua-cep"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/patrimonial/protocolo/rua-cep-municipio"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/patrimonial/protocolo/rua-cep-municipio"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/config"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/config"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/config"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/config"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/config/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/config/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/config/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/config/update"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao/update"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/getComissao"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/getComissao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao/update"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/save"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/save"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/update"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/show"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/update"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/update"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/update"
+    },
+    {
+      "casos": [
+        "escrita-jetom-funcao-listar",
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao"
+    },
+    {
+      "casos": [
+        "escrita-jetom-funcao-incluir",
+        "escrita-jetom-funcao-duplicada",
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/funcao"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/all"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao/all"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/funcao/alterar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao/alterar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/find"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao/find"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao/show"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/sessao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/sessao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/sessao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/sessao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/tiposessao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/tiposessao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/tiposessao/all"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/tiposessao/all"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentamentos"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/assentamentos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentconcedeconfig"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/assentconcedeconfig"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentform"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/assentform"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentperc"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/assentperc"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculo"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculo"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculolog"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculolog"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/configuracao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/configuracao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentconcedeconfig"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentconcedeconfig"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentform"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentform"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentperc"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/gravarassentperc"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/ambulatorial/cgs/find-or-create"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/ambulatorial/cgs/find-or-create"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/saude/ambulatorial/cid"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/saude/ambulatorial/cid"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/saude/ambulatorial/consulta/microarea"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/saude/ambulatorial/consulta/microarea"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/saude/ambulatorial/consulta/problemas"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/saude/ambulatorial/consulta/problemas"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/saude/ambulatorial/parametros"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/saude/ambulatorial/parametros"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/ambulatorial/procedimento/acompanhamento-acs/save"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/ambulatorial/procedimento/acompanhamento-acs/save"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/ambulatorial/procedimento/problemaspaciente/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/ambulatorial/procedimento/problemaspaciente/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/ambulatorial/relatorio/acompanhamento-acs"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/ambulatorial/relatorio/acompanhamento-acs"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/saude/esf/controle-vacinas/imunobiologicos"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/esf/controle-vacinas/imunobiologicos"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/esf/equipes/unidades-com-equipe"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/esf/equipes/unidades-com-equipe"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/esf/relatorio/condicoes-saude"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/esf/relatorio/condicoes-saude"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/esf/relatorio/controle-vacinas"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/esf/relatorio/controle-vacinas"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/esf/relatorio/indicador-desempenho"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/esf/relatorio/indicador-desempenho"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/farmacia/cadastro/demanda-reprimida/save"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/farmacia/cadastro/demanda-reprimida/save"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/farmacia/consulta/medicamento/estoque"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/farmacia/consulta/medicamento/estoque"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/farmacia/relatorio/demanda-reprimida"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/farmacia/relatorio/demanda-reprimida"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/saude/tfd/relatorio/viagens-por-motorista"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/saude/tfd/relatorio/viagens-por-motorista"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/acoes"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/acoes"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/agendamento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/agendamento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/pix/gerar"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/tributario/arrecadacao/pix/gerar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/regra-emissao/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/arrecadacao/regra-emissao/salvar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tef/alterar-operacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/arrecadacao/tef/alterar-operacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tef/confirmar-operacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/arrecadacao/tef/confirmar-operacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tef/incluir-operacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/arrecadacao/tef/incluir-operacao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tef/operacoes-pendentes"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/arrecadacao/tef/operacoes-pendentes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tef/relatorio-pendentes"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/arrecadacao/tef/relatorio-pendentes"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/arrecadacao/tipo-debito/salvar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/arrecadacao/tipo-debito/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/bairros"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/bairros"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/configuracao/listar"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/configuracao/listar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/cadastro/configuracao/salvar"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/configuracao/salvar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/dados-matricula"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/cadastro/dados-matricula"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/localidade-rural"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/localidade-rural"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/logradouros"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/logradouros"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/cadastro/setor-registro-imoveis"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/cadastro/setor-registro-imoveis"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/alvaraevento"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/alvaraeventos/alvaraevento"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/alvaraevento/getAlvaraEvento"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento/getAlvaraEvento"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/alvaraevento/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/alvaraeventos/alvaraevento/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento/update"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/mensagempadrao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/mensagempadrao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/ordemservico"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/alvaraeventos/ordemservico"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/ordemservico/getOrdemServico"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/getOrdemServico"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/alvaraeventos/ordemservico/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/alvaraeventos/ordemservico/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/update"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/tributario/issqn/redesim/inclusao-inscricao"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/tributario/issqn/redesim/relatorio-inscricoes"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/veiculos/condutorauxiliar"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/issqn/veiculos/condutorauxiliar"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/veiculos/condutorauxiliar"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/veiculos/condutorauxiliar"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/veiculos/condutorauxiliar/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/veiculos/condutorauxiliar/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/veiculos/condutorauxiliar/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/veiculos/condutorauxiliar/update"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/veiculos/veiculo"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/veiculos/veiculo"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/veiculos/veiculo/getVeiculo"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo/getVeiculo"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/issqn/veiculos/veiculo/show"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo/show"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/issqn/veiculos/veiculo/update"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 406,
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo/update"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/itbi/autenticacao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/autenticacao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/benfeitoria/especie"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/benfeitoria/especie"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/api/tributario/itbi/benfeitoria/padrao-construtivo"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/benfeitoria/tipo"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/benfeitoria/tipo"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/benfeitorias"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/benfeitorias"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/cartorios"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/itbi/cartorios"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/api/tributario/itbi/emissao"
+      ],
+      "classe": "4xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/emissao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/forma-pagamento-tipo-transacao"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/forma-pagamento-tipo-transacao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/rural/caracter"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/rural/caracter"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/situacao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/itbi/situacao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/taxas-itbi"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/taxas-itbi"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/tipo-transacao"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/tributario/itbi/tipo-transacao"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/tipos"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/tipos"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/tributario/itbi/transmitente-principal"
+      ],
+      "classe": "4xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 422,
+      "uri": "/v4/api/tributario/itbi/transmitente-principal"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/api/user"
+      ],
+      "classe": "2xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/api/user"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/oauth/authorize"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/authorize"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/oauth/authorize"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/authorize"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/oauth/clients"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/clients"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/oauth/clients"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/clients"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/oauth/personal-access-tokens"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/personal-access-tokens"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/oauth/personal-access-tokens"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/personal-access-tokens"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/oauth/scopes"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/scopes"
+    },
+    {
+      "casos": [
+        "auth-token-valido",
+        "auth-client-secret-errado",
+        "auth-senha-errada",
+        "auth-usuario-inexistente",
+        "auth-sem-grant-type",
+        "auth-refresh-token",
+        "rota:POST:/v4/oauth/token"
+      ],
+      "classe": "2xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 200,
+      "uri": "/v4/oauth/token"
+    },
+    {
+      "casos": [
+        "rota:POST:/v4/oauth/token/refresh"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/token/refresh"
+    },
+    {
+      "casos": [
+        "rota:GET:/v4/oauth/tokens"
+      ],
+      "classe": "5xx",
+      "metodo": "GET|HEAD",
+      "origem": "laravel",
+      "status": 500,
+      "uri": "/v4/oauth/tokens"
+    },
+    {
+      "casos": [
+        "rota:POST:/api/v1/auth/login"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "silex",
+      "status": 500,
+      "uri": "/api/v1/auth/login"
+    },
+    {
+      "casos": [
+        "rota:GET:/api/v1/matriculaonline/emissaoProtocolo"
+      ],
+      "classe": "5xx",
+      "metodo": "GET",
+      "origem": "silex",
+      "status": 500,
+      "uri": "/api/v1/matriculaonline/emissaoProtocolo"
+    },
+    {
+      "casos": [
+        "rota:POST:/api/v1/matriculaonline/inscricao"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "silex",
+      "status": 500,
+      "uri": "/api/v1/matriculaonline/inscricao"
+    },
+    {
+      "casos": [
+        "rota:GET:/api/v1/protocolo/cgm"
+      ],
+      "classe": "4xx",
+      "metodo": "GET",
+      "origem": "silex",
+      "status": 403,
+      "uri": "/api/v1/protocolo/cgm"
+    },
+    {
+      "casos": [
+        "rota:POST:/api/v1/tributario/recibo"
+      ],
+      "classe": "5xx",
+      "metodo": "POST",
+      "origem": "silex",
+      "status": 500,
+      "uri": "/api/v1/tributario/recibo"
+    }
+  ],
+  "inconclusivos_5xx": [
+    "rota:POST:/v4/api/assinador/obter-assinantes-portaria",
+    "rota:POST:/v4/api/assinador/recuperar-pfx",
+    "rota:POST:/v4/api/configuracao/assinantes",
+    "rota:GET:/v4/api/configuracao/bancos",
+    "rota:POST:/v4/api/configuracao/documento-assinado",
+    "rota:GET:/v4/api/configuracao/documentos-assinar/assinante",
+    "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinado-por",
+    "rota:POST:/v4/api/configuracao/documentos-assinar/atualizar-assinantes",
+    "rota:POST:/v4/api/configuracao/documentos-assinar/novo-documento",
+    "rota:POST:/v4/api/configuracao/organograma/filtrar",
+    "rota:POST:/v4/api/configuracao/relatorios-legais/upload/template",
+    "rota:GET:/v4/api/configuracao/usuario/assinantes",
+    "rota:GET:/v4/api/educacao/censo/tabelas-censo/areas-pos-graduacao",
+    "rota:POST:/v4/api/educacao/escola/recursos-humanos/buscar-documento-pos-graducao",
+    "rota:POST:/v4/api/educacao/escola/recursos-humanos/salvar-documento-pos-graducao",
+    "rota:POST:/v4/api/educacao/escola/relatorios/emitirRelatorioTurmasAee",
+    "rota:POST:/v4/api/educacao/secretaria/parametros/notificacoes",
+    "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos",
+    "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/info",
+    "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/recursos",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/despesa/ecidade",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/orcamentario/receita/ecidade",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/despesa/mapeamento",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/receita/mapeamento",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/mapeamento",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/vincular",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/vincular",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/editar-estruturais",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-bancaria",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-caixa",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-conta-extra",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/salvar-outras-contas",
+    "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/pcasp/vincular",
+    "rota:POST:/v4/api/financeiro/contabilidade/relatorio/atributos-plano-conas",
+    "rota:POST:/v4/api/financeiro/contabilidade/relatorio/balancete-receita-por-complemento",
+    "auth-sem-token",
+    "rota:POST:/v4/api/financeiro/empenho/relatorio/retencoesEfdReinf",
+    "rota:POST:/v4/api/financeiro/orcamento/cadastro/complemento/salvar",
+    "rota:POST:/v4/api/financeiro/orcamento/relatorios/cotas-despesa",
+    "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-arrecadacao",
+    "rota:POST:/v4/api/financeiro/orcamento/relatorios/meta-x-cotas",
+    "rota:POST:/v4/api/financeiro/orcamento/relatorios/siconfi-recursos-2022",
+    "rota:POST:/v4/api/financeiro/planejamento/configuracao/salvar",
+    "rota:POST:/v4/api/financeiro/planejamento/despesa/cronograma/buscar",
+    "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/buscar",
+    "rota:POST:/v4/api/financeiro/planejamento/iniciativa-vincular-objetivo/vincular",
+    "rota:POST:/v4/api/financeiro/planejamento/pib",
+    "rota:GET:/v4/api/financeiro/planejamento/programas-estrategico",
+    "rota:POST:/v4/api/financeiro/planejamento/programas-estrategico/salvar",
+    "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/projecao",
+    "rota:POST:/v4/api/financeiro/planejamento/projecao-despesa/salvar-projecao",
+    "rota:POST:/v4/api/financeiro/planejamento/projecao/receita/atualizar/valor-exercicio",
+    "rota:POST:/v4/api/financeiro/planejamento/receita/cronograma/buscar",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/cotas-despesa",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/por-elemento",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-estrategico",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/programa-gestao",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-agrupado-sintetico",
+    "rota:POST:/v4/api/financeiro/planejamento/relatorios/projecao-despesa-conferencia-recurso",
+    "rota:POST:/v4/api/financeiro/tesouraria/contatesouraria/buscar",
+    "rota:POST:/v4/api/financeiro/tesouraria/relatorio/ExtratoContaBancaria",
+    "rota:POST:/v4/api/integracoes/efd-reinf/configuracao/save",
+    "rota:POST:/v4/api/patrimonial/licitacoes/itensBloqueados",
+    "rota:POST:/v4/api/patrimonial/patrimonio/relatorio/transferencia-bens-aberto",
+    "rota:POST:/v4/api/patrimonial/protocolo/documentos/atividades-executadas",
+    "rota:POST:/v4/api/patrimonial/protocolo/documentos/buscar-por-identificador",
+    "rota:POST:/v4/api/patrimonial/protocolo/documentos/conferir",
+    "rota:POST:/v4/api/patrimonial/protocolo/documentos/salvar-documento-assinado",
+    "rota:GET:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
+    "rota:POST:/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/resposta",
+    "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/comissao",
+    "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/update",
+    "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/all",
+    "rota:GET:/v4/api/recursos-humanos/pessoal/jetom/funcao/find",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentconcedeconfig",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentform",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentperc",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculo",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/concessaocalculolog",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/configuracao",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravaconcessaoassent",
+    "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/gravarconfiguracao",
+    "rota:GET:/v4/api/saude/ambulatorial/parametros",
+    "rota:POST:/v4/api/tributario/arrecadacao/pix/gerar",
+    "rota:POST:/v4/api/tributario/issqn/redesim/inclusao-inscricao",
+    "rota:POST:/v4/api/tributario/issqn/redesim/relatorio-inscricoes",
+    "rota:GET:/v4/api/tributario/itbi/benfeitoria/padrao-construtivo",
+    "rota:GET:/v4/oauth/authorize",
+    "rota:POST:/v4/oauth/authorize",
+    "rota:GET:/v4/oauth/clients",
+    "rota:POST:/v4/oauth/clients",
+    "rota:GET:/v4/oauth/personal-access-tokens",
+    "rota:POST:/v4/oauth/personal-access-tokens",
+    "rota:GET:/v4/oauth/scopes",
+    "rota:POST:/v4/oauth/token/refresh",
+    "rota:GET:/v4/oauth/tokens",
+    "rota:POST:/api/v1/auth/login",
+    "rota:GET:/api/v1/matriculaonline/emissaoProtocolo",
+    "rota:POST:/api/v1/matriculaonline/inscricao",
+    "rota:POST:/api/v1/tributario/recibo"
+  ],
+  "nao_cobertas": [
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {eid}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/assinador/obter-arquivo-base64/{eid}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (arquiv): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/assinador/obter-dados-arquivo"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (arquiv): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/assinador/salvar-arquivo-tmp"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {file_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/assinantes/{file_id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {db90_codban}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/banco-pix/atualizar/{db90_codban}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {db90_codban}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/banco-pix/excluir/{db90_codban}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {db90_codban?}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/banco-pix/validar/{db90_codban?}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {db90_codban}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/banco-pix/{db90_codban}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {file_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/documentos-assinar/documento/{file_id}/assinado-por"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {file_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/documentos-assinar/documento/{file_id}/assinantes"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {file_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/documentos-assinar/{file_id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (migrate): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/entrega-continua/migrate"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): UPDATE em db_config com corpo vazio (200)",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/instituicao/departamento-principal"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/instituicao/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (duplic): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/menu/permissoes/saude/duplicar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {instit}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/organograma/{instit}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {instit}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/organograma/{instit}/{departamento}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {relatorio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/relatorios-legais/periodos/{relatorio}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {idUsuario}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/configuracao/usuario/{idUsuario}/assinantes"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {escola}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/calendario/{escola}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {turma}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/matriculas-por-turma/{turma}/{etapa}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {profissionalVacinacao}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/profissional/excluir-vacinacao/{profissionalVacinacao}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {profissional}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/profissional/{profissional}/salvar-vacinacao"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {profissional}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/profissional/{profissional}/vacinas"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/recursos-humanos/excluir-documento-pos-graducao"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/recursos-humanos/excluir-formacao-superior-profissional"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {escola}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/recursos-humanos/profissionais-com-superior/{escola}/{ativos}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT DEFAULT VALUES em escola.rhformacaosuperior com corpo vazio (500)",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/recursos-humanos/salvar-formacao-superior-profissional"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {turmaOrigem}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/regencias-turmas/{turmaOrigem}/{turmaDestino}/{etapa}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {codigo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/turma/{codigo}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {vacina}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/vacinas/{vacina}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {turma}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/escola/vagas-por-turma/{turma}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/secretaria/tipo-base/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT em secretariadeeducacao.tipobase com corpo vazio (500)",
+      "origem": "laravel",
+      "uri": "/v4/api/educacao/secretaria/tipo-base/salvar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/BalancetesMensais/balancete-mensal-anexo1"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/importar/msc"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipoPlano}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/emitir/orcamentario/{tipoPlano}/{origem}/{exercicio}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/emitir/pcasp/{tipo}/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/despesa"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {estrutural}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/despesa/{estrutural}/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/receita"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {estrutural}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/orcamentario/receita/{estrutural}/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/pcasp"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {estrutural}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/exclusao-geral/pcasp/{estrutural}/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/importar/orcamentario/despesa"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/importar/orcamentario/receita"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/importar/pcasp"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desvincul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/despesa/desvincular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desvincul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/orcamentario/receita/desvincular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/conta-corrente/remover"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {codcon}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/conta-corrente/{codcon}/{exercicio}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {estrutural}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/estrural-existe/{estrutural}/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/plano-contas/pcasp/remover-reduzido"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {instituicao}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/procedimento/encerramento-periodo-contabil/{instituicao}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/relatorio-disponibilidade-recurso"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/contabilidade/relatorio/notificacao-recebimento-recursos-federais"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/despesa/recalcular"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {exercicio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/despesa/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/receita/recalcular"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {exercicio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/acompanhamento/cronograma/receita/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/complemento/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/especificacao-recurso/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recurso/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (inativ): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recurso/inativar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recurso/{id}/{exercicio}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {exercicio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/cadastro/recursos/inativar/{exercicio}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {exercicio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/de-para-siconfi/exportar/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/de-para-siconfi/importar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {data?}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/recursos/{data?}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {exercicio}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/orcamento/utiliza-decimal/{exercicio}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/abrangencia/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/area-resultado/excluir"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/consulta/plano/{id}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipo?}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/consulta/planos-em-desenvolvimento/{tipo?}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/consulta/planos/{tipo}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/consulta/planos/{tipo}/{status}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/consulta/situacoes/movimentar/plano/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/despesa/cronograma/recalcular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/despesa/cronograma/recalcularGeral"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/despesa/detalhamento/remover"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/despesa/detalhamento/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/indicador-programa/remover"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/iniciativa/regionalizacoes/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/iniciativa/remover"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/iniciativa/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/meta-objetivo/remover"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/objetivo-estrategico/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/objetivo-programa/remover"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (cancel): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/orcamento/cancelar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {planejamento_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/pib/{planejamento_id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico/remover"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/programas-estrategico/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/projecao-despesa/recalcular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/projecao/receita/recalcular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/recalcular-valores-sinteticos"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (recalcul): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/receita/cronograma/recalcular"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/receita/previsao/remover"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/receita/previsao/removerNaturezas"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/receita/previsao/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/regionalizacao/excluir"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (remov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/planejamento/remove"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/importar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/inconsistente"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar-implantacao"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar-implantacao-por-conta"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {processar}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar/{processar}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {processar}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar/{processar}"
+    },
+    {
+      "metodo": "PUT|PATCH",
+      "motivo": "parametro de caminho {processar}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/processar/{processar}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (arquiv): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/financeiro/tesouraria/relatorio/tef"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/integracoes/efd-reinf/unidaderesponsavel/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/licitacoes/integracaocomprasbr/importar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/licitacoes/tramita/importar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (aprov): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/aprovarProcessoOuvidoria"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (rejeit): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/atendimento/rejeitarProcessoOuvidoria"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {codigoProcesso}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/detalhe-processo/{codigoProcesso}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {numero_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/mensagens/{numero_processo}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {numero_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/savevisualizacao/{numero_processo}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cpf}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/servidor/{cpf}/tipoprocesso/{tipoProcesso}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {matricula}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/anos-trabalhados/{matricula}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {matricula}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/assentamentos/{matricula}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {matricula}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/averbacoes/{matricula}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {matricula}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/comprovante-irrf/{matricula}/ano/{ano}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {matricula}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/ferias/{matricula}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cpf}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/ouvidoria/atendimento/servidor/matriculas/{cpf}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (exclu): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/atividades-execucao/excluir-vinculo"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipoProcesso}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/atividades-execucao/tipo-processo/{tipoProcesso}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (arquiv): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/documentos/arquivar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (devolv): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/documentos/devolver"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {codigo_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/processo/andamento-padrao/campos-dinamicos/{codigo_processo}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {tipo_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/processo/{tipo_processo}/andamento-padrao/campos-dinamicos"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {tipo_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/processo/{tipo_processo}/andamento-padrao/campos-dinamicos"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {tipo_processo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/patrimonial/protocolo/processo/{tipo_processo}/andamento-padrao/campos-dinamicos/{ordem}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/contra-cheques/processar-competencia"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/config/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/funcao/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao/delete"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/permissao/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/servidor/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/comissao/tiposessao/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/funcao/deletar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/importar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/importar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (import): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/importar/arquivoponto"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {importar}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/importar/{importar}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {importar}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/importar/{importar}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/sessao/processar"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {sessao}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/sessao/{sessao}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {sessao}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/pessoal/jetom/sessao/{sessao}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/deleteassentconcedeconfig"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/deleteassentform"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/deleteassentperc"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/deleteconfiguracao"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/recursos-humanos/rh/concessaodireitos/processar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cgs}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/cgs/familiamicroarea/{cgs}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cgs}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/cgs/{cgs}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/consulta/problemaspaciente/by-paciente/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/procedimento/acompanhamento-acs/delete"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/procedimento/acompanhamento-acs/paciente/{id}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/procedimento/acompanhamento-acs/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (apag): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/ambulatorial/procedimento/problemaspaciente/apagar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/esf/consulta/equipes/by-unidade/{id}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cgs}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/esf/vacinas/by-paciente/{cgs}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/farmacia/cadastro/demanda-reprimida/delete"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cgs}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/farmacia/consulta/demanda-reprimida/by-paciente/{cgs}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {idRequisicao}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/laboratorio/exames/requisicao/{idRequisicao}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {idRequisicaoExame}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/saude/laboratorio/exames/resultado/{idRequisicaoExame}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desativ): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/agendamento/desativar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (provada ao vivo): INSERT em arrecadacao.controleparc_agendamento com corpo vazio (500)",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/agendamento/salvar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {numParcelamento}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/buscar/{numParcelamento}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {numParcelamento}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/processar/{numParcelamento}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/controle-parcelamentos-vencidos/tipo-parcelamento/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {k48_sequencial}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/regra-emissao/atualizar/{k48_sequencial}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {k48_sequencial}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/regra-emissao/excluir/{k48_sequencial}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {k48_sequencial}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/regra-emissao/{k48_sequencial}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (baix): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tef/baixar-debito"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desfaz): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tef/comprovante-desfazimento"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desfaz): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tef/desfazer-operacao"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {k00_tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tipo-debito/atualizar/{k00_tipo}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {k00_tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tipo-debito/excluir/{k00_tipo}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "parametro de caminho {codtipopix?}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tipo-debito/validar/{codtipopix?}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {k00_tipo}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/arrecadacao/tipo-debito/{k00_tipo}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/cadastro/dados-isencao/{id}"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/alvaraevento/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desprocess): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/desprocessar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (processar): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/alvaraeventos/ordemservico/processar"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/veiculos/condutorauxiliar/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (delete): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo/delete"
+    },
+    {
+      "metodo": "POST",
+      "motivo": "rota perigosa (desprocess): nao e sondada",
+      "origem": "laravel",
+      "uri": "/v4/api/tributario/issqn/veiculos/veiculo/desprocessar"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "metodo destrutivo sem allowlist: DELETE/PUT/PATCH nao sao sondados",
+      "origem": "laravel",
+      "uri": "/v4/oauth/authorize"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {client_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/oauth/clients/{client_id}"
+    },
+    {
+      "metodo": "PUT",
+      "motivo": "parametro de caminho {client_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/oauth/clients/{client_id}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {token_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/oauth/personal-access-tokens/{token_id}"
+    },
+    {
+      "metodo": "DELETE",
+      "motivo": "parametro de caminho {token_id}: nao se envia id real",
+      "origem": "laravel",
+      "uri": "/v4/oauth/tokens/{token_id}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cgm}: nao se envia id real",
+      "origem": "rest",
+      "uri": "/rest/v1/enderecopessoa/{cgm}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {cpf}: nao se envia id real",
+      "origem": "rest",
+      "uri": "/rest/v1/pesquisapessoa/nro_cpf/{cpf}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {rg}: nao se envia id real",
+      "origem": "rest",
+      "uri": "/rest/v1/pesquisapessoa/nro_rg/{rg}"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "motivo": "parametro de caminho {nome}: nao se envia id real",
+      "origem": "rest",
+      "uri": "/rest/v1/pesquisapessoa/txt_nome/{nome}/{tp_pesquisa?}"
+    },
+    {
+      "metodo": "GET",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "silex",
+      "uri": "/api/v1/configuracao/formulario/{id}/instituicao/{instituicao}"
+    },
+    {
+      "metodo": "GET",
+      "motivo": "parametro de caminho {id}: nao se envia id real",
+      "origem": "silex",
+      "uri": "/api/v1/protocolo/cgm/{id}"
+    }
+  ],
+  "notas": {
+    "head": "rotas GET|HEAD sao exercitadas so por GET (HEAD nao e sondado); PUT|PATCH, se permitido, so por PUT",
+    "metodos_colapsados": 0
+  },
+  "por_origem": {
+    "laravel": {
+      "cobertas": 361,
+      "nao_cobertas": 196,
+      "total": 557
+    },
+    "rest": {
+      "cobertas": 0,
+      "nao_cobertas": 4,
+      "total": 4
+    },
+    "silex": {
+      "cobertas": 5,
+      "nao_cobertas": 2,
+      "total": 7
+    }
+  },
+  "total": 568
+}

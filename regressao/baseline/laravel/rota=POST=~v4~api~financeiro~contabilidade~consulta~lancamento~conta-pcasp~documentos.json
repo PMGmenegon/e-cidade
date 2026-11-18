@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/consulta/lancamento/conta-pcasp/documentos",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Contabilidade/Services/ConsultaLancamentoPcaspService.php",
+    "line": 243,
+    "message": "Invalid argument supplied for foreach()"
+  },
+  "sha256": "2980e79958e79758a7f3d688d2b5bd0f6d2f987cf584be1493bd078fbb6d5711",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

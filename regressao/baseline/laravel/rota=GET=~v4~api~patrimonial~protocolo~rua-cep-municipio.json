@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/protocolo/rua-cep-municipio",
+  "json": {
+    "data": {
+      "cep": [
+        "O campo cep é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo cep é obrigatório."
+  },
+  "sha256": "1b39cae521eddd72416de9bbb315f9a1ddb46488c027f85a255d5ecf0c5b5a5d",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

@@ -1,0 +1,43 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/cadastro/bairros",
+  "json": {
+    "data": [
+      {
+        "codigo": 1,
+        "codigoAnterior": "",
+        "descricao": "CENTRO",
+        "rural": false
+      },
+      {
+        "codigo": 2,
+        "codigoAnterior": "",
+        "descricao": "BAIRRO A",
+        "rural": false
+      },
+      {
+        "codigo": 3,
+        "codigoAnterior": "",
+        "descricao": "BAIRRO B",
+        "rural": false
+      },
+      {
+        "codigo": 0,
+        "codigoAnterior": "",
+        "descricao": "NAO INFORMADO",
+        "rural": false
+      }
+    ],
+    "error": false,
+    "message": ""
+  },
+  "sha256": "e934dded72ea5cfd907b486540e97bb87065baf5eff3af65d9b1a25cbc5bb75f",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

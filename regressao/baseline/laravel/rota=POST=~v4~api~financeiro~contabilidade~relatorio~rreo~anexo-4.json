@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/relatorio/rreo/anexo-4",
+  "json": {
+    "data": {
+      "DB_anousu": [
+        "O campo d b anousu é obrigatório."
+      ],
+      "codigo_relatorio": [
+        "O campo codigo relatorio é obrigatório."
+      ],
+      "periodo": [
+        "O campo periodo é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo codigo relatorio é obrigatório."
+  },
+  "sha256": "a94494aab5b829c7ce49f6e61222b0b6d18567ef718219fa40d9e1d95f11ad07",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

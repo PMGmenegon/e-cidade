@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/educacao/escola/relatorios/vacinacao",
+  "json": {
+    "data": {
+      "tipo": [
+        "Tipo de relatório não informado."
+      ]
+    },
+    "error": true,
+    "message": "Tipo de relatório não informado."
+  },
+  "sha256": "16f3e040789447dea4d7ee2b0b65c5e1016a5e299d1b8480aa0f8e4ee84e9a25",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

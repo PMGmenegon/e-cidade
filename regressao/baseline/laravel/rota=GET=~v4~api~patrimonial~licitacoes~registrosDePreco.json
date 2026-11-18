@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/licitacoes/registrosDePreco",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": ""
+  },
+  "sha256": "5de61450e754b83e720c5d9e00663a16d86d88e3b88601aaf25679554f4cde05",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

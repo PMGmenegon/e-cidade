@@ -1,0 +1,11 @@
+{
+  "cabecalhos": {},
+  "id": "console-list",
+  "json": null,
+  "sha256": "1647767b68ead3439c064f6cc01febf7d3b9091e19a49479a43346bbb783a299",
+  "sql_negocio": [],
+  "status": 0,
+  "tabelas": {},
+  "texto": "agendamento:inativarvinculoprofessor\napp:name\nauth:clear-resets\ncache:clear\ncache:forget\ncache:table\nclear-compiled\nconfig:cache\nconfig:clear\ndb:seed\ndown\nenv\nevent:generate\nhelp\nide-helper:eloquent\nide-helper:generate\nide-helper:meta\nide-helper:models\ninspire\nkey:generate\nlist\nmake:auth\nmake:command\nmake:controller\nmake:event\nmake:job\nmake:listener\nmake:mail\nmake:middleware\nmake:migration\nmake:model\nmake:notification\nmake:policy\nmake:provider\nmake:request\nmake:seeder\nmake:test\nmatriculaonline:alteracaoinscricao\nmigrate\nmigrate:install\nmigrate:refresh\nmigrate:reset\nmigrate:rollback\nmigrate:status\nnotifications:table\noptimize\npassport:client\npassport:install\npassport:keys\npayroll:clear\npayroll:load\nqueue:failed\nqueue:failed-table\nqueue:flush\nqueue:forget\nqueue:listen\nqueue:restart\nqueue:retry\nqueue:table\nqueue:work\nroute:cache\nroute:clear\nroute:list\nschedule:run\nserve\nsession:table\nstorage:link\ntinker\ntributario:parcelamentovencido\nup\nvendor:publish\nview:clear\n",
+  "tipos": {}
+}

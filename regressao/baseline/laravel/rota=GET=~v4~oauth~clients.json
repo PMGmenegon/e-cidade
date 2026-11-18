@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/oauth/clients",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/vendor/laravel/framework/src/Illuminate/Auth/GuardHelpers.php",
+    "line": 39,
+    "message": "Unauthenticated."
+  },
+  "sha256": "2dd1b9c00aab71f2b2bbe4bf8956aa8e08ee781170d07a550f0fe625275d2c93",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

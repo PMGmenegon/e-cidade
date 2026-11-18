@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/padrao",
+  "json": {
+    "data": {
+      "exercicio": [
+        "O campo exercicio é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo exercicio é obrigatório."
+  },
+  "sha256": "6cc6025ee767c8d7ce374eeeaccbc80c9a97e78716dc209c0e99905bc9f8aa55",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

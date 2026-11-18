@@ -1,0 +1,22 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/contabilidade/plano-contas/consulta/pcasp/ecidade",
+  "json": {
+    "data": {
+      "exercicio": [
+        "O campo exercicio é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo exercicio é obrigatório."
+  },
+  "sha256": "62dbef122269f6da1649e2c1dee91a4e2a245deb14f575bde7c54daeb5ae15d6",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

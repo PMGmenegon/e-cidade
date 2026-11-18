@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/saude/ambulatorial/parametros",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Saude/Ambulatorial/Controllers/ParametrosController.php",
+    "line": 17,
+    "message": "Não foram encontrados parâmetros para o módulo Ambulatorial."
+  },
+  "sha256": "2c8b723de96a8682689c57120aa2c6fec432a4048f59366d49e1224ebe080938",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

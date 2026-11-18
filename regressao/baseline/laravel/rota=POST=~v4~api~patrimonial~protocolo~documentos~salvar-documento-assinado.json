@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/protocolo/documentos/salvar-documento-assinado",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/src/Lib/Request/Storage/Curl/Autenticacao.php",
+    "line": 175,
+    "message": "Propriedades de autenticação não existentes."
+  },
+  "sha256": "e5d224048d2f419d83d6108b78b02038bafb55c32198913ddbf82296af06deb0",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

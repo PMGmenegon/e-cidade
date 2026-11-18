@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/abrangencia/salvar",
+  "json": {
+    "data": {
+      "abrangencias": [
+        "Deve ser informado uma coleção de Abrangências."
+      ],
+      "pl12_codigo": [
+        "O campo \"Código da iniciativa\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código da iniciativa\" deve ser informado."
+  },
+  "sha256": "528310a3ccde3b9f01fd54c05a66d088c4c1af3b7b3bf8b1732f5d52649e167c",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

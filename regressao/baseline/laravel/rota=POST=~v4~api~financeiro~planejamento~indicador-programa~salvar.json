@@ -1,0 +1,31 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/planejamento/indicador-programa/salvar",
+  "json": {
+    "data": {
+      "pl22_ano": [
+        "O campo \"Ano\" deve ser informado."
+      ],
+      "pl22_indice": [
+        "O campo \"Índice\" deve ser informado."
+      ],
+      "pl22_orcindica": [
+        "Código do indicador deve ser informado."
+      ],
+      "pl9_codigo": [
+        "O campo \"Código do programa estratégico\" deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo \"Código do programa estratégico\" deve ser informado."
+  },
+  "sha256": "00cfc6573c3761566a805b3424f66ecb03d0e80f657ef31715fe5a32d6a33c32",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

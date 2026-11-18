@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/configuracao/documentos-assinar/novo-documento",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Configuracao/DocumentosAssinatura/Controller/DocumentosAssinatura.php",
+    "line": 269,
+    "message": "Pelo menos um arquivo deve ser informado."
+  },
+  "sha256": "4b9e054430749356ab2761686f063733a7eb2d09f8ed285f5b0db7a6bf86cae5",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

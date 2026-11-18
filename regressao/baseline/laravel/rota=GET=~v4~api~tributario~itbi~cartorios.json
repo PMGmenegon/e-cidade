@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/tributario/itbi/cartorios",
+  "json": {
+    "data": [],
+    "error": false,
+    "message": ""
+  },
+  "sha256": "917d217ff0756d668ccd30efd6d00d8dac26bfe54f067b1ff855dd9071745ceb",
+  "sql_negocio": [],
+  "status": 200,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

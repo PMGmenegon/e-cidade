@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/ouvidoria/atendimento/atendimento/buscarProcessosOuvidoria",
+  "json": {
+    "data": {
+      "DB_coddepto": [
+        "Código inválido do departamento."
+      ],
+      "DB_instit": [
+        "Código inválido do departamento."
+      ]
+    },
+    "error": true,
+    "message": "Código inválido do departamento."
+  },
+  "sha256": "b5c19a80e221a996409d38292d442dca9422e0a92cd10e35413f1d9c82d8866f",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

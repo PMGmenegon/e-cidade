@@ -1,0 +1,25 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/patrimonial/protocolo/atividades-execucao/vincular",
+  "json": {
+    "data": {
+      "codigoAtividade": [
+        "O campo codigo atividade é obrigatório."
+      ],
+      "codigoTipoProcesso": [
+        "O campo codigo tipo processo é obrigatório."
+      ]
+    },
+    "error": true,
+    "message": "O campo codigo tipo processo é obrigatório."
+  },
+  "sha256": "24055daeaabe2a123bb818f258b755ad6177cebabf0fb7eca1c4a3eb84c25b05",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

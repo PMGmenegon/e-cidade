@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/financeiro/orcamento/acompanhamento/cronograma/receita/salvar",
+  "json": {
+    "code": 403,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Financeiro/Orcamento/Controllers/AcompanhamentoDesembolsoReceitaController.php",
+    "line": 32,
+    "message": "Revise os dados enviados."
+  },
+  "sha256": "e8f200f66af55ef5a175be983481250c93ee980d30b72e37ebe1e7b3c17a1d90",
+  "sql_negocio": [],
+  "status": 403,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

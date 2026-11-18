@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/rh/concessaodireitos/assentperc",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Controllers/AssentPercController.php",
+    "line": 59,
+    "message": "Undefined index: rh501_seqasentconf"
+  },
+  "sha256": "82f8b663c1d9bbce31a898da6b6af7cb5bff53acac4d00c7f20faa1309034a17",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

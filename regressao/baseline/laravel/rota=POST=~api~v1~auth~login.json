@@ -1,0 +1,26 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/api/v1/auth/login",
+  "json": {
+    "message": "Sem permissão para acessar a API.",
+    "stacktrace": "#0 /var/www/html/api/V1/Providers/Domain/ApplicationAuthServiceProvider.php(20): ECidade\\Api\\V1\\Middleware\\Auth\\AuthMiddleware::handle(Object(Symfony\\Component\\HttpFoundation\\Request), Object(Silex\\Application))\n#1 [internal function]: ECidade\\Api\\V1\\Providers\\Domain\\ApplicationAuthServiceProvider->ECidade\\Api\\V1\\Providers\\Domain\\{closure}(Object(Symfony\\Component\\HttpFoundation\\Request), Object(Silex\\Application))\n#2 /var/www/html/vendor/silex/silex/src/Silex/Application.php(254): call_user_func(Object(Closure), Object(Symfony\\Component\\HttpFoundation\\Request), Object(Silex\\Application))\n#3 [internal function]: Silex\\Application->Silex\\{closure}(Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent), 'kernel.request', Object(Symfony\\Component\\EventDispatcher\\EventDispatcher))\n#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(214): call_user_func(Object(Closure), Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent), 'kernel.request', Object(Symfony\\Component\\EventDispatcher\\EventDispatcher))\n#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(44): Symfony\\Component\\EventDispatcher\\EventDispatcher->doDispatch(Array, 'kernel.request', Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent))\n#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(127): Symfony\\Component\\EventDispatcher\\EventDispatcher->dispatch('kernel.request', Object(Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent))\n#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(68): Symfony\\Component\\HttpKernel\\HttpKernel->handleRaw(Object(Symfony\\Component\\HttpFoundation\\Request), 1)\n#8 /var/www/html/vendor/silex/silex/src/Silex/Application.php(496): Symfony\\Component\\HttpKernel\\HttpKernel->handle(Object(Symfony\\Component\\HttpFoundation\\Request), 1, true)\n#9 /var/www/html/vendor/silex/silex/src/Silex/Application.php(477): Silex\\Application->handle(Object(Symfony\\Component\\HttpFoundation\\Request))\n#10 /var/www/html/api/api.php(117): Silex\\Application->run()\n#11 /var/www/html/FrontController.php(5): require_once('/var/www/html/a...')\n#12 {main}",
+    "statusCode": {
+      "attributes": {},
+      "cookies": {},
+      "files": {},
+      "headers": {},
+      "query": {},
+      "request": {},
+      "server": {}
+    }
+  },
+  "sha256": "3d53ee99968afd7bfa16034045c25f243b2a5793328eab40dff931ba69160d07",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

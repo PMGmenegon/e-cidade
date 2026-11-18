@@ -1,0 +1,18 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:GET:/v4/api/patrimonial/ouvidoria/atendimento/processo-eletronico/atendimentos",
+  "json": {
+    "ids": [
+      "O campo ids é obrigatório."
+    ]
+  },
+  "sha256": "ed1f1cb8f305bac486225c4308e0ffde5e76156fc428eea057dcfec909868e2e",
+  "sql_negocio": [],
+  "status": 422,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

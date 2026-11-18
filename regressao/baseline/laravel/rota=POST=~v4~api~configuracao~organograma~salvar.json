@@ -1,0 +1,28 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/configuracao/organograma/salvar",
+  "json": {
+    "data": {
+      "departamento": [
+        "O campo departamento deve ser informado."
+      ],
+      "departamentofilho": [
+        "O campo departamentofilho deve ser informado."
+      ],
+      "descricao": [
+        "O campo descricao deve ser informado."
+      ]
+    },
+    "error": true,
+    "message": "O campo departamento deve ser informado."
+  },
+  "sha256": "fcad57644b96ff1dcbd365644ef1d39e5ecdd7caa55c045e87679511511ef329",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

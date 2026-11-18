@@ -1,0 +1,37 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/recursos-humanos/pessoal/jetom/comissao/config/update",
+  "json": {
+    "data": {
+      "comissao": [
+        "Código da comissão não informado."
+      ],
+      "funcao": [
+        "Código da função não informado."
+      ],
+      "id": [
+        "Código não informado da configuração da rubrica da comissão."
+      ],
+      "rubrica": [
+        "O campo rubrica é obrigatório."
+      ],
+      "tiposessao": [
+        "Tipo de sessão não informado."
+      ],
+      "valor": [
+        "Valor não informado."
+      ]
+    },
+    "error": true,
+    "message": "Código não informado da configuração da rubrica da comissão."
+  },
+  "sha256": "2913fb6d485d07270f937f681615cb2052c2109e2bde6184368ed399a7e8f1aa",
+  "sql_negocio": [],
+  "status": 406,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}

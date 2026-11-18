@@ -1,0 +1,20 @@
+{
+  "cabecalhos": {
+    "cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, no-cache, private",
+    "content-type": "application/json"
+  },
+  "id": "rota:POST:/v4/api/configuracao/organograma/filtrar",
+  "json": {
+    "code": 0,
+    "error": true,
+    "file": "/var/www/html/app/Domain/Configuracao/Configuracao/Controllers/OrganogramaController.php",
+    "line": 52,
+    "message": "Departamento não encontrado."
+  },
+  "sha256": "1a1a2b54be7ac78aaa823b6ee84199787a050da9e5093a0cff63c5d302a63599",
+  "sql_negocio": [],
+  "status": 500,
+  "tabelas": {},
+  "texto": "",
+  "tipos": {}
+}
