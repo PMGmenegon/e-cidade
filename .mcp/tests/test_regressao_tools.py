@@ -1,7 +1,10 @@
 import json
+import multiprocessing as mp
 import os
 import subprocess
 import sys
+import time
+from pathlib import Path
 
 import pytest
 
@@ -59,7 +62,7 @@ def test_rodar_php_por_prefixo_destacado(cfg):
 
 
 def test_laravel_so_compara_nunca_grava(cfg):
-    r = roda(cfg, bateria="laravel")
+    r = roda(cfg, bateria="laravel", confirmo_rodada_longa=True)
     meta = json.loads((cfg.dir_rodadas / r["id"] / "meta.json").read_text())
     assert meta["argv"][2:4] == ["regressao.laravel.bateria", "comparar"]
     assert "gravar" not in meta["argv"] and "--confirmo-sobrescrever" not in meta["argv"]
@@ -76,11 +79,95 @@ def test_fluxos_e_completa(cfg):
     assert "--area=tributario" in meta["argv"] and "--sem-fluxos" in meta["argv"]
 
 
-def test_rodada_inteira_exige_confirmacao(cfg):
+@pytest.mark.parametrize("kw", [{"bateria": "php"}, {"bateria": "completa"}, {"bateria": "laravel"},
+                                {"bateria": "fluxos"}])
+def test_rodada_sem_filtro_exige_confirmacao(cfg, kw):
     with pytest.raises(ErroFerramenta) as e:
-        roda(cfg, bateria="php")
+        roda(cfg, **kw)
     assert e.value.codigo == "confirmacao_necessaria"
-    assert roda(cfg, bateria="php", confirmo_rodada_longa=True)["status"] == "iniciada"
+    assert FakePopen.chamadas == []
+    assert roda(cfg, confirmo_rodada_longa=True, **kw)["status"] == "iniciada"
+
+
+def _meta_em(cfg, rid, meta, idade_s=0):
+    d = cfg.dir_rodadas / rid
+    d.mkdir(parents=True)
+    (d / "meta.json").write_text(meta if isinstance(meta, str) else json.dumps(meta))
+    if idade_s:
+        t = time.time() - idade_s
+        os.utime(d / "meta.json", (t, t))
+    return d
+
+
+def test_pid_none_recente_bloqueia_e_antigo_libera(cfg):
+    _meta_em(cfg, "20261117-120000-php-aaaa", {"bateria": "php", "pid": None})
+    with pytest.raises(ErroFerramenta) as e:
+        roda(cfg, bateria="php", prefixo=["^a"])
+    assert e.value.codigo == "rodada_em_andamento" and e.value.detalhes["status"] == "iniciando"
+    os.utime(cfg.dir_rodadas / "20261117-120000-php-aaaa" / "meta.json", (time.time() - 3600,) * 2)
+    assert roda(cfg, bateria="php", prefixo=["^a"])["status"] == "iniciada"
+
+
+def test_meta_ilegivel_bloqueia_e_vira_estado_corrompido_na_leitura(cfg):
+    _meta_em(cfg, "20261117-120000-php-bbbb", "{nao json")
+    with pytest.raises(ErroFerramenta) as e:
+        roda(cfg, bateria="php", prefixo=["^a"])
+    assert e.value.detalhes["status"] == "desconhecida"
+    with pytest.raises(ErroFerramenta) as e:
+        ler_resultado_regressao(cfg, id="20261117-120000-php-bbbb")
+    assert e.value.codigo == "estado_corrompido"
+
+
+@pytest.mark.parametrize("meta", ['[]', '{"pid": "abc"}', '{"bateria": 3, "pid": 1}'])
+def test_meta_com_forma_invalida(cfg, meta):
+    _meta_em(cfg, "20261117-120000-php-cccc", meta)
+    with pytest.raises(ErroFerramenta) as e:
+        ler_resultado_regressao(cfg, id="20261117-120000-php-cccc")
+    assert e.value.codigo == "estado_corrompido"
+
+
+def test_resultado_json_com_forma_invalida(cfg):
+    rid = _rodada(cfg)
+    (cfg.dir_rodadas / rid / "saida" / "resultado.json").write_text('{"casos": [1, 2]}')
+    with pytest.raises(ErroFerramenta) as e:
+        ler_resultado_regressao(cfg, id=rid)
+    assert e.value.codigo == "estado_corrompido"
+
+
+def _dispara(raiz: str, fila) -> None:
+    """Processo filho: tenta disparar uma rodada; o Popen falso segura a trava 1 s e devolve um pid vivo."""
+    import time as t
+    from servidor.config import Config
+    from servidor.docker_exec import DockerExec
+    from servidor.tools.regressao import rodar_regressao
+
+    class PopenLento:
+        def __init__(self, argv, **kw):
+            t.sleep(1.0)
+            self.pid = os.getppid()  # vivo durante o teste
+
+    cfg = Config(raiz=Path(raiz))
+    ok = lambda argv, **kw: subprocess.CompletedProcess(argv, 0, "true\n", "")  # noqa: E731
+    try:
+        r = rodar_regressao(cfg, bateria="php", prefixo=["^a"], docker=DockerExec(cfg, runner=ok), popen=PopenLento,
+                            _cmdline_executor=lambda pid: True)
+        fila.put(("ok", r["id"]))
+    except Exception as e:  # ErroFerramenta
+        fila.put(("erro", getattr(e, "codigo", repr(e))))
+
+
+def test_corrida_dois_processos_so_um_dispara(cfg):
+    ctx = mp.get_context("spawn")
+    fila = ctx.Queue()
+    procs = [ctx.Process(target=_dispara, args=(str(cfg.raiz), fila)) for _ in range(2)]
+    for p in procs:
+        p.start()
+    res = sorted(fila.get(timeout=60) for _ in procs)
+    for p in procs:
+        p.join(timeout=30)
+    assert [r[0] for r in res] == ["erro", "ok"]
+    assert res[0][1] == "rodada_em_andamento"
+    assert len([d for d in cfg.dir_rodadas.iterdir() if d.is_dir()]) == 1
 
 
 @pytest.mark.parametrize("kw,codigo", [

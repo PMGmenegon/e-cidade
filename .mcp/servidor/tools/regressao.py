@@ -6,22 +6,25 @@ processo destacado, depois de conferir os conteineres; nunca `gravar` baseline (
 """
 from __future__ import annotations
 
+import fcntl
 import json
 import os
 import re
 import secrets
 import subprocess
 import sys
+import time
 import unicodedata
 from collections import Counter
 from collections.abc import Callable
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from servidor.config import Config
 from servidor.docker_exec import DockerExec
-from servidor.seguranca import ErroFerramenta, limitar, relativo, resolver_caminho, validar_regex
+from servidor.seguranca import ErroFerramenta, limitar, limpar_texto, relativo, resolver_caminho, validar_regex
 
 AREAS = ("assistenciasocial", "cidadao", "configuracao", "educacao", "financeiro", "gestor", "integracoes",
          "patrimonial", "recursoshumanos", "saude", "tributario")
@@ -53,18 +56,69 @@ def _cmdline_executor(pid: int) -> bool:
         return False
 
 
+INICIO_TOLERANCIA_S = 120  # meta.json sem pid ha menos que isso = rodada ainda iniciando (bloqueia outra)
+BLOQUEIAM = ("em_andamento", "iniciando", "desconhecida")
+
+
+def _ler_meta(d: Path) -> dict[str, Any]:
+    try:
+        meta = json.loads((d / "meta.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise ErroFerramenta("estado_corrompido", f"{d.name}/meta.json ilegivel ({type(e).__name__}); se a rodada "
+                             "nao existe mais, apague a pasta em .mcp/rodadas/") from None
+    if (not isinstance(meta, dict) or not isinstance(meta.get("bateria", ""), str)
+            or not (meta.get("pid") is None or isinstance(meta.get("pid"), int))):
+        raise ErroFerramenta("estado_corrompido", f"{d.name}/meta.json com formato invalido; apague a pasta se a "
+                             "rodada nao existe mais")
+    return meta
+
+
 def _status(d: Path, vivo: Callable[[int], bool]) -> tuple[str, int | None]:
     fim = d / "fim.json"
     if fim.is_file():
         try:
-            return "concluida", json.loads(fim.read_text(encoding="utf-8")).get("codigo_saida")
-        except (json.JSONDecodeError, OSError):
+            cod = json.loads(fim.read_text(encoding="utf-8")).get("codigo_saida")
+            return "concluida", cod if isinstance(cod, int) else None
+        except (json.JSONDecodeError, OSError, AttributeError):
             return "concluida", None
     try:
-        pid = int(json.loads((d / "meta.json").read_text(encoding="utf-8")).get("pid", 0))
-    except (json.JSONDecodeError, OSError, ValueError, TypeError):
-        return "desconhecida", None
-    return ("em_andamento" if pid and vivo(pid) else "interrompida"), None
+        meta = _ler_meta(d)
+    except ErroFerramenta:
+        return "desconhecida", None  # conservador: BLOQUEIA nova rodada (veja BLOQUEIAM)
+    pid = meta.get("pid")
+    if pid is None:  # meta gravado, Popen ainda nao devolveu (ou o servidor caiu no meio)
+        try:
+            idade = time.time() - (d / "meta.json").stat().st_mtime
+        except OSError:
+            return "desconhecida", None
+        return ("iniciando" if idade < INICIO_TOLERANCIA_S else "interrompida"), None
+    return ("em_andamento" if pid > 0 and vivo(pid) else "interrompida"), None
+
+
+@contextmanager
+def _trava_rodadas(config: Config, espera_s: float = 30.0):
+    """Trava de arquivo cobrindo verificacao + criacao + Popen: duas IAs nao disparam rodadas juntas."""
+    config.dir_rodadas.mkdir(parents=True, exist_ok=True)
+    fd = os.open(config.dir_rodadas / ".lock", os.O_RDWR | os.O_CREAT, 0o644)
+    try:
+        limite = time.monotonic() + espera_s
+        while True:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                if time.monotonic() > limite:
+                    raise ErroFerramenta("rodada_em_andamento", "outra rodada esta sendo disparada agora") from None
+                time.sleep(0.05)
+        yield
+    finally:
+        os.close(fd)
+
+
+def _grava_meta(d: Path, meta: dict[str, Any]) -> None:
+    tmp = d / "meta.json.tmp"
+    tmp.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp, d / "meta.json")
 
 
 def _argv(config: Config, bateria: str, saida: Path, area: list[str], prefixo: list[str], fluxo: list[str],
@@ -115,6 +169,14 @@ def rodar_regressao(
         raise ErroFerramenta("confirmacao_necessaria",
                              "sem area/prefixo a bateria PHP roda ~12 mil telas (HORAS). Restrinja com prefixo "
                              "(ex.: '^arr1_') ou passe confirmo_rodada_longa=true")
+    if bateria == "laravel" and not confirmo_rodada_longa:
+        raise ErroFerramenta("confirmacao_necessaria",
+                             "a bateria laravel restaura o banco e roda todos os ~380 casos (~12 min); confirme com "
+                             "confirmo_rodada_longa=true")
+    if bateria == "fluxos" and not fluxo and not confirmo_rodada_longa:
+        raise ErroFerramenta("confirmacao_necessaria",
+                             "sem `fluxo` roda todos os fluxos de navegador; escolha fluxo=[...] ou passe "
+                             "confirmo_rodada_longa=true")
 
     py = config.raiz / config.python_regressao
     if not py.is_file():
@@ -125,26 +187,30 @@ def rodar_regressao(
     for nome in (config.container_ref, config.container_alvo, config.container_banco):
         docker.verificar_conteiner(nome)
 
-    config.dir_rodadas.mkdir(parents=True, exist_ok=True)
-    for d in sorted(config.dir_rodadas.iterdir()):
-        if d.is_dir() and _ID.match(d.name) and _status(d, _cmdline_executor)[0] == "em_andamento":
-            raise ErroFerramenta("rodada_em_andamento",
-                                 f"a rodada {d.name} ainda roda (cada bateria restaura o banco: duas juntas se "
-                                 "atrapalham). Acompanhe com ler_resultado_regressao", id=d.name)
+    with _trava_rodadas(config):
+        for d in sorted(config.dir_rodadas.iterdir()):
+            if not (d.is_dir() and _ID.match(d.name)):
+                continue
+            st = _status(d, _cmdline_executor)[0]
+            if st in BLOQUEIAM:
+                raise ErroFerramenta("rodada_em_andamento",
+                                     f"a rodada {d.name} esta '{st}' (cada bateria restaura o banco: duas juntas se "
+                                     "atrapalham). Acompanhe com ler_resultado_regressao; se ela nao existe mais, "
+                                     "apague a pasta em .mcp/rodadas/", id=d.name, status=st)
 
-    rid = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{bateria}-{secrets.token_hex(2)}"
-    d = config.dir_rodadas / rid
-    d.mkdir()
-    argv = _argv(config, bateria, d / "saida", area, prefixo, fluxo, sem_fluxos)
-    meta = {"id": rid, "bateria": bateria, "argv": argv, "raiz": str(config.raiz), "inicio": _agora_iso(),
-            "quem": quem or config.usuario or "", "pid": None}
-    (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
-    with open(d / "execucao.log", "wb") as log:
-        proc = popen([sys.executable, str(EXECUTOR), str(d / "meta.json")], cwd=str(config.raiz),
-                     stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
-                     close_fds=True)
-    meta["pid"] = proc.pid
-    (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+        rid = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{bateria}-{secrets.token_hex(2)}"
+        d = config.dir_rodadas / rid
+        d.mkdir()
+        argv = _argv(config, bateria, d / "saida", area, prefixo, fluxo, sem_fluxos)
+        meta = {"id": rid, "bateria": bateria, "argv": argv, "raiz": str(config.raiz), "inicio": _agora_iso(),
+                "quem": limpar_texto(quem or config.usuario or "", 80), "pid": None}
+        _grava_meta(d, meta)
+        with open(d / "execucao.log", "wb") as log:
+            proc = popen([sys.executable, str(EXECUTOR), str(d / "meta.json")], cwd=str(config.raiz),
+                         stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
+                         close_fds=True)
+        meta["pid"] = proc.pid
+        _grava_meta(d, meta)
     return {"id": rid, "status": "iniciada", "pasta": relativo(config.raiz, d), "comando": argv[2:],
             "acompanhe": f"ler_resultado_regressao(id='{rid}')",
             "duracao_esperada": "restauracao do banco ~4 min + casos (prefixo pequeno ~5-6 min; area inteira: horas)"}
@@ -165,21 +231,27 @@ def _resultado(saida: Path, max_itens: int, veredito: str | None) -> dict[str, A
     try:
         dados = json.loads(arq.read_text(encoding="utf-8"))
         casos = dados["casos"]
-    except (json.JSONDecodeError, KeyError, OSError) as e:
-        return {"erro_leitura": f"resultado.json invalido: {e}"}
+        if not isinstance(dados, dict) or not isinstance(casos, list) or not all(isinstance(c, dict) for c in casos):
+            raise TypeError("casos precisa ser lista de objetos")
+    except (json.JSONDecodeError, KeyError, OSError, TypeError, UnicodeDecodeError) as e:
+        raise ErroFerramenta("estado_corrompido", f"resultado.json com formato invalido: {str(e)[:200]}") from None
     totais = {v: 0 for v in VEREDITOS}
     for c in casos:
-        totais[c.get("veredito", "?")] = totais.get(c.get("veredito", "?"), 0) + 1
+        v = str(c.get("veredito", "?"))[:30]
+        totais[v] = totais.get(v, 0) + 1
     novas = [c for c in casos if c.get("veredito") == "DIVERGE" and not c.get("conhecida")]
     erros = [c for c in casos if c.get("veredito") == "ERRO_AMBIENTE"]
-    inc = Counter((c.get("detalhe") or "")[:100] for c in casos if c.get("veredito") == "INCONCLUSIVO")
-    corta = lambda xs: [{k: c.get(k) for k in ("id", "area", "detalhe")} for c in xs[:max_itens]]  # noqa: E731
+    inc = Counter(str(c.get("detalhe") or "")[:100] for c in casos if c.get("veredito") == "INCONCLUSIVO")
+
+    def corta(xs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        return [{k: (str(c.get(k))[:300] if c.get(k) is not None else None) for k in ("id", "area", "detalhe")}
+                for c in xs[:max_itens]]
     r: dict[str, Any] = {
         "totais": totais, "total_casos": len(casos),
         "divergencias_novas": corta(novas), "divergencias_novas_total": len(novas),
         "divergencias_conhecidas_total": sum(1 for c in casos if c.get("veredito") == "DIVERGE" and c.get("conhecida")),
         "erros_ambiente": corta(erros), "inconclusivo_por_motivo": dict(inc.most_common(15)),
-        "meta": {k: v for k, v in (dados.get("meta") or {}).items()
+        "meta": {k: v for k, v in (dados.get("meta") if isinstance(dados.get("meta"), dict) else {}).items()
                  if k in ("tipo", "comparavel", "versoes", "baseline_sha256", "tempos_s", "baterias", "git_commit")},
     }
     if veredito:
@@ -222,7 +294,7 @@ def ler_resultado_regressao(
     if not d.is_dir():
         raise ErroFerramenta("rodada_inexistente", f"rodada {id} nao existe em .mcp/rodadas/")
     st, cod = _status(d, _cmdline_executor)
-    meta = json.loads((d / "meta.json").read_text(encoding="utf-8")) if (d / "meta.json").is_file() else {}
+    meta = _ler_meta(d)  # formato invalido -> estado_corrompido (nunca erro_interno)
     r: dict[str, Any] = {"id": id, "bateria": meta.get("bateria"), "status": st, "inicio": meta.get("inicio"),
                          "quem": meta.get("quem"), "codigo_saida": cod,
                          "significado_saida": SIGNIFICADO_SAIDA.get(cod) if cod is not None else None,
