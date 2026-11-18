@@ -33,6 +33,31 @@ def test_reivindicar_e_liberar(repo):
     assert r["concluido"] is True
 
 
+def test_sugestoes_de_commit_com_aspas_de_shell(repo):
+    import shlex
+    r = co.reivindicar_arquivo(repo, "ecidade/t1.php", "x", quem="ana")
+    partes = shlex.split(r["sugestao_commit"])
+    assert partes[-2:] == ["-m", "estado: reivindica ecidade/t1.php"]
+    r = co.liberar_arquivo(repo, "ecidade/t1.php", quem="ana", concluido=True, padroes_corrigidos=["split"])
+    assert shlex.split(r["commit_do_codigo"]) == ["git", "add", "--", "ecidade/t1.php", "&&", "git", "commit", "-m",
+                                                  "migra(split): ecidade/t1.php"]
+
+
+@pytest.mark.parametrize("nome", ["a;rm -rf ~.php", "a$(id).php", "a`id`.php", "a'b.php", "a|b.php"])
+def test_caminho_com_metacaractere_de_shell_e_recusado(repo, nome):
+    (repo.raiz / "ecidade" / nome).write_text("<?php")
+    with pytest.raises(ErroFerramenta) as e:
+        co.reivindicar_arquivo(repo, f"ecidade/{nome}", "x", quem="ana")
+    assert e.value.codigo == "caminho_invalido"
+
+
+def test_quem_cooperativo_normalizado(repo):
+    co.reivindicar_arquivo(repo, "ecidade/t1.php", "x", quem="Ana")
+    r = co.reivindicar_arquivo(repo, "ecidade/t1.php", "x", quem=" ana ")
+    assert r["renovada"] is True
+    assert co.quem_sou(repo, "  bia\x1b[31m\r\n") == "bia"
+
+
 def test_reivindicar_caminho_confinado_e_existente(repo):
     with pytest.raises(ErroFerramenta) as e:
         co.reivindicar_arquivo(repo, "../x.php", "x", quem="ana")

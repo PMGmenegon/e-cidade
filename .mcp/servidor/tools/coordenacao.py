@@ -5,15 +5,16 @@ Nenhuma destas tools faz commit: elas devolvem a sugestao (`git add` do caminho 
 from __future__ import annotations
 
 import re
+import shlex
 import subprocess
 from collections.abc import Callable
 from typing import Any
 
 from servidor.busca import buscar
 from servidor.config import Config
-from servidor.estado import Estado
+from servidor.estado import MAX_QUEM, Estado, mesma_pessoa
 from servidor.padroes import CATALOGO, PADROES, padroes_para
-from servidor.seguranca import ErroFerramenta, relativo, resolver_caminho
+from servidor.seguranca import ErroFerramenta, limpar_texto, relativo, resolver_caminho, tem_metacaractere
 from servidor.tools.regressao import ler_resultado_regressao
 
 _COMMIT_MIGRA = re.compile(r"^migra\(([a-z0-9_]+)\):")
@@ -32,44 +33,54 @@ def _git(config: Config, args: list[str], runner: Callable[..., Any]) -> subproc
 
 
 def quem_sou(config: Config, quem: str | None, git_runner: Callable[..., Any] = subprocess.run) -> str:
-    """Identidade: parametro > ECIDADE_MCP_USUARIO > git config user.name (nunca o e-mail)."""
+    """Identidade COOPERATIVA (sem autenticacao: qualquer um pode dizer qualquer nome; serve para coordenar, nao
+    para controlar acesso): parametro > ECIDADE_MCP_USUARIO > git config user.name (nunca o e-mail)."""
     for c in (quem, config.usuario):
-        if c and c.strip():
-            v = c.strip()
-            if len(v) > 80 or "\n" in v:
-                raise ErroFerramenta("parametro_invalido", "quem: ate 80 caracteres, uma linha")
+        v = limpar_texto(c, MAX_QUEM)
+        if v:
             return v
     r = _git(config, ["config", "--get", "user.name"], git_runner)
-    if r is not None and r.returncode == 0 and r.stdout.strip():
-        return r.stdout.strip()[:80]
+    if r is not None and r.returncode == 0 and limpar_texto(r.stdout, MAX_QUEM):
+        return limpar_texto(r.stdout, MAX_QUEM)
     raise ErroFerramenta("quem_desconhecido",
                          "informe `quem` (seu nome), ou defina ECIDADE_MCP_USUARIO, ou `git config user.name`")
 
 
+def _caminho_seguro(config: Config, caminho: str, **kw: Any) -> str:
+    """Relativo, confinado e sem metacaracteres de shell (vai parar em sugestoes de comando git)."""
+    rel = relativo(config.raiz, resolver_caminho(config.raiz, caminho, **kw))
+    if tem_metacaractere(caminho) or tem_metacaractere(rel):
+        raise ErroFerramenta("caminho_invalido", "caminho com caractere especial de shell (; & | $ ` < > ( ) aspas...)")
+    return rel
+
+
 def _sugestao(acao: str, caminho: str) -> str:
-    return f"git add .mcp/estado/trabalho.json && git commit -m \"estado: {acao} {caminho}\""
+    return (f"git add .mcp/estado/trabalho.json && git commit -m "
+            f"{shlex.quote(f'estado: {acao} {caminho}')}")
 
 
 def reivindicar_arquivo(config: Config, caminho: str, motivo: str, quem: str | None = None,
                         horas: float | None = None) -> dict[str, Any]:
-    rel = relativo(config.raiz, resolver_caminho(config.raiz, caminho, tipo="arquivo"))
+    rel = _caminho_seguro(config, caminho, tipo="arquivo")
     eu = quem_sou(config, quem)
-    r = _estado(config).reivindicar(rel, eu, (motivo or "")[:200], horas)
+    r = _estado(config).reivindicar(rel, eu, motivo or "", horas)
     return {**r, "sugestao_commit": _sugestao("reivindica", rel),
             "lembrete": "renove chamando de novo antes de expirar; libere com liberar_arquivo ao terminar"}
 
 
 def liberar_arquivo(config: Config, caminho: str, quem: str | None = None, concluido: bool = False,
                     padroes_corrigidos: list[str] | None = None, observacao: str = "") -> dict[str, Any]:
-    rel = relativo(config.raiz, resolver_caminho(config.raiz, caminho, deve_existir=False))
+    rel = _caminho_seguro(config, caminho, deve_existir=False)
     for p in padroes_corrigidos or []:
         if p not in PADROES:
             raise ErroFerramenta("padrao_desconhecido", f"padrao {p!r}; validos: {', '.join(PADROES)}")
     eu = quem_sou(config, quem)
     r = _estado(config).liberar(rel, eu, concluido=concluido, padroes=padroes_corrigidos,
-                                observacao=(observacao or "")[:500])
+                                observacao=observacao or "")
     acao = "conclui" if concluido else "libera"
-    dica = (f"commit do codigo: git add {rel} && git commit -m \"migra(<padrao>): {rel}\"" if concluido else "")
+    padrao = (padroes_corrigidos or ["<padrao>"])[0]
+    dica = (f"git add -- {shlex.quote(rel)} && git commit -m {shlex.quote(f'migra({padrao}): {rel}')}"
+            if concluido else "")
     return {**r, "sugestao_commit": _sugestao(acao, rel), "commit_do_codigo": dica}
 
 
@@ -99,17 +110,18 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
     candidatos = padroes_para(padrao) if padrao else [
         p for p in sorted(CATALOGO, key=lambda p: p.prioridade) if p.mecanico in ("sim", "semi") and p.confianca != "baixa" and not p.ruidoso]
     ativos = est.reivindicados_ativos()
-    de_outros = {c for c, r in ativos.items() if r["quem"] != eu}
+    de_outros = {c for c, r in ativos.items() if not mesma_pessoa(r["quem"], eu)}
     feitos = est.concluidos_por_padrao()
     for p in candidatos:
         res = buscar(config, padrao=p.nome, caminho=caminho, limite=min(2000, limite * 40),
                      ignorar_arquivos=de_outros | set(feitos.get(p.nome, [])))
         por_arquivo: dict[str, list[int]] = {}
         for o in res["ocorrencias"]:
-            por_arquivo.setdefault(o["arquivo"], []).append(o["linha"])
+            if not tem_metacaractere(o["arquivo"]):  # nome estranho nao entra em lote (iria para comando git)
+                por_arquivo.setdefault(o["arquivo"], []).append(o["linha"])
         if not por_arquivo:
             continue
-        arquivos = [{"arquivo": a, "ocorrencias": len(ls), "linhas": ls[:20], "ja_e_seu": a in ativos}
+        arquivos = [{"arquivo": a, "ocorrencias": len(ls), "linhas": ls[:20], "ja_e_seu": a in ativos}  # de_outros ja fora
                     for a, ls in list(por_arquivo.items())[:limite]]
         out: dict[str, Any] = {
             "padrao": p.como_dict(), "arquivos": arquivos, "quem": eu,

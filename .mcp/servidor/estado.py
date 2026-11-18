@@ -15,6 +15,7 @@ from __future__ import annotations
 import fcntl
 import json
 import os
+import re
 import tempfile
 import time
 from collections.abc import Callable
@@ -23,7 +24,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-from servidor.seguranca import ErroFerramenta
+from servidor.seguranca import ErroFerramenta, limpar_texto
 
 VERSAO = 1
 ESPERA_TRAVA_S = 15.0
@@ -39,6 +40,41 @@ def _de_iso(s: str) -> datetime:
 
 def _agora() -> datetime:
     return datetime.now(timezone.utc)
+
+
+_CONFLITO = re.compile(r"^(<{7}|={7}|>{7})(\s|$)", re.M)
+MAX_QUEM, MAX_MOTIVO, MAX_OBSERVACAO = 80, 200, 500
+
+
+def mesma_pessoa(a: str, b: str) -> bool:
+    """Identidade COOPERATIVA (sem autenticacao): compara nomes sem diferenca de caixa/espacos."""
+    return " ".join(a.split()).casefold() == " ".join(b.split()).casefold()
+
+
+def _validar_forma(dados: Any, nome: str) -> None:
+    def ruim(msg: str) -> ErroFerramenta:
+        return ErroFerramenta("estado_corrompido", f"{nome}: {msg}; corrija o arquivo (veja .mcp/estado/README.md)")
+    if not isinstance(dados, dict) or dados.get("versao") != VERSAO:
+        raise ruim("versao desconhecida ou formato invalido")
+    for chave in ("reivindicacoes", "concluidos"):
+        dados.setdefault(chave, {})
+        if not isinstance(dados[chave], dict):
+            raise ruim(f"'{chave}' precisa ser objeto")
+    for c, r in dados["reivindicacoes"].items():
+        if not isinstance(r, dict) or not all(isinstance(r.get(k), str) for k in ("quem", "expira")):
+            raise ruim(f"reivindicacao de {c[:100]!r} sem 'quem'/'expira' texto")
+    for c, v in dados["concluidos"].items():
+        if (not isinstance(v, dict) or not isinstance(v.get("quem"), str)
+                or not isinstance(v.get("padroes", []), list)
+                or not all(isinstance(p, str) for p in v.get("padroes", []))):
+            raise ruim(f"concluido de {c[:100]!r} com forma invalida")
+
+
+def _quem(quem: str) -> str:
+    q = limpar_texto(quem, MAX_QUEM)
+    if not q:
+        raise ErroFerramenta("quem_desconhecido", "informe quem esta trabalhando (nome nao vazio)")
+    return q
 
 
 class Estado:
@@ -77,7 +113,7 @@ class Estado:
             texto = self.arquivo.read_text(encoding="utf-8")
         except FileNotFoundError:
             return {"versao": VERSAO, "reivindicacoes": {}, "concluidos": {}}
-        if "<<<<<<<" in texto or ">>>>>>>" in texto:
+        if _CONFLITO.search(texto):  # so no INICIO de linha: um motivo "<<<<<<< x" dentro do JSON nao conta
             raise ErroFerramenta("estado_corrompido",
                                  f"{self.arquivo.name} tem marcas de conflito do git: resolva o conflito "
                                  "(mantenha as entradas dos dois lados) e faca commit so desse arquivo")
@@ -85,10 +121,7 @@ class Estado:
             dados = json.loads(texto)
         except json.JSONDecodeError as e:
             raise ErroFerramenta("estado_corrompido", f"{self.arquivo.name} nao e JSON valido: {e}") from None
-        if not isinstance(dados, dict) or dados.get("versao") != VERSAO:
-            raise ErroFerramenta("estado_corrompido", f"{self.arquivo.name}: versao desconhecida")
-        dados.setdefault("reivindicacoes", {})
-        dados.setdefault("concluidos", {})
+        _validar_forma(dados, self.arquivo.name)
         return dados
 
     def _gravar(self, dados: dict[str, Any]) -> None:
@@ -137,10 +170,11 @@ class Estado:
         horas = self.expira_horas if horas is None else horas
         if not (0 < horas <= 72):
             raise ErroFerramenta("parametro_invalido", "horas precisa estar entre 0 e 72")
+        quem, motivo = _quem(quem), limpar_texto(motivo, MAX_MOTIVO)
 
         def fn(dados, agora):
             atual = dados["reivindicacoes"].get(caminho)
-            if atual and atual["quem"] != quem:
+            if atual and not mesma_pessoa(atual["quem"], quem):
                 raise ErroFerramenta("ja_reivindicado", f"{caminho} esta com {atual['quem']} ate {atual['expira']}",
                                      quem=atual["quem"], expira=atual["expira"], motivo=atual.get("motivo", ""))
             novo = {"quem": quem, "motivo": motivo, "desde": atual["desde"] if atual else _iso(agora),
@@ -152,11 +186,13 @@ class Estado:
 
     def liberar(self, caminho: str, quem: str, *, concluido: bool = False, padroes: list[str] | None = None,
                 observacao: str = "") -> dict[str, Any]:
+        quem, observacao = _quem(quem), limpar_texto(observacao, MAX_OBSERVACAO)
+
         def fn(dados, agora):
             atual = dados["reivindicacoes"].get(caminho)
             if atual is None:
                 raise ErroFerramenta("nao_reivindicado", f"{caminho} nao esta reivindicado (ou ja expirou)")
-            if atual["quem"] != quem:
+            if not mesma_pessoa(atual["quem"], quem):
                 raise ErroFerramenta("reivindicado_por_outro", f"{caminho} esta com {atual['quem']}",
                                      quem=atual["quem"], expira=atual["expira"])
             del dados["reivindicacoes"][caminho]

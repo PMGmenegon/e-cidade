@@ -119,6 +119,50 @@ def test_json_corrompido_por_conflito_do_git(estado):
     assert "conflito" in e.value.mensagem
 
 
+def test_motivo_com_marca_de_conflito_nao_corrompe(estado):
+    estado.reivindicar("ecidade/a.php", "ana", "<<<<<<< x")
+    estado.reivindicar("ecidade/b.php", "ana", "=======")
+    q = estado.quadro()
+    assert [r["motivo"] for r in q["reivindicacoes_ativas"]] == ["<<<<<<< x", "======="]
+
+
+def test_texto_livre_e_sanitizado(estado):
+    r = estado.reivindicar("ecidade/a.php", "  ana\r\n\x1b[31m ", "m\x1b[2J\x07otivo\r\nlinha2" + "x" * 500)
+    assert r["quem"] == "ana"
+    assert r["motivo"].startswith("motivo linha2") and len(r["motivo"]) == 200
+    estado.liberar("ecidade/a.php", "ana", concluido=True, observacao="ok\x1b]0;titulo\x07‮fim")
+    assert estado.quadro()["concluidos"][0]["observacao"] == "okfim"
+
+
+def test_quem_vazio_depois_de_limpar(estado):
+    with pytest.raises(ErroFerramenta) as e:
+        estado.reivindicar("ecidade/a.php", "\x1b[0m \r\n", "x")
+    assert e.value.codigo == "quem_desconhecido"
+
+
+def test_quem_normalizado_na_comparacao(estado):
+    estado.reivindicar("ecidade/a.php", "Ana Souza", "x")
+    r = estado.reivindicar("ecidade/a.php", "  ana   souza ", "x")
+    assert r["renovada"] is True
+    assert estado.liberar("ecidade/a.php", "ANA SOUZA")["liberado"] is True
+
+
+@pytest.mark.parametrize("conteudo", [
+    '[]', '{"versao": 1, "reivindicacoes": []}', '{"versao": 1, "reivindicacoes": {"a": "x"}}',
+    '{"versao": 1, "reivindicacoes": {"a": {"quem": 1, "expira": "x"}}}',
+    '{"versao": 1, "concluidos": {"a": {"quem": "x", "padroes": [1]}}}',
+])
+def test_forma_invalida_vira_estado_corrompido(estado, conteudo):
+    estado.arquivo.parent.mkdir(parents=True, exist_ok=True)
+    estado.arquivo.write_text(conteudo)
+    with pytest.raises(ErroFerramenta) as e:
+        estado.quadro()
+    assert e.value.codigo == "estado_corrompido"
+    with pytest.raises(ErroFerramenta) as e:
+        estado.reivindicar("ecidade/z.php", "ana", "x")
+    assert e.value.codigo == "estado_corrompido"
+
+
 def test_escrita_atomica_nao_deixa_temporarios(estado):
     for i in range(5):
         estado.reivindicar(f"ecidade/{i}.php", "ana", "x")
