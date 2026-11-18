@@ -25,7 +25,13 @@ def classify(current, previous):
 def lint(content, image):
     # Arquivo fora da arvore original, sem iniciar a aplicacao ou seus includes.
     with tempfile.TemporaryDirectory(prefix='ecidade-lint-') as directory:
-        Path(directory, 'arquivo.php').write_bytes(content)
+        source = Path(directory, 'arquivo.php')
+        source.write_bytes(content)
+        # TemporaryDirectory usa 0700 no Linux. Sem DAC_OVERRIDE, o root do
+        # container nao atravessa a pasta do runner (outro UID).
+        # Somente esta copia temporaria fica legivel; o mount continua readonly.
+        Path(directory).chmod(0o755)
+        source.chmod(0o644)
         result = subprocess.run([
             'docker', 'run', '--rm', '--network', 'none', '--read-only',
             '--cap-drop=ALL', '--security-opt=no-new-privileges',

@@ -69,6 +69,20 @@ class LintTests(unittest.TestCase):
         runner.side_effect = fake_command
         self.assertEqual(lint(content, 'php:7.4-cli'), 0)
 
+    @patch('lint_alterados.Path.chmod', autospec=True)
+    @patch('lint_alterados.subprocess.run')
+    def test_permissoes_da_copia_temporaria_antes_do_container(self, runner, chmod):
+        def check_command(command, **kwargs):
+            mount = command[command.index('--mount') + 1]
+            directory = Path(mount.split('src=', 1)[1].split(',dst=', 1)[0])
+            self.assertEqual([call.args for call in chmod.call_args_list],
+                             [(directory, 0o755), (directory / 'arquivo.php', 0o644)])
+            self.assertIn('--cap-drop=ALL', command)
+            self.assertTrue(mount.endswith(',readonly'))
+            return Mock(returncode=0, stderr=b'')
+        runner.side_effect = check_command
+        self.assertEqual(lint(b'<?php echo 1;', 'php:7.4-cli'), 0)
+
     @patch('lint_alterados.subprocess.run', return_value=Mock(returncode=125, stderr=b'erro docker'))
     def test_erro_do_docker_e_erro_de_ambiente(self, runner):
         with self.assertRaises(RuntimeError):

@@ -39,9 +39,9 @@ Os dois jobs rodam independentemente, com limite de 20 minutos cada. Cada invoca
 
 ## Validacao
 
-Treze testes locais passaram, cobrindo classificacao, codigos, resumo, preservacao de bytes LATIN1, argumentos do Docker, falhas, timeout, links simbolicos e selecao de renomes/exclusoes em Git real temporario. PHP e Docker sao simulados nesses testes.
+Quatorze testes locais passaram, cobrindo classificacao, codigos, resumo, preservacao de bytes LATIN1, argumentos do Docker, falhas, timeout, links simbolicos e selecao de renomes/exclusoes em Git real temporario. PHP e Docker sao simulados nesses testes.
 
-Um teste adicional confere PHP valido e invalido em Docker quando ECIDADE_LINT_IMAGE esta configurado. Ele foi pulado localmente e roda no workflow. A validacao remota segue pendente.
+Um teste adicional confere PHP valido e invalido em Docker quando ECIDADE_LINT_IMAGE esta configurado. Ele foi pulado localmente e roda no workflow. A primeira execucao remota falhou ao abrir /lint/arquivo.php. A correcao de permissoes da copia temporaria aguarda nova execucao no GitHub.
 
 Comando de teste: python3 -B -m unittest discover -s ferramentas/testes-ci -p 'test_*.py' -v
 
@@ -52,3 +52,7 @@ O lint roda isolado sem php.ini da aplicacao, com short_open_tag=1. Nao carrega 
 Referencias:
 - https://docs.github.com/en/actions/get-started/continuous-integration
 - https://www.php.net/manual/en/features.commandline.options.php
+
+## Correcao de leitura no Docker
+
+A copia temporaria usa pasta 0755 e arquivo 0644 antes de iniciar o container. Isso permite leitura com --cap-drop=ALL mesmo quando o UID do runner difere do UID do container. Apenas a copia temporaria recebe essas permissoes; os fontes do projeto nao sao alterados. O bind mount continua somente leitura e sem rede. Um teste verifica as permissoes antes da chamada ao Docker.
