@@ -24,24 +24,96 @@ def test_confere_baseline_aceita_dump_igual(tmp_path, monkeypatch):
     banco.confere_baseline(dump)
 
 
-def test_alvos_usam_variaveis_de_ambiente(monkeypatch):
-    for v in ("REF", "PHP_NOVO", "LARAVEL_NOVO", "PROXY"):
-        monkeypatch.delenv(f"REGRESSAO_{v}_URL", raising=False)
+_VARS_URL = ("REGRESSAO_REF_URL", "REGRESSAO_PHP_NOVO_URL", "REGRESSAO_NOVO_URL",
+             "REGRESSAO_LARAVEL_NOVO_URL", "REGRESSAO_PROXY_URL")
+_VARS_CONTAINER = ("REGRESSAO_CONTAINER_REF", "REGRESSAO_CONTAINER_PHP_NOVO",
+                   "REGRESSAO_CONTAINER_BANCO", "REGRESSAO_CONTAINER_PROXY")
+
+
+@pytest.fixture
+def sem_variaveis(monkeypatch):
+    for v in _VARS_URL + _VARS_CONTAINER:
+        monkeypatch.delenv(v, raising=False)
+    return monkeypatch
+
+
+def test_alvos_padrao_sao_os_do_ambiente_e74(sem_variaveis):
     padrao = ambiente.alvos_do_ambiente()
-    assert padrao.ref == "http://localhost:8080"
-    assert padrao.php_novo == "http://localhost:8085"
-    assert padrao.laravel_novo == "http://localhost:8087"
-    assert padrao.proxy == "http://localhost:8090"
-    monkeypatch.setenv("REGRESSAO_REF_URL", "http://x:1")
-    monkeypatch.setenv("REGRESSAO_PROXY_URL", "http://y:2")
+    assert padrao.ref == "http://localhost:8074"
+    assert padrao.php_novo == "http://localhost:8185"
+    assert padrao.laravel_novo == "http://localhost:8187"
+    assert padrao.proxy == "http://localhost:8190"
+
+
+def test_alvos_usam_variaveis_de_ambiente(sem_variaveis):
+    sem_variaveis.setenv("REGRESSAO_REF_URL", "http://x:1")
+    sem_variaveis.setenv("REGRESSAO_PROXY_URL", "http://y:2")
     alvos = ambiente.alvos_do_ambiente()
     assert alvos.ref == "http://x:1"
     assert alvos.proxy == "http://y:2"
-    assert alvos.php_novo == "http://localhost:8085"
+    assert alvos.php_novo == "http://localhost:8185"
 
 
-def test_verifica_reporta_alvo_fora(monkeypatch):
-    monkeypatch.setattr(ambiente, "containers_ativos", lambda: {"ecidade_database"})
+def test_alvo_php_novo_aceita_regressao_novo_url(sem_variaveis):
+    sem_variaveis.setenv("REGRESSAO_NOVO_URL", "http://n:3")
+    assert ambiente.alvos_do_ambiente().php_novo == "http://n:3"
+    # o nome antigo, mais especifico, vence
+    sem_variaveis.setenv("REGRESSAO_PHP_NOVO_URL", "http://p:4")
+    assert ambiente.alvos_do_ambiente().php_novo == "http://p:4"
+
+
+def test_containers_padrao_sao_os_do_projeto_e74(sem_variaveis):
+    c = ambiente.containers_do_ambiente()
+    assert c.ref == "ecidade74_php74"
+    assert c.php_novo == "ecidade74_php85"
+    assert c.banco == "ecidade74_database"
+    assert c.proxy == "ecidade74_proxy"
+
+
+def test_containers_usam_variaveis_de_ambiente(sem_variaveis):
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_REF", "r")
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_PHP_NOVO", "n")
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "b")
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_PROXY", "p")
+    assert ambiente.containers_do_ambiente() == ambiente.Containers(ref="r", php_novo="n", banco="b", proxy="p")
+
+
+def test_verifica_procura_o_container_de_banco_configurado(sem_variaveis):
+    sem_variaveis.setattr(ambiente, "_responde", lambda url: True)
+    sem_variaveis.setattr(ambiente, "containers_ativos", lambda: {"ecidade74_database"})
+    alvos = ambiente.Alvos("http://a", "http://b", "http://c", "http://d")
+    assert ambiente.verifica(alvos) == []
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "outro_banco")
+    assert ambiente.verifica(alvos) == ["container ausente em docker ps: outro_banco"]
+
+
+def test_banco_usa_o_container_configurado(sem_variaveis):
+    cmds = []
+    sem_variaveis.setattr(banco.subprocess, "run", lambda cmd, **k: cmds.append(cmd) or _Res(0, b"1"))
+    banco._psql("select 1")
+    assert cmds[-1][:3] == ["docker", "exec", "ecidade74_database"]
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "meu_banco")
+    banco._psql("select 1")
+    assert cmds[-1][:3] == ["docker", "exec", "meu_banco"]
+    assert banco.container() == "meu_banco"
+
+
+def test_logs_do_banco_da_bateria_laravel_usam_o_container_configurado(sem_variaveis):
+    import datetime
+
+    from regressao.laravel import caso
+    cmds = []
+    sem_variaveis.setattr(caso.subprocess, "run", lambda cmd, **k: cmds.append(cmd) or _Res(0, b""))
+    caso._logs_banco(datetime.datetime(2026, 1, 1))
+    assert cmds[-1][0:2] == ["docker", "logs"] and cmds[-1][-1] == "ecidade74_database"
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "meu_banco")
+    caso._logs_banco(datetime.datetime(2026, 1, 1))
+    assert cmds[-1][-1] == "meu_banco"
+
+
+def test_verifica_reporta_alvo_fora(sem_variaveis):
+    monkeypatch = sem_variaveis
+    monkeypatch.setattr(ambiente, "containers_ativos", lambda: {"ecidade74_database"})
     alvos = ambiente.Alvos(
         ref="http://127.0.0.1:1",
         php_novo="http://127.0.0.1:1/php",
@@ -54,12 +126,13 @@ def test_verifica_reporta_alvo_fora(monkeypatch):
         assert any(url in p for p in problemas)
 
 
-def test_verifica_reporta_container_ausente(monkeypatch):
+def test_verifica_reporta_container_ausente(sem_variaveis):
+    monkeypatch = sem_variaveis
     monkeypatch.setattr(ambiente, "containers_ativos", lambda: {"outro"})
     monkeypatch.setattr(ambiente, "_responde", lambda url: True)
     alvos = ambiente.Alvos("http://a", "http://b", "http://c", "http://d")
     problemas = ambiente.verifica(alvos)
-    assert any("ecidade_database" in p for p in problemas)
+    assert any("ecidade74_database" in p for p in problemas)
 
 
 def test_com_log_statement_reseta_mesmo_com_excecao(monkeypatch):

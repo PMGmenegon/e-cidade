@@ -179,12 +179,12 @@ def test_roda_console_usa_o_container_informado(monkeypatch):
 def test_container_do_console_na_referencia_e_sempre_o_54_e_no_alvo_novo_exige_a_variavel(monkeypatch):
     monkeypatch.delenv("REGRESSAO_REF_URL", raising=False)
     monkeypatch.setenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER", "lab12")
-    assert integracao.container_console("http://localhost:8080") == "ecidade_php56"   # gravar/ref ignora a variavel
-    assert integracao.container_console("http://localhost:8087/") == "lab12"
+    assert integracao.container_console("http://localhost:8074") == "ecidade_php56"   # gravar/ref ignora a variavel
+    assert integracao.container_console("http://localhost:8187/") == "lab12"
     monkeypatch.delenv("REGRESSAO_LARAVEL_CONSOLE_CONTAINER")
     with pytest.raises(integracao.ErroConsole, match="REGRESSAO_LARAVEL_CONSOLE_CONTAINER"):
-        integracao.container_console("http://localhost:8087")
-    assert integracao.container_console("http://localhost:8080/") == "ecidade_php56"
+        integracao.container_console("http://localhost:8187")
+    assert integracao.container_console("http://localhost:8074/") == "ecidade_php56"
 
 
 def test_comparar_console_em_alvo_novo_sem_container_vira_erro_ambiente_e_nao_falso_identico(monkeypatch):
@@ -193,7 +193,7 @@ def test_comparar_console_em_alvo_novo_sem_container_vira_erro_ambiente_e_nao_fa
     monkeypatch.setattr(integracao, "_roda", lambda cmd: pytest.fail("nao pode executar no container do 5.4"))
     c = CasoHttp(id="console-env", metodo="CONSOLE", caminho="artisan", corpo=None, console=["env"])
     with pytest.raises(mod_caso.ErroRequisicao, match="CONSOLE_CONTAINER"):
-        mod_caso.executa(c, "http://localhost:8087", "tok", banco=False)
+        mod_caso.executa(c, "http://localhost:8187", "tok", banco=False)
 
 
 @pytest.mark.parametrize("rc,err", [(125, b""), (126, b""), (127, b""), (1, b"Error response from daemon: No such container: x"),
@@ -236,7 +236,7 @@ def test_executa_console_nao_trunca_a_saida(monkeypatch):
     monkeypatch.setattr(integracao, "roda_console", lambda args, modo=None, runner=None, container=None: (0, grande))
     c = CasoHttp(id="console-migrate-status", metodo="CONSOLE", caminho="artisan", corpo=None, console=["migrate:status"],
                  console_modo="migracoes")
-    assert len(mod_caso.executa(c, "http://localhost:8080", "tok", banco=False).texto) == 90_000
+    assert len(mod_caso.executa(c, "http://localhost:8074", "tok", banco=False).texto) == 90_000
 
 
 def test_arquivo_ilegivel_nos_dois_lados_e_inconclusivo_nao_identico():
@@ -252,7 +252,7 @@ def test_executa_console_devolve_codigo_e_saida_normalizada(monkeypatch):
     monkeypatch.setattr(integracao, "roda_console",
                         lambda args, modo=None, runner=None, container=None: (0, f"saida de {args} {modo}\n"))
     c = CasoHttp(id="console-env", metodo="CONSOLE", caminho="artisan", corpo=None, console=["env"], console_modo="nomes")
-    r = mod_caso.executa(c, "http://localhost:8080", "tok", banco=False)
+    r = mod_caso.executa(c, "http://localhost:8074", "tok", banco=False)
     assert r.status == 0 and r.json is None and r.texto == "saida de ['env'] nomes\n"
 
 
@@ -275,7 +275,7 @@ def _prepara_baseline(tmp_path, monkeypatch, antigos=("a", "b")):
     monkeypatch.setattr(mod_caso, "_commit", lambda: "c0ffee")
 
 
-REF = "http://localhost:8080"
+REF = "http://localhost:8074"
 
 
 @pytest.fixture(autouse=True)
@@ -319,7 +319,7 @@ def test_gravar_novos_recusa_alvo_que_nao_e_a_referencia_54(tmp_path, monkeypatc
     _prepara_baseline(tmp_path, monkeypatch)
     monkeypatch.setattr(mod_caso, "_roda", lambda *a, **k: pytest.fail("nao pode rodar"))
     with pytest.raises(mod_caso.ErroGravacao, match="referencia"):
-        mod_caso.gravar_novos([_c("a"), _c("b"), _c("n1")], "http://localhost:8087", tmp_path)
+        mod_caso.gravar_novos([_c("a"), _c("b"), _c("n1")], "http://localhost:8187", tmp_path)
     assert not (tmp_path / mod_caso.nome_arquivo("n1")).exists()
 
 

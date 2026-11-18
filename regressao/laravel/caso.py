@@ -27,9 +27,10 @@ from regressao.laravel.token import (CLIENT_ID, _RE_JWT, ErroToken, _segredo_cli
                                      laravel_sobe, obtem_token, redige)
 from regressao.nucleo import git
 from regressao.nucleo.ambiente import alvos_do_ambiente
-from regressao.nucleo.banco import (ARQ_DUMP, ARQ_SHA256, CONTAINER, BancoDiferente,
+from regressao.nucleo.banco import (ARQ_DUMP, ARQ_SHA256, BancoDiferente,
                                     ErroAmbienteBanco, _psql, com_log_statement,
                                     confere_baseline, hash_tabelas, restaura_dump)
+from regressao.nucleo.banco import container as container_banco
 from regressao.nucleo.veredito import Caso, Veredito
 
 DIR_CASOS = Path(__file__).resolve().parent / "casos"
@@ -343,7 +344,7 @@ def _logs_banco(desde: datetime.datetime) -> bytes:
     """`docker logs` do banco desde `desde` (stderr incluso: o postgres loga la)."""
     try:
         r = subprocess.run(["docker", "logs", "--since", desde.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                            CONTAINER], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                            container_banco()], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                            timeout=120)
     except (OSError, subprocess.SubprocessError) as e:
         raise ErroAmbienteBanco(f"docker logs falhou: {type(e).__name__}") from None

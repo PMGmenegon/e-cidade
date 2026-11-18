@@ -4,7 +4,8 @@ import subprocess
 from contextlib import contextmanager
 from pathlib import Path
 
-CONTAINER = "ecidade_database"
+from regressao.nucleo.ambiente import containers_do_ambiente
+
 BASE = "ecidade"
 DIR_BASELINE = Path(__file__).resolve().parent.parent / "baseline"
 ARQ_DUMP = DIR_BASELINE / "baseline.dump"
@@ -22,6 +23,11 @@ class ErroAmbienteBanco(Exception):
 TIMEOUT_PSQL = 60
 TIMEOUT_DUMP = 900
 _NOME_TABELA = re.compile(r"[a-z_][a-z0-9_]*(\.[a-z_][a-z0-9_]*)?")
+
+
+def container() -> str:
+    """Container do PostgreSQL (REGRESSAO_CONTAINER_BANCO; padrao ecidade74_database)."""
+    return containers_do_ambiente().banco
 
 
 def _sha256(arquivo: Path) -> str:
@@ -52,7 +58,7 @@ def _docker(args: list[str], timeout: int, stdin=None, stdout=None) -> bytes:
 
 def _psql(sql: str, db: str = BASE) -> str:
     saida = _docker(
-        ["exec", CONTAINER, "psql", "-U", "postgres", "-d", db,
+        ["exec", container(), "psql", "-U", "postgres", "-d", db,
          "-At", "-v", "ON_ERROR_STOP=1", "-c", sql],
         TIMEOUT_PSQL,
     )
@@ -63,7 +69,7 @@ def gera_dump(destino: Path) -> str:
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
     with open(destino, "wb") as f:
-        _docker(["exec", CONTAINER, "pg_dump", "-U", "postgres", "-Fc", "--create", BASE],
+        _docker(["exec", container(), "pg_dump", "-U", "postgres", "-Fc", "--create", BASE],
                 TIMEOUT_DUMP, stdout=f)
     sha = _sha256(destino)
     ARQ_SHA256.parent.mkdir(parents=True, exist_ok=True)
@@ -90,7 +96,7 @@ def restaura_dump(dump: Path) -> None:
           f"where datname='{BASE}' and pid<>pg_backend_pid()", db="postgres")
     _psql(f"DROP DATABASE IF EXISTS {BASE}", db="postgres")
     with open(dump, "rb") as f:
-        _docker(["exec", "-i", CONTAINER, "pg_restore", "-U", "postgres",
+        _docker(["exec", "-i", container(), "pg_restore", "-U", "postgres",
                  "--create", "--exit-on-error", "-d", "postgres"],
                 TIMEOUT_DUMP, stdin=f)
 
