@@ -1,34 +1,50 @@
 # Regras de arquitetura e de trabalho da migração
 
-Valem para **toda pessoa e toda IA** que mexe no e-Cidade nesta migração (base PHP 7.4/Laravel 8 → PHP 8.5/Laravel 12).
-A IA lê este arquivo pelo resource `ecidade://docs/regras-arquitetura`.
+Valem para **toda pessoa e toda IA** que mexe no e-Cidade nesta migração: base PHP 7.4/Laravel 8 do PR #8 → PHP 8.5
+com **Laravel 13 + Passport 13** (o 7.4 fica intacto com o Laravel 8; o 8.5 tem composer próprio). A IA lê este
+arquivo pelo resource `ecidade://docs/regras-arquitetura`. As regras do grupo (CONTRIBUINDO.md e o guia de
+18/11/2026) estão em `ecidade://grupo/regras` e **prevalecem** sobre este arquivo se houver diferença.
 
 ## 1. Regras de trabalho (não negociáveis)
 
-1. **O gabarito é a referência 7.4.** Migrar é fazer o mesmo sistema rodar no PHP 8.5/Laravel 12 **com o mesmo
-   comportamento**. Mudou o que o usuário vê (tela, PDF, valor, mensagem)? É regressão, mesmo que "pareça melhor".
-2. **Uma coisa por vez, o mínimo necessário.** Corrigiu `parse_str`? Não reformate o arquivo, não renomeie
-   variáveis, não "aproveite para melhorar". Refatoração é outra tarefa, com outro commit.
-3. **Reivindique antes de editar** (`reivindicar_arquivo`) e **libere ao terminar** (`liberar_arquivo`). Veja o
+1. **O gabarito é a referência 7.4 do PR.** Migrar é fazer o mesmo sistema rodar no PHP 8.5 (Laravel 13) **com o
+   mesmo comportamento**. Mudou o que o usuário vê (tela, PDF, valor, mensagem)? É regressão, mesmo que "pareça
+   melhor". Se o 8.5 já se comporta como o 7.4, **não se mexe**.
+2. **O código do PR tem prioridade; o mínimo necessário.** Mexa só as linhas que o 8.5 exige, no arquivo do PR.
+   **Nunca copie arquivo inteiro da `base-php84`** (desfaz mudanças funcionais do PR) e nunca traga dela o que o
+   7.4 já resolve (`$$x[$i]`, `split()` com compatibilidade, `break` fora de laço). Não reformate, não renomeie,
+   não "aproveite para melhorar". **Só atualizar**: defeito que já existe no 7.4 (inclusive de segurança) é
+   registrado e avisado ao dono da área, não corrigido; falha de segurança nunca vai para o repositório.
+3. **Prova antes e depois**: `php -l` no 7.4 e no 8.5 e a comparação da tela/classe 7.4 × 8.5. Arquivo que o 7.4
+   também usa só muda com prova de que o 7.4 continua igual.
+4. **ISO-8859-1**: o código não é salvo em UTF-8 (estraga os acentos). Trabalhe no WSL/Linux, nunca em `C:\`.
+5. **Cada pessoa na sua área** (tabela em `ecidade://grupo/regras`); arquivo de outra área, peça ao dono.
+   `composer.json`, `composer.lock` e `vendor/` são do grupo Laravel.
+6. **Reivindique antes de editar** (`reivindicar_arquivo`) e **libere ao terminar** (`liberar_arquivo`). Veja o
    `quadro` antes de começar. A reivindicação expira em 4 h: renove se ainda estiver trabalhando.
-4. **Valide nos dois PHPs pelo MCP** (`validar_arquivo_php`, que roda no Docker do projeto). Nada de "no meu PHP
+7. **Valide nos dois PHPs pelo MCP** (`validar_arquivo_php`, que roda no Docker do projeto). Nada de "no meu PHP
    local funciona": a versão do PHP tem de ser a mesma para todos.
-5. **Rode a regressão** (`rodar_regressao`) cobrindo o que você tocou e leia o resultado
+8. **Rode a regressão** (`rodar_regressao`) cobrindo o que você tocou e leia o resultado
    (`ler_resultado_regressao`). Só segue com **zero DIVERGE nova sem explicação** e **nenhum ERRO_AMBIENTE**.
    **INCONCLUSIVO e ERRO_AMBIENTE nunca são aprovação.**
-6. **Commits pequenos e por caminho**: `git add <arquivo1> <arquivo2>` — **nunca `git add -A` nem `git add .`**
-   (o repositório tem arquivos locais de ambiente, dumps e segredos que não podem subir).
-   Mensagem: `migra(<padrao>): <o que mudou>` para correções de padrão (ex.: `migra(parse_str_1_arg): 12 telas de
-   arrecadação`); o estado vai em commit separado (`estado: reivindica ecidade/x.php`).
-7. **Sem push** sem pedido explícito de quem é dono da tarefa. O repositório no GitHub é **público**.
-8. **Nunca** coloque divergência nova em `regressao/conhecidas.tsv` para "ficar verde": esse arquivo só aceita
+9. **Commits pequenos e por caminho**: `git add <arquivo1> <arquivo2>` — **nunca `git add -A` nem `git add .`**
+   (o repositório tem arquivos locais de ambiente, dumps e segredos que não podem subir). Assunto no formato do
+   histórico do grupo: **verbo no presente, sem acento, com números** (ex.: `Troca $s{i} por $s[i] em 20 arquivos
+   (20 linhas)`), corpo dizendo o que foi medido e a linha `Padrao-MCP: <padrao>` para o MCP contar. **O que o
+   Rector fez vai num commit só dele**, separado do manual. O estado vai em commit separado (`estado: reivindica
+   ecidade/x.php`). Branch `area/assunto` a partir da `base-php74`; pull request pequeno.
+10. **Sem push** sem pedido explícito de quem é dono da tarefa; **nunca `git push --force` nem `git reset --hard`**
+    sem avisar. O repositório no GitHub é **público**.
+11. **Nunca** coloque divergência nova em `regressao/conhecidas.tsv` para "ficar verde": esse arquivo só aceita
    divergência que **já existia antes da migração**, com prova.
-9. **Nunca regrave baseline** (`gravar --confirmo-sobrescrever`) com código migrado. O MCP nem oferece isso: a
+12. **Nunca regrave baseline** (`gravar --confirmo-sobrescrever`) com código migrado. O MCP nem oferece isso: a
    baseline é a foto da referência 7.4.
-10. **Segredos**: não leia, copie nem cole `.env`, `libs/db_conn.php`, chaves `oauth-*.key`, senhas ou hashes em
+13. **Não toque no banco** fora do teste combinado (banco só leitura sempre que der; não limpe registros de
+    auditoria que o próprio sistema grava).
+14. **Segredos**: não leia, copie nem cole `.env`, `libs/db_conn.php`, chaves `oauth-*.key`, senhas ou hashes em
     issue, commit, prompt ou log.
 
-## 2. Código novo ou reescrito (PHP 8.5 / Laravel 12)
+## 2. Código novo ou reescrito (PHP 8.5 / Laravel 13)
 
 Estas regras valem para **código novo** e para classes que você precisa reescrever. Código legado que só recebe a
 correção mecânica (seção 1, regra 2) **não** é reestruturado.
@@ -37,8 +53,9 @@ correção mecânica (seção 1, regra 2) **não** é reestruturado.
 > pasta `ecidade/`. Se você usar sintaxe que só existe no PHP 8 (promoção de propriedade no construtor, `readonly`,
 > `enum`, `match`, tipos união, argumentos nomeados, `?->`), a **referência 7.4 quebra** e a regressão perde o
 > gabarito. Por isso, **até a virada**, todo código em `ecidade/` precisa compilar e funcionar no 7.4 **e** no 8.5
-> (`validar_arquivo_php(versao="ambas")`). Os exemplos abaixo são compatíveis com os dois. Depois da virada (sem a
-> referência 7.4 rodando), a mesma estrutura pode usar `final readonly class` e promoção no construtor.
+> (`validar_arquivo_php(versao="ambas")`). Os exemplos abaixo são compatíveis com os dois. Código que **só o 8.5 lê**
+> (as bibliotecas próprias do 8.5, com Laravel 13) e o código depois da virada podem usar `final readonly class` e
+> promoção no construtor.
 
 ### 2.1 Tipagem estrita
 

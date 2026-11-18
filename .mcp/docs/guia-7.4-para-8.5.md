@@ -126,7 +126,8 @@ Frente do grupo Laravel. Pela regra 6 do `CONTRIBUINDO.md`, `composer.json`, `co
 
 ### Bibliotecas que travam o PHP 8.5
 
-- **10 pacotes do `composer.lock` do PR excluem o 8.5:** `lcobucci/jwt` 3.4, `dompdf` 0.8.6, `mpdf` 8.2.4, `laminas-escaper`, `htmlpurifier`, `nette/schema`, `nette/utils`, `bacon-qr-code`, `qrcode-detector-decoder` e `faker` (desenvolvimento). `phpspreadsheet ^1.08` resolve para 1.30.x, que declara `<8.5`. A maioria sai ao atualizar o pacote que a puxa.- **Com Laravel 12 ou 13 e as versões liberadas, sobram 2 bloqueios** (testado no Composer com PHP 8.5.12):
+- **10 pacotes do `composer.lock` do PR excluem o 8.5:** `lcobucci/jwt` 3.4, `dompdf` 0.8.6, `mpdf` 8.2.4, `laminas-escaper`, `htmlpurifier`, `nette/schema`, `nette/utils`, `bacon-qr-code`, `qrcode-detector-decoder` e `faker` (desenvolvimento). `phpspreadsheet ^1.08` resolve para 1.30.x, que declara `<8.5`. A maioria sai ao atualizar o pacote que a puxa.
+- **Com Laravel 12 ou 13 e as versões liberadas, sobram 2 bloqueios** (testado no Composer com PHP 8.5.12):
   - `dbseller/sdk-api-pix-bb` 2.0.0, que exige o Guzzle 7.5.0 exato. A solução já medida é um ajuste mínimo aplicado na instalação, só no 8.5, com prova contra dublê de que os pedidos saem idênticos.
   - `proner/phppimaco` 1.4.5, que puxa `endroid/qr-code ^2.5` e `bacon-qr-code` 1.0.3. A solução já medida mantém a etiqueta com o mesmo tamanho impresso.
 

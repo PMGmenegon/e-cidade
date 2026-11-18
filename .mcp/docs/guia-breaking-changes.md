@@ -1,9 +1,58 @@
-# Guia de quebras: PHP 7.4 → 8.5 e Laravel 8 → 12
+# Guia de quebras: PHP 7.4 → 8.5 e Laravel 8 → 13
 
 Para quem migra o e-Cidade (gente e IA). A IA lê este guia pelo resource `ecidade://docs/breaking-changes`. Cada
 item diz **o que quebra**, **em que versão**, **como achar** (padrão do `buscar_codigo_legado`) e **a correção
 padrão**. O que está marcado **(verificado)** foi conferido nos contêineres `ecidade74_php74` (7.4.33) e
-`ecidade74_php85` (8.5.12) em 17/11/2026.
+`ecidade74_php85` (8.5.12) em 17/11/2026. Os números **medidos pelo grupo** vêm do guia "Migração do PHP 7.4 para
+o 8.5 a partir do PR #8" (18/11/2026; íntegra em `ecidade://grupo/guia-7.4-para-8.5`) e as regras de trabalho em
+`ecidade://grupo/regras`.
+
+**Alvo (corrigido):** PHP 8.5 com **Laravel 13 + Passport 13**. O 7.4 fica **intacto** com o Laravel 8 do PR e o
+8.5 ganha um composer próprio. Ninguém sobe o Laravel do 7.4.
+
+## Medidas do grupo na nova base (`origin/base-php74`, 18/11/2026)
+
+| O quê | Tamanho | Efeito no 8.5 | Padrão MCP |
+|---|---|---|---|
+| Arquivos PHP (fora `vendor/`) | 36.683 | — | — |
+| Compilam no 7.4 e **não compilam no 8.5** | **32 arquivos**: `$s{0}` 20, ternário encadeado 3, nome com `\` que virou token 4, assinatura incompatível com a mãe (jpgraph) 4, `(real)` 1 | erro de compilação | `chaves_offset_string` (`chave_offset`), `ternario_encadeado`, `cast_real`; o resto só o `php -l` do 8.5 (`validar_arquivo_php`) |
+| Já não compilam nem no 7.4 | 13 arquivos | ficam como estão e são **registrados** | — |
+| `each()` | 84 usos / 28 arq | erro fatal quando a linha roda | `each` (`each_removido`) |
+| `pg_lo_export`/`pg_lo_import` | 40 usos / 33 arq (o MCP aponta os ~15 com a conexão no FIM, a ordem removida) | erro de tipo; a exportação não acontece | `pg_lo_export_ordem_antiga` |
+| `create_function` | 1 arq | erro fatal | `create_function` |
+| `get_magic_quotes_*` | 2 arq | erro fatal | `get_magic_quotes` |
+| `count()` de não-lista | amplo | `TypeError` | `count_null` (ruidoso) |
+| `$this->x == ""` | **36.729 pontos em 4.054 arquivos** | **silencioso**: com `$x` inteiro o formulário deixa de ser lido | `comparacao_vazio` (o MCP conta todo `$var == ""`, por isso acha mais); regra Rector do grupo `GuardaComparacaoLiteralRector` |
+| Construtor no estilo antigo | **152 classes em 143 arquivos** `.php` | **silencioso**: o objeto nasce sem inicializar | `construtor_php4` (`construtor_antigo`; o MCP também varre `.class`/`.inc` do `dbagata`) |
+| `utf8_encode`/`utf8_decode` | 1.832 usos / 376 arq | obsoleto (8.2) | `utf8_encode_decode` |
+| `"${var}"` | 113 arq | obsoleto (8.2) | `interpolacao_dolar_chave` (`string_interp_dolar`; o MCP também casa `${x}` de JavaScript) |
+| `strftime`/`gmstrftime` | 12 arq | obsoleto (8.1) | `strftime` |
+| `FILTER_SANITIZE_STRING` | 3 arq | obsoleto (8.1) | `filter_sanitize_string` |
+
+Ordem de trabalho do grupo (e do `proximo_trabalho`): **não compila no 8.5 > quebra em execução > silencioso >
+obsoleto**. Aviso de obsoleto que não aparece na tela e não muda o resultado não precisa de correção (regra
+"funciona igual"); confira `error_reporting`/`display_errors` do 8.5 contra o 7.4.
+
+## O que dá para copiar da `base-php84` e o que não
+
+Parte do que foi corrigido na `base-php84` era diferença 5.6 → 7, que o 7.4 do PR **já tem**. Copiar muda o
+comportamento em relação à referência. **Nunca** copie arquivo inteiro da `base-php84` por cima do da
+`base-php74` (desfaz as mudanças funcionais do PR); parta do arquivo do PR e mude só as linhas necessárias.
+
+| Correção na `base-php84` | Copiar? |
+|---|---|
+| `$$x[$i]` e `$o->$p[$i]` (mudaram de sentido no 7.0) | **NÃO**: o 7.4 já lê do jeito novo; mexer mudaria o resultado |
+| `split()` coberto por função de compatibilidade | **NÃO**, se a mesma função de compatibilidade estiver no 7.4 e no 8.5 (hoje o 7.4 do PR não tem `split`: a tela já quebra na referência, então registre) |
+| `break` fora de laço | **NÃO**: já é erro de compilação no 7.4; se compila no 7.4, não existe |
+| `$s{i}` → `$s[i]` | sim (8.0) |
+| `pg_lo_export` com a conexão no fim | sim (8.0) |
+| Construtor do jpgraph e assinaturas compatíveis | sim (8.0) |
+| `== ""` com inteiro | sim (8.0) |
+| `each()`, `create_function`, `count(null)` | sim (8.0) |
+
+Prioridade: se o PR já resolveu e roda no 8.5, fica o do PR; se resolveu mas não roda, ajuste mínimo no código do
+PR; só se o PR não mexeu e o ponto quebra no 8.5 a `base-php84` serve de modelo, adaptada. Antes de aplicar, rode o
+trecho no 7.4 e no 8.5: se o 8.5 já se comporta como o 7.4, não mexa.
 
 ## 0. O que a migração anterior ensinou (5.6 → 8.5, branch `regressao`)
 
@@ -28,14 +77,14 @@ A suíte já mediu uma migração deste mesmo código (gabarito PHP 5.6). Detalh
 
 - **Já quebrado no 7.4** (`split`, `ereg*`, `mysql_*`, `mcrypt_*` não existem no 7.4, **verificado**): o código que
   ainda os usa quebra **na referência também**. Na regressão aparece como erro igual dos dois lados
-  (INCONCLUSIVO), não como DIVERGE. Corrigir é conserto de bug antigo; faça mesmo assim (comportamento novo =
-  confira com o usuário).
+  (INCONCLUSIVO), não como DIVERGE. Pela regra do grupo ("funciona igual ao 7.4" / "só atualizar"), **registre e
+  avise o dono da área**; corrigir é decisão do grupo, não da migração.
 - **Depreciado no 7.4 e fatal no 8.0** (o 7.4 avisa e segue; o 8.5 para): `parse_str` com 1 argumento, construtor
   PHP 4, `each`, `create_function`, `money_format`, `get_magic_quotes_*`, `$str{0}`, ternário aninhado sem
   parênteses, `implode($array, $sep)`, `array_key_exists` em objeto, `mktime()` sem argumentos. **Estes viram
   DIVERGE** na bateria 7.4 × 8.5. São a maior parte do trabalho.
-- **A base 7.4 já veio com boa parte corrigida**: na varredura de 17/11/2026 há só ~256 construtores PHP 4 (eram
-  ~600 classes na base 5.6), mas o `parse_str` de 1 argumento continua em milhares de telas. Números atuais: seção 7.
+- **A base 7.4 já veio com boa parte corrigida**: o grupo mediu 152 classes com construtor antigo (eram ~600 na
+  base 5.6), mas o `parse_str` de 1 argumento continua em milhares de telas. Números: "Medidas do grupo" e seção 7.
 
 ## 2. PHP 8.0 (o grosso das quebras)
 
@@ -45,10 +94,12 @@ A suíte já mediu uma migração deste mesmo código (gabarito PHP 5.6). Detalh
 | Construtor PHP 4 (`function cl_x()` na classe `cl_x`) | não é mais chamado **(verificado: `ok=0` no 8.5, `ok=1` no 7.4)** → propriedades nulas, `Call to a member function label() on null` | `construtor_php4` | renomear para `__construct`; `parent::cl_x()` → `parent::__construct()` |
 | `each()`, `create_function()`, `money_format()`, `get_magic_quotes_*()`, `is_real()`, `fgetss()`, `hebrevc()`, `restore_include_path()`, `__autoload()` | `Call to undefined function` **(verificado)** | `each`, `create_function`, `removidas_php8` | `foreach`; closure; `NumberFormatter`/`number_format`; remover magic quotes; `is_float`; `strip_tags(fgets())`; `spl_autoload_register` |
 | `$str{0}` | **erro de compilação** (`ParseError`, verificado): o arquivo inteiro para | `chaves_offset_string` | `$str[0]` |
-| Ternário aninhado sem parênteses `a ? b : c ? d : e` | **erro de compilação** (o 7.4 só avisava) | — (use `validar_arquivo_php`, o `php -l` do 8.5 acusa) | parênteses explícitos, mantendo a associatividade do 7.4: `(a ? b : c) ? d : e` |
+| `(real)` | **erro de compilação** | `cast_real` | `(float)` |
+| `pg_lo_export($oid, $arq, $conn)` (conexão no fim) | erro de tipo; o arquivo não é exportado | `pg_lo_export_ordem_antiga` | conexão primeiro: `pg_lo_export($conn, $oid, $arq)` |
+| Ternário aninhado sem parênteses `a ? b : c ? d : e` | **erro de compilação** (o 7.4 só avisava) | `ternario_encadeado` (heurística ruidosa; o `php -l` do 8.5 via `validar_arquivo_php` é quem decide) | parênteses explícitos, mantendo a associatividade do 7.4: `(a ? b : c) ? d : e` |
 | `count(null)` / `sizeof` de não contável | `TypeError` **(verificado)** (7.4: warning e seguia) | `count_null` (baixa confiança: acha todos os `count($x)`) | `is_countable($x) ? count($x) : 0` ou `count($x ?? [])` só onde pode ser null |
 | `pg_*` recebendo `false` (consulta que falhou) | `TypeError: pg_numrows(): Argument #1 ($result) must be of type PgSql\Result, false given` **(verificado)** | `pg_resultado_false` (só o caso aninhado `pg_numrows(db_query(...))`) | guardar o resultado e testar `=== false` antes; decisão de negócio sobre a mensagem |
-| Comparação número × string | `0 == ""` e `0 == "abc"` passam a ser **false** (eram true) **(verificado)** | — (não dá para achar por regex) | revisar `==` entre número e texto em regras de negócio; a regressão é a rede de proteção |
+| Comparação número × string | `0 == ""` e `0 == "abc"` passam a ser **false** (eram true) **(verificado)** | `comparacao_vazio` para `== ""` (o resto não dá para achar por regex) | regra Rector do grupo `GuardaComparacaoLiteralRector`, em commit separado; prove com `escrita.php` (o caminho de escrita das classes de dados não é exercitado por GET) |
 | Aritmética com texto não numérico | `"abc" + 1` → `TypeError: Unsupported operand types: string + int` **(verificado)**; `"10abc" + 1` só avisa | — | converter/validar a entrada (`(int)`, `is_numeric`); em biblioteca (Agata: acumulador não inicializado) corrigir 1 vez na origem |
 | `implode($array, ',')` (ordem invertida) | `TypeError` **(verificado)** | regex livre: `implode\(\s*\$\w+\s*,\s*['"]` | `implode(',', $array)` |
 | `array_key_exists($k, $objeto)` | `TypeError` **(verificado)** | regex livre | `property_exists`/`isset` |
@@ -85,36 +136,65 @@ A suíte já mediu uma migração deste mesmo código (gabarito PHP 5.6). Detalh
 > se o `display_errors` do alvo mostrar o aviso na página, vira DIVERGE. A paridade de ini está em
 > `regressao/lab/php85/paridade-74.ini`.
 
-## 5. Laravel 8 → 12 (suba uma major por vez)
+## 5. Laravel 8 → 13 (frente do grupo Laravel)
 
-Faça **9 → 10 → 11 → 12**, lendo o guia de upgrade oficial de cada uma, rodando a bateria `laravel` (golden master
-gravado no Laravel 8) a cada passo. Depois de cada `composer update`, rode `analisar_composer`.
+**Estratégia do grupo:** o Laravel 13 exige PHP 8.3+ e não roda no 7.4. O **7.4 fica com o Laravel 8 do PR,
+intacto**, e o **8.5 ganha bibliotecas próprias** (um composer só dele, com Laravel 13 e Passport 13): a referência
+nunca muda e os dois são comparados lado a lado. Os degraus 9, 10 e 11 não ajudam (nenhum tem suporte oficial no
+8.5). `composer.json`, `composer.lock` e `vendor/` são do grupo Laravel: ninguém mexe sem combinar.
 
-| Versão | Mudança | Como achar | Correção |
+### O que muda do Laravel 8 ao 13 (contado pelo grupo na nova base)
+
+| Assunto | Tamanho | O que muda | Padrão MCP |
 |---|---|---|---|
-| 9 | PHP mínimo 8.0; Symfony 6; **Flysystem 3** (`Storage::put` etc. não lançam exceção por padrão; métodos do adapter mudaram) | `Storage::`, `getAdapter(`, `getDriver(` | testar upload/download; `'throw' => true` no disco se o código dependia de exceção |
-| 9 | SwiftMailer → Symfony Mailer | `Swift_`, `->withSwiftMessage` | `->withSymfonyMessage` |
-| 9 | `dispatchNow` removido | `laravel_dispatch_now` | `dispatchSync` |
-| 9 | `fideloper/proxy` e `fruitcake/laravel-cors` embutidos | `analisar_composer` | middleware nativo `TrustProxies`/`HandleCors` |
-| 10 | PHP mínimo 8.1; `$dates` removido | `laravel_dates_property` | `$casts` com `datetime` |
-| 10 | `Bus::dispatchNow`, `Redirect::home()` e outros métodos depreciados removidos | guia oficial | — |
-| 11 | PHP mínimo 8.2; **Doctrine DBAL removido**; `->change()` em migration exige repetir todos os modificadores | `doctrine_dbal` | `Schema::getColumns()`/`getIndexes()`; migration com a definição completa |
-| 11 | Carbon 3 suportado; estrutura enxuta opcional (manter `app/Http/Kernel.php` é permitido) | — | não reestruture a aplicação na mesma tarefa |
-| 12 | **Carbon 3 obrigatório**: `diffIn*` devolve `float` e **com sinal** | `carbon_diff_in` | `(int) abs($a->diffInDays($b))` onde o código esperava inteiro positivo |
-| 12 | Symfony 7.x por baixo | `request_get` (baixa confiança) | `$request->input()`/`query()` |
-| todas | helpers globais `array_*`/`str_*` (fora do framework desde o 6) | `laravel_helpers_globais` | `Arr::`/`Str::` |
-| Passport | 10 → 11 removeu `Passport::routes()`; majors seguintes mudam tabelas/hashing de segredos | `passport_routes` | ler o UPGRADE.md do Passport a cada major; a bateria `laravel` cobre o fluxo de token (`casos/auth.yml`) |
+| Inicialização e configuração | esqueleto 5.4 mantido | `bootstrap/app.php`, `Kernel`, `Handler`, providers e `configuration/` seguem a estrutura antiga (o 11+ aceita) | — |
+| Passport 13 e login | `/v4/login` + tabelas `oauth_*` | login por senha precisa ser ativado (`enablePasswordGrant()`); o model de usuário precisa de `OAuthenticatable`; `Passport::ignoreRoutes()`; ids inteiros dos clientes | `passport_routes` |
+| Datas | 21 models com `$dates`; 256 usos do Carbon; 242 pontos que geram JSON | `$dates` sai no 10; Carbon 2 → 3 (`diffIn*` com sinal e float) | `laravel_dates_property` (`dates_model`), `carbon_diff_in` |
+| Consultas | 302 usos de `DB::raw` | no 10 a expressão não vira texto sozinha | `db_raw` |
+| Validação | 82 pontos com `validated()`/`validate()` | chaves sem regra deixam de voltar | `validated` |
+| E-mail | SwiftMailer | trocado pelo Symfony Mailer no 9 | — |
+| Arquivos | 3 arquivos de configuração | Flysystem 3; raiz padrão do disco local muda no 12 | — |
+| Rotas | 1.300 rotas | ordem de precedência no 12 | — |
+| Documentos | mPDF, dompdf, PhpSpreadsheet, PHPWord | versões novas; conferir PDF, planilha e Word contra o 7.4 | — |
+| Helpers globais `array_*`/`str_*` | — | fora do framework desde o 6 | `laravel_helpers_globais` |
+| Doctrine DBAL | — | removido no 11; `->change()` exige a definição completa | `doctrine_dbal` |
+
+No total o grupo achou **134 itens** dos guias oficiais em uso no código.
+
+### Bibliotecas que travam o PHP 8.5 (composer.lock do PR)
+
+- **10 pacotes excluem o 8.5**: `lcobucci/jwt` 3.4, `dompdf` 0.8.6, `mpdf` 8.2.4, `laminas-escaper`,
+  `htmlpurifier`, `nette/schema`, `nette/utils`, `bacon-qr-code`, `qrcode-detector-decoder` e `faker` (dev);
+  `phpspreadsheet ^1.08` resolve para 1.30.x, que declara `<8.5`. A maioria sai ao atualizar o pacote que a puxa
+  (`analisar_composer` lista o que o lock declara).
+- **Sobram 2 bloqueios** com o Laravel novo nas versões liberadas (testado com Composer e PHP 8.5.12): `dbseller/sdk-api-pix-bb` 2.0.0
+  (exige Guzzle 7.5.0 exato; solução medida: ajuste mínimo na instalação, só no 8.5, provado contra dublê) e
+  `proner/phppimaco` 1.4.5 (puxa `endroid/qr-code ^2.5` e `bacon-qr-code` 1.0.3; solução medida mantém a etiqueta
+  com o mesmo tamanho impresso).
+
+### Defeitos que o Laravel 8 do PR JÁ tem (também no 7.4): registrar, não corrigir
+
+| Defeito | Onde | Padrão MCP |
+|---|---|---|
+| `Cache::put` conta em **segundos** desde o 5.8 | `AssinadorAPI.php:177` e `EmissaoContraChequeJob.php:124` (provavelmente `LicitaconObrasClient.php:47`) guardavam 5 e 10 minutos e agora guardam 5 e 10 segundos | `cache_put_ttl` |
+| Helpers removidos sem `laravel/helpers` | `array_pluck` (`ComissaoController.php:75`, `edu4_cancelaprogressao001.php:96`), `str_random` (`ModelFactory.php:22`) | `array_pluck`, `str_random` |
+| `env()` fora de `configuration/` | 82 usos em 33 arquivos: com a configuração em cache devolvem `null` | `env_fora_config` |
+
+Estão na referência: a regra manda **registrar e avisar quem cuida da área**; corrigir é decisão do grupo (replicar
+o defeito no 8.5 ou corrigir).
 
 ## 6. Como verificar uma correção (sempre)
 
-1. `validar_arquivo_php(caminho, versao="ambas")` — **até a virada o mesmo código roda no 7.4 e no 8.5**: a
-   correção precisa compilar e funcionar nos dois (nada de sintaxe só do PHP 8 em `ecidade/`).
-2. `validar_arquivo_php(caminho, ferramentas=["phpstan"], versao="alvo")` — o PHPStan no 8.5 já acusa, por exemplo,
+1. **Antes de mexer**, prove a diferença: `validar_arquivo_php(caminho, versao="ambas")` e a comparação 7.4 × 8.5
+   da tela/classe. Se o 8.5 já se comporta como o 7.4, não mexa.
+2. Depois: de novo `validar_arquivo_php(versao="ambas")` — o mesmo código legado roda no 7.4 e no 8.5: a correção
+   precisa compilar e funcionar nos dois (nada de sintaxe só do PHP 8 em arquivo que o 7.4 usa).
+3. `validar_arquivo_php(caminho, ferramentas=["phpstan"], versao="alvo")` — o PHPStan no 8.5 já acusa, por exemplo,
    `Function parse_str invoked with 1 parameter, 2 required` **(verificado)**.
-3. `rodar_regressao` no recorte da tela/rota e `ler_resultado_regressao`. IDENTICO = mesma resposta que o 7.4.
+4. `rodar_regressao` no recorte da tela/rota e `ler_resultado_regressao`. IDENTICO = mesma resposta que o 7.4.
    INCONCLUSIVO/ERRO_AMBIENTE não aprovam nada.
 
-## 7. Quanto ainda existe na base 7.4 (varredura estática de `ecidade/`, 17/11/2026)
+## 7. Quanto ainda existe na base 7.4 (varredura estática do MCP em `ecidade/`, 17 e 18/11/2026)
 
 Gerado com o catálogo do MCP (`buscar_codigo_legado`); conte de novo com `padroes_ja_corrigidos(contar_em="ecidade")`.
 Número de ocorrências é teto (comentários e strings também casam).
@@ -122,7 +202,7 @@ Número de ocorrências é teto (comentários e strings também casam).
 | Padrão | Ocorrências | Arquivos | Efeito no 8.5 |
 |---|---:|---:|---|
 | `parse_str_1_arg` | 7.645 | 7.560 | **fatal** (tela 500) |
-| `construtor_php4` | 256 | 205 | **comportamento** (construtor não roda) |
+| `construtor_php4` | 253 | 202 | **silencioso** (construtor não roda); classes com `namespace` ficam de fora (no 7.4 já não eram construtor); só `.php`: 150 arquivos, o grupo mediu 143 |
 | `split` | 368 | 86 | já quebrado no 7.4 |
 | `each` | 85 | 28 | **fatal** |
 | `ereg` | 23 | 7 | já quebrado no 7.4 |
@@ -144,6 +224,16 @@ Número de ocorrências é teto (comentários e strings também casam).
 | `laravel_helpers_globais` | 2 | 2 | Laravel |
 | `laravel_dates_property` | 21 | 21 | Laravel 10 |
 | `passport_routes` | 1 | 1 | Passport 11 |
-| `carbon_diff_in` | 1 | 1 | Laravel 12 (Carbon 3) |
-| `request_get` (ruidoso) | 920 | 147 | Symfony 7 (confira) |
+| `carbon_diff_in` | 1 | 1 | Laravel 13 (Carbon 3) |
+| `request_get` (ruidoso) | 920 | 147 | Symfony do Laravel 13 (confira) |
 | `laravel_dispatch_now`, `doctrine_dbal` | 0 | 0 | — |
+| `cast_real` (18/11) | 4 | 1 | **compilação** |
+| `ternario_encadeado` (ruidoso, 18/11) | 23 | 9 | **compilação** (o grupo mediu 3 arquivos pelo `php -l`) |
+| `pg_lo_export_ordem_antiga` (18/11) | 15 | 15 | **fatal** |
+| `get_magic_quotes` (18/11) | 9 | 4 | **fatal** |
+| `comparacao_vazio` (ruidoso, 18/11) | 57.682 | 5.356 | **silencioso** (o grupo conta só `$this->x == ""`: 36.729 / 4.054) |
+| `db_raw` (18/11) | 344 | 87 | Laravel 10 |
+| `validated` (18/11, só `app/` `routes/` `database/` `resources/` `bootstrap/`) | 82 | 37 | Laravel (o grupo mediu os mesmos 82) |
+| `env_fora_config` (18/11) | 84 | 33 | defeito já no 7.4 |
+| `cache_put_ttl` (18/11) | 6 | 6 | defeito já no 7.4 |
+| `array_pluck` / `str_random` (18/11) | 1 / 1 | 1 / 1 | defeito já no 7.4 |

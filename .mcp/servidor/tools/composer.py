@@ -15,7 +15,7 @@ from servidor.seguranca import ErroFerramenta, decodificar, relativo, resolver_c
 
 ALVO_PHP = (8, 5, 0)
 
-# Medido pelo grupo (guia 7.4 -> 8.5, 18/11/2026, Composer com PHP 8.5.12): com Laravel 12/13 e as versoes
+# Medido pelo grupo (guia 7.4 -> 8.5, 18/11/2026, Composer com PHP 8.5.12): com o Laravel novo e as versoes
 # liberadas sobram 2 bloqueios, cada um com solucao ja medida.
 BLOQUEIOS_CONHECIDOS: dict[str, str] = {
     "dbseller/sdk-api-pix-bb": "2.0.0 exige o Guzzle 7.5.0 exato. Solucao medida: ajuste minimo aplicado na "

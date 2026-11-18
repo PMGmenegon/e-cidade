@@ -139,10 +139,12 @@ CATALOGO: tuple[Padrao, ...] = (
         "split", "split() (extensao ereg)", "php",
         "REMOVIDO no 7.0 (ja quebra na referencia 7.4: `Call to undefined function split()`). 2a camada escondida "
         "em ~190 telas e nos 5 balancetes",
-        "Separador literal (\"-\", \"#\", \",\", \"/\"): `explode`. Separador que e regex (\"\\?\", \"\\|\", "
-        "classes []): `preg_split` com delimitador. Mantenha o limite (3o argumento) se houver.",
-        "$partes = split(\"-\", $db_selinstit);", "$partes = explode(\"-\", $db_selinstit);",
-        "semi", "alta", 30, regex=FN + r"split\s*\(", filtro=("split",),
+        "JA QUEBRA NA REFERENCIA 7.4: pela regra do grupo (funciona igual ao 7.4 / so atualizar) registre e avise o "
+        "dono; nao corrija na migracao sem decisao do grupo. A base-php84 cobria com funcao de compatibilidade: NAO "
+        "copie so para um lado (o guia: 'nao, se a mesma funcao estiver no 7.4 e no 8.5'). Se o grupo decidir "
+        "corrigir: separador literal -> `explode`; separador regex -> `preg_split`; mantenha o limite.",
+        "$partes = split(\"-\", $db_selinstit);", "(registrar; se o grupo decidir: explode(\"-\", $db_selinstit))",
+        "nao", "alta", 30, regex=FN + r"split\s*\(", filtro=("split",),
     ),
     Padrao(
         "each", "each()", "php",
@@ -155,9 +157,10 @@ CATALOGO: tuple[Padrao, ...] = (
     Padrao(
         "ereg", "ereg*/eregi*/spliti/sql_regcase", "php",
         "REMOVIDOS no 7.0 (ja quebram na referencia 7.4)",
-        "Use preg_* com delimitador e o modificador i quando era eregi; escape o delimitador dentro do padrao.",
-        "if (ereg('^[0-9]+$', $x)) { ... }", "if (preg_match('/^[0-9]+$/', $x)) { ... }",
-        "semi", "alta", 32, regex=FN + r"(?:eregi?_replace|eregi?|spliti|sql_regcase)\s*\(",
+        "JA QUEBRA NA REFERENCIA 7.4: registre e avise o dono (regra 'so atualizar'). Se o grupo decidir corrigir: "
+        "preg_* com delimitador e o modificador i quando era eregi.",
+        "if (ereg('^[0-9]+$', $x)) { ... }", "(registrar; se o grupo decidir: preg_match('/^[0-9]+$/', $x))",
+        "nao", "alta", 32, regex=FN + r"(?:eregi?_replace|eregi?|spliti|sql_regcase)\s*\(",
         filtro=("ereg", "spliti", "sql_regcase"),
     ),
     Padrao(

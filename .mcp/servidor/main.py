@@ -286,7 +286,7 @@ def criar_servidor() -> MCPServer:
 
     @_tool(mcp, name="padroes_ja_corrigidos", annotations=LEITURA,
               description="Para cada padrao: a forma canonica de corrigir, os arquivos registrados como concluidos e "
-                          "os commits `migra(<padrao>): ...`; com contar_em conta o que ainda resta. Ex.: "
+                          "os commits com 'Padrao-MCP: <padrao>'; com contar_em conta o que ainda resta. Ex.: "
                           "padroes_ja_corrigidos(contar_em='ecidade/classes')")
     def t_padroes(contar_em: Annotated[str | None, Field(max_length=1024)] = None) -> Resposta:
         return executar("padroes_ja_corrigidos", coordenacao.padroes_ja_corrigidos, contar_em=contar_em)
