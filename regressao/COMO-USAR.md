@@ -90,6 +90,37 @@ no 8.5, 2 cadastros que o 8.5 não grava). Laravel 992 casos contra a própria r
 0 DIVERGE (a medição é estável). Fluxos: 32 IDENTICO (o proxy ainda manda tudo ao 7.4). Ou seja: o vermelho vem todo do
 PHP 8.5, que ainda não foi adaptado.
 
+### Exemplo: a rodada "antes" completa (18/11/2026, 5 h 26 min)
+
+`regressao/bin/regressao rodada-completa --alvo-laravel http://localhost:8074` (`~/rodadas/antes74`). O começo do
+`resumo.md`:
+
+```text
+Resultado: ERRO (saida 2): a rodada nao pode ser concluida (ERRO_AMBIENTE ou sub-rodada nao comparavel); ...
+- ERRO_AMBIENTE php:tela:rec2_espelhoponto002.php: timeout: ref=000  85=500 (apos 1 retentativa)
+  ... (11 telas)
+| bateria | casos | IDENTICO | DIVERGE | INCONCLUSIVO | ERRO_AMBIENTE | novas | conhecidas | saida | tempo (s) |
+| php     | 28783 | 18958    | 9205    | 609          | 11            | 9205  | 0          | 2     | 18273.4   |
+| laravel | 992   | 719      | 0       | 273          | 0             | 0     | 0          | 0     | 988.0     |
+| fluxos  | 32    | 31       | 1       | 0            | 0             | 1     | 0          | 1     | 293.1     |
+```
+
+Como ler:
+
+- **ERRO (saída 2)**, não VERMELHO: 11 telas estouraram 60 s **na referência 7.4** (importações do censo, espelho de
+  ponto). Sem gabarito nada se conclui sobre elas; refeitas num complemento (`--prefixo` só com elas e
+  `--pular sintaxe --pular classes`), 10 estouraram de novo e 1 virou DIVERGE. Elas continuam ERRO_AMBIENTE: não se
+  "aprova" uma tela porque o 7.4 é lento.
+- **PHP 9.205 DIVERGE** é o retrato da base 7.4 no 8.5: 3 causas mecânicas explicam 90% das telas (`parse_str` de
+  1 argumento, `fpdf151/fpdf.php:614` e `libs/JSON.php:188`). A causa de cada uma está em
+  [`baseline/triagem-divergencias.md`](baseline/triagem-divergencias.md); o que fazer primeiro, em
+  [`baseline/decisoes-migracao.md`](baseline/decisoes-migracao.md).
+- **Laravel 719/0/273** com `ALVO LARAVEL = REFERENCIA` no aviso: prova que a medição é estável, não mede migração.
+- **Fluxos 1 DIVERGE**: um pedido de ajuda que a gravação registrou e não aconteceu (proxy → 7.4 nos dois). Repetido
+  2 vezes, deu IDENTICO: é instabilidade da medição. Registre assim; não apague nem "aprove".
+- Juntar a completa e os complementos num painel (`~/rodadas/antes74-consolidado.md`) é leitura, não aprovação:
+  o veredito do complemento só substitui o do mesmo caso.
+
 ## Os quatro vereditos (com exemplos reais deste projeto)
 
 | Veredito | Quer dizer | Exemplo real (base 7.4 × 8.5, novembro/2026) |
@@ -130,7 +161,8 @@ vermelho sem ser verificado, **não** é correção). Para valer a comparação,
 
 ## Perguntas frequentes
 
-**A rodada demora horas. Preciso esperar?** Não: os atalhos rodam em segundo plano. `ver-ultimo` mostra o andamento.
+**A rodada demora horas. Preciso esperar?** Não: os atalhos rodam em segundo plano (a completa levou 5 h 26 min em
+18/11/2026: PHP 5 h 05, Laravel 16 min, fluxos 5 min). `ver-ultimo` mostra o andamento.
 Para o dia a dia use `--prefixo`/`--area` (só as telas da sua área) ou a `rodada-pequena`.
 
 **Por que o banco é recriado em cada bateria?** Para todo mundo partir do mesmo estado: um cadastro de teste deixa
@@ -199,7 +231,10 @@ Gravar ou regravar uma linha de base exige `--confirmo-sobrescrever` e é sempre
 ## Pelo MCP (para quem usa IA)
 
 O servidor MCP do repositório (`.mcp/`) tem as tools `rodar_regressao` (dispara uma rodada em segundo plano, nunca
-grava linha de base) e `ler_resultado_regressao`, e este guia como resource (`ecidade://regressao/como-usar`).
+grava linha de base), `ler_resultado_regressao` e `ler_triagem` (a triagem e as decisões da rodada "antes", sempre com
+o resumo do topo), e este guia como resource (`ecidade://regressao/como-usar`). Testado ao vivo em 18/11/2026: uma
+rodada `rodar_regressao(bateria="php", prefixo=["^arr1_grupotaxa001\\.php$"])` levou 3 min 47 s e
+`ler_resultado_regressao` devolveu 2 IDENTICO e 2 DIVERGE (a classe e o cadastro com `0 == ""`).
 Instalação em 3 passos: [`.mcp/README.md`](../.mcp/README.md). O MCP só lê rodadas de dentro do repositório (as que
 ele mesmo dispara); as do atalho `regressao/bin/regressao` ficam em `~/rodadas`, fora dele. O MCP não enxerga uma
 rodada disparada à mão: não dispare as duas ao mesmo tempo.
