@@ -13,10 +13,19 @@ MAX_MENSAGENS = 100
 
 
 def _phpstan(stdout: str) -> tuple[bool | None, list[dict[str, Any]]]:
-    try:
-        dados = json.loads(stdout[stdout.find("{"):]) if "{" in stdout else None
-    except json.JSONDecodeError:
-        dados = None
+    dados = None
+    for linha in reversed(stdout.splitlines()):  # o JSON e a ultima linha que comeca com '{'
+        if linha.lstrip().startswith("{"):
+            try:
+                dados = json.loads(linha)
+            except json.JSONDecodeError:
+                dados = None
+            break
+    if dados is None and "{" in stdout:
+        try:
+            dados = json.loads(stdout[stdout.find("{"):])
+        except json.JSONDecodeError:
+            dados = None
     if not isinstance(dados, dict) or "totals" not in dados:
         return None, []
     msgs = [{"linha": m.get("line"), "mensagem": m.get("message", "")}
@@ -47,7 +56,9 @@ def _um(docker: DockerExec, conteiner: str, ferramenta: str, arquivo: str, nivel
     if ferramenta == "phpstan":
         ok, msgs = _phpstan(r.stdout)
         if ok is None:
-            item.update(ok=False, saida=saida, aviso="saida do PHPStan nao e JSON (erro de execucao?)")
+            aviso = ("o phpstan.neon nao define nivel: passe nivel_phpstan (0 a 9)" if "No rules detected" in saida
+                     else "saida do PHPStan nao e JSON (erro de execucao?)")
+            item.update(ok=False, saida=saida, aviso=aviso)
         else:
             item.update(ok=ok, mensagens=msgs)
     else:

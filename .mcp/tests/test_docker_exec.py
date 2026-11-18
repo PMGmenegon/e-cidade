@@ -75,8 +75,20 @@ def test_conteiner_fora_da_allowlist(config):
     assert e.value.codigo == "conteiner_nao_permitido"
 
 
+def test_todos_os_comandos_das_ferramentas_passam_na_allowlist(config):
+    from servidor.docker_exec import FERRAMENTAS, _validar_argv
+    for f in FERRAMENTAS:
+        _validar_argv(comando_ferramenta(f, "/var/www/html/a.php", nivel=2), "/var/www/html")
+
+
 @pytest.mark.parametrize("argv", [["sh", "-c", "rm -rf /"], ["bash"], ["php", "-r", "system('id');"],
-                                  ["php", "a\x00b"], []])
+                                  ["php", "a\x00b"], [],
+                                  ["php", "-l", "/etc/passwd"], ["php", "-l", "/var/www/html/../../etc/passwd"],
+                                  ["php", "-d", "auto_prepend_file=/tmp/x", "-d", "display_errors=stderr",
+                                   "vendor/bin/phpstan", "analyse", "/var/www/html/a.php"],
+                                  ["php", "-d", "memory_limit=1G", "-d", "display_errors=stderr",
+                                   "vendor/bin/phpstan", "analyse", "--configuration=/tmp/x.neon",
+                                   "/var/www/html/a.php"]])
 def test_binario_ou_argumento_fora_da_allowlist(config, argv):
     with pytest.raises(ErroFerramenta) as e:
         DockerExec(config, runner=Runner({"inspect": (0, "true", "")})).executar(
@@ -108,7 +120,8 @@ def test_caminho_no_conteiner(config):
 def test_comando_ferramenta():
     assert comando_ferramenta("lint", "/var/www/html/a.php") == ["php", "-l", "/var/www/html/a.php"]
     stan = comando_ferramenta("phpstan", "/var/www/html/a.php", nivel=5)
-    assert stan[:3] == ["php", "-d", "memory_limit=1G"] and "--level=5" in stan and "--error-format=json" in stan
+    assert stan[:5] == ["php", "-d", "memory_limit=1G", "-d", "display_errors=stderr"]
+    assert "--level=5" in stan and "--error-format=json" in stan
     assert "--level=5" not in comando_ferramenta("phpstan", "/var/www/html/a.php")
     assert comando_ferramenta("pint", "/var/www/html/a.php") == ["vendor/bin/pint", "--test", "/var/www/html/a.php"]
     with pytest.raises(ErroFerramenta):

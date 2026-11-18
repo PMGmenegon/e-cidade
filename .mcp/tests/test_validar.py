@@ -25,7 +25,7 @@ class FakeDocker:
             return subprocess.CompletedProcess(argv, 1, "", f"Error: No such object: {nome}")
         conteiner = argv[4]
         cmd = argv[9:]
-        chave = (conteiner, cmd[0] if cmd[0] != "php" or cmd[1] != "-d" else "phpstan")
+        chave = (conteiner, "phpstan" if "vendor/bin/phpstan" in cmd and cmd[0] == "php" else cmd[0])
         if cmd[0] == "test":
             chave = (conteiner, "test:" + cmd[-1])
         cod, out, err = self.respostas.get(chave, (0, "No syntax errors detected", ""))
@@ -77,6 +77,22 @@ def test_phpstan_json(config):
     assert item["ok"] is False and item["mensagens"][0] == {"linha": 2, "mensagem": "Function split not found."}
     exec_ = [c for c in fake.chamadas if c[1] == "exec" and "analyse" in c][0]
     assert "--level=3" in exec_ and "--error-format=json" in exec_
+
+
+def test_phpstan_com_avisos_antes_do_json(config):
+    saida = ("Deprecated: Non-canonical cast (double) is deprecated in phar:///x on line 202\n"
+             "Deprecated: algo {com chaves} on line 3\n"
+             + json.dumps({"totals": {"errors": 0, "file_errors": 0}, "files": {}, "errors": []}) + "\n")
+    fake = FakeDocker(respostas={("ecidade74_php85", "phpstan"): (0, saida, "")})
+    item = roda(config, fake, caminho="ecidade/tela001.php", ferramentas=["phpstan"], versao="alvo")["resultados"][0]
+    assert item["ok"] is True and item["mensagens"] == []
+
+
+def test_phpstan_sem_nivel_explica(config):
+    fake = FakeDocker(respostas={("ecidade74_php85", "phpstan"): (1, "", "Note: Using configuration file x\n"
+                                                                            "No rules detected\n")})
+    item = roda(config, fake, caminho="ecidade/tela001.php", ferramentas=["phpstan"], versao="alvo")["resultados"][0]
+    assert item["ok"] is False and "nivel_phpstan" in item["aviso"]
 
 
 def test_phpstan_saida_nao_json(config):

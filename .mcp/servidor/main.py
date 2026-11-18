@@ -113,7 +113,8 @@ def criar_servidor() -> MCPServer:
         ferramentas: Annotated[list[Literal["lint", "phpstan", "pint", "phpcs"]],
                                Field(min_length=1, max_length=4)] = ["lint"],  # noqa: B006
         versao: Literal["ambas", "alvo", "referencia"] = "ambas",
-        nivel_phpstan: Annotated[int | None, Field(ge=0, le=9, description="padrao: o do phpstan.neon")] = None,
+        nivel_phpstan: Annotated[int, Field(ge=0, le=9, description="nivel do PHPStan (o phpstan.neon do projeto "
+                                                                    "nao define nivel)")] = 0,
     ) -> Resposta:
         return executar("validar_arquivo_php", validar_arquivo_php, caminho=caminho, ferramentas=list(ferramentas),
                         versao=versao, nivel_phpstan=nivel_phpstan)
