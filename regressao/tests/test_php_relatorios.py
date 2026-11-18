@@ -137,10 +137,11 @@ def test_catalogo_semeado_carrega():
     casos = carrega_catalogo_relatorios(relatorios.CATALOGO)
     assert all(c.tipo in ("html", "pdf", "xls", "doc") for c in casos)
     assert len(casos) == 42
-    # 17 anteriores + cem2_renovacoes (modelo em branco, evidencia fraca) + 22 novos (11 financeiro, 11 tributario)
-    assert sum(c.verificado for c in casos) == 40
-    assert {c.tela for c in casos if not c.verificado} == {"func_cgm.php"} | {"db_download.php"}
-    assert [c.query for c in casos if not c.verificado and c.tela == "db_download.php"] == ["arquivo=tmp/balrec.csv"]
+    # reverificado ao vivo na referencia 7.4 (2026-11-18): os 3 db_download.php dao 302 (o CSV nao existe em tmp/ da base
+    # 7.4) e orc2_despsecretaria002 da 500 na propria referencia; func_cgm so devolve a pagina de pesquisa
+    assert sum(c.verificado for c in casos) == 37
+    assert {c.tela for c in casos if not c.verificado} == {"func_cgm.php", "db_download.php", "orc2_despsecretaria002.php"}
+    assert len([c for c in casos if not c.verificado and c.tela == "db_download.php"]) == 3
     assert {c.tela for c in casos if c.verificado} >= ACHADOS
 
 
