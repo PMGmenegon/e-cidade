@@ -1,3 +1,13 @@
+# Ambiente `e74` (base PHP 7.4)
+
+`docker-compose.e74.yml` (projeto `-p e74`) sobe a referência PHP 7.4/Laravel 8 (`ecidade74_php74`, :8074), o PHP 8.5
+(`ecidade74_php85`, :8185, Dockerfile em `php85/` + `php85/paridade-74.ini`), o proxy (`ecidade74_proxy`, :8190,
+`proxy/nginx-e74.conf` + `proxy/map-e74.conf`) e o banco (`ecidade74_database`, sem porta publicada), com rede e
+volumes próprios. Instalação passo a passo: `regressao/README.md`, seção 1.
+
+O laboratório abaixo ainda descreve a pilha antiga (`ecidade_*`, :8087); ele passa para o `e74` (:8187) na
+adaptação da bateria Laravel.
+
 # Laboratório "Laravel 12" (:8087)
 
 `docker-compose.lar12.yml` sobe o container `ecidade_lar12` em **http://localhost:8087**, o alvo padrão da bateria
