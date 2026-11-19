@@ -41,6 +41,11 @@ Variáveis (lidas a cada chamada, em `regressao/nucleo/ambiente.py`): `REGRESSAO
 `REGRESSAO_CONTAINER_REF`, `REGRESSAO_CONTAINER_PHP_NOVO`, `REGRESSAO_CONTAINER_BANCO`, `REGRESSAO_CONTAINER_PROXY`,
 `REGRESSAO_CONTAINER_LARAVEL_NOVO` (padrão `ecidade74_lar12`).
 
+**Trava do banco:** toda bateria recria o banco (`DROP DATABASE ecidade` + `pg_restore`, `regressao/nucleo/banco.py`).
+Ela só faz isso em contêiner do ambiente da regressão: nome com prefixo `ecidade74_` ou label do projeto compose `e74`.
+Com `REGRESSAO_CONTAINER_BANCO` apontando para outro contêiner, a restauração é recusada (ERRO_AMBIENTE) a não ser que
+`REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74=sim` esteja exportada, o que **apaga** o banco desse contêiner.
+
 ## 1. Pré-requisitos
 
 - Docker com Compose v2 e WSL Ubuntu (ou Linux). O ambiente é o projeto Compose **`e74`**, com rede (`e74_ecidade74`),

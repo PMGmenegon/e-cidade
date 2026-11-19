@@ -169,7 +169,8 @@ Para o dia a dia use `--prefixo`/`--area` (só as telas da sua área) ou a `roda
 linhas no banco. Cada bateria restaura o dump (~4 min). Nunca rode duas rodadas ao mesmo tempo.
 
 **A suíte grava no banco de alguém?** Não. O banco é o contêiner `ecidade74_database`, só da regressão, recriado a cada
-bateria. Nenhum serviço externo é chamado.
+bateria; a restauração recusa contêiner de fora do ambiente `e74` (veja "Usar com a pilha do grupo"). Nenhum serviço
+externo é chamado.
 
 **Por que o login do 8.5 não é usado?** O login direto no 8.5 ainda quebra (`abrir.php`, achado da migração). A bateria
 loga no 7.4 e usa a mesma sessão nos dois (as sessões são compartilhadas). Quando o login do 8.5 for corrigido, a
@@ -215,7 +216,9 @@ ambiente isolado `e74`. A pilha da raiz do repositório (a do `CLAUDE.md`/guia d
 Com essas variáveis, `scratchpad/cmp.py` (comparar as telas de um módulo) e `scratchpad/escrita_post.py` (um POST nos
 dois lados) medem a pilha do grupo. **Cuidado:** as baterias (`rodada-*`, `python -m regressao...`) **recriam o banco**
 do contêiner configurado a partir do dump. Contra a pilha da raiz isso apagaria o banco dela: rode as baterias só no
-ambiente `e74`.
+ambiente `e74`. O código trava isso: a restauração só roda em contêiner `ecidade74_*` (ou do projeto compose `e74`); com
+outro, a bateria dá ERRO_AMBIENTE "restauracao recusada". Só `REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74=sim` libera, e aí o
+banco daquele contêiner **é apagado e recriado**.
 
 ## Adicionar um caso
 

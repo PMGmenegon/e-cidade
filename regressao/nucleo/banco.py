@@ -1,4 +1,5 @@
 import hashlib
+import os
 import re
 import subprocess
 from contextlib import contextmanager
@@ -77,8 +78,32 @@ def gera_dump(destino: Path) -> str:
     return sha
 
 
+PREFIXO_E74 = "ecidade74_"
+PROJETO_E74 = "e74"
+CONFIRMA_FORA_DO_E74 = "REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74"
+
+
+def _confere_conteiner_descartavel(nome: str) -> None:
+    """Trava do DROP DATABASE: so o banco do ambiente isolado da regressao (nome ecidade74_* ou label do projeto
+    compose `e74`) e recriado. Qualquer outro conteiner (ex.: o banco da pilha da raiz) exige
+    REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74=sim, porque o banco dele seria APAGADO."""
+    if nome.startswith(PREFIXO_E74) or os.environ.get(CONFIRMA_FORA_DO_E74) == "sim":
+        return
+    try:
+        projeto = _docker(["inspect", "--format", '{{index .Config.Labels "com.docker.compose.project"}}', nome],
+                          TIMEOUT_PSQL).decode("utf-8", errors="replace").strip()
+    except ErroAmbienteBanco as e:
+        raise ErroAmbienteBanco(f"restauracao recusada: nao foi possivel conferir o conteiner {nome} ({e})") from e
+    if projeto != PROJETO_E74:
+        raise ErroAmbienteBanco(
+            f"restauracao recusada: {nome} nao e do ambiente da regressao (projeto compose {projeto or '-'}, sem "
+            f"prefixo {PREFIXO_E74}) e a restauracao faz DROP DATABASE {BASE} nele. Para apagar e recriar o banco "
+            f"desse conteiner mesmo assim, exporte {CONFIRMA_FORA_DO_E74}=sim.")
+
+
 def restaura_dump(dump: Path) -> None:
-    """Recria o banco `ecidade` a partir do dump (gerado com --create).
+    """Recria o banco `ecidade` a partir do dump (gerado com --create). So em conteiner do ambiente `e74`
+    (veja `_confere_conteiner_descartavel`).
 
     Ordem: (1) ALLOW_CONNECTIONS false (tolera banco inexistente, ex.: retry apos
     falha), para o apache/PHP nao reconectar entre o terminate e o DROP (corrida
@@ -89,6 +114,7 @@ def restaura_dump(dump: Path) -> None:
     deixa o banco inutilizavel: o orquestrador deve rejeitar a execucao
     (ERRO_AMBIENTE) e simplesmente repetir a restauracao, que comeca por DROP.
     """
+    _confere_conteiner_descartavel(container())
     _psql(f"DO $$ BEGIN IF EXISTS (select 1 from pg_database where datname='{BASE}') "
           f"THEN ALTER DATABASE {BASE} WITH ALLOW_CONNECTIONS false; END IF; END $$",
           db="postgres")

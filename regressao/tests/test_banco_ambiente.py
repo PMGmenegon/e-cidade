@@ -235,6 +235,7 @@ def test_hash_tabelas_rejeita_nome_invalido(monkeypatch):
 
 
 def test_restaura_dump_recria_banco_e_restaura_com_create(tmp_path, monkeypatch):
+    monkeypatch.delenv("REGRESSAO_CONTAINER_BANCO", raising=False)  # padrao ecidade74_database: sem `inspect`
     chamadas = []
 
     def falso(*a, **k):
@@ -290,6 +291,59 @@ def test_hash_tabelas_rejeita_nomes_invalidos_com_schema(monkeypatch, nome):
     monkeypatch.setattr(banco, "_psql", lambda sql, db="ecidade": "h")
     with pytest.raises(ValueError):
         banco.hash_tabelas([nome])
+
+
+def _restaura_com_docker_falso(monkeypatch, tmp_path, label: str | None):
+    """restaura_dump com o docker falso: `inspect` devolve a label do projeto compose; o resto so registra."""
+    cmds = []
+
+    def falso(cmd, **k):
+        cmds.append(cmd)
+        if cmd[1] == "inspect":
+            return _Res(1, b"", b"Error: No such object") if label is None else _Res(0, (label + "\n").encode())
+        return _Res()
+
+    monkeypatch.setattr(banco.subprocess, "run", falso)
+    dump = tmp_path / "d.dump"
+    dump.write_bytes(b"x")
+    return cmds, dump
+
+
+def test_restaura_dump_recusa_conteiner_fora_do_e74_sem_confirmacao(sem_variaveis, tmp_path):
+    sem_variaveis.delenv("REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74", raising=False)
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "ecidade_database")  # o banco da pilha da raiz
+    cmds, dump = _restaura_com_docker_falso(sem_variaveis, tmp_path, label="raiz")
+    with pytest.raises(banco.ErroAmbienteBanco, match="REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74=sim"):
+        banco.restaura_dump(dump)
+    assert not any("DROP DATABASE" in " ".join(c) for c in cmds)
+    assert not any("pg_restore" in c for c in cmds)
+    # conteiner inexistente tambem e recusado (sem DROP)
+    cmds, dump = _restaura_com_docker_falso(sem_variaveis, tmp_path, label=None)
+    with pytest.raises(banco.ErroAmbienteBanco):
+        banco.restaura_dump(dump)
+    assert not any("DROP DATABASE" in " ".join(c) for c in cmds)
+
+
+def test_restaura_dump_aceita_conteiner_do_projeto_e74_por_label(sem_variaveis, tmp_path):
+    sem_variaveis.delenv("REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74", raising=False)
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "meu_banco")
+    cmds, dump = _restaura_com_docker_falso(sem_variaveis, tmp_path, label="e74")
+    banco.restaura_dump(dump)
+    assert any("DROP DATABASE IF EXISTS ecidade" in " ".join(c) for c in cmds)
+
+
+@pytest.mark.parametrize("valor,aceita", [("sim", True), ("SIM", False), ("1", False), ("", False)])
+def test_restaura_dump_fora_do_e74_so_com_confirmacao_explicita(sem_variaveis, tmp_path, valor, aceita):
+    sem_variaveis.setenv("REGRESSAO_CONTAINER_BANCO", "ecidade_database")
+    sem_variaveis.setenv("REGRESSAO_CONFIRMO_BANCO_FORA_DO_E74", valor)
+    cmds, dump = _restaura_com_docker_falso(sem_variaveis, tmp_path, label="raiz")
+    if aceita:
+        banco.restaura_dump(dump)
+        assert any("pg_restore" in c for c in cmds)
+    else:
+        with pytest.raises(banco.ErroAmbienteBanco):
+            banco.restaura_dump(dump)
+        assert not any("DROP DATABASE" in " ".join(c) for c in cmds)
 
 
 def test_restaura_dump_bloqueio_tolera_banco_inexistente(tmp_path, monkeypatch):
