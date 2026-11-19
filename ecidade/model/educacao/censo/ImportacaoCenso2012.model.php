@@ -36,7 +36,7 @@ class ImportacaoCenso2012 extends importacaoCenso
     /**
      *
      */
-    function __construct($iAnoEscolhido, $iCodigoInepEscola = null, $iCodigoLayout)
+    function __construct($iAnoEscolhido, $iCodigoInepEscola = null, $iCodigoLayout = null)
     {
         parent::__construct($iAnoEscolhido, $iCodigoInepEscola, $iCodigoLayout);
     }
