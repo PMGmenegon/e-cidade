@@ -102,10 +102,10 @@ for ($linha = 1; $linha <= 50; $linha++) {
 
   foreach($aValoresColunasLinhas as $oValor) {
 
-    $aValoresReceita[$linha]["inicial"]    += @$oValor->colunas[1]->o117_valor;
-    $aValoresReceita[$linha]["atualizada"] += @$oValor->colunas[2]->o117_valor;
-    $aValoresReceita[$linha]["bimestre"]   += @$oValor->colunas[3]->o117_valor;
-    $aValoresReceita[$linha]["exercicio"]  += @$oValor->colunas[4]->o117_valor;
+    $aValoresReceita[$linha]["inicial"]    += (float) @$oValor->colunas[1]->o117_valor;
+    $aValoresReceita[$linha]["atualizada"] += (float) @$oValor->colunas[2]->o117_valor;
+    $aValoresReceita[$linha]["bimestre"]   += (float) @$oValor->colunas[3]->o117_valor;
+    $aValoresReceita[$linha]["exercicio"]  += (float) @$oValor->colunas[4]->o117_valor;
   }
   //echo "<pre>";
   //print_r($aValoresColunasLinhas);
@@ -145,23 +145,23 @@ for ($linha = 51; $linha <= 76; $linha++) {
   foreach($aValoresColunasLinhas as $oValor) {
 
     if (($linha >= 55 && $linha <= 59) || ($linha >= 68 && $linha <= 71)) {
-      $aValoresDespesas[$linha]["valor"] = $oValor->colunas[1]->o117_valor;
+      $aValoresDespesas[$linha]["valor"] = (float) $oValor->colunas[1]->o117_valor;
     } else if ($linha == 76) {
 
-      $aValoresDespesas[$linha]["saldo"]     = $oValor->colunas[1]->o117_valor;
-      $aValoresDespesas[$linha]["cancelado"] = $oValor->colunas[2]->o117_valor;
+      $aValoresDespesas[$linha]["saldo"]     = (float) $oValor->colunas[1]->o117_valor;
+      $aValoresDespesas[$linha]["cancelado"] = (float) $oValor->colunas[2]->o117_valor;
 
     } else {
 
-      $aValoresDespesas[$linha]["inicial"]       = $oValor->colunas[1]->o117_valor;
-      $aValoresDespesas[$linha]["atualizada"]    = $oValor->colunas[2]->o117_valor;
-      $aValoresDespesas[$linha]["bimestre"]      = $oValor->colunas[3]->o117_valor;
-      $aValoresDespesas[$linha]["exercicio"]     = $oValor->colunas[4]->o117_valor;
+      $aValoresDespesas[$linha]["inicial"]       = (float) $oValor->colunas[1]->o117_valor;
+      $aValoresDespesas[$linha]["atualizada"]    = (float) $oValor->colunas[2]->o117_valor;
+      $aValoresDespesas[$linha]["bimestre"]      = (float) $oValor->colunas[3]->o117_valor;
+      $aValoresDespesas[$linha]["exercicio"]     = (float) $oValor->colunas[4]->o117_valor;
       /**
        * restos a pagar
        */
       if (isset($oValor->colunas[5])) {
-        $aValoresDespesas[$linha]["inscritas"]     = $oValor->colunas[5]->o117_valor;
+        $aValoresDespesas[$linha]["inscritas"]     = (float) $oValor->colunas[5]->o117_valor;
       }
     }
   }
@@ -674,44 +674,44 @@ for ($col = 1; $col <= 5; $col++){
   $pcol = array(1=>"inicial",2=>"atualizada",3=>"bimestre",4=>"exercicio",5=>"inscritas");
 
   // 12.1 PGTO PROFISSIONAIS - Educacao Infantil
-  $aDespesas[2][$pcol[$col]] += $aValoresDespesas[51][$pcol[$col]];
+  $aDespesas[2][$pcol[$col]] += (float) $aValoresDespesas[51][$pcol[$col]];
   // 12.2 PGTO PROFISSIONAIS - Ensino Fundamental
-  $aDespesas[3][$pcol[$col]] += $aValoresDespesas[52][$pcol[$col]];
+  $aDespesas[3][$pcol[$col]] += (float) $aValoresDespesas[52][$pcol[$col]];
   // 12 - PAGAMENTO PROFISSIONAIS DO MAGISTERIO
   $aDespesas[1][$pcol[$col]] = $aDespesas[2][$pcol[$col]] + $aDespesas[3][$pcol[$col]];
 
   // 13.1 OUTRAS DESPESAS - Educacao Infantil
-  $aDespesas[5][$pcol[$col]] += $aValoresDespesas[53][$pcol[$col]];
+  $aDespesas[5][$pcol[$col]] += (float) $aValoresDespesas[53][$pcol[$col]];
   // 13.2 OUTRAS DESPESAS - Ensino Fundamental
-  $aDespesas[6][$pcol[$col]] += $aValoresDespesas[54][$pcol[$col]];
+  $aDespesas[6][$pcol[$col]] += (float) $aValoresDespesas[54][$pcol[$col]];
 
   // 13 - OUTRAS DESPESAS
   $aDespesas[4][$pcol[$col]] = $aDespesas[5][$pcol[$col]] + $aDespesas[6][$pcol[$col]];
 
   // 17.1 Despesas com Recursos do FUNDEB
-  $aDespesas[8][$pcol[$col]] += $aValoresDespesas[60][$pcol[$col]];
+  $aDespesas[8][$pcol[$col]] += (float) $aValoresDespesas[60][$pcol[$col]];
   // 17.2 Despesas com outros Recursos de Impostos
-  $aDespesas[9][$pcol[$col]] += $aValoresDespesas[61][$pcol[$col]];
+  $aDespesas[9][$pcol[$col]] += (float) $aValoresDespesas[61][$pcol[$col]];
 
   // 17 EDUCACAO INFANTIL
   $aDespesas[7][$pcol[$col]] = $aDespesas[8][$pcol[$col]] + $aDespesas[9][$pcol[$col]];
 
   // 18.1 Despesas com Recursos do FUNDEB
-  $aDespesas[11][$pcol[$col]] += $aValoresDespesas[62][$pcol[$col]];
+  $aDespesas[11][$pcol[$col]] += (float) $aValoresDespesas[62][$pcol[$col]];
   // 18.2 Despesas com outros Recursos de Impostos
-  $aDespesas[12][$pcol[$col]] += $aValoresDespesas[63][$pcol[$col]];
+  $aDespesas[12][$pcol[$col]] += (float) $aValoresDespesas[63][$pcol[$col]];
 
   // 18 ENSINO FUNDAMENTAL
   $aDespesas[10][$pcol[$col]] = $aDespesas[11][$pcol[$col]] + $aDespesas[12][$pcol[$col]];
 
   // 19 ENSINO MEDIO
-  $aDespesas[13][$pcol[$col]] += $aValoresDespesas[64][$pcol[$col]];
+  $aDespesas[13][$pcol[$col]] += (float) $aValoresDespesas[64][$pcol[$col]];
   // 20 ENSINO SUPERIOR
-  $aDespesas[14][$pcol[$col]] += $aValoresDespesas[65][$pcol[$col]];
+  $aDespesas[14][$pcol[$col]] += (float) $aValoresDespesas[65][$pcol[$col]];
   // 21 ENSINO PROFISSIONAL
-  $aDespesas[15][$pcol[$col]] += $aValoresDespesas[66][$pcol[$col]];
+  $aDespesas[15][$pcol[$col]] += (float) $aValoresDespesas[66][$pcol[$col]];
   // 22 OUTRAS
-  $aDespesas[16][$pcol[$col]] += $aValoresDespesas[67][$pcol[$col]];
+  $aDespesas[16][$pcol[$col]] += (float) $aValoresDespesas[67][$pcol[$col]];
 
   // 32 CONTRIBUICAO SOCIAL SALARIO-EDUCACAO
   $aDespesas[17][$pcol[$col]] = $aValoresDespesas[72][$pcol[$col]];
@@ -847,8 +847,8 @@ for($linha = 1; $linha <= 5; $linha++){
   $aValoresColunasLinhas = $oLinhaRelatorio->getValoresSomadosColunas($iPrefeitura, $anousu);
   foreach ($aValoresColunasLinhas as $oValorColuna) {
 
-    $fluxo[$linha]["valor"]        += $oValorColuna->colunas[1]->o117_valor;
-    $fluxo[$linha]["valor_fundef"] += $oValorColuna->colunas[2]->o117_valor;
+    $fluxo[$linha]["valor"]        += (float) $oValorColuna->colunas[1]->o117_valor;
+    $fluxo[$linha]["valor_fundef"] += (float) $oValorColuna->colunas[2]->o117_valor;
 
   }
 }
@@ -911,9 +911,9 @@ $nValorLinha33 = $aValoresDespesas[69]["valor"];
 $nValorLinha34 = $aValoresDespesas[70]["valor"];
 $nValorLinha35 = $aValoresDespesas[71]["valor"];
 
-$nValorLinha37 = $aReceitas[65]["exercicio"]+ $nValorLinha31 + $nValorLinha32+$nValorLinha33+
-                 $nValorLinha34             +$nValorLinha35  +$m_restos_mde["cancelado"]
-                 +$fluxo[4]["valor"];
+$nValorLinha37 = (float) $aReceitas[65]["exercicio"]+ (float) $nValorLinha31 + (float) $nValorLinha32+(float) $nValorLinha33+
+                 (float) $nValorLinha34             +(float) $nValorLinha35  +(float) $m_restos_mde["cancelado"]
+                 +(float) $fluxo[4]["valor"];
 
 $nValorLinha38 = ($aDespesas[7]["exercicio"]+$aDespesas[10]["exercicio"])-$nValorLinha37;
 
@@ -922,10 +922,11 @@ if ($lUltimoPeriodo) {
 }
 
 
-@$nValorLinha39 = ((float) $aReceitas[42]["exercicio"] == 0 ? (float) $nValorLinha38 > 0 ? INF : ((float) $nValorLinha38 < 0 ? -INF : NAN) : $nValorLinha38 / $aReceitas[42]["exercicio"])*100;
+@$nValorLinha39 = (((float) $aReceitas[42]["exercicio"] == 0 ? ((float) $nValorLinha38 > 0 ? INF : ((float) $nValorLinha38 < 0 ? -INF : NAN)) : $nValorLinha38/$aReceitas[42]["exercicio"]))*100;
 
-$nValorMinimo60Fundeb    = @(((float) $aReceitas[61]["exercicio"] == 0 ? (float) ($aDespesas[1]["exercicio"] - ($nValorLinha16 + $nValorLinha17)) > 0 ? INF : ((float) ($aDespesas[1]["exercicio"] - ($nValorLinha16 + $nValorLinha17)) < 0 ? -INF : NAN) : ($aDespesas[1]["exercicio"] - ($nValorLinha16 + $nValorLinha17)) / $aReceitas[61]["exercicio"])*100);
-$nValorMinimo60Fundeb    += $aValoresDespesas[59]["valor"];
+$nDivA = ($aDespesas[1]["exercicio"]-((float) $nValorLinha16+(float) $nValorLinha17));
+$nValorMinimo60Fundeb    = @(((float) $aReceitas[61]["exercicio"] == 0 ? ((float) $nDivA > 0 ? INF : ((float) $nDivA < 0 ? -INF : NAN)) : $nDivA/($aReceitas[61]["exercicio"]))*100);
+$nValorMinimo60Fundeb    += (float) $aValoresDespesas[59]["valor"];
 
 $nImpostosTransferencias      = @(($aReceitas[42]["exercicio"])*25)/100;
 $nImpostosTransferenciasPrev  = @(($aReceitas[42]["inicial"])*25)/100;

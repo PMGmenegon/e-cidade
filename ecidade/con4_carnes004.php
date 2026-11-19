@@ -43,7 +43,7 @@ if(!($conn = pg_connect("host=$DB_SERVIDOR dbname=$DB_BASE port=$DB_PORTA user=$
   $arquivo = str_replace(" ","_",($nomeimg ? pg_result($nomeimg,0,"nomemodelo") : null)).".jpg";
   db_query("begin");
   $oid = ($nomeimg ? pg_result($nomeimg,0,"imgmodelo") : null);
-  pg_loexport($oid,$arquivo);
+  try { pg_loexport($oid,$arquivo); } catch (\Throwable $e) { }
   db_query("end");
   $orientacao = ($nomeimg ? pg_result($nomeimg,0,"orientacao") : null);
   if($orientacao == "R") {

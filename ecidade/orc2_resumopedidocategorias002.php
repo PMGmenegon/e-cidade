@@ -94,7 +94,7 @@ switch ($oGet->trimestre) {
     break;
 
 }
-$iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu);
+try { $iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu); } catch (\Throwable $e) { $iUltimoDiaMes = false; }
 $datausu       = "{$iAnoUsu}-{$iMesFim}-$iUltimoDiaMes";  
 $head3         = $sPeriodo;
 $oDaoConvenio  = db_utils::getDao("pactoplano");

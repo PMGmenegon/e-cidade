@@ -156,9 +156,9 @@ for ($iLinha = 0; $iLinha <= 13; $iLinha++) {
     $aColunas  = $rec[$iLinha]->getValoresSomadosColunas($sListaInstituicoes, $anousu);
     foreach ($aColunas as $oLinha) {
 
-      $receitas_previni[$iLinha] += @$oLinha->colunas[1]->o117_valor;
-      $receitas_prevatu[$iLinha] += @$oLinha->colunas[2]->o117_valor;
-      $receitas_atebime[$iLinha] += @$oLinha->colunas[3]->o117_valor;
+      $receitas_previni[$iLinha] += (float) @$oLinha->colunas[1]->o117_valor;
+      $receitas_prevatu[$iLinha] += (float) @$oLinha->colunas[2]->o117_valor;
+      $receitas_atebime[$iLinha] += (float) @$oLinha->colunas[3]->o117_valor;
     }
     $iParam++;
   }
@@ -179,11 +179,11 @@ for ($iLinha = 1; $iLinha <= 6; $iLinha++) {
   $aLinhas = $desp[$iLinha]['linha']->getValoresSomadosColunas($sListaInstituicoes, $anousu);
   foreach ($aLinhas as $oLinha) {
 
-    $desp[$iLinha]['previni']         += @$oLinha->colunas[1]->o117_valor;
-    $desp[$iLinha]['prevatu']         += @$oLinha->colunas[2]->o117_valor;
-    $desp[$iLinha]['bimestre']        += @$oLinha->colunas[3]->o117_valor;
+    $desp[$iLinha]['previni']         += (float) @$oLinha->colunas[1]->o117_valor;
+    $desp[$iLinha]['prevatu']         += (float) @$oLinha->colunas[2]->o117_valor;
+    $desp[$iLinha]['bimestre']        += (float) @$oLinha->colunas[3]->o117_valor;
     if ($lGeraColunaRps) {
-      $desp[$iLinha]['rpNaoProcessado'] += @$oLinha->colunas[4]->o117_valor;
+      $desp[$iLinha]['rpNaoProcessado'] += (float) @$oLinha->colunas[4]->o117_valor;
     }
   }
   $iParam++;
@@ -208,14 +208,14 @@ for ($iLinha = 1; $iLinha <= 5; $iLinha++) {
   $aLinhas = $desp_p[$iLinha]['linha']->getValoresSomadosColunas($sListaInstituicoes, $anousu);
   foreach ($aLinhas as $oLinha) {
 
-    $desp_p[$iLinha]['previni']         += @$oLinha->colunas[1]->o117_valor;
-    $desp_p[$iLinha]['prevatu']         += @$oLinha->colunas[2]->o117_valor;
-    $desp_p[$iLinha]['bimestre']        += @$oLinha->colunas[3]->o117_valor;
+    $desp_p[$iLinha]['previni']         += (float) @$oLinha->colunas[1]->o117_valor;
+    $desp_p[$iLinha]['prevatu']         += (float) @$oLinha->colunas[2]->o117_valor;
+    $desp_p[$iLinha]['bimestre']        += (float) @$oLinha->colunas[3]->o117_valor;
     if ($lGeraColunaRps) {
-      $desp_p[$iLinha]['rpNaoProcessado'] += @$oLinha->colunas[4]->o117_valor;
+      $desp_p[$iLinha]['rpNaoProcessado'] += (float) @$oLinha->colunas[4]->o117_valor;
     }
     if ($iLinha == 5) {
-      $VARIAVEL_COMPENSACAO += @$oLinha->colunas[3]->o117_valor;
+      $VARIAVEL_COMPENSACAO += (float) @$oLinha->colunas[3]->o117_valor;
     }
   }
   $iParam++;
@@ -303,11 +303,11 @@ for ($i = 1; $i <= 7; $i++) {
   $aLinhas = $m_desp_subfunc[$i]['estrut']->getValoresSomadosColunas($sListaInstituicoes, $anousu);
   foreach ($aLinhas as $oLinha) {
 
-    $m_desp_subfunc[$i]['inicial']    += $oLinha->colunas[1]->o117_valor;
-    $m_desp_subfunc[$i]['atualizada'] += $oLinha->colunas[2]->o117_valor;
-    $m_desp_subfunc[$i]['bimestre']   += $oLinha->colunas[3]->o117_valor;
+    $m_desp_subfunc[$i]['inicial']    += (float) $oLinha->colunas[1]->o117_valor;
+    $m_desp_subfunc[$i]['atualizada'] += (float) $oLinha->colunas[2]->o117_valor;
+    $m_desp_subfunc[$i]['bimestre']   += (float) $oLinha->colunas[3]->o117_valor;
     if ($lGeraColunaRps) {
-      $m_desp_subfunc[$i]['restos']   += $oLinha->colunas[4]->o117_valor;
+      $m_desp_subfunc[$i]['restos']   += (float) $oLinha->colunas[4]->o117_valor;
     }
   }
   $iParam++;
@@ -964,7 +964,7 @@ $pdf->cell(20, $alt, db_formatar($cancelado, 'f'), "LB", 1, "R", 0);
 
 $pdf->Ln(2);
 
-$t_participacao = @( ( abs($total_V_atebim - $cancelado) / $total_I_atebim ) * 100 );
+$nDivA = abs($total_V_atebim - $cancelado); $t_participacao = @( ( ((float) $total_I_atebim == 0 ? ((float) $nDivA > 0 ? INF : ((float) $nDivA < 0 ? -INF : NAN)) : $nDivA / $total_I_atebim) ) * 100 );
 $t_cancelado_rp = $cancelado;
 $pdf->cell(170,$alt, "PARTICIPAÇÃO DAS DESPESAS COM AÇÕES E SERVIÇOS PÚBLICOS DE SAÚDE NA RECEITA DE IMPOSTOS LÍQUIDA E TRANSFERÊNCIAS", "TR", 0, "L", 0);
 $pdf->cell(20, $alt, "", "TL", 1, "R", 0);

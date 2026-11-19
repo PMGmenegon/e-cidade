@@ -46,7 +46,7 @@ for($i = 0;$i < sizeof($conta);$i++) {
                                                  c61_instit = ".db_getsession("DB_instit");
   $pdf->SetFont('Arial','B',9);
   $pdf->SetY($pdf->GetY() + 3);
-  $pdf->Cell(80,6,$conta[$i]." - ".($des ? pg_result($des,0,0) : null),0,2,"L",0);
+  $pdf->Cell(80,6,$conta[$i]." - ".(is_string($des) ? null : ($des ? pg_result($des,0,0) : null)),0,2,"L",0);
   $DATAi = false;
   $DATAf = false;
   if(isset($datai) && trim($datai)!=""){

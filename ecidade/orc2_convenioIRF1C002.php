@@ -112,7 +112,7 @@ switch ($oGet->trimestre) {
  * para poder informar qual o fim do trimestre anterior
  * Este dado serve somente para informação
  */
-$iUltimoDiaTrimestreAnterior  = mktime(0, 0, 0, $iMesIni, 0, $iAnoUsu);
+$iUltimoDiaTrimestreAnterior  = mktime(0, 0, 0, (int)$iMesIni, 0, $iAnoUsu);
 $dtUltimoDiaTrimestreAnterior = date("d/m/Y", $iUltimoDiaTrimestreAnterior);
 
 $iCodigoRelatorio            = 100;
@@ -136,7 +136,7 @@ if ($iAnoUsu == 2013){
 $sWhere          = " o70_instit = ".db_getsession("DB_instit");
 $sWhere         .= " and o70_codigo = {$oConvenio->o16_orctiporec}";
 $iDataInicial    = "{$iAnoUsu}-{$iMesIni}-01";
-$iUltimoDiaMes   = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu);
+try { $iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu); } catch (\Throwable $e) { $iUltimoDiaMes = false; }
 $datausu         = "{$iAnoUsu}-{$iMesFim}-$iUltimoDiaMes";
 
 $rsReceitaSaldo = db_receitasaldo(11, 1, 3,true, $sWhere,$iAnoUsu, $iDataInicial, $datausu);

@@ -40,13 +40,13 @@ $oJson          = new services_json();
 $aListaTipos    = $oJson->decode(str_replace("\\", "", $aListaTipo));
 $aListaDeptos   = $oJson->decode(str_replace("\\", "", $aListaDepartamentos));
 $sDepartamentos = "";
-if (count($aListaDeptos) > 0) {
+if (count((array)$aListaDeptos) > 0) {
     foreach ($aListaDeptos as $iDepto) {
         $sDepartamentos .= "{$iDepto},";
     }
     $sDepartamentos = substr($sDepartamentos, 0, -1);
 }
-$iNroLista      = count($aListaTipos);
+$iNroLista      = count((array)$aListaTipos);
 $sWhereTipo     = "";
 $sCamposTipo    = "";
 

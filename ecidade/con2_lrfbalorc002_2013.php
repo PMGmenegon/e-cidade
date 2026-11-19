@@ -2275,16 +2275,16 @@ atualizaTotaisReceita($m_transf_fome["parametros"], $m_transf_fome_intra, $resul
 $oLinha = $m_transf_fome["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  $tot_atualizada += $oColunas->colunas[2]->o117_valor;
-  $tot_nobim      += $oColunas->colunas[3]->o117_valor;
-  $tot_atebim     += $oColunas->colunas[4]->o117_valor;
-  //$tot_realizar   += $oColunas->colunas[5]->o117_valor;
+  $tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  $tot_atualizada += (float) $oColunas->colunas[2]->o117_valor;
+  $tot_nobim      += (float) $oColunas->colunas[3]->o117_valor;
+  $tot_atebim     += (float) $oColunas->colunas[4]->o117_valor;
+  //$tot_realizar   += (float) $oColunas->colunas[5]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp     += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp     += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 
@@ -3230,10 +3230,10 @@ atualizaTotaisReceita($m_transf_capital_fome["parametros"], $m_transf_capital_fo
 $oLinha = $m_transf_capital_fome["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  $tot_atualizada += $oColunas->colunas[2]->o117_valor;
-  $tot_nobim      += $oColunas->colunas[3]->o117_valor;
-  $tot_atebim     += $oColunas->colunas[4]->o117_valor;
+  $tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  $tot_atualizada += (float) $oColunas->colunas[2]->o117_valor;
+  $tot_nobim      += (float) $oColunas->colunas[3]->o117_valor;
+  $tot_atebim     += (float) $oColunas->colunas[4]->o117_valor;
 
 }
 
@@ -3316,10 +3316,10 @@ atualizaTotaisReceita($m_outras_social["parametros"], $m_outras_social_intra, $r
 $oLinha = $m_outras_social["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  $tot_atualizada += $oColunas->colunas[2]->o117_valor;
-  $tot_nobim      += $oColunas->colunas[3]->o117_valor;
-  $tot_atebim     += $oColunas->colunas[4]->o117_valor;
+  $tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  $tot_atualizada += (float) $oColunas->colunas[2]->o117_valor;
+  $tot_nobim      += (float) $oColunas->colunas[3]->o117_valor;
+  $tot_atebim     += (float) $oColunas->colunas[4]->o117_valor;
 
 }
 
@@ -5573,16 +5573,16 @@ $aColunas  = $oLinha->getValoresSomadosColunas(str_replace('-',', ',$db_selinsti
 foreach ($aColunas as $oLinhaColuna) {
 
   if (isset($oLinhaColuna->colunas[1]->o117_valor)) {
-    $tot_inicial    += @$oLinhaColuna->colunas[1]->o117_valor;
+    $tot_inicial    += (float) @$oLinhaColuna->colunas[1]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[2]->o117_valor)) {
-    $tot_atualizada += @$oLinhaColuna->colunas[2]->o117_valor;
+    $tot_atualizada += (float) @$oLinhaColuna->colunas[2]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[3]->o117_valor)) {
-    $tot_nobim      += @$oLinhaColuna->colunas[3]->o117_valor;
+    $tot_nobim      += (float) @$oLinhaColuna->colunas[3]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[4]->o117_valor)) {
-    $tot_atebim     += @$oLinhaColuna->colunas[4]->o117_valor;
+    $tot_atebim     += (float) @$oLinhaColuna->colunas[4]->o117_valor;
   }
 }
 $tot_realizar = $tot_atualizada - $tot_atebim;
@@ -5623,16 +5623,16 @@ $aColunas  = $oLinha->getValoresSomadosColunas(str_replace('-',', ',$db_selinsti
 foreach ($aColunas as $oLinhaColuna) {
 
   if (isset($oLinhaColuna->colunas[1]->o117_valor)) {
-    $tot_inicial    += @$oLinhaColuna->colunas[1]->o117_valor;
+    $tot_inicial    += (float) @$oLinhaColuna->colunas[1]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[2]->o117_valor)) {
-    $tot_atualizada += @$oLinhaColuna->colunas[2]->o117_valor;
+    $tot_atualizada += (float) @$oLinhaColuna->colunas[2]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[3]->o117_valor)) {
-    $tot_nobim      += @$oLinhaColuna->colunas[3]->o117_valor;
+    $tot_nobim      += (float) @$oLinhaColuna->colunas[3]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[4]->o117_valor)) {
-    $tot_atebim     += @$oLinhaColuna->colunas[4]->o117_valor;
+    $tot_atebim     += (float) @$oLinhaColuna->colunas[4]->o117_valor;
   }
 }
 $tot_realizar = $tot_atualizada - $tot_atebim;
@@ -5704,16 +5704,16 @@ $aColunas  = $oLinha->getValoresSomadosColunas(str_replace('-',', ',$db_selinsti
 foreach ($aColunas as $oLinhaColuna) {
 
   if (isset($oLinhaColuna->colunas[1]->o117_valor)) {
-    $tot_inicial    += @$oLinhaColuna->colunas[1]->o117_valor;
+    $tot_inicial    += (float) @$oLinhaColuna->colunas[1]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[2]->o117_valor)) {
-    $tot_atualizada += @$oLinhaColuna->colunas[2]->o117_valor;
+    $tot_atualizada += (float) @$oLinhaColuna->colunas[2]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[3]->o117_valor)) {
-    $tot_nobim      += @$oLinhaColuna->colunas[3]->o117_valor;
+    $tot_nobim      += (float) @$oLinhaColuna->colunas[3]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[4]->o117_valor)) {
-    $tot_atebim     += @$oLinhaColuna->colunas[4]->o117_valor;
+    $tot_atebim     += (float) @$oLinhaColuna->colunas[4]->o117_valor;
   }
 }
 $tot_realizar = $tot_atualizada - $tot_atebim;
@@ -5754,16 +5754,16 @@ $aColunas  = $oLinha->getValoresSomadosColunas(str_replace('-',', ',$db_selinsti
 foreach ($aColunas as $oLinhaColuna) {
 
   if (isset($oLinhaColuna->colunas[1]->o117_valor)) {
-    $tot_inicial    += @$oLinhaColuna->colunas[1]->o117_valor;
+    $tot_inicial    += (float) @$oLinhaColuna->colunas[1]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[2]->o117_valor)) {
-    $tot_atualizada += @$oLinhaColuna->colunas[2]->o117_valor;
+    $tot_atualizada += (float) @$oLinhaColuna->colunas[2]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[3]->o117_valor)) {
-    $tot_nobim      += @$oLinhaColuna->colunas[3]->o117_valor;
+    $tot_nobim      += (float) @$oLinhaColuna->colunas[3]->o117_valor;
   }
   if (isset($oLinhaColuna->colunas[4]->o117_valor)) {
-    $tot_atebim     += @$oLinhaColuna->colunas[4]->o117_valor;
+    $tot_atebim     += (float) @$oLinhaColuna->colunas[4]->o117_valor;
   }
 }
 $tot_realizar = $tot_atualizada - $tot_atebim;
@@ -5905,15 +5905,15 @@ $sSqlSuperavit = " SELECT sum(o47_valor) as soma
 $rsSqlSuperavit = db_query($sSqlSuperavit);
 if(($rsSqlSuperavit ? pg_num_rows($rsSqlSuperavit) : null) > 0){
   $oSuperavit = db_utils::fieldsMemory($rsSqlSuperavit,0);
-  $nSuperavitFinancPrevAtu += $oSuperavit->soma;
+  $nSuperavitFinancPrevAtu = (float) $nSuperavitFinancPrevAtu + (float) $oSuperavit->soma;
 }
 
 $m_superavit_financeiro["parametros"]->setPeriodo($iCodigoPeriodo);
 $oLinha = $m_superavit_financeiro["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $nSuperavitFinancPrevAtu += $oColunas->colunas[2]->o117_valor;
-  $nSuperavitFinancAteBim  += $oColunas->colunas[4]->o117_valor;
+  $nSuperavitFinancPrevAtu = (float) $nSuperavitFinancPrevAtu + (float) $oColunas->colunas[2]->o117_valor;
+  $nSuperavitFinancAteBim = (float) $nSuperavitFinancAteBim + (float) $oColunas->colunas[4]->o117_valor;
 
 }
 
@@ -5929,14 +5929,14 @@ $sSqlReabertura = " SELECT sum(o47_valor) as soma
 $rsSqlReabertura = db_query($sSqlReabertura);
 if(($rsSqlReabertura ? pg_num_rows($rsSqlReabertura) : null) > 0){
   $oReabertura = db_utils::fieldsMemory($rsSqlReabertura,0);
-  $nReaberturaCredPrevAtu += $oReabertura->soma;
+  $nReaberturaCredPrevAtu = (float) $nReaberturaCredPrevAtu + (float) $oReabertura->soma;
 }
 
 $oLinha = $m_reab_credito_adicionais["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $nReaberturaCredPrevAtu += $oColunas->colunas[2]->o117_valor;
-  $nReaberturaCredAteBim  += $oColunas->colunas[4]->o117_valor;
+  $nReaberturaCredPrevAtu = (float) $nReaberturaCredPrevAtu + (float) $oColunas->colunas[2]->o117_valor;
+  $nReaberturaCredAteBim = (float) $nReaberturaCredAteBim + (float) $oColunas->colunas[4]->o117_valor;
 
 }
 
@@ -6154,17 +6154,17 @@ atualizaTotaisDespesa($m_outras_despesas_correntes["parametros"],$result_desp,fa
 $oLinha = $m_outras_despesas_correntes["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  $tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  $tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  $tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  $tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  $tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  $tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  $tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  $tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  $tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  $tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  $tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 
@@ -6688,17 +6688,17 @@ atualizaTotaisDespesa($m_outras_despesas_correntes["parametros"],$result_desp,tr
 $oLinha = $m_outras_despesas_correntes["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  $tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  $tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  $tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  $tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  $tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  $tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  $tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  $tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  $tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  $tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  $tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  $tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 
@@ -6977,17 +6977,17 @@ $tot_atualizada   = 0;
 $oLinha = $m_amort_divida_int_mobiliario["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  @$tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  @$tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  @$tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  @$tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  @$tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  @$tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  @$tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  @$tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  @$tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  @$tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  @$tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  @$tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 }
@@ -7040,17 +7040,17 @@ atualizaTotaisDespesaDivida($m_amort_divida_int_outras["parametros"],$result_des
 $oLinha = $m_amort_divida_int_outras["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  @$tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  @$tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  @$tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  @$tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  @$tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  @$tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  @$tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  @$tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  @$tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  @$tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  @$tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  @$tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 }
@@ -7139,17 +7139,17 @@ $tot_inscritos_rp = 0;
 $oLinha = $m_amort_divida_ext_mobiliario["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas) {
 
-  @$tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  @$tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  @$tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  @$tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  @$tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  @$tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  @$tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  @$tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  @$tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  @$tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  @$tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  @$tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 }
@@ -7201,17 +7201,17 @@ $tot_inscritos_rp = 0;
 $oLinha = $m_amort_divida_ext_outras["parametros"]->getValoresSomadosColunas($instituicao, $anousu);
 foreach ($oLinha as $oColunas){
 
-  @$tot_inicial    += $oColunas->colunas[1]->o117_valor;
-  @$tot_adicional  += $oColunas->colunas[2]->o117_valor;
-  @$tot_emp_nobim  += $oColunas->colunas[3]->o117_valor;
-  @$tot_emp_atebim += $oColunas->colunas[4]->o117_valor;
-  @$tot_liq_nobim  += $oColunas->colunas[5]->o117_valor;
-  @$tot_liq_atebim += $oColunas->colunas[6]->o117_valor;
+  @$tot_inicial    += (float) $oColunas->colunas[1]->o117_valor;
+  @$tot_adicional  += (float) $oColunas->colunas[2]->o117_valor;
+  @$tot_emp_nobim  += (float) $oColunas->colunas[3]->o117_valor;
+  @$tot_emp_atebim += (float) $oColunas->colunas[4]->o117_valor;
+  @$tot_liq_nobim  += (float) $oColunas->colunas[5]->o117_valor;
+  @$tot_liq_atebim += (float) $oColunas->colunas[6]->o117_valor;
 
   if ($bimestre == 6) {
 
     if (isset($oColunas->colunas[7]->o117_valor)) {
-      $tot_inscritos_rp += $oColunas->colunas[7]->o117_valor;
+      $tot_inscritos_rp += (float) $oColunas->colunas[7]->o117_valor;
     }
   }
 }

@@ -238,7 +238,7 @@ function js_valorinicial(campo){
 	x = document.form1;
 	arr = new Array();
 	<?php
-	for($i=0; $i<count($arr_valin); $i++){
+	for($i=0; $i<count((array)$arr_valin); $i++){
     echo "  arr[".$i."] = ".$arr_valin[$i].";\n";
 	}
 	?>

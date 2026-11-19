@@ -104,7 +104,7 @@ switch ($oGet->trimestre) {
     break;
 
 }
-$iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu);
+try { $iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN,$iMesFim,$iAnoUsu); } catch (\Throwable $e) { $iUltimoDiaMes = false; }
 $datausu       = "{$iAnoUsu}-{$iMesFim}-$iUltimoDiaMes";  
 $head3         = $sPeriodo;
 $oDaoConvenio  = db_utils::getDao("pactoplano");
@@ -438,6 +438,7 @@ for ($i = 0; $i < $iTotalRows; $i++) {
 }
 //exit;
 
+$oSaldoOrigem = new stdClass();
 $oSaldoOrigem->cp_saldo_inicial_trim_atual =  $aTotalizador["CP"]["realizado_trim_atual"];
 $oSaldoOrigem->cp_saldo_inicial_ano_atual  =  $aTotalizador["CP"]["realizado_ano_atual"];
 $oSaldoOrigem->cp_saldo_inicial_acumulado  =  $aTotalizador["CP"]["realizado_acumulado"];

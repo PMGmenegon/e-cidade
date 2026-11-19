@@ -190,7 +190,7 @@ if (!isset($lReemissao)) {
             $xcodtaxa = $codtaxa[$i];
         }
 
-        if ($valor[$i] == 0) {
+        if (($valor[$i] == 0 || (is_string($valor[$i]) && !is_numeric($valor[$i])))) {
             db_redireciona("db_erros.php?fechar=true&db_erro=O Recibo Com a Receita " . $rece[$i] . " Com Valor Zerado.");
         }
 

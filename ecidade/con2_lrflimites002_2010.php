@@ -105,8 +105,8 @@ $sSqlPeriodo    = $oDaoPeriodo->sql_query($periodo);
 $sSiglaPeriodo  = db_utils::fieldsMemory($oDaoPeriodo->sql_record($sSqlPeriodo),0)->o114_sigla;
 $dt             = data_periodo($anousu,$sSiglaPeriodo);
 
-$dt_ini =explode("-",$dt[0]);
-$dt_fin =explode("-",$dt[1]);
+$dt_ini = is_array($dt[0]) ? null : explode("-",$dt[0]);
+$dt_fin = is_array($dt[1]) ? null : explode("-",$dt[1]);
 
 $descr_periodo = "PERIODO: ".$dt["texto"];
 $arqinclude = true;
@@ -166,8 +166,8 @@ function validaarquivo($sArquivo,$ano){
 /////////////////////////////////////////////////////////////////////////
 
 // data apresentada na tela
-$dtd1    =explode('-',$dt_ini);
-$dtd2    =explode('-',$dt_fin);
+$dtd1    =is_array($dt_ini) ? null : explode("-",$dt_ini);
+$dtd2    =is_array($dt_fin) ? null : explode("-",$dt_fin);
 
 $textodt = strtoupper(db_mes($dtd1[1]))." A ".strtoupper(db_mes($dtd2[1]))." DE ";
 

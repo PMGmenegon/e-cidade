@@ -24,7 +24,7 @@ $nChequesNApresentados = 0;
 //Tipo 4
 $nCreditoAnexoIII      = 0;
 
-$iUltimoDiaMes         = cal_days_in_month(CAL_GREGORIAN, $oGet->iMes, $oGet->iAno);
+try { $iUltimoDiaMes = cal_days_in_month(CAL_GREGORIAN, $oGet->iMes, $oGet->iAno); } catch (\Throwable $e) { $iUltimoDiaMes = false; }
 $sDataRelatorio        = "{$iUltimoDiaMes}/{$oGet->iMes}/{$oGet->iAno}";
 
 if ((int)$oGet->iAno < (int)$iAnoSessao) {
