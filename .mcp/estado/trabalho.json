@@ -1,9 +1,21 @@
 {
   "concluidos": {
+    "ecidade/cai1_calend001.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
     "ecidade/cai1_lista001.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:43Z",
+      "quem": "Segundo"
+    },
+    "ecidade/cai1_saltes001.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/cai1_slip.php": {
@@ -4284,6 +4296,12 @@
       "quando": "2026-11-19T22:49:52Z",
       "quem": "Segundo"
     },
+    "ecidade/con1_cadinst.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
     "ecidade/con1_caditens.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4707,7 +4725,7 @@
     "ecidade/con3_acount.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
-      "quando": "2026-11-19T22:49:53Z",
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/con3_conscontri011.php": {
@@ -4744,6 +4762,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:53Z",
+      "quem": "Segundo"
+    },
+    "ecidade/con4_lancamentosSlip001.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/con4_padbver_ant.php": {
@@ -4788,6 +4812,12 @@
       "quando": "2026-11-19T22:49:53Z",
       "quem": "Segundo"
     },
+    "ecidade/con4_trocadata.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
     "ecidade/con4_viradadeano002.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4818,10 +4848,40 @@
       "quando": "2026-11-19T22:49:53Z",
       "quem": "Segundo"
     },
+    "ecidade/con6_ordem001.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/con6_ordem003.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
     "ecidade/con6_ordemagenda.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:53Z",
+      "quem": "Segundo"
+    },
+    "ecidade/con6_ordemagendamento.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/con6_ordemandamento.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/con7_ordemandamento.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/emp2_anulardespesa002.php": {
@@ -5008,6 +5068,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:54Z",
+      "quem": "Segundo"
+    },
+    "ecidade/model/contabilidade/relatorios/AnexoIVDemonstrativoRPPS.model.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/model/contabilidade/relatorios/AnexoProgramaObrasPrestacaoServico.model.php": {
@@ -5286,6 +5352,36 @@
       "quando": "2026-11-19T22:49:55Z",
       "quem": "Segundo"
     },
+    "ecidade/model/modeloAutentTermicaArrecadacao.model.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/model/modeloAutentTermicaEmpenho.model.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/model/modeloAutentTermicaResumo.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/model/modeloAutentTermicaSlip.model.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
+    "ecidade/model/modeloAutenticadoraElginXprint.model.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
+      "quem": "Segundo"
+    },
     "ecidade/orc1_orcduplicacao001.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -5302,6 +5398,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:55Z",
+      "quem": "Segundo"
+    },
+    "ecidade/orc1_orcreserva001.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/orc2_anexo1002.php": {
@@ -5590,6 +5692,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:56Z",
+      "quem": "Segundo"
+    },
+    "ecidade/src/Financeiro/Contabilidade/ExercicioContabil/Abertura.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-19T23:16:22Z",
       "quem": "Segundo"
     },
     "ecidade/src/Financeiro/Contabilidade/Relatorio/DCASP/Model/BalancoOrcamentarioDCASP2017.php": {
