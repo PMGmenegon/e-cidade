@@ -174,7 +174,7 @@ Sempre da raiz do repositório, com `regressao/.venv/bin/python -m …`. Cada co
 `resultado.json`, `resumo.md` e `diffs/`.
 
 ```bash
-# PHP: referencia 7.4 x 8.5. Rodada completa de telas leva HORAS (~0,83 s/tela; 12 mil telas ≈ 3 h): para fumaça use --area/--prefixo
+# PHP: referencia 7.4 x 8.5. Rodada completa de telas leva HORAS (~0,83 s/tela; a rodada real da base 7.4 teve 13.036 telas e o PHP levou 5 h 05): para fumaça use --area/--prefixo
 python -m regressao.php.bateria --saida /tmp/php --prefixo '^arr1_(procjurtipo|grupotaxa)001\.php$'
 python -m regressao.php.bateria --saida /tmp/php --area tributario            # uma área (≈ 5,5 mil telas)
 # opções: --sem-normalizar, --incluir-nao-verificados, --sem-restaurar (só desenvolvimento: rodada NÃO comparável)
@@ -306,8 +306,8 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
 - `comparar` recusa baseline gravada com outro sha256 de dump.
 - O repositório no GitHub (`Segunddo/e-cidade`) é **PÚBLICO** e as baselines contêm **dados do banco de desenvolvimento**
   (nome e telefones da instituição, usuários, textos de telas etc.; o campo `senha` de `/v4/api/user` é mascarado).
-  Não publique a branch `regressao`
-  sem decidir isso. Senhas, SIDs e tokens nunca são gravados.
+  A branch `regressao-php74` já está publicada com essas baselines; antes de publicar novas gravações (ou outra
+  branch), decida se esses dados podem ficar num repositório público. Senhas, SIDs e tokens nunca são gravados.
 
 ## 7. Migração: antes × depois
 
@@ -340,7 +340,7 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
   A rodada pequena do atalho (3 prefixos PHP + Laravel inteiro + 6 fluxos) leva ≈ 23 min (PHP 4,2, Laravel 14,2,
   fluxos 4,4); resultado em 2026-11-18: VERMELHO, PHP 15/15/0/0, Laravel 719/0/273/0, fluxos 32 IDENTICO.
 - PHP: ~0,83 s/tela, POSTs 4–17 s cada, relatórios ~1 s; uma rodada de fumaça (`--prefixo`) leva ~5–6 min no total. Áreas
-  inteiras levam **horas**. Laravel (base 7.4): ≈ 10,5–11 min de casos (996 casos) + ≈ 3,2 min de restore. Fluxos: ≈ 1 min + restore.
+  inteiras levam **horas**. Laravel (base 7.4): ≈ 10,5–11 min de casos (992 casos) + ≈ 3,2 min de restore. Fluxos: ≈ 1 min + restore.
 - A memória do host é apertada: antes de rodadas longas, solte o cache de arquivos do WSL
   (`wsl -d Ubuntu-24.04 -u root -- sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'`). Um `.wslconfig` com `memory=6GB` e
   `autoMemoryReclaim=gradual` ajuda; fica a critério do usuário. Os fluxos usam um Chromium só, fechado ao fim.
@@ -386,7 +386,7 @@ Regravá-las com o sistema já migrado destrói a comparação. Por isso:
     da referência contra a baseline (`comparar --alvo http://localhost:8074`, cada uma restaurando o dump) deram
     exatamente o mesmo resultado, caso a caso: **719 IDENTICO, 0 DIVERGE, 273 INCONCLUSIVO (272 "5xx nos dois lados", 1
     "resposta sem conteúdo"), 0 ERRO_AMBIENTE**, saída 0 (v1: 666/0/330/0).
-- **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (12 de 996 registros da base 7.4 trazem caminhos do
+- **Baselines Laravel guardam `file`/`line`/stacktrace absolutos** (cerca de 12 dos 992 registros da base 7.4 trazem caminhos do
   servidor, p.ex. `/var/www/html/...` e números de linha). **Decisão (implementada em `laravel/mascara.py::normaliza_erro`,
   aplicada só na comparação; a baseline bruta guarda o registro inteiro) — **escopo estreito**: só em **respostas de erro**
   (status >= 400 ou objeto com `exception`), só no `json` (e no `texto` de respostas 5xx); nunca em `sql_negocio`,
