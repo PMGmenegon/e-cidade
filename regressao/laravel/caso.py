@@ -619,8 +619,8 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
     perdidos = sorted(i for i in ids_meta & ids_casos if not (diretorio / nome_arquivo(i)).is_file())
     if perdidos:
         raise ErroGravacao("registros perdidos (no _meta, sem arquivo): " + ", ".join(perdidos[:10])
-                           + ". Nao serao regravados em silencio: remova-os com `caso remove <id>` (se for "
-                           "intencional) ou restaure o arquivo do git")
+                           + ". Nao serao regravados em silencio: remova-os com "
+                           "`caso remove <id> --confirmo-sobrescrever` (se for intencional) ou restaure o arquivo do git")
     novos = [c for c in casos if c.id not in ids_meta]
     com_arquivo = sorted(c.id for c in novos if (diretorio / nome_arquivo(c.id)).is_file())
     if com_arquivo:
@@ -629,7 +629,7 @@ def gravar_novos(casos: list[CasoHttp], base_url: str, diretorio: Path) -> list[
         raise ErroGravacao("nenhum caso novo: todos ja tem registro na baseline")
     ids_novos = {c.id for c in novos}
     if ids_meta - ids_casos:
-        raise ErroGravacao("_meta lista casos que nao existem mais: use `poda`")
+        raise ErroGravacao("_meta lista casos que nao existem mais: use `poda --confirmo-sobrescrever`")
     info: dict = {}
     respostas = _roda(novos, base_url, info=info)
     for c in novos:
@@ -815,7 +815,7 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path, restaurar: b
                       "baseline inconsistente com os casos carregados; nada foi restaurado. "
                       f"casos sem registro no _meta: {sobra_caso[:10]}; ids do _meta sem caso: "
                       f"{sobra_meta[:10]}; arquivos sem caso: {orfaos[:10]} "
-                      "(use `python -m regressao.laravel.caso poda` ou grave de novo)")]
+                      "(use `python -m regressao.laravel.caso poda --confirmo-sobrescrever` ou grave de novo)")]
     registros: dict[str, dict] = {}
     faltando: list[Caso] = []
     for c in casos:
@@ -854,10 +854,16 @@ def comparar(casos: list[CasoHttp], base_url: str, diretorio: Path, restaurar: b
 
 def _main(argv: list[str]) -> int:
     """python -m regressao.laravel.caso comparar [url] | poda (remove da baseline o que nao tem caso e
-    reescreve o _meta). NAO ha `gravar` aqui: gravar passa por `python -m regressao.laravel.bateria gravar`,
-    que tem a protecao da baseline (RecusaBaseline / --confirmo-sobrescrever)."""
+    reescreve o _meta) | remove <id>...; `poda` e `remove` exigem --confirmo-sobrescrever. NAO ha `gravar`
+    aqui: gravar passa por `python -m regressao.laravel.bateria gravar`, que tem a protecao da baseline (RecusaBaseline / --confirmo-sobrescrever)."""
     import sys
+    confirmo = "--confirmo-sobrescrever" in argv
+    argv = [a for a in argv if a != "--confirmo-sobrescrever"]
     modo = argv[0] if argv else ""
+    if modo in ("remove", "poda") and not confirmo:
+        print(f"erro: `{modo}` apaga registros da baseline pre-migracao (a referencia Laravel 8); confira o que sai e "
+              f"repita com --confirmo-sobrescrever", file=sys.stderr)
+        return 2
     if modo == "gravar":
         print("erro: `gravar` saiu deste atalho (sem protecao da baseline). Use: "
               "python -m regressao.laravel.bateria gravar --saida DIR [--confirmo-sobrescrever]", file=sys.stderr)
@@ -869,12 +875,13 @@ def _main(argv: list[str]) -> int:
             print(f"remocao recusada: {e}", file=sys.stderr)
             return 1
         if ids is None:
-            print("uso: python -m regressao.laravel.caso remove <id> [<id>...]", file=sys.stderr)
+            print("uso: python -m regressao.laravel.caso remove <id> [<id>...] --confirmo-sobrescrever", file=sys.stderr)
             return 2
         print(f"removidos da baseline: {ids}; regrave com `bateria gravar --apenas-novos --confirmo-sobrescrever`")
         return 0
     if modo not in ("comparar", "poda"):
-        print("uso: python -m regressao.laravel.caso comparar [url] | poda | remove <id>...", file=sys.stderr)
+        print("uso: python -m regressao.laravel.caso comparar [url] | poda --confirmo-sobrescrever | "
+              "remove <id>... --confirmo-sobrescrever", file=sys.stderr)
         return 2
     casos = carrega_casos(DIR_CASOS)
     if modo == "poda":

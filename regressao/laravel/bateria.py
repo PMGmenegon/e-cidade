@@ -11,6 +11,8 @@ PHP 7.4/Laravel 8); `comparar` roda os casos contra `Alvos.laravel_novo` (REGRES
 A baseline e a REFERENCIA PRE-MIGRACAO. Regrava-la com um sistema ja migrado destroi a comparacao;
 por isso `gravar` recusa (RecusaBaseline, exit 2) sobrescrever uma baseline existente e gravar contra
 um alvo que nao seja a referencia sem `--confirmo-sobrescrever` (e, para outro alvo, `--alvo` explicito).
+Na URL da referencia, `gravar` tambem confere que o container dela roda PHP 7.4 e Laravel 8 (a URL pode estar
+apontada para o lugar errado).
 Um `gravar` bem-sucedido NAO produz casos (so meta + a linha GRAVACAO no resumo): nada foi comparado.
 
 Ordem de `comparar`: boot do alvo (se fora do ar: UM caso ERRO_AMBIENTE `laravel:boot`, o banco NAO
@@ -29,6 +31,7 @@ vermelha e NAO e aprovacao.
 """
 import argparse
 import json
+import re
 import sys
 import time
 import traceback
@@ -82,6 +85,22 @@ def _versao_laravel(container: str) -> str:
         return saida.decode(errors="replace").strip().splitlines()[-1]
     except Exception as e:
         return f"indisponivel: {type(e).__name__}"
+
+
+def _versoes_do_alvo(url: str) -> tuple[str, str]:
+    """(PHP, Laravel) do container que atende a URL; `indisponivel` se a URL nao tem container conhecido."""
+    container = container_do_alvo(url)
+    if not container:
+        return "indisponivel (url sem container conhecido)", "indisponivel"
+    return _versao_php(container), _versao_laravel(container)
+
+
+def _confere_referencia_74(url: str) -> None:
+    """A baseline so nasce da referencia: alem da URL, o container dela tem de rodar PHP 7.4 e Laravel 8."""
+    php, laravel = _versoes_do_alvo(url)
+    if not (php.startswith("7.4.") and re.search(r"\bLaravel Framework 8\.", laravel)):
+        raise RecusaBaseline(f"gravar recusado: a baseline nasce da referencia PHP 7.4 e Laravel 8, mas {url} "
+                             f"responde com PHP {php} / {laravel}. Confira REGRESSAO_REF_URL e REGRESSAO_CONTAINER_REF.")
 
 
 def _metadados_ambiente(alvo: str) -> dict:
@@ -270,6 +289,8 @@ def _executa(diretorio_saida: Path, modo: str, alvo: str | None, confirmo_sobres
     problemas = verifica(replace(alvos, ref=url, php_novo=url, laravel_novo=url, proxy=url))
     if problemas:
         return para("laravel:ambiente", "; ".join(problemas))
+    if modo == "gravar" and url == _norm(alvos.ref):  # outro alvo so com --alvo + --confirmo-sobrescrever (acima)
+        _confere_referencia_74(url)
     # 3. casos
     try:
         casos_http = carrega_casos(DIR_CASOS)

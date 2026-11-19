@@ -380,3 +380,18 @@ def test_casos_novos_do_yaml_carregam():
     casos = {c.id: c for c in mod_caso.carrega_casos(mod_caso.DIR_CASOS)}
     assert casos["console-list"].console == ["list", "--raw"] and casos["console-list"].console_modo == "nomes"
     assert any(c.arquivo for c in casos.values()) and any(c.console for c in casos.values())
+
+
+@pytest.mark.parametrize("argv", [["remove", "b"], ["poda"]])
+def test_cli_remove_e_poda_exigem_confirmo_sobrescrever(tmp_path, monkeypatch, capsys, argv):
+    """`remove` e `poda` apagam registros da baseline pre-migracao: sem a confirmacao nada e tocado."""
+    _prepara_baseline(tmp_path, monkeypatch, antigos=("a", "b"))
+    monkeypatch.setattr(mod_caso, "DIR_BASELINE", tmp_path)
+    monkeypatch.setattr(mod_caso, "carrega_casos", lambda d: [_c("a")])
+    antes = sorted(p.name for p in tmp_path.iterdir())
+    meta_antes = (tmp_path / "_meta.json").read_text()
+    assert mod_caso._main(argv) == 2
+    assert "--confirmo-sobrescrever" in capsys.readouterr().err
+    assert sorted(p.name for p in tmp_path.iterdir()) == antes and (tmp_path / "_meta.json").read_text() == meta_antes
+    assert mod_caso._main([*argv, "--confirmo-sobrescrever"]) == 0
+    assert not (tmp_path / mod_caso.nome_arquivo("b")).exists()
