@@ -76,7 +76,8 @@ com o próprio `resumo.md`, `resultado.json` e `diffs/`.
 
 1. **Primeira linha — `Resultado:`** `VERDE (saída 0)`, `VERMELHO (saída 1)` ou `ERRO (saída 2)`.
 2. **AVISOS** — leia sempre. Dizem que a referência é o 7.4, que INCONCLUSIVO não é aprovação, o limite da bateria PHP
-   (mesmo código nos dois lados), quando o Laravel foi comparado com ele mesmo, e cada ERRO_AMBIENTE.
+   (mesmo código nos dois lados), quando o Laravel foi comparado com ele mesmo, quando nenhum passo dos fluxos veio do
+   8.5 (`FLUXOS 7.4 x 7.4`: o proxy mandou tudo ao 7.4, os fluxos não mediram a migração) e cada ERRO_AMBIENTE.
 3. **Totais por bateria** — quantos casos deram cada veredito, por bateria, e o tempo.
 4. **Cobertura** — o que foi exercitado: telas selecionadas, POSTs e relatórios do catálogo, rotas Laravel cobertas ×
    não cobertas, passos de fluxo. Um verde com pouca cobertura vale pouco.
@@ -229,7 +230,8 @@ banco daquele contêiner **é apagado e recriado**.
   referência 7.4** (nunca no sistema migrado).
 - **Um caminho de navegador:** uma função em `regressao/completa/fluxos.py` e `gravar --fluxo <id>` na referência.
 
-Gravar ou regravar uma linha de base exige `--confirmo-sobrescrever` e é sempre feito **contra a referência 7.4**.
+Gravar ou regravar uma linha de base exige `--confirmo-sobrescrever` e é sempre feito **contra a referência 7.4**. O
+código confere: o `gravar` dos fluxos recusa se algum passo veio com `X-Ecidade-Runtime` diferente de `PHP-7.4`.
 
 ## Pelo MCP (para quem usa IA)
 

@@ -362,3 +362,68 @@ def test_compara_fluxos_com_executor_falso(tmp_path, monkeypatch):
     casos, _ = fluxos.compara_fluxos("http://p", base / "2", "s", executa=lambda p, i: [fluxo(passo("a"), id="x")],
                                       restaurar=False)
     assert veredictos(casos)["fluxo:y:execucao"] == N
+
+
+# ---------------------------------------------------------------- runtime: 7.4 x 7.4 e gravacao so na referencia
+
+R74, R85 = "PHP-7.4 (referencia)", "PHP-8.5 (migrado)"
+
+
+def test_aviso_quando_nenhum_passo_veio_do_php85():
+    assert "7.4 x 7.4" in fluxos.aviso_sem_php85({R74: 12})
+    assert "7.4 x 7.4" in fluxos.aviso_sem_php85({})
+    assert fluxos.aviso_sem_php85({R74: 11, R85: 1}) is None
+
+
+def test_resumo_dos_fluxos_avisa_que_mediu_7_4_x_7_4(tmp_path, monkeypatch):
+    from regressao.nucleo import ambiente
+    from regressao.nucleo.veredito import Caso
+    monkeypatch.setattr(ambiente, "_responde", lambda url: True)
+    monkeypatch.setattr(fluxos, "_dump_sha", lambda: "s")
+    for observado, avisa in (({R74: 3}, True), ({R74: 2, R85: 1}, False)):
+        monkeypatch.setattr(fluxos, "compara_fluxos", lambda *a, o=observado, **k: (
+            [Caso("fluxo:nav:login", "fluxos", I)], {"comparavel": True, "runtime_observado": o}))
+        saida = tmp_path / ("a" if avisa else "b")
+        fluxos.roda_fluxos_rodada(saida, "http://proxy")
+        resumo = (saida / "resumo.md").read_text(encoding="utf-8")
+        assert ("7.4 x 7.4" in resumo) is avisa
+
+
+def test_resumo_da_completa_avisa_quando_os_fluxos_nao_passaram_pelo_8_5():
+    from regressao.completa import orquestra
+    from regressao.nucleo.veredito import Caso
+    for observado, avisa in (({R74: 3}, True), ({R85: 1}, False)):
+        fl = orquestra.Frente("fluxos", 0, [Caso("fluxo:nav:login", "fluxos", I)],
+                              {"comparavel": True, "runtime_observado": observado}, 1.0)
+        _, _, avisos = orquestra.agrega({"fluxos": fl}, {}, {}, ["fluxos"])
+        assert any("7.4 x 7.4" in a for a in avisos) is avisa
+
+
+@pytest.fixture
+def gravacao(tmp_path, monkeypatch):
+    """`grava_fluxos` sem navegador, banco nem proxy; devolve a lista de baselines gravadas."""
+    from regressao.nucleo import ambiente
+    gravadas = []
+    monkeypatch.setattr(fluxos, "DIR_BASELINE", tmp_path / "baseline")
+    monkeypatch.setattr(ambiente, "_responde", lambda url: True)
+    monkeypatch.setattr(fluxos, "_prepara_banco", lambda restaurar, meta: None)
+    monkeypatch.setattr(fluxos, "versoes_navegador", lambda: {})
+    monkeypatch.setattr(fluxos, "_dump_sha", lambda: "s")
+    monkeypatch.setattr(fluxos, "grava_baseline", lambda d, fs, *a, **k: gravadas.append([f["id"] for f in fs]))
+    return gravadas
+
+
+def test_gravar_recusa_passo_servido_por_outro_runtime(gravacao, tmp_path, monkeypatch, capsys):
+    misto = fluxo(passo("login", runtime={"/a.php": R74}), passo("tela", runtime={"/b.php": R85}))
+    monkeypatch.setattr(fluxos, "executa_fluxos", lambda proxy, ids, versoes: [misto])
+    assert fluxos.grava_fluxos(tmp_path / "s", "http://proxy") == 2
+    assert gravacao == []
+    err = capsys.readouterr().err
+    assert "baseline NAO gravada" in err and "/b.php" in err and "PHP-8.5" in err
+
+
+def test_gravar_aceita_quando_todos_os_passos_vieram_do_7_4(gravacao, tmp_path, monkeypatch):
+    so74 = fluxo(passo("login", runtime={"/a.php": R74}), passo("sair", runtime={}))
+    monkeypatch.setattr(fluxos, "executa_fluxos", lambda proxy, ids, versoes: [so74])
+    assert fluxos.grava_fluxos(tmp_path / "s", "http://proxy") == 0
+    assert gravacao == [["nav"]]

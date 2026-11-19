@@ -5,7 +5,8 @@
 
 O proxy e a entrada real do usuario: ele manda cada tela para a referencia PHP 7.4 ou para o 8.5 e diz
 qual no cabecalho `X-Ecidade-Runtime`. Esse cabecalho e REGISTRADO em cada requisicao principal mas NUNCA
-e motivo de falha: ele vai mudar na migracao; aparece como INFO no detalhe.
+e motivo de falha no `comparar`: ele vai mudar na migracao; aparece como INFO no detalhe, e o resumo AVISA quando
+nenhum passo veio do 8.5 (a rodada mediu 7.4 x 7.4). O `gravar` recusa passo servido por outro runtime que nao o 7.4.
 
 Base 7.4 (PR #8): o login abre o Desktop (`/extension/desktop`, ECIDADE_DESKTOP forcado). O usuario abre o
 MENU, escolhe instituicao, area e modulo, e cada item de menu abre uma JANELA do Desktop com o frame `corpo`
@@ -852,6 +853,24 @@ def executa_fluxos(proxy_url: str, ids: list[str] | None = None, versoes: dict |
 
 # ------------------------------------------------------------------ gravar / comparar
 
+RUNTIME_REFERENCIA = "PHP-7.4"  # inicio do X-Ecidade-Runtime da referencia (regressao/lab/proxy/nginx-e74.conf)
+
+
+def aviso_sem_php85(runtime_observado: dict) -> str | None:
+    """AVISO quando nenhuma requisicao dos fluxos foi servida pelo PHP 8.5: com o proxy mandando tudo ao 7.4, a
+    rodada comparou 7.4 x 7.4 (prova a estabilidade da medicao, nao a migracao)."""
+    if any("8.5" in str(v) for v in runtime_observado):
+        return None
+    return ("FLUXOS 7.4 x 7.4: nenhum passo veio do PHP 8.5 (X-Ecidade-Runtime); o proxy mandou tudo a referencia. "
+            "Os fluxos NAO mediram a migracao: mande telas ao 8.5 em regressao/lab/proxy/map-e74.conf.")
+
+
+def _fora_da_referencia(fluxos: list[dict]) -> list[str]:
+    """Requisicoes principais servidas por um runtime que nao e a referencia 7.4 (`fluxo/passo caminho: runtime`)."""
+    return [f"{f['id']}/{p['nome']} {caminho}: {rt}" for f in fluxos for p in f["passos"]
+            for caminho, rt in sorted(p.get("runtime", {}).items()) if not str(rt).startswith(RUNTIME_REFERENCIA)]
+
+
 def _dump_sha() -> str:
     from regressao.nucleo.banco import ARQ_SHA256
     return ARQ_SHA256.read_text().split()[0]
@@ -951,6 +970,8 @@ def roda_fluxos_rodada(diretorio_saida: Path, proxy_url: str | None = None, rest
         meta.update(extra)
         if extra.get("aviso"):
             avisos.append(extra["aviso"])
+        if "runtime_observado" in extra and (a := aviso_sem_php85(extra["runtime_observado"])):
+            avisos.append(a)
     meta["tempo_total_s"] = round(time.monotonic() - inicio, 1)
     meta["banco_apos_a_rodada"] = "SUJO por construcao (registro de teste em grupotaxa, sessoes); a proxima bateria restaura"
     if any(c.veredito == Veredito.INCONCLUSIVO for c in casos):
@@ -987,6 +1008,11 @@ def grava_fluxos(diretorio_saida: Path, proxy_url: str | None = None, restaurar:
     quebrados = [(f["id"], p["nome"], p["erro"]) for f in atuais for p in f["passos"] if not p["ok"]]
     if quebrados:
         print(f"erro: passos falharam na gravacao; baseline NAO gravada: {quebrados}", file=sys.stderr)
+        return 2
+    if fora := _fora_da_referencia(atuais):
+        print(f"erro: a baseline so nasce da referencia {RUNTIME_REFERENCIA}; {len(fora)} requisicao(oes) vieram de "
+              f"outro runtime (X-Ecidade-Runtime); baseline NAO gravada. Volte o proxy (map-e74.conf) para o 7.4: "
+              f"{fora[:10]}", file=sys.stderr)
         return 2
     grava_baseline(DIR_BASELINE, atuais, _dump_sha(), git.commit(RAIZ), completo=ids is None)
     d = Path(diretorio_saida)

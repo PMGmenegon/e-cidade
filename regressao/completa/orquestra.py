@@ -35,6 +35,7 @@ from collections import Counter
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
+from regressao.completa.fluxos import aviso_sem_php85
 from regressao.laravel.token import redige
 from regressao.nucleo import git
 from regressao.nucleo.ambiente import alvos_do_ambiente, verifica
@@ -270,6 +271,9 @@ def agrega(frentes: dict[str, Frente], meta_repo: dict, tempos: dict, partes: li
                           + (f" ({b['erro']})" if b["erro"] else " (ver meta da sub-rodada)"))
     if not partes or "fluxos" not in partes:
         avisos.append("fluxos de navegador NAO executados (--sem-fluxos)")
+    fl = frentes.get("fluxos")
+    if fl and "runtime_observado" in fl.meta and (a := aviso_sem_php85(fl.meta["runtime_observado"])):
+        avisos.append(a)
     n_inc = sum(1 for c in casos if c.veredito == Veredito.INCONCLUSIVO)
     if n_inc:
         avisos.append(f"{n_inc} caso(s) INCONCLUSIVO: NAO sao aprovacao (nao foram exercitados) - "
