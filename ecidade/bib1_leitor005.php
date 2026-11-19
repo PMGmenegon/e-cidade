@@ -59,7 +59,7 @@ if(isset($confirmar)){
  exit;
 }
 $result = db_query("SELECT ed47_v_nome FROM aluno WHERE ed47_i_codigo = $aluno");
-$nomealuno = trim(pg_result($result,0,0));
+$nomealuno = trim(($result ? pg_result($result,0,0) : null));
 function NomeUsuario($usuario){
  if($usuario!=""){
   $result = db_query("SELECT nome FROM db_usuarios WHERE id_usuario = $usuario");
@@ -102,7 +102,7 @@ $array_modulo = array("1"=>"ESCOLA","2"=>"BIBLIOTECA");
              ORDER BY ed275_i_data DESC
             ";
     $result3 = db_query($sql3);
-    for($x=0;$x<pg_num_rows($result3);$x++){
+    for($x=0;$x<($result3 ? pg_num_rows($result3) : null);$x++){
      db_fieldsmemory($result3,$x);
      $codigo_alunoalt .= $sep.$ed275_i_codigo;
      $sep = ",";

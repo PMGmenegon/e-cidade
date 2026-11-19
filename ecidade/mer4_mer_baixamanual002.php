@@ -462,11 +462,11 @@ for($x=0;$x<$clmer_cardapiodia->numrows;$x++){
  $msg_erro = "";
  $sep1 = "";
  $sep2 = "";
- for($y=0;$y<pg_num_rows($result_dados);$y++){
+ for($y=0;$y<($result_dados ? pg_num_rows($result_dados) : null);$y++){
   db_fieldsmemory($result_dados,$y);
   if($primeiro!=$m60_codmater){
    if($y>0){
-    $estoque = pg_result($result_dados,$y-1,'m70_quant');
+    $estoque = ($result_dados ? pg_result($result_dados,$y-1,'m70_quant') : null);
     $estoque = $estoque==""?0:$estoque;
     ?>
     <td align="center" width="5%">

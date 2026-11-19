@@ -886,7 +886,7 @@ $array_registro = array("null"=>"","00"=>"Registro 00 - Identificação","10"=>"Re
                          "Código INEP do Docente:<b> ".trim($explode_linha[2])."</b>",
                          "Código do Docente na Escola:<b> ".trim($explode_linha[3])." - ".$nome_docente."</b><br>");
              
-                          for ($t = 0; $t < count($array); $t++) {
+                          for ($t = 0; $t < count((array)$array); $t++) {
                               echo $array[$t]."<br>";
                           }
                           $primeiro = 1;
