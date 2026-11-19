@@ -18,7 +18,7 @@ def test_laboratorio_e_o_runtime_do_php85_do_e74_com_outro_codigo():
     svc = lab["services"]["ecidade74_lar12"]
     assert lab["name"] != e74["name"]                 # projeto proprio: down do lab nao derruba o e74
     assert svc["container_name"] == "ecidade74_lar12"
-    assert svc["ports"] == ["8187:80"]
+    assert svc["ports"] == ["127.0.0.1:8187:80"]
     assert svc["pull_policy"] == "never" and "build" not in svc
     assert svc["image"] == "${LAR12_IMAGEM:-ecidade74-php85:latest}"
     assert php85["image"].endswith("ecidade74-php85:latest}")
@@ -31,3 +31,13 @@ def test_laboratorio_e_o_runtime_do_php85_do_e74_com_outro_codigo():
     assert lab["volumes"]["e74_sessions"] == {"external": True} and lab["volumes"]["e74_tmp"] == {"external": True}
     assert e74["volumes"]["sessions"]["name"] == "e74_sessions" and e74["volumes"]["tmp"]["name"] == "e74_tmp"
     assert lab["networks"]["e74"] == {"external": True, "name": e74["networks"]["ecidade74"]["name"]}
+
+
+def test_portas_do_ambiente_so_no_localhost():
+    """Login de teste conhecido (dbseller/dbseller): as portas nao podem aparecer na rede local."""
+    portas = {nome: svc.get("ports", [])
+              for arq in ("docker-compose.e74.yml", "docker-compose.lar12.yml")
+              for nome, svc in _servicos(arq)["services"].items()}
+    assert portas == {"ecidade74_database": [], "ecidade74_php74": ["127.0.0.1:8074:80"],
+                      "ecidade74_php85": ["127.0.0.1:8185:80"], "ecidade74_proxy": ["127.0.0.1:8190:80"],
+                      "ecidade74_lar12": ["127.0.0.1:8187:80"]}

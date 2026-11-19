@@ -5,8 +5,11 @@
 #   proxy (uma origem so)           -> http://localhost:8190   container ecidade74_proxy
 #   banco PostgreSQL 16             -> sem porta publicada      container ecidade74_database
 #
+# As portas sao publicadas SO em 127.0.0.1: o login de teste (dbseller/dbseller) e conhecido e o ambiente nao
+# pode aparecer na rede local. Para abrir de outra maquina use um tunel (ssh -L), nunca 0.0.0.0.
+#
 # Convive com a pilha antiga (ecidade_*, :8080/:8085/:8090) e com outros projetos do host
-# (ex.: o :8080 do Evolution): nomes, portas, rede e volumes sao todos proprios do projeto `e74`.
+# (ex.: outro projeto local na porta 8080): nomes, portas, rede e volumes sao todos proprios do projeto `e74`.
 # Nada aqui para, recria ou reaproveita container de outro projeto.
 #
 # Uso (da raiz do repositorio):
@@ -53,7 +56,7 @@ services:
     image: ecidade-php74:latest
     container_name: ecidade74_php74
     ports:
-      - "8074:80"
+      - "127.0.0.1:8074:80"
     environment: &db
       DB_HOST: ecidade74_database
       DB_PORT: 5432
@@ -78,7 +81,7 @@ services:
     image: ${E74_PHP85_IMAGEM:-ecidade74-php85:latest}
     container_name: ecidade74_php85
     ports:
-      - "8185:80"
+      - "127.0.0.1:8185:80"
     environment: *db
     volumes:
       - ../../ecidade:/var/www/html/
@@ -96,7 +99,7 @@ services:
     image: nginx:1.27-alpine
     container_name: ecidade74_proxy
     ports:
-      - "8190:80"
+      - "127.0.0.1:8190:80"
     volumes:
       - ./proxy/nginx-e74.conf:/etc/nginx/conf.d/default.conf:ro
       - ./proxy/map-e74.conf:/etc/nginx/map-e74.conf:ro

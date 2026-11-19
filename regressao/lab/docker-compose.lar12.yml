@@ -30,7 +30,7 @@ services:
     pull_policy: never
     container_name: ecidade74_lar12
     ports:
-      - "8187:80"
+      - "127.0.0.1:8187:80"
     environment:
       DB_HOST: ecidade74_database
       DB_PORT: 5432
