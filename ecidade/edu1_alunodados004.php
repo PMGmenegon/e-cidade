@@ -140,7 +140,7 @@ $array_modulo = array("1"=>"ESCOLA","2"=>"BIBLIOTECA");
       ?>
       <tr bgcolor="#f3f3f3">
        <td>&nbsp;</td>
-       <td><?=$$label_aluno?></td>
+       <td><?=${$label_aluno}?></td>
        <td><?=$ed276_c_contant==""?"&nbsp;":$ed276_c_contant?></td>
        <td><?=$ed276_c_contatual==""?"&nbsp;":$ed276_c_contatual?></td>
       </tr>

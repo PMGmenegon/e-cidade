@@ -209,7 +209,7 @@ for ($x = 0; $x < count($codensinos); $x++) {
     );
     db_fieldsmemory($result10, 0);
     $cabecalho  = "head".($x+6);
-    $$cabecalho = "-> ".$codigo_ensino." - ".$descrensino;
+    ${$cabecalho} = "-> ".$codigo_ensino." - ".$descrensino;
 
 }
 
