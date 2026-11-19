@@ -188,7 +188,7 @@ $oDadosTotal->total_geral     = 0;
 $oDadosTotal->custas_geral    = 0;
 $lOutrosDebitos       = false;
 $lOutrosTipos         = false;
-if ( pg_num_rows($rsOutrosDebitos) > pg_numrows($rsDebitos)) {
+if ( ($rsOutrosDebitos ? pg_num_rows($rsOutrosDebitos) : null) > ($rsDebitos ? pg_numrows($rsDebitos) : null)) {
   $lOutrosDebitos = true;
 }
 
@@ -342,7 +342,7 @@ foreach ($oDadosDebitos as $aDados) {
     $sSqlProcessoForo .= " inner join processoforoinicial  on processoforoinicial.v71_inicial = inicial.inicial       ";
     $sSqlProcessoForo .= " inner join processoforo         on processoforo.v70_sequencial     = processoforoinicial.v71_processoforo ";
     $rsProcessoForo = db_query($sSqlProcessoForo);
-    if (pg_num_rows($rsProcessoForo) > 0) {
+    if (($rsProcessoForo ? pg_num_rows($rsProcessoForo) : null) > 0) {
       $oDadosProcessoForo = db_utils::getCollectionByRecord($rsProcessoForo);
 
       $aDadosProcessado->processo_foro = $oDadosProcessoForo;
@@ -373,7 +373,7 @@ foreach ($oDadosDebitos as $aDados) {
 														 order by v76_sequencial desc;
 														     \n";
       $rsDadosPartilha = db_query($sSqlDadosPartilha);
-      if (pg_num_rows($rsDadosPartilha) > 0) {
+      if (($rsDadosPartilha ? pg_num_rows($rsDadosPartilha) : null) > 0) {
 
           for ($iInd=0; $iInd < $rsDadosPartilha; $iInd++) {
              $aDadosPartilha = db_utils::fieldsmemory($rsDadosPartilha, $iInd);
@@ -722,7 +722,7 @@ $sSqlSuspensao .= " 			      arresusp.k00_numpre,									                      
 $sSqlSuspensao .= " 			      arresusp.k00_numpar,									                            ";
 $sSqlSuspensao .= " 			      arresusp.k00_receit 									                            ";
 $rsSuspensao      = db_query($sSqlSuspensao);
-$iLinhasSuspensao = pg_num_rows($rsSuspensao);
+$iLinhasSuspensao = ($rsSuspensao ? pg_num_rows($rsSuspensao) : null);
 $aSuspensao		 = array();
 
 if ( $iLinhasSuspensao > 0 ) {

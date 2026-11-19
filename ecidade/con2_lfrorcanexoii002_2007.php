@@ -363,9 +363,9 @@ $pdf->cell(20,$alt,db_formatar($soma_nobempenhado,'f'),"LRT",0,"R",0);
 $pdf->cell(20,$alt,db_formatar($soma_aempenhado,'f'),"LRT",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($soma_nobliquidado,'f'),"LRT",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($soma_aliquidado,'f'),"LRT",0,"R",0);
-@$totalae = ($soma_aliquidado/$soma_aliquidado)*100;
+@$totalae = ((float) $soma_aliquidado == 0 ? (float) $soma_aliquidado > 0 ? INF : ((float) $soma_aliquidado < 0 ? -INF : NAN) : $soma_aliquidado / $soma_aliquidado)*100;
 $pdf->cell(8,$alt,db_formatar($totalae,'f'),"LRT",0,"R",0);
-@$ttotalae = ($soma_dot_ini/$soma_aliquidado)*100;
+@$ttotalae = ((float) $soma_aliquidado == 0 ? (float) $soma_dot_ini > 0 ? INF : ((float) $soma_dot_ini < 0 ? -INF : NAN) : $soma_dot_ini / $soma_aliquidado)*100;
 $pdf->cell(8,$alt," - ","LRT",0,"C",0);
 $pdf->cell(20,$alt,db_formatar($soma_atualizada - $soma_aliquidado,'f'),"LT",1,"R",0);
 
@@ -433,9 +433,9 @@ for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
     $pdf->cell(20,$alt,db_formatar($soma_emp_ac[$y],'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($soma_liq[$y],'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($soma_liq_ac[$y],'f'),"LR",0,"R",0);
-    @$etotal = ($soma_liq_ac[$y]/$total_e)*100;
+    @$etotal = ((float) $total_e == 0 ? (float) $soma_liq_ac[$y] > 0 ? INF : ((float) $soma_liq_ac[$y] < 0 ? -INF : NAN) : $soma_liq_ac[$y] / $total_e)*100;
     $pdf->cell(8,$alt,db_formatar($etotal,'f'),"LR",0,"R",0);
-    @$ae = ($soma_liq_ac[$y]/$soma_dot_at[$y])*100;
+    @$ae = ((float) $soma_dot_at[$y] == 0 ? (float) $soma_liq_ac[$y] > 0 ? INF : ((float) $soma_liq_ac[$y] < 0 ? -INF : NAN) : $soma_liq_ac[$y] / $soma_dot_at[$y])*100;
     $func_muda = $o58_funcao;
     $pdf->cell(8,$alt,db_formatar($ae,'f'),"LR",0,"R",0);
     $pdf->cell(20,$alt,db_formatar($soma_dot_at[$y]-$soma_liq_ac[$y],'f'),0,1,"R",0);
@@ -450,10 +450,10 @@ for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
     $pdf->cell(20,$alt,db_formatar($empenhado_acumulado_p - $anulado_acumulado_p,'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($liquidado_p,'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($liquidado_acumulado_p,'f'),"LR",0,"R",0);
-    @$etotal = ($liquidado_acumulado_p/$total_e)*100;
+    @$etotal = ((float) $total_e == 0 ? (float) $liquidado_acumulado_p > 0 ? INF : ((float) $liquidado_acumulado_p < 0 ? -INF : NAN) : $liquidado_acumulado_p / $total_e)*100;
     $pdf->cell(8,$alt,db_formatar($etotal,'f'),"LR",0,"R",0);
     if (($dot_ini_p + $suplementado_p - $reduzir_p) != 0) {
-      $ae = ($liquidado_acumulado_p/($dot_ini_p + $suplementado_p - $reduzir_p))*100;
+      $ae = ((float) ($dot_ini_p + $suplementado_p - $reduzir_p) == 0 ? (float) $liquidado_acumulado_p > 0 ? INF : ((float) $liquidado_acumulado_p < 0 ? -INF : NAN) : $liquidado_acumulado_p / ($dot_ini_p + $suplementado_p - $reduzir_p))*100;
     }else{
       $ae =0;
     }
@@ -498,9 +498,9 @@ $pdf->cell(20,$alt,db_formatar($xsoma_nobempenhado,'f'),"LR",0,"R",0);
 $pdf->cell(20,$alt,db_formatar($xsoma_aempenhado,'f'),"LR",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($xsoma_nobliquidado,'f'),"LR",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($xsoma_aliquidado,'f'),"LR",0,"R",0);
-@$totalae = ($xsoma_aliquidado/$xsoma_aliquidado)*100;
+@$totalae = ((float) $xsoma_aliquidado == 0 ? (float) $xsoma_aliquidado > 0 ? INF : ((float) $xsoma_aliquidado < 0 ? -INF : NAN) : $xsoma_aliquidado / $xsoma_aliquidado)*100;
 $pdf->cell(8,$alt,db_formatar($totalae,'f'),"LR",0,"R",0);
-@$ttotalae = ($xsoma_dot_ini/$xsoma_aliquidado)*100;
+@$ttotalae = ((float) $xsoma_aliquidado == 0 ? (float) $xsoma_dot_ini > 0 ? INF : ((float) $xsoma_dot_ini < 0 ? -INF : NAN) : $xsoma_dot_ini / $xsoma_aliquidado)*100;
 $pdf->cell(8,$alt," - ","LR",0,"C",0);
 $pdf->cell(20,$alt,db_formatar($xsoma_atualizada - $xsoma_aliquidado,'f'),"L",1,"R",0);
 
@@ -563,9 +563,9 @@ for($i=0;$i<($result_intra ? pg_numrows($result_intra) : null);$i++){
     $pdf->cell(20,$alt,db_formatar($soma_emp_ac_intra[$y],'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($soma_liq_intra[$y],'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($soma_liq_ac_intra[$y],'f'),"LR",0,"R",0);
-    @$etotal = ($soma_liq_ac_intra[$y]/$total_e_intra)*100;
+    @$etotal = ((float) $total_e_intra == 0 ? (float) $soma_liq_ac_intra[$y] > 0 ? INF : ((float) $soma_liq_ac_intra[$y] < 0 ? -INF : NAN) : $soma_liq_ac_intra[$y] / $total_e_intra)*100;
     $pdf->cell(8,$alt,db_formatar($etotal,'f'),"LR",0,"R",0);
-    @$ae = ($soma_liq_ac_intra[$y]/$soma_dot_at_intra[$y])*100;
+    @$ae = ((float) $soma_dot_at_intra[$y] == 0 ? (float) $soma_liq_ac_intra[$y] > 0 ? INF : ((float) $soma_liq_ac_intra[$y] < 0 ? -INF : NAN) : $soma_liq_ac_intra[$y] / $soma_dot_at_intra[$y])*100;
     $func_muda = $o58_funcao;
     $pdf->cell(8,$alt,db_formatar($ae,'f'),"LR",0,"R",0);
     $pdf->cell(20,$alt,db_formatar($soma_dot_at_intra[$y]-$soma_liq_ac_intra[$y],'f'),0,1,"R",0);
@@ -581,10 +581,10 @@ for($i=0;$i<($result_intra ? pg_numrows($result_intra) : null);$i++){
     $pdf->cell(20,$alt,db_formatar($empenhado_acumulado_p - $anulado_acumulado_p,'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($liquidado_p,'f'),"LR",0,"R",0);
     $pdf->cell(17,$alt,db_formatar($liquidado_acumulado_p,'f'),"LR",0,"R",0);
-    @$etotal = ($liquidado_acumulado_p/$total_e)*100;
+    @$etotal = ((float) $total_e == 0 ? (float) $liquidado_acumulado_p > 0 ? INF : ((float) $liquidado_acumulado_p < 0 ? -INF : NAN) : $liquidado_acumulado_p / $total_e)*100;
     $pdf->cell(8,$alt,db_formatar($etotal,'f'),"LR",0,"R",0);
     if (($dot_ini_p + $suplementado_p) != 0) {
-        $ae = ($liquidado_acumulado_p/($dot_ini_p + $suplementado_p))*100;
+        $ae = ((float) ($dot_ini_p + $suplementado_p) == 0 ? (float) $liquidado_acumulado_p > 0 ? INF : ((float) $liquidado_acumulado_p < 0 ? -INF : NAN) : $liquidado_acumulado_p / ($dot_ini_p + $suplementado_p))*100;
     }else{
         $ae =0;
     }
@@ -610,9 +610,9 @@ $pdf->cell(20,$alt,db_formatar($soma_nobempenhado,'f'),"LRTB",0,"R",0);
 $pdf->cell(20,$alt,db_formatar($soma_aempenhado,'f'),"LRTB",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($soma_nobliquidado,'f'),"LRTB",0,"R",0);
 $pdf->cell(17,$alt,db_formatar($soma_aliquidado,'f'),"LRTB",0,"R",0);
-@$totalae = ($soma_aliquidado/$soma_aliquidado)*100;
+@$totalae = ((float) $soma_aliquidado == 0 ? (float) $soma_aliquidado > 0 ? INF : ((float) $soma_aliquidado < 0 ? -INF : NAN) : $soma_aliquidado / $soma_aliquidado)*100;
 $pdf->cell(8,$alt,db_formatar($totalae,'f'),"LRTB",0,"R",0);
-@$ttotalae = ($soma_dot_ini/$soma_aliquidado)*100;
+@$ttotalae = ((float) $soma_aliquidado == 0 ? (float) $soma_dot_ini > 0 ? INF : ((float) $soma_dot_ini < 0 ? -INF : NAN) : $soma_dot_ini / $soma_aliquidado)*100;
 $pdf->cell(8,$alt," - ","LRTB",0,"C",0);
 $pdf->cell(20,$alt,db_formatar($soma_atualizada - $soma_aliquidado,'f'),"TB",1,"R",0);
 $pdf->cell(190,$alt,'Fonte: Contabilidade',"",1,"L",0);
