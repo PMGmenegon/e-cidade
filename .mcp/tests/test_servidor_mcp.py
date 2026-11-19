@@ -185,6 +185,16 @@ def test_prompts(ambiente):
             assert frase in t, frase
 
 
+def test_verificar_com_regressao_so_libera_com_identico_nos_casos_da_mudanca(ambiente):
+    async def go():
+        async with Client(criar_servidor()) as c:
+            return await c.get_prompt("verificar-com-regressao", {"alvo": "ecidade/x.php"})
+    texto = chama(go).messages[0].content.text
+    assert "IDENTICO em TODOS os casos da mudanca" in texto
+    assert "INCONCLUSIVO num caso da mudanca NAO libera" in texto
+    assert "zero DIVERGE nova sem explicacao" not in texto  # o criterio antigo deixava INCONCLUSIVO passar
+
+
 def test_grupo_pelo_mcp_e_alvo_laravel_13(ambiente):
     for nome in ("regras-do-grupo.md", "guia-7.4-para-8.5.md"):
         (ambiente / ".mcp" / "docs" / nome).write_text((DOCS_REAIS / nome).read_text(encoding="utf-8"))

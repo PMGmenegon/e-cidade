@@ -121,5 +121,9 @@ Passos:
    - INCONCLUSIVO: NAO exercitado (ex.: 500 nos dois lados, tela sem parametros). Nao conta como aprovado.
    - ERRO_AMBIENTE: a rodada nao vale; corrija o ambiente (conteiner, sessao, baseline) e rode de novo.
 5. Regressao em area de outra pessoa: so documente e avise o dono.
-6. Responda com: comando usado, totais por veredito, DIVERGE novas com causa, o que NAO foi exercitado, e se a
-   mudanca pode seguir (so com zero DIVERGE nova sem explicacao e nenhum ERRO_AMBIENTE)."""
+6. Liste os casos da mudanca (as telas/rotas/fluxos que o arquivo alcanca) e o veredito de cada um.
+7. A mudanca so pode seguir com IDENTICO em TODOS os casos da mudanca (ou DIVERGE explicada e aceita pelo usuario) e
+   nenhum ERRO_AMBIENTE. INCONCLUSIVO num caso da mudanca NAO libera: o caso nao foi exercitado; diga o que falta
+   para exercita-lo (parametros, dados, outro recorte) e rode de novo.
+8. Responda com: comando usado, totais por veredito, o veredito de cada caso da mudanca, DIVERGE novas com causa, o
+   que NAO foi exercitado e se a mudanca pode seguir pelo criterio do passo 7."""
