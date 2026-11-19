@@ -419,10 +419,10 @@ if (!isset($arqinclude)) {
 $nTotalRcl = somaRCLPeriodoAnexo3($aMesesRCLAtual, $aMesesRCLAnterior, $aRCL);
 
 $aLinhasRelatorio['27.1']->nobimestre  = $aParametros[19]->nobimestre;
-$aLinhasRelatorio['27.1']->atebimestre = round( ( ( $aParametros[19]->nobimestre / $nTotalRcl ) * 100 ), 2);
+$aLinhasRelatorio['27.1']->atebimestre = round( ( ( (float) $nTotalRcl == 0 ? (float) $aParametros[19]->nobimestre > 0 ? INF : ((float) $aParametros[19]->nobimestre < 0 ? -INF : NAN) : $aParametros[19]->nobimestre / $nTotalRcl ) * 100 ), 2);
 
 $aLinhasRelatorio['27.2']->nobimestre  = $aParametros[20]->nobimestre;
-$aLinhasRelatorio['27.2']->atebimestre = round( ( ( $aParametros[20]->nobimestre / $nTotalRcl ) * 100 ), 2);
+$aLinhasRelatorio['27.2']->atebimestre = round( ( ( (float) $nTotalRcl == 0 ? (float) $aParametros[20]->nobimestre > 0 ? INF : ((float) $aParametros[20]->nobimestre < 0 ? -INF : NAN) : $aParametros[20]->nobimestre / $nTotalRcl ) * 100 ), 2);
 
 // Inclui elemento no exercício anterior com base no atual;
 
@@ -433,13 +433,13 @@ $aLinhasRelatorio[27]->nobimestre  = $aLinhasRelatorio['27.1']->nobimestre   + $
 $aLinhasRelatorio[27]->atebimestre = $aLinhasRelatorio['27.1']->atebimestre  + $aLinhasRelatorio['27.2']->atebimestre;
 
 $aLinhasRelatorio[28]->nobimestre  = $aLinhasRelatorio[0]->atebimestre+$aLinhasRelatorio['27.1']->nobimestre;
-$aLinhasRelatorio[28]->atebimestre = @round( (($aLinhasRelatorio[28]->nobimestre)/ $nTotalRcl)*100,2);
+$aLinhasRelatorio[28]->atebimestre = @round( ((float) $nTotalRcl == 0 ? (float) $aLinhasRelatorio[28]->nobimestre > 0 ? INF : ((float) $aLinhasRelatorio[28]->nobimestre < 0 ? -INF : NAN) : $aLinhasRelatorio[28]->nobimestre / $nTotalRcl)*100,2);
 
 $aLinhasRelatorio[29]->nobimestre  = $nTotalRcl*0.16;
 $aLinhasRelatorio[29]->atebimestre = 16;
 
 $aLinhasRelatorio[30]->nobimestre  = $aLinhasRelatorio[10]->atebimestre;
-$aLinhasRelatorio[30]->atebimestre = @round( (($aLinhasRelatorio[30]->nobimestre)/$nTotalRcl)*100,2);
+$aLinhasRelatorio[30]->atebimestre = @round( ((float) $nTotalRcl == 0 ? (float) $aLinhasRelatorio[30]->nobimestre > 0 ? INF : ((float) $aLinhasRelatorio[30]->nobimestre < 0 ? -INF : NAN) : $aLinhasRelatorio[30]->nobimestre / $nTotalRcl)*100,2);
 
 $aLinhasRelatorio[31]->nobimestre  = $nTotalRcl* 0.07;;
 $aLinhasRelatorio[31]->atebimestre = 7;
@@ -448,7 +448,7 @@ $aLinhasRelatorio['29.1']->nobimestre  = round(($nTotalRcl *14.4) / 100, 2);
 $aLinhasRelatorio['29.1']->atebimestre = 14.4;
 
 $aLinhasRelatorio[32]->nobimestre  = $aLinhasRelatorio[16]->atebimestre  + $aLinhasRelatorio[28]->nobimestre;
-$aLinhasRelatorio[32]->atebimestre = round( ( ($aLinhasRelatorio[16]->atebimestre  + $aLinhasRelatorio[28]->nobimestre)/$nTotalRcl)*100, 2);
+$aLinhasRelatorio[32]->atebimestre = round( ( (float) $nTotalRcl == 0 ? (float) ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) > 0 ? INF : ((float) ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) < 0 ? -INF : NAN) : ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) / $nTotalRcl)*100, 2);
 
 if (!isset($arqinclude)) {
 
@@ -573,7 +573,7 @@ $perc_total_operacoes_credito = 0;
 
 $total_operacoes_credito = $nTotalExternas+$nTotalInternas;
 if ($nTotalRcl > 0){
-  $perc_total_operacoes_credito	= (($nTotalExternas + $nTotalInternas) / $nTotalRcl)*100;
+  $perc_total_operacoes_credito	= ((float) $nTotalRcl == 0 ? (float) ($nTotalExternas + $nTotalInternas) > 0 ? INF : ((float) ($nTotalExternas + $nTotalInternas) < 0 ? -INF : NAN) : ($nTotalExternas + $nTotalInternas) / $nTotalRcl)*100;
 }
 
 $total_antecipacao_receita = 0;
@@ -581,7 +581,7 @@ $perc_antecipacao_receita  = 0;
 
 $total_antecipacao_receita	= $nTotalOperacoesCredito ;
 if ($nTotalRcl > 0){
-  $perc_antecipacao_receita	= (($nTotalOperacoesCredito)/$nTotalRcl)*100;
+  $perc_antecipacao_receita	= ((float) $nTotalRcl == 0 ? (float) $nTotalOperacoesCredito > 0 ? INF : ((float) $nTotalOperacoesCredito < 0 ? -INF : NAN) : $nTotalOperacoesCredito / $nTotalRcl)*100;
 }
 
 // Variaveis do relatorio

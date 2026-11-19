@@ -400,20 +400,20 @@ $aLinhasRelatorio[27]->nobimestre  = $aParametros[18]->nobimestre;
 $aLinhasRelatorio[27]->atebimestre = $aParametros[18]->atebimestre;
 
 $aLinhasRelatorio[28]->nobimestre  = $aLinhasRelatorio[0]->atebimestre+$aLinhasRelatorio[27]->atebimestre;
-$aLinhasRelatorio[28]->atebimestre = @(($aLinhasRelatorio[28]->nobimestre)/ $nTotalRcl)*100;
+$aLinhasRelatorio[28]->atebimestre = @((float) $nTotalRcl == 0 ? (float) $aLinhasRelatorio[28]->nobimestre > 0 ? INF : ((float) $aLinhasRelatorio[28]->nobimestre < 0 ? -INF : NAN) : $aLinhasRelatorio[28]->nobimestre / $nTotalRcl)*100;
 
 $aLinhasRelatorio[29]->nobimestre  = $nTotalRcl*0.16;
 $aLinhasRelatorio[29]->atebimestre = 16;
 
 $aLinhasRelatorio[30]->nobimestre  = $aLinhasRelatorio[10]->atebimestre;
-$aLinhasRelatorio[30]->atebimestre = @(($aLinhasRelatorio[30]->nobimestre)/$nTotalRcl)*100;
+$aLinhasRelatorio[30]->atebimestre = @((float) $nTotalRcl == 0 ? (float) $aLinhasRelatorio[30]->nobimestre > 0 ? INF : ((float) $aLinhasRelatorio[30]->nobimestre < 0 ? -INF : NAN) : $aLinhasRelatorio[30]->nobimestre / $nTotalRcl)*100;
 
 $aLinhasRelatorio[31]->nobimestre  = $nTotalRcl* 0.07;;
 $aLinhasRelatorio[31]->atebimestre = 7;
 
 
 $aLinhasRelatorio[32]->nobimestre  = $aLinhasRelatorio[16]->atebimestre  + $aLinhasRelatorio[28]->nobimestre;
-$aLinhasRelatorio[32]->atebimestre = (($aLinhasRelatorio[16]->atebimestre  + $aLinhasRelatorio[28]->nobimestre)/$nTotalRcl)*100;
+$aLinhasRelatorio[32]->atebimestre = ((float) $nTotalRcl == 0 ? (float) ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) > 0 ? INF : ((float) ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) < 0 ? -INF : NAN) : ($aLinhasRelatorio[16]->atebimestre + $aLinhasRelatorio[28]->nobimestre) / $nTotalRcl)*100;
 
 if (!isset($arqinclude)) {
 
@@ -534,7 +534,7 @@ $perc_total_operacoes_credito = 0;
 
 $total_operacoes_credito = $nTotalExternas+$nTotalInternas;
 if ($nTotalRcl > 0){
-  $perc_total_operacoes_credito	= (($nTotalExternas + $nTotalInternas) / $nTotalRcl)*100;
+  $perc_total_operacoes_credito	= ((float) $nTotalRcl == 0 ? (float) ($nTotalExternas + $nTotalInternas) > 0 ? INF : ((float) ($nTotalExternas + $nTotalInternas) < 0 ? -INF : NAN) : ($nTotalExternas + $nTotalInternas) / $nTotalRcl)*100;
 }
 
 $total_antecipacao_receita = 0;
@@ -542,7 +542,7 @@ $perc_antecipacao_receita  = 0;
 
 $total_antecipacao_receita	= $nTotalOperacoesCredito ;
 if ($nTotalRcl > 0){
-  $perc_antecipacao_receita	= (($nTotalOperacoesCredito)/$nTotalRcl)*100;
+  $perc_antecipacao_receita	= ((float) $nTotalRcl == 0 ? (float) $nTotalOperacoesCredito > 0 ? INF : ((float) $nTotalOperacoesCredito < 0 ? -INF : NAN) : $nTotalOperacoesCredito / $nTotalRcl)*100;
 }
 
 // Variaveis do relatorio
