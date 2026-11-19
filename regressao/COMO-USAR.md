@@ -2,6 +2,8 @@
 
 Para quem vai rodar ou ler a regressão sem ter participado do projeto: desenvolvedor, QA ou gestor. O detalhe técnico
 (cada bateria, cada opção) está em [`regressao/README.md`](README.md); aqui está o necessário para usar e entender.
+O histórico e as decisões estão em [`docs/regressao-php74/01-passo-a-passo-do-que-foi-feito.md`](../docs/regressao-php74/01-passo-a-passo-do-que-foi-feito.md);
+um tutorial passo a passo (regressão + MCP), em [`docs/regressao-php74/02-tutorial-de-uso.md`](../docs/regressao-php74/02-tutorial-de-uso.md).
 
 ## Em uma frase
 

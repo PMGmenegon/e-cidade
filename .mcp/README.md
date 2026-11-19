@@ -10,6 +10,10 @@ apaga nada, não roda comando livre.
 **Alvo:** PHP 8.5 com **Laravel 13 + Passport 13**, partindo da `base-php74` (PR #8: PHP 7.4 + Laravel 8). O 7.4 fica
 intacto como referência; o 8.5 terá composer próprio.
 
+Para quem não participou: o que foi feito e por quê em
+[`docs/regressao-php74/01-passo-a-passo-do-que-foi-feito.md`](../docs/regressao-php74/01-passo-a-passo-do-que-foi-feito.md);
+tutorial prático (regressão + MCP) em [`docs/regressao-php74/02-tutorial-de-uso.md`](../docs/regressao-php74/02-tutorial-de-uso.md).
+
 ## Regras do grupo (o essencial)
 
 O servidor ensina à sua IA as regras do `CONTRIBUINDO.md` e do guia do grupo (íntegra: tool `regras_do_grupo`,
