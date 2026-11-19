@@ -375,7 +375,7 @@ juntos dão exatamente a árvore final). Commits do Rector e manuais nunca mistu
 
 | Branch do PR | Commits | Arquivos |
 | --- | --- | --- |
-| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`) | 430 |
+| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 51 classes `ed*`/`bi*` achadas pela regressão | 481 |
 | `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas | 532 |
 | `educacao/func` | Rector nas `func_` (2 commits) — separado: descartável se a branch de `func_` do Pedro chegar antes | 258 |
 | `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; este registro | 84 |
@@ -419,6 +419,24 @@ Além disso: HTML inline idêntico ao da base em 1.279 arquivos (`token_get_all`
 codificação ISO-8859-1 preservada, fim de arquivo restaurado onde o Rector acrescentou uma quebra de linha.
 O passo 4b acusa `extract`, `is_array` e `preg_split` — o script ainda compara com o 5.6; as
 três existem no 7.4. A bateria byte a byte (passo 7) não rodou: depende do núcleo portado.
+
+### Regressão no ambiente `e74` (19/11/2026)
+
+Bateria PHP da suíte `regressao/` (branch `regressao-php74`), referência 7.4 (:8074) × alvo 8.5 (:8185), sobre as
+1.570 telas `bib/edu/esc/mer/rel/sec/tre`, as classes que elas usam e a sintaxe. Mesma baseline do banco nas duas
+rodadas (dump local gerado pela seção 2 do README da regressão, não o v2 do time: os números valem como comparação
+antes × depois, não como baseline oficial).
+
+| Bloco | Antes (base) idêntico / diverge | Depois (4 PRs) idêntico / diverge |
+| --- | --- | --- |
+| Classes (320) | 1 / 317 | 279 / 39 |
+| Sintaxe (1.569) | 1.563 / 2 | 1.565 / 0 |
+| Telas (1.570) | 650 / 851 | 1.064 / 382 |
+
+**Nenhum caso que era idêntico passou a divergir.** 694 casos passaram de "diverge" para "idêntico". Das 39 classes
+que ainda divergiam, 36 são de outras áreas (material, RH, CGM, configuração, saúde, veículos) usadas pelas telas da
+Educação; as outras 3 levaram à correção das 51 classes `ed*`/`bi*` (commit próprio no PR `educacao/classes`). Das
+telas que ainda divergem, quase todas são HTTP 500 só no 8.5, o padrão dos defeitos do núcleo listados abaixo.
 
 ### Fora da Educação (anotado para os donos)
 
