@@ -191,7 +191,7 @@ def rodar_regressao(
                              "(ex.: '^arr1_') ou passe confirmo_rodada_longa=true")
     if bateria == "laravel" and not confirmo_rodada_longa:
         raise ErroFerramenta("confirmacao_necessaria",
-                             "a bateria laravel restaura o banco e roda todos os ~380 casos (~12 min); confirme com "
+                             "a bateria laravel restaura o banco e roda todos os 992 casos (~16 min); confirme com "
                              "confirmo_rodada_longa=true")
     if bateria == "fluxos" and not fluxo and not confirmo_rodada_longa:
         raise ErroFerramenta("confirmacao_necessaria",

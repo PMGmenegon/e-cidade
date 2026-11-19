@@ -129,7 +129,10 @@ severidade. O código é lido como ISO-8859-1.
   `ecidade74_php85` (8.5), com uma lista fechada de comandos.
 - **A suíte `regressao/`**: roda **no host** (WSL), com o venv dela (`regressao/.venv`), porque o código dela não está
   montado nos contêineres e ela mesma comanda os contêineres (HTTP e `docker exec`). O MCP só dispara os comandos
-  fixos dela (nunca `gravar` baseline), em segundo plano e uma rodada por vez (trava em `.mcp/rodadas/.lock`).
+  fixos dela (nunca `gravar` baseline), em segundo plano e uma rodada por vez (trava em `.mcp/rodadas/.lock`). Também
+  recusa disparar se houver rodada fora dele (trava `~/rodadas/.em-andamento` do atalho `regressao/bin/regressao` com
+  processo vivo, ou qualquer `python -m regressao.` rodando). A própria suíte só recria o banco em contêiner do ambiente
+  `e74` (`ecidade74_*`); veja `regressao/COMO-USAR.md`.
 
 ## O que o servidor NUNCA faz
 
@@ -154,7 +157,17 @@ severidade. O código é lido como ISO-8859-1.
 | `ECIDADE_MCP_EXPIRA_HORAS` | `4` | validade da reivindicação |
 | `REGRESSAO_CONTAINER_REF` / `REGRESSAO_CONTAINER_PHP_NOVO` / `REGRESSAO_CONTAINER_BANCO` | `ecidade74_php74` / `ecidade74_php85` / `ecidade74_database` | nomes dos contêineres (os mesmos da suíte `regressao/`) |
 | `ECIDADE_MCP_TIMEOUT_PHPSTAN` | `600` | segundos |
-| `ECIDADE_MCP_LOG` | `INFO` | nível do log (stderr) |
+| `ECIDADE_MCP_LOG` | `INFO` | nível do log (stderr); valor inválido vira `INFO` com um aviso |
+| `ECIDADE_MCP_RAIZ` | a raiz deste repositório | qual pasta o servidor lê e onde grava o quadro (revise como código: veja abaixo) |
+| `ECIDADE_MCP_DOCKER` | `docker` | qual executável roda como "docker" (revise como código: veja abaixo) |
+
+## Revise como código: `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`
+
+Esses três arquivos dizem **qual comando a sua IA executa** ao abrir o repositório, com quais variáveis. Quem muda um
+deles decide o que roda na máquina de cada colega que aceitar o servidor. Revise qualquer mudança neles num pull
+request como revisaria código, e desconfie em especial de `ECIDADE_MCP_RAIZ` (troca a pasta que o servidor lê e onde
+ele grava o quadro) e `ECIDADE_MCP_DOCKER` (troca o executável chamado no lugar do `docker`): nos arquivos do
+repositório eles **não** devem aparecer; se precisar deles, defina-os na configuração do **seu** usuário.
 
 ## Cuidado com o `phpstan.neon`
 
@@ -174,10 +187,10 @@ código.
 | `ferramenta_indisponivel` | Pint/PHPCS não estão instalados no `vendor/` do projeto (instalar é decisão da equipe) |
 | `quem_desconhecido` | passe `quem="seu nome"` ou defina `ECIDADE_MCP_USUARIO` |
 | `ja_reivindicado` | outra pessoa está no arquivo até a hora em `detalhes.expira`; escolha outro (`proximo_trabalho`) |
-| `rodada_em_andamento` | espere a rodada atual (`ler_resultado_regressao`) |
+| `rodada_em_andamento` | espere a rodada atual (`ler_resultado_regressao`); com `detalhes.status="manual"` ela foi disparada fora do MCP (atalho ou `python -m regressao...`): acompanhe com `regressao/bin/regressao ver-ultimo` |
 | `outra_area` | o arquivo é de outra área: peça ao dono (ou, combinado, `combinado_com_dono=true`) |
-| `estado_corrompido` | `trabalho.json` com conflito do Git ou formato inválido (veja `.mcp/estado/README.md`), ou `meta.json`/`resultado.json` de rodada estragado (apague a pasta da rodada em `.mcp/rodadas/`) |
-| `confirmacao_necessaria` | a rodada pedida é longa (PHP sem filtro: horas; laravel: ~12 min; fluxos sem `fluxo`): restrinja ou confirme com `confirmo_rodada_longa=true` |
+| `estado_corrompido` | `trabalho.json` com conflito do Git, chave duplicada (`detalhes.chave_duplicada`) ou formato inválido (veja `.mcp/estado/README.md`), ou `meta.json`/`resultado.json` de rodada estragado (apague a pasta da rodada em `.mcp/rodadas/`) |
+| `confirmacao_necessaria` | a rodada pedida é longa (PHP sem filtro: horas; laravel: ~16 min; fluxos sem `fluxo`): restrinja ou confirme com `confirmo_rodada_longa=true` |
 | `caminho_proibido` | o arquivo é segredo, log, cache ou dado de execução (lista em "O que o servidor NUNCA faz") |
 | `caminho_invalido` | caminho com caractere especial de shell (`;`, `$`, crase, aspas...) |
 | `extensao_nao_permitida` | a busca só lê arquivos de código |
@@ -189,7 +202,7 @@ código.
 - Código em `.mcp/servidor/` (`main.py` registra tools/resources/prompts; `seguranca.py` confina caminhos;
   `docker_exec.py` tem a lista de comandos permitidos; `estado.py` a escrita atômica com trava; `padroes.py` o
   catálogo). SDK oficial `mcp` 2.x (`MCPServer`, o antigo FastMCP) e `pydantic`, versões fixas em `requirements.txt`.
-- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest` (295 testes, ~20 s). Inclui cliente MCP em processo, o
+- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest` (311 testes, ~20 s). Inclui cliente MCP em processo, o
   servidor de verdade por stdio, a garantia de que o stdout só tem JSON-RPC e uma corrida com 2 processos no estado.
 - Teste manual com o inspetor oficial: `npx @modelcontextprotocol/inspector .mcp/.venv/bin/python .mcp/servidor/main.py`;
   no Claude Code, `claude mcp list` mostra se o `ecidade` conectou.
