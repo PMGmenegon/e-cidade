@@ -23,7 +23,7 @@ por um servidor MCP versionado no repositório.
 
 ## Anti-objetivos
 - Gravar baseline com o sistema migrado; contar INCONCLUSIVO/ERRO_AMBIENTE como aprovação; mascarar diferença real;
-  mexer em containers/dados fora do projeto (o Evolution do Gentil não deve ser tocado: a referência usa porta própria).
+  mexer em containers/dados fora do projeto (outro projeto local na porta 8080 não deve ser tocado: a referência usa porta própria).
 
 ## Abordagens consideradas
 - A) Só o pedido original (2 resources, 3 tools, 2 prompts): simples, mas só padroniza regras.
@@ -38,8 +38,8 @@ por um servidor MCP versionado no repositório.
 - Coordenação: `.mcp/estado/trabalho.json` (quem reivindicou o quê, com data e expiração) + convenção de commit;
   tools `reivindicar_arquivo`, `liberar_arquivo`, `quadro`, `proximo_trabalho`.
 - Ambiente da regressão na 7.4: projeto compose próprio (`-p e74`), contêineres `ecidade74_*` e portas próprias
-  (referência 7.4 em :8074, alvo PHP 8.5 em :8085 -> :8185 se conflitar, proxy :8090 -> :8190), para NÃO parar o Evolution
-  do Gentil (:8080) e NÃO tocar nos contêineres da stack antiga.
+  (referência 7.4 em :8074, alvo PHP 8.5 em :8085 -> :8185 se conflitar, proxy :8090 -> :8190), para NÃO parar outro
+  projeto local na porta 8080 e NÃO tocar nos contêineres da stack antiga.
 - Alvo padrão da bateria Laravel: `ecidade_lar12` em :8087 (código por `LAR12_CODIGO`); o Laravel 12 real não existe,
   o laboratório mostra o que falha.
 

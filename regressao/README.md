@@ -152,7 +152,7 @@ ambiente `e74` (`\du`) são `dbseller` (sem atributos), `ecidade` e `plugin` (su
 do `pg_restore` com `ecidade/docker/init.sql` **sem** a linha `CREATE DATABASE` (o `pg_restore --create` cria o banco).
 
 **Dump v2 (atual, 2026-11-18): instalação + migrations Laravel do PR.** sha256 `97251574…0fad`, cópia fora do git em
-`C:\Users\kauab\ecidade74-baseline-v2.dump`. Motivo: com o dump de instalação (v1) o Desktop do PR **não monta o menu
+`<seu-diretorio>/ecidade74-baseline-v2.dump`. Motivo: com o dump de instalação (v1) o Desktop do PR **não monta o menu
 de módulos** (`Menu/getItensMenu` → 500: faltam `itens_menu_usuario_favoritos`, `notifications` e `db_itensmenu.api`),
 como o guia do grupo previa. Aplicada a decisão 1(a) do guia: banco descartável (o `ecidade74_database`) restaurado do
 v1, as 736 migrations pendentes rodadas **uma a uma** (`migrate --path`, a que falha fica pendente: **712 aplicadas,
@@ -163,7 +163,7 @@ Laravel e de fluxos foram **regravadas** sobre o v2 na referência, e os catálo
 
 **Dump v1 (histórico, 2026-11-17)**: gerado com os runtimes **parados** (o healthcheck do `ecidade74_php74` faz `GET /` a
 cada 5 s), logo depois da carga do `ecidade_base.sql.gz`, sem nenhum acesso HTTP antes. sha256 `15cd994a…444d`, cópia
-em `C:\Users\kauab\ecidade74-baseline.dump`. É o ponto de partida do v2. O `search_path` real é
+em `<seu-diretorio>/ecidade74-baseline.dump`. É o ponto de partida do v2. O `search_path` real é
 configurado **por banco** (`ALTER DATABASE ecidade SET search_path = "$user", public, teleatend, acordos, …` com ~70
 schemas) e vem no dump porque ele é gerado com `--create`; não há `ALTER ROLE … SET`. Confira com
 `psql -c '\du'` e `select * from pg_db_role_setting`.

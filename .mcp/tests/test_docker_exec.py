@@ -71,7 +71,7 @@ def test_timeout(config):
 
 def test_conteiner_fora_da_allowlist(config):
     with pytest.raises(ErroFerramenta) as e:
-        DockerExec(config, runner=Runner()).executar("gentil-checklist-postgres-1", ["php", "-v"], timeout=10)
+        DockerExec(config, runner=Runner()).executar("outro-projeto-postgres-1", ["php", "-v"], timeout=10)
     assert e.value.codigo == "conteiner_nao_permitido"
 
 

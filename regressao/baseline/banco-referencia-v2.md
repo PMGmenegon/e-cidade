@@ -1,8 +1,8 @@
 # Banco de referência v2 (dump com as migrations Laravel do PR)
 
 Data: 2026-11-18. sha256 do dump: `972515745567622ce8394d91e63c481a50d3500104c115c170ba95544b8b0fad` (93.634.549 bytes),
-registrado em `baseline.dump.sha256`. Cópia fora do git: `C:\Users\kauab\ecidade74-baseline-v2.dump`. O dump v1 (sha256
-`15cd994a5326b3ec25c523f49f9ebe52f65e19d3ee3e58d715d625b2a10a444d`, cópia `C:\Users\kauab\ecidade74-baseline.dump`)
+registrado em `baseline.dump.sha256`. Cópia fora do git: `<seu-diretorio>/ecidade74-baseline-v2.dump`. O dump v1 (sha256
+`15cd994a5326b3ec25c523f49f9ebe52f65e19d3ee3e58d715d625b2a10a444d`, cópia `<seu-diretorio>/ecidade74-baseline.dump`)
 fica como histórico: nenhuma linha de base o usa mais.
 
 ## Por que mudou

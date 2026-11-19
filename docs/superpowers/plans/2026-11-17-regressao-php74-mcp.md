@@ -10,9 +10,9 @@ Leia `regressao/README.md`, `regressao/baseline/triagem-divergencias.md`, `regre
 `regressao/baseline/lab-lar12-resultado.md` da fonte para o contexto histórico (lá o gabarito era PHP 5.6/Laravel 5.4).
 
 ## Global Constraints
-- Worktree `~/e-cidade-74`, branch `regressao-php74`; nunca `git add -A` (adicione caminhos); commits terminam com
-  `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`; sem push; não imprimir e-mail/segredos/hash de senha.
-- Não tocar nos contêineres existentes (`ecidade_*`, `gentil-*`) nem parar/religar o Evolution. Novo ambiente = projeto
+- Worktree `~/e-cidade-74`, branch `regressao-php74`; nunca `git add -A` (adicione caminhos); commits sem trailer
+  Co-Authored-By; sem push; não imprimir e-mail/segredos/hash de senha.
+- Não tocar nos contêineres existentes (`ecidade_*` e os de outro projeto local na porta 8080) nem parar/religar esse projeto. Novo ambiente = projeto
   compose `e74`, nomes `ecidade74_*`, portas: referência 7.4 :8074, PHP 8.5 :8185, proxy :8190, lab Laravel 12 :8187,
   banco sem porta publicada (ou 55432). Memória do host curta (15 GB; Docker já caiu): `sync; echo 3 > /proc/sys/vm/drop_caches`
   (root) antes de rodadas longas; rodadas longas DESTACADAS (`setsid nohup … < /dev/null &`).
@@ -38,7 +38,7 @@ Leia `regressao/README.md`, `regressao/baseline/triagem-divergencias.md`, `regre
   `extension/log/`, `libs/db_acessa.php`, hash da senha do `dbseller`) SEM commitar o que é gitignored.
 - Crie o venv, rode `pytest regressao/tests -q` (unitários verdes sem Docker). Tire o dump baseline do banco 7.4 recém-subido
   (`regressao/baseline/baseline.dump` gitignored, sha256 em `baseline.dump.sha256` commitado) e copie o dump para
-  `C:\Users\kauab\ecidade74-baseline.dump` (fora do git). Registre versões no `regressao/README` (7.4/Laravel 8).
+  `<seu-diretorio>/ecidade74-baseline.dump` (fora do git). Registre versões no `regressao/README` (7.4/Laravel 8).
 - Verificação: login web pelos 3 runtimes (referência, 8.5, proxy) devolve a tela; `confere_baseline` ok.
 
 ### Task 2: Bateria PHP sobre 7.4 x 8.5
@@ -82,4 +82,4 @@ Leia `regressao/README.md`, `regressao/baseline/triagem-divergencias.md`, `regre
 - Rodada completa destacada (`orquestra --saida ~/rodadas/antes74 --alvo-laravel <referência>` para auto-consistência) e
   PHP 7.4 x 8.5 completo (renovação de sessão já existe); complemente o que falhar. Escreva
   `regressao/baseline/triagem-divergencias.md` (7.4 x 8.5) e `decisoes-migracao.md` atualizado (impacto, ordem, esforço).
-- Fim: pare os contêineres `ecidade74_*` (não os antigos nem o Evolution).
+- Fim: pare os contêineres `ecidade74_*` (não os antigos nem os de outro projeto local).
