@@ -18,8 +18,9 @@ REGRAS_COMUNS = """Regras fixas (valem para todo o trabalho):
   corrigido; falha de seguranca nunca vai para o repositorio.
 - Cada pessoa na sua area; arquivo de outra area -> peca ao dono. composer.json/lock/vendor sao do grupo Laravel.
 - PHP/PHPStan/Pint so pelas tools (rodam no Docker do projeto). Nunca rode shell livre.
-- Commit so dos caminhos que voce tocou (git add <caminho>), nunca `git add -A`/`git add .`; assunto com verbo no
-  presente, sem acento, com numeros; sem push nem push --force sem pedido.
+- Commit so dos caminhos que voce tocou (git add <caminho>), nunca `git add -A`/`git add .`; assunto no formato do
+  CONTRIBUINDO.md, `PHP8-NN: descricao curta` (NN = numero da tarefa do grupo; ex.: "PHP8-31: troca $str{i} por
+  $str[i] em db_stdlib.php"); sem push nem push --force sem pedido.
 - INCONCLUSIVO e ERRO_AMBIENTE da regressao NUNCA sao aprovacao."""
 
 
@@ -46,8 +47,8 @@ Passos:
    repita a comparacao 7.4 x 8.5: tem de ficar igual. Se o arquivo tambem roda no 7.4, prove que o 7.4 nao mudou.
 6. So com IDENTICO (ou DIVERGE explicada e aceita pelo usuario): `liberar_arquivo(caminho="{caminho}",
    concluido=true, padroes_corrigidos=[...])`.
-7. Mostre ao usuario: o diff, a prova antes/depois e a sugestao de commit (`git add {caminho}`; assunto com verbo no
-   presente, sem acento, com numeros; se houve Rector, um commit so dele). Nao faca push."""
+7. Mostre ao usuario: o diff, a prova antes/depois e a sugestao de commit (`git add {caminho}`; assunto
+   `PHP8-NN: descricao curta`, com o numero da tarefa do grupo; se houve Rector, um commit so dele). Nao faca push."""
 
     @mcp.prompt(name="auditar-model", title="Auditar um Model Eloquent para Laravel 13",
                 description="Revisao (sem editar) de um Model Eloquent: o que quebra ou muda do Laravel 8 ao 13")
@@ -99,8 +100,8 @@ Passos:
 7. `liberar_arquivo(..., concluido=true, padroes_corrigidos=["{padrao}"])` para cada arquivo pronto; libere sem
    concluir os que ficaram para tras.
 8. Proponha os commits: o que o Rector fez num commit SO DELE, o manual em outro; `git add <cada caminho>`; assunto
-   com verbo no presente, sem acento, com numeros (ex.: "Troca each() por foreach em 3 arquivos (5 linhas)") e a
-   linha `Padrao-MCP: {padrao}` no corpo; o commit de `.mcp/estado/trabalho.json` separado."""
+   `PHP8-NN: descricao curta` com o numero da tarefa do grupo (ex.: "PHP8-31: troca each() por foreach em 3
+   arquivos") e a linha `Padrao-MCP: {padrao}` no corpo; o commit de `.mcp/estado/trabalho.json` separado."""
 
     @mcp.prompt(name="verificar-com-regressao", title="Verificar uma mudanca com a regressao",
                 description="Escolhe a bateria e o recorte certos para uma mudanca, roda e interpreta o resultado")

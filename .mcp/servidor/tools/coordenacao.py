@@ -56,9 +56,17 @@ def _caminho_seguro(config: Config, caminho: str, **kw: Any) -> str:
     return rel
 
 
-def _sugestao(acao: str, caminho: str) -> str:
+def _sugestao(config: Config, acao: str, caminho: str) -> str:
+    # formato do CONTRIBUINDO.md ("Commits"): `PHP8-NN: descricao curta`, NN = numero da tarefa do grupo
     return (f"git add .mcp/estado/trabalho.json && git commit -m "
-            f"{shlex.quote(f'estado: {acao} {caminho}')}")
+            f"{shlex.quote(f'{config.prefixo_commit} {acao} {caminho} no quadro')}")
+
+
+def _aviso_tarefa(config: Config) -> dict[str, str]:
+    if config.tarefa:
+        return {}
+    return {"aviso_commit": "troque NN pelo numero da tarefa do grupo (formato `PHP8-NN: descricao curta` do "
+                            "CONTRIBUINDO.md) ou defina ECIDADE_MCP_TAREFA"}
 
 
 def _minha_area(config: Config, minha_area: str | None) -> str | None:
@@ -80,8 +88,9 @@ def reivindicar_arquivo(config: Config, caminho: str, motivo: str, quem: str | N
     if minha and area_arq and area_arq != minha and not combinado_com_dono:
         raise ErroFerramenta("outra_area", _aviso_outra_area(area_arq), area_do_arquivo=area_arq, sua_area=minha)
     r = _estado(config).reivindicar(rel, eu, motivo or "", horas, area=area_arq)
-    out = {**r, "area_do_arquivo": area_arq, "sugestao_commit": _sugestao("reivindica", rel),
-           "lembrete": "renove chamando de novo antes de expirar; libere com liberar_arquivo ao terminar"}
+    out = {**r, "area_do_arquivo": area_arq, "sugestao_commit": _sugestao(config, "reivindica", rel),
+           "lembrete": "renove chamando de novo antes de expirar; libere com liberar_arquivo ao terminar",
+           **_aviso_tarefa(config)}
     if not minha:
         out["aviso_area"] = ("defina sua area (minha_area ou ECIDADE_MCP_AREA) para o MCP aplicar a regra 'cada pessoa "
                              "na sua area'")
@@ -102,12 +111,13 @@ def liberar_arquivo(config: Config, caminho: str, quem: str | None = None, concl
                                 observacao=observacao or "")
     acao = "conclui" if concluido else "libera"
     padrao = (padroes_corrigidos or ["<padrao>"])[0]
-    # formato do historico do grupo: verbo no presente, sem acento, com numeros; o trailer deixa o MCP contar
-    assunto = f"Corrige {padrao} em 1 arquivo ({rel})"
+    # formato do CONTRIBUINDO.md: `PHP8-NN: descricao curta`; o trailer deixa o MCP contar
+    assunto = f"{config.prefixo_commit} corrige {padrao} em {rel}"
     dica = (f"git add -- {shlex.quote(rel)} && git commit -m {shlex.quote(assunto)} "
             f"-m {shlex.quote('Padrao-MCP: ' + padrao)}" if concluido else "")
-    return {**r, "sugestao_commit": _sugestao(acao, rel), "commit_do_codigo": dica,
-            "lembrete": "mudanca feita pelo Rector vai em commit separado da manual (regra 4 do grupo)"}
+    return {**r, "sugestao_commit": _sugestao(config, acao, rel), "commit_do_codigo": dica,
+            "lembrete": "mudanca feita pelo Rector vai em commit separado da manual (regra 4 do grupo)",
+            **_aviso_tarefa(config)}
 
 
 def quadro(config: Config) -> dict[str, Any]:
@@ -207,7 +217,8 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
                     recusados.append({"arquivo": a["arquivo"], "erro": e.como_dict()})
             out["reivindicados"] = ok
             out["recusados"] = recusados
-            out["sugestao_commit"] = _sugestao("reivindica lote", p.nome)
+            out["sugestao_commit"] = _sugestao(config, "reivindica lote de", p.nome)
+            out.update(_aviso_tarefa(config))
         return out
     return {"padrao": None, "arquivos": [], "quem": eu, "sua_area": minha,
             "arquivos_de_outras_areas_pulados": outras_areas,
@@ -253,6 +264,7 @@ def padroes_ja_corrigidos(config: Config, contar_em: str | None = None,
             item["restantes_em_contar_em"] = restantes.get(p.nome, 0)
         padroes.append(item)
     return {"padroes": padroes, "avisos": avisos,
-            "convencao_commit": "assunto no formato do grupo (verbo no presente, sem acento, com numeros: 'Troca $s{i} "
-                                "por $s[i] em 20 arquivos (20 linhas)') + linha 'Padrao-MCP: <nome>' no corpo; um "
-                                "padrao por commit; Rector em commit separado do manual; so os caminhos tocados"}
+            "convencao_commit": f"assunto no formato do CONTRIBUINDO.md: '{config.prefixo_commit} descricao curta' "
+                                "(NN = numero da tarefa do grupo; ex.: 'PHP8-31: troca $str{i} por $str[i] em "
+                                "db_stdlib.php') + linha 'Padrao-MCP: <nome>' no corpo; um padrao por commit; Rector "
+                                "em commit separado do manual; so os caminhos tocados"}

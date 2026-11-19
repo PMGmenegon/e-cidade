@@ -26,9 +26,16 @@ def test_regras_e_numeros_do_guia_do_grupo_nos_docs():
     for frase in ("git add .", "WSL", "ISO-8859-1", "Rector", "Cada pessoa mexe só na sua área",
                   "composer.json", "push --force", "Pull request pequeno", "Não repetir trabalho",
                   "Funciona igual ao 7.4", "O código do PR tem prioridade", "Só atualizar", "O 7.4 fica intacto",
-                  "Não tocar no banco", "auditoria", "Seguir precedente", "verbo no presente",
+                  "Não tocar no banco", "auditoria", "Seguir precedente", "PHP8-NN: descrição curta",
                   "Documentos autocontidos", "git checkout base-php74", "Laravel 13 + Passport 13"):
         assert frase in regras, frase
+    # decisao 11 (19/11/2026): o formato de commit e o do CONTRIBUINDO.md, em todos os documentos do MCP
+    for doc in ("regras-do-grupo.md", "regras-arquitetura.md"):
+        texto = (MCP / "docs" / doc).read_text(encoding="utf-8")
+        assert "PHP8-NN" in texto and "decisão em aberto" not in texto, doc
+    readme = (MCP / "README.md").read_text(encoding="utf-8")
+    assert "PHP8-NN: descrição curta" in readme and "ECIDADE_MCP_TAREFA" in readme
+    assert "verbo no presente" not in readme
     guia = (MCP / "docs" / "guia-breaking-changes.md").read_text(encoding="utf-8")
     for numero in ("32 arquivos", "84 usos", "40 usos", "36.729", "4.054", "152 classes", "1.832", "113 arq",
                    "10 pacotes", "dbseller/sdk-api-pix-bb", "proner/phppimaco", "Cache::put", "array_pluck",

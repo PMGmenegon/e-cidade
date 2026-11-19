@@ -27,8 +27,9 @@ resources `ecidade://grupo/regras` e `ecidade://grupo/guia-7.4-para-8.5`):
 - **O código do PR manda**: mexa o mínimo, nunca copie arquivo inteiro da `base-php84`; se o 8.5 já se comporta
   como o 7.4, não mexa; **prove 7.4 × 8.5 antes e depois**.
 - **Só atualizar**: defeito que já existe no 7.4 (até de segurança) é registrado e avisado ao dono, não corrigido.
-- Fluxo: `git checkout base-php74 && git pull && git checkout -b area/assunto` → commits (verbo no presente, sem
-  acento, com números) → `git pull origin base-php74` → pull request para `base-php74`.
+- Fluxo: `git checkout base-php74 && git pull && git checkout -b area/assunto` → commits no formato do
+  `CONTRIBUINDO.md`, `PHP8-NN: descrição curta` (NN = número da tarefa do grupo; decidido em 19/11/2026) →
+  `git pull origin base-php74` → pull request para `base-php74`.
 
 ## Em 3 passos
 
@@ -124,8 +125,10 @@ severidade. O código é lido como ISO-8859-1.
 - O quadro fica em `.mcp/estado/trabalho.json`, **no Git**. Depois de reivindicar/liberar, faça commit **só desse
   arquivo** (`git add .mcp/estado/trabalho.json`). Detalhes e o que fazer em conflito: `.mcp/estado/README.md`.
 - Commit de código: **só os arquivos que você mexeu** (`git add <arquivo>`), nunca `git add -A`. Assunto no formato
-  do grupo (verbo no presente, sem acento, com números) e a linha `Padrao-MCP: <padrao>` no corpo; Rector num
-  commit só dele. Regras completas: `.mcp/docs/regras-arquitetura.md` e `ecidade://grupo/regras`.
+  do `CONTRIBUINDO.md`, `PHP8-NN: descrição curta` (ex.: `PHP8-31: troca $str{i} por $str[i] em db_stdlib.php`), e
+  a linha `Padrao-MCP: <padrao>` no corpo; Rector num commit só dele. As sugestões de commit do MCP usam o número de
+  `ECIDADE_MCP_TAREFA`; sem ela saem com `NN` e o aviso `aviso_commit`. Regras completas:
+  `.mcp/docs/regras-arquitetura.md` e `ecidade://grupo/regras`.
 
 ## Onde cada coisa roda
 
@@ -159,6 +162,7 @@ severidade. O código é lido como ISO-8859-1.
 | `ECIDADE_MCP_USUARIO` | `git config user.name` | seu nome no quadro |
 | `ECIDADE_MCP_AREA` | (nenhuma) | sua área no grupo: o MCP recusa reivindicar arquivo de outra área e o `proximo_trabalho` só traz a sua |
 | `ECIDADE_MCP_EXPIRA_HORAS` | `4` | validade da reivindicação |
+| `ECIDADE_MCP_TAREFA` | (nenhuma: `NN`) | número da tarefa do grupo; vira o `NN` de `PHP8-NN:` nas sugestões de commit (só dígitos) |
 | `REGRESSAO_CONTAINER_REF` / `REGRESSAO_CONTAINER_PHP_NOVO` / `REGRESSAO_CONTAINER_BANCO` | `ecidade74_php74` / `ecidade74_php85` / `ecidade74_database` | nomes dos contêineres (os mesmos da suíte `regressao/`) |
 | `ECIDADE_MCP_TIMEOUT_PHPSTAN` | `600` | segundos |
 | `ECIDADE_MCP_LOG` | `INFO` | nível do log (stderr); valor inválido vira `INFO` com um aviso |
@@ -206,7 +210,7 @@ código.
 - Código em `.mcp/servidor/` (`main.py` registra tools/resources/prompts; `seguranca.py` confina caminhos;
   `docker_exec.py` tem a lista de comandos permitidos; `estado.py` a escrita atômica com trava; `padroes.py` o
   catálogo). SDK oficial `mcp` 2.x (`MCPServer`, o antigo FastMCP) e `pydantic`, versões fixas em `requirements.txt`.
-- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest` (311 testes, ~20 s). Inclui cliente MCP em processo, o
+- Testes (sem Docker, tudo simulado): `cd .mcp && .venv/bin/python -m pytest` (313 testes, ~20 s). Inclui cliente MCP em processo, o
   servidor de verdade por stdio, a garantia de que o stdout só tem JSON-RPC e uma corrida com 2 processos no estado.
 - Teste manual com o inspetor oficial: `npx @modelcontextprotocol/inspector .mcp/.venv/bin/python .mcp/servidor/main.py`;
   no Claude Code, `claude mcp list` mostra se o `ecidade` conectou.

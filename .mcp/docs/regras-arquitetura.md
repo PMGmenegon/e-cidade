@@ -29,10 +29,11 @@ arquivo pelo resource `ecidade://docs/regras-arquitetura`. As regras do grupo (C
    **INCONCLUSIVO e ERRO_AMBIENTE nunca são aprovação.**
 9. **Commits pequenos e por caminho**: `git add <arquivo1> <arquivo2>` — **nunca `git add -A` nem `git add .`**
    (o repositório tem arquivos locais de ambiente, dumps e segredos que não podem subir). Assunto no formato do
-   histórico do grupo: **verbo no presente, sem acento, com números** (ex.: `Troca $s{i} por $s[i] em 20 arquivos
-   (20 linhas)`), corpo dizendo o que foi medido e a linha `Padrao-MCP: <padrao>` para o MCP contar. **O que o
-   Rector fez vai num commit só dele**, separado do manual. O estado vai em commit separado (`estado: reivindica
-   ecidade/x.php`). Branch `area/assunto` a partir da `base-php74`; pull request pequeno.
+   `CONTRIBUINDO.md`: **`PHP8-NN: descrição curta`**, NN = número da tarefa do grupo (ex.: `PHP8-31: troca $str{i}
+   por $str[i] em db_stdlib.php`; decisão 11, 19/11/2026), corpo dizendo o que foi medido e a linha
+   `Padrao-MCP: <padrao>` para o MCP contar. **O que o Rector fez vai num commit só dele**, separado do manual. O
+   estado vai em commit separado (`PHP8-NN: reivindica ecidade/x.php no quadro`). Branch `area/assunto` a partir da
+   `base-php74`; pull request pequeno.
 10. **Sem push** sem pedido explícito de quem é dono da tarefa; **nunca `git push --force` nem `git reset --hard`**
     sem avisar. O repositório no GitHub é **público**.
 11. **Nunca** coloque divergência nova em `regressao/conhecidas.tsv` para "ficar verde": esse arquivo só aceita

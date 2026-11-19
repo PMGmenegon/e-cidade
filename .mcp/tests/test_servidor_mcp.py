@@ -181,8 +181,9 @@ def test_prompts(ambiente):
     assert "Padrao-MCP: split" in lote
     for t in (texto, lote):  # lembretes do grupo nos dois roteiros
         for frase in ("MINIMO no arquivo do PR", "base-php84", "ANTES", "DEPOIS", "ISO-8859-1", "Rector",
-                      "REGISTRADO e avisado ao dono"):
+                      "REGISTRADO e avisado ao dono", "PHP8-NN: descricao curta"):
             assert frase in t, frase
+        assert "verbo no presente" not in t  # formato antigo, trocado pelo do CONTRIBUINDO.md (decisao 11)
 
 
 def test_erro_interno_nao_devolve_caminho_absoluto(ambiente):

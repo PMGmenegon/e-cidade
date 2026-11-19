@@ -195,7 +195,7 @@ Fluxo: `git checkout base-php74 && git pull && git checkout -b area/assunto` →
 | **Não limpar registros de auditoria** | Gravação de auditoria feita pelo próprio sistema durante o teste fica como está. |
 | **Seguir precedente** | Se o grupo já resolveu um caso igual de um jeito, siga o mesmo jeito e registre a diferença medida (ex.: `break` fora de laço virou `exit`). |
 | **Regressão em área de outro** | Só documentar e avisar o dono. |
-| **Commits** | Assunto começando com verbo no presente, sem acento, com números (ex.: `Troca $s{i} por $s[i] em 20 arquivos (20 linhas)`); corpo dizendo o que foi medido. O `CONTRIBUINDO.md` pede o prefixo `PHP8-NN:`, mas o histórico do grupo não usa (ver decisões). |
+| **Commits** | Assunto começando com verbo no presente, sem acento, com números (ex.: `Troca $s{i} por $s[i] em 20 arquivos (20 linhas)`); corpo dizendo o que foi medido. O `CONTRIBUINDO.md` pede o prefixo `PHP8-NN:`, mas o histórico do grupo não usa (ver decisões). **Atualização de 19/11/2026: decidido o formato do `CONTRIBUINDO.md`, `PHP8-NN: descrição curta` (NN = número da tarefa do grupo).** |
 | **Documentos autocontidos** | Cada registro em `docs/registro/` se explica sozinho, sem citar ferramentas internas nem nomes de quem fez. Falha de segurança **nunca** vai para o repositório. |
 
 ## Como provar que ficou igual
@@ -280,6 +280,10 @@ Proposta: (c), seguindo (a) enquanto não houver resposta.
 O `CONTRIBUINDO.md` pede `PHP8-NN: …`; o histórico real do grupo usa verbo no presente, sem prefixo.
 
 Proposta: o coordenador escolhe um e o `CONTRIBUINDO.md` passa a dizer o mesmo que o histórico.
+
+> **Atualização de 19/11/2026 (decisão 11, tomada):** vale o formato do `CONTRIBUINDO.md`, `PHP8-NN: descrição curta`,
+> com NN = número da tarefa do grupo (ex.: `PHP8-31: troca $str{i} por $str[i] em db_stdlib.php`). O histórico
+> anterior fica como está. Pergunta aberta: quem distribui os números das tarefas (o documento só dá o exemplo 31).
 
 ### 4. Defeitos que o PR trouxe no Laravel 8
 

@@ -273,6 +273,7 @@ Defina também quem você é e a sua área (no `~/.bashrc` do WSL):
 ```bash
 export ECIDADE_MCP_USUARIO="Seu Nome"
 export ECIDADE_MCP_AREA=financeiro     # nucleo, educacao, pessoal, financeiro, tributario_patrimonial ou saude_demais
+export ECIDADE_MCP_TAREFA=31           # número da tarefa do grupo: as sugestões de commit saem como "PHP8-31: ..."
 ```
 
 **Passo 3. Abra o repositório na sua IA** (a configuração já está no repositório):
@@ -342,13 +343,14 @@ Roteiro de uma tarefa:
 
    ```bash
    git add .mcp/estado/trabalho.json
-   git commit -m "Reivindica ecidade/xxx.php para parse_str"
+   git commit -m "PHP8-NN: reivindica ecidade/xxx.php no quadro"      # NN = número da tarefa do grupo
    git pull --rebase && git push      # só quando a equipe combinar publicar
    ```
 
 4. Faça a correção com prova antes e depois (o prompt `migrar-arquivo` faz o roteiro inteiro). Commit **só dos arquivos
-   que você mexeu** (`git add <arquivo>`, nunca `git add -A`); o que o Rector fez num commit, o manual em outro; o código
-   em ISO-8859-1.
+   que você mexeu** (`git add <arquivo>`, nunca `git add -A`), assunto no formato do `CONTRIBUINDO.md`,
+   `PHP8-NN: descrição curta` (NN = número da tarefa do grupo); o que o Rector fez num commit, o manual em outro; o
+   código em ISO-8859-1.
 5. Libere o arquivo (`concluido=true` se terminou) e faça commit do `trabalho.json` de novo, separado do código.
 6. `git pull origin base-php74` e abra o pull request para `base-php74`.
 
