@@ -43,6 +43,7 @@ def cfg(config):
 
 
 def roda(cfg, runner=docker_ok, **kw):
+    kw.setdefault("_rodada_manual", lambda: None)  # a maquina de teste pode ter uma rodada real em curso
     return rodar_regressao(cfg, docker=DockerExec(cfg, runner=runner), popen=FakePopen, **kw)
 
 
@@ -150,7 +151,7 @@ def _dispara(raiz: str, fila) -> None:
     ok = lambda argv, **kw: subprocess.CompletedProcess(argv, 0, "true\n", "")  # noqa: E731
     try:
         r = rodar_regressao(cfg, bateria="php", prefixo=["^a"], docker=DockerExec(cfg, runner=ok), popen=PopenLento,
-                            _cmdline_executor=lambda pid: True)
+                            _cmdline_executor=lambda pid: True, _rodada_manual=lambda: None)
         fila.put(("ok", r["id"]))
     except Exception as e:  # ErroFerramenta
         fila.put(("erro", getattr(e, "codigo", repr(e))))
@@ -211,6 +212,33 @@ def test_uma_rodada_por_vez(cfg):
     with pytest.raises(ErroFerramenta) as e:
         roda(cfg, bateria="php", prefixo=["^b"], _cmdline_executor=lambda pid: True)
     assert e.value.codigo == "rodada_em_andamento"
+
+
+def test_rodada_manual_em_curso_bloqueia(cfg):
+    with pytest.raises(ErroFerramenta) as e:
+        roda(cfg, bateria="php", prefixo=["^a"], _rodada_manual=lambda: "rodada do atalho em 20261118-090000-pequena")
+    assert e.value.codigo == "rodada_em_andamento" and e.value.detalhes["status"] == "manual"
+    assert "20261118-090000-pequena" in e.value.mensagem and FakePopen.chamadas == []
+
+
+def test_rodada_manual_ve_a_trava_viva_do_atalho(tmp_path, monkeypatch):
+    from servidor.tools import regressao as mod
+    monkeypatch.setenv("REGRESSAO_RODADAS", str(tmp_path))
+    pgreps = []
+    monkeypatch.setattr(mod.subprocess, "run", lambda argv, **kw: pgreps.append(argv) or
+                        subprocess.CompletedProcess(argv, 1, "", ""))
+    assert mod._rodada_manual() is None and pgreps[-1] == ["pgrep", "-f", "--", r"-m regressao\."]
+    (tmp_path / ".em-andamento").write_text(f"{os.getpid()}\t{tmp_path}/20261118-090000-pequena\n")
+    assert "20261118-090000-pequena" in mod._rodada_manual()
+    (tmp_path / ".em-andamento").write_text("2147483646\tx\n")  # pid morto: a trava ficou para tras
+    assert mod._rodada_manual() is None
+
+
+def test_rodada_manual_ve_processo_da_suite_disparado_a_mao(tmp_path, monkeypatch):
+    from servidor.tools import regressao as mod
+    monkeypatch.setenv("REGRESSAO_RODADAS", str(tmp_path))
+    monkeypatch.setattr(mod.subprocess, "run", lambda argv, **kw: subprocess.CompletedProcess(argv, 0, "4321\n", ""))
+    assert "4321" in mod._rodada_manual()
 
 
 # ---------- leitura ----------

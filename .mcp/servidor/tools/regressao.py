@@ -56,6 +56,25 @@ def _cmdline_executor(pid: int) -> bool:
         return False
 
 
+def _rodada_manual() -> str | None:
+    """Rodada da suite disparada FORA do MCP (atalho regressao/bin/regressao ou `python -m regressao...` a mao):
+    descricao dela, ou None. Ve a trava do atalho (~/rodadas/.em-andamento ou $REGRESSAO_RODADAS) com pid vivo e
+    qualquer processo `-m regressao.`; as duas restauram o mesmo banco que a rodada do MCP restauraria."""
+    trava = Path(os.environ.get("REGRESSAO_RODADAS") or Path.home() / "rodadas") / ".em-andamento"
+    try:
+        pid_txt, _, pasta = trava.read_text(encoding="utf-8").strip().partition("\t")
+        os.kill(int(pid_txt), 0)
+        return f"rodada do atalho regressao/bin/regressao em {Path(pasta).name or pasta} (trava {trava.name})"
+    except (OSError, ValueError, OverflowError):
+        pass
+    try:
+        r = subprocess.run(["pgrep", "-f", "--", r"-m regressao\."], capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    pids = r.stdout.split() if r.returncode == 0 else []
+    return f"processo da suite rodando (pgrep -af 'm regressao\\.': pid {', '.join(pids[:5])})" if pids else None
+
+
 INICIO_TOLERANCIA_S = 120  # meta.json sem pid ha menos que isso = rodada ainda iniciando (bloqueia outra)
 BLOQUEIAM = ("em_andamento", "iniciando", "desconhecida")
 
@@ -147,6 +166,7 @@ def rodar_regressao(
     docker: DockerExec | None = None,
     popen: Callable[..., Any] = subprocess.Popen,
     _cmdline_executor: Callable[[int], bool] = _cmdline_executor,
+    _rodada_manual: Callable[[], str | None] = _rodada_manual,
 ) -> dict[str, Any]:
     area, prefixo, fluxo = list(area or []), list(prefixo or []), list(fluxo or [])
     if bateria not in BATERIAS:
@@ -197,6 +217,10 @@ def rodar_regressao(
                                      f"a rodada {d.name} esta '{st}' (cada bateria restaura o banco: duas juntas se "
                                      "atrapalham). Acompanhe com ler_resultado_regressao; se ela nao existe mais, "
                                      "apague a pasta em .mcp/rodadas/", id=d.name, status=st)
+        if manual := _rodada_manual():
+            raise ErroFerramenta("rodada_em_andamento",
+                                 f"ha uma rodada da regressao fora do MCP: {manual}. Cada bateria restaura o banco: "
+                                 "espere ela terminar (regressao/bin/regressao ver-ultimo)", status="manual")
 
         rid = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{bateria}-{secrets.token_hex(2)}"
         d = config.dir_rodadas / rid

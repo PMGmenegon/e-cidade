@@ -241,8 +241,9 @@ o resumo do topo), e este guia como resource (`ecidade://regressao/como-usar`). 
 rodada `rodar_regressao(bateria="php", prefixo=["^arr1_grupotaxa001\\.php$"])` levou 3 min 47 s e
 `ler_resultado_regressao` devolveu 2 IDENTICO e 2 DIVERGE (a classe e o cadastro com `0 == ""`).
 Instalação em 3 passos: [`.mcp/README.md`](../.mcp/README.md). O MCP só lê rodadas de dentro do repositório (as que
-ele mesmo dispara); as do atalho `regressao/bin/regressao` ficam em `~/rodadas`, fora dele. O MCP não enxerga uma
-rodada disparada à mão: não dispare as duas ao mesmo tempo.
+ele mesmo dispara); as do atalho `regressao/bin/regressao` ficam em `~/rodadas`, fora dele. O `rodar_regressao` recusa
+(`rodada_em_andamento`) quando há rodada disparada fora dele: a trava `~/rodadas/.em-andamento` com processo vivo ou
+qualquer processo `python -m regressao.` (o mesmo `pgrep` que o atalho usa).
 
 ## Glossário
 
