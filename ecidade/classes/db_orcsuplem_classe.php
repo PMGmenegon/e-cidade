@@ -62,7 +62,7 @@ class cl_orcsuplem
                  o46_obs = text = Origem do Recurso
                  ";
    //funcao construtor da classe
-    function cl_orcsuplem()
+    function __construct()
     {
       //classes dos rotulos dos campos
         $this->rotulo = new rotulo("orcsuplem");

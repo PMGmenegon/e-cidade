@@ -107,7 +107,7 @@ class cl_cadtipoparc {
                  k40_separajuremul = bool = Controla separacao de juros e multas
                  ";
    //funcao construtor da classe 
-   public function cl_cadtipoparc() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("cadtipoparc");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

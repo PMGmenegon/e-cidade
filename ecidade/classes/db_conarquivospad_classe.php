@@ -57,7 +57,7 @@ class cl_conarquivospad
                  c54_anousu = int4 = exercício
                  ";
    //funcao construtor da classe
-    public function cl_conarquivospad()
+    public function __construct()
     {
       //classes dos rotulos dos campos
         $this->rotulo = new rotulo("conarquivospad");

@@ -61,7 +61,7 @@ class cl_concilia {
                  k68_conciliastatus = int4 = Codigo 
                  ";
    //funcao construtor da classe 
-   public function cl_concilia() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("concilia"); 
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

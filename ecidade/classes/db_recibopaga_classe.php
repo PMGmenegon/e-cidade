@@ -82,7 +82,7 @@ class cl_recibopaga
                  k00_numnov = int4 = Codigo Auxiliar
                  ";
    //funcao construtor da classe
-   public function cl_recibopaga() {
+   public function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("recibopaga");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

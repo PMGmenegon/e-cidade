@@ -58,7 +58,7 @@ class cl_conparametro {
                  c90_confirmadata = bool = Confirma data antes da escrituração 
                  ";
 
-    public function cl_conparametro()
+    public function __construct()
     {
         $this->rotulo = new rotulo("conparametro"); 
         $this->pagina_retorno = basename($_SERVER['PHP_SELF']);
