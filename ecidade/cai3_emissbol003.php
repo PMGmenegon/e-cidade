@@ -66,7 +66,7 @@ if($datai == $dataf){
 	    where k11_data = '".$datai."' and k11_anousu = ".db_getsession("DB_anousu")." and k11_instit = ".db_getsession("DB_instit");
 
     $result = db_query($sql);
-    if(pg_numrows($result) > 0) {
+    if(($result ? pg_numrows($result) : null) > 0) {
 	db_fieldsmemory($result,0);
     }
 
@@ -134,7 +134,7 @@ $sql  = "select a.k12_id,a.k12_data,a.k12_autent,
 		    $ordem ";
 //exit;
 $result = db_query($sql);
-$numrows = pg_numrows($result);
+$numrows = ($result ? pg_numrows($result) : null);
 $QuebraPagina = 10;
 $Total1 = 0;
 $Total2 = 0;

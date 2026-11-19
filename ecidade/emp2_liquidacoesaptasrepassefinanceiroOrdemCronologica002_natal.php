@@ -163,7 +163,7 @@ $sSql = "select dados.*,
           order by o58_orgao, o58_unidade, cc30_ordem, codigo_lista, ac16_acordocategoria, dtvencimento_pag";
             
 $rsDados = db_query($sSql);
-$iLinhas = pg_num_rows($rsDados);
+$iLinhas = ($rsDados ? pg_num_rows($rsDados) : null);
 if ($iLinhas == 0) {
 	db_redireciona("db_erros.php?fechar=true&db_erro=Nenhum registro encontrado.");
 }

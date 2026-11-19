@@ -114,7 +114,7 @@ $xinstit =explode("-", $db_selinstit);
 $resultinst = db_query("select codigo,nomeinst from db_config where codigo in (".str_replace('-', ', ', $db_selinstit).") ");
 $descr_inst = '';
 $xvirg = '';
-for ($xins = 0; $xins < pg_numrows($resultinst); $xins ++) {
+for ($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins ++) {
 	db_fieldsmemory($resultinst, $xins);
 	$descr_inst .= $xvirg.$nomeinst;
 	$xvirg = ', ';
@@ -817,7 +817,7 @@ if ($tipo=="de" ){//desdobramento
 
 
     $resdesdob = retorna_desdob(substr($o56_elemento, 0, 7), $desdobramentos, $clorcelemento);
-$numrows   = pg_numrows($resdesdob);
+$numrows   = ($resdesdob ? pg_numrows($resdesdob) : null);
 
 for ($i = 0; $i < $numrows; $i ++) {
     db_fieldsmemory($resdesdob,$i);

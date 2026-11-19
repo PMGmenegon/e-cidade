@@ -42,7 +42,7 @@ $xinstit =explode("-",$db_selinstit);
 $resultinst = pg_exec("select codigo,nomeinstabrev from db_config where codigo in (".str_replace('-',', ',$db_selinstit).") ");
 $descr_inst = '';
 $xvirg = '';
-for($xins = 0; $xins < pg_numrows($resultinst); $xins++){
+for($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++){
     db_fieldsmemory($resultinst,$xins);
       $descr_inst .= $xvirg.$nomeinstabrev ;
         $xvirg = ', ';
@@ -135,7 +135,7 @@ $valor = 0;
 if($origem == "O"){
   $tipo_balanco=1;
 }
-for($i=0;$i<pg_numrows($result_rec);$i++){
+for($i=0;$i<($result_rec ? pg_numrows($result_rec) : null);$i++){
   db_fieldsmemory($result_rec,$i);
   if($tipo_balanco==1){
     $valor = $dot_ini;
@@ -184,7 +184,7 @@ $tvalor2=0;
 $tvalor3=0;
 $ttotal4=0;
 $pagina = 1;
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
   db_fieldsmemory($result,$i);
 
   if($pdf->gety()>$pdf->h-30 || $pagina ==1){
@@ -258,7 +258,7 @@ $tvalor3=0;
 $tvalor4=0;
 $ttotal4=0;
 $pagina = 1;
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
   db_fieldsmemory($result,$i);
   if($valor==-1){
     continue;
@@ -326,7 +326,7 @@ $tvalor2=0;
 $ttotal4=0;
 $pagina = 1;
 
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
   db_fieldsmemory($result,$i);
   if($valor==-1){
     continue;

@@ -89,7 +89,7 @@ SQL;
 
 
 $result = pg_exec($sql);
-$xxnum = pg_numrows($result);
+$xxnum = ($result ? pg_numrows($result) : null);
 if ($xxnum == 0){
    db_redireciona('db_erros.php?fechar=true&db_erro=Não existe Cadastrada ('.$o80_codres.'). Contate suporte.');
 
@@ -109,7 +109,7 @@ $pdf->setfont('arial','b',8);
 $troca = 1;
 $alt = 6;
 
-for($x = 0; $x < pg_numrows($result); $x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null); $x++){
    db_fieldsmemory($result,$x);
 
    $pdf->ln(10);

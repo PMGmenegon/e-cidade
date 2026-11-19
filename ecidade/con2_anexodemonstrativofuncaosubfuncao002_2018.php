@@ -82,7 +82,7 @@ $sSqlOrgaos .= "                         o41_orgao = o40_orgao and o40_anousu = 
 $sSqlOrgaos .= "     where o41_anousu = {$dtAnousu} and o41_instit  in (".str_replace('-', ',', $oGet->sOrigem).")";
 
 $res_orgaos     = @db_query($sSqlOrgaos);
-$iNumeroLinhas  = @pg_numrows($res_orgaos);
+$iNumeroLinhas  = @($res_orgaos ? pg_numrows($res_orgaos) : null);
 $sOrgao         = "";
 $sSeparador     = "";
 
@@ -354,7 +354,7 @@ function contabilizarDespesa ($oTipoDespesa,$oStdSubfuncao,$sFuncao,$sSubfuncao,
 function construirArraysDespesas($sSql, $lDiferenciaTipo = true) {
 
   $rsSubfuncoes      = db_query($sSql);
-  $iNumeroResultados = pg_num_rows($rsSubfuncoes);
+  $iNumeroResultados = ($rsSubfuncoes ? pg_num_rows($rsSubfuncoes) : null);
 
   $oContingencia  = inicializarDespesa();
   $oOutras        = inicializarDespesa();

@@ -86,7 +86,7 @@ $sWhere         = "where codigo in (".str_replace('-',', ',$db_selinstit).")";
 $sSqlResultInst = "select munic, db21_tipoinstit from db_config {$sWhere}";
 $rsResultInst   = db_query($sSqlResultInst);
 
-for ($xins = 0; $xins < pg_numrows($rsResultInst); $xins++) {
+for ($xins = 0; $xins < ($rsResultInst ? pg_numrows($rsResultInst) : null); $xins++) {
 
   db_fieldsmemory($rsResultInst,$xins);
 
@@ -176,7 +176,7 @@ $textodt = strtoupper(db_mes($dtd1[1]))." A ".strtoupper(db_mes($dtd2[1]))." DE 
  */
 $sTodasInstit  = '';
 $rsResultInst  = db_query("select codigo, munic, db21_tipoinstit from db_config");
-$numrowsinstit = pg_num_rows($rsResultInst);
+$numrowsinstit = ($rsResultInst ? pg_num_rows($rsResultInst) : null);
 $virgula       = "";
 for ($x = 0; $x < $numrowsinstit; $x ++) {
 

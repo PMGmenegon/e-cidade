@@ -39,7 +39,7 @@ $resultinst = db_query("select codigo,nomeinst,nomeinstabrev from db_config wher
 $descr_inst = '';
 $xvirg = '';
 $flag_abrev = false;
-for($xins = 0; $xins < pg_numrows($resultinst); $xins++){
+for($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++){
     db_fieldsmemory($resultinst,$xins);
     if (strlen(trim($nomeinstabrev)) > 0){
          $descr_inst .= $xvirg.$nomeinstabrev;
@@ -191,7 +191,7 @@ $y =0;
 db_fieldsmemory($result,0);
 $func_muda = $o58_funcao;
 $total_e = 0;
-for($y=0;$y<pg_numrows($result_grup);$y++){
+for($y=0;$y<($result_grup ? pg_numrows($result_grup) : null);$y++){
    db_fieldsmemory($result_grup,$y);
    $soma_dot[$y]     = $dot_ini_s;
    $soma_dot_at[$y]  = $dot_ini_s + $suplementado_s - $reduzir;//
@@ -278,7 +278,7 @@ $anulado_acumulados   = 0;
 $liquidados           = 0;
 $liquidado_acumulados = 0;
 
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
   $ae = 0;
   $atotal =0;
   db_fieldsmemory($result,$i);

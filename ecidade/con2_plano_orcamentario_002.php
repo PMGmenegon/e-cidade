@@ -100,7 +100,7 @@ $sql = "
 
 $result = db_query($sql);
 
-if (pg_num_rows($result) == 0) {
+if (($result ? pg_num_rows($result) : null) == 0) {
     db_redireciona("db_erros.php?fechar=true&db_erro=Plano de Contas não Cadastrado. Exercício: " . db_getsession("DB_anousu"));
 }
 
@@ -141,7 +141,7 @@ function cabecalho(\ECidade\Pdf\Pdf $pdf, $alt)
 
 cabecalho($pdf, $alt);
 
-while ($dado = pg_fetch_object($result)) {
+while ($dado = ($result ? pg_fetch_object($result) : null)) {
     if ($pdf->gety() > $pdf->getH() - 15) {
         cabecalho($pdf, $alt);
     }

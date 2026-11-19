@@ -44,7 +44,7 @@ include(modification("libs/db_usuariosonline.php"));
   }else{
      $resultsql = @db_query(str_replace('\\','',$sql.@$limit ));
      $result = db_query("select max(codger) + 1 from db_gerador");
-     $codger = pg_result($result,0,0);
+     $codger = ($result ? pg_result($result,0,0) : null);
      $codger = $codger==""?"1":$codger;
       db_query("insert into db_gerador values($codger,'$nome','$titulo','$finalidade','$sql',$limite,'$visualizacao','$intercalar1','$intercalar2',$pcabecaltura,$pcorpaltura)");
   }
@@ -188,7 +188,7 @@ include(modification("libs/db_usuariosonline.php"));
     fputs($fd,' $corplargura_'.$i.'="'.$$v.'";'."\n");
     $corplargura=$$v;
 
-    $coluna = pg_fieldname($resultsql,$i);
+    $coluna = ($resultsql ? pg_fieldname($resultsql,$i) : null);
 
     if(@$libera==true){
       //db_query("update  db_gerpref set coluna ='$coluna',cabecfonte='$cabecfonte', cabectamanho=$cabectamanho, cabecn='$cabecn', cabeci='$cabeci', cabecs='$cabecs',cabeccortexto='$cabeccortexto', cabeccorborda='$cabeccorborda', cabeccorfundo='$cabeccorfundo', cabecaltura=$cabecaltura, cabeclargura='$cabeclargura', corpfonte='$corpfonte',corpopcao='$corpopcao',corptamanho=$corptamanho, corpn='$corpn', corpi='$corpi',corps='$corps', corpcortexto='$corpcortexto', corpcorborda='$corpcorborda', corpcorfundo='$corpcorfundo', corpaltura='$corpaltura', corplargura='$corplargura' where codger=$codigo");

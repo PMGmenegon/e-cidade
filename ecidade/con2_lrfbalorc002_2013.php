@@ -5843,7 +5843,7 @@ $pdf->cell(20,$alt,db_formatar($somador_III_realizar,'f'),'TB',1,"R",0);
 $tot_despesas   = 0;
 $tot_liq_atebim = 0;
 $tot_deficit    = 0;
-for ($i=0; $i<pg_numrows($result_desp); $i++) {
+for ($i=0; $i<($result_desp ? pg_numrows($result_desp) : null); $i++) {
   db_fieldsmemory($result_desp,$i);
   $estrutural = $o58_elemento."00";
 
@@ -5903,7 +5903,7 @@ $sSqlSuperavit = " SELECT sum(o47_valor) as soma
   and o46_instit in ($instituicao);";
 
 $rsSqlSuperavit = db_query($sSqlSuperavit);
-if(pg_num_rows($rsSqlSuperavit) > 0){
+if(($rsSqlSuperavit ? pg_num_rows($rsSqlSuperavit) : null) > 0){
   $oSuperavit = db_utils::fieldsMemory($rsSqlSuperavit,0);
   $nSuperavitFinancPrevAtu += $oSuperavit->soma;
 }
@@ -5927,7 +5927,7 @@ $sSqlReabertura = " SELECT sum(o47_valor) as soma
   and o46_instit in ($instituicao);";
 
 $rsSqlReabertura = db_query($sSqlReabertura);
-if(pg_num_rows($rsSqlReabertura) > 0){
+if(($rsSqlReabertura ? pg_num_rows($rsSqlReabertura) : null) > 0){
   $oReabertura = db_utils::fieldsMemory($rsSqlReabertura,0);
   $nReaberturaCredPrevAtu += $oReabertura->soma;
 }
@@ -6504,7 +6504,7 @@ $tot_liq_atebim   = 0;
 $tot_inscritos_rp = 0;
 // atualizaTotaisDespesa($m_in["parametros"],$result_desp,false);
 
-for ($i=0; $i<pg_numrows($result_desp); $i++) {
+for ($i=0; $i<($result_desp ? pg_numrows($result_desp) : null); $i++) {
   db_fieldsmemory($result_desp,$i);
   $estrutural = $o58_elemento."00";
   if (substr($estrutural,3,2)=='91' ) {
@@ -7488,7 +7488,7 @@ function atualizaTotaisReceita($oLinha, &$aReceitaIntra, $recordset){
     $tot_realizar,
     $anousu;
 
-  for ($i=0; $i<pg_num_rows($recordset); $i++) {
+  for ($i=0; $i<($recordset ? pg_num_rows($recordset) : null); $i++) {
 
     $oResultado = db_utils::fieldsmemory($recordset,$i);
     $oParametro = $oLinha->getParametros($anousu);
@@ -7522,7 +7522,7 @@ function atualizaTotaisDespesa($oLinha,$recordset, $lIntra){
 
   global $bimestre,$anousu,$tot_inicial,$tot_adicional,$tot_emp_nobim,$tot_emp_atebim,$tot_liq_nobim,$tot_liq_atebim,$tot_inscritos_rp;
 
-  for ($i=0; $i<pg_num_rows($recordset); $i++) {
+  for ($i=0; $i<($recordset ? pg_num_rows($recordset) : null); $i++) {
 
     $oResultado = db_utils::fieldsmemory($recordset,$i);
     $oParametro = $oLinha->getParametros($anousu);
@@ -7560,7 +7560,7 @@ function atualizaTotaisDespesaDivida($oLinha,$recordset){
 
   global $bimestre,$anousu,$tot_inicial,$tot_adicional,$tot_emp_nobim,$tot_emp_atebim,$tot_liq_nobim,$tot_liq_atebim,$tot_inscritos_rp;
 
-  for ($i=0; $i<pg_num_rows($recordset); $i++) {
+  for ($i=0; $i<($recordset ? pg_num_rows($recordset) : null); $i++) {
 
     $oResultado = db_utils::fieldsmemory($recordset,$i);
     $oParametro = $oLinha->getParametros($anousu);

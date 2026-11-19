@@ -124,7 +124,7 @@ $tpag_anu  =  0;
 $tpag_pag  =  0;
 
 
-for($x = 0; $x < pg_numrows($result);$x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null);$x++){
    db_fieldsmemory($result,$x,true);
 
    // codigo não repete o cgm
