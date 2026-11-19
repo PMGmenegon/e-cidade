@@ -33,7 +33,7 @@ include(modification("classes/db_fis_fiscal_classe.php"));
 include(modification("classes/db_fis_fiscalocal_classe.php"));
 include(modification("classes/db_fis_fiscexec_classe.php"));
 include(modification("classes/db_fis_fiscalbaixa_classe.php"));
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 // Ticket 108335
 $getIntimacao = ((isset($intimacao) && $intimacao == 1) ? '&intimacao=1' : '');
 $getLabel     = ((isset($intimacao) && $intimacao == 1) ? 'Intimação' : 'Notificação');

@@ -33,7 +33,7 @@ include(modification("classes/db_fiscal_classe.php"));
 include(modification("classes/db_fiscalocal_classe.php"));
 include(modification("classes/db_fiscexec_classe.php"));
 include(modification("classes/db_fiscalbaixa_classe.php"));
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $clfiscal = new cl_fiscal;
 $clfiscalocal = new cl_fiscalocal;
 $clfiscexec = new cl_fiscexec;
