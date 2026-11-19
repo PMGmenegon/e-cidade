@@ -1,5 +1,76 @@
 {
   "concluidos": {},
-  "reivindicacoes": {},
+  "reivindicacoes": {
+    "ecidade/cai2_correceitas002.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:15Z",
+      "expira": "2026-11-20T01:58:15Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/cai4_carregadadosautent.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:17Z",
+      "expira": "2026-11-20T01:58:17Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/cai4_carregadadosautent_manual.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:19Z",
+      "expira": "2026-11-20T01:58:19Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/cai4_carregadadosextrato.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:20Z",
+      "expira": "2026-11-20T01:58:20Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/cai4_carregadadosextrato_manual.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:22Z",
+      "expira": "2026-11-20T01:58:22Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/con4_padbver_ant.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:23Z",
+      "expira": "2026-11-20T01:58:23Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/con4_padbvmovant.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:25Z",
+      "expira": "2026-11-20T01:58:25Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/con4_viradadeano002_item009.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:26Z",
+      "expira": "2026-11-20T01:58:26Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/orc1_orcduplicacao001.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:11Z",
+      "expira": "2026-11-20T01:58:11Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    },
+    "ecidade/orc1_orcprojativ012.php": {
+      "area": "financeiro",
+      "desde": "2026-11-19T21:58:13Z",
+      "expira": "2026-11-20T01:58:13Z",
+      "motivo": "migracao 8.5 do Financeiro",
+      "quem": "Segundo"
+    }
+  },
   "versao": 1
 }
