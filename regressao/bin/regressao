@@ -30,7 +30,8 @@ Uso: regressao/bin/regressao <comando>
   rodada-completa [args]   rodada completa (HORAS): todas as telas PHP, Laravel contra o laboratorio
                            (ou --alvo-laravel URL), fluxos. Roda em segundo plano.
   comparar ANTES DEPOIS    compara duas rodadas completas (pastas) e escreve comparacao.md em DEPOIS
-  ver-ultimo               mostra o resumo da ultima rodada (ou o andamento, se ainda roda)
+  ver-ultimo               mostra o andamento da rodada em curso ou, sem rodada em curso, o resumo da mais
+                           recente (por data) entre as pastas AAAAMMDD-HHMMSS-<tipo> criadas por este atalho
 
 Rodadas ficam em $REGRESSAO_RODADAS (padrao ~/rodadas). Argumentos extras de rodada-* vao para
 python -m regressao.completa.orquestra (ex.: --sem-fluxos, --area tributario, --alvo-laravel URL).
@@ -111,8 +112,15 @@ rodada() {  # rodada <nome> <args do orquestrador...>
 }
 
 ver_ultimo() {
-    local ultima
-    ultima="$(find "$RODADAS" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort | tail -n 1 || true)"
+    # a rodada viva (trava) vem primeiro; senao a mais recente por data de modificacao entre as pastas que o atalho
+    # cria (AAAAMMDD-HHMMSS-<tipo>). Ordenar por nome errava: pastas criadas a mao (ex.: antes74) iam para o fim.
+    local ultima=""
+    if em_andamento; then
+        ultima="$(cut -f2 "$TRAVA")"
+    else
+        ultima="$(find "$RODADAS" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
+            -regex '.*/[0-9]{8}-[0-9]{6}-[^/]+' -printf '%T@\t%p\n' 2>/dev/null | sort -rn | head -n 1 | cut -f2- || true)"
+    fi
     if [ -z "$ultima" ]; then
         echo "nenhuma rodada em $RODADAS"
         return 0
