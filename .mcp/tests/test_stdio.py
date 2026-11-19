@@ -51,9 +51,11 @@ class Sessao:
                                   env=env, cwd=cwd)
         self.linhas: list[bytes] = []
         self.fila: queue.Queue = queue.Queue()
-        threading.Thread(target=self._le, daemon=True).start()
         self.stderr = b""
-        threading.Thread(target=self._le_err, daemon=True).start()
+        self._leitores = [threading.Thread(target=self._le, daemon=True),
+                          threading.Thread(target=self._le_err, daemon=True)]
+        for t in self._leitores:
+            t.start()
 
     def _le(self):
         for linha in self.p.stdout:
@@ -77,6 +79,8 @@ class Sessao:
     def fecha(self):
         self.p.stdin.close()
         self.p.wait(timeout=30)
+        for t in self._leitores:  # sem o join, linhas/stderr podiam ser conferidos antes de lidos por inteiro
+            t.join(timeout=30)
 
 
 def _sessao_completa(s: Sessao):
@@ -136,6 +140,15 @@ def test_print_e_subprocesso_dentro_de_tool_nao_vazam(env, tmp_path):
     _so_json_rpc(s.linhas)
     for marca in (b"PRINT NO STDOUT", b"PRINT SEM QUEBRA", b"SUBPROCESSO NO STDOUT", b"WRITE NO FD 1"):
         assert marca in s.stderr, marca
+
+
+def test_ecidade_mcp_log_invalido_nao_derruba_a_inicializacao(env):
+    s = Sessao([sys.executable, str(MAIN)], {**env, "ECIDADE_MCP_LOG": "barulhento"}, str(MCP_DIR.parent))
+    init = s.pede(1, "initialize", {"protocolVersion": "2025-06-18", "capabilities": {},
+                                    "clientInfo": {"name": "teste-cru", "version": "0"}})
+    s.fecha()
+    assert init["result"]["serverInfo"]["name"] == "ecidade-migracao"
+    assert b"ECIDADE_MCP_LOG" in s.stderr and b"iniciando" in s.stderr
 
 
 def test_import_nao_escreve_no_stdout():
