@@ -19,6 +19,11 @@ a equipe se coordena sem servidor central.
 - **Conflito no Git?** O arquivo tem uma entrada por caminho, em ordem alfabética: mantenha as entradas dos dois
   lados, apague as marcas `<<<<<<<`, `=======`, `>>>>>>>` e faça commit. Enquanto houver marcas, as tools respondem
   `estado_corrompido` (de propósito: nada é sobrescrito).
+- **Chave duplicada?** Um merge pode deixar o mesmo caminho duas vezes sem marca nenhuma (cada lado acrescentou a sua
+  linha). O JSON comum ficaria só com a última e perderia a outra reivindicação calado; o servidor recusa com
+  `estado_corrompido` e diz qual chave (`detalhes.chave_duplicada`). Combine com o colega qual entrada fica, apague a
+  outra e faça commit só deste arquivo.
+- **Permissão:** o servidor grava o arquivo com `0644` (legível por todos, como os demais arquivos do repositório).
 
 Formato:
 

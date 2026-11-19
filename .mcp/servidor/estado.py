@@ -72,6 +72,23 @@ def _validar_forma(dados: Any, nome: str) -> None:
             raise ruim(f"concluido de {c[:100]!r} com forma invalida")
 
 
+class _ChaveDuplicada(ValueError):
+    def __init__(self, chave: str):
+        super().__init__(chave)
+        self.chave = chave
+
+
+def _sem_duplicadas(pares: list[tuple[str, Any]]) -> dict[str, Any]:
+    """object_pairs_hook: um merge do git pode repetir a chave de um caminho; o json padrao ficaria calado com a
+    ULTIMA e perderia a outra reivindicacao."""
+    dados: dict[str, Any] = {}
+    for k, v in pares:
+        if k in dados:
+            raise _ChaveDuplicada(k)
+        dados[k] = v
+    return dados
+
+
 def _quem(quem: str) -> str:
     q = limpar_texto(quem, MAX_QUEM)
     if not q:
@@ -120,9 +137,14 @@ class Estado:
                                  f"{self.arquivo.name} tem marcas de conflito do git: resolva o conflito "
                                  "(mantenha as entradas dos dois lados) e faca commit so desse arquivo")
         try:
-            dados = json.loads(texto)
+            dados = json.loads(texto, object_pairs_hook=_sem_duplicadas)
         except json.JSONDecodeError as e:
             raise ErroFerramenta("estado_corrompido", f"{self.arquivo.name} nao e JSON valido: {e}") from None
+        except _ChaveDuplicada as e:
+            raise ErroFerramenta("estado_corrompido",
+                                 f"{self.arquivo.name} tem a chave {e.chave[:100]!r} duplicada (sobra de merge do git): "
+                                 "deixe uma entrada so por caminho e faca commit so desse arquivo",
+                                 chave_duplicada=e.chave[:200]) from None
         _validar_forma(dados, self.arquivo.name)
         return dados
 
@@ -134,6 +156,7 @@ class Estado:
                 f.write(texto)
                 f.flush()
                 os.fsync(f.fileno())
+            os.chmod(tmp, 0o644)  # mkstemp cria 0600; o arquivo versionado fica legivel como os outros
             os.replace(tmp, self.arquivo)
         except BaseException:
             try:

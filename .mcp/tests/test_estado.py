@@ -163,6 +163,30 @@ def test_forma_invalida_vira_estado_corrompido(estado, conteudo):
     assert e.value.codigo == "estado_corrompido"
 
 
+@pytest.mark.parametrize("onde,chave", [("reivindicacoes", "ecidade/a.php"), ("raiz", "reivindicacoes")])
+def test_chave_duplicada_vira_estado_corrompido_estruturado(estado, onde, chave):
+    """Um merge do git pode deixar a mesma chave duas vezes; o json padrao ficaria com a ULTIMA, calado."""
+    r = '{"quem": "ana", "motivo": "", "desde": "2026-11-17T12:00:00Z", "expira": "2026-11-17T16:00:00Z"}'
+    if onde == "raiz":
+        texto = '{"versao": 1, "reivindicacoes": {}, "concluidos": {}, "reivindicacoes": {}}'
+    else:
+        texto = ('{"versao": 1, "concluidos": {}, "reivindicacoes": {"ecidade/a.php": ' + r
+                 + ', "ecidade/a.php": ' + r.replace("ana", "bia") + '}}')
+    estado.arquivo.parent.mkdir(parents=True, exist_ok=True)
+    estado.arquivo.write_text(texto)
+    for op in (estado.quadro, lambda: estado.reivindicar("ecidade/b.php", "ana", "x")):
+        with pytest.raises(ErroFerramenta) as e:
+            op()
+        assert e.value.codigo == "estado_corrompido"
+        assert e.value.detalhes["chave_duplicada"] == chave and "duplicada" in e.value.mensagem
+    assert estado.arquivo.read_text() == texto  # nada foi sobrescrito
+
+
+def test_arquivo_gravado_fica_com_permissao_0644(estado):
+    estado.reivindicar("ecidade/a.php", "ana", "x")
+    assert estado.arquivo.stat().st_mode & 0o777 == 0o644
+
+
 def test_escrita_atomica_nao_deixa_temporarios(estado):
     for i in range(5):
         estado.reivindicar(f"ecidade/{i}.php", "ana", "x")
