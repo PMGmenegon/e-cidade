@@ -215,16 +215,17 @@ db_postmemory($HTTP_POST_VARS);
                 $sql .= " ( select id_acount from db_acountkey ".($sqlkey!=""?" where ".$sqlkey:"")." group by id_acount having count(*) = $contador ) ";
               }
               
-		          if ($dbh_campo!=0) {
+		          if ($dbh_campo!=0 && !(is_string($dbh_campo) && !is_numeric($dbh_campo))) {
 		             $sql .= " and d.codcam = $dbh_campo ";
 		          }
 		          
-		          if ($dbh_usuario!=0) {
+		          if ($dbh_usuario!=0 && !(is_string($dbh_usuario) && !is_numeric($dbh_usuario))) {
 		             $sql .= " and d.id_usuario = $dbh_usuario ";
 		          }
 		          
-		          if ($k00_dtoper_dia!=0) {
-		             $sql .= " and d.datahr >= ".mktime(0,0,0,$k00_dtoper_mes,$k00_dtoper_dia,$k00_dtoper_ano);
+		          if ($k00_dtoper_dia!=0 && !(is_string($k00_dtoper_dia) && !is_numeric($k00_dtoper_dia))) {
+		             try { $iTsDtoper = mktime(0,0,0,$k00_dtoper_mes ?? 0,$k00_dtoper_dia,$k00_dtoper_ano ?? 0); } catch (\Throwable $e) { $iTsDtoper = false; }
+		             $sql .= " and d.datahr >= ".$iTsDtoper;
 		          }
 		  
          		  $sql .= " order by id_acount ";
@@ -263,7 +264,7 @@ db_postmemory($HTTP_POST_VARS);
 		            }
 
 		            $processa = true;
-                if ($dbh_campo!=0) {
+                if ($dbh_campo!=0 && !(is_string($dbh_campo) && !is_numeric($dbh_campo))) {
 		              if ($dbh_campo != $codcam ) {
                      $processa = false;
                   }
