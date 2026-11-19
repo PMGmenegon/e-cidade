@@ -71,7 +71,7 @@ $operacoes    = false;
 $restosapagar = false;
 $rcl          = false;
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 db_postmemory($HTTP_SERVER_VARS);
 
 $anousu     = db_getsession("DB_anousu");

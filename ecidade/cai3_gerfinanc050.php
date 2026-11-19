@@ -24,7 +24,7 @@
  *  Copia da licenca no diretorio licenca/licenca_en.txt
  *                                licenca/licenca_pt.txt
  */
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 use ECidade\Tributario\Arrecadacao\CGF\Repository\Certidao as RepositoryCertidao;
 use ECidade\Tributario\Arrecadacao\Enums\TipoCampoOrdenacaoCgfEnum;

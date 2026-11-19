@@ -105,7 +105,7 @@ $CoL8 = 25;
 $StrPad1 = 20;
 $StrPad2 = 26;
 
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $exercicio = $GLOBALS["DB_anousu"];
 $sql  = "
          select distinct k12_conta,k13_descr as conta_saltes

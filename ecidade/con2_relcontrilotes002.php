@@ -35,7 +35,7 @@ $clcontlotv = new cl_contlotv;
 $cleditalserv = new cl_editalserv;
 $cleditalrua = new cl_editalrua;
 $clprojmelhoriasmatric = new cl_projmelhoriasmatric;
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 
 $sSqlServico = $cleditalserv->sql_query($contri,"","d04_quant,d04_vlrobra,d04_vlrcal,d04_vlrval,d03_descr");

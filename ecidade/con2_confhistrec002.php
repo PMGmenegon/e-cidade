@@ -39,7 +39,7 @@ $classinatura = new cl_assinatura;
 $clorctiporec = new cl_orctiporec;
 $clempresto   = new cl_empresto;
 
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 // GET //
 // db_selinstit

@@ -32,7 +32,7 @@ $clrotulo->label('k02_codigo');
 $clrotulo->label('k02_tipo');
 $clrotulo->label('k02_descr');
 $clrotulo->label('k02_drecei');
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $sql = "";
 $info = "Todas Receitas";
 

@@ -38,7 +38,7 @@ $classinatura = new cl_assinatura;
 $clorctiporec = new cl_orctiporec;
 $clempresto   = new cl_empresto;
 
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $dataSessao = date('Y-m-d', db_getsession('DB_datausu'));
 
 $anousu = db_getsession("DB_anousu");

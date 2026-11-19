@@ -36,7 +36,7 @@ $anousu = db_getsession('DB_anousu');
 $clrotulo = new rotulocampo();
 $clrotulo->label('o45_descr');
 
-parse_str($_SERVER['QUERY_STRING']);
+parse_str($_SERVER['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $db_selinstit = str_replace('-', ', ', $db_selinstit);
 $iAnoUsu = db_getsession('DB_anousu');

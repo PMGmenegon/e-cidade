@@ -71,7 +71,7 @@ $oPost = db_utils::postMemory($aDados);
 
 db_postmemory($aDados);
 db_postmemory($_GET);
-parse_str($_SERVER['QUERY_STRING']);
+parse_str($_SERVER['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $vlrjuros = 0;
 $vlrmulta = 0;
 $nDesconto = 0;
