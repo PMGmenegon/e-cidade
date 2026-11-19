@@ -354,3 +354,92 @@ Correções: 104 guardas `== <literal>`, 34 `split` → `preg_split` (todos `#`)
 4 `parse_str`+`extract`. O Rector aplicou só regras já vetadas — **denylist inalterada (29)**.
 Entre os alvos estão `db_turma_classe.php` e `db_matricula_classe.php`, duas das quatro classes
 em que a branch do TCC de referência deixou as guardas `0 == ""` de fora.
+
+## 🔁 Refeita sobre a `base-php74` (19/11/2026)
+
+Com o PR #8 da DBSeller, a referência passou a ser o **PHP 7.4** (`:8080`), não mais o 5.6. A
+área foi refeita do zero a partir de `982a95fb5` (`base-php74`), mantendo a regra de sempre: **reproduzir o 7.4, não corrigir bugs antigos**.
+
+### Escopo
+
+Universo de 3.028 arquivos da Educação: telas `edu/esc/rel/sec/tre/bib/mer`, classes, `forms` e
+`func_` das tabelas dos esquemas `escola`, `merenda`, `biblioteca` e `transporteescolar`,
+`model/educacao` e `src/Educacao`. Núcleo (`std/`, `libs/`, `dbforms/`, `fpdf151/`, classes
+compartilhadas), `scratchpad/`, `composer*`, `vendor/` e Laravel ficaram de fora — o que
+apareceu neles virou anotação para o dono (abaixo).
+
+### Commits e pull requests
+
+Quatro PRs para `base-php74`, independentes entre si (cada um aplica direto na base; os quatro
+juntos dão exatamente a árvore final). Commits do Rector e manuais nunca misturados.
+
+| Branch do PR | Commits | Arquivos |
+| --- | --- | --- |
+| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`) | 430 |
+| `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas | 532 |
+| `educacao/func` | Rector nas `func_` (2 commits) — separado: descartável se a branch de `func_` do Pedro chegar antes | 258 |
+| `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; este registro | 84 |
+
+Configuração local: `rector-curado.php` com
+`ThisCallOnStaticMethodToStaticCallRector` no skip (não é necessária no 8.5) e paralelismo
+reduzido (`withParallel(1800, 3, 6)`) — **não commitada**.
+
+### O que o 7.4 faz e o 8.5 não (medido nos dois containers)
+
+| Expressão | 7.4 | 8.5 | Correção fiel |
+| --- | --- | --- | --- |
+| `pg_num_rows(false)` e afins | aviso, `NULL` | `TypeError` | `($r ? pg_x($r) : null)` — 148 linhas, 65 arquivos |
+| `x / 0` | aviso, `INF`/`-INF`/`NAN` | `DivisionByZeroError` | devolve o mesmo `INF`/`-INF`/`NAN` (2 arquivos) |
+| `0 != ""` | `false` | `true` | `($x != "" && $x !== 0 && $x !== 0.0)` (5 classes BNCC) |
+| `file_get_contents("")` | `false` | `ValueError` | guarda (3) |
+| propriedade em `null` | cria `stdClass` | `Error` | `new stdClass` explícito (1) |
+| `count(null)` | 0 com aviso | `TypeError` | `count((array)$x)` (1) |
+| `array_unique(null)` / `natsort(null)` | aviso, `NULL` | `TypeError` | `is_array` antes (1) |
+| `"" + 1`, `"07:30" <= 1800` | aviso; converte o número inicial | `TypeError` / compara como texto | cast `(int)`/`(float)` (2) |
+| `pg_last_error()` sem conexão | `false` | erro | `try/catch` (1) |
+| assinatura incompatível com a mãe | aviso | fatal | parâmetros opcionais iguais aos da mãe (4) |
+
+Mantida a versão da DBSeller (sem portar a correção antiga): `bib1_reserva004` (octal),
+`edu1_matricula003`, `edu1_avaliacaoestruturanota001`, `edu4_avaliacaoestruturafrequencia001/002`,
+`edu2_historico002`, `ProgressaoParcialVinculoDisciplina` e os `forms` com constante indefinida.
+
+### Verificação
+
+`verifica_lote.py educacao-74 eduall --base 982a95fb5` (universo de 3.029 arquivos, 437 classes):
+
+| Passo | Antes das correções | Final | Observação |
+| --- | --- | --- | --- |
+| 5 `php -l` nos dois runtimes | 0 erros novos | 0 erros novos | 4 pré-existentes, falham também no 7.4 |
+| 5b carga (LSP) | 7 só no 8.5 | 5 só no 8.5 | os 5 são `RelatorioDiarioClasse*`, que herdam de `fpdf151/pdf.php` (núcleo) |
+| 6 instanciar classes | OK | OK | 437 classes |
+| 6b caminho de escrita | 110 linhas | 6 linhas | as 6 são de `db_linhacolunavalorinformacaocomplementar` (Financeiro) |
+| 6c forma negada | 30 | 3 | as 3 são da mesma classe do Financeiro |
+
+Além disso: HTML inline idêntico ao da base em 1.279 arquivos (`token_get_all`, `T_INLINE_HTML`),
+codificação ISO-8859-1 preservada, fim de arquivo restaurado onde o Rector acrescentou uma quebra de linha.
+O passo 4b acusa `extract`, `is_array` e `preg_split` — o script ainda compara com o 5.6; as
+três existem no 7.4. A bateria byte a byte (passo 7) não rodou: depende do núcleo portado.
+
+### Fora da Educação (anotado para os donos)
+
+- `libs/db_app.utils.php:39` (`DB_VERSION` indefinida com a sessão da API) e o retorno
+  antecipado do `db_conecta` — núcleo; a `base-php84` já usa `defined()`.
+- `fpdf151/fpdf.php`: `ParseError` no 8.5 — derruba **todo** relatório em PDF (inclusive os
+  `RelatorioDiarioClasse*` da Educação, que só falham por herdarem dele). O Financeiro portou
+  na 84.
+- Tabela `configuracoes.itens_menu_usuario_favoritos` ausente no banco de teste.
+- Sessão de login real recusada pelas telas legadas na `base-php74`; só a sessão da API serve.
+- `verifica_lote` passo 4b ainda compara com o 5.6 (`extract`, `is_array`, `preg_split`
+  existem no 7.4: falso alarme).
+- `rector_lote`: em máquina com pouca RAM a execução paralela estoura o tempo (lotes de 80
+  resolvem) e duas execuções no mesmo minuto sobrescrevem a pasta de saída.
+- `enumera.py` deixa arquivos de fora (ternário aninhado, classes sem a guarda, arquivos só
+  com correção manual) — achados pelos passos 5/6b/6c.
+- Sugestão ao Diego: banir `ThisCallOnStaticMethodToStaticCallRector` e aceitar
+  `FinalPrivateToPrivateVisibilityRector` na configuração oficial.
+- `db_linhacolunavalorinformacaocomplementar_classe.php` (Financeiro): divergências no 6c.
+- 4 arquivos não compilam nem no 7.4 (pré-existentes): `bib3_leitorcons002`,
+  `edu1_diarioavaliacao001` (`<?php` duplicado), `edu1_diarioavaliacaoobs001`,
+  `mer1_mer_desper_und003`.
+- Bateria byte a byte (passo 7) bloqueada até o núcleo ser portado; roteamento no nginx
+  deliberadamente **não** feito.
