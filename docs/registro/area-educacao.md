@@ -376,13 +376,15 @@ juntos dão exatamente a árvore final). Commits do Rector e manuais nunca mistu
 | Branch do PR | Commits | Arquivos |
 | --- | --- | --- |
 | `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 51 classes `ed*`/`bi*` achadas pela regressão | 481 |
-| `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas | 532 |
-| `educacao/func` | Rector nas `func_` (2 commits) — separado: descartável se a branch de `func_` do Pedro chegar antes | 258 |
+| `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas; `parse_str` na forma decidida pelo grupo | 532 |
+| `educacao/func` | Rector nas `func_` e `parse_str` na forma decidida pelo grupo (3 commits) — separado: descartável se outra branch de `func_` entrar antes | 258 |
 | `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; este registro | 84 |
 
-Configuração local: `rector-curado.php` com
-`ThisCallOnStaticMethodToStaticCallRector` no skip (não é necessária no 8.5) e paralelismo
-reduzido (`withParallel(1800, 3, 6)`) — **não commitada**.
+
+`parse_str` com um argumento usa a forma decidida pelo grupo em 19/11/2026 (decisão 3):
+`parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`, numa linha, com o espaçamento
+original de `x`. As linhas são iguais, byte a byte, às da correção de `parse_str` do grupo para todas as áreas, então
+as duas integram sem conflito em qualquer ordem.
 
 ### O que o 7.4 faz e o 8.5 não (medido nos dois containers)
 
@@ -405,7 +407,7 @@ Mantida a versão da DBSeller (sem portar a correção antiga): `bib1_reserva004
 
 ### Verificação
 
-`verifica_lote.py educacao-74 eduall --base 982a95fb5` (universo de 3.029 arquivos, 437 classes):
+Verificação por lote, contra `982a95fb5` (universo de 3.029 arquivos, 437 classes):
 
 | Passo | Antes das correções | Final | Observação |
 | --- | --- | --- | --- |
@@ -417,7 +419,7 @@ Mantida a versão da DBSeller (sem portar a correção antiga): `bib1_reserva004
 
 Além disso: HTML inline idêntico ao da base em 1.279 arquivos (`token_get_all`, `T_INLINE_HTML`),
 codificação ISO-8859-1 preservada, fim de arquivo restaurado onde o Rector acrescentou uma quebra de linha.
-O passo 4b acusa `extract`, `is_array` e `preg_split` — o script ainda compara com o 5.6; as
+A conferência de funções novas acusa `extract`, `is_array` e `preg_split` porque ainda compara com o 5.6; as
 três existem no 7.4. A bateria byte a byte (passo 7) não rodou: depende do núcleo portado.
 
 ### Regressão no ambiente `e74` (19/11/2026)
@@ -447,13 +449,13 @@ telas que ainda divergem, quase todas são HTTP 500 só no 8.5, o padrão dos de
   na 84.
 - Tabela `configuracoes.itens_menu_usuario_favoritos` ausente no banco de teste.
 - Sessão de login real recusada pelas telas legadas na `base-php74`; só a sessão da API serve.
-- `verifica_lote` passo 4b ainda compara com o 5.6 (`extract`, `is_array`, `preg_split`
+- A verificação por lote ainda confere as funções novas contra o 5.6 (`extract`, `is_array`, `preg_split`
   existem no 7.4: falso alarme).
-- `rector_lote`: em máquina com pouca RAM a execução paralela estoura o tempo (lotes de 80
+- Rector por lote: em máquina com pouca RAM a execução paralela estoura o tempo (lotes de 80
   resolvem) e duas execuções no mesmo minuto sobrescrevem a pasta de saída.
-- `enumera.py` deixa arquivos de fora (ternário aninhado, classes sem a guarda, arquivos só
-  com correção manual) — achados pelos passos 5/6b/6c.
-- Sugestão ao Diego: banir `ThisCallOnStaticMethodToStaticCallRector` e aceitar
+- A enumeração dos alvos deixa arquivos de fora (ternário aninhado, classes sem a guarda, arquivos só
+  com correção manual) — achados pela sintaxe e pelos testes de escrita.
+- Sugestão para a configuração oficial do Rector: banir `ThisCallOnStaticMethodToStaticCallRector` e aceitar
   `FinalPrivateToPrivateVisibilityRector` na configuração oficial.
 - `db_linhacolunavalorinformacaocomplementar_classe.php` (Financeiro): divergências no 6c.
 - 4 arquivos não compilam nem no 7.4 (pré-existentes): `bib3_leitorcons002`,
