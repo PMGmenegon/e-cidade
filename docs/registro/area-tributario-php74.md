@@ -159,6 +159,54 @@ deve ser editado à mão; quem for testá-la, com dublê local do serviço, deve
   corrigido na branch do Financeiro, ainda não integrada a esta base;
 - 2, `fis1_sanitario004` e `fis1_fis_sanitario004`: respondem 500 **no 7.4** — defeito da referência, não corrigido.
 
+## 4f. Lote 6 — `cad` (20/11/2026)
+
+| Commit | O quê | Prova |
+|---|---|---|
+| construtores (manual) | `__construct` em 12 classes: `cl_averbacao`, `cl_averbacgm`, `cl_averbacgmold`, `cl_condominio`, `cl_condominiocgm`, `cl_iptutaxacalvold`, `cl_iptutaxanumpold`, `cl_promitente`, `cl_propri`, `cl_ruasbairro`, `cl_ruascep`, `cl_tesinteroutros` | instanciação: antes 12 ≠; depois 8.5 = 7.4 e 7.4 = 7.4 |
+| `0 == ""` (Rector, automático) | 151 classes (tabelas do módulo cadastro; 179 tabelas, 164 classes não tratadas antes); 951 linhas, só inserção. `cl_ruastipo` ficou de fora pela própria regra (propriedades sem padrão inteiro) e já era igual | caminho de escrita: antes 167 ≠ (1.225 linhas); depois só `cl_iptuconstr`, que no harness sem conexão consulta o banco (no 7.4 `pg_query()` sem conexão avisa, no 8.5 é `Error`) — artefato; as telas que a usam são idênticas |
+| `pg_*` (script, automático) | 10 telas, 57 chamadas | 7.4 igual antes/depois; 9/10 idênticas |
+| `pg_fetch_object(db_query(...))` aninhado (manual) | `cad4_calciptu:703`: resultado numa variável nova e a mesma guarda | 7.4 igual; idêntica |
+| forma negada (manual) | `cad4_constr002:212`: `if($num!="")` com `$num` inteiro → `($num!="" && $num !== 0 && $num !== 0.0)` (idioma do catálogo) | caracterizado com 7 valores: igual ao 7.4 nos dois; idêntica |
+
+`split()` mantido (função de compatibilidade nos dois). O inventário apontou "offset com chaves" em 6 arquivos
+(`cad4_geracarneiptutxt*.php`, `src/Tributario/Cadastro/Iptu/EmissaoTXT.php`): falso positivo, é interpolação
+`"$x{$y}"` dentro de texto; o `php -l` passa nos dois.
+
+**Resultado:** bateria do lote **417/540 → 456/540**. As **84** restantes:
+- 76 de `fpdf151/fpdf.php` e `libs/JSON.php`;
+- `cad1_aba1ruas002` e `cad1_ruas003`: `forms/db_frmruas.php:160` chama `db_inputdata()` com os argumentos deslocados
+  (defeito pré-existente, igual nos dois: `'text'` cai em `$db_opcao`); dentro do núcleo, `$db_opcao < 3` com `'text'`
+  é verdadeiro no 7.4 e falso no 8, e o script do calendário só sai no 7.4 — núcleo;
+- `cad1_lote002` e `cad1_lote003`: `db_select('j54_ponto', ...)` com chave `'0'` e chaves de texto — comparação `==` do
+  núcleo;
+- `cad2_iptulancpago001`: `db_multiploselect()` testa `gettype($rs) == "resource"` (`dbforms/db_funcoes.php:416`),
+  `"object"` no 8 — núcleo;
+- `cad4_certidaoexistencia003`: `std/DBLargeObject.php:101`, `pg_lo_export()` na ordem antiga de argumentos — núcleo;
+- `cad1_reliptuender002` e `cad2_emissaobic_002`: respondem 500 **no 7.4** — defeito da referência, não corrigido.
+
+## 4g. Bateria completa do fim da área (20/11/2026)
+
+Os 14 prefixos de novo, depois dos 6 lotes: **2.396 de 2.805 telas idênticas** (linha de base: 2.234). O conjunto das 409
+divergentes é **exatamente** o das baterias finais de cada lote — nenhum lote regrediu outro.
+
+| Prefixo | Linha de base | Fim | | Prefixo | Linha de base | Fim |
+|---|---|---|---|---|---|---|
+| `cem` | 109/117 | 112/117 | | `div` | 110/148 | 119/148 |
+| `itb`/`itbi` | 89/123 | 114/123 | | `arr` | 119/166 | 123/166 |
+| `mar` | 31/35 | 31/35 | | `agu`/`agua` | 173/224 | 179/224 |
+| `not` | 10/14 | 10/14 | | `iss` | 307/400 | 328/400 |
+| `tri` | 26/35 | 32/35 | | `fis` | 686/792 | 727/792 |
+| `inf` | 23/30 | 23/30 | | `cad` | 417/540 | 456/540 |
+| `dvr` | 19/33 | 24/33 | | `jur` | 115/148 | 118/148 |
+
+Das 409 que divergem: **379 dependem só de `fpdf151/fpdf.php` e `libs/JSON.php`**; as outras 30 são as pendências da seção 5
+(núcleo e `cl_cadtipo` do Financeiro), 6 telas que já quebram no 7.4 e 2 arquivos que não são tela (lote 3).
+
+Uma única divergente não estava na linha de base: `fis2_emiteaidof002.php`. Conferido voltando o código ao ponto de
+partida (antes de qualquer commit desta frente): lá ela já diverge igual (7.4 gera o PDF, 8.5 quebra no
+`fpdf151/fpdf.php`). Não é regressão; a medição da linha de base dessa tela foi instável.
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
@@ -170,6 +218,10 @@ deve ser editado à mão; quem for testá-la, com dublê local do serviço, deve
 | `dbforms/db_funcoes.php:1051` (`db_select`) | `reset($db_matriz)` com lista nula: aviso no 7.4, `TypeError` no 8 | 2 no lote 4 |
 | `dbforms/db_funcoes.php:859` (`db_selectrecord`, somente leitura) | `is_resource($record)` é falso para `PgSql\Result`: a descrição do registro não aparece | todo select somente leitura (6 no lote 5) |
 | `libs/db_stdlib.php:100`, `libs/db_libsession.php:63` | `pg_query()`/`pg_escape_string()` sem conexão: `Deprecated` no 8.1+ (aparece em tela que liga `display_errors`) | 1 no lote 5 |
+| `dbforms/db_funcoes.php:1157` (`db_inputdata`) | `$db_opcao < 3` com texto não numérico: verdadeiro no 7.4, falso no 8 (só ocorre porque o formulário passa os argumentos deslocados) | 2 no lote 6 |
+| `dbforms/db_funcoes.php:416` (`db_multiploselect`) | `gettype($rs) == "resource"`: `"object"` no 8, a lista sai vazia | 1 no lote 6 |
+| `std/DBLargeObject.php:101` | `pg_lo_export()` com a conexão no fim (ordem removida no 8.0): `ArgumentCountError` | 1 no lote 6 |
+| `cl_cadtipo` (módulo caixa, do Financeiro) | construtor estilo PHP 4 — já corrigido na branch do Financeiro, ainda não integrada | 2 no lote 5 |
 | `classes/db_db_logsacessa_classe.php` | construtor estilo PHP 4 | usada pela Configuração e por webservices |
 | `abrir.php:372` | `db_verifica_ip_banco()` chamada sem o argumento que o PR passou a exigir; quebra **igual no 7.4** (depois de gravar a sessão) | login direto pelo `abrir.php` |
 
