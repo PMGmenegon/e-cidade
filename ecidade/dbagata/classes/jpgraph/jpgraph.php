@@ -3075,7 +3075,7 @@ class GraphTabTitle extends Text{
 	$this->align = $aAlign;
     }
 
-    public function SetPos($aAlign) {
+    public function SetPos($aAlign = null, $aYAbsPos = 0, $aHAlign = 'left', $aVAlign = 'top') {
 	$this->align = $aAlign;
     }
 
@@ -3092,7 +3092,7 @@ class GraphTabTitle extends Text{
 	$this->corner = $aD ;
     }
 
-    function Stroke(&$aImg) {
+    function Stroke(&$aImg, $aX = null, $aY = null) {
 	if( $this->hide )
 	    return;
 	$this->boxed = false;

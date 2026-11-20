@@ -683,7 +683,7 @@ class PiePlotC extends PiePlot {
     }
 
 
-    public function Stroke($img,$aaoption=0) {
+    public function Stroke(&$img,$aaoption=0) {
 
 	// Stroke the pie but don't stroke values
 	$tmp =  $this->value->show;
@@ -768,7 +768,7 @@ class PieGraph extends Graph {
 
 //---------------
 // PUBLIC METHODS
-    public function Add($aObj) {
+    public function Add(&$aObj) {
 
 	if( is_array($aObj) && count($aObj) > 0 )
 	    $cl = get_class($aObj[0]);

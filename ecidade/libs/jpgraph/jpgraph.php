@@ -3123,7 +3123,7 @@ class GraphTabTitle extends Text{
 	$this->align = $aAlign;
     }
 
-    public function SetPos($aAlign) {
+    public function SetPos($aAlign = null, $aYAbsPos = 0, $aHAlign = 'left', $aVAlign = 'top') {
 	$this->align = $aAlign;
     }
 
@@ -3140,7 +3140,7 @@ class GraphTabTitle extends Text{
 	$this->corner = $aD ;
     }
 
-    public function Stroke($aImg) {
+    public function Stroke($aImg, $aX = null, $aY = null) {
 	if( $this->hide )
 	    return;
 	$this->boxed = false;
@@ -3262,7 +3262,7 @@ class SuperScriptText extends Text {
     }
 
     // Total width of text
-    function GetWidth(&$aImg) {
+    function GetWidth($aImg) {
 	$aImg->SetFont($this->font_family,$this->font_style,$this->font_size);
 	$w = $aImg->GetTextWidth($this->t);
 	$aImg->SetFont($this->sfont_family,$this->sfont_style,$this->sfont_size);
@@ -3272,7 +3272,7 @@ class SuperScriptText extends Text {
     }
 
     // Hight of font (approximate the height of the text)
-    function GetFontHeight(&$aImg) {
+    function GetFontHeight($aImg) {
 	$aImg->SetFont($this->font_family,$this->font_style,$this->font_size);
 	$h = $aImg->GetFontHeight();
 	$aImg->SetFont($this->sfont_family,$this->sfont_style,$this->sfont_size);
@@ -7127,7 +7127,7 @@ class RotImage extends Image {
 	parent::Arc($xc,$yc,$w,$h,$s,$e);
     }
 
-    public function FilledArc($xc,$yc,$w,$h,$s,$e) {
+    public function FilledArc($xc,$yc,$w,$h,$s,$e,$style="") {
 	list($xc,$yc) = $this->Rotate($xc,$yc);
 	$s += $this->a;
 	$e += $this->a;

@@ -2073,7 +2073,7 @@ class RotImage extends Image {
 	parent::Arc($xc,$yc,$w,$h,$s,$e);
     }
 
-    public function FilledArc($xc,$yc,$w,$h,$s,$e) {
+    public function FilledArc($xc,$yc,$w,$h,$s,$e,$style="") {
 	list($xc,$yc) = $this->Rotate($xc,$yc);
 	$s += $this->a;
 	$e += $this->a;
