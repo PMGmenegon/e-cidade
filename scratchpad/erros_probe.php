@@ -38,7 +38,7 @@ if ($camada === 'b') {
     $app->make(Illuminate\Contracts\Http\Kernel::class)->bootstrap();
 }
 
-// o que muitas telas fazem: ini_set('error_reporting', <texto>) (115 arquivos .php da raiz); ?er=<texto> reproduz
+// o que muitas telas fazem: ini_set('error_reporting', <texto>) (68 arquivos .php, 61 na raiz de ecidade/: git grep -lE "ini_set\(\s*['\"]error_reporting['\"]" -- 'ecidade/*.php' ':!ecidade/vendor'); ?er=<texto> reproduz
 $er = isset($_GET['er']) ? $_GET['er'] : (isset($argv[3]) ? $argv[3] : null);
 $er_resultado = null;
 if ($er !== null) {

@@ -5,6 +5,9 @@
 set -u
 E=$(realpath "$1"); V74=$(realpath "$2"); V85=$(realpath "$3"); I74=$4; I85=$5; ENVF=$(realpath "$6"); O=$(realpath -m "$7"); T=$(dirname "$(realpath "$0")")
 mkdir -p "$O"
+# pontos de montagem do conteiner: ecidade/.env e ecidade/vendor precisam existir no host
+[ -e "$E/.env" ] || { echo "ERRO: falta $E/.env (o .env de teste e montado em /e/.env; sem o ponto de montagem o docker falha)"; exit 1; }
+[ -d "$E/vendor" ] || { echo "ERRO: falta $E/vendor (ponto de montagem do vendor; crie a pasta vazia ou rode o composer install do composer.lock do PR)"; exit 1; }
 for v in 74 85; do
   img=$I74; ven=$V74; [ $v = 85 ] && img=$I85 && ven=$V85
   APPLOCAL=""; [ -f "$E/config/application.php" ] && APPLOCAL="-v $O/vazio.php:/e/config/application.php:ro"   # a copia local nao versionada fica de fora: vale so o config/application.default.php
@@ -31,5 +34,6 @@ for v in 74 85; do
       php -r "echo json_encode([\"error_reporting\"=>ini_get(\"error_reporting\"),\"display_errors\"=>ini_get(\"display_errors\"),\"log_errors\"=>ini_get(\"log_errors\"),\"error_log\"=>ini_get(\"error_log\"),\"html_errors\"=>ini_get(\"html_errors\"),\"ini\"=>php_ini_loaded_file()]),\"\n\";" > /o/cli_'$v'.json
       php -v | head -1 > /o/versao_'$v'.txt
     '
+  rc=$?; [ $rc -eq 0 ] || { echo "ERRO: docker run do php$v saiu com $rc"; exit $rc; }
   echo "php$v: $(ls "$O" | grep -c "_$v")"
 done
