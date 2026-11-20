@@ -64,7 +64,7 @@ class cl_issconfiguracaogruposervico {
                  q136_salaoparceiro = boll = Salão Parceiro
                  ";
    //funcao construtor da classe
-   public function cl_issconfiguracaogruposervico() {
+   public function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("issconfiguracaogruposervico");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

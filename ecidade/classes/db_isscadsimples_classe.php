@@ -59,7 +59,7 @@ class cl_isscadsimples {
                  q38_observacao varchar(60) = Observação
                  ";
    //funcao construtor da classe
-   public function cl_isscadsimples() {
+   public function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("isscadsimples");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
