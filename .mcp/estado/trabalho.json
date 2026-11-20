@@ -1,5 +1,109 @@
 {
-  "concluidos": {},
-  "reivindicacoes": {},
+  "concluidos": {
+    "ecidade/composer-85.json": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-79",
+        "PHP8-39"
+      ],
+      "quando": "2026-11-20T04:57:36Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/composer-85.lock": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-79",
+        "PHP8-39"
+      ],
+      "quando": "2026-11-20T04:57:36Z",
+      "quem": "Gustavo"
+    }
+  },
+  "reivindicacoes": {
+    "ecidade/app/Domain/Financeiro/Orcamento/Services/Relatorios/VinculosRecursoService.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Planejamento/Services/ProjecaoDespesaService.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/Concessao.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/ConcessaoCalculo.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/Rhpessoal.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/CotaUnicaRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/DataLancamentoRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/ReciboRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/TipoDebitoRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Caixa/Models/Arrecad.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/ISSQN/Repository/SimplesNacional/AtualizaCadastroOptantesSimplesNacionalRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/ISSQN/Repository/SimplesNacional/AtualizaDataCadastrosRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/composer-85.json": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-79",
+      "quem": "Gustavo"
+    },
+    "ecidade/database/migrations/2023_10_16_161806_m24478_criando_tabelas_novas_configuracoes.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    }
+  },
   "versao": 1
 }
