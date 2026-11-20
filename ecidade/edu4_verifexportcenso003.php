@@ -1113,7 +1113,7 @@ $array_registro = array("null"=>"","00"=>"Registro 00 - Identificação","10"=>"Re
         }
       
         if ($registro != "51" && $registro != "80" && $registro != "null") {
-            for ($t = 0; $t < count($array); $t++) {
+            for ($t = 0; $t < count((array)$array); $t++) {
                 echo $array[$t]."<br>";
             }
         }

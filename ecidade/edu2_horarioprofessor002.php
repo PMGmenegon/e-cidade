@@ -93,7 +93,7 @@ $result0 = db_query($sql);
 $escolas = array(); // Criando um array que irá armazenar as escolas de $result0
 $objEscola = new stdClass(); // Criando um objeto para armazenar o código e nome das escolas dentro do array $escolas
 
-for ($x = 0; $x < pg_num_rows($result0); $x++) {
+for ($x = 0; $x < ($result0 ? pg_num_rows($result0) : null); $x++) {
     db_fieldsmemory($result0, $x);
 
     $objEscola = new stdClass();
