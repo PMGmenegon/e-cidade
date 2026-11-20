@@ -6,8 +6,11 @@ A trava da integracao nao foi tocada.
 
 ## Como foi medido
 
-- **Composer descartavel** (fora do repositorio, so baixa pacotes): para o Carbon 2, o **vendor do PR** (`composer install` da `ecidade/composer.lock`: `nesbot/carbon` 2.72.5, `symfony/translation` 5.4.42); para o Carbon 3, `composer require nesbot/carbon:^3` (3.15.1). Conteineres `php:7.4-cli` e `php:8.5-cli` com `--network none`.
-- **Locale:** para `formatLocalized` (que usa `strftime`), duas imagens descartaveis `php:7.4-cli`/`php:8.5-cli` com o pacote `locales` e `pt_BR` gerado (so isso a mais).
+- **Composer descartavel** (fora do repositorio, so baixa pacotes): Carbon 2 = `nesbot/carbon` 2.72.5 com `config.platform.php = 7.4.33` (resolve `symfony/translation` 5.4.45, a ultima que roda no 7.4; sem isso o
+  Composer pega a 6.4, so PHP 8, e o 7.4 morre no `translatedFormat`) e `config.audit.block-insecure=false` (a 2.72.5 tem aviso de seguranca). Carbon 3 = `composer require nesbot/carbon:^3` (3.15.1).
+  O vendor do PR (`symfony/translation` 5.4.42) da as mesmas saidas.
+- **Imagens do projeto** (`docker/php74-apache` e `docker/php85-apache`, com o `php.ini` e o locale `pt_BR` delas), sem rede, pelo `docker/composer-85/roda-isolado.sh` (PHP8-79), que falha alto
+  se o `docker run` falhar ou a saida vier vazia: `VENDOR=<pasta>/vendor bash docker/composer-85/roda-isolado.sh <7.4|8.5> scratchpad/carbon_usos_2x3.php /app/vendor`.
 - Script: `scratchpad/carbon_usos_2x3.php <vendor>` (relogio fixo 2030-01-01 23:30 `America/Sao_Paulo`; cada linha da saida e um uso com o seu arquivo:linha).
   Saidas: `carbon3-usos/carbon2-php7.4.txt`, `carbon2-php8.5.txt` e `carbon3-php8.5.txt` (76 linhas cada).
 - Carbon 2 no 7.4 x Carbon 2 no 8.5: iguais, **exceto** (a) o texto de 2 mensagens do PHP em `createFromFormat` vazio/`null` (`Data missing` x `Not enough data available to satisfy format`) e (b) o mes por extenso da tabela abaixo, que depende de o `AppServiceProvider` achar o locale `pt_BR` (so no 7.4, ver nota). A igualdade "Carbon 2 igual no 7.4 e no 8.5" vale no script isolado, sem o boot do provider.
@@ -64,13 +67,15 @@ Cada um e valido no 7.4 (mesmo resultado medido no Carbon 2) e no Carbon 3:
 ## Repetir
 
 ```bash
-# composer descartavel (so baixa pacotes)
 mkdir -p c2 c3
-echo '{"require":{"nesbot/carbon":"2.72.5"},"config":{"audit":{"block-insecure":false}}}' > c2/composer.json
-docker run --rm -u $(id -u):$(id -g) -e COMPOSER_HOME=/tmp/ch -v $PWD/c2:/c -w /c composer:2 composer update --ignore-platform-reqs --no-interaction
+echo '{"require":{"nesbot/carbon":"2.72.5"},"config":{"platform":{"php":"7.4.33"},"audit":{"block-insecure":false}}}' > c2/composer.json
+docker run --rm -u $(id -u):$(id -g) -e COMPOSER_HOME=/tmp/ch -v $PWD/c2:/c -w /c composer:2 composer update --no-interaction   # sem --ignore-platform-reqs: a plataforma 7.4.33 vale
 docker run --rm -u $(id -u):$(id -g) -e COMPOSER_HOME=/tmp/ch -v $PWD/c3:/c -w /c composer:2 composer require 'nesbot/carbon:^3' --ignore-platform-reqs --no-interaction
-# locale pt_BR: Dockerfile  FROM php:8.5-cli ; RUN apt-get update && apt-get install -y --no-install-recommends locales && sed -i 's/^# *pt_BR ISO-8859-1/pt_BR ISO-8859-1/' /etc/locale.gen && locale-gen
-docker run --rm --network none -v $PWD/scratchpad:/s:ro -v $PWD/c2:/w/c2:ro <imagem php 7.4 com locale> php /s/carbon_usos_2x3.php /w/c2/vendor
-docker run --rm --network none -v $PWD/scratchpad:/s:ro -v $PWD/c3:/w/c3:ro <imagem php 8.5 com locale> php /s/carbon_usos_2x3.php /w/c3/vendor
+VENDOR=$PWD/c2/vendor bash docker/composer-85/roda-isolado.sh 7.4 scratchpad/carbon_usos_2x3.php /app/vendor > carbon2-php7.4.txt
+VENDOR=$PWD/c2/vendor bash docker/composer-85/roda-isolado.sh 8.5 scratchpad/carbon_usos_2x3.php /app/vendor > carbon2-php8.5.txt
+VENDOR=$PWD/c3/vendor bash docker/composer-85/roda-isolado.sh 8.5 scratchpad/carbon_usos_2x3.php /app/vendor > carbon3-php8.5.txt
+for f in carbon2-php7.4 carbon2-php8.5 carbon3-php8.5; do cmp $f.txt docs/migracao-laravel/carbon3-usos/$f.txt; done
 diff carbon2-php8.5.txt carbon3-php8.5.txt          # as diferencas da tabela acima
 ```
+
+Conferido assim (imagens do projeto, `roda-isolado.sh`): as tres saidas ficam identicas as guardadas.
