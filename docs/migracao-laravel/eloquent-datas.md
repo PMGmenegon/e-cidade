@@ -50,11 +50,13 @@ o ponto de partida da inicializacao do Laravel (PHP8-62).
 
 ### Repetir com o vendor do 8.5
 
-O trecho recebe a pasta `vendor` por argumento. Quando o vendor do 8.5 estiver na integracao:
+O trecho recebe a pasta `vendor` por argumento. O `vendor` tem de ser montado em **`/w/ecidade/vendor`** (por cima de `ecidade/vendor`): o autoload do Composer resolve
+os `files` do projeto (`app/Helpers/*`) a partir de `dirname(vendor)`, que precisa ser o proprio `ecidade/`. Quando o vendor do 8.5 estiver na integracao
+(`bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+` o deixa em `runtime-85/vendor`; num checkout novo, `mkdir ecidade/vendor` antes):
 
 ```bash
-docker run --rm --network none -v $PWD/ecidade:/w/ecidade:ro -v <vendor-8.5>:/w/v:ro -v $PWD/scratchpad:/s:ro \
-  php:8.5-cli php -d memory_limit=1G /s/eloquent_datas.php /w/ecidade /w/v/vendor \
+docker run --rm --network none -v $PWD/ecidade:/w/ecidade:ro -v $PWD/runtime-85/vendor:/w/ecidade/vendor:ro -v $PWD/scratchpad:/s:ro \
+  php:8.5-cli php -d memory_limit=1G /s/eloquent_datas.php /w/ecidade /w/ecidade/vendor \
   | diff - docs/migracao-laravel/eloquent-datas/models-7.4.txt     # saida do 8.5 e comparada crua; a referencia ja esta normalizada
 # para refazer a referencia no 7.4: ... php:7.4-cli php ... | sed 's/DateTime::__construct(): //' > models-7.4.txt
 ```
