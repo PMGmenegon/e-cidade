@@ -4,6 +4,8 @@
 `testes-proprios-85.md` da **os mesmos numeros** de antes, com o Laravel 8.73.2: 520 testes nos dois runtimes, 1065
 asserc. no 7.4 e 1051 no 8.5, 2 falhas nos dois e 5 erros so no 8.5 (os mesmos `$texto{n}` de `libs/JSON.php:188` e
 `Lancamento.php:742`). Nenhum teste e nenhum arquivo do PR foi alterado. O 7.4 nao muda (vendor do PR, Laravel 8).
+**Atencao:** numeros iguais aqui mostram que os testes **nao dependem do framework**, nao que o Laravel 13 funciona: nenhum
+teste sobe o app nem o kernel (ver "O que a suite exercita"), e o boot do kernel no vendor do Laravel 13 **falha** (lacuna abaixo).
 
 ## O que mudou e o que nao mudou no vendor
 
@@ -38,14 +40,30 @@ Cada diferenca tem a causa de `testes-proprios-85.md`: `$texto{n}` removido no P
 `Configuracao`) e `src/Financeiro/.../Repository/Lancamento.php:742` (2 de `Financeiro`), e 2 testes de `Tributario` com
 float sem delta que falham igual nos dois.
 
-## O que a troca para o Laravel 13 exercitou
+## O que a suite exercita do Laravel 13 (e o que nao)
 
-- **41 dos arquivos de teste usam `Tests\TestCase`** (o `ExampleTest` e quase todos os de RH, Patrimonial e Std).
-  `Tests\TestCase` usa `CreatesApplication`, que carrega `bootstrap/app.php` e roda `Kernel::bootstrap()`: essas classes
-  sobem o **kernel do Laravel 13** e passam. A suite confirma o boot do kernel; nao confirma rotas, banco nem o Passport.
+- **Nenhum teste sobe o app nem o kernel.** `Tests\TestCase` (`ecidade/tests/TestCase.php`) estende
+  `Mockery\Adapter\Phpunit\MockeryTestCase` e o `setUp()` so ajusta fuso, `error_reporting` e cria o Faker; o trait
+  `CreatesApplication` existe, mas nenhum teste o usa (so o proprio arquivo cita `createApplication`). O bootstrap da suite
+  (`tests/suite/bootstrap.php`) carrega apenas `vendor/autoload.php` e o `bootstrap.php` do sistema.
+- O Laravel 13 so entra pelo autoload e por classes do Illuminate que o codigo testado ou o teste citam (por exemplo
+  `Illuminate\Support\Collection` em `ProcedimentoBnafarStrategyTest`). Nenhum teste usa `Carbon` direto; o Carbon 3.15.1
+  so seria exercitado se o codigo sob teste o usasse (nao medido por teste).
 - **Avisos `Deprecated` do 8.5: 378** (no 7.4: 1). **327 sao do `mockery/mockery` 1.3.0** ("implicitly nullable") e os
   demais do proprio codigo do PR (`src/`, `libs/`, `model/agua/...`, `std/`: `ReflectionParameter::getClass()`/`isArray()`,
-  `"parent"` em callables, cast `(integer)`). Nenhum muda resultado; sao a lista do que o 8.5 ainda acusa.
+  `"parent"` em callables, cast `(integer)`). Nenhum muda resultado.
+
+## Lacuna: o boot do kernel no Laravel 13 falha
+
+Fora da suite, subir o kernel com o vendor do 8.5 em Laravel 13.43.0 + Passport 13.12.0 **nao funciona hoje**:
+
+```
+Call to undefined method Laravel\Passport\Passport::routes()      (ecidade/app/Providers/AuthServiceProvider.php:31)
+```
+
+O Passport 13 nao tem `routes()`. Reproduzido com `bash docker/composer-85/roda-isolado.sh 8.5 <trecho.php>` (trecho: `require tests/bootstrap.php`,
+`require bootstrap/app.php`, `Console\Kernel::bootstrap()`), sem banco e sem rede. A medida do que mais quebra no boot e da
+tarefa que trata a inicializacao no Laravel 13; esta suite nao a cobre.
 
 ## Como foi medido
 
@@ -61,5 +79,6 @@ Medido no 7.4: as imagens do projeto dao os mesmos numeros das `php:7.4-cli` (52
 ## Limites
 
 - Sem banco: nenhum dos 520 testes abre conexao; o que depende de banco continua fora (ver `testes-proprios-85.md`).
+- Nao ha teste do app no Laravel 13 (rotas, kernel, Passport): a suite atual nao os tem, e o boot falha (lacuna acima).
 - O PHPUnit e o 8.5.39; se um dia a trava do 8.5 passar ao PHPUnit 11/12, `setUp()` sem `: void` e `@dataProvider` em
   comentario deixam de funcionar e a suite precisa de ajuste nos arquivos de teste.
