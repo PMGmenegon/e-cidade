@@ -3,7 +3,7 @@
 // Para cada form request: instancia com dados em memoria, le rules()/messages()/attributes() e roda o Validator com 5 entradas
 // (vazia, valida montada pelas regras, chave obrigatoria ausente, todos os campos vazios, todos os campos array).
 // Regras que dependem de banco (exists, unique) sao tiradas e listadas. Saida: JSON canonico (mesmo arquivo nos dois PHPs => iguais).
-// Uso: php laravel8_validacao_medir.php <pasta ecidade> <saida.json>   (autoload do vendor ao lado deste arquivo: laravel/framework 8.73.2)
+// Uso: php laravel8_validacao_medir.php <pasta ecidade> <saida.json>   (autoload do vendor ao lado deste arquivo ou em $VENDOR)
 $deprec = array();
 set_error_handler(function ($no, $str) use (&$deprec) {
     if ($no === E_DEPRECATED || $no === E_USER_DEPRECATED) {
@@ -12,7 +12,7 @@ set_error_handler(function ($no, $str) use (&$deprec) {
     }
     return false;
 });
-require __DIR__ . '/vendor/autoload.php';
+require (getenv('VENDOR') ?: __DIR__ . '/vendor') . '/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
