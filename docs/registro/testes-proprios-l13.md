@@ -11,7 +11,7 @@ asserc. no 7.4 e 1051 no 8.5, 2 falhas nos dois e 5 erros so no 8.5 (os mesmos `
 |---|---|---|---|
 | `laravel/framework` | 8.73.2 | 8.73.2 | **13.43.0** |
 | `laravel/passport` | 10.4.2 | 10.4.2 | **13.12.0** |
-| `nesbot/carbon` | do PR | 2.x | **3.15.1** |
+| `nesbot/carbon` | 2.72.5 | 2.72.5 (mesma trava do PR) | **3.15.1** |
 | `phpunit/phpunit` | 8.5.39 | 8.5.39 | 8.5.39 (a trava do 8.5 nao o trocou) |
 | `mockery/mockery` | 1.3.0 | 1.3.0 | 1.3.0 |
 
