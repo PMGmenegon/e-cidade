@@ -3,7 +3,8 @@
 Medido em 20/11/2026, sem banco, sem rede e sem fila de verdade. O 7.4 é o do PR: a imagem construída de
 `docker/php74-apache` (PHP 7.4.33) com o `vendor/` instalado do `ecidade/composer.lock`. O 8.5 é a imagem de
 `docker/php85-apache` (PHP 8.5.12) com o `runtime-85/vendor` instalado do `ecidade/composer-85.lock`
-(`docker/composer-85/composer-85.sh install`). Os dois lados têm o mesmo Laravel 8.73.2 e sobem o kernel de console
+(`docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+`, o comando de
+`docs/registro/estrutura-85.md`). Os dois lados têm o mesmo Laravel 8.73.2 e sobem o kernel de console
 como o `artisan` faz (`bootstrap.php`, depois `bootstrap/app.php`). O `.env` de teste é o `.env.example` com chave e
 endereços fictícios e banco num host que não existe (`anexos/filas-comandos-85/gera_env.py`).
 
@@ -58,6 +59,16 @@ data fixa. A saída é `var_export`, porque as descrições estão em ISO-8859-1
 
 ```bash
 bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh ecidade <vendor do 7.4> runtime-85/vendor <imagem 7.4> <imagem 8.5> <saída>
+```
+
+Os dois `vendor/` vêm antes, com rede (só dependências). O do 7.4 vai para uma pasta fora do repositório, pelo Composer
+da própria imagem do 7.4, com `ecidade/` só leitura (o `mkdir` cria o ponto de montagem num checkout novo):
+
+```bash
+mkdir -p ecidade/vendor <vendor do 7.4>
+docker run --rm -u "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/ch -v "$PWD/ecidade:/app:ro" -v "<vendor do 7.4>:/app/vendor" \
+  -w /app <imagem 7.4> composer install --no-scripts --no-plugins --no-interaction
+bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+   # o do 8.5, em runtime-85/vendor
 ```
 
 O script monta `ecidade/` só para leitura, o `vendor/` de cada lado em `ecidade/vendor`, o `.env` de teste por cima,

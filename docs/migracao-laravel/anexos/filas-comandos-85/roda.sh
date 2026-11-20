@@ -3,7 +3,8 @@
 # sem banco (host inexistente) e sem rede (--network none). ecidade/ montado so leitura;
 # .env de teste gerado do .env.example por cima; bootstrap/cache em tmpfs e storage/ numa pasta da saida.
 # Uso: roda.sh <ecidade> <vendor 7.4> <vendor 8.5> <img 7.4> <img 8.5> <saida>
-#   vendor 7.4 = composer install do ecidade/composer.lock do PR; vendor 8.5 = runtime-85/vendor (docker/composer-85/composer-85.sh install)
+#   vendor 7.4 = composer install do ecidade/composer.lock do PR (comando em filas-comandos-85.md, "Como reproduzir");
+#   vendor 8.5 = runtime-85/vendor (docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+)
 #   img 7.4 = construida de docker/php74-apache; img 8.5 = construida de docker/php85-apache
 set -u
 E=$(realpath "$1"); V74=$(realpath "$2"); V85=$(realpath "$3"); I74=$4; I85=$5; O=$(realpath -m "$6"); T=$(dirname "$(realpath "$0")")
