@@ -370,22 +370,24 @@ apareceu neles virou anotação para o dono (abaixo).
 
 ### Commits e pull requests
 
-Quatro PRs para `base-php85` (a branch que recebe o código migrado; nasceu no mesmo commit
-`982a95fb5` da `base-php74`), ligados à issue da área. Independentes entre si (cada um aplica direto
-na base; os quatro juntos dão exatamente a árvore final). Commits do Rector e manuais nunca misturados.
+Três PRs para `base-php85` (a branch que recebe o código migrado), ligados à issue da área. Cada um parte da
+`base-php85` de 20/11/2026 (`6d881031b`, que já traz os PRs do Tributário e do Financeiro e a correção de `parse_str`
+do grupo para todas as áreas). São independentes entre si e, juntos, dão a árvore final da área. Commits do Rector e
+manuais nunca misturados.
 
 | Branch do PR | Commits | Arquivos |
 | --- | --- | --- |
-| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 51 classes `ed*`/`bi*` achadas pela regressão | 481 |
-| `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas; `parse_str` na forma decidida pelo grupo | 532 |
-| `educacao/func` | Rector nas `func_` e `parse_str` na forma decidida pelo grupo (3 commits) — separado: descartável se outra branch de `func_` entrar antes | 258 |
+| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 50 classes `ed*`/`bi*` achadas pela regressão | 477 |
+| `educacao/telas` | Rector em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 11 telas | 23 |
 | `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; guardas achadas na regressão final; este registro | 104 |
 
-
-`parse_str` com um argumento usa a forma decidida pelo grupo em 19/11/2026 (decisão 3):
-`parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`, numa linha, com o espaçamento
-original de `x`. As linhas são iguais, byte a byte, às da correção de `parse_str` do grupo para todas as áreas, então
-as duas integram sem conflito em qualquer ordem.
+O trabalho foi feito sobre `982a95fb5`. Nas telas e nas `func_`, `parse_str` com um argumento usava a forma decidida
+pelo grupo em 19/11/2026 (decisão 3): `parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`,
+numa linha, com o espaçamento original de `x`, igual byte a byte à correção do grupo. Quando essa correção entrou na
+`base-php85`, 509 telas e todas as 258 janelas `func_` da Educação ficaram **idênticas** às nossas, e 4 classes
+ficaram idênticas pelo PR do Financeiro. Esses arquivos saíram dos PRs, e o PR das `func_` deixou de existir. No
+`edu2_certconclusao002.php` ficou só a linha do ternário: o Rector tinha tirado os espaços do fim de 64 linhas em
+branco, sem efeito na saída.
 
 ### O que o 7.4 faz e o 8.5 não (medido nos dois containers)
 
@@ -445,13 +447,13 @@ telas que ainda divergem, quase todas são HTTP 500 só no 8.5, o padrão dos de
 
 A issue da área lista, além dos prefixos próprios, 22 telas `mat` (almoxarifado: requisição, estoque, transferência)
 e 1 `pro` (`pro1_tipoarq002.php`) que o menu da Educação também abre. As `mat` são compartilhadas com o Patrimonial
-(uma também com a Saúde). Medido sobre os 4 PRs:
+(uma também com a Saúde). Medido sobre os PRs da Educação:
 
 - Rector do grupo (`rector-curado.php`): **0 arquivos** a alterar nas 23; `php -l` limpo no 7.4 e no 8.5.
 - Regressão do grupo (e74), 7.4 × 8.5: **21 idênticas**. As outras 2 (`mat1_atendrequi001.php` e
   `mat1_matestoquesai001.php`) dão 500 só no 8.5 por `pg_num_rows(false)` em `libs/db_utils.php:186`
   (`getCollectionByRecord`), ou seja, no núcleo, não na tela. Com a guarda dos wrappers do núcleo da decisão 2a
-  (`PHP8-31`, branch do `parse_str`) as duas ficam **idênticas** ao 7.4.
+  (`PHP8-31`, branch do `parse_str`) as duas ficam **idênticas** ao 7.4. Essa guarda já está na `base-php85`.
 
 Conclusão: nenhuma das 23 precisa de alteração da Educação; nenhum arquivo delas entra nos PRs.
 
@@ -495,6 +497,12 @@ ficam idênticas**. Das 20 que sobram, **nenhuma é da Educação**:
 
 As 61 restantes são inconclusivas (página de erro idêntica nos dois lados ou resposta vazia): a tela não foi exercitada.
 
+Estas medições foram feitas sobre `982a95fb5`. Desde então a `base-php85` recebeu as guardas da decisão 2a em
+`libs/db_stdlib.php`, `libs/db_utils.php`, `libs/db_libsys.php` e `dbforms/db_classesgenericas.php`. Os PRs foram
+refeitos sobre ela sem mudar nenhuma linha de código da Educação (fora os espaços do `edu2_certconclusao002.php`), e
+a bateria ainda não foi repetida sobre a base nova. `php -l` dos 597 arquivos alterados, já juntos com a base nova:
+0 erros no 7.4 e no 8.5.
+
 ### Fora da Educação (anotado para os donos)
 
 - `libs/db_app.utils.php:39` (`DB_VERSION` indefinida com a sessão da API) e o retorno
@@ -519,6 +527,7 @@ As 61 restantes são inconclusivas (página de erro idêntica nos dois lados ou 
 - `src/V3/Error/Handler/Error.php`: `_handle` e `handle` exigem 5 parâmetros (`$context`), mas o PHP 8 chama o
   tratador de erros com 4. Todo aviso vira `ArgumentCountError` e a página para no meio (HTTP 200 cortado ou 500).
   Nenhuma branch corrige ainda; com `$context = null` o comportamento volta ao do 7.4.
-- `libs/db_libsys.php:146`, `libs/db_stdlibwebseller.php:437` e `std/DBDate.php:497`: ver a regressão final acima.
+- `libs/db_stdlibwebseller.php:437` e `std/DBDate.php:497`: ver a regressão final acima. O `libs/db_libsys.php:146`
+  já tem guarda na `base-php85`.
 - Bateria byte a byte (passo 7) bloqueada até o núcleo ser portado; roteamento no nginx
   deliberadamente **não** feito.
