@@ -99,6 +99,21 @@ runtimes (regra do grupo).
 `dbforms/db_funcoes.php:761` compara `@$GLOBALS[$nome] == $chave` e a tela inicia a variável com `""`
 (`"" == 0`: verdadeiro no 7.4, falso no 8).
 
+## 4c. Lote 3 — `agu`/`agua` (20/11/2026)
+
+Sem construtor estilo PHP 4, `each()` nem offset com chaves nos arquivos da Água.
+
+| Commit | O quê | Prova |
+|---|---|---|
+| `0 == ""` (Rector, automático) | 58 classes (tabelas do módulo agua; 60 tabelas, 59 classes); 387 linhas, só inserção | caminho de escrita: antes 54 classes ≠ (528 linhas); depois 0 |
+| `pg_*` (script, automático) | `forms/db_frmaguacortematnumpre.php` (formulário das 3 telas `agu1_aguacortematnumpre00x`) e `agu4_emissaoparcial_cliente59_001.php` | 7.4 igual antes/depois; 4/4 idênticas |
+| laço de exercícios (manual) | `agu2_agualancpago001` e `agu2_relreceitabairro001` com `aguacalc` vazia: os anos chegam como `""`, e depois do `$i--` o 8 compara `-1 >= ""` como texto (verdadeiro): laço infinito. Na condição do `for`, só número × texto não numérico volta a converter o texto em número, como no 7.4 | caracterizado em 196 pares: corrigida no 7.4 e no 8.5 = original no 7.4; 2/2 idênticas |
+
+**Resultado:** bateria do lote **173/224 → 179/224**. As 45 restantes: 43 dependem só do núcleo (`fpdf151/fpdf.php`,
+`libs/JSON.php`) e 2 não são telas — `agu1_aguaconsumo999.php` (fragmento incluído por `agu1_aguaconsumo001/002/003`)
+e `agu4_cancelaleituras_classe.php` (classe incluída por `agu4_expdadoscoletores_003`). Abertos sozinhos, falham nos dois
+runtimes de jeitos diferentes (sem conexão / sem sessão); as 4 telas que os incluem são idênticas.
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
