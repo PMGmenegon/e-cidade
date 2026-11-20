@@ -27,7 +27,7 @@ migrations (1.186 no repositorio).
 | 11.x Modifying Columns | 3 em 2 arquivos | `database/migrations/2021_10_25_083540_alter_secret_to_oauth_clients.php:17`, `:29`; `2024_08_13_093320_M28685_ajuste_schema_tabela_mensageriaacordo.php:243` (`->change()`) | medio: sem DBAL o `change()` do 11+ tem de repetir todos os modificadores da coluna; o SQL do `ALTER` muda |
 | 11.x Floating-Point Types | 14 em 5 arquivos | `2021_12_14_114408_M19629_create_pix_tipo_debito.php:23-24` (`double(8,2)`), `2024_08_08_094811_m28016_rotina_elaboracao_pca.php:93-96` (`float`), `2022_02_11_105019_m17145_emissao_termo_divida.php:39-42`, `2024_10_10_130358_m28977_criacao_estrutura_notas_parciais.php:109,146,149`, `2022_05_26_163234_M20866_Createe_assentperc.php:20` | baixo: no PostgreSQL os tipos ficam `double precision`/`float(53)`, nao medido |
 
-**Tarefa nova sugerida (para o Lider):** "Migrations no Laravel 13 sem banco: compilar o SQL do `Blueprint` pelo `Grammar` do PostgreSQL (7.4 com o vendor do PR x 8.5 com o Laravel 13) para os `->change()`, `float`/`double`
+**Tarefa nova sugerida:** "Migrations no Laravel 13 sem banco: compilar o SQL do `Blueprint` pelo `Grammar` do PostgreSQL (7.4 com o vendor do PR x 8.5 com o Laravel 13) para os `->change()`, `float`/`double`
 e, se der, as 1.186 migrations; diferenca de SQL com causa e correcao minima na migration (no proprio arquivo se o 7.4 fica igual) ou na sobreposicao". Area back; sem banco.
 
 ## Depende de banco (parte sem banco ja coberta): 2 itens
