@@ -1,6 +1,6 @@
 <?php
 // PHP8-38: middlewares do app/Http (sem banco): pipeline do kernel com requisicoes em memoria.
-// Uso: php middlewares_trecho.php <raiz do ecidade> <pasta vendor>   (rodar no 7.4 e no 8.5 e comparar; ver docs/migracao-laravel/middlewares-sessao.md)
+// Uso: bash scratchpad/roda_middlewares.sh   (roda este arquivo no 7.4 e no 8.5 e compara; ver docs/migracao-laravel/middlewares-sessao.md)
 $raiz = $argv[1]; $vendor = $argv[2];
 $avisos = array();
 set_error_handler(function ($no, $msg, $arq, $lin) use (&$avisos) {

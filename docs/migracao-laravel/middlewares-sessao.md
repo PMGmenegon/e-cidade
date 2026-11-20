@@ -59,7 +59,7 @@ qualquer troca (`$p[1] ?? null`) mudaria o comportamento do 7.4.
 `session_set_cookie_params()` (o `diferenca-7.4-8.5.txt` tem essa linha):
 
 - 7.4: `session_set_cookie_params(): Cannot change session cookie parameters when session is active`
-- 8.5: `session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active (started from /s/mw.php on line 134)`
+- 8.5: `session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active (started from /s/middlewares_trecho.php on line 134)`
 
 O texto do `session_destroy(): Trying to destroy uninitialized session` (caso sem sessao iniciada) e igual nos dois. Total: o `AuthSim` aparece em 2 linhas
 (corpo JSON e log), o `WindowSession` em 1.
@@ -93,18 +93,23 @@ nulo); como a configuracao `logging.php` nao tem o canal `deprecations`, o Larav
 | `clientCredential`, `auth:api`, `AuthenticateSession`, `CreateFreshApiToken` | Passport e usuario autenticado leem `oauth_*` e a tabela de usuarios |
 | `LogPhpActivities` (global) | usa a classe legada `TraceLog` e `QueryLogger` (carregadas pelo `bootstrap.php` legado); nao exercitado aqui |
 
-## Repetir
+## Repetir (do zero, num checkout novo)
 
 ```bash
-# vendor do PR: composer install da composer.lock em pasta fora do repositorio (so dependencias, sem banco)
-for v in 7.4 8.5; do
-  docker run --rm --network none -v $PWD/ecidade:/w/ecidade:ro -v /tmp/vazio:/w/ecidade/.env:ro -v <vendor>:/w/v:ro \
-    -v $PWD/scratchpad:/s:ro -v <storage gravavel>:/tmp/storage -e APP_ENV=production -e APP_KEY=<chave> \
-    -e APP_PACKAGES_CACHE=/tmp/cache/packages.php -e APP_SERVICES_CACHE=/tmp/cache/services.php \
-    php:$v-cli php /s/middlewares_trecho.php /w/ecidade /w/v/vendor > saida-$v.txt
-done
-# comparar sem as linhas de depreciacao do vendor no 8.5
-diff <(grep -v '^Deprecated\|^$\|^LOG laravel\.' saida-7.4.txt) <(grep -v '^Deprecated\|^$\|^LOG laravel\.' saida-8.5.txt)
+bash scratchpad/roda_middlewares.sh [pasta-de-trabalho]     # na raiz do repositorio; sem argumento usa /tmp/t112-XXXXXX
 ```
 
-Com o vendor do 8.5 (PHP8-79), trocar `<vendor>` e repetir.
+O script faz tudo o que a medicao precisou e que um checkout novo nao tem:
+
+- **vendor do PR:** `composer install` da `ecidade/composer.lock` numa pasta de trabalho fora do repositorio (`<pasta>/pr`, so baixa pacotes; sem banco). O `composer.json` dessa
+  pasta tem so o autoload PSR-4 `App\` apontando para `../ecidade/app/` (os `autoload.files` do PR sao relativos ao proprio `ecidade/` e nao servem a um vendor montado fora dele);
+  por isso o vendor fica em `<pasta>/pr/vendor`, montado em `/w/pr`, ao lado de `ecidade/` em `/w/ecidade`.
+- **`.env`:** a base nao versiona `ecidade/.env`; so se existir um local ele e coberto por um arquivo vazio montado por cima (nao e necessario criar nada num checkout novo).
+- **storage gravavel** em pasta nova a cada rodada, ja com `logs`, `framework/sessions`, `framework/cache/data` e `framework/views` (sem eles aparecem erros de `session_start`/`file_put_contents`).
+- **encoding:** a saida do trecho e ISO-8859-1 (mensagens do `AuthRedesim`); o script converte para UTF-8 (`iconv`) e tira as linhas `Deprecated`/`LOG laravel.` do vendor antes de comparar.
+- **comparacao:** `cmp` da saida do 7.4 com `middlewares-sessao/saida-7.4.txt` e do `diff` 7.4 x 8.5 com `middlewares-sessao/diferenca-7.4-8.5.txt`; imprime 32 casos nos dois e os
+  pares `EMERGENCY` do vendor (0 no 7.4, 89 no 8.5).
+
+Medido do zero (pasta nova, vendor instalado na hora): `7.4: 32 casos`, `8.5: 32 casos`, `89` pares no 8.5, as duas comparacoes iguais.
+
+Com o vendor do 8.5 (PHP8-79): usar uma pasta de trabalho cujo `pr/vendor` seja o dele, instalado com o mesmo layout (autoload de `App\` em `../ecidade/app/`); o script so instala se nao houver `pr/vendor/autoload.php`.
