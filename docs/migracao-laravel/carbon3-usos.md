@@ -21,7 +21,7 @@ A trava da integracao nao foi tocada.
 
 ## Usos que mudam (arquivo:linha, entrada, saida nos dois Carbon)
 
-| # | Uso (arquivo:linha) | Entrada | Carbon 2 (7.4 = 8.5) | Carbon 3 (8.5) | Patch |
+| # | Uso (arquivo:linha) | Entrada | Carbon 2 (7.4 e 8.5; igual nos dois, salvo U1-U3) | Carbon 3 (8.5) | Patch |
 |---|---|---|---|---|---|
 | U1 | `ApropriacaoDecimoFeriasService.php:61` `ucfirst(...->formatLocalized('%B'))` | `c01_data` = 2025-03-01, depois do boot do `AppServiceProvider` | **7.4: `mar\xe7o`** (`LC_TIME=pt_BR`, hex `6d6172e76f`); 8.5: `March` (`LC_TIME=C`, o bloco `< 74000` nao roda; corrigido na PHP8-62, T-139) | `UnknownMethodException: Method formatLocalized does not exist.` | 01 |
 | U2 | `ApropriacaoDecimoFeriasService.php:73` e `:98` `Carbon::create($ano,$mes,1)->formatLocalized('%B')` | 2025-03-01 | idem U1 | idem | 01 |
