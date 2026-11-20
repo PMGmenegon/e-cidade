@@ -700,7 +700,7 @@ if (isset($demonstrativo)) {
                         <?php
                             $oDaocfiptu = new cl_cfiptu;
                             $sqlcfiptu = $oDaocfiptu->sql_query_file(db_getsession("DB_anousu"),'j18_taxaseparada, j18_simulacaocalculo');
-                            $rs = pg_fetch_object(db_query($sqlcfiptu));
+                            $rsCfiptu = db_query($sqlcfiptu); $rs = ($rsCfiptu ? pg_fetch_object($rsCfiptu) : null);
  
                             if($rs->j18_taxaseparada == 0 && $rs->j18_simulacaocalculo == 't'){
                             ?>
