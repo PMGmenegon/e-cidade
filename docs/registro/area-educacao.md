@@ -370,8 +370,9 @@ apareceu neles virou anotação para o dono (abaixo).
 
 ### Commits e pull requests
 
-Quatro PRs para `base-php74`, independentes entre si (cada um aplica direto na base; os quatro
-juntos dão exatamente a árvore final). Commits do Rector e manuais nunca misturados.
+Quatro PRs para `base-php85` (a branch que recebe o código migrado; nasceu no mesmo commit
+`982a95fb5` da `base-php74`), ligados à issue da área. Independentes entre si (cada um aplica direto
+na base; os quatro juntos dão exatamente a árvore final). Commits do Rector e manuais nunca misturados.
 
 | Branch do PR | Commits | Arquivos |
 | --- | --- | --- |
