@@ -114,14 +114,31 @@ Sem construtor estilo PHP 4, `each()` nem offset com chaves nos arquivos da Águ
 e `agu4_cancelaleituras_classe.php` (classe incluída por `agu4_expdadoscoletores_003`). Abertos sozinhos, falham nos dois
 runtimes de jeitos diferentes (sem conexão / sem sessão); as 4 telas que os incluem são idênticas.
 
+## 4d. Lote 4 — `iss` (20/11/2026)
+
+| Commit | O quê | Prova |
+|---|---|---|
+| construtores (manual) | `__construct` em `cl_isscadsimples`, `cl_issconfiguracaogruposervico`, `cl_meiimporta` | instanciação: antes 3 ≠; depois 8.5 = 7.4 e 7.4 = 7.4 |
+| `0 == ""` (Rector, automático) | 144 classes (tabelas do módulo issqn; 190 tabelas, 159 classes não tratadas antes); 844 linhas, só inserção | caminho de escrita: antes 144 classes ≠ (1.046 linhas); depois 0 |
+| `pg_*` (script, automático) | 10 arquivos (`forms/db_frmissnotaavulsaservico.php` e 9 telas), 29 chamadas | 7.4 igual antes/depois nas 12 telas; 12/12 idênticas |
+| objeto criado antes da atribuição (manual) | `iss1_tabalvara_depto001:43` e `iss4_issbasecaracteristicas001:125`: `$x->p = v` sobre variável inexistente criava `stdClass` no 7.4 e é `Error` no 8. Na mesma linha, `if (!isset($x) \|\| $x === false \|\| $x === '') { $x = new stdClass(); }` (condicional: com dados, `$oGrupo` é o último grupo do laço) | caracterizado (nulo, false, "", objeto): corrigida no 7.4 e no 8.5 = original no 7.4; 2/2 idênticas |
+
+As telas `iss4_meicompetenciasemmovimento001/003` e `iss1_parissqn` passaram com os construtores dos lotes 1 e 4.
+
+**Resultado:** bateria do lote **307/400 → 328/400**. As **72** restantes dependem só do núcleo: 66 de
+`fpdf151/fpdf.php` e `libs/JSON.php`; 4 do Agata (`iss1_inscr002` gera PDF no 7.4 e nada no 8.5;
+`iss2_relatorioinscricoes002`, `iss2_relinconsistenciassimples` e `iss4_relinconsistenciassimples` mostram a
+mensagem do `Dialog` só no 7.4); 2 de `db_select()` com lista nula (`iss2_calculadoepago001`, `iss2_issqnpago001`).
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
 |---|---|---|
 | `fpdf151/fpdf.php:614` | `ParseError`: offset de string com chaves | 248 (todos os relatórios em PDF) |
 | `libs/JSON.php:188` | o mesmo | 130 (RPCs) |
-| `dbagata/` (128 classes) | construtor estilo PHP 4 não roda | relatórios do Agata (1 no lote 1, 1 no lote 2) |
+| `dbagata/` (128 classes) | construtor estilo PHP 4 não roda | relatórios do Agata (1 no lote 1, 1 no lote 2, 4 no lote 4) |
 | `dbforms/db_funcoes.php:761` (`db_select`) | `@$GLOBALS[$nome] == $chave` com variável `""` e chave `0`: marcada no 7.4, não no 8 | todo select com opção de chave 0 (1 no lote 2) |
+| `dbforms/db_funcoes.php:1051` (`db_select`) | `reset($db_matriz)` com lista nula: aviso no 7.4, `TypeError` no 8 | 2 no lote 4 |
 | `classes/db_db_logsacessa_classe.php` | construtor estilo PHP 4 | usada pela Configuração e por webservices |
 | `abrir.php:372` | `db_verifica_ip_banco()` chamada sem o argumento que o PR passou a exigir; quebra **igual no 7.4** (depois de gravar a sessão) | login direto pelo `abrir.php` |
 
