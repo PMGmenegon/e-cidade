@@ -242,7 +242,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
-| `inventario-telas-v4.md` | PHP8-12: telas legadas, `scripts/` e front Vue que chamam `/v4`, sem banco: 1.411 rotas lidas (1.294 `/v4`), 1.332 chamadas em 484 arquivos, 926 rotas com chamador firme, 274 sem chamador (limite superior, ~220 esperadas), 53 chamadas a rotas que não existem, 3 arquivos de rotas que ninguém carrega e a ordem sugerida dos lotes; dados em `inventario-v4-*.tsv` |
+| `inventario-telas-v4.md` | PHP8-12: telas legadas, `scripts/` e front Vue que chamam `/v4`, sem banco: 1.428 rotas lidas (1.311 `/v4`, conferidas contra as 1.315 registradas pelo Laravel), 1.337 chamadas em 485 arquivos, 935 rotas com chamador firme, 282 sem chamador (limite superior, ~220 esperadas), 52 chamadas a rotas que não existem, 3 arquivos de rotas que ninguém carrega e a ordem sugerida dos lotes; dados em `inventario-v4-*.tsv` |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).

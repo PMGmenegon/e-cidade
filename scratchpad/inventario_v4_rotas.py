@@ -4,7 +4,7 @@
 Parte de app/Providers/RouteServiceProvider.php e segue os grupos (Route::prefix, Route::middleware, Route::group, ->group(closure),
 ->group(base_path('routes/...'))), os Route::get/post/put/patch/delete/any/match e Route::resource/apiResource. Variaveis de caminho e de controller
 (`$path . "X@m"`, `$controller`, `"{$path}X@m"`) sao resolvidas quando a atribuicao e so de literais; o que nao resolve vira `{var}`.
-Acrescenta as rotas do Passport 10 (`Passport::routes(null, ['prefix' => 'v4/oauth'])`, que vem do pacote).
+Acrescenta as rotas do Passport 10 (`Passport::routes(null, ['prefix' => 'v4/oauth'])`, do pacote) e as 2 de `Broadcast::routes` (do framework).
 
 Uso (da raiz do repositorio): python3 scratchpad/inventario_v4_rotas.py [saida.tsv]
 Saida: TSV `metodo<TAB>caminho<TAB>controller<TAB>origem(arquivo:linha)<TAB>middleware`.
@@ -117,11 +117,46 @@ def avalia(expr, vars_):
     return out
 
 
-def coleta_vars(texto, vars_):
-    """$nome = <literais/variaveis>; (so atribuicoes simples, em ordem)"""
-    v = dict(vars_)
-    for m in re.finditer(r'\$(\w+)\s*=\s*((?:' + STR + r'|\$\w+|[\w\\]+::class|\s|\.)+);', texto):
-        v[m.group(1)] = avalia(m.group(2), v)
+def prof_chaves(texto):
+    """profundidade de { } em cada posicao (strings ignoradas); o texto ja vem sem comentarios"""
+    prof, d, i, n = [0] * (len(texto) + 1), 0, 0, len(texto)
+    while i < n:
+        c = texto[i]
+        if c in '\'"':
+            q = c
+            j = i + 1
+            while j < n and texto[j] != q:
+                j += 2 if texto[j] == '\\' else 1
+            for k in range(i, min(j + 1, n)):
+                prof[k] = d
+            i = j + 1
+            continue
+        if c == '{':
+            d += 1
+        elif c == '}':
+            d -= 1
+        prof[i] = d
+        i += 1
+    return prof
+
+
+def atribuicoes(texto):
+    """[(posicao, nome, expr)] das atribuicoes simples `$nome = <literais/variaveis>;` no NIVEL 0 deste texto (o escopo do arquivo/closure)"""
+    prof = prof_chaves(texto)
+    out = []
+    for m in re.finditer(r'\$(\w+)\s*(\.?=)\s*((?:' + STR + r'|\$\w+|[\w\\]+::class|\s|\.)+);', texto):
+        if prof[m.start()] == 0:
+            out.append((m.start(), m.group(1), m.group(3), m.group(2)))
+    return out
+
+
+def vars_em(asg, pos, base):
+    """variaveis vigentes na posicao: as de fora do escopo mais as atribuicoes de nivel 0 ANTES de pos, na ordem"""
+    v = dict(base)
+    for p, nome, expr, op in asg:
+        if p >= pos:
+            break
+        v[nome] = (v.get(nome, '') if op == '.=' else '') + avalia(expr, v)
     return v
 
 
@@ -177,7 +212,8 @@ def expande_resource(nome, ctrl, opcoes, api):
 
 
 def processa(texto, arq, prefixo, mw, vars_, prof=0, base=0):
-    vars_ = coleta_vars(texto, vars_)
+    base_vars = vars_
+    asg = atribuicoes(texto)
     i = 0
     rx = re.compile(r'Route::(\w+)\s*\(')
     while True:
@@ -186,6 +222,7 @@ def processa(texto, arq, prefixo, mw, vars_, prof=0, base=0):
             break
         inicio = m.start()
         lin = base + linha(texto, inicio)
+        vars_ = vars_em(asg, inicio, base_vars)
         pos = inicio
         cadeia = []
         while True:
@@ -284,9 +321,16 @@ def passport():
         rotas[-1] = rotas[-1][:3] + ('pacote laravel/passport 10.4.2',) + rotas[-1][4:]
 
 
+def broadcast():
+    """Broadcast::routes(['prefix' => 'v4', 'middleware' => ['auth:api']]) (BroadcastServiceProvider.php:17): GET e POST v4/broadcasting/auth, do framework"""
+    for mt in ('GET', 'POST'):
+        rotas.append((mt, '/v4/broadcasting/auth', 'Illuminate\\Broadcasting\\BroadcastController@authenticate', 'framework laravel (app/Providers/BroadcastServiceProvider.php:17)', 'auth:api'))
+
+
 def main():
     processa(le('app/Providers/RouteServiceProvider.php'), 'app/Providers/RouteServiceProvider.php', '', [], {})
     passport()
+    broadcast()
     vistos, unicas = set(), []
     for r in rotas:
         if os.environ.get('TODOS'):

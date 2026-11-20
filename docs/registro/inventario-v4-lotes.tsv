@@ -7,11 +7,11 @@ patrimonial/pncp	54	51	0	1	2	0	22	6	0	16
 financeiro/orcamento	45	35	5	0	5	0	22	10	0	12
 educacao/secretaria	37	34	0	1	2	0	18	11	0	7
 financeiro/tesouraria	27	24	0	0	3	0	17	9	0	8
+tributario/issqn	56	31	0	0	25	0	16	9	2	5
 tributario/arrecadacao	46	35	3	1	7	0	16	8	0	8
-tributario/issqn	45	26	0	0	19	0	14	9	2	3
 educacao/matricula-online	41	36	0	0	5	0	14	14	0	0
+patrimonial/protocolo	54	13	9	0	32	8	13	3	3	7
 tributario/cadastro	32	17	0	0	15	15	13	11	0	2
-patrimonial/protocolo	50	11	9	0	30	8	12	3	2	7
 financeiro/empenho	10	10	0	0	0	0	12	4	0	8
 saude/ambulatorial	36	27	2	0	7	2	10	7	2	1
 recursos-humanos/rh	25	25	0	0	0	0	10	4	1	5
@@ -45,6 +45,7 @@ tributario/fiscalizacao	3	3	0	0	0	0	1	1	0	0
 tributario/caixa	2	2	0	0	0	0	1	0	0	1
 tributario/cemiterio	2	1	0	0	1	0	1	1	0	0
 tributario/diversos	2	2	0	0	0	0	1	1	0	0
+v4/broadcasting	2	2	0	0	0	0	1	0	1	0
 configuracao/campos	1	1	0	0	0	0	1	1	0	0
 configuracao/consultas	1	1	0	0	0	0	1	1	0	0
 v4/kill	1	1	0	0	0	0	1	0	1	0
