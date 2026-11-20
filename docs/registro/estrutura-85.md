@@ -172,6 +172,30 @@ lint pode pular `ecidade/app-85/`? O 7.4 nunca carrega essa pasta. Ou o grupo pr
 sobreposição fora de `ecidade/`, montada só no contêiner do 8.5)? Até a resposta vale a regra acima, e uma classe que
 não couber nela fica registrada como pendente.
 
+## Trecho isolado em Docker que falha alto (`roda-isolado.sh`)
+
+`bash docker/composer-85/roda-isolado.sh <7.4|8.5> <trecho.php> [args]` roda um trecho PHP sem rede e sem banco
+(`--network none`; imagens `php:7.4-cli` e `php:8.5-cli`). Monta `ecidade/` em `/app` (somente leitura) e o trecho em
+`/trecho`; no 8.5 monta também `runtime-85/vendor` em `/app/vendor`, no 7.4 vale o `ecidade/vendor` do PR.
+
+**Por que existe:** o `docker run` que monta `ecidade/.env` e `ecidade/vendor` falha num checkout novo (`mountpoint ...
+read-only`; arquivo ou pasta inexistente vira diretório de `root`), e um script que compara a saída vazia de um lado
+com a vazia do outro dá "igual" falso. Isso apareceu em 4 tarefas. O script cria `ecidade/.env` (de `ecidade/.env.test`,
+sem segredo) e `ecidade/vendor` como o usuário e **sai com erro** quando:
+
+| Situação | rc |
+|---|---|
+| argumento inválido, trecho inexistente | 64 |
+| imagem ausente (não baixa sozinho) | 65 |
+| saída do trecho vazia | 66 |
+| `docker run` ou o trecho falhar | o próprio rc (nunca 0) |
+
+A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo (`bash docker/composer-85/testa-roda-isolado.sh`):
+8 casos, 8/8 (7.4 e 8.5 imprimem a versão; `exit(3)`, trecho vazio, imagem ausente, `docker run` quebrado, versão e
+arquivo inválidos falham com mensagem `roda-isolado: ERRO`). **Aviso:** tarefa que roda trecho isolado passa a chamar
+este script em vez de montar o `docker run` à mão. Sem `runtime-85/vendor` instalado o 8.5 só roda trecho que não usa
+o autoload (o script avisa).
+
 ## Lacunas
 
 - O contêiner do 8.5 com `runtime-85/vendor` montado ainda não existe: é da inicialização (PHP8-62). O 8.5 de hoje
