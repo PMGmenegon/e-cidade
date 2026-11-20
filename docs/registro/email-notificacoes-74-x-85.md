@@ -60,7 +60,7 @@ Esses caminhos não usam `Mail::`/`Mailable` e dependem de servidor SMTP ou `sen
 | Execução | PHP | Vendor |
 |---|---|---|
 | `l8-74` | 7.4.33 | `composer install` do `ecidade/composer.lock` do PR (Laravel 8.73.2, SwiftMailer 6.3.0) |
-| `l8-85` | 8.5.12 | vendor do `composer-85.lock` (`docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php`; Laravel 8.73.2, SwiftMailer 6.3.0, `lcobucci/jwt` 4.1.5) |
+| `l8-85` | 8.5.12 | vendor do `composer-85.lock` (`docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+`; Laravel 8.73.2, SwiftMailer 6.3.0, `lcobucci/jwt` 4.1.5) |
 | `l13-85` | 8.5.12 | Laravel 13.43.0 (Symfony Mailer 8.1) resolvido à parte, só para esta comparação |
 
 ```bash
