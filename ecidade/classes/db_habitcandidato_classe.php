@@ -67,10 +67,10 @@ class cl_habitcandidato {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht10_sequencial = ($this->ht10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_sequencial"]:$this->ht10_sequencial);
-       $this->ht10_numcgm = ($this->ht10_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_numcgm"]:$this->ht10_numcgm);
+       $this->ht10_sequencial = ($this->ht10_sequencial === 0 || $this->ht10_sequencial === 0.0 || $this->ht10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_sequencial"]:$this->ht10_sequencial);
+       $this->ht10_numcgm = ($this->ht10_numcgm === 0 || $this->ht10_numcgm === 0.0 || $this->ht10_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_numcgm"]:$this->ht10_numcgm);
      }else{
-       $this->ht10_sequencial = ($this->ht10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_sequencial"]:$this->ht10_sequencial);
+       $this->ht10_sequencial = ($this->ht10_sequencial === 0 || $this->ht10_sequencial === 0.0 || $this->ht10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht10_sequencial"]:$this->ht10_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_habitcandidato {
          $this->ht10_sequencial = $ht10_sequencial;
        }
      }
-     if(($this->ht10_sequencial == null) || ($this->ht10_sequencial == "") ){
+     if(($this->ht10_sequencial == null) || ($this->ht10_sequencial === 0 || $this->ht10_sequencial === 0.0 || $this->ht10_sequencial == "") ){
        $this->erro_sql = " Campo ht10_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

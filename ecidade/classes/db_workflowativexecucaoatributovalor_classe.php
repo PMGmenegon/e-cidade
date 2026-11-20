@@ -69,11 +69,11 @@ class cl_workflowativexecucaoatributovalor {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db111_sequencial = ($this->db111_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_sequencial"]:$this->db111_sequencial);
-       $this->db111_workflowativexec = ($this->db111_workflowativexec == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_workflowativexec"]:$this->db111_workflowativexec);
-       $this->db111_cadattdinamicovalorgrupo = ($this->db111_cadattdinamicovalorgrupo == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_cadattdinamicovalorgrupo"]:$this->db111_cadattdinamicovalorgrupo);
+       $this->db111_sequencial = ($this->db111_sequencial === 0 || $this->db111_sequencial === 0.0 || $this->db111_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_sequencial"]:$this->db111_sequencial);
+       $this->db111_workflowativexec = ($this->db111_workflowativexec === 0 || $this->db111_workflowativexec === 0.0 || $this->db111_workflowativexec == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_workflowativexec"]:$this->db111_workflowativexec);
+       $this->db111_cadattdinamicovalorgrupo = ($this->db111_cadattdinamicovalorgrupo === 0 || $this->db111_cadattdinamicovalorgrupo === 0.0 || $this->db111_cadattdinamicovalorgrupo == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_cadattdinamicovalorgrupo"]:$this->db111_cadattdinamicovalorgrupo);
      }else{
-       $this->db111_sequencial = ($this->db111_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_sequencial"]:$this->db111_sequencial);
+       $this->db111_sequencial = ($this->db111_sequencial === 0 || $this->db111_sequencial === 0.0 || $this->db111_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db111_sequencial"]:$this->db111_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_workflowativexecucaoatributovalor {
          $this->db111_sequencial = $db111_sequencial;
        }
      }
-     if(($this->db111_sequencial == null) || ($this->db111_sequencial == "") ){
+     if(($this->db111_sequencial == null) || ($this->db111_sequencial === 0 || $this->db111_sequencial === 0.0 || $this->db111_sequencial == "") ){
        $this->erro_sql = " Campo db111_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

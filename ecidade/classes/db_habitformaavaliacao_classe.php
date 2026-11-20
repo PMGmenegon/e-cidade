@@ -79,7 +79,7 @@ class cl_habitformaavaliacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht07_sequencial = ($this->ht07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_sequencial"]:$this->ht07_sequencial);
+       $this->ht07_sequencial = ($this->ht07_sequencial === 0 || $this->ht07_sequencial === 0.0 || $this->ht07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_sequencial"]:$this->ht07_sequencial);
        $this->ht07_descricao = ($this->ht07_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_descricao"]:$this->ht07_descricao);
        $this->ht07_obs = ($this->ht07_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_obs"]:$this->ht07_obs);
        if($this->ht07_datainicial == ""){
@@ -99,7 +99,7 @@ class cl_habitformaavaliacao {
          }
        }
      }else{
-       $this->ht07_sequencial = ($this->ht07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_sequencial"]:$this->ht07_sequencial);
+       $this->ht07_sequencial = ($this->ht07_sequencial === 0 || $this->ht07_sequencial === 0.0 || $this->ht07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht07_sequencial"]:$this->ht07_sequencial);
      }
    }
    // funcao para inclusao
@@ -144,7 +144,7 @@ class cl_habitformaavaliacao {
          $this->ht07_sequencial = $ht07_sequencial;
        }
      }
-     if(($this->ht07_sequencial == null) || ($this->ht07_sequencial == "") ){
+     if(($this->ht07_sequencial == null) || ($this->ht07_sequencial === 0 || $this->ht07_sequencial === 0.0 || $this->ht07_sequencial == "") ){
        $this->erro_sql = " Campo ht07_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -78,9 +78,9 @@ class cl_workflowativexec {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db113_sequencial = ($this->db113_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_sequencial"]:$this->db113_sequencial);
-       $this->db113_workflowativ = ($this->db113_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_workflowativ"]:$this->db113_workflowativ);
-       $this->db113_id_usuario = ($this->db113_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_id_usuario"]:$this->db113_id_usuario);
+       $this->db113_sequencial = ($this->db113_sequencial === 0 || $this->db113_sequencial === 0.0 || $this->db113_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_sequencial"]:$this->db113_sequencial);
+       $this->db113_workflowativ = ($this->db113_workflowativ === 0 || $this->db113_workflowativ === 0.0 || $this->db113_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_workflowativ"]:$this->db113_workflowativ);
+       $this->db113_id_usuario = ($this->db113_id_usuario === 0 || $this->db113_id_usuario === 0.0 || $this->db113_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_id_usuario"]:$this->db113_id_usuario);
        if($this->db113_dtexecucao == ""){
          $this->db113_dtexecucao_dia = ($this->db113_dtexecucao_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_dtexecucao_dia"]:$this->db113_dtexecucao_dia);
          $this->db113_dtexecucao_mes = ($this->db113_dtexecucao_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_dtexecucao_mes"]:$this->db113_dtexecucao_mes);
@@ -92,7 +92,7 @@ class cl_workflowativexec {
        $this->db113_obs = ($this->db113_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_obs"]:$this->db113_obs);
        $this->db113_concluido = ($this->db113_concluido == "f"?@$GLOBALS["HTTP_POST_VARS"]["db113_concluido"]:$this->db113_concluido);
      }else{
-       $this->db113_sequencial = ($this->db113_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_sequencial"]:$this->db113_sequencial);
+       $this->db113_sequencial = ($this->db113_sequencial === 0 || $this->db113_sequencial === 0.0 || $this->db113_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db113_sequencial"]:$this->db113_sequencial);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_workflowativexec {
          $this->db113_sequencial = $db113_sequencial;
        }
      }
-     if(($this->db113_sequencial == null) || ($this->db113_sequencial == "") ){
+     if(($this->db113_sequencial == null) || ($this->db113_sequencial === 0 || $this->db113_sequencial === 0.0 || $this->db113_sequencial == "") ){
        $this->erro_sql = " Campo db113_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

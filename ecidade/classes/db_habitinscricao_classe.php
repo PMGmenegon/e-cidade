@@ -80,9 +80,9 @@ class cl_habitinscricao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht15_sequencial = ($this->ht15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_sequencial"]:$this->ht15_sequencial);
-       $this->ht15_habitcandidatointeresseprograma = ($this->ht15_habitcandidatointeresseprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_habitcandidatointeresseprograma"]:$this->ht15_habitcandidatointeresseprograma);
-       $this->ht15_id_usuario = ($this->ht15_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_id_usuario"]:$this->ht15_id_usuario);
+       $this->ht15_sequencial = ($this->ht15_sequencial === 0 || $this->ht15_sequencial === 0.0 || $this->ht15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_sequencial"]:$this->ht15_sequencial);
+       $this->ht15_habitcandidatointeresseprograma = ($this->ht15_habitcandidatointeresseprograma === 0 || $this->ht15_habitcandidatointeresseprograma === 0.0 || $this->ht15_habitcandidatointeresseprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_habitcandidatointeresseprograma"]:$this->ht15_habitcandidatointeresseprograma);
+       $this->ht15_id_usuario = ($this->ht15_id_usuario === 0 || $this->ht15_id_usuario === 0.0 || $this->ht15_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_id_usuario"]:$this->ht15_id_usuario);
        if($this->ht15_datalancamento == ""){
          $this->ht15_datalancamento_dia = ($this->ht15_datalancamento_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_datalancamento_dia"]:$this->ht15_datalancamento_dia);
          $this->ht15_datalancamento_mes = ($this->ht15_datalancamento_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_datalancamento_mes"]:$this->ht15_datalancamento_mes);
@@ -92,10 +92,10 @@ class cl_habitinscricao {
          }
        }
        $this->ht15_hora = ($this->ht15_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_hora"]:$this->ht15_hora);
-       $this->ht15_tipoprioridade = ($this->ht15_tipoprioridade == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_tipoprioridade"]:$this->ht15_tipoprioridade);
+       $this->ht15_tipoprioridade = ($this->ht15_tipoprioridade === 0 || $this->ht15_tipoprioridade === 0.0 || $this->ht15_tipoprioridade == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_tipoprioridade"]:$this->ht15_tipoprioridade);
        $this->ht15_lembrete = ($this->ht15_lembrete == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_lembrete"]:$this->ht15_lembrete);
      }else{
-       $this->ht15_sequencial = ($this->ht15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_sequencial"]:$this->ht15_sequencial);
+       $this->ht15_sequencial = ($this->ht15_sequencial === 0 || $this->ht15_sequencial === 0.0 || $this->ht15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht15_sequencial"]:$this->ht15_sequencial);
      }
    }
    // funcao para inclusao
@@ -173,7 +173,7 @@ class cl_habitinscricao {
          $this->ht15_sequencial = $ht15_sequencial;
        }
      }
-     if(($this->ht15_sequencial == null) || ($this->ht15_sequencial == "") ){
+     if(($this->ht15_sequencial == null) || ($this->ht15_sequencial === 0 || $this->ht15_sequencial === 0.0 || $this->ht15_sequencial == "") ){
        $this->erro_sql = " Campo ht15_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -73,13 +73,13 @@ class cl_habitprogramalistacompraitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht18_sequencial = ($this->ht18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_sequencial"]:$this->ht18_sequencial);
-       $this->ht18_habitprogramalistacompra = ($this->ht18_habitprogramalistacompra == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_habitprogramalistacompra"]:$this->ht18_habitprogramalistacompra);
-       $this->ht18_matunid = ($this->ht18_matunid == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_matunid"]:$this->ht18_matunid);
-       $this->ht18_pcmater = ($this->ht18_pcmater == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_pcmater"]:$this->ht18_pcmater);
-       $this->ht18_quantidade = ($this->ht18_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_quantidade"]:$this->ht18_quantidade);
+       $this->ht18_sequencial = ($this->ht18_sequencial === 0 || $this->ht18_sequencial === 0.0 || $this->ht18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_sequencial"]:$this->ht18_sequencial);
+       $this->ht18_habitprogramalistacompra = ($this->ht18_habitprogramalistacompra === 0 || $this->ht18_habitprogramalistacompra === 0.0 || $this->ht18_habitprogramalistacompra == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_habitprogramalistacompra"]:$this->ht18_habitprogramalistacompra);
+       $this->ht18_matunid = ($this->ht18_matunid === 0 || $this->ht18_matunid === 0.0 || $this->ht18_matunid == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_matunid"]:$this->ht18_matunid);
+       $this->ht18_pcmater = ($this->ht18_pcmater === 0 || $this->ht18_pcmater === 0.0 || $this->ht18_pcmater == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_pcmater"]:$this->ht18_pcmater);
+       $this->ht18_quantidade = ($this->ht18_quantidade === 0 || $this->ht18_quantidade === 0.0 || $this->ht18_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_quantidade"]:$this->ht18_quantidade);
      }else{
-       $this->ht18_sequencial = ($this->ht18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_sequencial"]:$this->ht18_sequencial);
+       $this->ht18_sequencial = ($this->ht18_sequencial === 0 || $this->ht18_sequencial === 0.0 || $this->ht18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht18_sequencial"]:$this->ht18_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_habitprogramalistacompraitem {
          $this->ht18_sequencial = $ht18_sequencial;
        }
      }
-     if(($this->ht18_sequencial == null) || ($this->ht18_sequencial == "") ){
+     if(($this->ht18_sequencial == null) || ($this->ht18_sequencial === 0 || $this->ht18_sequencial === 0.0 || $this->ht18_sequencial == "") ){
        $this->erro_sql = " Campo ht18_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -80,9 +80,9 @@ class cl_habitinscricaocancelamento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht22_sequencial = ($this->ht22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_sequencial"]:$this->ht22_sequencial);
-       $this->ht22_habitinscricao = ($this->ht22_habitinscricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_habitinscricao"]:$this->ht22_habitinscricao);
-       $this->ht22_id_usuario = ($this->ht22_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_id_usuario"]:$this->ht22_id_usuario);
+       $this->ht22_sequencial = ($this->ht22_sequencial === 0 || $this->ht22_sequencial === 0.0 || $this->ht22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_sequencial"]:$this->ht22_sequencial);
+       $this->ht22_habitinscricao = ($this->ht22_habitinscricao === 0 || $this->ht22_habitinscricao === 0.0 || $this->ht22_habitinscricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_habitinscricao"]:$this->ht22_habitinscricao);
+       $this->ht22_id_usuario = ($this->ht22_id_usuario === 0 || $this->ht22_id_usuario === 0.0 || $this->ht22_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_id_usuario"]:$this->ht22_id_usuario);
        if($this->ht22_data == ""){
          $this->ht22_data_dia = ($this->ht22_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_data_dia"]:$this->ht22_data_dia);
          $this->ht22_data_mes = ($this->ht22_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_data_mes"]:$this->ht22_data_mes);
@@ -92,10 +92,10 @@ class cl_habitinscricaocancelamento {
          }
        }
        $this->ht22_hora = ($this->ht22_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_hora"]:$this->ht22_hora);
-       $this->ht22_tipo = ($this->ht22_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_tipo"]:$this->ht22_tipo);
+       $this->ht22_tipo = ($this->ht22_tipo === 0 || $this->ht22_tipo === 0.0 || $this->ht22_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_tipo"]:$this->ht22_tipo);
        $this->ht22_motivo = ($this->ht22_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_motivo"]:$this->ht22_motivo);
      }else{
-       $this->ht22_sequencial = ($this->ht22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_sequencial"]:$this->ht22_sequencial);
+       $this->ht22_sequencial = ($this->ht22_sequencial === 0 || $this->ht22_sequencial === 0.0 || $this->ht22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht22_sequencial"]:$this->ht22_sequencial);
      }
    }
    // funcao para inclusao
@@ -179,7 +179,7 @@ class cl_habitinscricaocancelamento {
          $this->ht22_sequencial = $ht22_sequencial;
        }
      }
-     if(($this->ht22_sequencial == null) || ($this->ht22_sequencial == "") ){
+     if(($this->ht22_sequencial == null) || ($this->ht22_sequencial === 0 || $this->ht22_sequencial === 0.0 || $this->ht22_sequencial == "") ){
        $this->erro_sql = " Campo ht22_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
