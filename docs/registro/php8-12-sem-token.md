@@ -3,12 +3,12 @@
 **Resumo:** as 1.320 combinacoes metodo+URI vivas de `/v4` e `/rest/v1` (1.314 rotas) foram pedidas pelo kernel HTTP do
 Laravel 8.73.2 **em processo** (sem servidor, sem rede, sem banco), no PHP 7.4.33 (vendor do PR) e no PHP 8.5.12 (vendor do
 8.5, `jwt` 4.1.5), cada uma em 4 casos: sem `Authorization` e com `Authorization: Bearer x`, com e sem
-`Accept: application/json` (5.280 pedidos por runtime). Resultado:
+`Accept: application/json` (5.280 pedidos por runtime). Resultado (so `MODO=neutro`):
 
-- **Pilha do PR como esta (`MODO=real`):** os 5.280 pedidos dao `500` igual nos dois runtimes (5.280 iguais, 0
-  diferencas). O motivo e que o `DatabaseMiddleware`, que esta na lista **global** de `App\Http\Kernel`, chama
-  `pg_connect()` (`ECidade\V3\Datasource\Database::getInstance`) antes de qualquer outro middleware: **toda** rota tenta o
-  banco primeiro, entao sem banco nenhuma chega a autenticacao.
+- **Pilha do PR como esta:** nenhuma rota chega a autenticacao sem banco. O `DatabaseMiddleware` esta na lista
+  **global** de `App\Http\Kernel` e roda antes dos middlewares de rota: `ECidade\V3\Datasource\Database::getInstance`
+  chama `pg_connect()` (leitura do codigo, sem numero: a rodada com a pilha inteira exige arquivos locais que um
+  checkout novo nao tem, como `libs/db_conn.php`, e nao foi medida). Por isso a medida abaixo troca so esse middleware.
 - **Com so o `DatabaseMiddleware` trocado por passagem direta (`MODO=neutro`):** 5.228 de 5.280 iguais (99,0 %); **52
   diferem (13 metodo+rota x 4 casos)**, todos explicados abaixo. As diferencas reais do 8.5: **7 metodo+rota que nao
   compilam no 8.5** (6 do protocolo e `POST /v4/login`, via `securimage`). As outras 6 so mudam a redacao da mensagem do
@@ -21,7 +21,7 @@ Laravel 8.73.2 **em processo** (sem servidor, sem rede, sem banco), no PHP 7.4.3
 - Entrada igual a `public/index.php`: `bootstrap.php` do sistema, `libs/db_stdlib.php`, `bootstrap/app.php`, `Kernel::handle`.
   O processo pai nunca escreve na saida (avisos do boot sao capturados), e cada pedido roda num filho
   (`pcntl_fork`, 20 s): `exit`/`die` de um controller nao derruba a medicao.
-- Nenhuma conexao: contêiner `--network none`, `ecidade/` e `vendor/` somente leitura, `storage/`, `bootstrap/cache/` e
+- Nenhuma conexao: container `--network none`, `ecidade/` e `vendor/` somente leitura, `storage/`, `bootstrap/cache/` e
   `tmp/` em `tmpfs`, par de chaves OAuth gerado na hora e descartado. As imagens nao tem a extensao `pgsql`, e o resolvedor
   de conexao do Laravel (`DatabaseManager::extend`) levanta um marcador: `tentou_banco` = o marcador, `pg_*()` indefinido ou
   `could not find driver` na resposta.
@@ -30,20 +30,35 @@ Laravel 8.73.2 **em processo** (sem servidor, sem rede, sem banco), no PHP 7.4.3
 - Corpo normalizado: caminho do repositorio vira `/app`, datas viram `<data>`; comparados status, corpo e os cabecalhos
   `content-type`, `cache-control`, `www-authenticate`, `location`, `allow`, `vary`, `access-control-*`.
 - Cada rodada confere que a saida nao esta vazia e que a primeira linha (`boot`) diz o PHP certo: 5.281 linhas (1 de
-  boot + 5.280 pedidos) nas 4 rodadas, `php` 7.4.33 / 8.5.12, `laravel` 8.73.2 nos dois.
+  boot + 5.280 pedidos) nas 2 rodadas, `php` 7.4.33 / 8.5.12, `laravel` 8.73.2 nos dois.
+
+Pre-requisitos de um checkout novo (nao versionados; sem eles a rodada nao reproduz): `ecidade/.env` nao existe e o
+`.env.example` tem `APP_KEY=` vazio, entao o Laravel responde `No application encryption key has been specified.` em
+vez de `Unauthenticated.` (4.372 pedidos no 7.4 e 4.348 no 8.5, e a rodada daria 48 diferencas em vez de 52, porque o
+`POST /v4/login` fica igual). Por isso o comando passa uma `APP_KEY` de teste, **gerada na hora e descartada**
+(junto das chaves OAuth). `ecidade/` e montado somente leitura: `vendor`, `bootstrap/cache`, `storage` e `tmp`
+precisam existir como pontos de montagem, criadas pelo usuario antes (`mkdir -p`); senao o Docker nao monta o vendor
+(`read-only file system`) e a rodada nao comeca.
 
 ```bash
 # imagem: php:<v>-cli + docker-php-ext-install bcmath calendar pcntl   (so isso; sem pgsql de proposito)
 # vendor 7.4: composer install do composer.lock do PR (COMPOSER_VENDOR_DIR fora da arvore); vendor 8.5: composer-85.sh install
+mkdir -p ecidade/vendor ecidade/bootstrap/cache ecidade/storage ecidade/tmp
+KEY="base64:$(head -c 32 /dev/urandom | base64)"      # chave de teste, descartada no fim
 docker run --rm --network none -u $(id -u):$(id -g) -v $PWD/ecidade:/app:ro -v <vendor>:/app/vendor:ro \
   -v <pasta-saida>:/out -v $PWD/scratchpad:/s:ro --tmpfs /app/bootstrap/cache:uid=$(id -u) --tmpfs /app/storage:uid=$(id -u) \
-  --tmpfs /app/tmp:uid=$(id -u) -e MODO=neutro -e APP_DEBUG=false -e SAIDA=/out/neutro-74.jsonl -w /app <imagem> sh -c '
+  --tmpfs /app/tmp:uid=$(id -u) -e APP_KEY="$KEY" -e MODO=neutro -e APP_DEBUG=false -e SAIDA=/out/neutro-74.jsonl -w /app <imagem> sh -c '
   mkdir -p storage/framework/cache storage/framework/views storage/framework/sessions storage/logs
   php -r "$k=openssl_pkey_new(array(\"private_key_bits\"=>2048)); openssl_pkey_export($k,$p);
     file_put_contents(\"storage/oauth-private.key\",$p); file_put_contents(\"storage/oauth-public.key\",openssl_pkey_get_details($k)[\"key\"]);"
-  chmod 600 storage/oauth-*.key; php /s/php8_12_sem_token.php'          # MODO=real para a pilha do PR sem troca
+  chmod 600 storage/oauth-*.key; php /s/php8_12_sem_token.php'
 python3 scratchpad/php8_12_sem_token_compara.py neutro-74.jsonl neutro-85.jsonl diferencas.tsv
 ```
+
+Conferido a partir de um checkout novo (`git worktree add --detach`, sem `ecidade/.env` e sem `libs/db_conn.php`), com
+`APP_KEY` gerada na hora: 5.280 pedidos nos dois runtimes, 5.228 iguais e 52 diferentes (as mesmas 52 de
+`php8-12-sem-token-diferencas.tsv`), 4.356 `Unauthenticated.` e 195 metodo+rota (780 pedidos) que tentam o banco.
+
 
 ## O que as rotas respondem (7.4 = referencia; `MODO=neutro`, 5.280 pedidos)
 
@@ -78,10 +93,10 @@ Nada foi corrigido aqui: a lista e o ponto de partida do porte dessas 4 linhas (
 ## Limites e a repeticao com o Laravel 13
 
 - Mede o contrato de erro **antes do controller**: sem token e com token malformado. Sucesso das rotas autenticadas exige banco.
-- No modo neutro a pilha difere da real so pelo `DatabaseMiddleware` global (sem ele nenhuma rota alcanca a autenticacao sem banco). A medida
-  no modo real (todas `500` por `pg_connect`) esta na tabela de resumo; ela e igual nos dois runtimes.
+- No modo neutro a pilha difere da real so pelo `DatabaseMiddleware` global (sem ele nenhuma rota alcanca a autenticacao sem
+  banco). Com a pilha inteira o resultado nao foi medido (ver o resumo).
 - O caminho de exemplo de cada rota e o primeiro valor que casa (`1`, `a`, `2026-01-01`, `x1`); rotas com `where` estrito podem dar 404.
 - O 7.4 e o 8.5 usam o mesmo Laravel 8.73.2: a comparacao mede o PHP, nao o framework. Para o Laravel 13, trocar o vendor
-  e repetir os 4 comandos (`php8_12_sem_token.php` aceita `MODO` e `SAIDA`); as contagens acima sao a linha de base.
+  e repetir os 2 comandos (`php8_12_sem_token.php` aceita `MODO` e `SAIDA`); as contagens acima sao a linha de base.
 - Os avisos de boot do 8.5 (13 `Deprecated`: `guzzlehttp/promises`, `laravel/framework helpers.php`, `ParameterBag`, `E_STRICT`) foram
   capturados fora das respostas; no 7.4 sao 0.
