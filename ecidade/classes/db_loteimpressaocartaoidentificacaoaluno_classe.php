@@ -71,12 +71,12 @@ class cl_loteimpressaocartaoidentificacaoaluno {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed306_sequencial = ($this->ed306_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_sequencial"]:$this->ed306_sequencial);
-       $this->ed306_loteimpressaocartaoidentificacao = ($this->ed306_loteimpressaocartaoidentificacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_loteimpressaocartaoidentificacao"]:$this->ed306_loteimpressaocartaoidentificacao);
-       $this->ed306_cartaoidentificacaosituacao = ($this->ed306_cartaoidentificacaosituacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_cartaoidentificacaosituacao"]:$this->ed306_cartaoidentificacaosituacao);
-       $this->ed306_aluno = ($this->ed306_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_aluno"]:$this->ed306_aluno);
+       $this->ed306_sequencial = ($this->ed306_sequencial === 0 || $this->ed306_sequencial === 0.0 || $this->ed306_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_sequencial"]:$this->ed306_sequencial);
+       $this->ed306_loteimpressaocartaoidentificacao = ($this->ed306_loteimpressaocartaoidentificacao === 0 || $this->ed306_loteimpressaocartaoidentificacao === 0.0 || $this->ed306_loteimpressaocartaoidentificacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_loteimpressaocartaoidentificacao"]:$this->ed306_loteimpressaocartaoidentificacao);
+       $this->ed306_cartaoidentificacaosituacao = ($this->ed306_cartaoidentificacaosituacao === 0 || $this->ed306_cartaoidentificacaosituacao === 0.0 || $this->ed306_cartaoidentificacaosituacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_cartaoidentificacaosituacao"]:$this->ed306_cartaoidentificacaosituacao);
+       $this->ed306_aluno = ($this->ed306_aluno === 0 || $this->ed306_aluno === 0.0 || $this->ed306_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_aluno"]:$this->ed306_aluno);
      }else{
-       $this->ed306_sequencial = ($this->ed306_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_sequencial"]:$this->ed306_sequencial);
+       $this->ed306_sequencial = ($this->ed306_sequencial === 0 || $this->ed306_sequencial === 0.0 || $this->ed306_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed306_sequencial"]:$this->ed306_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_loteimpressaocartaoidentificacaoaluno {
          $this->ed306_sequencial = $ed306_sequencial;
        }
      }
-     if(($this->ed306_sequencial == null) || ($this->ed306_sequencial == "") ){
+     if(($this->ed306_sequencial == null) || ($this->ed306_sequencial === 0 || $this->ed306_sequencial === 0.0 || $this->ed306_sequencial == "") ){
        $this->erro_sql = " Campo ed306_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

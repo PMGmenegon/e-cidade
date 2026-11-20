@@ -78,8 +78,8 @@ class cl_histbem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t56_histbem = ($this->t56_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_histbem"]:$this->t56_histbem);
-       $this->t56_codbem = ($this->t56_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_codbem"]:$this->t56_codbem);
+       $this->t56_histbem = ($this->t56_histbem === 0 || $this->t56_histbem === 0.0 || $this->t56_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_histbem"]:$this->t56_histbem);
+       $this->t56_codbem = ($this->t56_codbem === 0 || $this->t56_codbem === 0.0 || $this->t56_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_codbem"]:$this->t56_codbem);
        if($this->t56_data == ""){
          $this->t56_data_dia = ($this->t56_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_data_dia"]:$this->t56_data_dia);
          $this->t56_data_mes = ($this->t56_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_data_mes"]:$this->t56_data_mes);
@@ -88,11 +88,11 @@ class cl_histbem {
             $this->t56_data = $this->t56_data_ano."-".$this->t56_data_mes."-".$this->t56_data_dia;
          }
        }
-       $this->t56_depart = ($this->t56_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_depart"]:$this->t56_depart);
-       $this->t56_situac = ($this->t56_situac == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_situac"]:$this->t56_situac);
+       $this->t56_depart = ($this->t56_depart === 0 || $this->t56_depart === 0.0 || $this->t56_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_depart"]:$this->t56_depart);
+       $this->t56_situac = ($this->t56_situac === 0 || $this->t56_situac === 0.0 || $this->t56_situac == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_situac"]:$this->t56_situac);
        $this->t56_histor = pg_escape_string(($this->t56_histor == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_histor"]:$this->t56_histor));
      }else{
-       $this->t56_histbem = ($this->t56_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_histbem"]:$this->t56_histbem);
+       $this->t56_histbem = ($this->t56_histbem === 0 || $this->t56_histbem === 0.0 || $this->t56_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t56_histbem"]:$this->t56_histbem);
      }
    }
    // funcao para inclusao
@@ -158,7 +158,7 @@ class cl_histbem {
          $this->t56_histbem = $t56_histbem;
        }
      }
-     if(($this->t56_histbem == null) || ($this->t56_histbem == "") ){
+     if(($this->t56_histbem == null) || ($this->t56_histbem === 0 || $this->t56_histbem === 0.0 || $this->t56_histbem == "") ){
        $this->erro_sql = " Campo t56_histbem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

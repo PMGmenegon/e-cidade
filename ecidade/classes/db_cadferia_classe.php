@@ -179,11 +179,11 @@ class cl_cadferia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->r30_anousu = ($this->r30_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_anousu"]:$this->r30_anousu);
-       $this->r30_mesusu = ($this->r30_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_mesusu"]:$this->r30_mesusu);
-       $this->r30_numcgm = ($this->r30_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_numcgm"]:$this->r30_numcgm);
-       $this->r30_regist = ($this->r30_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_regist"]:$this->r30_regist);
-       $this->r30_faltas = ($this->r30_faltas == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_faltas"]:$this->r30_faltas);
+       $this->r30_anousu = ($this->r30_anousu === 0 || $this->r30_anousu === 0.0 || $this->r30_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_anousu"]:$this->r30_anousu);
+       $this->r30_mesusu = ($this->r30_mesusu === 0 || $this->r30_mesusu === 0.0 || $this->r30_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_mesusu"]:$this->r30_mesusu);
+       $this->r30_numcgm = ($this->r30_numcgm === 0 || $this->r30_numcgm === 0.0 || $this->r30_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_numcgm"]:$this->r30_numcgm);
+       $this->r30_regist = ($this->r30_regist === 0 || $this->r30_regist === 0.0 || $this->r30_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_regist"]:$this->r30_regist);
+       $this->r30_faltas = ($this->r30_faltas === 0 || $this->r30_faltas === 0.0 || $this->r30_faltas == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_faltas"]:$this->r30_faltas);
        if($this->r30_perai == ""){
          $this->r30_perai_dia = ($this->r30_perai_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_perai_dia"]:$this->r30_perai_dia);
          $this->r30_perai_mes = ($this->r30_perai_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_perai_mes"]:$this->r30_perai_mes);
@@ -200,9 +200,9 @@ class cl_cadferia {
             $this->r30_peraf = $this->r30_peraf_ano."-".$this->r30_peraf_mes."-".$this->r30_peraf_dia;
          }
        }
-       $this->r30_ndias = ($this->r30_ndias == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_ndias"]:$this->r30_ndias);
-       $this->r30_dias1 = ($this->r30_dias1 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_dias1"]:$this->r30_dias1);
-       $this->r30_dias2 = ($this->r30_dias2 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_dias2"]:$this->r30_dias2);
+       $this->r30_ndias = ($this->r30_ndias === 0 || $this->r30_ndias === 0.0 || $this->r30_ndias == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_ndias"]:$this->r30_ndias);
+       $this->r30_dias1 = ($this->r30_dias1 === 0 || $this->r30_dias1 === 0.0 || $this->r30_dias1 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_dias1"]:$this->r30_dias1);
+       $this->r30_dias2 = ($this->r30_dias2 === 0 || $this->r30_dias2 === 0.0 || $this->r30_dias2 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_dias2"]:$this->r30_dias2);
        if($this->r30_per1i == ""){
          $this->r30_per1i_dia = ($this->r30_per1i_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_per1i_dia"]:$this->r30_per1i_dia);
          $this->r30_per1i_mes = ($this->r30_per1i_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_per1i_mes"]:$this->r30_per1i_mes);
@@ -237,7 +237,7 @@ class cl_cadferia {
        }
        $this->r30_proc1 = ($this->r30_proc1 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_proc1"]:$this->r30_proc1);
        $this->r30_proc2 = ($this->r30_proc2 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_proc2"]:$this->r30_proc2);
-       $this->r30_abono = ($this->r30_abono == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_abono"]:$this->r30_abono);
+       $this->r30_abono = ($this->r30_abono === 0 || $this->r30_abono === 0.0 || $this->r30_abono == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_abono"]:$this->r30_abono);
        $this->r30_proc1d = ($this->r30_proc1d == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_proc1d"]:$this->r30_proc1d);
        $this->r30_vliq1 = ($this->r30_vliq1 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_vliq1"]:$this->r30_vliq1);
        $this->r30_vfgt1 = ($this->r30_vfgt1 == ""?@$GLOBALS["HTTP_POST_VARS"]["r30_vfgt1"]:$this->r30_vfgt1);

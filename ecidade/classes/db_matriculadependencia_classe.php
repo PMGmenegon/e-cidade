@@ -74,7 +74,7 @@ class cl_matriculadependencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed297_sequencial = ($this->ed297_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_sequencial"]:$this->ed297_sequencial);
+       $this->ed297_sequencial = ($this->ed297_sequencial === 0 || $this->ed297_sequencial === 0.0 || $this->ed297_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_sequencial"]:$this->ed297_sequencial);
        if($this->ed297_data == ""){
          $this->ed297_data_dia = ($this->ed297_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_data_dia"]:$this->ed297_data_dia);
          $this->ed297_data_mes = ($this->ed297_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_data_mes"]:$this->ed297_data_mes);
@@ -83,10 +83,10 @@ class cl_matriculadependencia {
             $this->ed297_data = $this->ed297_data_ano."-".$this->ed297_data_mes."-".$this->ed297_data_dia;
          }
        }
-       $this->ed297_matricula = ($this->ed297_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_matricula"]:$this->ed297_matricula);
-       $this->ed297_turma = ($this->ed297_turma == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_turma"]:$this->ed297_turma);
+       $this->ed297_matricula = ($this->ed297_matricula === 0 || $this->ed297_matricula === 0.0 || $this->ed297_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_matricula"]:$this->ed297_matricula);
+       $this->ed297_turma = ($this->ed297_turma === 0 || $this->ed297_turma === 0.0 || $this->ed297_turma == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_turma"]:$this->ed297_turma);
      }else{
-       $this->ed297_sequencial = ($this->ed297_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_sequencial"]:$this->ed297_sequencial);
+       $this->ed297_sequencial = ($this->ed297_sequencial === 0 || $this->ed297_sequencial === 0.0 || $this->ed297_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed297_sequencial"]:$this->ed297_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_matriculadependencia {
          $this->ed297_sequencial = $ed297_sequencial;
        }
      }
-     if(($this->ed297_sequencial == null) || ($this->ed297_sequencial == "") ){
+     if(($this->ed297_sequencial == null) || ($this->ed297_sequencial === 0 || $this->ed297_sequencial === 0.0 || $this->ed297_sequencial == "") ){
        $this->erro_sql = " Campo ed297_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

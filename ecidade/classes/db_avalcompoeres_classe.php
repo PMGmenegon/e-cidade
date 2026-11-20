@@ -76,14 +76,14 @@ class cl_avalcompoeres {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed44_i_codigo = ($this->ed44_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_codigo"]:$this->ed44_i_codigo);
-       $this->ed44_i_procavaliacao = ($this->ed44_i_procavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_procavaliacao"]:$this->ed44_i_procavaliacao);
-       $this->ed44_i_procresultado = ($this->ed44_i_procresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_procresultado"]:$this->ed44_i_procresultado);
-       $this->ed44_i_peso = ($this->ed44_i_peso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_peso"]:$this->ed44_i_peso);
+       $this->ed44_i_codigo = ($this->ed44_i_codigo === 0 || $this->ed44_i_codigo === 0.0 || $this->ed44_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_codigo"]:$this->ed44_i_codigo);
+       $this->ed44_i_procavaliacao = ($this->ed44_i_procavaliacao === 0 || $this->ed44_i_procavaliacao === 0.0 || $this->ed44_i_procavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_procavaliacao"]:$this->ed44_i_procavaliacao);
+       $this->ed44_i_procresultado = ($this->ed44_i_procresultado === 0 || $this->ed44_i_procresultado === 0.0 || $this->ed44_i_procresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_procresultado"]:$this->ed44_i_procresultado);
+       $this->ed44_i_peso = ($this->ed44_i_peso === 0 || $this->ed44_i_peso === 0.0 || $this->ed44_i_peso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_peso"]:$this->ed44_i_peso);
        $this->ed44_c_obrigatorio = ($this->ed44_c_obrigatorio == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_c_obrigatorio"]:$this->ed44_c_obrigatorio);
        $this->ed44_c_minimoaprov = ($this->ed44_c_minimoaprov == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_c_minimoaprov"]:$this->ed44_c_minimoaprov);
      }else{
-       $this->ed44_i_codigo = ($this->ed44_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_codigo"]:$this->ed44_i_codigo);
+       $this->ed44_i_codigo = ($this->ed44_i_codigo === 0 || $this->ed44_i_codigo === 0.0 || $this->ed44_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed44_i_codigo"]:$this->ed44_i_codigo);
      }
    }
    // funcao para inclusao
@@ -149,7 +149,7 @@ class cl_avalcompoeres {
          $this->ed44_i_codigo = $ed44_i_codigo;
        }
      }
-     if(($this->ed44_i_codigo == null) || ($this->ed44_i_codigo == "") ){
+     if(($this->ed44_i_codigo == null) || ($this->ed44_i_codigo === 0 || $this->ed44_i_codigo === 0.0 || $this->ed44_i_codigo == "") ){
        $this->erro_sql = " Campo ed44_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

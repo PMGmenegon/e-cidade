@@ -69,12 +69,12 @@ class cl_bensimoveis {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t54_codbem = ($this->t54_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_codbem"]:$this->t54_codbem);
-       $this->t54_idbql = ($this->t54_idbql == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_idbql"]:$this->t54_idbql);
+       $this->t54_codbem = ($this->t54_codbem === 0 || $this->t54_codbem === 0.0 || $this->t54_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_codbem"]:$this->t54_codbem);
+       $this->t54_idbql = ($this->t54_idbql === 0 || $this->t54_idbql === 0.0 || $this->t54_idbql == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_idbql"]:$this->t54_idbql);
        $this->t54_obs = ($this->t54_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_obs"]:$this->t54_obs);
      }else{
-       $this->t54_codbem = ($this->t54_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_codbem"]:$this->t54_codbem);
-       $this->t54_idbql = ($this->t54_idbql == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_idbql"]:$this->t54_idbql);
+       $this->t54_codbem = ($this->t54_codbem === 0 || $this->t54_codbem === 0.0 || $this->t54_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_codbem"]:$this->t54_codbem);
+       $this->t54_idbql = ($this->t54_idbql === 0 || $this->t54_idbql === 0.0 || $this->t54_idbql == ""?@$GLOBALS["HTTP_POST_VARS"]["t54_idbql"]:$this->t54_idbql);
      }
    }
    // funcao para inclusao
@@ -82,7 +82,7 @@ class cl_bensimoveis {
       $this->atualizacampos();
        $this->t54_codbem = $t54_codbem;
        $this->t54_idbql = $t54_idbql;
-     if(($this->t54_codbem == null) || ($this->t54_codbem == "") ){
+     if(($this->t54_codbem == null) || ($this->t54_codbem === 0 || $this->t54_codbem === 0.0 || $this->t54_codbem == "") ){
        $this->erro_sql = " Campo t54_codbem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -90,7 +90,7 @@ class cl_bensimoveis {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->t54_idbql == null) || ($this->t54_idbql == "") ){
+     if(($this->t54_idbql == null) || ($this->t54_idbql === 0 || $this->t54_idbql === 0.0 || $this->t54_idbql == "") ){
        $this->erro_sql = " Campo t54_idbql nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

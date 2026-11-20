@@ -73,13 +73,13 @@ class cl_regraarredondamentofaixa {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed317_sequencial = ($this->ed317_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_sequencial"]:$this->ed317_sequencial);
-       $this->ed317_regraarredondamento = ($this->ed317_regraarredondamento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_regraarredondamento"]:$this->ed317_regraarredondamento);
-       $this->ed317_inicial = ($this->ed317_inicial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_inicial"]:$this->ed317_inicial);
-       $this->ed317_final = ($this->ed317_final == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_final"]:$this->ed317_final);
+       $this->ed317_sequencial = ($this->ed317_sequencial === 0 || $this->ed317_sequencial === 0.0 || $this->ed317_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_sequencial"]:$this->ed317_sequencial);
+       $this->ed317_regraarredondamento = ($this->ed317_regraarredondamento === 0 || $this->ed317_regraarredondamento === 0.0 || $this->ed317_regraarredondamento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_regraarredondamento"]:$this->ed317_regraarredondamento);
+       $this->ed317_inicial = ($this->ed317_inicial === 0 || $this->ed317_inicial === 0.0 || $this->ed317_inicial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_inicial"]:$this->ed317_inicial);
+       $this->ed317_final = ($this->ed317_final === 0 || $this->ed317_final === 0.0 || $this->ed317_final == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_final"]:$this->ed317_final);
        $this->ed317_arredondar = ($this->ed317_arredondar == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_arredondar"]:$this->ed317_arredondar);
      }else{
-       $this->ed317_sequencial = ($this->ed317_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_sequencial"]:$this->ed317_sequencial);
+       $this->ed317_sequencial = ($this->ed317_sequencial === 0 || $this->ed317_sequencial === 0.0 || $this->ed317_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed317_sequencial"]:$this->ed317_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_regraarredondamentofaixa {
          $this->ed317_sequencial = $ed317_sequencial;
        }
      }
-     if(($this->ed317_sequencial == null) || ($this->ed317_sequencial == "") ){
+     if(($this->ed317_sequencial == null) || ($this->ed317_sequencial === 0 || $this->ed317_sequencial === 0.0 || $this->ed317_sequencial == "") ){
        $this->erro_sql = " Campo ed317_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

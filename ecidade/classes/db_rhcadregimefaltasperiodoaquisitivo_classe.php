@@ -73,13 +73,13 @@ class cl_rhcadregimefaltasperiodoaquisitivo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh125_sequencial = ($this->rh125_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_sequencial"]:$this->rh125_sequencial);
-       $this->rh125_rhcadregime = ($this->rh125_rhcadregime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_rhcadregime"]:$this->rh125_rhcadregime);
-       $this->rh125_faixainicial = ($this->rh125_faixainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_faixainicial"]:$this->rh125_faixainicial);
-       $this->rh125_faixafinal = ($this->rh125_faixafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_faixafinal"]:$this->rh125_faixafinal);
-       $this->rh125_diasdesconto = ($this->rh125_diasdesconto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_diasdesconto"]:$this->rh125_diasdesconto);
+       $this->rh125_sequencial = ($this->rh125_sequencial === 0 || $this->rh125_sequencial === 0.0 || $this->rh125_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_sequencial"]:$this->rh125_sequencial);
+       $this->rh125_rhcadregime = ($this->rh125_rhcadregime === 0 || $this->rh125_rhcadregime === 0.0 || $this->rh125_rhcadregime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_rhcadregime"]:$this->rh125_rhcadregime);
+       $this->rh125_faixainicial = ($this->rh125_faixainicial === 0 || $this->rh125_faixainicial === 0.0 || $this->rh125_faixainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_faixainicial"]:$this->rh125_faixainicial);
+       $this->rh125_faixafinal = ($this->rh125_faixafinal === 0 || $this->rh125_faixafinal === 0.0 || $this->rh125_faixafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_faixafinal"]:$this->rh125_faixafinal);
+       $this->rh125_diasdesconto = ($this->rh125_diasdesconto === 0 || $this->rh125_diasdesconto === 0.0 || $this->rh125_diasdesconto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_diasdesconto"]:$this->rh125_diasdesconto);
      }else{
-       $this->rh125_sequencial = ($this->rh125_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_sequencial"]:$this->rh125_sequencial);
+       $this->rh125_sequencial = ($this->rh125_sequencial === 0 || $this->rh125_sequencial === 0.0 || $this->rh125_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh125_sequencial"]:$this->rh125_sequencial);
      }
    }
    // funcao para inclusao
@@ -139,7 +139,7 @@ class cl_rhcadregimefaltasperiodoaquisitivo {
          $this->rh125_sequencial = $rh125_sequencial;
        }
      }
-     if(($this->rh125_sequencial == null) || ($this->rh125_sequencial == "") ){
+     if(($this->rh125_sequencial == null) || ($this->rh125_sequencial === 0 || $this->rh125_sequencial === 0.0 || $this->rh125_sequencial == "") ){
        $this->erro_sql = " Campo rh125_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

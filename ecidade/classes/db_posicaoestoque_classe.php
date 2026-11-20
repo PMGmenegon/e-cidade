@@ -75,14 +75,14 @@ class cl_posicaoestoque {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m06_sequencial = ($this->m06_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_sequencial"]:$this->m06_sequencial);
-       $this->m06_posicaoestoqueprocessamento = ($this->m06_posicaoestoqueprocessamento == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_posicaoestoqueprocessamento"]:$this->m06_posicaoestoqueprocessamento);
-       $this->m06_matestoque = ($this->m06_matestoque == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_matestoque"]:$this->m06_matestoque);
-       $this->m06_quantidade = ($this->m06_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_quantidade"]:$this->m06_quantidade);
-       $this->m06_valor = ($this->m06_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_valor"]:$this->m06_valor);
-       $this->m06_precomedio = ($this->m06_precomedio == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_precomedio"]:$this->m06_precomedio);
+       $this->m06_sequencial = ($this->m06_sequencial === 0 || $this->m06_sequencial === 0.0 || $this->m06_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_sequencial"]:$this->m06_sequencial);
+       $this->m06_posicaoestoqueprocessamento = ($this->m06_posicaoestoqueprocessamento === 0 || $this->m06_posicaoestoqueprocessamento === 0.0 || $this->m06_posicaoestoqueprocessamento == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_posicaoestoqueprocessamento"]:$this->m06_posicaoestoqueprocessamento);
+       $this->m06_matestoque = ($this->m06_matestoque === 0 || $this->m06_matestoque === 0.0 || $this->m06_matestoque == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_matestoque"]:$this->m06_matestoque);
+       $this->m06_quantidade = ($this->m06_quantidade === 0 || $this->m06_quantidade === 0.0 || $this->m06_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_quantidade"]:$this->m06_quantidade);
+       $this->m06_valor = ($this->m06_valor === 0 || $this->m06_valor === 0.0 || $this->m06_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_valor"]:$this->m06_valor);
+       $this->m06_precomedio = ($this->m06_precomedio === 0 || $this->m06_precomedio === 0.0 || $this->m06_precomedio == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_precomedio"]:$this->m06_precomedio);
      }else{
-       $this->m06_sequencial = ($this->m06_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_sequencial"]:$this->m06_sequencial);
+       $this->m06_sequencial = ($this->m06_sequencial === 0 || $this->m06_sequencial === 0.0 || $this->m06_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m06_sequencial"]:$this->m06_sequencial);
      }
    }
    // funcao para inclusao
@@ -157,7 +157,7 @@ class cl_posicaoestoque {
          $this->m06_sequencial = $m06_sequencial;
        }
      }
-     if(($this->m06_sequencial == null) || ($this->m06_sequencial == "") ){
+     if(($this->m06_sequencial == null) || ($this->m06_sequencial === 0 || $this->m06_sequencial === 0.0 || $this->m06_sequencial == "") ){
        $this->erro_sql = " Campo m06_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

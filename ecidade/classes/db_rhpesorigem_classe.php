@@ -67,10 +67,10 @@ class cl_rhpesorigem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh21_regist = ($this->rh21_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regist"]:$this->rh21_regist);
-       $this->rh21_regpri = ($this->rh21_regpri == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regpri"]:$this->rh21_regpri);
+       $this->rh21_regist = ($this->rh21_regist === 0 || $this->rh21_regist === 0.0 || $this->rh21_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regist"]:$this->rh21_regist);
+       $this->rh21_regpri = ($this->rh21_regpri === 0 || $this->rh21_regpri === 0.0 || $this->rh21_regpri == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regpri"]:$this->rh21_regpri);
      }else{
-       $this->rh21_regist = ($this->rh21_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regist"]:$this->rh21_regist);
+       $this->rh21_regist = ($this->rh21_regist === 0 || $this->rh21_regist === 0.0 || $this->rh21_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh21_regist"]:$this->rh21_regist);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_rhpesorigem {
        return false;
      }
        $this->rh21_regist = $rh21_regist;
-     if(($this->rh21_regist == null) || ($this->rh21_regist == "") ){
+     if(($this->rh21_regist == null) || ($this->rh21_regist === 0 || $this->rh21_regist === 0.0 || $this->rh21_regist == "") ){
        $this->erro_sql = " Campo rh21_regist nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

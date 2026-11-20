@@ -43,11 +43,11 @@ class cl_avaliacaoperguntadb_formulas {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->eso01_sequencial = ($this->eso01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_sequencial"]:$this->eso01_sequencial);
-       $this->eso01_db_formulas = ($this->eso01_db_formulas == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_db_formulas"]:$this->eso01_db_formulas);
-       $this->eso01_avaliacaopergunta = ($this->eso01_avaliacaopergunta == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_avaliacaopergunta"]:$this->eso01_avaliacaopergunta);
+       $this->eso01_sequencial = ($this->eso01_sequencial === 0 || $this->eso01_sequencial === 0.0 || $this->eso01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_sequencial"]:$this->eso01_sequencial);
+       $this->eso01_db_formulas = ($this->eso01_db_formulas === 0 || $this->eso01_db_formulas === 0.0 || $this->eso01_db_formulas == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_db_formulas"]:$this->eso01_db_formulas);
+       $this->eso01_avaliacaopergunta = ($this->eso01_avaliacaopergunta === 0 || $this->eso01_avaliacaopergunta === 0.0 || $this->eso01_avaliacaopergunta == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_avaliacaopergunta"]:$this->eso01_avaliacaopergunta);
      }else{
-       $this->eso01_sequencial = ($this->eso01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_sequencial"]:$this->eso01_sequencial);
+       $this->eso01_sequencial = ($this->eso01_sequencial === 0 || $this->eso01_sequencial === 0.0 || $this->eso01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso01_sequencial"]:$this->eso01_sequencial);
      }
    }
    // funcao para Inclusão
@@ -95,7 +95,7 @@ class cl_avaliacaoperguntadb_formulas {
          $this->eso01_sequencial = $eso01_sequencial; 
        }
      }
-     if(($this->eso01_sequencial == null) || ($this->eso01_sequencial == "") ){ 
+     if(($this->eso01_sequencial == null) || ($this->eso01_sequencial === 0 || $this->eso01_sequencial === 0.0 || $this->eso01_sequencial == "") ){ 
        $this->erro_sql = " Campo eso01_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

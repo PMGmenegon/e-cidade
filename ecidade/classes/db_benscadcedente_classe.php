@@ -67,10 +67,10 @@ class cl_benscadcedente {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t04_sequencial = ($this->t04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_sequencial"]:$this->t04_sequencial);
-       $this->t04_numcgm = ($this->t04_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_numcgm"]:$this->t04_numcgm);
+       $this->t04_sequencial = ($this->t04_sequencial === 0 || $this->t04_sequencial === 0.0 || $this->t04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_sequencial"]:$this->t04_sequencial);
+       $this->t04_numcgm = ($this->t04_numcgm === 0 || $this->t04_numcgm === 0.0 || $this->t04_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_numcgm"]:$this->t04_numcgm);
      }else{
-       $this->t04_sequencial = ($this->t04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_sequencial"]:$this->t04_sequencial);
+       $this->t04_sequencial = ($this->t04_sequencial === 0 || $this->t04_sequencial === 0.0 || $this->t04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t04_sequencial"]:$this->t04_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_benscadcedente {
          $this->t04_sequencial = $t04_sequencial;
        }
      }
-     if(($this->t04_sequencial == null) || ($this->t04_sequencial == "") ){
+     if(($this->t04_sequencial == null) || ($this->t04_sequencial === 0 || $this->t04_sequencial === 0.0 || $this->t04_sequencial == "") ){
        $this->erro_sql = " Campo t04_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

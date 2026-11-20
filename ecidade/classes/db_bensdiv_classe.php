@@ -67,10 +67,10 @@ class cl_bensdiv {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t33_bem = ($this->t33_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_bem"]:$this->t33_bem);
-       $this->t33_divisao = ($this->t33_divisao == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_divisao"]:$this->t33_divisao);
+       $this->t33_bem = ($this->t33_bem === 0 || $this->t33_bem === 0.0 || $this->t33_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_bem"]:$this->t33_bem);
+       $this->t33_divisao = ($this->t33_divisao === 0 || $this->t33_divisao === 0.0 || $this->t33_divisao == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_divisao"]:$this->t33_divisao);
      }else{
-       $this->t33_bem = ($this->t33_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_bem"]:$this->t33_bem);
+       $this->t33_bem = ($this->t33_bem === 0 || $this->t33_bem === 0.0 || $this->t33_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t33_bem"]:$this->t33_bem);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_bensdiv {
        return false;
      }
        $this->t33_bem = $t33_bem;
-     if(($this->t33_bem == null) || ($this->t33_bem == "") ){
+     if(($this->t33_bem == null) || ($this->t33_bem === 0 || $this->t33_bem === 0.0 || $this->t33_bem == "") ){
        $this->erro_sql = " Campo t33_bem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

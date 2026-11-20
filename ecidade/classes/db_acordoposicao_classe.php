@@ -86,11 +86,11 @@ class cl_acordoposicao {
   // funcao para atualizar campos
   public function atualizacampos($exclusao=false) {
     if($exclusao==false){
-      $this->ac26_sequencial = ($this->ac26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_sequencial"]:$this->ac26_sequencial);
-      $this->ac26_acordo = ($this->ac26_acordo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_acordo"]:$this->ac26_acordo);
-      $this->ac26_acordoposicaotipo = ($this->ac26_acordoposicaotipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_acordoposicaotipo"]:$this->ac26_acordoposicaotipo);
-      $this->ac26_numero = ($this->ac26_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_numero"]:$this->ac26_numero);
-      $this->ac26_situacao = ($this->ac26_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_situacao"]:$this->ac26_situacao);
+      $this->ac26_sequencial = ($this->ac26_sequencial === 0 || $this->ac26_sequencial === 0.0 || $this->ac26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_sequencial"]:$this->ac26_sequencial);
+      $this->ac26_acordo = ($this->ac26_acordo === 0 || $this->ac26_acordo === 0.0 || $this->ac26_acordo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_acordo"]:$this->ac26_acordo);
+      $this->ac26_acordoposicaotipo = ($this->ac26_acordoposicaotipo === 0 || $this->ac26_acordoposicaotipo === 0.0 || $this->ac26_acordoposicaotipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_acordoposicaotipo"]:$this->ac26_acordoposicaotipo);
+      $this->ac26_numero = ($this->ac26_numero === 0 || $this->ac26_numero === 0.0 || $this->ac26_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_numero"]:$this->ac26_numero);
+      $this->ac26_situacao = ($this->ac26_situacao === 0 || $this->ac26_situacao === 0.0 || $this->ac26_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_situacao"]:$this->ac26_situacao);
       if($this->ac26_data == ""){
         $this->ac26_data_dia = ($this->ac26_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_data_dia"]:$this->ac26_data_dia);
         $this->ac26_data_mes = ($this->ac26_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_data_mes"]:$this->ac26_data_mes);
@@ -104,7 +104,7 @@ class cl_acordoposicao {
       $this->ac26_numeroaditamento = ($this->ac26_numeroaditamento == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_numeroaditamento"]:$this->ac26_numeroaditamento);
       $this->ac26_tipooperacao = ($this->ac26_tipooperacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_tipooperacao"]:$this->ac26_tipooperacao);
     }else{
-      $this->ac26_sequencial = ($this->ac26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_sequencial"]:$this->ac26_sequencial);
+      $this->ac26_sequencial = ($this->ac26_sequencial === 0 || $this->ac26_sequencial === 0.0 || $this->ac26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac26_sequencial"]:$this->ac26_sequencial);
     }
   }
   // funcao para Inclusão
@@ -182,7 +182,7 @@ class cl_acordoposicao {
         $this->ac26_sequencial = $ac26_sequencial;
       }
     }
-    if(($this->ac26_sequencial == null) || ($this->ac26_sequencial == "") ){
+    if(($this->ac26_sequencial == null) || ($this->ac26_sequencial === 0 || $this->ac26_sequencial === 0.0 || $this->ac26_sequencial == "") ){
       $this->erro_sql = " Campo ac26_sequencial não declarado.";
       $this->erro_banco = "Chave Primaria zerada.";
       $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

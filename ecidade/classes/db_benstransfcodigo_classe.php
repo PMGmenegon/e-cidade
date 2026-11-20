@@ -71,13 +71,13 @@ class cl_benstransfcodigo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t95_codtran = ($this->t95_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codtran"]:$this->t95_codtran);
-       $this->t95_codbem = ($this->t95_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codbem"]:$this->t95_codbem);
-       $this->t95_situac = ($this->t95_situac == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_situac"]:$this->t95_situac);
+       $this->t95_codtran = ($this->t95_codtran === 0 || $this->t95_codtran === 0.0 || $this->t95_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codtran"]:$this->t95_codtran);
+       $this->t95_codbem = ($this->t95_codbem === 0 || $this->t95_codbem === 0.0 || $this->t95_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codbem"]:$this->t95_codbem);
+       $this->t95_situac = ($this->t95_situac === 0 || $this->t95_situac === 0.0 || $this->t95_situac == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_situac"]:$this->t95_situac);
        $this->t95_histor = pg_escape_string(($this->t95_histor == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_histor"]:$this->t95_histor));
      }else{
-       $this->t95_codtran = ($this->t95_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codtran"]:$this->t95_codtran);
-       $this->t95_codbem = ($this->t95_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codbem"]:$this->t95_codbem);
+       $this->t95_codtran = ($this->t95_codtran === 0 || $this->t95_codtran === 0.0 || $this->t95_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codtran"]:$this->t95_codtran);
+       $this->t95_codbem = ($this->t95_codbem === 0 || $this->t95_codbem === 0.0 || $this->t95_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t95_codbem"]:$this->t95_codbem);
      }
    }
    // funcao para inclusao
@@ -94,7 +94,7 @@ class cl_benstransfcodigo {
      }
        $this->t95_codtran = $t95_codtran;
        $this->t95_codbem = $t95_codbem;
-     if(($this->t95_codtran == null) || ($this->t95_codtran == "") ){
+     if(($this->t95_codtran == null) || ($this->t95_codtran === 0 || $this->t95_codtran === 0.0 || $this->t95_codtran == "") ){
        $this->erro_sql = " Campo t95_codtran nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -102,7 +102,7 @@ class cl_benstransfcodigo {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->t95_codbem == null) || ($this->t95_codbem == "") ){
+     if(($this->t95_codbem == null) || ($this->t95_codbem === 0 || $this->t95_codbem === 0.0 || $this->t95_codbem == "") ){
        $this->erro_sql = " Campo t95_codbem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

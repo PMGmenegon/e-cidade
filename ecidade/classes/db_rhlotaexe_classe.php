@@ -71,13 +71,13 @@ class cl_rhlotaexe {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh26_anousu = ($this->rh26_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_anousu"]:$this->rh26_anousu);
-       $this->rh26_codigo = ($this->rh26_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_codigo"]:$this->rh26_codigo);
-       $this->rh26_orgao = ($this->rh26_orgao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_orgao"]:$this->rh26_orgao);
-       $this->rh26_unidade = ($this->rh26_unidade == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_unidade"]:$this->rh26_unidade);
+       $this->rh26_anousu = ($this->rh26_anousu === 0 || $this->rh26_anousu === 0.0 || $this->rh26_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_anousu"]:$this->rh26_anousu);
+       $this->rh26_codigo = ($this->rh26_codigo === 0 || $this->rh26_codigo === 0.0 || $this->rh26_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_codigo"]:$this->rh26_codigo);
+       $this->rh26_orgao = ($this->rh26_orgao === 0 || $this->rh26_orgao === 0.0 || $this->rh26_orgao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_orgao"]:$this->rh26_orgao);
+       $this->rh26_unidade = ($this->rh26_unidade === 0 || $this->rh26_unidade === 0.0 || $this->rh26_unidade == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_unidade"]:$this->rh26_unidade);
      }else{
-       $this->rh26_anousu = ($this->rh26_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_anousu"]:$this->rh26_anousu);
-       $this->rh26_codigo = ($this->rh26_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_codigo"]:$this->rh26_codigo);
+       $this->rh26_anousu = ($this->rh26_anousu === 0 || $this->rh26_anousu === 0.0 || $this->rh26_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_anousu"]:$this->rh26_anousu);
+       $this->rh26_codigo = ($this->rh26_codigo === 0 || $this->rh26_codigo === 0.0 || $this->rh26_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["rh26_codigo"]:$this->rh26_codigo);
      }
    }
    // funcao para inclusao
@@ -103,7 +103,7 @@ class cl_rhlotaexe {
      }
        $this->rh26_anousu = $rh26_anousu;
        $this->rh26_codigo = $rh26_codigo;
-     if(($this->rh26_anousu == null) || ($this->rh26_anousu == "") ){
+     if(($this->rh26_anousu == null) || ($this->rh26_anousu === 0 || $this->rh26_anousu === 0.0 || $this->rh26_anousu == "") ){
        $this->erro_sql = " Campo rh26_anousu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -111,7 +111,7 @@ class cl_rhlotaexe {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->rh26_codigo == null) || ($this->rh26_codigo == "") ){
+     if(($this->rh26_codigo == null) || ($this->rh26_codigo === 0 || $this->rh26_codigo === 0.0 || $this->rh26_codigo == "") ){
        $this->erro_sql = " Campo rh26_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -469,7 +469,7 @@ class cl_rhlotaexe {
      return $sql;
   }
 
-  public function sql_query_servidores( $iAnoUsu, $iMesUsu, $sCampos = null, $sWhere, $iInstituicao = null ) {
+  public function sql_query_servidores( $iAnoUsu, $iMesUsu, $sCampos = null, $sWhere = null, $iInstituicao = null ) {
 
   	if ( empty($sCampos) ) {
   		$sCampos = "*";

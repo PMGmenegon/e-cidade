@@ -69,11 +69,11 @@ class cl_censomunic {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed261_i_codigo = ($this->ed261_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_codigo"]:$this->ed261_i_codigo);
-       $this->ed261_i_censouf = ($this->ed261_i_censouf == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_censouf"]:$this->ed261_i_censouf);
+       $this->ed261_i_codigo = ($this->ed261_i_codigo === 0 || $this->ed261_i_codigo === 0.0 || $this->ed261_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_codigo"]:$this->ed261_i_codigo);
+       $this->ed261_i_censouf = ($this->ed261_i_censouf === 0 || $this->ed261_i_censouf === 0.0 || $this->ed261_i_censouf == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_censouf"]:$this->ed261_i_censouf);
        $this->ed261_c_nome = ($this->ed261_c_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_c_nome"]:$this->ed261_c_nome);
      }else{
-       $this->ed261_i_codigo = ($this->ed261_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_codigo"]:$this->ed261_i_codigo);
+       $this->ed261_i_codigo = ($this->ed261_i_codigo === 0 || $this->ed261_i_codigo === 0.0 || $this->ed261_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed261_i_codigo"]:$this->ed261_i_codigo);
      }
    }
    // funcao para inclusao
@@ -98,7 +98,7 @@ class cl_censomunic {
        return false;
      }
        $this->ed261_i_codigo = $ed261_i_codigo;
-     if(($this->ed261_i_codigo == null) || ($this->ed261_i_codigo == "") ){
+     if(($this->ed261_i_codigo == null) || ($this->ed261_i_codigo === 0 || $this->ed261_i_codigo === 0.0 || $this->ed261_i_codigo == "") ){
        $this->erro_sql = " Campo ed261_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

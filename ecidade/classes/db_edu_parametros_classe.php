@@ -104,19 +104,19 @@ class cl_edu_parametros {
   // funcao para atualizar campos
   public function atualizacampos($exclusao=false) {
     if ($exclusao==false) {
-      $this->ed233_i_codigo = ($this->ed233_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_codigo"]:$this->ed233_i_codigo);
-      $this->ed233_i_escola = ($this->ed233_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_escola"]:$this->ed233_i_escola);
+      $this->ed233_i_codigo = ($this->ed233_i_codigo === 0 || $this->ed233_i_codigo === 0.0 || $this->ed233_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_codigo"]:$this->ed233_i_codigo);
+      $this->ed233_i_escola = ($this->ed233_i_escola === 0 || $this->ed233_i_escola === 0.0 || $this->ed233_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_escola"]:$this->ed233_i_escola);
       $this->ed233_c_decimais = ($this->ed233_c_decimais == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_decimais"]:$this->ed233_c_decimais);
       $this->ed233_c_notabranca = ($this->ed233_c_notabranca == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_notabranca"]:$this->ed233_c_notabranca);
-      $this->ed233_f_medidaaluno = ($this->ed233_f_medidaaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_f_medidaaluno"]:$this->ed233_f_medidaaluno);
+      $this->ed233_f_medidaaluno = ($this->ed233_f_medidaaluno === 0 || $this->ed233_f_medidaaluno === 0.0 || $this->ed233_f_medidaaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_f_medidaaluno"]:$this->ed233_f_medidaaluno);
       $this->ed233_c_limitemov = ($this->ed233_c_limitemov == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_limitemov"]:$this->ed233_c_limitemov);
       $this->ed233_c_database = ($this->ed233_c_database == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_database"]:$this->ed233_c_database);
       $this->ed233_c_consistirmat = ($this->ed233_c_consistirmat == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_consistirmat"]:$this->ed233_c_consistirmat);
       $this->ed233_c_avalalternativa = ($this->ed233_c_avalalternativa == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_c_avalalternativa"]:$this->ed233_c_avalalternativa);
-      $this->ed233_i_idadevotacao = ($this->ed233_i_idadevotacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_idadevotacao"]:$this->ed233_i_idadevotacao);
-      $this->ed233_i_habilitaordemalfabeticaturma = ($this->ed233_i_habilitaordemalfabeticaturma == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_habilitaordemalfabeticaturma"]:$this->ed233_i_habilitaordemalfabeticaturma);
-      $this->ed233_deslocamentocursor = ($this->ed233_deslocamentocursor == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_deslocamentocursor"]:$this->ed233_deslocamentocursor);
-      $this->ed233_formalancamentoparecer = ($this->ed233_formalancamentoparecer == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_formalancamentoparecer"]:$this->ed233_formalancamentoparecer);
+      $this->ed233_i_idadevotacao = ($this->ed233_i_idadevotacao === 0 || $this->ed233_i_idadevotacao === 0.0 || $this->ed233_i_idadevotacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_idadevotacao"]:$this->ed233_i_idadevotacao);
+      $this->ed233_i_habilitaordemalfabeticaturma = ($this->ed233_i_habilitaordemalfabeticaturma === 0 || $this->ed233_i_habilitaordemalfabeticaturma === 0.0 || $this->ed233_i_habilitaordemalfabeticaturma == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_habilitaordemalfabeticaturma"]:$this->ed233_i_habilitaordemalfabeticaturma);
+      $this->ed233_deslocamentocursor = ($this->ed233_deslocamentocursor === 0 || $this->ed233_deslocamentocursor === 0.0 || $this->ed233_deslocamentocursor == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_deslocamentocursor"]:$this->ed233_deslocamentocursor);
+      $this->ed233_formalancamentoparecer = ($this->ed233_formalancamentoparecer === 0 || $this->ed233_formalancamentoparecer === 0.0 || $this->ed233_formalancamentoparecer == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_formalancamentoparecer"]:$this->ed233_formalancamentoparecer);
       $this->ed233_bloqueioalteracaoavaliacao = ($this->ed233_bloqueioalteracaoavaliacao == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed233_bloqueioalteracaoavaliacao"]:$this->ed233_bloqueioalteracaoavaliacao);
       $this->ed233_reclassificaetapaanterior = ($this->ed233_reclassificaetapaanterior == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed233_reclassificaetapaanterior"]:$this->ed233_reclassificaetapaanterior);
       $this->ed233_apresentarnotaproporcional = ($this->ed233_apresentarnotaproporcional == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed233_apresentarnotaproporcional"]:$this->ed233_apresentarnotaproporcional);
@@ -124,7 +124,7 @@ class cl_edu_parametros {
       $this->ed233_alterarprocedimentonotaparcial = ($this->ed233_alterarprocedimentonotaparcial == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed233_alterarprocedimentonotaparcial"]:$this->ed233_alterarprocedimentonotaparcial);
       $this->ed233_habilitarrecuperacaonotaparcial = ($this->ed233_habilitarrecuperacaonotaparcial == "t"?@$GLOBALS["HTTP_POST_VARS"]["ed233_habilitarrecuperacaonotaparcial"]:$this->ed233_habilitarrecuperacaonotaparcial);
     } else {
-      $this->ed233_i_codigo = ($this->ed233_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_codigo"]:$this->ed233_i_codigo);
+      $this->ed233_i_codigo = ($this->ed233_i_codigo === 0 || $this->ed233_i_codigo === 0.0 || $this->ed233_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed233_i_codigo"]:$this->ed233_i_codigo);
     }
   }
 
@@ -293,7 +293,7 @@ class cl_edu_parametros {
         $this->ed233_i_codigo = $ed233_i_codigo;
       }
     }
-    if(($this->ed233_i_codigo == null) || ($this->ed233_i_codigo == "") ){
+    if(($this->ed233_i_codigo == null) || ($this->ed233_i_codigo === 0 || $this->ed233_i_codigo === 0.0 || $this->ed233_i_codigo == "") ){
       $this->erro_sql = " Campo ed233_i_codigo não declarado.";
       $this->erro_banco = "Chave Primaria zerada.";
       $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

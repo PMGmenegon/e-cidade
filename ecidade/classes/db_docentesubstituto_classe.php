@@ -85,11 +85,11 @@ class cl_docentesubstituto {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed322_sequencial = ($this->ed322_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_sequencial"]:$this->ed322_sequencial);
-       $this->ed322_docenteausente = ($this->ed322_docenteausente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_docenteausente"]:$this->ed322_docenteausente);
-       $this->ed322_rechumano = ($this->ed322_rechumano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_rechumano"]:$this->ed322_rechumano);
-       $this->ed322_regencia = ($this->ed322_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_regencia"]:$this->ed322_regencia);
-       $this->ed322_tipovinculo = ($this->ed322_tipovinculo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_tipovinculo"]:$this->ed322_tipovinculo);
+       $this->ed322_sequencial = ($this->ed322_sequencial === 0 || $this->ed322_sequencial === 0.0 || $this->ed322_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_sequencial"]:$this->ed322_sequencial);
+       $this->ed322_docenteausente = ($this->ed322_docenteausente === 0 || $this->ed322_docenteausente === 0.0 || $this->ed322_docenteausente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_docenteausente"]:$this->ed322_docenteausente);
+       $this->ed322_rechumano = ($this->ed322_rechumano === 0 || $this->ed322_rechumano === 0.0 || $this->ed322_rechumano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_rechumano"]:$this->ed322_rechumano);
+       $this->ed322_regencia = ($this->ed322_regencia === 0 || $this->ed322_regencia === 0.0 || $this->ed322_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_regencia"]:$this->ed322_regencia);
+       $this->ed322_tipovinculo = ($this->ed322_tipovinculo === 0 || $this->ed322_tipovinculo === 0.0 || $this->ed322_tipovinculo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_tipovinculo"]:$this->ed322_tipovinculo);
        if($this->ed322_periodoinicial == ""){
          $this->ed322_periodoinicial_dia = ($this->ed322_periodoinicial_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_periodoinicial_dia"]:$this->ed322_periodoinicial_dia);
          $this->ed322_periodoinicial_mes = ($this->ed322_periodoinicial_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_periodoinicial_mes"]:$this->ed322_periodoinicial_mes);
@@ -106,9 +106,9 @@ class cl_docentesubstituto {
             $this->ed322_periodofinal = $this->ed322_periodofinal_ano."-".$this->ed322_periodofinal_mes."-".$this->ed322_periodofinal_dia;
          }
        }
-       $this->ed322_usuario = ($this->ed322_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_usuario"]:$this->ed322_usuario);
+       $this->ed322_usuario = ($this->ed322_usuario === 0 || $this->ed322_usuario === 0.0 || $this->ed322_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_usuario"]:$this->ed322_usuario);
      }else{
-       $this->ed322_sequencial = ($this->ed322_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_sequencial"]:$this->ed322_sequencial);
+       $this->ed322_sequencial = ($this->ed322_sequencial === 0 || $this->ed322_sequencial === 0.0 || $this->ed322_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed322_sequencial"]:$this->ed322_sequencial);
      }
    }
    // funcao para inclusao
@@ -195,7 +195,7 @@ class cl_docentesubstituto {
          $this->ed322_sequencial = $ed322_sequencial;
        }
      }
-     if(($this->ed322_sequencial == null) || ($this->ed322_sequencial == "") ){
+     if(($this->ed322_sequencial == null) || ($this->ed322_sequencial === 0 || $this->ed322_sequencial === 0.0 || $this->ed322_sequencial == "") ){
        $this->erro_sql = " Campo ed322_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

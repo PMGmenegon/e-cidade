@@ -51,14 +51,14 @@ class cl_servidoroperadorasaudedependente
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->rh223_sequencial = ($this->rh223_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_sequencial"]:$this->rh223_sequencial);
+       $this->rh223_sequencial = ($this->rh223_sequencial === 0 || $this->rh223_sequencial === 0.0 || $this->rh223_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_sequencial"]:$this->rh223_sequencial);
        $this->rh223_tipo = ($this->rh223_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_tipo"]:$this->rh223_tipo);
-       $this->rh223_valor = ($this->rh223_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_valor"]:$this->rh223_valor);
-       $this->rh223_dependente = ($this->rh223_dependente == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_dependente"]:$this->rh223_dependente);
-       $this->rh223_servidoroperadorasaude = ($this->rh223_servidoroperadorasaude == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_servidoroperadorasaude"]:$this->rh223_servidoroperadorasaude);
+       $this->rh223_valor = ($this->rh223_valor === 0 || $this->rh223_valor === 0.0 || $this->rh223_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_valor"]:$this->rh223_valor);
+       $this->rh223_dependente = ($this->rh223_dependente === 0 || $this->rh223_dependente === 0.0 || $this->rh223_dependente == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_dependente"]:$this->rh223_dependente);
+       $this->rh223_servidoroperadorasaude = ($this->rh223_servidoroperadorasaude === 0 || $this->rh223_servidoroperadorasaude === 0.0 || $this->rh223_servidoroperadorasaude == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_servidoroperadorasaude"]:$this->rh223_servidoroperadorasaude);
        $this->rh223_rubrica = ($this->rh223_rubrica == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_rubrica"]:$this->rh223_rubrica);
      }else{
-       $this->rh223_sequencial = ($this->rh223_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_sequencial"]:$this->rh223_sequencial);
+       $this->rh223_sequencial = ($this->rh223_sequencial === 0 || $this->rh223_sequencial === 0.0 || $this->rh223_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh223_sequencial"]:$this->rh223_sequencial);
      }
    }
 
@@ -139,7 +139,7 @@ class cl_servidoroperadorasaudedependente
                 $this->rh223_sequencial = $rh223_sequencial;
             }
         }
-     if(($this->rh223_sequencial == null) || ($this->rh223_sequencial == "") ){
+     if(($this->rh223_sequencial == null) || ($this->rh223_sequencial === 0 || $this->rh223_sequencial === 0.0 || $this->rh223_sequencial == "") ){
        $this->erro_sql = " Campo rh223_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

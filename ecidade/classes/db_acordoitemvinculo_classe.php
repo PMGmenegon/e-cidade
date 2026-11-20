@@ -77,15 +77,15 @@ class cl_acordoitemvinculo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac33_sequencial = ($this->ac33_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_sequencial"]:$this->ac33_sequencial);
-       $this->ac33_acordoitempai = ($this->ac33_acordoitempai == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_acordoitempai"]:$this->ac33_acordoitempai);
-       $this->ac33_acordoitemfilho = ($this->ac33_acordoitemfilho == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_acordoitemfilho"]:$this->ac33_acordoitemfilho);
-       $this->ac33_tipo = ($this->ac33_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_tipo"]:$this->ac33_tipo);
+       $this->ac33_sequencial = ($this->ac33_sequencial === 0 || $this->ac33_sequencial === 0.0 || $this->ac33_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_sequencial"]:$this->ac33_sequencial);
+       $this->ac33_acordoitempai = ($this->ac33_acordoitempai === 0 || $this->ac33_acordoitempai === 0.0 || $this->ac33_acordoitempai == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_acordoitempai"]:$this->ac33_acordoitempai);
+       $this->ac33_acordoitemfilho = ($this->ac33_acordoitemfilho === 0 || $this->ac33_acordoitemfilho === 0.0 || $this->ac33_acordoitemfilho == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_acordoitemfilho"]:$this->ac33_acordoitemfilho);
+       $this->ac33_tipo = ($this->ac33_tipo === 0 || $this->ac33_tipo === 0.0 || $this->ac33_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_tipo"]:$this->ac33_tipo);
        $this->ac33_quantidade = ($this->ac33_quantidade === ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_quantidade"]:$this->ac33_quantidade);
        $this->ac33_valorunitario = ($this->ac33_valorunitario === ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_valorunitario"]:$this->ac33_valorunitario);
        $this->ac33_valortotal = ($this->ac33_valortotal === ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_valortotal"]:$this->ac33_valortotal);
      }else{
-       $this->ac33_sequencial = ($this->ac33_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_sequencial"]:$this->ac33_sequencial);
+       $this->ac33_sequencial = ($this->ac33_sequencial === 0 || $this->ac33_sequencial === 0.0 || $this->ac33_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac33_sequencial"]:$this->ac33_sequencial);
      }
    }
    // funcao para inclusao
@@ -169,7 +169,7 @@ class cl_acordoitemvinculo {
          $this->ac33_sequencial = $ac33_sequencial;
        }
      }
-     if(($this->ac33_sequencial == null) || ($this->ac33_sequencial == "") ){
+     if(($this->ac33_sequencial == null) || ($this->ac33_sequencial === 0 || $this->ac33_sequencial === 0.0 || $this->ac33_sequencial == "") ){
        $this->erro_sql = " Campo ac33_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -65,9 +65,9 @@ class cl_db_cadattdinamicovalorgrupo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db120_sequencial = ($this->db120_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db120_sequencial"]:$this->db120_sequencial);
+       $this->db120_sequencial = ($this->db120_sequencial === 0 || $this->db120_sequencial === 0.0 || $this->db120_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db120_sequencial"]:$this->db120_sequencial);
      }else{
-       $this->db120_sequencial = ($this->db120_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db120_sequencial"]:$this->db120_sequencial);
+       $this->db120_sequencial = ($this->db120_sequencial === 0 || $this->db120_sequencial === 0.0 || $this->db120_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db120_sequencial"]:$this->db120_sequencial);
      }
    }
    // funcao para inclusao
@@ -97,7 +97,7 @@ class cl_db_cadattdinamicovalorgrupo {
          $this->db120_sequencial = $db120_sequencial;
        }
      }
-     if(($this->db120_sequencial == null) || ($this->db120_sequencial == "") ){
+     if(($this->db120_sequencial == null) || ($this->db120_sequencial === 0 || $this->db120_sequencial === 0.0 || $this->db120_sequencial == "") ){
        $this->erro_sql = " Campo db120_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

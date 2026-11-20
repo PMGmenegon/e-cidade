@@ -89,21 +89,21 @@ class cl_procresultado {
   // funcao para atualizar campos
   public function atualizacampos($exclusao=false) {
    if($exclusao==false){
-     $this->ed43_i_codigo = ($this->ed43_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_codigo"]:$this->ed43_i_codigo);
-     $this->ed43_i_procedimento = ($this->ed43_i_procedimento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_procedimento"]:$this->ed43_i_procedimento);
-     $this->ed43_i_resultado = ($this->ed43_i_resultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_resultado"]:$this->ed43_i_resultado);
-     $this->ed43_i_formaavaliacao = ($this->ed43_i_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_formaavaliacao"]:$this->ed43_i_formaavaliacao);
+     $this->ed43_i_codigo = ($this->ed43_i_codigo === 0 || $this->ed43_i_codigo === 0.0 || $this->ed43_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_codigo"]:$this->ed43_i_codigo);
+     $this->ed43_i_procedimento = ($this->ed43_i_procedimento === 0 || $this->ed43_i_procedimento === 0.0 || $this->ed43_i_procedimento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_procedimento"]:$this->ed43_i_procedimento);
+     $this->ed43_i_resultado = ($this->ed43_i_resultado === 0 || $this->ed43_i_resultado === 0.0 || $this->ed43_i_resultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_resultado"]:$this->ed43_i_resultado);
+     $this->ed43_i_formaavaliacao = ($this->ed43_i_formaavaliacao === 0 || $this->ed43_i_formaavaliacao === 0.0 || $this->ed43_i_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_formaavaliacao"]:$this->ed43_i_formaavaliacao);
      $this->ed43_c_minimoaprov = ($this->ed43_c_minimoaprov == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_minimoaprov"]:$this->ed43_c_minimoaprov);
      $this->ed43_c_obtencao = ($this->ed43_c_obtencao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_obtencao"]:$this->ed43_c_obtencao);
      $this->ed43_c_geraresultado = ($this->ed43_c_geraresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_geraresultado"]:$this->ed43_c_geraresultado);
      $this->ed43_c_boletim = ($this->ed43_c_boletim == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_boletim"]:$this->ed43_c_boletim);
      $this->ed43_c_reprovafreq = ($this->ed43_c_reprovafreq == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_reprovafreq"]:$this->ed43_c_reprovafreq);
      $this->ed43_c_arredmedia = ($this->ed43_c_arredmedia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_arredmedia"]:$this->ed43_c_arredmedia);
-     $this->ed43_i_sequencia = ($this->ed43_i_sequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_sequencia"]:$this->ed43_i_sequencia);
+     $this->ed43_i_sequencia = ($this->ed43_i_sequencia === 0 || $this->ed43_i_sequencia === 0.0 || $this->ed43_i_sequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_sequencia"]:$this->ed43_i_sequencia);
      $this->ed43_c_tipoarred = ($this->ed43_c_tipoarred == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_c_tipoarred"]:$this->ed43_c_tipoarred);
      $this->ed43_proporcionalidade = ($this->ed43_proporcionalidade == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed43_proporcionalidade"]:$this->ed43_proporcionalidade);
    }else{
-     $this->ed43_i_codigo = ($this->ed43_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_codigo"]:$this->ed43_i_codigo);
+     $this->ed43_i_codigo = ($this->ed43_i_codigo === 0 || $this->ed43_i_codigo === 0.0 || $this->ed43_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed43_i_codigo"]:$this->ed43_i_codigo);
    }
   }
   // funcao para inclusao
@@ -241,7 +241,7 @@ class cl_procresultado {
        $this->ed43_i_codigo = $ed43_i_codigo;
      }
    }
-   if(($this->ed43_i_codigo == null) || ($this->ed43_i_codigo == "") ){
+   if(($this->ed43_i_codigo == null) || ($this->ed43_i_codigo === 0 || $this->ed43_i_codigo === 0.0 || $this->ed43_i_codigo == "") ){
      $this->erro_sql = " Campo ed43_i_codigo nao declarado.";
      $this->erro_banco = "Chave Primaria zerada.";
      $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -71,13 +71,13 @@ class cl_andpadrao {
    // funcao para atualizar campos
    function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->p53_codigo = ($this->p53_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_codigo"]:$this->p53_codigo);
-       $this->p53_coddepto = ($this->p53_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_coddepto"]:$this->p53_coddepto);
-       $this->p53_dias = ($this->p53_dias == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_dias"]:$this->p53_dias);
-       $this->p53_ordem = ($this->p53_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_ordem"]:$this->p53_ordem);
+       $this->p53_codigo = ($this->p53_codigo === 0 || $this->p53_codigo === 0.0 || $this->p53_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_codigo"]:$this->p53_codigo);
+       $this->p53_coddepto = ($this->p53_coddepto === 0 || $this->p53_coddepto === 0.0 || $this->p53_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_coddepto"]:$this->p53_coddepto);
+       $this->p53_dias = ($this->p53_dias === 0 || $this->p53_dias === 0.0 || $this->p53_dias == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_dias"]:$this->p53_dias);
+       $this->p53_ordem = ($this->p53_ordem === 0 || $this->p53_ordem === 0.0 || $this->p53_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_ordem"]:$this->p53_ordem);
      }else{
-       $this->p53_codigo = ($this->p53_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_codigo"]:$this->p53_codigo);
-       $this->p53_ordem = ($this->p53_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_ordem"]:$this->p53_ordem);
+       $this->p53_codigo = ($this->p53_codigo === 0 || $this->p53_codigo === 0.0 || $this->p53_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_codigo"]:$this->p53_codigo);
+       $this->p53_ordem = ($this->p53_ordem === 0 || $this->p53_ordem === 0.0 || $this->p53_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["p53_ordem"]:$this->p53_ordem);
      }
    }
    // funcao para inclusao
@@ -103,7 +103,7 @@ class cl_andpadrao {
      }
        $this->p53_codigo = $p53_codigo;
        $this->p53_ordem = $p53_ordem;
-     if(($this->p53_codigo == null) || ($this->p53_codigo == "") ){
+     if(($this->p53_codigo == null) || ($this->p53_codigo === 0 || $this->p53_codigo === 0.0 || $this->p53_codigo == "") ){
        $this->erro_sql = " Campo p53_codigo não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -111,7 +111,7 @@ class cl_andpadrao {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->p53_ordem == null) || ($this->p53_ordem == "") ){
+     if(($this->p53_ordem == null) || ($this->p53_ordem === 0 || $this->p53_ordem === 0.0 || $this->p53_ordem == "") ){
        $this->erro_sql = " Campo p53_ordem não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -81,15 +81,15 @@ class cl_avaliacaoestruturafrequencia
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->ed328_sequencial = ($this->ed328_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_sequencial"] : $this->ed328_sequencial);
-            $this->ed328_escola = ($this->ed328_escola == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_escola"] : $this->ed328_escola);
-            $this->ed328_db_estrutura = ($this->ed328_db_estrutura == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_db_estrutura"] : $this->ed328_db_estrutura);
+            $this->ed328_sequencial = ($this->ed328_sequencial === 0 || $this->ed328_sequencial === 0.0 || $this->ed328_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_sequencial"] : $this->ed328_sequencial);
+            $this->ed328_escola = ($this->ed328_escola === 0 || $this->ed328_escola === 0.0 || $this->ed328_escola == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_escola"] : $this->ed328_escola);
+            $this->ed328_db_estrutura = ($this->ed328_db_estrutura === 0 || $this->ed328_db_estrutura === 0.0 || $this->ed328_db_estrutura == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_db_estrutura"] : $this->ed328_db_estrutura);
             $this->ed328_ativo = ($this->ed328_ativo == "f" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_ativo"] : $this->ed328_ativo);
             $this->ed328_arredondafrequencia = ($this->ed328_arredondafrequencia == "f" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_arredondafrequencia"] : $this->ed328_arredondafrequencia);
             $this->ed328_observacao = ($this->ed328_observacao == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_observacao"] : $this->ed328_observacao);
-            $this->ed328_ano = ($this->ed328_ano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_ano"] : $this->ed328_ano);
+            $this->ed328_ano = ($this->ed328_ano === 0 || $this->ed328_ano === 0.0 || $this->ed328_ano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_ano"] : $this->ed328_ano);
         } else {
-            $this->ed328_sequencial = ($this->ed328_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_sequencial"] : $this->ed328_sequencial);
+            $this->ed328_sequencial = ($this->ed328_sequencial === 0 || $this->ed328_sequencial === 0.0 || $this->ed328_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed328_sequencial"] : $this->ed328_sequencial);
         }
     }
     // funcao para inclusao
@@ -159,7 +159,7 @@ class cl_avaliacaoestruturafrequencia
                 $this->ed328_sequencial = $ed328_sequencial;
             }
         }
-        if (($this->ed328_sequencial == null) || ($this->ed328_sequencial == "")) {
+        if (($this->ed328_sequencial == null) || ($this->ed328_sequencial === 0 || $this->ed328_sequencial === 0.0 || $this->ed328_sequencial == "")) {
             $this->erro_sql = " Campo ed328_sequencial nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg   = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

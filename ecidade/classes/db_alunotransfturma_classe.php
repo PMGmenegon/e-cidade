@@ -76,10 +76,10 @@ class cl_alunotransfturma {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed69_i_codigo = ($this->ed69_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_codigo"]:$this->ed69_i_codigo);
-       $this->ed69_i_matricula = ($this->ed69_i_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_matricula"]:$this->ed69_i_matricula);
-       $this->ed69_i_turmaorigem = ($this->ed69_i_turmaorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_turmaorigem"]:$this->ed69_i_turmaorigem);
-       $this->ed69_i_turmadestino = ($this->ed69_i_turmadestino == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_turmadestino"]:$this->ed69_i_turmadestino);
+       $this->ed69_i_codigo = ($this->ed69_i_codigo === 0 || $this->ed69_i_codigo === 0.0 || $this->ed69_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_codigo"]:$this->ed69_i_codigo);
+       $this->ed69_i_matricula = ($this->ed69_i_matricula === 0 || $this->ed69_i_matricula === 0.0 || $this->ed69_i_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_matricula"]:$this->ed69_i_matricula);
+       $this->ed69_i_turmaorigem = ($this->ed69_i_turmaorigem === 0 || $this->ed69_i_turmaorigem === 0.0 || $this->ed69_i_turmaorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_turmaorigem"]:$this->ed69_i_turmaorigem);
+       $this->ed69_i_turmadestino = ($this->ed69_i_turmadestino === 0 || $this->ed69_i_turmadestino === 0.0 || $this->ed69_i_turmadestino == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_turmadestino"]:$this->ed69_i_turmadestino);
        if($this->ed69_d_datatransf == ""){
          $this->ed69_d_datatransf_dia = ($this->ed69_d_datatransf_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_d_datatransf_dia"]:$this->ed69_d_datatransf_dia);
          $this->ed69_d_datatransf_mes = ($this->ed69_d_datatransf_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_d_datatransf_mes"]:$this->ed69_d_datatransf_mes);
@@ -89,7 +89,7 @@ class cl_alunotransfturma {
          }
        }
      }else{
-       $this->ed69_i_codigo = ($this->ed69_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_codigo"]:$this->ed69_i_codigo);
+       $this->ed69_i_codigo = ($this->ed69_i_codigo === 0 || $this->ed69_i_codigo === 0.0 || $this->ed69_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed69_i_codigo"]:$this->ed69_i_codigo);
      }
    }
    // funcao para inclusao
@@ -155,7 +155,7 @@ class cl_alunotransfturma {
          $this->ed69_i_codigo = $ed69_i_codigo;
        }
      }
-     if(($this->ed69_i_codigo == null) || ($this->ed69_i_codigo == "") ){
+     if(($this->ed69_i_codigo == null) || ($this->ed69_i_codigo === 0 || $this->ed69_i_codigo === 0.0 || $this->ed69_i_codigo == "") ){
        $this->erro_sql = " Campo ed69_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -92,7 +92,7 @@ class cl_inventario {
   // funcao para atualizar campos
   public function atualizacampos($exclusao=false) {
     if($exclusao==false){
-      $this->t75_sequencial = ($this->t75_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_sequencial"]:$this->t75_sequencial);
+      $this->t75_sequencial = ($this->t75_sequencial === 0 || $this->t75_sequencial === 0.0 || $this->t75_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_sequencial"]:$this->t75_sequencial);
       if($this->t75_dataabertura == ""){
         $this->t75_dataabertura_dia = ($this->t75_dataabertura_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_dataabertura_dia"]:$this->t75_dataabertura_dia);
         $this->t75_dataabertura_mes = ($this->t75_dataabertura_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_dataabertura_mes"]:$this->t75_dataabertura_mes);
@@ -117,14 +117,14 @@ class cl_inventario {
           $this->t75_periodofinal = $this->t75_periodofinal_ano."-".$this->t75_periodofinal_mes."-".$this->t75_periodofinal_dia;
         }
       }
-      $this->t75_exercicio = ($this->t75_exercicio == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_exercicio"]:$this->t75_exercicio);
-      $this->t75_processo = ($this->t75_processo == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_processo"]:$this->t75_processo);
-      $this->t75_acordocomissao = ($this->t75_acordocomissao == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_acordocomissao"]:$this->t75_acordocomissao);
+      $this->t75_exercicio = ($this->t75_exercicio === 0 || $this->t75_exercicio === 0.0 || $this->t75_exercicio == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_exercicio"]:$this->t75_exercicio);
+      $this->t75_processo = ($this->t75_processo === 0 || $this->t75_processo === 0.0 || $this->t75_processo == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_processo"]:$this->t75_processo);
+      $this->t75_acordocomissao = ($this->t75_acordocomissao === 0 || $this->t75_acordocomissao === 0.0 || $this->t75_acordocomissao == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_acordocomissao"]:$this->t75_acordocomissao);
       $this->t75_observacao = ($this->t75_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_observacao"]:$this->t75_observacao);
-      $this->t75_situacao = ($this->t75_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_situacao"]:$this->t75_situacao);
-      $this->t75_db_depart = ($this->t75_db_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_db_depart"]:$this->t75_db_depart);
+      $this->t75_situacao = ($this->t75_situacao === 0 || $this->t75_situacao === 0.0 || $this->t75_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_situacao"]:$this->t75_situacao);
+      $this->t75_db_depart = ($this->t75_db_depart === 0 || $this->t75_db_depart === 0.0 || $this->t75_db_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_db_depart"]:$this->t75_db_depart);
     }else{
-      $this->t75_sequencial = ($this->t75_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_sequencial"]:$this->t75_sequencial);
+      $this->t75_sequencial = ($this->t75_sequencial === 0 || $this->t75_sequencial === 0.0 || $this->t75_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t75_sequencial"]:$this->t75_sequencial);
     }
   }
   // funcao para inclusao
@@ -214,7 +214,7 @@ class cl_inventario {
         $this->t75_sequencial = $t75_sequencial;
       }
     }
-    if(($this->t75_sequencial == null) || ($this->t75_sequencial == "") ){
+    if(($this->t75_sequencial == null) || ($this->t75_sequencial === 0 || $this->t75_sequencial === 0.0 || $this->t75_sequencial == "") ){
       $this->erro_sql = " Campo t75_sequencial nao declarado.";
       $this->erro_banco = "Chave Primaria zerada.";
       $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

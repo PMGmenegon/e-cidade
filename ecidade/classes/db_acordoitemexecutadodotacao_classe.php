@@ -71,12 +71,12 @@ class cl_acordoitemexecutadodotacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac32_sequencial = ($this->ac32_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_sequencial"]:$this->ac32_sequencial);
-       $this->ac32_acordoitem = ($this->ac32_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_acordoitem"]:$this->ac32_acordoitem);
-       $this->ac32_coddot = ($this->ac32_coddot == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_coddot"]:$this->ac32_coddot);
-       $this->ac32_valor = ($this->ac32_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_valor"]:$this->ac32_valor);
+       $this->ac32_sequencial = ($this->ac32_sequencial === 0 || $this->ac32_sequencial === 0.0 || $this->ac32_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_sequencial"]:$this->ac32_sequencial);
+       $this->ac32_acordoitem = ($this->ac32_acordoitem === 0 || $this->ac32_acordoitem === 0.0 || $this->ac32_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_acordoitem"]:$this->ac32_acordoitem);
+       $this->ac32_coddot = ($this->ac32_coddot === 0 || $this->ac32_coddot === 0.0 || $this->ac32_coddot == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_coddot"]:$this->ac32_coddot);
+       $this->ac32_valor = ($this->ac32_valor === 0 || $this->ac32_valor === 0.0 || $this->ac32_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_valor"]:$this->ac32_valor);
      }else{
-       $this->ac32_sequencial = ($this->ac32_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_sequencial"]:$this->ac32_sequencial);
+       $this->ac32_sequencial = ($this->ac32_sequencial === 0 || $this->ac32_sequencial === 0.0 || $this->ac32_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac32_sequencial"]:$this->ac32_sequencial);
      }
    }
    // funcao para inclusao
@@ -127,7 +127,7 @@ class cl_acordoitemexecutadodotacao {
          $this->ac32_sequencial = $ac32_sequencial;
        }
      }
-     if(($this->ac32_sequencial == null) || ($this->ac32_sequencial == "") ){
+     if(($this->ac32_sequencial == null) || ($this->ac32_sequencial === 0 || $this->ac32_sequencial === 0.0 || $this->ac32_sequencial == "") ){
        $this->erro_sql = " Campo ac32_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

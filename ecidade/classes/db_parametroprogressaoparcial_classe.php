@@ -79,16 +79,16 @@ class cl_parametroprogressaoparcial {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed112_sequencial = ($this->ed112_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_sequencial"]:$this->ed112_sequencial);
-       $this->ed112_formacontrole = ($this->ed112_formacontrole == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_formacontrole"]:$this->ed112_formacontrole);
-       $this->ed112_quantidadedisciplinas = ($this->ed112_quantidadedisciplinas == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_quantidadedisciplinas"]:$this->ed112_quantidadedisciplinas);
+       $this->ed112_sequencial = ($this->ed112_sequencial === 0 || $this->ed112_sequencial === 0.0 || $this->ed112_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_sequencial"]:$this->ed112_sequencial);
+       $this->ed112_formacontrole = ($this->ed112_formacontrole === 0 || $this->ed112_formacontrole === 0.0 || $this->ed112_formacontrole == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_formacontrole"]:$this->ed112_formacontrole);
+       $this->ed112_quantidadedisciplinas = ($this->ed112_quantidadedisciplinas === 0 || $this->ed112_quantidadedisciplinas === 0.0 || $this->ed112_quantidadedisciplinas == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_quantidadedisciplinas"]:$this->ed112_quantidadedisciplinas);
        $this->ed112_habilitado = ($this->ed112_habilitado == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed112_habilitado"]:$this->ed112_habilitado);
-       $this->ed112_escola = ($this->ed112_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_escola"]:$this->ed112_escola);
+       $this->ed112_escola = ($this->ed112_escola === 0 || $this->ed112_escola === 0.0 || $this->ed112_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_escola"]:$this->ed112_escola);
        $this->ed112_controlefrequencia = ($this->ed112_controlefrequencia == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed112_controlefrequencia"]:$this->ed112_controlefrequencia);
        $this->ed112_disciplinaeliminadependencia = ($this->ed112_disciplinaeliminadependencia == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed112_disciplinaeliminadependencia"]:$this->ed112_disciplinaeliminadependencia);
        $this->ed112_justificativa = ($this->ed112_justificativa == "" ? "" : $this->ed112_justificativa);
      }else{
-       $this->ed112_sequencial = ($this->ed112_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_sequencial"]:$this->ed112_sequencial);
+       $this->ed112_sequencial = ($this->ed112_sequencial === 0 || $this->ed112_sequencial === 0.0 || $this->ed112_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed112_sequencial"]:$this->ed112_sequencial);
      }
    }
    // funcao para inclusao
@@ -172,7 +172,7 @@ class cl_parametroprogressaoparcial {
          $this->ed112_sequencial = $ed112_sequencial;
        }
      }
-     if(($this->ed112_sequencial == null) || ($this->ed112_sequencial == "") ){
+     if(($this->ed112_sequencial == null) || ($this->ed112_sequencial === 0 || $this->ed112_sequencial === 0.0 || $this->ed112_sequencial == "") ){
        $this->erro_sql = " Campo ed112_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

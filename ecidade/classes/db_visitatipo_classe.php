@@ -69,11 +69,11 @@ class cl_visitatipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as13_sequencial = ($this->as13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as13_sequencial"]:$this->as13_sequencial);
+       $this->as13_sequencial = ($this->as13_sequencial === 0 || $this->as13_sequencial === 0.0 || $this->as13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as13_sequencial"]:$this->as13_sequencial);
        $this->as13_descricao = ($this->as13_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["as13_descricao"]:$this->as13_descricao);
        $this->as13_exigeencaminhamento = ($this->as13_exigeencaminhamento == "f"?@$GLOBALS["HTTP_POST_VARS"]["as13_exigeencaminhamento"]:$this->as13_exigeencaminhamento);
      }else{
-       $this->as13_sequencial = ($this->as13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as13_sequencial"]:$this->as13_sequencial);
+       $this->as13_sequencial = ($this->as13_sequencial === 0 || $this->as13_sequencial === 0.0 || $this->as13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as13_sequencial"]:$this->as13_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_visitatipo {
          $this->as13_sequencial = $as13_sequencial;
        }
      }
-     if(($this->as13_sequencial == null) || ($this->as13_sequencial == "") ){
+     if(($this->as13_sequencial == null) || ($this->as13_sequencial === 0 || $this->as13_sequencial === 0.0 || $this->as13_sequencial == "") ){
        $this->erro_sql = " Campo as13_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -67,8 +67,8 @@ class cl_transmater {
     // funcao para atualizar campos
     public function atualizacampos($exclusao=false) {
         if($exclusao==false){
-            $this->m63_codmatmater = ($this->m63_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m63_codmatmater"]:$this->m63_codmatmater);
-            $this->m63_codpcmater = ($this->m63_codpcmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m63_codpcmater"]:$this->m63_codpcmater);
+            $this->m63_codmatmater = ($this->m63_codmatmater === 0 || $this->m63_codmatmater === 0.0 || $this->m63_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m63_codmatmater"]:$this->m63_codmatmater);
+            $this->m63_codpcmater = ($this->m63_codpcmater === 0 || $this->m63_codpcmater === 0.0 || $this->m63_codpcmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m63_codpcmater"]:$this->m63_codpcmater);
         }else{
         }
     }

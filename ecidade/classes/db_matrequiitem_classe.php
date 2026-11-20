@@ -75,14 +75,14 @@ class cl_matrequiitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m41_codigo = ($this->m41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codigo"]:$this->m41_codigo);
-       $this->m41_codmatrequi = ($this->m41_codmatrequi == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codmatrequi"]:$this->m41_codmatrequi);
-       $this->m41_codmatmater = ($this->m41_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codmatmater"]:$this->m41_codmatmater);
-       $this->m41_codunid = ($this->m41_codunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codunid"]:$this->m41_codunid);
-       $this->m41_quant = ($this->m41_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_quant"]:$this->m41_quant);
+       $this->m41_codigo = ($this->m41_codigo === 0 || $this->m41_codigo === 0.0 || $this->m41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codigo"]:$this->m41_codigo);
+       $this->m41_codmatrequi = ($this->m41_codmatrequi === 0 || $this->m41_codmatrequi === 0.0 || $this->m41_codmatrequi == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codmatrequi"]:$this->m41_codmatrequi);
+       $this->m41_codmatmater = ($this->m41_codmatmater === 0 || $this->m41_codmatmater === 0.0 || $this->m41_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codmatmater"]:$this->m41_codmatmater);
+       $this->m41_codunid = ($this->m41_codunid === 0 || $this->m41_codunid === 0.0 || $this->m41_codunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codunid"]:$this->m41_codunid);
+       $this->m41_quant = ($this->m41_quant === 0 || $this->m41_quant === 0.0 || $this->m41_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_quant"]:$this->m41_quant);
        $this->m41_obs = ($this->m41_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_obs"]:$this->m41_obs);
      }else{
-       $this->m41_codigo = ($this->m41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codigo"]:$this->m41_codigo);
+       $this->m41_codigo = ($this->m41_codigo === 0 || $this->m41_codigo === 0.0 || $this->m41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m41_codigo"]:$this->m41_codigo);
      }
    }
    // funcao para inclusao
@@ -148,7 +148,7 @@ class cl_matrequiitem {
          $this->m41_codigo = $m41_codigo;
        }
      }
-     if(($this->m41_codigo == null) || ($this->m41_codigo == "") ){
+     if(($this->m41_codigo == null) || ($this->m41_codigo === 0 || $this->m41_codigo === 0.0 || $this->m41_codigo == "") ){
        $this->erro_sql = " Campo m41_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

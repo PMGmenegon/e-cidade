@@ -69,11 +69,11 @@ class cl_cursosocialcidadaoausencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as18_sequencial = ($this->as18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_sequencial"]:$this->as18_sequencial);
-       $this->as18_cursosocialaula = ($this->as18_cursosocialaula == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_cursosocialaula"]:$this->as18_cursosocialaula);
-       $this->as18_cursocialcidadao = ($this->as18_cursocialcidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_cursocialcidadao"]:$this->as18_cursocialcidadao);
+       $this->as18_sequencial = ($this->as18_sequencial === 0 || $this->as18_sequencial === 0.0 || $this->as18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_sequencial"]:$this->as18_sequencial);
+       $this->as18_cursosocialaula = ($this->as18_cursosocialaula === 0 || $this->as18_cursosocialaula === 0.0 || $this->as18_cursosocialaula == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_cursosocialaula"]:$this->as18_cursosocialaula);
+       $this->as18_cursocialcidadao = ($this->as18_cursocialcidadao === 0 || $this->as18_cursocialcidadao === 0.0 || $this->as18_cursocialcidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_cursocialcidadao"]:$this->as18_cursocialcidadao);
      }else{
-       $this->as18_sequencial = ($this->as18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_sequencial"]:$this->as18_sequencial);
+       $this->as18_sequencial = ($this->as18_sequencial === 0 || $this->as18_sequencial === 0.0 || $this->as18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as18_sequencial"]:$this->as18_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_cursosocialcidadaoausencia {
          $this->as18_sequencial = $as18_sequencial;
        }
      }
-     if(($this->as18_sequencial == null) || ($this->as18_sequencial == "") ){
+     if(($this->as18_sequencial == null) || ($this->as18_sequencial === 0 || $this->as18_sequencial === 0.0 || $this->as18_sequencial == "") ){
        $this->erro_sql = " Campo as18_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

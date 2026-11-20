@@ -69,11 +69,11 @@ class cl_progressaoparcialalunoencerradodiario {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed151_sequencial = ($this->ed151_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_sequencial"]:$this->ed151_sequencial);
-       $this->ed151_progressaoparcialaluno = ($this->ed151_progressaoparcialaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_progressaoparcialaluno"]:$this->ed151_progressaoparcialaluno);
-       $this->ed151_diariofinal = ($this->ed151_diariofinal == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_diariofinal"]:$this->ed151_diariofinal);
+       $this->ed151_sequencial = ($this->ed151_sequencial === 0 || $this->ed151_sequencial === 0.0 || $this->ed151_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_sequencial"]:$this->ed151_sequencial);
+       $this->ed151_progressaoparcialaluno = ($this->ed151_progressaoparcialaluno === 0 || $this->ed151_progressaoparcialaluno === 0.0 || $this->ed151_progressaoparcialaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_progressaoparcialaluno"]:$this->ed151_progressaoparcialaluno);
+       $this->ed151_diariofinal = ($this->ed151_diariofinal === 0 || $this->ed151_diariofinal === 0.0 || $this->ed151_diariofinal == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_diariofinal"]:$this->ed151_diariofinal);
      }else{
-       $this->ed151_sequencial = ($this->ed151_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_sequencial"]:$this->ed151_sequencial);
+       $this->ed151_sequencial = ($this->ed151_sequencial === 0 || $this->ed151_sequencial === 0.0 || $this->ed151_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed151_sequencial"]:$this->ed151_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_progressaoparcialalunoencerradodiario {
          $this->ed151_sequencial = $ed151_sequencial;
        }
      }
-     if(($this->ed151_sequencial == null) || ($this->ed151_sequencial == "") ){
+     if(($this->ed151_sequencial == null) || ($this->ed151_sequencial === 0 || $this->ed151_sequencial === 0.0 || $this->ed151_sequencial == "") ){
        $this->erro_sql = " Campo ed151_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

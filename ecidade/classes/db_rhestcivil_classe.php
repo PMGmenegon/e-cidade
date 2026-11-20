@@ -67,10 +67,10 @@ class cl_rhestcivil {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh08_estciv = ($this->rh08_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh08_estciv"]:$this->rh08_estciv);
+       $this->rh08_estciv = ($this->rh08_estciv === 0 || $this->rh08_estciv === 0.0 || $this->rh08_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh08_estciv"]:$this->rh08_estciv);
        $this->rh08_descr = ($this->rh08_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["rh08_descr"]:$this->rh08_descr);
      }else{
-       $this->rh08_estciv = ($this->rh08_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh08_estciv"]:$this->rh08_estciv);
+       $this->rh08_estciv = ($this->rh08_estciv === 0 || $this->rh08_estciv === 0.0 || $this->rh08_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh08_estciv"]:$this->rh08_estciv);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_rhestcivil {
        return false;
      }
        $this->rh08_estciv = $rh08_estciv;
-     if(($this->rh08_estciv == null) || ($this->rh08_estciv == "") ){
+     if(($this->rh08_estciv == null) || ($this->rh08_estciv === 0 || $this->rh08_estciv === 0.0 || $this->rh08_estciv == "") ){
        $this->erro_sql = " Campo rh08_estciv nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

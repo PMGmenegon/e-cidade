@@ -85,11 +85,11 @@ class cl_alunonecessidade
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->ed214_i_codigo = ($this->ed214_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_codigo"]:$this->ed214_i_codigo);
-       $this->ed214_i_aluno = ($this->ed214_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_aluno"]:$this->ed214_i_aluno);
-       $this->ed214_i_necessidade = ($this->ed214_i_necessidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_necessidade"]:$this->ed214_i_necessidade);
+       $this->ed214_i_codigo = ($this->ed214_i_codigo === 0 || $this->ed214_i_codigo === 0.0 || $this->ed214_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_codigo"]:$this->ed214_i_codigo);
+       $this->ed214_i_aluno = ($this->ed214_i_aluno === 0 || $this->ed214_i_aluno === 0.0 || $this->ed214_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_aluno"]:$this->ed214_i_aluno);
+       $this->ed214_i_necessidade = ($this->ed214_i_necessidade === 0 || $this->ed214_i_necessidade === 0.0 || $this->ed214_i_necessidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_necessidade"]:$this->ed214_i_necessidade);
        $this->ed214_c_principal = ($this->ed214_c_principal == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_c_principal"]:$this->ed214_c_principal);
-       $this->ed214_i_apoio = ($this->ed214_i_apoio == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_apoio"]:$this->ed214_i_apoio);
+       $this->ed214_i_apoio = ($this->ed214_i_apoio === 0 || $this->ed214_i_apoio === 0.0 || $this->ed214_i_apoio == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_apoio"]:$this->ed214_i_apoio);
        if($this->ed214_d_data == ""){
          $this->ed214_d_data_dia = ($this->ed214_d_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_d_data_dia"]:$this->ed214_d_data_dia);
          $this->ed214_d_data_mes = ($this->ed214_d_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_d_data_mes"]:$this->ed214_d_data_mes);
@@ -98,11 +98,11 @@ class cl_alunonecessidade
             $this->ed214_d_data = $this->ed214_d_data_ano."-".$this->ed214_d_data_mes."-".$this->ed214_d_data_dia;
          }
        }
-       $this->ed214_i_tipo = ($this->ed214_i_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_tipo"]:$this->ed214_i_tipo);
-       $this->ed214_i_escola = ($this->ed214_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_escola"]:$this->ed214_i_escola);
-       $this->ed214_i_anexo_estorage = ($this->ed214_i_anexo_estorage == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_anexo_estorage"]:$this->ed214_i_anexo_estorage);
+       $this->ed214_i_tipo = ($this->ed214_i_tipo === 0 || $this->ed214_i_tipo === 0.0 || $this->ed214_i_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_tipo"]:$this->ed214_i_tipo);
+       $this->ed214_i_escola = ($this->ed214_i_escola === 0 || $this->ed214_i_escola === 0.0 || $this->ed214_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_escola"]:$this->ed214_i_escola);
+       $this->ed214_i_anexo_estorage = ($this->ed214_i_anexo_estorage === 0 || $this->ed214_i_anexo_estorage === 0.0 || $this->ed214_i_anexo_estorage == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_anexo_estorage"]:$this->ed214_i_anexo_estorage);
      }else{
-       $this->ed214_i_codigo = ($this->ed214_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_codigo"]:$this->ed214_i_codigo);
+       $this->ed214_i_codigo = ($this->ed214_i_codigo === 0 || $this->ed214_i_codigo === 0.0 || $this->ed214_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed214_i_codigo"]:$this->ed214_i_codigo);
      }
    }
 
@@ -193,7 +193,7 @@ class cl_alunonecessidade
          $this->ed214_i_codigo = $ed214_i_codigo; 
        }
      }
-     if(($this->ed214_i_codigo == null) || ($this->ed214_i_codigo == "") ){ 
+     if(($this->ed214_i_codigo == null) || ($this->ed214_i_codigo === 0 || $this->ed214_i_codigo === 0.0 || $this->ed214_i_codigo == "") ){ 
        $this->erro_sql = " Campo ed214_i_codigo não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

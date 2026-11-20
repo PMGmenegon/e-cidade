@@ -67,10 +67,10 @@ class cl_matestoquetransf {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m83_matestoqueini = ($this->m83_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_matestoqueini"]:$this->m83_matestoqueini);
-       $this->m83_coddepto = ($this->m83_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_coddepto"]:$this->m83_coddepto);
+       $this->m83_matestoqueini = ($this->m83_matestoqueini === 0 || $this->m83_matestoqueini === 0.0 || $this->m83_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_matestoqueini"]:$this->m83_matestoqueini);
+       $this->m83_coddepto = ($this->m83_coddepto === 0 || $this->m83_coddepto === 0.0 || $this->m83_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_coddepto"]:$this->m83_coddepto);
      }else{
-       $this->m83_matestoqueini = ($this->m83_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_matestoqueini"]:$this->m83_matestoqueini);
+       $this->m83_matestoqueini = ($this->m83_matestoqueini === 0 || $this->m83_matestoqueini === 0.0 || $this->m83_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m83_matestoqueini"]:$this->m83_matestoqueini);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_matestoquetransf {
        return false;
      }
        $this->m83_matestoqueini = $m83_matestoqueini;
-     if(($this->m83_matestoqueini == null) || ($this->m83_matestoqueini == "") ){
+     if(($this->m83_matestoqueini == null) || ($this->m83_matestoqueini === 0 || $this->m83_matestoqueini === 0.0 || $this->m83_matestoqueini == "") ){
        $this->erro_sql = " Campo m83_matestoqueini nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -52,12 +52,12 @@ class cl_turmaoutrosprofissionais
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->ed347_sequencial = ($this->ed347_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_sequencial"] : $this->ed347_sequencial);
-            $this->ed347_turma = ($this->ed347_turma == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_turma"] : $this->ed347_turma);
-            $this->ed347_rechumano = ($this->ed347_rechumano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_rechumano"] : $this->ed347_rechumano);
-            $this->ed347_funcaoatividade = ($this->ed347_funcaoatividade == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_funcaoatividade"] : $this->ed347_funcaoatividade);
+            $this->ed347_sequencial = ($this->ed347_sequencial === 0 || $this->ed347_sequencial === 0.0 || $this->ed347_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_sequencial"] : $this->ed347_sequencial);
+            $this->ed347_turma = ($this->ed347_turma === 0 || $this->ed347_turma === 0.0 || $this->ed347_turma == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_turma"] : $this->ed347_turma);
+            $this->ed347_rechumano = ($this->ed347_rechumano === 0 || $this->ed347_rechumano === 0.0 || $this->ed347_rechumano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_rechumano"] : $this->ed347_rechumano);
+            $this->ed347_funcaoatividade = ($this->ed347_funcaoatividade === 0 || $this->ed347_funcaoatividade === 0.0 || $this->ed347_funcaoatividade == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_funcaoatividade"] : $this->ed347_funcaoatividade);
         } else {
-            $this->ed347_sequencial = ($this->ed347_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_sequencial"] : $this->ed347_sequencial);
+            $this->ed347_sequencial = ($this->ed347_sequencial === 0 || $this->ed347_sequencial === 0.0 || $this->ed347_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed347_sequencial"] : $this->ed347_sequencial);
         }
     }
 
@@ -116,7 +116,7 @@ class cl_turmaoutrosprofissionais
                 $this->ed347_sequencial = $ed347_sequencial;
             }
         }
-        if (($this->ed347_sequencial == null) || ($this->ed347_sequencial == "")) {
+        if (($this->ed347_sequencial == null) || ($this->ed347_sequencial === 0 || $this->ed347_sequencial === 0.0 || $this->ed347_sequencial == "")) {
             $this->erro_sql = " Campo ed347_sequencial nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

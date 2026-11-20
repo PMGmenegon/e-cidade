@@ -80,9 +80,9 @@ class cl_cidadaocadastrounico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as02_sequencial = ($this->as02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_sequencial"]:$this->as02_sequencial);
-       $this->as02_cidadao = ($this->as02_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_cidadao"]:$this->as02_cidadao);
-       $this->as02_cidadao_seq = ($this->as02_cidadao_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_cidadao_seq"]:$this->as02_cidadao_seq);
+       $this->as02_sequencial = ($this->as02_sequencial === 0 || $this->as02_sequencial === 0.0 || $this->as02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_sequencial"]:$this->as02_sequencial);
+       $this->as02_cidadao = ($this->as02_cidadao === 0 || $this->as02_cidadao === 0.0 || $this->as02_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_cidadao"]:$this->as02_cidadao);
+       $this->as02_cidadao_seq = ($this->as02_cidadao_seq === 0 || $this->as02_cidadao_seq === 0.0 || $this->as02_cidadao_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_cidadao_seq"]:$this->as02_cidadao_seq);
        $this->as02_nis = ($this->as02_nis == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_nis"]:$this->as02_nis);
        $this->as02_apelido = ($this->as02_apelido == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_apelido"]:$this->as02_apelido);
        if($this->as02_dataatualizacao == ""){
@@ -95,7 +95,7 @@ class cl_cidadaocadastrounico {
        }
        $this->as02_codigounicocidadao = ($this->as02_codigounicocidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_codigounicocidadao"]:$this->as02_codigounicocidadao);
      }else{
-       $this->as02_sequencial = ($this->as02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_sequencial"]:$this->as02_sequencial);
+       $this->as02_sequencial = ($this->as02_sequencial === 0 || $this->as02_sequencial === 0.0 || $this->as02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as02_sequencial"]:$this->as02_sequencial);
      }
    }
    // funcao para inclusao
@@ -164,7 +164,7 @@ class cl_cidadaocadastrounico {
          $this->as02_sequencial = $as02_sequencial;
        }
      }
-     if(($this->as02_sequencial == null) || ($this->as02_sequencial == "") ){
+     if(($this->as02_sequencial == null) || ($this->as02_sequencial === 0 || $this->as02_sequencial === 0.0 || $this->as02_sequencial == "") ){
        $this->erro_sql = " Campo as02_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

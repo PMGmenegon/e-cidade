@@ -67,10 +67,10 @@ class cl_tiporetorno {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov22_sequencial = ($this->ov22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov22_sequencial"]:$this->ov22_sequencial);
+       $this->ov22_sequencial = ($this->ov22_sequencial === 0 || $this->ov22_sequencial === 0.0 || $this->ov22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov22_sequencial"]:$this->ov22_sequencial);
        $this->ov22_descricao = ($this->ov22_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov22_descricao"]:$this->ov22_descricao);
      }else{
-       $this->ov22_sequencial = ($this->ov22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov22_sequencial"]:$this->ov22_sequencial);
+       $this->ov22_sequencial = ($this->ov22_sequencial === 0 || $this->ov22_sequencial === 0.0 || $this->ov22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov22_sequencial"]:$this->ov22_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_tiporetorno {
          $this->ov22_sequencial = $ov22_sequencial;
        }
      }
-     if(($this->ov22_sequencial == null) || ($this->ov22_sequencial == "") ){
+     if(($this->ov22_sequencial == null) || ($this->ov22_sequencial === 0 || $this->ov22_sequencial === 0.0 || $this->ov22_sequencial == "") ){
        $this->erro_sql = " Campo ov22_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -51,14 +51,14 @@ class cl_conplanoexecontacorrente
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->id = ($this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
-            $this->c143_conplanoreduz = ($this->c143_conplanoreduz == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_conplanoreduz"] : $this->c143_conplanoreduz);
-            $this->c143_exercicio = ($this->c143_exercicio == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_exercicio"] : $this->c143_exercicio);
-            $this->c143_conplanosistema = ($this->c143_conplanosistema == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_conplanosistema"] : $this->c143_conplanosistema);
+            $this->id = ($this->id === 0 || $this->id === 0.0 || $this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
+            $this->c143_conplanoreduz = ($this->c143_conplanoreduz === 0 || $this->c143_conplanoreduz === 0.0 || $this->c143_conplanoreduz == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_conplanoreduz"] : $this->c143_conplanoreduz);
+            $this->c143_exercicio = ($this->c143_exercicio === 0 || $this->c143_exercicio === 0.0 || $this->c143_exercicio == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_exercicio"] : $this->c143_exercicio);
+            $this->c143_conplanosistema = ($this->c143_conplanosistema === 0 || $this->c143_conplanosistema === 0.0 || $this->c143_conplanosistema == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_conplanosistema"] : $this->c143_conplanosistema);
             $this->c143_saldo = is_null($this->c143_saldo) ? @$GLOBALS["HTTP_POST_VARS"]["c143_saldo"] : $this->c143_saldo;
             $this->c143_natureza = ($this->c143_natureza == "" ? @$GLOBALS["HTTP_POST_VARS"]["c143_natureza"] : $this->c143_natureza);
         } else {
-            $this->id = ($this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
+            $this->id = ($this->id === 0 || $this->id === 0.0 || $this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
         }
     }
 
@@ -134,7 +134,7 @@ class cl_conplanoexecontacorrente
                 $this->id = $id;
             }
         }
-        if (($this->id == null) || ($this->id == "")) {
+        if (($this->id == null) || ($this->id === 0 || $this->id === 0.0 || $this->id == "")) {
             $this->erro_sql = " Campo id não declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

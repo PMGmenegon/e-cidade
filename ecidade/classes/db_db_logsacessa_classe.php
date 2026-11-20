@@ -72,7 +72,7 @@ class cl_db_logsacessa
                  instit = int4 = Instituição
                  ";
     //funcao construtor da classe
-    public function cl_db_logsacessa()
+    public function __construct()
     {
       //classes dos rotulos dos campos
         $this->rotulo = new rotulo("db_logsacessa");
@@ -92,7 +92,7 @@ class cl_db_logsacessa
     public function atualizacampos($exclusao = false)
     {
         if (!$exclusao) {
-            $this->codsequen = ($this->codsequen == ""?@$GLOBALS["HTTP_POST_VARS"]["codsequen"]:$this->codsequen);
+            $this->codsequen = ($this->codsequen === 0 || $this->codsequen === 0.0 || $this->codsequen == ""?@$GLOBALS["HTTP_POST_VARS"]["codsequen"]:$this->codsequen);
             $this->ip = ($this->ip == ""?@$GLOBALS["HTTP_POST_VARS"]["ip"]:$this->ip);
             if ($this->data == "") {
                 $this->data_dia = ($this->data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["data_dia"]:$this->data_dia);
@@ -105,13 +105,13 @@ class cl_db_logsacessa
             $this->hora = ($this->hora == ""?@$GLOBALS["HTTP_POST_VARS"]["hora"]:$this->hora);
             $this->arquivo = ($this->arquivo == ""?@$GLOBALS["HTTP_POST_VARS"]["arquivo"]:$this->arquivo);
             $this->obs = ($this->obs == ""?@$GLOBALS["HTTP_POST_VARS"]["obs"]:$this->obs);
-            $this->id_usuario = ($this->id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["id_usuario"]:$this->id_usuario);
-            $this->id_modulo = ($this->id_modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["id_modulo"]:$this->id_modulo);
-            $this->id_item = ($this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
-            $this->coddepto = ($this->coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["coddepto"]:$this->coddepto);
-            $this->instit = ($this->instit == ""?@$GLOBALS["HTTP_POST_VARS"]["instit"]:$this->instit);
+            $this->id_usuario = ($this->id_usuario === 0 || $this->id_usuario === 0.0 || $this->id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["id_usuario"]:$this->id_usuario);
+            $this->id_modulo = ($this->id_modulo === 0 || $this->id_modulo === 0.0 || $this->id_modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["id_modulo"]:$this->id_modulo);
+            $this->id_item = ($this->id_item === 0 || $this->id_item === 0.0 || $this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
+            $this->coddepto = ($this->coddepto === 0 || $this->coddepto === 0.0 || $this->coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["coddepto"]:$this->coddepto);
+            $this->instit = ($this->instit === 0 || $this->instit === 0.0 || $this->instit == ""?@$GLOBALS["HTTP_POST_VARS"]["instit"]:$this->instit);
         } else {
-            $this->codsequen = ($this->codsequen == ""?@$GLOBALS["HTTP_POST_VARS"]["codsequen"]:$this->codsequen);
+            $this->codsequen = ($this->codsequen === 0 || $this->codsequen === 0.0 || $this->codsequen == ""?@$GLOBALS["HTTP_POST_VARS"]["codsequen"]:$this->codsequen);
         }
     }
    // funcao para inclusao
@@ -232,7 +232,7 @@ class cl_db_logsacessa
                 $this->codsequen = $codsequen;
             }
         }
-        if (($this->codsequen == null) || ($this->codsequen == "")) {
+        if (($this->codsequen == null) || ($this->codsequen === 0 || $this->codsequen === 0.0 || $this->codsequen == "")) {
             $this->erro_sql = " Campo codsequen nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -653,7 +653,7 @@ class cl_db_logsacessa
     {
         $sql = "select ";
         if ($campos != "*") {
-            $campos_sql = split("#", $campos);
+            $campos_sql = preg_split("#\\##m", $campos);
             $virgula = "";
             for ($i=0; $i<sizeof($campos_sql); $i++) {
                 $sql .= $virgula.$campos_sql[$i];
@@ -674,7 +674,7 @@ class cl_db_logsacessa
         $sql .= $sql2;
         if ($ordem != null) {
             $sql .= " order by ";
-            $campos_sql = split("#", $ordem);
+            $campos_sql = preg_split("#\\##m", $ordem);
             $virgula = "";
             for ($i=0; $i<sizeof($campos_sql); $i++) {
                 $sql .= $virgula.$campos_sql[$i];
@@ -688,7 +688,7 @@ class cl_db_logsacessa
     {
         $sql = "select ";
         if ($campos != "*") {
-            $campos_sql = split("#", $campos);
+            $campos_sql = preg_split("#\\##m", $campos);
             $virgula = "";
             for ($i=0; $i<sizeof($campos_sql); $i++) {
                 $sql .= $virgula.$campos_sql[$i];
@@ -709,7 +709,7 @@ class cl_db_logsacessa
         $sql .= $sql2;
         if ($ordem != null) {
             $sql .= " order by ";
-            $campos_sql = split("#", $ordem);
+            $campos_sql = preg_split("#\\##m", $ordem);
             $virgula = "";
             for ($i=0; $i<sizeof($campos_sql); $i++) {
                 $sql .= $virgula.$campos_sql[$i];

@@ -78,10 +78,10 @@ class cl_matmaterprecomedio {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m85_sequencial = ($this->m85_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_sequencial"]:$this->m85_sequencial);
-       $this->m85_matmater = ($this->m85_matmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_matmater"]:$this->m85_matmater);
-       $this->m85_instit = ($this->m85_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_instit"]:$this->m85_instit);
-       $this->m85_precomedio = ($this->m85_precomedio == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_precomedio"]:$this->m85_precomedio);
+       $this->m85_sequencial = ($this->m85_sequencial === 0 || $this->m85_sequencial === 0.0 || $this->m85_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_sequencial"]:$this->m85_sequencial);
+       $this->m85_matmater = ($this->m85_matmater === 0 || $this->m85_matmater === 0.0 || $this->m85_matmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_matmater"]:$this->m85_matmater);
+       $this->m85_instit = ($this->m85_instit === 0 || $this->m85_instit === 0.0 || $this->m85_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_instit"]:$this->m85_instit);
+       $this->m85_precomedio = ($this->m85_precomedio === 0 || $this->m85_precomedio === 0.0 || $this->m85_precomedio == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_precomedio"]:$this->m85_precomedio);
        $this->m85_hora = ($this->m85_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_hora"]:$this->m85_hora);
        if($this->m85_data == ""){
          $this->m85_data_dia = ($this->m85_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_data_dia"]:$this->m85_data_dia);
@@ -92,7 +92,7 @@ class cl_matmaterprecomedio {
          }
        }
      }else{
-       $this->m85_sequencial = ($this->m85_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_sequencial"]:$this->m85_sequencial);
+       $this->m85_sequencial = ($this->m85_sequencial === 0 || $this->m85_sequencial === 0.0 || $this->m85_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m85_sequencial"]:$this->m85_sequencial);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_matmaterprecomedio {
          $this->m85_sequencial = $m85_sequencial;
        }
      }
-     if(($this->m85_sequencial == null) || ($this->m85_sequencial == "") ){
+     if(($this->m85_sequencial == null) || ($this->m85_sequencial === 0 || $this->m85_sequencial === 0.0 || $this->m85_sequencial == "") ){
        $this->erro_sql = " Campo m85_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

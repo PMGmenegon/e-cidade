@@ -80,7 +80,7 @@ class cl_matordemanul {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m37_sequencial = ($this->m37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_sequencial"]:$this->m37_sequencial);
+       $this->m37_sequencial = ($this->m37_sequencial === 0 || $this->m37_sequencial === 0.0 || $this->m37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_sequencial"]:$this->m37_sequencial);
        $this->m37_hora = ($this->m37_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_hora"]:$this->m37_hora);
        if($this->m37_data == ""){
          $this->m37_data_dia = ($this->m37_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_data_dia"]:$this->m37_data_dia);
@@ -90,12 +90,12 @@ class cl_matordemanul {
             $this->m37_data = $this->m37_data_ano."-".$this->m37_data_mes."-".$this->m37_data_dia;
          }
        }
-       $this->m37_usuario = ($this->m37_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_usuario"]:$this->m37_usuario);
-       $this->m37_empanul = ($this->m37_empanul == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_empanul"]:$this->m37_empanul);
-       $this->m37_tipo = ($this->m37_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_tipo"]:$this->m37_tipo);
+       $this->m37_usuario = ($this->m37_usuario === 0 || $this->m37_usuario === 0.0 || $this->m37_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_usuario"]:$this->m37_usuario);
+       $this->m37_empanul = ($this->m37_empanul === 0 || $this->m37_empanul === 0.0 || $this->m37_empanul == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_empanul"]:$this->m37_empanul);
+       $this->m37_tipo = ($this->m37_tipo === 0 || $this->m37_tipo === 0.0 || $this->m37_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_tipo"]:$this->m37_tipo);
        $this->m37_motivo = ($this->m37_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_motivo"]:$this->m37_motivo);
      }else{
-       $this->m37_sequencial = ($this->m37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_sequencial"]:$this->m37_sequencial);
+       $this->m37_sequencial = ($this->m37_sequencial === 0 || $this->m37_sequencial === 0.0 || $this->m37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m37_sequencial"]:$this->m37_sequencial);
      }
    }
    // funcao para inclusao
@@ -170,7 +170,7 @@ class cl_matordemanul {
          $this->m37_sequencial = $m37_sequencial;
        }
      }
-     if(($this->m37_sequencial == null) || ($this->m37_sequencial == "") ){
+     if(($this->m37_sequencial == null) || ($this->m37_sequencial === 0 || $this->m37_sequencial === 0.0 || $this->m37_sequencial == "") ){
        $this->erro_sql = " Campo m37_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

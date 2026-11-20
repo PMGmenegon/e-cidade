@@ -69,11 +69,11 @@ class cl_matordemitemcustocriterio {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->cc11_sequencial = ($this->cc11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_sequencial"]:$this->cc11_sequencial);
-       $this->cc11_custocriteriorateio = ($this->cc11_custocriteriorateio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_custocriteriorateio"]:$this->cc11_custocriteriorateio);
-       $this->cc11_matordemitem = ($this->cc11_matordemitem == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_matordemitem"]:$this->cc11_matordemitem);
+       $this->cc11_sequencial = ($this->cc11_sequencial === 0 || $this->cc11_sequencial === 0.0 || $this->cc11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_sequencial"]:$this->cc11_sequencial);
+       $this->cc11_custocriteriorateio = ($this->cc11_custocriteriorateio === 0 || $this->cc11_custocriteriorateio === 0.0 || $this->cc11_custocriteriorateio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_custocriteriorateio"]:$this->cc11_custocriteriorateio);
+       $this->cc11_matordemitem = ($this->cc11_matordemitem === 0 || $this->cc11_matordemitem === 0.0 || $this->cc11_matordemitem == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_matordemitem"]:$this->cc11_matordemitem);
      }else{
-       $this->cc11_sequencial = ($this->cc11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_sequencial"]:$this->cc11_sequencial);
+       $this->cc11_sequencial = ($this->cc11_sequencial === 0 || $this->cc11_sequencial === 0.0 || $this->cc11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc11_sequencial"]:$this->cc11_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_matordemitemcustocriterio {
          $this->cc11_sequencial = $cc11_sequencial;
        }
      }
-     if(($this->cc11_sequencial == null) || ($this->cc11_sequencial == "") ){
+     if(($this->cc11_sequencial == null) || ($this->cc11_sequencial === 0 || $this->cc11_sequencial === 0.0 || $this->cc11_sequencial == "") ){
        $this->erro_sql = " Campo cc11_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

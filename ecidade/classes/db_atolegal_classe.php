@@ -96,12 +96,12 @@ class cl_atolegal {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed05_i_codigo = ($this->ed05_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_codigo"]:$this->ed05_i_codigo);
-       $this->ed05_c_numero = ($this->ed05_c_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_c_numero"]:$this->ed05_c_numero);
+       $this->ed05_i_codigo = ($this->ed05_i_codigo === 0 || $this->ed05_i_codigo === 0.0 || $this->ed05_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_codigo"]:$this->ed05_i_codigo);
+       $this->ed05_c_numero = ($this->ed05_c_numero === 0 || $this->ed05_c_numero === 0.0 || $this->ed05_c_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_c_numero"]:$this->ed05_c_numero);
        $this->ed05_c_finalidade = ($this->ed05_c_finalidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_c_finalidade"]:$this->ed05_c_finalidade);
-       $this->ed05_i_tipoato = ($this->ed05_i_tipoato == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_tipoato"]:$this->ed05_i_tipoato);
+       $this->ed05_i_tipoato = ($this->ed05_i_tipoato === 0 || $this->ed05_i_tipoato === 0.0 || $this->ed05_i_tipoato == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_tipoato"]:$this->ed05_i_tipoato);
        $this->ed05_c_competencia = ($this->ed05_c_competencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_c_competencia"]:$this->ed05_c_competencia);
-       $this->ed05_i_ano = ($this->ed05_i_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_ano"]:$this->ed05_i_ano);
+       $this->ed05_i_ano = ($this->ed05_i_ano === 0 || $this->ed05_i_ano === 0.0 || $this->ed05_i_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_ano"]:$this->ed05_i_ano);
        $this->ed05_c_orgao = ($this->ed05_c_orgao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_c_orgao"]:$this->ed05_c_orgao);
        if($this->ed05_d_vigora == ""){
          $this->ed05_d_vigora_dia = ($this->ed05_d_vigora_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_d_vigora_dia"]:$this->ed05_d_vigora_dia);
@@ -128,9 +128,9 @@ class cl_atolegal {
          }
        }
        $this->ed05_t_texto = ($this->ed05_t_texto == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_t_texto"]:$this->ed05_t_texto);
-       $this->ed05_i_aparecehistorico = ($this->ed05_i_aparecehistorico == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_aparecehistorico"]:$this->ed05_i_aparecehistorico);
+       $this->ed05_i_aparecehistorico = ($this->ed05_i_aparecehistorico === 0 || $this->ed05_i_aparecehistorico === 0.0 || $this->ed05_i_aparecehistorico == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_aparecehistorico"]:$this->ed05_i_aparecehistorico);
      }else{
-       $this->ed05_i_codigo = ($this->ed05_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_codigo"]:$this->ed05_i_codigo);
+       $this->ed05_i_codigo = ($this->ed05_i_codigo === 0 || $this->ed05_i_codigo === 0.0 || $this->ed05_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed05_i_codigo"]:$this->ed05_i_codigo);
      }
    }
    // funcao para inclusao
@@ -250,7 +250,7 @@ class cl_atolegal {
          $this->ed05_i_codigo = $ed05_i_codigo;
        }
      }
-     if(($this->ed05_i_codigo == null) || ($this->ed05_i_codigo == "") ){
+     if(($this->ed05_i_codigo == null) || ($this->ed05_i_codigo === 0 || $this->ed05_i_codigo === 0.0 || $this->ed05_i_codigo == "") ){
        $this->erro_sql = " Campo ed05_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

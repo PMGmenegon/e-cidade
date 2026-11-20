@@ -87,8 +87,8 @@ class cl_matestoqueitem
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->m71_codlanc = ($this->m71_codlanc == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codlanc"] : $this->m71_codlanc);
-            $this->m71_codmatestoque = ($this->m71_codmatestoque == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codmatestoque"] : $this->m71_codmatestoque);
+            $this->m71_codlanc = ($this->m71_codlanc === 0 || $this->m71_codlanc === 0.0 || $this->m71_codlanc == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codlanc"] : $this->m71_codlanc);
+            $this->m71_codmatestoque = ($this->m71_codmatestoque === 0 || $this->m71_codmatestoque === 0.0 || $this->m71_codmatestoque == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codmatestoque"] : $this->m71_codmatestoque);
             if ($this->m71_data == "") {
                 $this->m71_data_dia = ($this->m71_data_dia == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_data_dia"] : $this->m71_data_dia);
                 $this->m71_data_mes = ($this->m71_data_mes == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_data_mes"] : $this->m71_data_mes);
@@ -97,12 +97,12 @@ class cl_matestoqueitem
                     $this->m71_data = $this->m71_data_ano . "-" . $this->m71_data_mes . "-" . $this->m71_data_dia;
                 }
             }
-            $this->m71_quant = ($this->m71_quant == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_quant"] : $this->m71_quant);
-            $this->m71_valor = ($this->m71_valor == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_valor"] : $this->m71_valor);
-            $this->m71_quantatend = ($this->m71_quantatend == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_quantatend"] : $this->m71_quantatend);
+            $this->m71_quant = ($this->m71_quant === 0 || $this->m71_quant === 0.0 || $this->m71_quant == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_quant"] : $this->m71_quant);
+            $this->m71_valor = ($this->m71_valor === 0 || $this->m71_valor === 0.0 || $this->m71_valor == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_valor"] : $this->m71_valor);
+            $this->m71_quantatend = ($this->m71_quantatend === 0 || $this->m71_quantatend === 0.0 || $this->m71_quantatend == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_quantatend"] : $this->m71_quantatend);
             $this->m71_servico = ($this->m71_servico == "f" ? @$GLOBALS["HTTP_POST_VARS"]["m71_servico"] : $this->m71_servico);
         } else {
-            $this->m71_codlanc = ($this->m71_codlanc == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codlanc"] : $this->m71_codlanc);
+            $this->m71_codlanc = ($this->m71_codlanc === 0 || $this->m71_codlanc === 0.0 || $this->m71_codlanc == "" ? @$GLOBALS["HTTP_POST_VARS"]["m71_codlanc"] : $this->m71_codlanc);
         }
     }
 
@@ -182,7 +182,7 @@ class cl_matestoqueitem
                 $this->m71_codlanc = $m71_codlanc;
             }
         }
-        if (($this->m71_codlanc == null) || ($this->m71_codlanc == "")) {
+        if (($this->m71_codlanc == null) || ($this->m71_codlanc === 0 || $this->m71_codlanc === 0.0 || $this->m71_codlanc == "")) {
             $this->erro_sql = " Campo m71_codlanc nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

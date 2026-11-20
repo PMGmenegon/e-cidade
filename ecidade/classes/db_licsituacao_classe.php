@@ -69,11 +69,11 @@ class cl_licsituacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->l08_sequencial = ($this->l08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l08_sequencial"]:$this->l08_sequencial);
+       $this->l08_sequencial = ($this->l08_sequencial === 0 || $this->l08_sequencial === 0.0 || $this->l08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l08_sequencial"]:$this->l08_sequencial);
        $this->l08_descr = ($this->l08_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["l08_descr"]:$this->l08_descr);
        $this->l08_altera = ($this->l08_altera == "f"?@$GLOBALS["HTTP_POST_VARS"]["l08_altera"]:$this->l08_altera);
      }else{
-       $this->l08_sequencial = ($this->l08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l08_sequencial"]:$this->l08_sequencial);
+       $this->l08_sequencial = ($this->l08_sequencial === 0 || $this->l08_sequencial === 0.0 || $this->l08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l08_sequencial"]:$this->l08_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_licsituacao {
          $this->l08_sequencial = $l08_sequencial;
        }
      }
-     if(($this->l08_sequencial == null) || ($this->l08_sequencial == "") ){
+     if(($this->l08_sequencial == null) || ($this->l08_sequencial === 0 || $this->l08_sequencial === 0.0 || $this->l08_sequencial == "") ){
        $this->erro_sql = " Campo l08_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

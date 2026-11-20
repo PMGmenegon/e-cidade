@@ -69,11 +69,11 @@ class cl_cartaoidentificacaosituacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed307_sequencial = ($this->ed307_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed307_sequencial"]:$this->ed307_sequencial);
+       $this->ed307_sequencial = ($this->ed307_sequencial === 0 || $this->ed307_sequencial === 0.0 || $this->ed307_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed307_sequencial"]:$this->ed307_sequencial);
        $this->ed307_descricao = ($this->ed307_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed307_descricao"]:$this->ed307_descricao);
        $this->ed307_ativo = ($this->ed307_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed307_ativo"]:$this->ed307_ativo);
      }else{
-       $this->ed307_sequencial = ($this->ed307_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed307_sequencial"]:$this->ed307_sequencial);
+       $this->ed307_sequencial = ($this->ed307_sequencial === 0 || $this->ed307_sequencial === 0.0 || $this->ed307_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed307_sequencial"]:$this->ed307_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_cartaoidentificacaosituacao {
          $this->ed307_sequencial = $ed307_sequencial;
        }
      }
-     if(($this->ed307_sequencial == null) || ($this->ed307_sequencial == "") ){
+     if(($this->ed307_sequencial == null) || ($this->ed307_sequencial === 0 || $this->ed307_sequencial === 0.0 || $this->ed307_sequencial == "") ){
        $this->erro_sql = " Campo ed307_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

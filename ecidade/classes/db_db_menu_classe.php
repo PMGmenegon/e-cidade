@@ -71,10 +71,10 @@ class cl_db_menu {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->id_item = ($this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
-       $this->id_item_filho = ($this->id_item_filho == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item_filho"]:$this->id_item_filho);
-       $this->menusequencia = ($this->menusequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["menusequencia"]:$this->menusequencia);
-       $this->modulo = ($this->modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["modulo"]:$this->modulo);
+       $this->id_item = ($this->id_item === 0 || $this->id_item === 0.0 || $this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
+       $this->id_item_filho = ($this->id_item_filho === 0 || $this->id_item_filho === 0.0 || $this->id_item_filho == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item_filho"]:$this->id_item_filho);
+       $this->menusequencia = ($this->menusequencia === 0 || $this->menusequencia === 0.0 || $this->menusequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["menusequencia"]:$this->menusequencia);
+       $this->modulo = ($this->modulo === 0 || $this->modulo === 0.0 || $this->modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["modulo"]:$this->modulo);
      }else{
      }
    }
@@ -438,7 +438,7 @@ $sql .= "oid = '$oid'";     $result = db_query($sql);
    * @param integer $iModulo
    * @return string
    */
-  public function sqlItensMenuUsuario($sCampos = "*", $sOrdem = "", $sWhere = "", $iIdUsuario, $iAnoUsu, $iInstituicao, $iModulo = null) {
+  public function sqlItensMenuUsuario($sCampos = "*", $sOrdem = "", $sWhere = "", $iIdUsuario = null, $iAnoUsu = null, $iInstituicao = null, $iModulo = null) {
 
     $sSql  = "  select {$sCampos}                                               \n";
     $sSql .= "    from db_menu m                                                \n";

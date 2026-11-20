@@ -69,11 +69,11 @@ class cl_histbemdiv {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t32_codigo = ($this->t32_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_codigo"]:$this->t32_codigo);
-       $this->t32_histbem = ($this->t32_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_histbem"]:$this->t32_histbem);
-       $this->t32_divisao = ($this->t32_divisao == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_divisao"]:$this->t32_divisao);
+       $this->t32_codigo = ($this->t32_codigo === 0 || $this->t32_codigo === 0.0 || $this->t32_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_codigo"]:$this->t32_codigo);
+       $this->t32_histbem = ($this->t32_histbem === 0 || $this->t32_histbem === 0.0 || $this->t32_histbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_histbem"]:$this->t32_histbem);
+       $this->t32_divisao = ($this->t32_divisao === 0 || $this->t32_divisao === 0.0 || $this->t32_divisao == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_divisao"]:$this->t32_divisao);
      }else{
-       $this->t32_codigo = ($this->t32_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_codigo"]:$this->t32_codigo);
+       $this->t32_codigo = ($this->t32_codigo === 0 || $this->t32_codigo === 0.0 || $this->t32_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t32_codigo"]:$this->t32_codigo);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_histbemdiv {
          $this->t32_codigo = $t32_codigo;
        }
      }
-     if(($this->t32_codigo == null) || ($this->t32_codigo == "") ){
+     if(($this->t32_codigo == null) || ($this->t32_codigo === 0 || $this->t32_codigo === 0.0 || $this->t32_codigo == "") ){
        $this->erro_sql = " Campo t32_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

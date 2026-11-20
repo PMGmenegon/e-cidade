@@ -67,11 +67,11 @@ class cl_matestoqueitemnota {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m74_codmatestoqueitem = ($this->m74_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codmatestoqueitem"]:$this->m74_codmatestoqueitem);
-       $this->m74_codempnota = ($this->m74_codempnota == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codempnota"]:$this->m74_codempnota);
+       $this->m74_codmatestoqueitem = ($this->m74_codmatestoqueitem === 0 || $this->m74_codmatestoqueitem === 0.0 || $this->m74_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codmatestoqueitem"]:$this->m74_codmatestoqueitem);
+       $this->m74_codempnota = ($this->m74_codempnota === 0 || $this->m74_codempnota === 0.0 || $this->m74_codempnota == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codempnota"]:$this->m74_codempnota);
      }else{
-       $this->m74_codmatestoqueitem = ($this->m74_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codmatestoqueitem"]:$this->m74_codmatestoqueitem);
-       $this->m74_codempnota = ($this->m74_codempnota == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codempnota"]:$this->m74_codempnota);
+       $this->m74_codmatestoqueitem = ($this->m74_codmatestoqueitem === 0 || $this->m74_codmatestoqueitem === 0.0 || $this->m74_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codmatestoqueitem"]:$this->m74_codmatestoqueitem);
+       $this->m74_codempnota = ($this->m74_codempnota === 0 || $this->m74_codempnota === 0.0 || $this->m74_codempnota == ""?@$GLOBALS["HTTP_POST_VARS"]["m74_codempnota"]:$this->m74_codempnota);
      }
    }
    // funcao para inclusao
@@ -79,7 +79,7 @@ class cl_matestoqueitemnota {
       $this->atualizacampos();
        $this->m74_codmatestoqueitem = $m74_codmatestoqueitem;
        $this->m74_codempnota = $m74_codempnota;
-     if(($this->m74_codmatestoqueitem == null) || ($this->m74_codmatestoqueitem == "") ){
+     if(($this->m74_codmatestoqueitem == null) || ($this->m74_codmatestoqueitem === 0 || $this->m74_codmatestoqueitem === 0.0 || $this->m74_codmatestoqueitem == "") ){
        $this->erro_sql = " Campo m74_codmatestoqueitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -87,7 +87,7 @@ class cl_matestoqueitemnota {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->m74_codempnota == null) || ($this->m74_codempnota == "") ){
+     if(($this->m74_codempnota == null) || ($this->m74_codempnota === 0 || $this->m74_codempnota === 0.0 || $this->m74_codempnota == "") ){
        $this->erro_sql = " Campo m74_codempnota nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

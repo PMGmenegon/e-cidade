@@ -69,11 +69,11 @@ class cl_custoplanilhamatordemitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->cc20_sequencial = ($this->cc20_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_sequencial"]:$this->cc20_sequencial);
-       $this->cc20_custoplanilhaapuracao = ($this->cc20_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_custoplanilhaapuracao"]:$this->cc20_custoplanilhaapuracao);
-       $this->cc20_matordemitemcustocriterio = ($this->cc20_matordemitemcustocriterio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_matordemitemcustocriterio"]:$this->cc20_matordemitemcustocriterio);
+       $this->cc20_sequencial = ($this->cc20_sequencial === 0 || $this->cc20_sequencial === 0.0 || $this->cc20_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_sequencial"]:$this->cc20_sequencial);
+       $this->cc20_custoplanilhaapuracao = ($this->cc20_custoplanilhaapuracao === 0 || $this->cc20_custoplanilhaapuracao === 0.0 || $this->cc20_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_custoplanilhaapuracao"]:$this->cc20_custoplanilhaapuracao);
+       $this->cc20_matordemitemcustocriterio = ($this->cc20_matordemitemcustocriterio === 0 || $this->cc20_matordemitemcustocriterio === 0.0 || $this->cc20_matordemitemcustocriterio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_matordemitemcustocriterio"]:$this->cc20_matordemitemcustocriterio);
      }else{
-       $this->cc20_sequencial = ($this->cc20_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_sequencial"]:$this->cc20_sequencial);
+       $this->cc20_sequencial = ($this->cc20_sequencial === 0 || $this->cc20_sequencial === 0.0 || $this->cc20_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc20_sequencial"]:$this->cc20_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_custoplanilhamatordemitem {
          $this->cc20_sequencial = $cc20_sequencial;
        }
      }
-     if(($this->cc20_sequencial == null) || ($this->cc20_sequencial == "") ){
+     if(($this->cc20_sequencial == null) || ($this->cc20_sequencial === 0 || $this->cc20_sequencial === 0.0 || $this->cc20_sequencial == "") ){
        $this->erro_sql = " Campo cc20_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

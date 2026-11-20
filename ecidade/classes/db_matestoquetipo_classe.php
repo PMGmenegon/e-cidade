@@ -71,12 +71,12 @@ class cl_matestoquetipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m81_codtipo = ($this->m81_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_codtipo"]:$this->m81_codtipo);
+       $this->m81_codtipo = ($this->m81_codtipo === 0 || $this->m81_codtipo === 0.0 || $this->m81_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_codtipo"]:$this->m81_codtipo);
        $this->m81_descr = ($this->m81_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_descr"]:$this->m81_descr);
        $this->m81_entrada = ($this->m81_entrada == "f"?@$GLOBALS["HTTP_POST_VARS"]["m81_entrada"]:$this->m81_entrada);
-       $this->m81_tipo = ($this->m81_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_tipo"]:$this->m81_tipo);
+       $this->m81_tipo = ($this->m81_tipo === 0 || $this->m81_tipo === 0.0 || $this->m81_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_tipo"]:$this->m81_tipo);
      }else{
-       $this->m81_codtipo = ($this->m81_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_codtipo"]:$this->m81_codtipo);
+       $this->m81_codtipo = ($this->m81_codtipo === 0 || $this->m81_codtipo === 0.0 || $this->m81_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m81_codtipo"]:$this->m81_codtipo);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_matestoquetipo {
          $this->m81_codtipo = $m81_codtipo;
        }
      }
-     if(($this->m81_codtipo == null) || ($this->m81_codtipo == "") ){
+     if(($this->m81_codtipo == null) || ($this->m81_codtipo === 0 || $this->m81_codtipo === 0.0 || $this->m81_codtipo == "") ){
        $this->erro_sql = " Campo m81_codtipo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

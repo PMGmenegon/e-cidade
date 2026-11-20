@@ -107,16 +107,16 @@ class cl_pensao
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->r52_anousu = ($this->r52_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_anousu"]:$this->r52_anousu);
-       $this->r52_mesusu = ($this->r52_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_mesusu"]:$this->r52_mesusu);
-       $this->r52_regist = ($this->r52_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_regist"]:$this->r52_regist);
+       $this->r52_anousu = ($this->r52_anousu === 0 || $this->r52_anousu === 0.0 || $this->r52_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_anousu"]:$this->r52_anousu);
+       $this->r52_mesusu = ($this->r52_mesusu === 0 || $this->r52_mesusu === 0.0 || $this->r52_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_mesusu"]:$this->r52_mesusu);
+       $this->r52_regist = ($this->r52_regist === 0 || $this->r52_regist === 0.0 || $this->r52_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_regist"]:$this->r52_regist);
        $this->r52_formul = ($this->r52_formul == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_formul"]:$this->r52_formul);
-       $this->r52_perc = ($this->r52_perc == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_perc"]:$this->r52_perc);
-       $this->r52_numcgm = ($this->r52_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_numcgm"]:$this->r52_numcgm);
+       $this->r52_perc = ($this->r52_perc === 0 || $this->r52_perc === 0.0 || $this->r52_perc == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_perc"]:$this->r52_perc);
+       $this->r52_numcgm = ($this->r52_numcgm === 0 || $this->r52_numcgm === 0.0 || $this->r52_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_numcgm"]:$this->r52_numcgm);
        $this->r52_codbco = ($this->r52_codbco == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_codbco"]:$this->r52_codbco);
        $this->r52_codage = ($this->r52_codage == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_codage"]:$this->r52_codage);
        $this->r52_conta = ($this->r52_conta == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_conta"]:$this->r52_conta);
-       $this->r52_vlrpen = ($this->r52_vlrpen == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_vlrpen"]:$this->r52_vlrpen);
+       $this->r52_vlrpen = ($this->r52_vlrpen === 0 || $this->r52_vlrpen === 0.0 || $this->r52_vlrpen == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_vlrpen"]:$this->r52_vlrpen);
        if($this->r52_dtincl == ""){
          $this->r52_dtincl_dia = ($this->r52_dtincl_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_dtincl_dia"]:$this->r52_dtincl_dia);
          $this->r52_dtincl_mes = ($this->r52_dtincl_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_dtincl_mes"]:$this->r52_dtincl_mes);
@@ -128,9 +128,9 @@ class cl_pensao
        $this->r52_pag13 = ($this->r52_pag13 == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_pag13"]:$this->r52_pag13);
        $this->r52_pagfer = ($this->r52_pagfer == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_pagfer"]:$this->r52_pagfer);
        $this->r52_pagcom = ($this->r52_pagcom == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_pagcom"]:$this->r52_pagcom);
-       $this->r52_valor = ($this->r52_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valor"]:$this->r52_valor);
-       $this->r52_valcom = ($this->r52_valcom == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valcom"]:$this->r52_valcom);
-       $this->r52_val13 = ($this->r52_val13 == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_val13"]:$this->r52_val13);
+       $this->r52_valor = ($this->r52_valor === 0 || $this->r52_valor === 0.0 || $this->r52_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valor"]:$this->r52_valor);
+       $this->r52_valcom = ($this->r52_valcom === 0 || $this->r52_valcom === 0.0 || $this->r52_valcom == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valcom"]:$this->r52_valcom);
+       $this->r52_val13 = ($this->r52_val13 === 0 || $this->r52_val13 === 0.0 || $this->r52_val13 == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_val13"]:$this->r52_val13);
        if($this->r52_limite == ""){
          $this->r52_limite_dia = ($this->r52_limite_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_limite_dia"]:$this->r52_limite_dia);
          $this->r52_limite_mes = ($this->r52_limite_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_limite_mes"]:$this->r52_limite_mes);
@@ -141,19 +141,19 @@ class cl_pensao
        }
        $this->r52_dvagencia = ($this->r52_dvagencia == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_dvagencia"]:$this->r52_dvagencia);
        $this->r52_dvconta = ($this->r52_dvconta == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_dvconta"]:$this->r52_dvconta);
-       $this->r52_valfer = ($this->r52_valfer == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valfer"]:$this->r52_valfer);
-       $this->r52_valres = ($this->r52_valres == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valres"]:$this->r52_valres);
+       $this->r52_valfer = ($this->r52_valfer === 0 || $this->r52_valfer === 0.0 || $this->r52_valfer == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valfer"]:$this->r52_valfer);
+       $this->r52_valres = ($this->r52_valres === 0 || $this->r52_valres === 0.0 || $this->r52_valres == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valres"]:$this->r52_valres);
        $this->r52_pagres = ($this->r52_pagres == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_pagres"]:$this->r52_pagres);
        $this->r52_adiantamento13 = ($this->r52_adiantamento13 == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_adiantamento13"]:$this->r52_adiantamento13);
-       $this->r52_percadiantamento13 = ($this->r52_percadiantamento13 == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_percadiantamento13"]:$this->r52_percadiantamento13);
-       $this->r52_sequencial = ($this->r52_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_sequencial"]:$this->r52_sequencial);
+       $this->r52_percadiantamento13 = ($this->r52_percadiantamento13 === 0 || $this->r52_percadiantamento13 === 0.0 || $this->r52_percadiantamento13 == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_percadiantamento13"]:$this->r52_percadiantamento13);
+       $this->r52_sequencial = ($this->r52_sequencial === 0 || $this->r52_sequencial === 0.0 || $this->r52_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_sequencial"]:$this->r52_sequencial);
        $this->r52_pagasuplementar = ($this->r52_pagasuplementar == "f"?@$GLOBALS["HTTP_POST_VARS"]["r52_pagasuplementar"]:$this->r52_pagasuplementar);
-       $this->r52_valorsuplementar = ($this->r52_valorsuplementar == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valorsuplementar"]:$this->r52_valorsuplementar);
-       $this->r52_relacaodependencia = ($this->r52_relacaodependencia == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_relacaodependencia"]:$this->r52_relacaodependencia);
+       $this->r52_valorsuplementar = ($this->r52_valorsuplementar === 0 || $this->r52_valorsuplementar === 0.0 || $this->r52_valorsuplementar == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_valorsuplementar"]:$this->r52_valorsuplementar);
+       $this->r52_relacaodependencia = ($this->r52_relacaodependencia === 0 || $this->r52_relacaodependencia === 0.0 || $this->r52_relacaodependencia == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_relacaodependencia"]:$this->r52_relacaodependencia);
        $this->r52_observacao = ($this->r52_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_observacao"]:$this->r52_observacao);
-       $this->r52_cgmalimentado = ($this->r52_cgmalimentado == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_cgmalimentado"]:$this->r52_cgmalimentado);
+       $this->r52_cgmalimentado = ($this->r52_cgmalimentado === 0 || $this->r52_cgmalimentado === 0.0 || $this->r52_cgmalimentado == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_cgmalimentado"]:$this->r52_cgmalimentado);
      }else{
-       $this->r52_sequencial = ($this->r52_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_sequencial"]:$this->r52_sequencial);
+       $this->r52_sequencial = ($this->r52_sequencial === 0 || $this->r52_sequencial === 0.0 || $this->r52_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["r52_sequencial"]:$this->r52_sequencial);
      }
    }
    // funcao para inclusao
@@ -320,7 +320,7 @@ class cl_pensao
      if($this->r52_relacaodependencia == null ){
        $this->r52_relacaodependencia = "0";
      }
-     if ($this->r52_sequencial == "" || $this->r52_sequencial == null ) {
+     if ($this->r52_sequencial === 0 || $this->r52_sequencial === 0.0 || $this->r52_sequencial == "" || $this->r52_sequencial == null ) {
 
        $result = db_query("select nextval('pensao_r52_sequencial_seq')");
        if($result==false){
@@ -345,7 +345,7 @@ class cl_pensao
          $this->r52_sequencial = $this->r52_sequencial;
        }
      }
-     if(($this->r52_sequencial == null) || ($this->r52_sequencial == "") ){
+     if(($this->r52_sequencial == null) || ($this->r52_sequencial === 0 || $this->r52_sequencial === 0.0 || $this->r52_sequencial == "") ){
        $this->erro_sql = " Campo r52_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -1073,7 +1073,7 @@ class cl_pensao
 
     $sql = "select ";
     if ($campos != "*") {
-      $campos_sql = split("#", $campos);
+      $campos_sql = preg_split("#\\##m", $campos);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1135,7 +1135,7 @@ class cl_pensao
     $sql .= $sql2;
     if ($ordem != null) {
       $sql .= " order by ";
-      $campos_sql = split("#", $ordem);
+      $campos_sql = preg_split("#\\##m", $ordem);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1148,7 +1148,7 @@ class cl_pensao
 
     $sql = "select ";
     if ($campos != "*") {
-      $campos_sql = split("#", $campos);
+      $campos_sql = preg_split("#\\##m", $campos);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1223,7 +1223,7 @@ class cl_pensao
     $sql .= $sql2;
     if ($ordem != null) {
       $sql .= " order by ";
-      $campos_sql = split("#", $ordem);
+      $campos_sql = preg_split("#\\##m", $ordem);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1236,7 +1236,7 @@ class cl_pensao
 
     $sql = "select ";
     if ($campos != "*") {
-      $campos_sql = split("#", $campos);
+      $campos_sql = preg_split("#\\##m", $campos);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1289,7 +1289,7 @@ class cl_pensao
     $sql .= $sql2;
     if ($ordem != null) {
       $sql .= " order by ";
-      $campos_sql = split("#", $ordem);
+      $campos_sql = preg_split("#\\##m", $ordem);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1303,7 +1303,7 @@ class cl_pensao
 
     $sql = "select ";
     if ($campos != "*") {
-      $campos_sql = split("#", $campos);
+      $campos_sql = preg_split("#\\##m", $campos);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1366,7 +1366,7 @@ class cl_pensao
     $sql .= $sql2;
     if ($ordem != null) {
       $sql .= " order by ";
-      $campos_sql = split("#", $ordem);
+      $campos_sql = preg_split("#\\##m", $ordem);
       $virgula = "";
       for($i = 0; $i < sizeof($campos_sql); $i ++) {
         $sql .= $virgula . $campos_sql [$i];
@@ -1380,7 +1380,7 @@ class cl_pensao
 
         $sql = "select ";
         if ($campos != "*") {
-            $campos_sql = split("#", $campos);
+            $campos_sql = preg_split("#\\##m", $campos);
             $virgula = "";
             for($i = 0; $i < sizeof($campos_sql); $i ++) {
                 $sql .= $virgula . $campos_sql [$i];
@@ -1443,7 +1443,7 @@ class cl_pensao
         $sql .= $sql2;
         if ($ordem != null) {
             $sql .= " order by ";
-            $campos_sql = split("#", $ordem);
+            $campos_sql = preg_split("#\\##m", $ordem);
             $virgula = "";
             for($i = 0; $i < sizeof($campos_sql); $i ++) {
                 $sql .= $virgula . $campos_sql [$i];
