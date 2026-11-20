@@ -178,6 +178,41 @@ lint pode pular `ecidade/app-85/`? O 7.4 nunca carrega essa pasta. Ou o grupo pr
 sobreposição fora de `ecidade/`, montada só no contêiner do 8.5)? Até a resposta vale a regra acima, e uma classe que
 não couber nela fica registrada como pendente.
 
+## Trecho isolado em Docker que falha alto (`roda-isolado.sh`)
+
+`bash docker/composer-85/roda-isolado.sh <7.4|8.5> <trecho.php> [args]` roda um trecho PHP sem rede e sem banco
+(`--network none`). **Imagens do projeto**, não as `php:*-cli` oficiais (essas só servem para `php -l`): `ecidade-php74-apache`
+(construída de `docker/php74-apache`) e `ecidade-php85-apache` (de `docker/php85-apache`), com as extensões e o `php.ini`
+delas. Se a tag local não existir o script constrói (uma vez, precisa de rede); `IMAGEM=<tag>` troca a imagem.
+
+- **Código e vendor:** `ecidade/` em `/app` somente leitura. Vendor: 7.4 = `ecidade/vendor`; 8.5 = `runtime-85/vendor`;
+  `VENDOR=<pasta>` monta outro em `/app/vendor` (por exemplo o `composer install` do `ecidade/composer.lock` do PR, quando
+  `ecidade/vendor` está desatualizado). Vendor sem `autoload.php` gera aviso nos dois.
+- **Gravável só em memória (tmpfs):** `/app/bootstrap/cache`, `/app/storage/logs`, `/app/storage/framework` e `/tmp`. Sem
+  isso o kernel do Laravel não sobe (`bootstrap/cache must be present and writable`). Os pontos de montagem são criados vazios,
+  como o usuário, se não existirem.
+- **Ambiente de teste só no contêiner:** `--env-file` gerado de `ecidade/.env.example` (`APP_ENV=local`, `APP_KEY` de teste,
+  `DB_HOST=banco.invalido`). **Nenhum `ecidade/.env` é criado na árvore** e um que já exista não é alterado (as variáveis
+  do contêiner prevalecem sobre o arquivo).
+
+**Por que existe:** o `docker run` que monta o código e o vendor falha num checkout novo (`mountpoint ... read-only`; pasta
+inexistente vira diretório de `root`), e um script que compara a saída vazia de um lado com a vazia do outro dá "igual"
+falso. Apareceu em 4 tarefas. O script **sai com erro** quando:
+
+| Situação | rc |
+|---|---|
+| argumento inválido, trecho inexistente | 64 |
+| imagem ausente (com `IMAGEM=`) ou build falhou | 65 |
+| saída do trecho vazia | 66 |
+| `docker run` ou o trecho falhar | o próprio rc (nunca 0) |
+
+A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo
+(`bash docker/composer-85/testa-roda-isolado.sh`; precisa dos vendors em `TESTA_VENDOR74` e `TESTA_VENDOR85`, padrão
+`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 10 casos, 10/10. O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
+kernel do Laravel do PR nos dois (`App\Application env=local`, rc 0, nenhum `Deprecated` no stdout); `exit(3)`, trecho vazio,
+imagem ausente, `docker run` quebrado, versão e arquivo inválidos falham com `roda-isolado: ERRO`. **Aviso:** tarefa que roda
+trecho isolado passa a chamar este script em vez de montar o `docker run` à mão.
+
 ## Lacunas
 
 - O contêiner do 8.5 com `runtime-85/vendor` montado ainda não existe: é da inicialização (PHP8-62). O 8.5 de hoje
