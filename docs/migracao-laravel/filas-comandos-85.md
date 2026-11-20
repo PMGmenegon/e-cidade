@@ -70,6 +70,6 @@ da tabela acima.
   que vai para a fila e volta dela, não o trabalho do job.
 - Nenhum comando é executado além do `list`. A definição (assinatura, argumentos, opções) e o agendamento são os
   mesmos; o corpo de cada comando usa banco.
-- O `composer-85.lock` desta medição ainda é a cópia do lock do PR (só ignora o teto de versão do PHP). As trocas de
-  pacotes do 8.5 que vêm depois (`lcobucci/jwt` e os 9 pacotes) não mexem em fila, console nem agendamento. Ainda
-  assim, o `roda.sh` deve ser rodado de novo sobre o lock final.
+- O `composer-85.lock` desta medição é o da integração com a troca do `lcobucci/jwt` para 4.1.5 (PHP8-60), e o
+  resultado é o mesmo da cópia do lock do PR. A troca dos 9 pacotes que excluem o 8.5 (PHP8-87) vem depois e não mexe
+  em fila, console nem agendamento. Ainda assim, o `roda.sh` deve ser rodado de novo sobre o lock final.
