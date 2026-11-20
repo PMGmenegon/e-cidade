@@ -73,11 +73,25 @@ que precisarem de copia). Se algum model precisar de copia no futuro, o aviso e 
 
 ## Repetir
 
+O `vendor` precisa ser montado em **`/w/ecidade/vendor`** (por cima da pasta `ecidade/vendor`), nao em outra pasta: o autoload do Composer
+resolve os `files` do projeto (`app/Helpers/*`) a partir de `dirname(vendor)`, que tem de ser o proprio `ecidade/`. O ponto de montagem `ecidade/vendor`
+tem de existir (o `composer-85.sh` o cria; num checkout novo, `mkdir ecidade/vendor`).
+
+- **Vendor do 8.5 da integracao:** `bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+` deixa o vendor em
+  **`runtime-85/vendor`** (so `vendor/` dentro de `runtime-85/`); e esse o `<vendor>` abaixo.
+- **Vendor do PR (usado nas provas acima):** `composer install` da `ecidade/composer.lock` numa pasta fora do repositorio e depois `composer dump-autoload --no-scripts`
+  com o `composer.json` real (`-v $PWD/ecidade:/app:ro -v <pasta do vendor>:/app/vendor -w /app`), para o autoload incluir `app/Helpers/*`, `database/` e `Fpdf\`.
+
 ```bash
+mkdir -p ecidade/vendor
 python3 scratchpad/troca_dates_casts.py ecidade --dry          # lista os 21 arquivos
 for v in 7.4 8.5; do
-  docker run --rm --network none -v $PWD/ecidade:/w/ecidade:ro -v <vendor>:/w/v:ro -v $PWD/scratchpad:/s:ro \
-    php:$v-cli php -d memory_limit=1G /s/models_dates_casts.php /w/ecidade /w/v/vendor | sed 's/DateTime::__construct(): //' > saida-$v.txt
+  docker run --rm --network none -v $PWD/ecidade:/w/ecidade:ro -v <vendor>:/w/ecidade/vendor:ro -v $PWD/scratchpad:/s:ro \
+    php:$v-cli php -d memory_limit=1G /s/models_dates_casts.php /w/ecidade /w/ecidade/vendor | sed 's/DateTime::__construct(): //' > saida-$v.txt
 done
-cmp saida-7.4.txt saida-8.5.txt        # e contra docs/migracao-laravel/models-dates-casts/saida-7.4-antes-e-depois.txt
+cmp saida-7.4.txt docs/migracao-laravel/models-dates-casts/saida-7.4-antes-e-depois.txt
+cmp saida-8.5.txt docs/migracao-laravel/models-dates-casts/saida-7.4-antes-e-depois.txt
 ```
+
+Conferido neste layout (vendor do PR com autoload completo montado em `/w/ecidade/vendor`): 7.4 e 8.5 saem iguais a `saida-7.4-antes-e-depois.txt`. Com o vendor do 8.5 da integracao
+e com o Laravel 13 (PHP8-55 com Laravel 13, T-119), repetir o mesmo comando trocando `<vendor>`.
