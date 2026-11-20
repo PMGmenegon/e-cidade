@@ -2908,7 +2908,7 @@ function db_logsmanual_demais($string = '', $id_usuario = 0, $modulo = 0, $item 
 {
 
     // sem conexao com o banco
-    if (!isset($GLOBALS['conn']) || !is_resource($GLOBALS['conn'])) {
+    if (!isset($GLOBALS['conn']) || !(is_resource($GLOBALS['conn']) || $GLOBALS['conn'] instanceof \PgSql\Connection)) {
         return false;
     }
 

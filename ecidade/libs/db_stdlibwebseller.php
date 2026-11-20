@@ -4386,7 +4386,7 @@ function getCotasAgendamento(
     $oResult->sMensagem         = "Não encontrado o controle por cotas para a UPS solicitante.";
     $oResult->aCotasAgendamento = null;
 
-    if(is_resource($rs) && pg_num_rows($rs) > 0 ) {
+    if((is_resource($rs) || $rs instanceof \PgSql\Result) && pg_num_rows($rs) > 0 ) {
 
         $oResult->lStatus           = 1;
         $oResult->sMensagem         = "Agendamento realizado por cotas.";

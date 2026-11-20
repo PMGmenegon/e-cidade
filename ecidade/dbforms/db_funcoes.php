@@ -413,7 +413,7 @@ if (!function_exists("db_multiploselect")) {
                                 style="width:<?php echo  $width ?>px" multiple
                                 onDblClick="js_db_multiploselect_incluir_item(this,document.form1.<?php echo  $objsel ?>);">
                             <?php
-                            if (gettype($recordnsel) == "resource") {
+                            if (gettype($recordnsel) == "resource" || $recordnsel instanceof \PgSql\Result) {
                                 $numrows_recnsel = pg_num_rows($recordnsel);
                                 for ($i = 0; $i < $numrows_recnsel; $i++) {
                                     db_fieldsmemory($recordnsel, $i);
@@ -472,7 +472,7 @@ if (!function_exists("db_multiploselect")) {
                                 style="width:<?php echo  $width ?>px" multiple
                                 onDblClick="js_db_multiploselect_incluir_item(this,document.form1.<?php echo  $objnsel ?>);">
                             <?php
-                            if (gettype($recordsel) == "resource") {
+                            if (gettype($recordsel) == "resource" || $recordsel instanceof \PgSql\Result) {
                                 $numrows_recsel = pg_num_rows($recordsel);
                                 for ($i = 0; $i < $numrows_recsel; $i++) {
                                     db_fieldsmemory($recordsel, $i);
@@ -856,7 +856,7 @@ if (!function_exists("db_selectrecord")) {
                 $nomedescr = $nome . "descr";
             }
 
-            if (is_resource($record)) {
+            if (is_resource($record) || $record instanceof \PgSql\Result) {
                 for ($sqli = 0; $sqli < pg_num_rows($record); $sqli++) {
                     if (pg_fetch_result($record, $sqli, 0) == @ $GLOBALS[$nome]) {
                         $nomec = pg_field_name($record, 1);
@@ -924,7 +924,7 @@ if (!function_exists("db_selectmultiple")) {
                 ?>
             >
                 <?php
-                if (gettype($record) == "resource") {
+                if (gettype($record) == "resource" || $record instanceof \PgSql\Result) {
                     for ($sqli = 0; $sqli < pg_num_rows($record); $sqli++) {
                         if ($sqli % 2 == 0) {
                             $color = "#D7CC06";
@@ -934,7 +934,7 @@ if (!function_exists("db_selectmultiple")) {
                         $sqlv = pg_fetch_result($record, $sqli, 0);
                         $sqlv1 = pg_fetch_result($record, $sqli, 1);
                         $esta_selecionado = "";
-                        if ($db_opcao != 1 && $db_opcao != 22 && is_resource($record_select)) {
+                        if ($db_opcao != 1 && $db_opcao != 22 && (is_resource($record_select) || $record_select instanceof \PgSql\Result)) {
                             for ($sqls = 0; $sqls < pg_num_rows($record_select); $sqls++) {
                                 $sqlsv = pg_fetch_result($record_select, $sqls, 0);
                                 if ($sqlsv == $sqlv) {
@@ -981,7 +981,7 @@ if (!function_exists("db_selectmultiple")) {
             <?php
         } else {
             if (!is_int($record_select) && $record_select != false) {
-                if (gettype($record) == "resource") {
+                if (gettype($record) == "resource" || $record instanceof \PgSql\Result) {
                     if (pg_num_rows($record_select) > 0) {
                         db_selectrecord($nome, $record_select, true, ($db_opcao == 3 ? 2 : $db_opcao), "", $nomevar = "", $bgcolor = "", $todos = "", $onchange = "");
                     }

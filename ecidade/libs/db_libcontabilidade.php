@@ -3675,7 +3675,7 @@ class cl_translan extends cl_contranslan
          */
         if ($this->sql != $this->sSqlRegrasTransacao) {
             $this->rsRegrasTransacao = $this->sql_record($this->sql);
-            $this->iRegrasTransacao = is_resource($this->rsRegrasTransacao) ? pg_num_rows($this->rsRegrasTransacao) : 0;
+            $this->iRegrasTransacao = (is_resource($this->rsRegrasTransacao) || $this->rsRegrasTransacao instanceof \PgSql\Result) ? pg_num_rows($this->rsRegrasTransacao) : 0;
             $this->sSqlRegrasTransacao = $this->sql;
         }
 

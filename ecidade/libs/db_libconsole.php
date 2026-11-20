@@ -80,7 +80,7 @@ function db_log($sLog="", $sArquivo="", $iTipo=0, $lLogDataHora=true, $lQuebraAn
 // 
 function db_query($pConexao, $sSql, $sArquivoLog="", $lErroDie=true,$lIgnoreAll=false) {
 
-  if(!is_resource($pConexao)) {
+  if(!(is_resource($pConexao) || $pConexao instanceof \PgSql\Connection)) {
     db_log("ERRO: db_query - Conexao Invalida", $sArquivoLog);
     if($lErroDie) {
       die();
@@ -169,7 +169,7 @@ function db_existe_relacao($pConexao, $sEsquema="public", $sRelacao, $sTipo="tab
   $aTiposRelacao["tipo"]      = "c"; // relkind c = composite type 
   $aTiposRelacao["especial"]  = "s"; // relkind s = special
   $aTiposRelacao["toast"]     = "t"; // relkind t = toast table
-  if(!is_resource($pConexao) or db_empty($sRelacao)) {
+  if(!(is_resource($pConexao) || $pConexao instanceof \PgSql\Connection) or db_empty($sRelacao)) {
     return false;
   }
 
