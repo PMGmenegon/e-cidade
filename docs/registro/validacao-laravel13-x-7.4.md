@@ -16,12 +16,14 @@ Contêineres descartáveis, `--network none`, nas imagens construídas de `docke
 
 ```bash
 # da raiz do repositorio; D = pasta com os dois scripts (cp scratchpad/laravel8_validacao_*.php $D/) e $D/out gravavel
+mkdir -p ecidade/vendor   # ponto de montagem do vendor: sem ele o docker falha (rc 125, "read-only file system") num checkout novo
 for sc in medir matriz; do
   docker run --rm --network none -v $D:/s:ro -v $PWD/ecidade:/app:ro -v <vendor>:/app/vendor:ro -v $D/out:/o -e VENDOR=/app/vendor -w /app \
     <imagem> php -d memory_limit=1G /s/laravel8_validacao_$sc.php /app /o/$sc-<execucao>.json
 done
 python3 scratchpad/laravel13_validacao_compara.py $D/out/medir-l8-74.json $D/out/medir-l13-85.json   # idem para a matriz
 ```
+O laco roda os dois scripts para **uma** execucao; repita-o 3 vezes (`l8-74`, `l8-85` e `l13-85`), cada uma com a imagem e o vendor da tabela acima: 6 `docker run` ao todo. Os scripts gravam o JSON no arquivo dado como 2o argumento (`/o`, gravavel); por isso o bloco usa `docker run` direto em vez do `docker/composer-85/roda-isolado.sh`, que so devolve a saida padrao.
 
 O inventário é o mesmo da medição do Laravel 8: 288 nomes de form request, 270 com regras, 54 com regra de banco (`exists`/`unique`, tiradas e listadas), 14 que não carregam isoladas (`ECidade\Enum\…`, `ECidade\Lib\Session\DefaultSession`; falham pela mesma causa nas três execuções, só muda a aspa: `Class 'X'` no 7.4, `Class "X"` no 8.5). As 5 entradas por classe (vazia, válida, chave obrigatória ausente, campos vazios, campos array) e os 12 valores da matriz são os de antes.
 
