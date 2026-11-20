@@ -19,7 +19,7 @@ class ImgData_Stars extends ImgData {
     var $maxidx = 7 ;
     var $imgdata ;
 
-    public function ImgData_Stars() {
+    public function __construct() {
 //==========================================================
 // File: bstar_green_001.png
 //==========================================================

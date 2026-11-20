@@ -34,7 +34,7 @@ class FileBox
     /***********************************************************/
     /* Constructor Method
     /***********************************************************/
-    function FileBox($Description, $isdir)
+    function __construct($Description, $isdir)
     {
         global $Pixmaps;
         $tooltip = new GtkTooltips;

@@ -186,7 +186,7 @@ class ScintillaPHP extends GtkScintilla
     /***********************************************************/
     /* Constructor Method
     /***********************************************************/
-    function ScintillaPHP()
+    function __construct()
     {
         GtkScintilla::GtkScintilla();
         GtkScintilla::connect_object('char_added', array($this,'char_added'));

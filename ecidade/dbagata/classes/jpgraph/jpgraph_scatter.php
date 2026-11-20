@@ -71,7 +71,7 @@ class FieldPlot extends Plot {
 
 	$this->iAngles = $angles;
 
-	$this->Plot($datay,$datax);
+	parent::__construct($datay,$datax);
 	$this->value->SetAlign('center','center');
 	$this->value->SetMargin(15);
 
@@ -134,7 +134,7 @@ class ScatterPlot extends Plot {
     public function __construct($datay,$datax=false) {
 	if( (count($datax) != count($datay)) && is_array($datax))
 	    JpGraphError::RaiseL(20003);//("Scatterplot must have equal number of X and Y points.");
-	$this->Plot($datay,$datax);
+	parent::__construct($datay,$datax);
 	$this->mark = new PlotMark();
 	$this->mark->SetType(MARK_SQUARE);
 	$this->mark->SetColor($this->color);

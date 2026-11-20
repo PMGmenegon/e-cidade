@@ -34,7 +34,7 @@ class GtkPopDate
     /***********************************************************/
     /* Constructor Method
     /***********************************************************/
-    function GtkPopDate($Mask)
+    function __construct($Mask)
     {
         global $Pixmaps;
         $this->Mask = $Mask;

@@ -23,7 +23,7 @@ class StockPlot extends Plot {
 	if( count($datay) % $this->iTupleSize ) {
 	    JpGraphError::RaiseL(21001,$this->iTupleSize);//('Data values for Stock charts must contain an even multiple of '.$this->iTupleSize.' data points.');
 	}
-	$this->Plot($datay,$datax);
+	parent::__construct($datay,$datax);
 	$this->numpoints /= $this->iTupleSize;
     }
 //---------------

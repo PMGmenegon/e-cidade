@@ -342,7 +342,7 @@ class GanttGraph extends Graph {
 //---------------
 // CONSTRUCTOR
     // Create a new gantt graph
-    public function GanttGraph($aWidth=0,$aHeight=0,$aCachedName="",$aTimeOut=0,$aInline=true) {
+    public function __construct($aWidth=0,$aHeight=0,$aCachedName="",$aTimeOut=0,$aInline=true) {
 
 	// Backward compatibility
 	if( $aWidth == -1 ) $aWidth=0;
@@ -1508,7 +1508,7 @@ class TextProperty {
 
 //---------------
 // CONSTRUCTOR
-    function TextProperty($aTxt='') {
+    function __construct($aTxt='') {
 	$this->iText = $aTxt;
     }
 
@@ -1860,7 +1860,7 @@ class GanttScale {
 
 //---------------
 // CONSTRUCTOR
-    function GanttScale(&$aImg) {
+    function __construct(&$aImg) {
 	$this->iImg = &$aImg;
 	$this->iDateLocale = new DateLocale();
 
@@ -3153,7 +3153,7 @@ class GanttBar extends GanttPlotObject {
     var $progress;
 //---------------
 // CONSTRUCTOR
-    public function GanttBar($aPos,$aLabel,$aStart,$aEnd,$aCaption="",$aHeightFactor=0.6) {
+    public function __construct($aPos,$aLabel,$aStart,$aEnd,$aCaption="",$aHeightFactor=0.6) {
 	parent::GanttPlotObject();
 	$this->iStart = $aStart;
 	// Is the end date given as a date or as number of days added to start date?
@@ -3396,7 +3396,7 @@ class MileStone extends GanttPlotObject {
 
 //---------------
 // CONSTRUCTOR
-    public function MileStone($aVPos,$aLabel,$aDate,$aCaption="") {
+    public function __construct($aVPos,$aLabel,$aDate,$aCaption="") {
 	GanttPlotObject::GanttPlotObject();
 	$this->caption->Set($aCaption);
 	$this->caption->Align("left","center");
@@ -3488,8 +3488,8 @@ class MileStone extends GanttPlotObject {
 //===================================================
 
 class TextPropertyBelow extends TextProperty {
-    function TextPropertyBelow($aTxt='') {
-	parent::TextProperty($aTxt);
+    function __construct($aTxt='') {
+	parent::__construct($aTxt);
     }
 
     function GetColWidth(&$aImg,$margin) {
@@ -3506,7 +3506,7 @@ class GanttVLine extends GanttPlotObject {
 
 //---------------
 // CONSTRUCTOR
-    public function GanttVLine($aDate,$aTitle="",$aColor="black",$aWeight=3,$aStyle="dashed") {
+    public function __construct($aDate,$aTitle="",$aColor="black",$aWeight=3,$aStyle="dashed") {
 	GanttPlotObject::GanttPlotObject();
 	$this->iLine = new LineProperty();
 	$this->iLine->SetColor($aColor);

@@ -27,7 +27,7 @@
 
 class GtkValuedListItem extends GtkListItem
 {
-    public function GtkValuedListItem($label = "", $value = "")
+    public function __construct($label = "", $value = "")
     {
         GtkListItem::GtkListItem($label);
         $this->value = $value;
