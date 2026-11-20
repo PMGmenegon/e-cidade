@@ -39,4 +39,26 @@ printf '#!/usr/bin/env bash\n[ "$1" = image ] && exit 0\necho "docker: Error res
 quebra env DOCKER="$W/dockerquebrado" bash "$S" 8.5 "$W/t/ok.php"
 quebra bash "$S" 5.6 "$W/t/ok.php"
 quebra bash "$S" 7.4 "$W/t/nao-existe.php"
+# --- opcoes: ENV_EXTRA, stdin, EXTRA_RO, avisos separados (AVISOS, STDERR_ARQ)
+cat > "$W/t/opcoes.php" <<'PHP'
+<?php
+echo 'API=', getenv('API_DATA_AVAILABLE_URL'), ' extra=', getenv('OUTRA'), PHP_EOL;
+echo 'stdin=', trim((string)stream_get_contents(STDIN)), PHP_EOL;
+echo 'ro=', @file_get_contents('/dados/oi.txt'), PHP_EOL;
+echo 'gravavel=', var_export(@file_put_contents('/dados/x', '1') !== false, true), PHP_EOL;
+echo 'display_errors=', ini_get('display_errors'), ' log_errors=', var_export((bool)ini_get('log_errors'), true), PHP_EOL;
+echo $variavel_inexistente;
+PHP
+mkdir "$W/dados"; echo -n conteudo-ro > "$W/dados/oi.txt"; printf 'API_DATA_AVAILABLE_URL=http://api.invalid/\nOUTRA=valor\n' > "$W/envx"
+for v in 7.4 8.5; do
+  ven="$V74"; [ "$v" = 8.5 ] && ven="$V85"
+  echo ola | env VENDOR="$ven" ENV_EXTRA="$W/envx" EXTRA_RO="$W/dados:/dados" STDERR_ARQ="$W/err$v" bash "$S" "$v" "$W/t/opcoes.php" > "$W/o$v" 2>"$W/e$v"; rc=$?; n=$((n+1))
+  { [ $rc -eq 0 ] && grep -q '^API=http://api.invalid/ extra=valor$' "$W/o$v" && grep -q '^stdin=ola$' "$W/o$v" && grep -q '^ro=conteudo-ro$' "$W/o$v" \
+    && grep -q '^gravavel=false$' "$W/o$v" && grep -q '^display_errors=.*log_errors=false' "$W/o$v"; } && echo "ok   opcoes $v (ENV_EXTRA, stdin, EXTRA_RO somente leitura)" || { f=$((f+1)); echo "FALHOU: opcoes $v rc=$rc"; cat "$W/o$v" "$W/e$v"; }
+  n=$((n+1)); { grep -q 'Undefined variable' "$W/err$v" && ! grep -q 'Undefined variable' "$W/o$v" "$W/e$v"; } && echo "ok   aviso do $v so no STDERR_ARQ: $(grep -o '[A-Za-z ]*: Undefined variable' "$W/err$v" | head -1)" || { f=$((f+1)); echo "FALHOU: aviso $v"; cat "$W/err$v"; }
+done
+grep -q '^Warning: Undefined' "$W/err8.5" && grep -q '^Notice: Undefined' "$W/err7.4" && echo "ok   a diferenca 7.4 (Notice) x 8.5 (Warning) fica visivel" || { f=$((f+1)); echo "FALHOU: Notice x Warning"; }
+n=$((n+1)); echo x | env VENDOR="$V85" AVISOS=0 STDERR_ARQ="$W/errsem" bash "$S" 8.5 "$W/t/opcoes.php" >"$W/o" 2>/dev/null; { ! grep -q Undefined "$W/errsem" && grep -q 'display_errors=' "$W/o"; } && echo "ok   AVISOS=0 nao liga display_errors (php.ini da imagem)" || { f=$((f+1)); echo "FALHOU: AVISOS=0"; cat "$W/o"; }
+quebra env EXTRA_RO="/nao/existe:/x" bash "$S" 7.4 "$W/t/ok.php"
+quebra env ENV_EXTRA="$W/nao-existe" bash "$S" 7.4 "$W/t/ok.php"
 echo "$((n-f))/$n"; [ "$f" -eq 0 ]
