@@ -31,7 +31,7 @@ foreach (array('pgsql', 'mysql', 'sqlite', 'sqlsrv') as $drv) {
 
 $avisosBoot = ob_get_clean();
 $saida = fopen(getenv('SAIDA') ?: 'php://stdout', 'w');
-fwrite($saida, json_encode(array('boot' => true, 'modo' => $modo, 'php' => PHP_VERSION, 'laravel' => $app->version(), 'avisos_de_boot' => substr_count($avisosBoot, 'Deprecated'), 'avisos_de_boot_texto' => preg_split('/\n+/', trim(str_replace(getcwd(), '/app', $avisosBoot)))), JSON_UNESCAPED_SLASHES), "\n");
+fwrite($saida, json_encode(array('boot' => true, 'modo' => $modo, 'php' => PHP_VERSION, 'laravel' => $app->version(), 'avisos_de_boot' => substr_count($avisosBoot, 'Deprecated'), 'avisos_de_boot_texto' => preg_split('/\n+/', trim(str_replace(getcwd(), '/app', $avisosBoot)))), JSON_UNESCAPED_SLASHES) . "\n");
 ob_start();
 $vivas = array();
 foreach ($app['router']->getRoutes()->getRoutes() as $r) {
