@@ -1,9 +1,9 @@
 <?php
 // PHP8-51: le os "command" serializados por um runtime (arquivo de jobs.php) e mostra o estado de cada objeto
 // (classe e propriedades ordenadas por nome, recursivo), sem restaurar model (identificador fica como esta).
-chdir('/e');
-require '/e/bootstrap.php';
-$app = require '/e/bootstrap/app.php';
+chdir('/app');
+require '/app/bootstrap.php';
+$app = require '/app/bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 function estado($v, $n = 0) {
   if ($v instanceof DateTimeInterface) { return get_class($v) . ' ' . $v->format('Y-m-d H:i:s.u e'); }   // o 7.4 expoe date/timezone como propriedade, o 8 nao

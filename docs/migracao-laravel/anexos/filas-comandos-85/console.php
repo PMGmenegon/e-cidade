@@ -2,9 +2,9 @@
 // PHP8-51: sobe o kernel de console como o artisan (sem banco) e lista (var_export): cada comando (nome, descricao,
 // oculto, argumentos e opcoes com padrao) e cada evento do agendamento (comando, cron, fuso, flags e as 3
 // proximas execucoes a partir de 2026-01-01 00:00 no fuso do evento).
-chdir('/e');
-require '/e/bootstrap.php';
-$app = require '/e/bootstrap/app.php';
+chdir('/app');
+require '/app/bootstrap.php';
+$app = require '/app/bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 $saida = ['comandos' => [], 'agenda' => []];

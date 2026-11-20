@@ -1,8 +1,8 @@
 <?php
 // PHP8-51: funcoes que o Laravel 6 removeu e que o codigo do PR ainda chama (array_pluck, str_random), e
 // str_contains (20 chamadas): no 7.4 vem do symfony/polyfill-php80, no 8.5 e nativa. Mesmo carregamento das telas.
-chdir('/e');
-require '/e/bootstrap.php';
+chdir('/app');
+require '/app/bootstrap.php';
 $casos = [
   'array_pluck (ComissaoController.php:75)' => function () { return array_pluck([['m' => 1], ['m' => 2]], 'm'); },
   'str_random (ModelFactory.php:22)' => function () { return str_random(10); },
