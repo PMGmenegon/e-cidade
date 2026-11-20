@@ -15,7 +15,11 @@ O `ecidade/composer.lock` do PR traz `lcobucci/jwt` **3.4.0** (`composer.json` f
 | 4.2.1, 4.3.0 | `InvalidKeyProvided: Key cannot be empty`: o 8.3.2 passa `InMemory::plainText('')` como chave de verificação e a 4.2 passou a recusar chave vazia |
 | 5.7.0 | só com `league/oauth2-server` ^8.5 (8.5.5) |
 
-`~4.1.0` (4.1.5) mantém `league/oauth2-server` 8.3.2 e `laravel/passport` 10.4.2 como estão no lock do PR: muda só `lcobucci/jwt` e acrescenta `lcobucci/clock` (^2 || ^3, dependência da 4.x). A 4.0.4 também serve; a 4.1.5 é a mais nova que serve. Subir o `league/oauth2-server` para o 8.5.x permitiria a 4.3/5.x, mas é troca maior e fica como alternativa.
+`~4.1.0` (4.1.5) mantém `league/oauth2-server` 8.3.2 e `laravel/passport` 10.4.2 como estão no lock do PR: muda só `lcobucci/jwt` e acrescenta `lcobucci/clock` (a 4.1.5 pede `^2.0`).
+
+**`lcobucci/clock` precisa de trava própria.** Com o `update` rodando com `--ignore-platform-req=php+`, o resolvedor escolhe a 2.3.0, que declara `php ~8.1.0 || ~8.2.0` e também exclui o 8.5 (e puxa `stella-maris/clock`). As 2.x que aceitam o 8.5: 2.0.0 (`^7.4 || ^8.0`), 2.1.0 e 2.2.0 (`^8.0`, esta com `stella-maris/clock`). Foi fixada a **2.0.0**: a menor troca, sem pacote a mais além do próprio `lcobucci/clock`. Medido: `composer prohibits php 8.5.12 --locked` sem nenhum `lcobucci/*` (sobram os 9 pacotes da PHP8-87).
+
+A 4.0.4 também serve; a 4.1.5 é a mais nova que serve. Subir o `league/oauth2-server` para o 8.5.x permitiria a 4.3/5.x, mas é troca maior e fica como alternativa.
 
 O `league/oauth2-server` 8.3.2 e o Passport 10.4.2 já usam a API que a 3.4 e a 4.x têm em comum (`Configuration`, `InMemory`, `claims()->get()`, `Configuration::forUnsecuredSigner()->parser()`), por isso nada do código deles muda.
 
@@ -56,7 +60,7 @@ O 8.5 com a 3.4.0 morre no primeiro caso (`InvalidKeyProvided`). O 7.4 com a 3.4
 
 ## Estado
 
-- Feito: `ecidade/composer-85.json` com `"lcobucci/jwt": "~4.1.0"` e `ecidade/composer-85.lock` regerado com `bash docker/composer-85/composer-85.sh update lcobucci/jwt --no-install --no-scripts --ignore-platform-req=php+`. A trava muda em 3 pacotes, de 165 para 167: `lcobucci/jwt` 3.4.0 para 4.1.5, e entram `lcobucci/clock` 2.3.0 e `stella-maris/clock` 0.1.7. `validate` sem erro; `install` da trava no `runtime-85/vendor` com rc=0 e `lcobucci/jwt` 4.1.5.
+- Feito: `ecidade/composer-85.json` com `"lcobucci/jwt": "~4.1.0"` e `"lcobucci/clock": "2.0.0"`, e `ecidade/composer-85.lock` regerado com `bash docker/composer-85/composer-85.sh update lcobucci/jwt lcobucci/clock --no-install --no-scripts --ignore-platform-req=php+`. A trava muda em 2 pacotes, de 165 para 166: `lcobucci/jwt` 3.4.0 para 4.1.5 e entra `lcobucci/clock` 2.0.0. `validate` sem trava desatualizada; `install` da trava no `runtime-85/vendor` com rc=0.
 - O 7.4 não muda: `ecidade/composer.json` e `ecidade/composer.lock` iguais aos da `laravel/integracao-74` (`git diff` vazio); nenhum PHP mudou.
 - A mesma prova rodada com o `vendor/` real do 8.5 (`runtime-85/vendor` montado em `/app/vendor`, PHP 8.5.12, `league/oauth2-server` 8.3.2 e `nyholm/psr7` da trava) dá saída idêntica à do 7.4 + jwt 3.4.0 nos 9 casos.
 - A prova HTTP (`POST /v4/oauth/token`, Bearer de verdade) depende de banco e fica para quando houver decisão sobre o banco.
