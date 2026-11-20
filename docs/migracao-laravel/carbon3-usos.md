@@ -39,7 +39,7 @@ A trava da integracao nao foi tocada.
 **Nota sobre o locale (U1, U2, U3).** O boot do `AppServiceProvider` (linhas 25-39) faz `setlocale(LC_TIME,'pt-br')` (valor de `config('app.locale')`, que falha) e, **se `PHP_VERSION_ID < 74000`**,
 tenta `['ptb','pt_BR',...]`. `74000` e maior que `70433` (7.4.33) e menor que `80512` (8.5): o bloco **roda no 7.4 e nao roda no 8.5**. Medido reproduzindo essa sequencia, com `pt_BR` gerado nas
 imagens e o Carbon 2.72.5 do vendor do PR: no 7.4 `LC_TIME=pt_BR` e `formatLocalized('%B')` da `mar\xe7o` (ISO-8859-1, `6d6172e76f`); no 8.5, `LC_TIME=C` e `March`, **mesmo com o Carbon 2**.
-O 7.4 de referencia imprime o mes **em portugues**. A guarda e o assunto da PHP8-62 (T-139: `74000` -> `90000`); as medidas abaixo mostram os dois estados do boot (`boot original` e `boot com a T-139`).
+O 7.4 de referencia imprime o mes **em portugues**. A guarda e o assunto da PHP8-62 (T-139: `74000` -> `90000`); as medidas abaixo mostram os dois estados do boot (`boot original` e `boot com a T-139`). A T-139 ja esta integrada (`ee5df55c5`): o estado `boot com a T-139` e o da integracao e o da `base` de hoje no 8.5.
 O Carbon 3 nao tem o metodo em nenhum dos casos.
 
 ## Usos medidos que **nao** mudam
