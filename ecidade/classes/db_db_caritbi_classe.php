@@ -67,17 +67,17 @@ class cl_db_caritbi {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->codcaritbi = ($this->codcaritbi == ""?@$GLOBALS["HTTP_POST_VARS"]["codcaritbi"]:$this->codcaritbi);
+       $this->codcaritbi = ($this->codcaritbi === 0 || $this->codcaritbi === 0.0 || $this->codcaritbi == ""?@$GLOBALS["HTTP_POST_VARS"]["codcaritbi"]:$this->codcaritbi);
        $this->descricao = ($this->descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["descricao"]:$this->descricao);
      }else{
-       $this->codcaritbi = ($this->codcaritbi == ""?@$GLOBALS["HTTP_POST_VARS"]["codcaritbi"]:$this->codcaritbi);
+       $this->codcaritbi = ($this->codcaritbi === 0 || $this->codcaritbi === 0.0 || $this->codcaritbi == ""?@$GLOBALS["HTTP_POST_VARS"]["codcaritbi"]:$this->codcaritbi);
      }
    }
    // funcao para inclusao
    public function incluir ($codcaritbi){
       $this->atualizacampos();
       $this->codcaritbi = $codcaritbi;
-     if(($this->codcaritbi == null) || ($this->codcaritbi == "") ){
+     if(($this->codcaritbi == null) || ($this->codcaritbi === 0 || $this->codcaritbi === 0.0 || $this->codcaritbi == "") ){
        $this->erro_sql = " Campo codcaritbi nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

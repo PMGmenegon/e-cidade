@@ -78,7 +78,7 @@ class cl_db_leis {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->id_lei = ($this->id_lei == ""?@$GLOBALS["HTTP_POST_VARS"]["id_lei"]:$this->id_lei);
+       $this->id_lei = ($this->id_lei === 0 || $this->id_lei === 0.0 || $this->id_lei == ""?@$GLOBALS["HTTP_POST_VARS"]["id_lei"]:$this->id_lei);
        $this->numerolei = ($this->numerolei == ""?@$GLOBALS["HTTP_POST_VARS"]["numerolei"]:$this->numerolei);
        if($this->datalei == ""){
          $this->datalei_dia = ($this->datalei_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["datalei_dia"]:$this->datalei_dia);

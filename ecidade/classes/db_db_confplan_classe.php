@@ -73,11 +73,11 @@ class cl_db_confplan {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w10_valor = ($this->w10_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_valor"]:$this->w10_valor);
-       $this->w10_receit = ($this->w10_receit == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_receit"]:$this->w10_receit);
-       $this->w10_hist = ($this->w10_hist == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_hist"]:$this->w10_hist);
-       $this->w10_tipo = ($this->w10_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_tipo"]:$this->w10_tipo);
-       $this->w10_dia = ($this->w10_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_dia"]:$this->w10_dia);
+       $this->w10_valor = ($this->w10_valor === 0 || $this->w10_valor === 0.0 || $this->w10_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_valor"]:$this->w10_valor);
+       $this->w10_receit = ($this->w10_receit === 0 || $this->w10_receit === 0.0 || $this->w10_receit == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_receit"]:$this->w10_receit);
+       $this->w10_hist = ($this->w10_hist === 0 || $this->w10_hist === 0.0 || $this->w10_hist == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_hist"]:$this->w10_hist);
+       $this->w10_tipo = ($this->w10_tipo === 0 || $this->w10_tipo === 0.0 || $this->w10_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_tipo"]:$this->w10_tipo);
+       $this->w10_dia = ($this->w10_dia === 0 || $this->w10_dia === 0.0 || $this->w10_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["w10_dia"]:$this->w10_dia);
      }else{
      }
    }

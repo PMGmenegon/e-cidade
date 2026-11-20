@@ -73,13 +73,13 @@ class cl_aidofweb {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->y07_sequencial = ($this->y07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_sequencial"]:$this->y07_sequencial);
-       $this->y07_aidof = ($this->y07_aidof == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_aidof"]:$this->y07_aidof);
+       $this->y07_sequencial = ($this->y07_sequencial === 0 || $this->y07_sequencial === 0.0 || $this->y07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_sequencial"]:$this->y07_sequencial);
+       $this->y07_aidof = ($this->y07_aidof === 0 || $this->y07_aidof === 0.0 || $this->y07_aidof == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_aidof"]:$this->y07_aidof);
        $this->y07_ip = ($this->y07_ip == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_ip"]:$this->y07_ip);
        $this->y07_data = ($this->y07_data == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_data"]:$this->y07_data);
        $this->y07_hora = ($this->y07_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_hora"]:$this->y07_hora);
      }else{
-       $this->y07_sequencial = ($this->y07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_sequencial"]:$this->y07_sequencial);
+       $this->y07_sequencial = ($this->y07_sequencial === 0 || $this->y07_sequencial === 0.0 || $this->y07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y07_sequencial"]:$this->y07_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_aidofweb {
          $this->y07_sequencial = $y07_sequencial;
        }
      }
-     if(($this->y07_sequencial == null) || ($this->y07_sequencial == "") ){
+     if(($this->y07_sequencial == null) || ($this->y07_sequencial === 0 || $this->y07_sequencial === 0.0 || $this->y07_sequencial == "") ){
        $this->erro_sql = " Campo y07_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

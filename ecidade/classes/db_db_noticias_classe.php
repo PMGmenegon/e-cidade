@@ -78,7 +78,7 @@ class cl_db_noticias {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_codigo = ($this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
+       $this->s_codigo = ($this->s_codigo === 0 || $this->s_codigo === 0.0 || $this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
        $this->s_tit = ($this->s_tit == ""?@$GLOBALS["HTTP_POST_VARS"]["s_tit"]:$this->s_tit);
        if($this->s_data == ""){
          $this->s_data_dia = ($this->s_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["s_data_dia"]:$this->s_data_dia);
@@ -89,8 +89,8 @@ class cl_db_noticias {
          }
        }
        $this->s_texto = ($this->s_texto == ""?@$GLOBALS["HTTP_POST_VARS"]["s_texto"]:$this->s_texto);
-       $this->s_im_men = ($this->s_im_men == ""?@$GLOBALS["HTTP_POST_VARS"]["s_im_men"]:$this->s_im_men);
-       $this->s_im_mai = ($this->s_im_mai == ""?@$GLOBALS["HTTP_POST_VARS"]["s_im_mai"]:$this->s_im_mai);
+       $this->s_im_men = ($this->s_im_men === 0 || $this->s_im_men === 0.0 || $this->s_im_men == ""?@$GLOBALS["HTTP_POST_VARS"]["s_im_men"]:$this->s_im_men);
+       $this->s_im_mai = ($this->s_im_mai === 0 || $this->s_im_mai === 0.0 || $this->s_im_mai == ""?@$GLOBALS["HTTP_POST_VARS"]["s_im_mai"]:$this->s_im_mai);
      }else{
      }
    }

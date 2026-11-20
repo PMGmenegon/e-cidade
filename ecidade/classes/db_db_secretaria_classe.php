@@ -73,7 +73,7 @@ class cl_db_secretaria {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_codigo = ($this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
+       $this->s_codigo = ($this->s_codigo === 0 || $this->s_codigo === 0.0 || $this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
        $this->s_descricao = ($this->s_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["s_descricao"]:$this->s_descricao);
        $this->s_palavra = ($this->s_palavra == ""?@$GLOBALS["HTTP_POST_VARS"]["s_palavra"]:$this->s_palavra);
        $this->s_foto = ($this->s_foto == ""?@$GLOBALS["HTTP_POST_VARS"]["s_foto"]:$this->s_foto);

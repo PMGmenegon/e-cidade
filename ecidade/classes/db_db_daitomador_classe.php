@@ -87,12 +87,12 @@ class cl_db_daitomador {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w08_sequencial = ($this->w08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_sequencial"]:$this->w08_sequencial);
-       $this->w08_dai = ($this->w08_dai == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_dai"]:$this->w08_dai);
-       $this->w08_mes = ($this->w08_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_mes"]:$this->w08_mes);
-       $this->w08_aliquota = ($this->w08_aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_aliquota"]:$this->w08_aliquota);
-       $this->w08_valreceita = ($this->w08_valreceita == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_valreceita"]:$this->w08_valreceita);
-       $this->w08_imposto = ($this->w08_imposto == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_imposto"]:$this->w08_imposto);
+       $this->w08_sequencial = ($this->w08_sequencial === 0 || $this->w08_sequencial === 0.0 || $this->w08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_sequencial"]:$this->w08_sequencial);
+       $this->w08_dai = ($this->w08_dai === 0 || $this->w08_dai === 0.0 || $this->w08_dai == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_dai"]:$this->w08_dai);
+       $this->w08_mes = ($this->w08_mes === 0 || $this->w08_mes === 0.0 || $this->w08_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_mes"]:$this->w08_mes);
+       $this->w08_aliquota = ($this->w08_aliquota === 0 || $this->w08_aliquota === 0.0 || $this->w08_aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_aliquota"]:$this->w08_aliquota);
+       $this->w08_valreceita = ($this->w08_valreceita === 0 || $this->w08_valreceita === 0.0 || $this->w08_valreceita == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_valreceita"]:$this->w08_valreceita);
+       $this->w08_imposto = ($this->w08_imposto === 0 || $this->w08_imposto === 0.0 || $this->w08_imposto == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_imposto"]:$this->w08_imposto);
        $this->w08_nota = ($this->w08_nota == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_nota"]:$this->w08_nota);
        $this->w08_serie = ($this->w08_serie == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_serie"]:$this->w08_serie);
        $this->w08_servico = ($this->w08_servico == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_servico"]:$this->w08_servico);
@@ -100,7 +100,7 @@ class cl_db_daitomador {
        $this->w08_nome = ($this->w08_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_nome"]:$this->w08_nome);
        $this->w08_origem = ($this->w08_origem == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_origem"]:$this->w08_origem);
      }else{
-       $this->w08_sequencial = ($this->w08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_sequencial"]:$this->w08_sequencial);
+       $this->w08_sequencial = ($this->w08_sequencial === 0 || $this->w08_sequencial === 0.0 || $this->w08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w08_sequencial"]:$this->w08_sequencial);
      }
    }
    // funcao para inclusao
@@ -220,7 +220,7 @@ class cl_db_daitomador {
          $this->w08_sequencial = $w08_sequencial;
        }
      }
-     if(($this->w08_sequencial == null) || ($this->w08_sequencial == "") ){
+     if(($this->w08_sequencial == null) || ($this->w08_sequencial === 0 || $this->w08_sequencial === 0.0 || $this->w08_sequencial == "") ){
        $this->erro_sql = " Campo w08_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

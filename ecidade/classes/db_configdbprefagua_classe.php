@@ -71,12 +71,12 @@ class cl_configdbprefagua {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w16_sequencial = ($this->w16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_sequencial"]:$this->w16_sequencial);
-       $this->w16_instit = ($this->w16_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_instit"]:$this->w16_instit);
-       $this->w16_aguacortesituacao = ($this->w16_aguacortesituacao == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_aguacortesituacao"]:$this->w16_aguacortesituacao);
-       $this->w16_recibodbpref = ($this->w16_recibodbpref == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_recibodbpref"]:$this->w16_recibodbpref);
+       $this->w16_sequencial = ($this->w16_sequencial === 0 || $this->w16_sequencial === 0.0 || $this->w16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_sequencial"]:$this->w16_sequencial);
+       $this->w16_instit = ($this->w16_instit === 0 || $this->w16_instit === 0.0 || $this->w16_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_instit"]:$this->w16_instit);
+       $this->w16_aguacortesituacao = ($this->w16_aguacortesituacao === 0 || $this->w16_aguacortesituacao === 0.0 || $this->w16_aguacortesituacao == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_aguacortesituacao"]:$this->w16_aguacortesituacao);
+       $this->w16_recibodbpref = ($this->w16_recibodbpref === 0 || $this->w16_recibodbpref === 0.0 || $this->w16_recibodbpref == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_recibodbpref"]:$this->w16_recibodbpref);
      }else{
-       $this->w16_sequencial = ($this->w16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_sequencial"]:$this->w16_sequencial);
+       $this->w16_sequencial = ($this->w16_sequencial === 0 || $this->w16_sequencial === 0.0 || $this->w16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w16_sequencial"]:$this->w16_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_configdbprefagua {
          $this->w16_sequencial = $w16_sequencial;
        }
      }
-     if(($this->w16_sequencial == null) || ($this->w16_sequencial == "") ){
+     if(($this->w16_sequencial == null) || ($this->w16_sequencial === 0 || $this->w16_sequencial === 0.0 || $this->w16_sequencial == "") ){
        $this->erro_sql = " Campo w16_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
