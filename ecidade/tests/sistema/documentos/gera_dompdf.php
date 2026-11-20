@@ -13,6 +13,7 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 
+require_once ECIDADE_PATH . 'std/DBDate.php'; // usada pelos templates do memorando e do oficio
 @mkdir('/tmp/views', 0777, true);
 $files = new Filesystem();
 $resolver = new EngineResolver();
