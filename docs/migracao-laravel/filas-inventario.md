@@ -51,7 +51,7 @@ A ordem muda pelo `ReflectionClass::getProperties()` do PHP 8, explicado em `fil
 ## Como reproduzir
 
 ```bash
-bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh ecidade <vendor do 7.4> runtime-85/vendor <imagem 7.4> <imagem 8.5> <saída>
+bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh <vendor do 7.4> <vendor do 8.5> <saída>
 python3 docs/migracao-laravel/anexos/filas-comandos-85/inventario_filas.py ecidade \
   docs/migracao-laravel/inventario-8-a-13-ocorrencias.tsv \
   docs/migracao-laravel/filas-despachos.tsv docs/migracao-laravel/filas-classes.tsv <saída>

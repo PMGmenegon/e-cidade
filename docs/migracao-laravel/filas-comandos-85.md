@@ -2,11 +2,14 @@
 
 Medido em 20/11/2026, sem banco, sem rede e sem fila de verdade. O 7.4 é o do PR: a imagem construída de
 `docker/php74-apache` (PHP 7.4.33) com o `vendor/` instalado do `ecidade/composer.lock`. O 8.5 é a imagem de
-`docker/php85-apache` (PHP 8.5.12) com o `runtime-85/vendor` instalado do `ecidade/composer-85.lock`
-(`docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+`, o comando de
-`docs/registro/estrutura-85.md`). Os dois lados têm o mesmo Laravel 8.73.2 e sobem o kernel de console
-como o `artisan` faz (`bootstrap.php`, depois `bootstrap/app.php`). O `.env` de teste é o `.env.example` com chave e
-endereços fictícios e banco num host que não existe (`anexos/filas-comandos-85/gera_env.py`).
+`docker/php85-apache` (PHP 8.5.13) com o `vendor/` instalado da trava do 8.5 com Laravel 8.73.2: o
+`ecidade/composer-85.lock` do commit `a4f604512` (sha256 `f2f90dd5fa05f75d72aefd3593a1ec6dc51d49279c2900317c3cb22d40f225a6`),
+o último antes da troca para o Laravel 13 (PHP8-62), instalado com
+`docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+`. Os dois lados têm o mesmo
+Laravel 8.73.2 e sobem o kernel de console como o `artisan` faz (`bootstrap.php`, depois `bootstrap/app.php`). Cada
+trecho roda pelo `docker/composer-85/roda-isolado.sh`. O ambiente de teste é o que ele gera do `.env.example`, mais
+chave, token e endereços fictícios e banco num host que não existe (`anexos/filas-comandos-85/gera_env.py`, passado
+em `ENV_EXTRA`).
 
 **Resultado:** tudo igual. Nenhum arquivo do sistema muda nesta tarefa. A parte de e-mail e notificações da PHP8-51
 fica em tarefa própria.
@@ -20,7 +23,7 @@ fica em tarefa própria.
 | objeto da fila gravado num runtime e lido no outro (estado de todas as propriedades, recursivo) | 18 classes × 4 combinações (7.4→7.4, 7.4→8.5, 8.5→7.4, 8.5→8.5) | 1 estado só nas 4 |
 | `array_pluck` (`ComissaoController.php:75`) e `str_random` (`ModelFactory.php:22`) | 2 casos | igual: `Error: Call to undefined function` nos dois |
 | `str_contains`: polyfill `symfony/polyfill-php80` no 7.4, nativa no 8.5 | 14 casos | 12 com o mesmo resultado; os 2 com array dão `TypeError` nos dois, só o texto da mensagem muda |
-| avisos do PHP sem a máscara do `roda.sh` (seção abaixo) | 23 execuções de cada lado | 7.4: nenhum; 8.5: 12 `Deprecated` de carga por execução, nenhum warning ou notice; resultado igual |
+| avisos do PHP, no stderr e fora da saída comparada (seção abaixo) | todas as execuções | 7.4: nenhum; 8.5: 12 `Deprecated` de carga por execução, nenhum warning ou notice |
 
 ## Fila: o que muda e o que não muda
 
@@ -47,17 +50,17 @@ inexistente) e 3 sem construtor por `Exception` dos serviços do BNAFAR. Model v
 restauração, que consultaria o banco, não é feita.
 
 O `ProcessPayrollDataJob` encerra no construtor com `die()` quando falta `API_DATA_AVAILABLE_TOKEN`/`_URL`, igual nos
-dois. Com os dois valores fictícios no `.env` de teste, o payload sai.
+dois. Com os dois valores fictícios no ambiente de teste, o payload sai.
 
-## Avisos do PHP: o que a máscara do `roda.sh` tira
+## Avisos do PHP: fora da saída comparada
 
-O `roda.sh` sobe cada trecho com `-d error_reporting='E_ALL&~E_DEPRECATED&~E_NOTICE&~E_WARNING'`. Sem a máscara, os
-`Deprecated` que o 8.5 emite antes de o kernel subir sairiam no meio da saída, e o `cmp` acusaria diferença de texto,
-não de resultado. Depois do `bootstrap()` do kernel, o Laravel assume (`HandleExceptions.php:42` põe
-`error_reporting(-1)`): warning e notice viram exceção, que apareceria na saída comparada, e depreciação vai para o log.
+As imagens do projeto têm `display_errors=Off` e gravam o log de erros dentro do contêiner. O `roda-isolado.sh` sobe
+cada trecho com `display_errors=stderr`, `error_reporting=E_ALL` e `log_errors=0`, e o `roda.sh` guarda o stderr de cada
+lado em `err74.txt`/`err85.txt`, separado da saída comparada, com a contagem no resumo. Nada é filtrado. Depois do
+`bootstrap()` do kernel, o Laravel assume (`HandleExceptions.php:42` põe `error_reporting(-1)`): warning e notice viram
+exceção, que apareceria na saída comparada, e depreciação vai para o log.
 
-Medido sem a máscara, com `display_errors=stderr`, `log_errors=0` e `error_reporting=-1`, num checkout limpo, nas 23
-execuções de cada lado:
+Medido num checkout limpo, em todas as execuções:
 
 - 7.4: nenhuma mensagem.
 - 8.5: 12 `Deprecated` por execução, todas na carga, antes do kernel. São 0 warning e 0 notice.
@@ -67,7 +70,6 @@ execuções de cada lado:
   - `opis/closure/functions.php`: 1 (`unserialize()`);
   - `src/V3/Extension/ParameterBag.php`: 2 (tipo de retorno de `getIterator()` e `count()`);
   - `config/application.default.php:27`: 1 (constante `E_STRICT`).
-- Tirando essas linhas, a saída sem a máscara é igual à saída com ela em todos os arquivos comparados.
 
 São as mesmas 12 que o 8.5 dá ao subir o kernel em `laravel85-inicializacao.md` (lista em
 `laravel85-inicializacao/deprecated-8.5.txt`). As 3 do código do e-cidade (`ParameterBag.php` e
@@ -84,10 +86,11 @@ data fixa. A saída é `var_export`, porque as descrições estão em ISO-8859-1
 ## Como reproduzir
 
 ```bash
-bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh ecidade <vendor do 7.4> runtime-85/vendor <imagem 7.4> <imagem 8.5> <saída>
+bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh <vendor do 7.4> <vendor do 8.5> <saída>
 ```
 
-Os dois `vendor/` vêm antes, com rede (só dependências). O do 7.4 vai para uma pasta fora do repositório, pelo Composer
+Os dois `vendor/` vêm antes, com rede (só dependências). O do 8.5 é o de uma trava do 8.5; para a desta medição,
+num checkout do commit `a4f604512`. O do 7.4 vai para uma pasta fora do repositório, pelo Composer
 da própria imagem do 7.4, com `ecidade/` só leitura (o `mkdir` cria o ponto de montagem num checkout novo):
 
 ```bash
@@ -97,11 +100,11 @@ docker run --rm -u "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/ch -v "$PWD/ecidade
 bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+   # o do 8.5, em runtime-85/vendor
 ```
 
-O script monta `ecidade/` só para leitura, o `vendor/` de cada lado em `ecidade/vendor`, o `.env` de teste por cima,
-`bootstrap/cache` em `tmpfs` e `storage/` numa pasta da saída. Ele roda tudo com `--network none` e imprime o resumo
-da tabela acima. Antes, cria `ecidade/vendor` e um `ecidade/.env` vazio como pontos de montagem, se faltarem. Se um
-`docker run` falha ou falta saída de um dos lados, ele para com `FALHOU` e código de saída 1, em vez de comparar
-saídas vazias.
+O `roda.sh` chama o `docker/composer-85/roda-isolado.sh` para cada trecho, com `VENDOR` (o vendor de cada lado),
+`ENV_EXTRA` (as variáveis de `gera_env.py`), `EXTRA_RO` (a pasta de saída em `/o`, para a leitura cruzada),
+`STDERR_ARQ` (os avisos) e, na lista de classes, `STDIN=1`. O `artisan list` passa por `anexos/filas-comandos-85/artisan.php`,
+que faz o mesmo que o `ecidade/artisan` com os caminhos em `/app`. Se um trecho falha ou sai vazio, o `roda-isolado.sh`
+para, e o `roda.sh` imprime `FALHOU` e sai com código 1, em vez de comparar saídas vazias.
 
 ## Lacunas
 
@@ -109,6 +112,5 @@ saídas vazias.
   que vai para a fila e volta dela, não o trabalho do job.
 - Nenhum comando é executado além do `list`. A definição (assinatura, argumentos, opções) e o agendamento são os
   mesmos; o corpo de cada comando usa banco.
-- O `composer-85.lock` desta medição é o da integração com a troca do `lcobucci/jwt` para 4.1.5 (PHP8-60), e o
-  resultado é o mesmo da cópia do lock do PR. A troca dos 9 pacotes que excluem o 8.5 (PHP8-87) vem depois e não mexe
-  em fila, console nem agendamento. Ainda assim, o `roda.sh` deve ser rodado de novo sobre o lock final.
+- O 8.5 foi medido com a trava do Laravel 8.73.2 (a mesma versão do 7.4). Com a trava atual do 8.5 (Laravel 13), a
+  mesma prova roda passando o vendor dela no 2º argumento; essa medição é de etapa própria.
