@@ -49,3 +49,19 @@ foreach (['L' => 4, 'M' => 5] as $nivel => $tam) {
     \PHPQRCode\QRcode::png('https://exemplo.gov.br/pix/00020126580014br.gov.bcb.pix0136123e4567-e89b-12d3-a456-426655440000', "/tmp/qr_$nivel.png", $nivel, $tam, 2);
     emitir("qr-$nivel.png", file_get_contents("/tmp/qr_$nivel.png"));
 }
+
+// QR da propria Pimaco (Tag::qrcode -> endroid/qr-code 2.5 -> bacon/bacon-qr-code 1.0): o codigo proprio so usa barras, mas a
+// biblioteca expoe o QR e as duas dependencias excluem o PHP 8 no composer; aqui se mede se geram o mesmo QR no 8.5.
+foreach (['pimaco-qrcode.pdf' => false, 'pimaco-qrcode-rotulo.pdf' => true] as $nome => $comRotulo) {
+    $tags = [];
+    for ($i = 1; $i <= 6; $i++) {
+        $tag = new \Proner\PhpPimaco\Tag();
+        $tag->setPadding(2);
+        $tag->p("PLACA " . (5000 + $i))->br();
+        $url = "https://exemplo.gov.br/bem/" . (5000 + $i);
+        $comRotulo ? $tag->qrcode($url, 'BEM ' . (1000 + $i)) : $tag->qrcode($url);
+        $tags[] = $tag;
+    }
+    $e = new EtiquetasParaTeste($tags, 'A4351_MODELO01', ECIDADE_PATH . 'app/Domain/Patrimonial/Patrimonio/Relatorios/TemplatesEtiquetas/');
+    emitir($nome, $e->pdfEmString());
+}
