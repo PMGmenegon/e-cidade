@@ -36,22 +36,20 @@ Pre-requisitos de um checkout novo (nao versionados; sem eles a rodada nao repro
 `.env.example` tem `APP_KEY=` vazio, entao o Laravel responde `No application encryption key has been specified.` em
 vez de `Unauthenticated.` (4.372 pedidos no 7.4 e 4.348 no 8.5, e a rodada daria 48 diferencas em vez de 52, porque o
 `POST /v4/login` fica igual). Por isso o comando passa uma `APP_KEY` de teste, **gerada na hora e descartada**
-(junto das chaves OAuth). `ecidade/` e montado somente leitura: `vendor`, `bootstrap/cache`, `storage` e `tmp`
+(as chaves OAuth tambem sao geradas na hora, pelo proprio `php8_12_sem_token.php`). `ecidade/` e montado somente leitura: `vendor`, `bootstrap/cache`, `storage` e `tmp`
 precisam existir como pontos de montagem, criadas pelo usuario antes (`mkdir -p`); senao o Docker nao monta o vendor
 (`read-only file system`) e a rodada nao comeca.
 
 ```bash
 # imagem: php:<v>-cli + docker-php-ext-install bcmath calendar pcntl   (so isso; sem pgsql de proposito)
-# vendor 7.4: composer install do composer.lock do PR (COMPOSER_VENDOR_DIR fora da arvore); vendor 8.5: composer-85.sh install --no-scripts --no-plugins --ignore-platform-req=php+
+# vendor 7.4: composer install do composer.lock do PR (COMPOSER_VENDOR_DIR fora da arvore); vendor 8.5: composer-85.sh install --no-scripts --ignore-platform-req=php+   (SEM --no-plugins: aplica os patches da integracao, como em estrutura-85.md)
 mkdir -p ecidade/vendor ecidade/bootstrap/cache ecidade/storage ecidade/tmp
 KEY="base64:$(head -c 32 /dev/urandom | base64)"      # chave de teste, descartada no fim
 docker run --rm --network none -u $(id -u):$(id -g) -v $PWD/ecidade:/app:ro -v <vendor>:/app/vendor:ro \
   -v <pasta-saida>:/out -v $PWD/scratchpad:/s:ro --tmpfs /app/bootstrap/cache:uid=$(id -u) --tmpfs /app/storage:uid=$(id -u) \
   --tmpfs /app/tmp:uid=$(id -u) -e APP_KEY="$KEY" -e MODO=neutro -e APP_DEBUG=false -e SAIDA=/out/neutro-74.jsonl -w /app <imagem> sh -c '
   mkdir -p storage/framework/cache storage/framework/views storage/framework/sessions storage/logs
-  php -r "$k=openssl_pkey_new(array(\"private_key_bits\"=>2048)); openssl_pkey_export($k,$p);
-    file_put_contents(\"storage/oauth-private.key\",$p); file_put_contents(\"storage/oauth-public.key\",openssl_pkey_get_details($k)[\"key\"]);"
-  chmod 600 storage/oauth-*.key; php /s/php8_12_sem_token.php'
+  php /s/php8_12_sem_token.php'          # o script gera as chaves OAuth de teste em storage/ (tmpfs, descartado)
 python3 scratchpad/php8_12_sem_token_compara.py neutro-74.jsonl neutro-85.jsonl diferencas.tsv
 ```
 
