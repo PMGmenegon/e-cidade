@@ -175,3 +175,38 @@ Fora do lote:
 - Das telas-alvo, 3 do Tributário ainda divergem, agora pelo código da própria área: `div2_certtermo_002.php:89`
   (`pg_num_rows` sobre consulta que falhou) e `fis2_fis_autolote002`/`fis2_fis_notlanclote002`
   (`classes/db_fis_parfiscal_classe.php:893`, `pg_*` sem conexão aberta).
+
+## 7. Lote 4 — construtores estilo PHP 4 (20/11/2026)
+
+No 8.x, o método com o nome da classe deixou de ser construtor: o objeto nasce sem o estado que o construtor monta.
+Foram levantadas por análise de tokens as classes sem namespace que têm o método com o nome da classe e nenhum
+`__construct`, ou seja, as que o 7.4 de fato usa como construtor. São **153**: 144 em `dbagata/classes` (jpgraph 49,
+util 58, phpdocwriter 12, core 6, barcode128 2, reports 2, fpdf151 1), 7 em `libs/jpgraph` (`ImgData_*`, `PlotMark`),
+`PostgreSQLUtils` (`libs/db_libpostgres.php`) e `db_impcarne` (`fpdf151/impcarneGuiaQuitacaoItbi.php`).
+
+Um commit manual, 108 arquivos:
+- **Declarações:** só a linha da declaração muda, de `function X(` para `function __construct(`, nas 153.
+- **Chamadas pelo nome antigo:** as 29 chamadas ao construtor da mãe que o 7.4 executa (`parent::X(`, `$this->X(`,
+  `X::X(`) viram `parent::__construct(`. Em cada uma foi conferido que `X` é a mãe direta.
+- **Chamadas já quebradas, deixadas como estão:** as que apontam para classes que o PR #8 já tinha convertido para
+  `__construct` já falham no 7.4. São 13 no jpgraph de `libs/` e `div2_inicial_cda_002.php:161`.
+
+Prova:
+- `php -l` nos dois runtimes: os mesmos erros de antes. Já falhavam no 7.4 `util/FileBox.class`,
+  `util/GtkPopDate.class` e `libs/jpgraph/jpgraph_plotmark.inc`; só no 8.5, `jpgraph_gantt` e `jpgraph_pie` do
+  Agata (assinaturas, seção 4).
+- Objetos criados direto, com o código original e o novo: o 7.4 dá o mesmo estado nos dois. Com o lote, o 8.5 dá o
+  mesmo estado do 7.4 em 32 de 34 classes; sem o lote, quase todos nasciam vazios. Os 2 restantes não vêm deste lote:
+  - `ScatterPlot`: `count(false)` no construtor, que já era `__construct`. É aviso no 7.4 e `TypeError` no 8; fica para
+    o lote 5.
+  - `Grid`: efeito do teste, que passou `null` literal num parâmetro por referência.
+- **7.4 inalterado** nas 210 telas que carregam essas classes (Agata, barcode128, carnê do ITBI, `PostgreSQLUtils`): as
+  diferenças são só a hora atual. Num campo de hora e numa ata, a hora muda entre capturas; nos PDFs, o texto é idêntico.
+- **8.5:** bateria nas mesmas 210 telas, com **74 → 44 divergentes, 30 resolvidas** (relatórios do Agata) e **nenhuma
+  nova**.
+
+Achado durante a prova: a primeira versão tratava cada subpasta do `dbagata` como uma biblioteca separada e
+classificou como "já quebrada" a chamada `FPDF::FPDF()` de `reports/MyPdf.class`. Ela usa o `FPDF` de `fpdf151/`,
+que estava sendo renomeado. Por isso a comparação do 7.4 antes e depois acusou os relatórios do Agata respondendo
+com a página de erro. A classificação foi corrigida para tratar o `dbagata` inteiro como uma biblioteca, o lote foi
+reaplicado do zero e a bateria foi refeita; os números acima são da bateria refeita.
