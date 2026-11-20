@@ -242,6 +242,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `passport13-leitura-e-plano.md` | PHP8-39: Passport 13 e `/v4/login` sobre o código do PR (Passport 10.4.2) só por leitura: 14 pontos com arquivo:linha (6 mudam, 3 a conferir, 5 compatíveis), esquema `oauth_*` do PR × migrations do 13, o que o medido na base antiga ainda vale e o plano das provas P0-P9 para quando houver banco |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
