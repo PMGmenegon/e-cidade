@@ -86,14 +86,14 @@ class cl_gestorindicadorregistro {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->g05_sequencial = ($this->g05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_sequencial"]:$this->g05_sequencial);
-       $this->g05_gestorgrupoindicador = ($this->g05_gestorgrupoindicador == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_gestorgrupoindicador"]:$this->g05_gestorgrupoindicador);
-       $this->g05_gestorindicador = ($this->g05_gestorindicador == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_gestorindicador"]:$this->g05_gestorindicador);
-       $this->g05_instit = ($this->g05_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_instit"]:$this->g05_instit);
-       $this->g05_mes = ($this->g05_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_mes"]:$this->g05_mes);
-       $this->g05_ano = ($this->g05_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_ano"]:$this->g05_ano);
-       $this->g05_valor = ($this->g05_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_valor"]:$this->g05_valor);
-       $this->g05_meta = ($this->g05_meta == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_meta"]:$this->g05_meta);
+       $this->g05_sequencial = ($this->g05_sequencial === 0 || $this->g05_sequencial === 0.0 || $this->g05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_sequencial"]:$this->g05_sequencial);
+       $this->g05_gestorgrupoindicador = ($this->g05_gestorgrupoindicador === 0 || $this->g05_gestorgrupoindicador === 0.0 || $this->g05_gestorgrupoindicador == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_gestorgrupoindicador"]:$this->g05_gestorgrupoindicador);
+       $this->g05_gestorindicador = ($this->g05_gestorindicador === 0 || $this->g05_gestorindicador === 0.0 || $this->g05_gestorindicador == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_gestorindicador"]:$this->g05_gestorindicador);
+       $this->g05_instit = ($this->g05_instit === 0 || $this->g05_instit === 0.0 || $this->g05_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_instit"]:$this->g05_instit);
+       $this->g05_mes = ($this->g05_mes === 0 || $this->g05_mes === 0.0 || $this->g05_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_mes"]:$this->g05_mes);
+       $this->g05_ano = ($this->g05_ano === 0 || $this->g05_ano === 0.0 || $this->g05_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_ano"]:$this->g05_ano);
+       $this->g05_valor = ($this->g05_valor === 0 || $this->g05_valor === 0.0 || $this->g05_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_valor"]:$this->g05_valor);
+       $this->g05_meta = ($this->g05_meta === 0 || $this->g05_meta === 0.0 || $this->g05_meta == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_meta"]:$this->g05_meta);
        $this->g05_processado = ($this->g05_processado == "f"?@$GLOBALS["HTTP_POST_VARS"]["g05_processado"]:$this->g05_processado);
        if($this->g05_datalimite == ""){
          $this->g05_datalimite_dia = ($this->g05_datalimite_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_datalimite_dia"]:$this->g05_datalimite_dia);
@@ -104,7 +104,7 @@ class cl_gestorindicadorregistro {
          }
        }
      }else{
-       $this->g05_sequencial = ($this->g05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_sequencial"]:$this->g05_sequencial);
+       $this->g05_sequencial = ($this->g05_sequencial === 0 || $this->g05_sequencial === 0.0 || $this->g05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g05_sequencial"]:$this->g05_sequencial);
      }
    }
    // funcao para inclusao
@@ -191,7 +191,7 @@ class cl_gestorindicadorregistro {
          $this->g05_sequencial = $g05_sequencial;
        }
      }
-     if(($this->g05_sequencial == null) || ($this->g05_sequencial == "") ){
+     if(($this->g05_sequencial == null) || ($this->g05_sequencial === 0 || $this->g05_sequencial === 0.0 || $this->g05_sequencial == "") ){
        $this->erro_sql = " Campo g05_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
