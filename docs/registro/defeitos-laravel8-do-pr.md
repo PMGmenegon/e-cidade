@@ -1,6 +1,6 @@
 # Defeitos do Laravel 8 do PR #8 já presentes no PHP 7.4
 
-Registro de sete famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as quatro últimas lidas no código.
+Registro de oito famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as cinco últimas lidas no código (a última, de um inventário).
 São herança do código escrito para o Laravel 5.4 e rodado sobre o Laravel 8: não dependem do PHP 8.5 e **não foram corrigidos aqui** (só registro, para o grupo e para a DBSeller decidirem).
 
 | Família | Pontos na `base-php74` | Efeito no 7.4 |
@@ -12,6 +12,7 @@ São herança do código escrito para o Laravel 5.4 e rodado sobre o Laravel 8: 
 | Rota ausente para a tela `con4_manutencaoformulario001.php` | 1 chamada (`:500-506`), 1 controller sem rota | a chamada a `v4/api/configuracao/formulario/{id}/instituicao/{instituicao}` não tem rota em `routes/` |
 | Form request duplicado com o mesmo nome completo (`AutenticacaoRequest`) | 2 arquivos, 1 nome de classe | só o arquivo da pasta `ITBI` é carregado pelo autoload; o outro, com mais uma regra, nunca vale |
 | Factory legada sem o pacote que a carrega (`database/factories/ModelFactory.php`) | 1 arquivo, 1 `$factory->define` (`:15`) | o arquivo não roda; falha em `$factory` antes do `str_random` da linha 22 |
+| Front que chama rota `/v4` que não existe | 53 chamadas em 27 arquivos (29 em `tributario/cadastro`, 8 em `request-api-pix`) | a chamada não acha rota em `routes/` |
 
 ## 1. `Cache::put` com TTL em minutos
 
@@ -101,6 +102,12 @@ Conferência: `git grep -nE '^namespace App.Domain.Tributario.ITBI.Requests;' --
 O Laravel 8.73.2 do PR **não tem** essa classe (só `Illuminate\Database\Eloquent\Factories\Factory`, a factory por classe) e o pacote que a manteria, `laravel/legacy-factories`, não está no `composer.json` nem no `composer.lock`.
 Resultado no 7.4: o arquivo não é carregado por nada e, se fosse incluído, falharia na linha 15 (`$factory` indefinida) antes de chegar ao `str_random` da linha 22. A factory inteira está morta, não só uma chamada.
 Conferência: `git grep -nE '\$factory->define' -- ecidade/database | wc -l` dá 1 e `git grep -nE 'laravel/legacy-factories' -- ecidade/composer.json ecidade/composer.lock | wc -l` dá 0.
+
+## 8. Front que chama rota `/v4` que não existe
+
+O inventário das chamadas a `/v4` (`inventario-telas-v4.md`) achou **53 chamadas em 27 arquivos** do front (telas legadas, `scripts/` e componentes Vue) a caminhos que não estão registrados em `routes/`.
+29 são de `tributario/cadastro` (`emissao_ecarta`, `decad`, `calculo_iput`, `arquivo_xml_correios`: não há controller para elas na `base-php74`) e 8 de `tributario/arrecadacao/request-api-pix` (o `RequisicaoAPIPIXController` existe, mas nenhuma rota aponta para ele). A lista completa e o método estão em `inventario-telas-v4.md` e em `inventario-v4-chamadas.tsv` (classe `sem_rota`); não se repetem aqui.
+Conferência: `awk -F'\t' 'NR>1 && $6=="sem_rota"' docs/registro/inventario-v4-chamadas.tsv | wc -l` dá 53 e a mesma linha com `| cut -f1 | sort -u | wc -l` dá 27.
 
 ## Como foi medido
 
