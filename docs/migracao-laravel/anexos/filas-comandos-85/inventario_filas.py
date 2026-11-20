@@ -1,0 +1,58 @@
+# PHP8-51: inventario das filas do codigo do e-cidade, so por leitura (sem banco, sem PHP).
+# Uso: python3 inventario_filas.py <ecidade> <inventario-8-a-13-ocorrencias.tsv> <saida-despachos.tsv> <saida-classes.tsv>
+# - despachos: cada dispatch(, X::dispatch(, ->notify(, Queue::...->push*, com arquivo:linha, classe, fila e atraso
+# - classes: cada classe ShouldQueue (implements com nome curto ou qualificado), onde e despachada e os itens do
+#   inventario Laravel 8 -> 13 que citam o arquivo dela
+import os, re, subprocess, sys
+E_, OCOR, SAI_D, SAI_C = sys.argv[1:]
+def ler(a):
+    return open(os.path.join(E_, a), encoding='latin-1').read().split('\n')
+arqs = subprocess.run(['git', '-C', E_, 'ls-files', '*.php'], capture_output=True, text=True).stdout.split()
+arqs = [a for a in arqs if not a.startswith(('vendor/', 'tmp/'))]
+PAD = re.compile(r'(?:(?<![\w>$])dispatch\s*\(|(\w+)::dispatch\s*\(|->notify\s*\(|Queue::connection\([^)]*\)->(push\w*)\s*\()')
+classes = {}
+for a in arqs:
+    if not a.startswith('app/'): continue
+    t = '\n'.join(ler(a))
+    if re.search(r'class\s+\w+[^{;]*implements[^{;]*ShouldQueue', t):
+        classes[re.search(r'class\s+(\w+)', t).group(1)] = a
+desp = []
+for a in arqs:
+    ls = ler(a)
+    for i, l in enumerate(ls):
+        if re.match(r'\s*(//|\*|#|/\*)', l): continue
+        m = PAD.search(l)
+        if not m: continue
+        trecho = ' '.join(ls[i:i + 8])
+        if m.group(2): forma, alvo = 'Queue::connection()->' + m.group(2), '(payload guardado)'
+        elif m.group(1): forma, alvo = '::dispatch', m.group(1)
+        elif '->notify' in m.group(0): forma = '->notify'; n = re.search(r'new\s+(\w+)', trecho); alvo = n.group(1) if n else '?'
+        else:
+            forma = 'dispatch()'; n = re.search(r'dispatch\s*\(\s*\(?\s*new\s+(\w+)', trecho)
+            if n: alvo = n.group(1)
+            else:
+                v = re.search(r'dispatch\s*\(\s*(\$\w+)', l)
+                alvo = '?'
+                if v:
+                    for j in range(i, max(-1, i - 15), -1):
+                        n = re.search(re.escape(v.group(1)) + r'\s*=\s*new\s+(\w+)', ls[j])
+                        if n: alvo = n.group(1); break
+        fim = ' '.join(ls[i:i + 12]).split(';')[0]
+        fila = re.search(r'->onQueue\(([^)]*)\)', fim); con = re.search(r'->onConnection\(([^)]*)\)', fim)
+        atraso = 'sim' if re.search(r'->delay\(', ' '.join(ls[max(0, i - 3):i + 1]) + fim) else ''
+        vai = 'fila' if alvo in classes else ('na hora (nao e ShouldQueue)' if alvo not in ('?', '(payload guardado)') else 'fila (reenvio)')
+        desp.append((f'{a}:{i + 1}', forma, alvo, fila.group(1) if fila else '', con.group(1) if con else '', atraso, vai))
+with open(SAI_D, 'w') as f:
+    f.write('arquivo:linha\tforma\tclasse\tfila (onQueue)\tconexao (onConnection)\tatraso\tvai para\n')
+    for d in desp: f.write('\t'.join(d) + '\n')
+itens = {}
+for l in open(OCOR, encoding='utf-8').read().split('\n')[1:]:
+    c = l.split('\t')
+    if len(c) == 4: itens.setdefault(c[3].split(':')[0], set()).add(f'{c[0]} {c[1]}')
+with open(SAI_C, 'w') as f:
+    f.write('classe\tarquivo\tdespachada em\titens do inventario 8 -> 13 no arquivo\n')
+    for c in sorted(classes, key=lambda k: classes[k]):
+        onde = ' '.join(d[0] for d in desp if d[2] == c)
+        f.write(f'{c}\t{classes[c]}\t{onde or "(nenhum ponto no codigo)"}\t{"; ".join(sorted(itens.get(classes[c], [])))}\n')
+print(f'classes ShouldQueue: {len(classes)}; pontos de despacho: {len(desp)} '
+      f'(fila: {sum(1 for d in desp if d[6].startswith("fila"))}, na hora: {sum(1 for d in desp if d[6].startswith("na hora"))})')
