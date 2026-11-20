@@ -24,6 +24,10 @@ Cada entrada de `camadas/unitario.lista` roda num `docker run --rm --network non
 pasta de saida). Bootstrap: `tests/suite/bootstrap.php` (autoload do vendor + `bootstrap.php` do sistema). Saida em
 `tests/suite/relatorios/` (fora do git): um `.txt` e um JUnit por entrada, e `resumo-74.txt`/`resumo-85.txt`.
 
+Conferido a partir de um checkout novo (`git worktree add --detach`, sem `ecidade/vendor`), com o vendor 8.5 de
+`composer-85.sh install --no-scripts --ignore-platform-req=php+` (plugin de patches ligado): o `rodar.sh` criou
+`ecidade/vendor` com o dono de quem rodou e as duas rodadas deram os mesmos numeros da tabela abaixo (520 testes nos dois).
+
 ## O que roda sem banco (medido)
 
 | Entrada | 7.4 | 8.5 |
