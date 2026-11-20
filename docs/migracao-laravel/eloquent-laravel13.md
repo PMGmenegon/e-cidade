@@ -10,7 +10,7 @@ Runner: `bash scratchpad/roda_models_l13.sh` (compara com a referencia da T-124 
 |---|---|
 | 7.4 (vendor do PR) x referencia da T-124 | **identica** (3.204 linhas) |
 | 8.5 com Laravel 13, **sem** sobreposicao | 57 dos 58 models **identicos ao 7.4**; 1 model difere (abaixo) - `saida-8.5-laravel13-sem-sobreposicao.txt`, `diferenca-sem-sobreposicao.txt` |
-| 8.5 com Laravel 13, **com** a sobreposicao do item abaixo | 3.204 linhas; **16 linhas de diferenca, todas na escrita (`set`) de `c142_data`/`c142_validade`**; leitura, `toArray()`, `toJson()` e JSON inteiro identicos - `saida-8.5-laravel13.txt`, `diferenca-7.4-8.5.txt` |
+| 8.5 com Laravel 13, **com** a sobreposicao do item abaixo | **identica ao 7.4 byte a byte** (3.204 linhas, 0 linhas de diferenca: leitura, `toArray()`, `toJson()`, JSON inteiro **e escrita**) - `saida-8.5-laravel13.txt`; `diferenca-7.4-8.5.txt` vazia |
 
 Os 57 models (inclusive os 21 que a T-124 passou de `$dates` para `$casts` `datetime`) saem **iguais ao 7.4 byte a byte** no Eloquent 13 + Carbon 3: `Illuminate\Support\Carbon`, JSON em ISO-8601 UTC com microssegundos
 (`2021-03-15T13:20:30.000000Z`), data so com dia (`...T03:00:00.000000Z`), valor gravado (`Y-m-d H:i:s`), `''` = agora, `15/03/2021` = `InvalidFormatException`, `null`. A troca `$dates` -> `$casts` da T-124 e o que faz isso valer no 13
@@ -18,14 +18,20 @@ Os 57 models (inclusive os 21 que a T-124 passou de `$dates` para `$casts` `date
 
 ## A unica quebra: cast `DateTime` (maiusculas) em `Assinador/CertificadoUsuario`
 
-`app/Domain/Assinador/CertificadoUsuario.php:22-23` declara `'c142_data' => 'DateTime'` e `'c142_validade' => 'DateTime'`. No Laravel 8 a **leitura** funcionava (o `getCastType` baixava o nome para `datetime`) e a **escrita** falhava
-(`Call to undefined method DateTime::set()`, igual no 7.4 e no 8.5). No Laravel 13 o `getCastType` (`HasAttributes.php:978`) testa `class_exists($castType)` e trata `DateTime` como classe de cast personalizada, sem baixar o nome:
-**ate a leitura** passa a dar `Error: Call to undefined method DateTime::get()`. Uso real no codigo: `CertificadoPfxService.php:47` le `$certificadoUsuario->c142_validade <= new DateTime()` (verificar validade do certificado) e `:118-119` escreve as duas colunas.
+`app/Domain/Assinador/CertificadoUsuario.php:22-23` declara `'c142_data' => 'DateTime'` e `'c142_validade' => 'DateTime'`.
 
-Correcao minima, **por sobreposicao do 8.5** (nao no proprio arquivo): trocar `'DateTime'` por `'datetime'` mudaria o 7.4 (a escrita, que hoje lanca erro, passaria a funcionar), entao a copia vai para `ecidade/app-85/Domain/Assinador/CertificadoUsuario.php`,
-so com essas 2 linhas diferentes (`diff` das duas: 2 linhas). `bash docker/composer-85/composer-85.sh dump-autoload --no-scripts` avisa, como esperado:
-`Ambiguous class resolution, "App\Domain\Assinador\CertificadoUsuario" was found in both "/app/app-85/Domain/Assinador/CertificadoUsuario.php" and "/app/app/Domain/Assinador/CertificadoUsuario.php", the first will be used.` (1 aviso; o do 8.5 vence).
-O 7.4 le o `app/` e fica intacto. Com a sobreposicao, a leitura, `toArray()` e `toJson()` dos dois atributos voltam a sair como no 7.4; a escrita funciona (`'2021-03-15 10:20:30'`), em vez de lancar erro.
+- **7.4 (Laravel 8 do PR):** a **leitura** funciona (o `getCastType` baixava o nome para `datetime`); a **escrita lanca** `Error: Call to undefined method DateTime::set()` (o Laravel 8 trata a classe `DateTime` como cast
+  personalizado ao gravar); um valor que nao e data (`15/03/2021`) lanca antes `InvalidFormatException`, porque o Laravel 8 converte a data primeiro. Caminho alcancavel: `CertificadoPfxService.php:114-119` grava `c142_data` e `c142_validade` e chama `save()`; `:47` le `c142_validade`.
+- **8.5 com o Laravel 13, sem sobreposicao:** a **leitura tambem falha** (`Call to undefined method DateTime::get()`: o `getCastType` do 13, `HasAttributes.php:978`, testa `class_exists($castType)` e trata `DateTime` como classe, sem baixar o nome).
+
+Regra do projeto (referencia = 7.4; so atualizar): o 8.5 repete o 7.4 e nao habilita no 8.5 uma gravacao que o 7.4 nao faz. Correcao **por sobreposicao do 8.5**: `ecidade/app-85/Domain/Assinador/CertificadoUsuario.php` (o 7.4 le o `app/` e fica intacto):
+
+- `$casts` com `'datetime'` nas duas colunas: a **leitura** volta a sair como no 7.4;
+- `setAttribute()` para `c142_data`/`c142_validade`: converte o valor como o Laravel 8 (`fromDateTime`, que lanca `InvalidFormatException` para data invalida) e **lanca o mesmo** `Error: Call to undefined method DateTime::set()`: a **escrita** repete o 7.4.
+
+`bash docker/composer-85/composer-85.sh dump-autoload --no-scripts` avisa, como esperado: `Ambiguous class resolution, "App\Domain\Assinador\CertificadoUsuario" was found in both "/app/app-85/..." and "/app/app/...", the first will be used.` (1 aviso; o do 8.5 vence).
+Prova sem banco: os 9 valores de entrada (`d`, `dh`, `us`, `br`, `ts`, `nulo`, `vazio`, objeto `Carbon` e objeto `DateTime`) x escrita de `c142_data` e `c142_validade` saem iguais ao 7.4 (mesma classe de erro e mesma mensagem). O defeito do 7.4 (a gravacao do certificado do usuario nunca funciona)
+e do Laravel do PR e entra no registro unico da PHP8-49 (`defeitos-laravel8-do-pr.md`, da T-105/T-148); aqui so se aponta, sem corrigir.
 
 ## Fora do que esta prova mede
 

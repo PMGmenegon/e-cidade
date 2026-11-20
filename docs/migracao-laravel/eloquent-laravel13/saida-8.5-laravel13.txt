@@ -4,15 +4,15 @@ MODEL App\Domain\Assinador\CertificadoUsuario fmt=Y-m-d H:i:s attrs=2
   c142_data d get=Illuminate\Support\Carbon|2021-03-15 00:00:00.000000 -03:00
   c142_data d arr='2021-03-15T03:00:00.000000Z'
   c142_data d json='2021-03-15T03:00:00.000000Z'
-  c142_data d set='2021-03-15 00:00:00'
+  c142_data d set EXC Error: Call to undefined method DateTime::set()
   c142_data dh get=Illuminate\Support\Carbon|2021-03-15 10:20:30.000000 -03:00
   c142_data dh arr='2021-03-15T13:20:30.000000Z'
   c142_data dh json='2021-03-15T13:20:30.000000Z'
-  c142_data dh set='2021-03-15 10:20:30'
+  c142_data dh set EXC Error: Call to undefined method DateTime::set()
   c142_data us get=Illuminate\Support\Carbon|2021-03-15 10:20:30.123456 -03:00
   c142_data us arr='2021-03-15T13:20:30.123456Z'
   c142_data us json='2021-03-15T13:20:30.123456Z'
-  c142_data us set='2021-03-15 10:20:30'
+  c142_data us set EXC Error: Call to undefined method DateTime::set()
   c142_data br get EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
   c142_data br arr EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
   c142_data br json EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
@@ -20,29 +20,29 @@ MODEL App\Domain\Assinador\CertificadoUsuario fmt=Y-m-d H:i:s attrs=2
   c142_data ts get=Illuminate\Support\Carbon|2021-03-15 09:20:30.000000 -03:00
   c142_data ts arr='2021-03-15T12:20:30.000000Z'
   c142_data ts json='2021-03-15T12:20:30.000000Z'
-  c142_data ts set='2021-03-15 09:20:30'
+  c142_data ts set EXC Error: Call to undefined method DateTime::set()
   c142_data nulo get=NULL
   c142_data nulo arr='(ausente)'
   c142_data nulo json='(ausente)'
-  c142_data nulo set='(ausente)'
+  c142_data nulo set EXC Error: Call to undefined method DateTime::set()
   c142_data vazio get=Illuminate\Support\Carbon|2030-01-01 12:00:00.000000 -03:00
   c142_data vazio arr='2030-01-01T15:00:00.000000Z'
   c142_data vazio json='2030-01-01T15:00:00.000000Z'
-  c142_data vazio set=''
-  c142_data carbon set='2021-03-15 10:20:30'
-  c142_data datetime set='2021-03-15 10:20:30'
+  c142_data vazio set EXC Error: Call to undefined method DateTime::set()
+  c142_data carbon set EXC Error: Call to undefined method DateTime::set()
+  c142_data datetime set EXC Error: Call to undefined method DateTime::set()
   c142_validade d get=Illuminate\Support\Carbon|2021-03-15 00:00:00.000000 -03:00
   c142_validade d arr='2021-03-15T03:00:00.000000Z'
   c142_validade d json='2021-03-15T03:00:00.000000Z'
-  c142_validade d set='2021-03-15 00:00:00'
+  c142_validade d set EXC Error: Call to undefined method DateTime::set()
   c142_validade dh get=Illuminate\Support\Carbon|2021-03-15 10:20:30.000000 -03:00
   c142_validade dh arr='2021-03-15T13:20:30.000000Z'
   c142_validade dh json='2021-03-15T13:20:30.000000Z'
-  c142_validade dh set='2021-03-15 10:20:30'
+  c142_validade dh set EXC Error: Call to undefined method DateTime::set()
   c142_validade us get=Illuminate\Support\Carbon|2021-03-15 10:20:30.123456 -03:00
   c142_validade us arr='2021-03-15T13:20:30.123456Z'
   c142_validade us json='2021-03-15T13:20:30.123456Z'
-  c142_validade us set='2021-03-15 10:20:30'
+  c142_validade us set EXC Error: Call to undefined method DateTime::set()
   c142_validade br get EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
   c142_validade br arr EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
   c142_validade br json EXC Carbon\Exceptions\InvalidFormatException: Could not parse '15/03/2021': Failed to parse time string (15/03/2021) at position 0 (1): Unexpected character
@@ -50,17 +50,17 @@ MODEL App\Domain\Assinador\CertificadoUsuario fmt=Y-m-d H:i:s attrs=2
   c142_validade ts get=Illuminate\Support\Carbon|2021-03-15 09:20:30.000000 -03:00
   c142_validade ts arr='2021-03-15T12:20:30.000000Z'
   c142_validade ts json='2021-03-15T12:20:30.000000Z'
-  c142_validade ts set='2021-03-15 09:20:30'
+  c142_validade ts set EXC Error: Call to undefined method DateTime::set()
   c142_validade nulo get=NULL
   c142_validade nulo arr='(ausente)'
   c142_validade nulo json='(ausente)'
-  c142_validade nulo set='(ausente)'
+  c142_validade nulo set EXC Error: Call to undefined method DateTime::set()
   c142_validade vazio get=Illuminate\Support\Carbon|2030-01-01 12:00:00.000000 -03:00
   c142_validade vazio arr='2030-01-01T15:00:00.000000Z'
   c142_validade vazio json='2030-01-01T15:00:00.000000Z'
-  c142_validade vazio set=''
-  c142_validade carbon set='2021-03-15 10:20:30'
-  c142_validade datetime set='2021-03-15 10:20:30'
+  c142_validade vazio set EXC Error: Call to undefined method DateTime::set()
+  c142_validade carbon set EXC Error: Call to undefined method DateTime::set()
+  c142_validade datetime set EXC Error: Call to undefined method DateTime::set()
 MODEL App\Domain\Configuracao\Departamento\Models\Departamento fmt=Y-m-d H:i:s attrs=1
   TUDO json={"a_antes":"x","limite":"2021-03-15T13:20:30.000000Z","z_depois":5}
   TUDO arr_chaves=a_antes,limite,z_depois
