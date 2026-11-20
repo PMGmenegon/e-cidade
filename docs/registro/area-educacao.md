@@ -441,6 +441,20 @@ que ainda divergiam, 36 são de outras áreas (material, RH, CGM, configuração
 Educação; as outras 3 levaram à correção das 51 classes `ed*`/`bi*` (commit próprio no PR `educacao/classes`). Das
 telas que ainda divergem, quase todas são HTTP 500 só no 8.5, o padrão dos defeitos do núcleo listados abaixo.
 
+### Telas `mat` e `pro` do menu da Educação (20/11/2026)
+
+A issue da área lista, além dos prefixos próprios, 22 telas `mat` (almoxarifado: requisição, estoque, transferência)
+e 1 `pro` (`pro1_tipoarq002.php`) que o menu da Educação também abre. As `mat` são compartilhadas com o Patrimonial
+(uma também com a Saúde). Medido sobre os 4 PRs:
+
+- Rector do grupo (`rector-curado.php`): **0 arquivos** a alterar nas 23; `php -l` limpo no 7.4 e no 8.5.
+- Regressão do grupo (e74), 7.4 × 8.5: **21 idênticas**. As outras 2 (`mat1_atendrequi001.php` e
+  `mat1_matestoquesai001.php`) dão 500 só no 8.5 por `pg_num_rows(false)` em `libs/db_utils.php:186`
+  (`getCollectionByRecord`), ou seja, no núcleo, não na tela. Com a guarda dos wrappers do núcleo da decisão 2a
+  (`PHP8-31`, branch do `parse_str`) as duas ficam **idênticas** ao 7.4.
+
+Conclusão: nenhuma das 23 precisa de alteração da Educação; nenhum arquivo delas entra nos PRs.
+
 ### Fora da Educação (anotado para os donos)
 
 - `libs/db_app.utils.php:39` (`DB_VERSION` indefinida com a sessão da API) e o retorno
