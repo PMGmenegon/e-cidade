@@ -45,23 +45,23 @@ A lista dos 23 (classe, entrada, causa, campos que mudam) está em `validacao-la
 
 Na matriz, `digits:2` e `digits:4` com array e array aninhado dão o mesmo resultado que no 7.4 (reprova com "deve ter N dígitos"). Causa: `Validation/Concerns/ValidatesAttributes.php:757-763` do Laravel 13 só chama `preg_match` quando `is_numeric($value) || is_string($value)`; o 8.73.2 chamava sempre. Com isso as 3 classes de `Financeiro/Tesouraria/Requests` e a regra de `MapeamentoEmpenhoRPContaController` deixam de lançar `TypeError`.
 
-### Causa (a): chave de mensagem só com o nome do campo (21 casos, 6 classes)
+### Causa (a): chave de mensagem que o Laravel 13 passa a casar com o campo (21 casos, 6 classes)
 
-`messages()` com chave igual ao nome do campo, sem a regra (`'exercicio' => 'Você deve informar o exercício.'`; também curingas como `'exercicio.*'` ou `'receitas.*'`):
+`messages()` com chave igual ao nome do campo, sem a regra (`'exercicio' => 'Você deve informar o exercício.'`), e uma segunda forma, o curinga `'receitas.*'` quando o campo que falha é um item (`receitas.0`):
 
-- Laravel 8.73.2 (`FormatsMessages::getFromLocalArray`, `:94`): procura `campo.regra` e `regra`; a chave só do campo **nunca vale**. O usuário vê a mensagem padrão do idioma (`O campo exercicio é obrigatório.`, `exercicio deve ter 4 dígitos.`).
-- Laravel 13 (`:104`): a lista de chaves ganha `$attribute`; a mensagem do campo vale para **qualquer regra** que falhe nele.
+- Laravel 8.73.2 (`FormatsMessages::getFromLocalArray`, `:94`): procura `campo.regra` e `regra` (o curinga vira `([^.]*)` para um nível). A chave só do campo **nunca vale** (o usuário vê `O campo exercicio é obrigatório.`, `exercicio deve ter 4 dígitos.`). O curinga `'campo.*'` **vale** para as regras do próprio campo (`exercicio.*` dá a mensagem do autor para `exercicio` com `digits`) e **não** casa com `campo.0.regra`.
+- Laravel 13 (`:104`): a lista de chaves ganha `$attribute` (e `campo.regra_curta`): a mensagem escrita só com o nome do campo vale para **qualquer regra** que falhe nele, e o curinga `'receitas.*'` passa a casar com o item `receitas.0` (a chave do campo).
 
 | Classe (`App\Domain\…`) | Chaves só do campo | Entradas que mudam |
 |---|---|---|
 | `Financeiro\Empenho\Requests\ConferenciaExtraOrcamentariaRequest` | `tipo` | arrays, vazia, vazios |
-| `Financeiro\Tesouraria\Requests\ConfiguracaoReceitasDecendioRequest` | `receitas.*`, `desdobramentos.*`, `exercicio.*` | arrays, vazios |
+| `Financeiro\Tesouraria\Requests\ConfiguracaoReceitasDecendioRequest` | `receitas.*` (curinga que passa a casar com o item `receitas.0`) | arrays, vazios |
 | `Financeiro\Tesouraria\Requests\GetDetalhamentoDecendioRequest` | `exercicio`, `instituicao`, `dataInicial`, `dataFinal`, … | arrays, ausente, vazia, vazios |
 | `Financeiro\Tesouraria\Requests\GetLancamentosDecendioRequest` | as mesmas | arrays, ausente, vazia, vazios |
 | `Saude\Ambulatorial\Requests\UnidadesEncaminhadorasRequest` | `ativo`, `descricao` | arrays, ausente, vazia, vazios |
 | `Saude\Ambulatorial\Requests\UnidadesOrigemRequest` | `ativo`, `descricao` | arrays, ausente, vazia, vazios |
 
-Só o **texto** da mensagem muda (os campos `passa` e os nomes dos campos com erro ficam iguais). No Laravel 8 as mensagens escritas pelo autor dessas seis classes nunca apareciam; no 13 passam a aparecer, como o autor escreveu.
+Só o **texto** da mensagem muda (os campos `passa` e os nomes dos campos com erro ficam iguais). Em cinco das seis classes as mensagens do autor nunca apareciam no Laravel 8 e no 13 passam a aparecer; em `ConfiguracaoReceitasDecendioRequest` as três chaves (`receitas.*`, `desdobramentos.*`, `exercicio.*`) já valiam no 8 para as regras do próprio campo, e só `receitas.*` muda no 13, para os itens `receitas.0`, `receitas.1`.
 O 7.4 não muda. Resolvida na seção 4.
 
 ### Causa (b): `after_or_equal` com o campo de referência ausente (1 caso)
