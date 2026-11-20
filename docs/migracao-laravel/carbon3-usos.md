@@ -1,0 +1,75 @@
+# Carbon 2 -> 3 nos usos do codigo proprio (PHP8-55): medida e patches propostos
+
+O Laravel 13 traz o Carbon 3. Aqui cada uso do Carbon do codigo do e-Cidade (base-php74) foi medido com a **entrada real** nos dois Carbon, num composer
+descartavel, sem banco. Os patches ficam **anexados e nao aplicados**: so depois do Laravel 13 integrar (PHP8-55 com Laravel 13).
+A trava da integracao nao foi tocada.
+
+## Como foi medido
+
+- **Composer descartavel** (fora do repositorio, so baixa pacotes): `composer require nesbot/carbon:2.72.5` (o do PR; `config.audit.block-insecure=false` porque a
+  2.72.5 tem aviso de seguranca e o Composer a bloqueia) e `composer require nesbot/carbon:^3` (3.15.1). Conteineres `php:7.4-cli` e `php:8.5-cli` com `--network none`.
+- **Locale:** para `formatLocalized` (que usa `strftime`), duas imagens descartaveis `php:7.4-cli`/`php:8.5-cli` com o pacote `locales` e `pt_BR` gerado (so isso a mais).
+- Script: `scratchpad/carbon_usos_2x3.php <vendor>` (relogio fixo 2030-01-01 23:30 `America/Sao_Paulo`; cada linha da saida e um uso com o seu arquivo:linha).
+  Saidas: `carbon3-usos/carbon2-php7.4.txt`, `carbon2-php8.5.txt` e `carbon3-php8.5.txt` (80 linhas cada).
+- Carbon 2 no 7.4 x Carbon 2 no 8.5: **iguais**, so o texto de 2 mensagens do PHP em `createFromFormat` vazio/`null` (`Data missing` x `Not enough data available to satisfy format`).
+
+## Contagem do que usa Carbon
+
+`grep -rnE '\bCarbon\b' --include=*.php --include=*.inc ecidade | grep -v '^ecidade/vendor' | grep -vE '^[^:]+:[0-9]+:\s*use ' | wc -l` = **275 linhas**.
+`Carbon::createFromFormat` 73, `Carbon::now` 45, `Carbon::parse` 21, `Carbon::createFromTimestamp` 7 (`grep -rn 'Carbon::createFromTimestamp'`),
+`->formatLocalized` 4 (`grep -rn formatLocalized`), `->age` 3 (`grep -rnE '\->age\b'`), `diffIn*` 1 (`grep -rnE 'diffIn[A-Z]'`); o resto e docblock, assinatura de tipo,
+`new Carbon` e encadeamentos que nao mudam. Acrescento aqui o que a classificacao anterior nao tinha: **`formatLocalized`** (removido no Carbon 3).
+
+## Usos que mudam (arquivo:linha, entrada, saida nos dois Carbon)
+
+| # | Uso (arquivo:linha) | Entrada | Carbon 2 (7.4 = 8.5) | Carbon 3 (8.5) | Patch |
+|---|---|---|---|---|---|
+| U1 | `ApropriacaoDecimoFeriasService.php:61` `formatLocalized('%B')` | `c01_data` = 2025-03-01 | `'March'` (ver nota do locale) | `UnknownMethodException: Method formatLocalized does not exist.` | 01 |
+| U2 | `ApropriacaoDecimoFeriasService.php:73` e `:98` `Carbon::create($ano,$mes,1)->formatLocalized('%B')` | 2025-03-01 | `'March'` | idem | 01 |
+| U3 | `ImprimirRelatorioTemplateService.php:87` `formatLocalized('%d de %B de %Y')` | agora = 2030-01-01 | `'01 de January de 2030'` | idem | 01 |
+| U5 | `RegistroAulaController.php:67` e `:77`, `CalendarioController.php:83` `Carbon::createFromTimestamp($request->get('DB_datausu'))->format('Y-m-d')` (vai para o SQL em `ProfissionalEscolaRepository.php:120` e `ConteudoDesenvolvidoRepository.php:87`) | `DB_datausu` = `time()` (`DefaultSession.php:115`), as 23:30 locais | `'2030-01-01'` (fuso `America/Sao_Paulo`) | **`'2030-01-02'`** (UTC, `+00:00`) | 02 |
+| U6 | `DiarioClassePdf.php:362`, `:1110`, `:1116` `createFromTimestamp(...)` e `->month`/`->day`/`lt()` | data de encerramento/dia do diario (`getTimestamp()` de uma data, meia-noite local) | `3/15` | `3/15` (com 22:00 local passaria a `3/16`; com o dado real, meia-noite, nao muda) | 05 (opcional) |
+| U7 | `ApropriacaoDecimoFeriasService.php:377`/`:382` `createFromTimestamp(mtime)->diffInMinutes(new Carbon()) > 10` | arquivo de trava de 15 min atras | `15`, `true` | `15.0`, `true` | 03 |
+| U7 | idem, mtime 15 min **no futuro** (relogio atrasado) | | `15`, `true` | **`-15.0`, `false`** (a trava deixa de ser removida) | 03 |
+| U8 | `RhDepend.php:27`, `RhDependController.php:73`, `AjudaCustoService.php:246-247` `->age` | nascimento `1990-05-20` / `2012-12-31` | 39 / 17 | 39 / 17 | - |
+| U8 | idem | nascimento no **futuro** `2031-06-01` | `1` | **`-1`** | 04 |
+
+**Nota sobre o locale (U1, U2, U4).** `formatLocalized` usa `strftime` com o `LC_TIME` do processo. Medido com a imagem com `pt_BR`:
+`setlocale(LC_TIME,'pt-br')` (o valor de `config('app.locale')` em `AppServiceProvider.php:25`) **devolve `false`** e deixa o locale em `C`, entao o resultado no 7.4 e `March`/`January`
+(ingles); com `setlocale(LC_TIME,'pt_BR')` seria `mar\xe7o` / `01 de janeiro de 2030`. O Carbon 3 nao tem o metodo em nenhum dos casos.
+
+## Usos medidos que **nao** mudam
+
+Todos iguais nos dois Carbon (linhas `U9` a `U15` da saida): `createFromFormat` com os formatos do codigo (`Y-m-d`, `d/m/Y`, `Ymd`, `Y-m-d H:i`) e valores de
+coluna `date`/`timestamp` (`'2021-03-15'` ok; `'2021-03-15 10:20:30'` `Trailing data`; `''` e `null` `InvalidFormatException`; `'2021-02-30'` vira 2021-03-02), `addMonth(1)->firstOfMonth()`
+(`RedesimAlterarInscricaoService.php:396`), `startOfDay`/`endOfDay`, `toDateString`, `getTimestamp`, `between`, `addDay`/`addDays`/`addMinutes`/`subDay`, `Carbon::now()`, `Carbon::parse`, `Carbon::create`.
+O ponto de `AuthServiceProvider.php:35-37` (`Passport::tokensExpireIn(Carbon::now()->addDay())`) devolve `Carbon\Carbon` nos dois; o que o Passport 13 aceita ali e assunto da PHP8-39.
+
+## Patches propostos (nao aplicados) em `carbon3-patches/`
+
+Cada um e valido no 7.4 (mesmo resultado medido no Carbon 2) e no Carbon 3:
+
+| Patch | O que muda | Prova (saida do script) |
+|---|---|---|
+| `01-formatLocalized.patch` | `->formatLocalized('%B')` -> `->format('F')` (3x) e `formatLocalized('%d de %B de %Y')` -> `format('d \d\e F \d\e Y')` | igual ao Carbon 2 com `LC_TIME=C` (o caso do `'pt-br'` invalido): `March`, `01 de January de 2030`. Se o ambiente tiver `LC_TIME` em `pt_BR`, o 7.4 imprime em portugues e o patch nao; alternativa **B**: `strftime($fmt, $carbon->getTimestamp())` (igual em qualquer locale, mas `Deprecated` a partir do 8.1). Decidir antes de aplicar |
+| `02-createFromTimestamp-datausu.patch` | passa `date_default_timezone_get()` como 2o argumento nos 3 usos de `DB_datausu` | `'2030-01-01'` nos dois Carbon (o Carbon 2 com fuso explicito e igual ao padrao) |
+| `03-diffInMinutes-absoluto.patch` | `diffInMinutes(new Carbon(), true)` | passado `15`/`true` e futuro `15`/`true` nos dois Carbon (o Carbon 2 ja era absoluto) |
+| `04-age-absoluto.patch` | `abs(...->age)` nos 3 usos | `39`, `17`, `1` nos dois Carbon (`->age` do Carbon 2 nunca e negativo) |
+| `05-createFromTimestamp-diario-opcional.patch` | mesmo fuso explicito nos 3 usos do `DiarioClassePdf` | opcional: o dado real e meia-noite local e nao muda; so protege contra um horario depois de 21:00 |
+
+`git apply --check` passa nos cinco; aplicados juntos em 8 arquivos (18 linhas a mais, 15 a menos), `php -l` limpo no 7.4 e no 8.5 (o 8.5 so repete o `Deprecated` de
+`DiarioClassePdf.php:1768`, que ja existe). Ordem de aplicacao: depois da integracao do Laravel 13; 01 depende da decisao A x B.
+
+## Repetir
+
+```bash
+# composer descartavel (so baixa pacotes)
+mkdir -p c2 c3
+echo '{"require":{"nesbot/carbon":"2.72.5"},"config":{"audit":{"block-insecure":false}}}' > c2/composer.json
+docker run --rm -u $(id -u):$(id -g) -e COMPOSER_HOME=/tmp/ch -v $PWD/c2:/c -w /c composer:2 composer update --ignore-platform-reqs --no-interaction
+docker run --rm -u $(id -u):$(id -g) -e COMPOSER_HOME=/tmp/ch -v $PWD/c3:/c -w /c composer:2 composer require 'nesbot/carbon:^3' --ignore-platform-reqs --no-interaction
+# locale pt_BR: Dockerfile  FROM php:8.5-cli ; RUN apt-get update && apt-get install -y --no-install-recommends locales && sed -i 's/^# *pt_BR ISO-8859-1/pt_BR ISO-8859-1/' /etc/locale.gen && locale-gen
+docker run --rm --network none -v $PWD/scratchpad:/s:ro -v $PWD/c2:/w/c2:ro <imagem php 7.4 com locale> php /s/carbon_usos_2x3.php /w/c2/vendor
+docker run --rm --network none -v $PWD/scratchpad:/s:ro -v $PWD/c3:/w/c3:ro <imagem php 8.5 com locale> php /s/carbon_usos_2x3.php /w/c3/vendor
+diff carbon2-php8.5.txt carbon3-php8.5.txt          # as diferencas da tabela acima
+```
