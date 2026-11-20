@@ -34,8 +34,8 @@ As 18 classes `ShouldQueue` de `app/` (16 jobs e 2 notificações; a mesma lista
 com:
 
 - onde é despachada (arquivo:linha). `DeleteFileStorage` não tem ponto de despacho no código.
-- os itens do inventário Laravel 8 → 13 (`inventario-8-a-13-ocorrencias.tsv`) que citam o arquivo dela. Os 18 citam
-  `13.x Collection Model Serialization Restores Eager-Loaded Relations`, 16 citam
+- os itens do inventário Laravel 8 → 13 (`inventario-8-a-13-ocorrencias.tsv`) que citam o arquivo dela. As 18 citam
+  `13.x Collection Model Serialization Restores Eager-Loaded Relations` e
   `13.x Queued Notifications and Missing Models`, e há 1 caso de `10.x The dispatch() Helper Return Value` e 1 de
   `10.x Database Expressions`.
 - o resultado 7.4 × 8.5 hoje, com o Laravel 8 do PR, lido da saída do `roda.sh` de `filas-comandos-85.md`:
