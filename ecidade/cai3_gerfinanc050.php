@@ -45,7 +45,7 @@ if(isset($nl01_codlanc) && $nl01_codlanc != ''){
 if (!empty($Parcelamento)) {
   $sSqlNumpreParcelamento = "select v07_numpre as numpre from termo where v07_parcel = {$Parcelamento}";
   $rsNumpreParcelamento   = db_query($sSqlNumpreParcelamento);
-  if (pg_num_rows($rsNumpreParcelamento) > 0 ) {
+  if (($rsNumpreParcelamento ? pg_num_rows($rsNumpreParcelamento) : null) > 0 ) {
     $oNumpreParcelamento    = db_utils::fieldsMemory($rsNumpreParcelamento,0);
     $numpre = $oNumpreParcelamento->numpre;
   }
@@ -188,7 +188,7 @@ function adicionarCorpoTabelaDebitos($mostraDadosCda = false, $tabela, $campo, $
     
     $clarretipo   = new cl_arretipo;
     $result     = $clarretipo->sql_record($clarretipo->sql_query($tipo,'arretipo.k03_tipo'));
-    $k03_tipo = pg_fetch_result($result, 0);
+    $k03_tipo = ($result ? pg_fetch_result($result, 0) : null);
 
     $ordenacaoCgf = new MontaOrdenacaoCgf();
     $ordenacaoCgf->setGrupoDebito($k03_tipo);
@@ -246,7 +246,7 @@ function adicionarCorpoTabelaDebitos($mostraDadosCda = false, $tabela, $campo, $
 
     $valor_total = 0;
     $validaCor = true;
-    $numrowsArrecad = pg_num_rows($rsArrecad);
+    $numrowsArrecad = ($rsArrecad ? pg_num_rows($rsArrecad) : null);
     $numrows = $numrowsArrecad;
     if ($numrowsArrecad == 0) {
         $sLinhaRegistros = "<tr><td><small>Nenhum registro encontrado</small></td></tr>";
