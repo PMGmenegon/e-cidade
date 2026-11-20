@@ -125,7 +125,7 @@ if(isset($HTTP_POST_VARS["incluir"])) {
   system("rm -f $ahtml");
   db_postmemory($HTTP_POST_VARS);  
   $result = db_query("SELECT max(id_lei) + 1 FROM db_leis");
-  $id_lei = pg_result($result,0,0)==""?"1":pg_result($result,0,0);   
+  $id_lei = ($result ? pg_result($result,0,0) : null)==""?"1":($result ? pg_result($result,0,0) : null);   
   $result = db_query("INSERT INTO db_leis VALUES($id_lei,
                                                 '$numerolei',
   											    '$datalei_ano-$datalei_mes-$datalei_dia',

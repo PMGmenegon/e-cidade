@@ -177,7 +177,7 @@ input {
      } 
   } else if(isset($retorno)) {
 	  $result = db_query("SELECT *,to_char(datasolicitacao,'DD-MM-YYYY') as datasolicit FROM db_itbi WHERE id_itbi = $retorno");
-	  if(pg_numrows($result) > 0) {
+	  if(($result ? pg_numrows($result) : null) > 0) {
 	    db_fieldsmemory($result,0);
 	   /* $sql = "select z01_cgccpf,z01_nome,z01_ender,z01_munic,z01_uf,z01_cep,
 	                       z01_bairro,z01_email,v11_bql
@@ -188,7 +188,7 @@ input {
 		*/
 		$sql = "select * from proprietario where j01_matric = $matricula";
 	    $dadosp = db_query($sql);
-	    if(pg_numrows($dadosp) > 0)
+	    if(($dadosp ? pg_numrows($dadosp) : null) > 0)
 	      db_fieldsmemory($dadosp,0);
 		 // printfieldsmemory($dadosp,0);
         //$predterr = db_query("select v12_matric from edifica where trim(v12_matric) = '$matricula' limit 1");	  
@@ -369,14 +369,14 @@ input {
                     where c.codcaritbi = i.codcaritbi
                     and i.area <> 0
                     and i.id_itbi = $id_itbi");
-    for($i = 0;$i < pg_numrows($CAR);$i++) {
+    for($i = 0;$i < ($CAR ? pg_numrows($CAR) : null);$i++) {
       ?>  
       <tr> 
         <td width="16%"><?php echo $i==0?"<strong>Construções:</strong>":"" ?>&nbsp;</td>
-        <td width="23%"><?=@pg_result($CAR,$i,"descrcar")?>&nbsp;</td>
-        <td width="24%"><?=@pg_result($CAR,$i,"descricao")?>&nbsp;</td>
-        <td width="24%"><?=@pg_result($CAR,$i,"area")?>&nbsp;</td>
-        <td width="20%"><?=@pg_result($CAR,$i,"anoconstr")?>&nbsp;</td>
+        <td width="23%"><?=@($CAR ? pg_result($CAR,$i,"descrcar") : null)?>&nbsp;</td>
+        <td width="24%"><?=@($CAR ? pg_result($CAR,$i,"descricao") : null)?>&nbsp;</td>
+        <td width="24%"><?=@($CAR ? pg_result($CAR,$i,"area") : null)?>&nbsp;</td>
+        <td width="20%"><?=@($CAR ? pg_result($CAR,$i,"anoconstr") : null)?>&nbsp;</td>
       </tr>
 	  <?php
 	  }

@@ -35,7 +35,7 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
   db_postmemory($HTTP_POST_VARS);
   if(empty($id_itbi)) {
     $result = db_query("select max(id_itbi) from db_itbi");
-    $id_itbi = (integer)pg_result($result,0,0) + 1;
+    $id_itbi = (integer)($result ? pg_result($result,0,0) : null) + 1;
     db_query("BEGIN");
     //Soma das caracteristicas e grava
     $tam_vetor = sizeof($HTTP_POST_VARS);
@@ -153,19 +153,19 @@ if ( !is_int($cod_matricula) or $cod_matricula == "" ){
 }
 
 $result = db_query("select * from db_itbi where matricula = $cod_matricula and libpref = 't'");
-if (pg_numrows($result) > 0){
+if (($result ? pg_numrows($result) : null) > 0){
   echo("Socilitação de Guia de ITBI está em processo de avaliação. Volte mais tarde.");
   // db_logs("$cod_matricula","",0,"Socilitação de Guia de ITBI está em processo de avaliação. Volte mais tarde. Numero: $cod_matricula");
   //db_redireciona("opcoesitbi.php?".base64_encode("matricula=".$cod_matricula));
 }
 $result = db_query("select * from db_itbi where matricula = $cod_matricula and liberado = 1 and ( datavencimento is null or datavencimento >= CURRENT_DATE)");
-if (pg_numrows($result) != 0){
+if (($result ? pg_numrows($result) : null) != 0){
    //msgbox("Verifique Liberação de Guia.");
    //db_logs("$cod_matricula","",0,"Verifique Liberacao da Guia. Numero: $cod_matricula");
    db_redireciona("opcoesitbi.php?".base64_encode("matricula=".$cod_matricula));
 }
 $result = db_query("select * from db_itbi where matricula = $cod_matricula and liberado is null");
-if (pg_numrows($result) != 0){
+if (($result ? pg_numrows($result) : null) != 0){
   //msgbox("Socilitação Recentemente Encaminhada. Proceda as Alterações.");
   //db_logs("$cod_matricula","",0,"Socilitação Recentemente Encaminhada. Proceda as Alterações. Numero: $cod_matricula");
   db_fieldsmemory($result,0);
@@ -181,7 +181,7 @@ $result = db_query("select p.*,pm.z01_nome as promitente, m.z01_nome as imobilia
                    left outer join cgm m
                      on m.z01_numcgm = i.j44_numcgm
                    where j01_matric = $cod_matricula");
-if (pg_numrows($result) == 0){
+if (($result ? pg_numrows($result) : null) == 0){
    //msgbox("Matrícula não Cadastrada.");
    //db_logs("$cod_matricula","",0,"Matrícula não Cadastrada. Numero: $cod_matricula");
    db_redireciona("index.php");
@@ -515,7 +515,7 @@ function js_link(arq) {
 									     from db_caritbi c,db_caritbilan i
 											     where c.codigo = i.codigo
 											     and i.id_itbi = $id_itbi");
-						    for($i = 0;$i < pg_numrows($result);$i++) {
+						    for($i = 0;$i < ($result ? pg_numrows($result) : null);$i++) {
 						      db_fieldsmemory($result,$i);
 						      //echo "<option value=\"".pg_result($result,$i,"codigo")."\">".pg_result($result,$i,"descricao")."</option>\n";
 			  echo "<tr><td >".$descricao.":</td><td > <input type=\"text\" onkeyup=\"js_soma()\" name=\"CARAC".$descricao.$codcaritbi."\" value=\"".(@$area==""?"0":@$area)."\"></td><td >&nbsp;</td><td>&nbsp;</td></tr>\n";

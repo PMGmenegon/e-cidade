@@ -40,7 +40,7 @@ if(isset($HTTP_POST_VARS["confirmar"])) {
   if($HTTP_POST_VARS["matricula"] != $aux[0] && $HTTP_POST_VARS["matricula"] != "") {
     $matricula = trim($HTTP_POST_VARS["matricula"]);
 	$result = db_query("select j01_matric from iptubase where j01_matric = $matricula");
-	if(pg_numrows($result) == 0)
+	if(($result ? pg_numrows($result) : null) == 0)
 	  $TestaMatricula = 1;
   } else
     $matricula = $aux[0];
@@ -122,7 +122,7 @@ table {
 			  			 where p.j01_matric = $cod_matricula");
       }
 
-	  if(pg_numrows($result) > 0) {
+	  if(($result ? pg_numrows($result) : null) > 0) {
 	    db_fieldsmemory($result,0);
 	    if(isset($_FILES["arq"]))
 		  copy($tmp_name,$DocRoot."/tmp/".$name);

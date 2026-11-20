@@ -201,7 +201,7 @@ input {
                   and w11_revisado = 'f'
                ";
         $result = db_query($sql);
-        if(pg_numrows($result) > 0)
+        if(($result ? pg_numrows($result) : null) > 0)
           db_fieldsmemory($result,0);
         else
           db_erro("Erro no select da tabela db_cgmatualizaliga.");

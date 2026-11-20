@@ -33,7 +33,7 @@ include(modification("libs/db_usuariosonline.php"));
 if(isset($HTTP_POST_VARS["incluir"])) {
   db_postmemory($HTTP_POST_VARS);
   $result = db_query("select max(m_codigo) from db_menupref");
-  $codigo = pg_result($result,0,0) == ""?"1":((integer)pg_result($result,0,0) + 1);
+  $codigo = ($result ? pg_result($result,0,0) : null) == ""?"1":((integer)($result ? pg_result($result,0,0) : null) + 1);
   $ativo = @$ativo=="1"?"1":"0";
   $publico = @$publico=="f"?"f":"t";
   db_query("BEGIN");
@@ -196,19 +196,19 @@ function js_incluir() {
   <table border="0" cellspacing="0" cellpadding="0">
   <?php
   $result = db_query("SELECT m_codigo as codigo,m_descricao as descricao,m_arquivo as arquivo,m_imgs as imgs,m_ativo as ativo,m_publico as publico FROM db_menupref ORDER BY m_codigo");
-  $numrows = pg_numrows($result);
+  $numrows = ($result ? pg_numrows($result) : null);
   $cor = "#33CCFF";
   for($i = 0;$i < $numrows;$i++) {
     $cor = $cor=="#33CCFF"?"#33CCCC":"#33CCFF";
-    $ativo = pg_result($result,$i,"ativo");
+    $ativo = ($result ? pg_result($result,$i,"ativo") : null);
     echo "<tr bgcolor=\"$cor\">
-	        <td><input type=\"checkbox\" name=\"cb".pg_result($result,$i,"codigo")."\" value=\"".pg_result($result,$i,"codigo")."\" ".($ativo=="1"?"checked":"")."></td>
-			<td style=\"cursor: hand\" id=\"C".pg_result($result,$i,"codigo")."\" onclick=\"js_valores('C".pg_result($result,$i,"codigo")."')\">".pg_result($result,$i,"descricao")."</td>
-			<td><input type=\"hidden\" id=\"C".pg_result($result,$i,"codigo")."Harq\" value=\"".pg_result($result,$i,"arquivo")."\"></td>
-			<td><input type=\"hidden\" id=\"C".pg_result($result,$i,"codigo")."Himgs\" value=\"".pg_result($result,$i,"imgs")."\"></td>
-			<td><input type=\"hidden\" id=\"C".pg_result($result,$i,"codigo")."Hcod\" value=\"".pg_result($result,$i,"codigo")."\"></td>
-			<td><input type=\"hidden\" id=\"C".pg_result($result,$i,"codigo")."Hat\" value=\"".pg_result($result,$i,"ativo")."\"></td>			
-			<td><input type=\"hidden\" id=\"C".pg_result($result,$i,"codigo")."Hpu\" value=\"".pg_result($result,$i,"publico")."\"></td>			
+	        <td><input type=\"checkbox\" name=\"cb".($result ? pg_result($result,$i,"codigo") : null)."\" value=\"".($result ? pg_result($result,$i,"codigo") : null)."\" ".($ativo=="1"?"checked":"")."></td>
+			<td style=\"cursor: hand\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."\" onclick=\"js_valores('C".($result ? pg_result($result,$i,"codigo") : null)."')\">".($result ? pg_result($result,$i,"descricao") : null)."</td>
+			<td><input type=\"hidden\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."Harq\" value=\"".($result ? pg_result($result,$i,"arquivo") : null)."\"></td>
+			<td><input type=\"hidden\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."Himgs\" value=\"".($result ? pg_result($result,$i,"imgs") : null)."\"></td>
+			<td><input type=\"hidden\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."Hcod\" value=\"".($result ? pg_result($result,$i,"codigo") : null)."\"></td>
+			<td><input type=\"hidden\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."Hat\" value=\"".($result ? pg_result($result,$i,"ativo") : null)."\"></td>			
+			<td><input type=\"hidden\" id=\"C".($result ? pg_result($result,$i,"codigo") : null)."Hpu\" value=\"".($result ? pg_result($result,$i,"publico") : null)."\"></td>			
 		  </tr>\n";
   }
   ?>
