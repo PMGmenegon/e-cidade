@@ -20,6 +20,7 @@ fica em tarefa própria.
 | objeto da fila gravado num runtime e lido no outro (estado de todas as propriedades, recursivo) | 18 classes × 4 combinações (7.4→7.4, 7.4→8.5, 8.5→7.4, 8.5→8.5) | 1 estado só nas 4 |
 | `array_pluck` (`ComissaoController.php:75`) e `str_random` (`ModelFactory.php:22`) | 2 casos | igual: `Error: Call to undefined function` nos dois |
 | `str_contains`: polyfill `symfony/polyfill-php80` no 7.4, nativa no 8.5 | 14 casos | 12 com o mesmo resultado; os 2 com array dão `TypeError` nos dois, só o texto da mensagem muda |
+| avisos do PHP sem a máscara do `roda.sh` (seção abaixo) | 23 execuções de cada lado | 7.4: nenhum; 8.5: 12 `Deprecated` de carga por execução, nenhum warning ou notice; resultado igual |
 
 ## Fila: o que muda e o que não muda
 
@@ -47,6 +48,31 @@ restauração, que consultaria o banco, não é feita.
 
 O `ProcessPayrollDataJob` encerra no construtor com `die()` quando falta `API_DATA_AVAILABLE_TOKEN`/`_URL`, igual nos
 dois. Com os dois valores fictícios no `.env` de teste, o payload sai.
+
+## Avisos do PHP: o que a máscara do `roda.sh` tira
+
+O `roda.sh` sobe cada trecho com `-d error_reporting='E_ALL&~E_DEPRECATED&~E_NOTICE&~E_WARNING'`. Sem a máscara, os
+`Deprecated` que o 8.5 emite antes de o kernel subir sairiam no meio da saída, e o `cmp` acusaria diferença de texto,
+não de resultado. Depois do `bootstrap()` do kernel, o Laravel assume (`HandleExceptions.php:42` põe
+`error_reporting(-1)`): warning e notice viram exceção, que apareceria na saída comparada, e depreciação vai para o log.
+
+Medido sem a máscara, com `display_errors=stderr`, `log_errors=0` e `error_reporting=-1`, num checkout limpo, nas 23
+execuções de cada lado:
+
+- 7.4: nenhuma mensagem.
+- 8.5: 12 `Deprecated` por execução, todas na carga, antes do kernel. São 0 warning e 0 notice.
+  - `guzzlehttp/promises/src/functions.php`: 6 (parâmetro nulo implícito em `queue()`, `each()`, `each_limit()` e
+    `each_limit_all()`);
+  - `laravel/framework/src/Illuminate/Support/helpers.php`: 2 (`optional()`, `with()`);
+  - `opis/closure/functions.php`: 1 (`unserialize()`);
+  - `src/V3/Extension/ParameterBag.php`: 2 (tipo de retorno de `getIterator()` e `count()`);
+  - `config/application.default.php:27`: 1 (constante `E_STRICT`).
+- Tirando essas linhas, a saída sem a máscara é igual à saída com ela em todos os arquivos comparados.
+
+As 9 do `vendor/` são as da carga do `vendor/autoload.php` em `docs/registro/estrutura-85.md`, menos as 3 do
+`lcobucci/jwt`, que saíram com a versão 4.1.5 da trava do 8.5. As 3 do código do e-cidade (`ParameterBag.php` e
+`config/application.default.php`) vêm do `bootstrap.php`. Uma instalação com `config/application.php` local (fora do
+git) soma mais 1 `E_STRICT` do mesmo tipo.
 
 ## Agendamento e lista de comandos: como foi lido
 
