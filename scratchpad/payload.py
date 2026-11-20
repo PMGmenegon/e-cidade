@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extrai o esqueleto do POST de uma tela, lendo o formulario que o 5.6 emite.
+"""Extrai o esqueleto do POST de uma tela, lendo o formulario que o 7.4 emite.
 
 Montar payload a mao e o que limita o nivel 3 -- e onde eu errei duas vezes:
 o botao de submit muda de nome conforme a operacao (incluir/alterar/excluir),
@@ -12,7 +12,7 @@ O que faz: mostra, para AJUSTE A MAO, tudo o que o formulario da tela tem --
   botoes de submit (nome e valor), <select> com as primeiras opcoes, campos
   (<input> e <textarea>) com tipo e valor atual -- e um esqueleto de querystring.
   E a versao "para ler" do payload_auto.py (que preenche os valores sozinho).
-Como faz: restaura a sessao a partir de /tmp/_d.bak, faz um GET da tela no 5.6
+Como faz: restaura a sessao a partir de /tmp/_d.bak, faz um GET da tela no 7.4
   (:8080, o gabarito) e extrai as tags com expressoes regulares (sem parser HTML).
 Entradas: SID de uma sessao autenticada; a tela (relativa a ecidade/).
   Exige /tmp/_d.bak no container ecidade_php74 (criado pela prova de fumaca do

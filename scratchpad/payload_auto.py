@@ -8,7 +8,7 @@ precisam de ajuste manual -- que e onde o custo do nivel 3 realmente esta.
 Uso: python3 scratchpad/payload_auto.py <SID> <tela.php>
 Saida: a querystring, em uma linha.
 
-Como faz: restaura a sessao a partir de /tmp/_d.bak, faz um GET da tela no 5.6
+Como faz: restaura a sessao a partir de /tmp/_d.bak, faz um GET da tela no 7.4
   (:8080), le <input>, <select> e <textarea> por expressao regular e da a cada
   campo um valor plausivel pela heuristica de valor() (pelo NOME do campo);
   acrescenta no fim o PRIMEIRO botao de submit (em tela 001, o de inclusao).

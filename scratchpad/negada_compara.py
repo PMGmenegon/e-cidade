@@ -6,10 +6,10 @@ Uso (da raiz do repo):
 
 O terceiro argumento e a lista de classes do lote (a /tmp/cls.txt do passo 6). O negada_alvos.py varre
 TODAS as classes de classes/, entao a comparacao traz tambem classes de areas ainda nao migradas, que o
-5.6 serve e que nao sao problema do lote. Este script separa as duas coisas.
+7.4 serve e que nao sao problema do lote. Este script separa as duas coisas.
 
 Classifica cada par (classe, campo, metodo) que difere:
-  VALOR_DIFERENTE  5.6 NULL, 8.5 0: falta a guarda do == no atualizacampos() -- a classe nao foi portada
+  VALOR_DIFERENTE  7.4 NULL, 8.5 0: falta a guarda do == no atualizacampos() -- a classe nao foi portada
   FORMA_NEGADA     mesmo valor 0, `!= ""` decide diferente: corrigir com scratchpad/negada_corrige.py
   ERRO             <ERRO>/<SEM_CLASSE> de um lado so
   SO_DE_UM_LADO    o par so aparece num runtime (o processo morreu?)
@@ -21,7 +21,7 @@ e guardando o que vem a partir da 6a coluna (valor e resultado, ou <ERRO>/<SEM_C
 compara chave a chave, classifica as diferencas e as separa em DO LOTE (classe presente na lista
 do terceiro argumento) e FORA DO LOTE (so contadas por tipo).
 Saida (stdout): contagem de pares medidos em cada runtime, resumo FORA DO LOTE por tipo, uma linha
-por par DO LOTE ("tipo classe campo metodo 5.6=<valor>/<resultado> 8.5=<...>") e o VEREDITO:
+por par DO LOTE ("tipo classe campo metodo 7.4=<valor>/<resultado> 8.5=<...>") e o VEREDITO:
   PASSOU      nenhuma diferenca nas classes do lote
   INCOMPLETO  os runtimes mediram numeros diferentes de pares (tem precedencia sobre os outros)
   INVESTIGAR  ha pares do lote para olhar
@@ -60,7 +60,7 @@ for k in sorted(set(a) | set(b)):
         tipo = "FORMA_NEGADA"
     dif.append((tipo, k, va, vb))
 
-print(f"pares medidos: 5.6={len(a)}  8.5={len(b)}" + ("" if len(a) == len(b) else "   <-- DIFEREM: um runtime parou no meio?"))
+print(f"pares medidos: 7.4={len(a)}  8.5={len(b)}" + ("" if len(a) == len(b) else "   <-- DIFEREM: um runtime parou no meio?"))
 print(f"classes do lote: {len(lote)}")
 
 dentro = [d for d in dif if d[1][0] in lote]
@@ -73,7 +73,7 @@ for t, n in collections.Counter(d[0] for d in fora).most_common():
 
 print(f"\n== DO LOTE: {len(dentro)} pares")
 for t, k, va, vb in dentro:
-    print(f"   {t:16} {k[0]}  {k[1]}  {k[2]}   5.6={'/'.join(va)}  8.5={'/'.join(vb)}")
+    print(f"   {t:16} {k[0]}  {k[1]}  {k[2]}   7.4={'/'.join(va)}  8.5={'/'.join(vb)}")
 
 if len(a) != len(b):
     print("\nVEREDITO: INCOMPLETO -- os dois runtimes nao mediram o mesmo numero de pares; rode de novo")

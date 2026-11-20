@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compara as telas de um modulo entre os runtimes 5.6 (:8080) e 8.5 (:8085).
+"""Compara as telas de um modulo entre os runtimes 7.4 (:8080) e 8.5 (:8085).
 
 Restaura uma sessao autenticada antes de CADA requisicao (uma requisicao a
 consome/reescreve) e normaliza os identificadores aleatorios, que senao geram
@@ -7,10 +7,10 @@ falsos positivos -- alguns deles INTERMITENTES, que e o pior tipo.
 
 Como faz:
   1. guarda uma copia do arquivo de sessao (sess_<SID>) em /tmp/_sess.bak no
-     container do 5.6 (o /tmp e as sessoes sao volumes compartilhados entre os
+     container do 7.4 (o /tmp e as sessoes sao volumes compartilhados entre os
      runtimes, ver docs/registro/ambiente.md);
   2. lista as telas .php de ecidade/ cujo nome casa com o prefixo (ou usa ONLY);
-  3. para cada tela, restaura a sessao, faz GET com curl no 5.6 e no lado B,
+  3. para cada tela, restaura a sessao, faz GET com curl no 7.4 e no lado B,
      normaliza os dois corpos (NORM) e compara codigo HTTP + corpo;
   4. se diferir, repete as duas requisicoes uma vez (filtra flakes) antes de
      acusar DIVERGE; resposta que estoura 60 s conta como TIMEOUT, nao como identica.
@@ -27,8 +27,8 @@ Entradas:
             (lado B; padrao 8085 = nosso 8.5), NORM_MENU=1 (remove o menu, so para o TCC)
 
 Saidas:
-  stdout   "N telas", uma linha por tela problematica ("  DIVERGE <tela>  56=<cod>/<bytes>B
-           85=<cod>/<bytes>B", "  TIMEOUT <tela>  56=<cod>  85=<cod> ...", "  PULADA <tela> ..."),
+  stdout   "N telas", uma linha por tela problematica ("  DIVERGE <tela>  ref=<cod>/<bytes>B
+           85=<cod>/<bytes>B", "  TIMEOUT <tela>  ref=<cod>  85=<cod> ...", "  PULADA <tela> ..."),
            progresso a cada 50 e o resumo final "=== X/N identicas, D divergentes, T timeout ===".
   [saida]  TSV, uma divergente por linha: tela  cod56  cod85  bytes56  bytes85
            (TIMEOUT nao entra no arquivo, so no stdout).
@@ -54,7 +54,7 @@ sh(f"docker exec -u root ecidade_php74 cp {SESS} /tmp/_sess.bak")
 
 def restore():
     """Repoe a sessao salva (dono www-data, modo 600) antes de cada requisicao.
-    Feito pelo container do 5.6, mas vale para os dois: o diretorio de sessoes e compartilhado."""
+    Feito pelo container do 7.4, mas vale para os dois: o diretorio de sessoes e compartilhado."""
     sh("docker exec -u root ecidade_php74 sh -c "
        f"'cp /tmp/_sess.bak {SESS}; chown www-data:www-data {SESS}; chmod 600 {SESS}'")
 
@@ -159,7 +159,7 @@ for n, f in enumerate(files, 1):
     c85, b85 = fetch(PORTA_B, f)
     if '000' in (c56, c85):
         tout.append(f)
-        print(f"  TIMEOUT {f}  56={c56}  85={c85}  (nao conta como identica)", flush=True)
+        print(f"  TIMEOUT {f}  ref={c56}  85={c85}  (nao conta como identica)", flush=True)
         continue
     if not (c56 == c85 and b56 == b85):
         # CONFIRMAR antes de acusar. Relatorios em PDF carregam um horario
@@ -170,7 +170,7 @@ for n, f in enumerate(files, 1):
         c85, b85 = fetch(PORTA_B, f)
     if not (c56 == c85 and b56 == b85):
         div.append((f, c56, c85, len(b56), len(b85)))
-        print(f"  DIVERGE {f}  56={c56}/{len(b56)}B  85={c85}/{len(b85)}B", flush=True)
+        print(f"  DIVERGE {f}  ref={c56}/{len(b56)}B  85={c85}/{len(b85)}B", flush=True)
     if n % 50 == 0:
         print(f"  ... {n}/{len(files)}", flush=True)
 

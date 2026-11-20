@@ -56,9 +56,9 @@ REGRAS_ACEITAS = {
     "ParseStrComExtractRector": "regra propria: parse_str de 1 argumento -> parse_str($s, $a); extract($a)",
     "Php4ConstructorRector": "construtor com o nome da classe -> __construct",
     "EregToPregMatchRector": "split/ereg (removidas no PHP 7) -> preg_*",
-    "ConsistentImplodeRector": "implode($a, ',') -> implode(',', $a); conferida no 5.6",
-    "ParenthesizeNestedTernaryRector": "ternario aninhado ganha parenteses (associando a esquerda, como o 5.6)",
-    "RenameCastRector": "(real) -> (float); conferida no 5.6",
+    "ConsistentImplodeRector": "implode($a, ',') -> implode(',', $a); conferida na base-php84 (5.6 e 8.5)",
+    "ParenthesizeNestedTernaryRector": "ternario aninhado ganha parenteses (associando a esquerda, como o 7.4)",
+    "RenameCastRector": "(real) -> (float); conferida na base-php84 (5.6 e 8.5)",
     "ReplaceEachAssignmentWithKeyCurrentRector": "$x = each($a) -> key()/current()/next()",
     "WrapVariableVariableNameInCurlyBracesRector": "$$x -> ${$x}",
 }

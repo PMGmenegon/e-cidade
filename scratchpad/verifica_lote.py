@@ -17,7 +17,7 @@ Opcoes:
     --base REF    referencia do git contra a qual o lote e medido no 4b e no 5 (padrao: HEAD,
                   isto e, as alteracoes ainda nao commitadas; com --tudo o padrao e master). Depois
                   do commit do lote, passe o commit anterior a ele, ex. --base origin/base-php84
-    --sid SID     sessao autenticada a usar na bateria (padrao: a mais recente do 5.6)
+    --sid SID     sessao autenticada a usar na bateria (padrao: a mais recente do 7.4)
     --tudo        em vez de prefixos, verifica TUDO: o universo sao os arquivos que a migracao alterou
                   (diff contra o master, o codigo antes da migracao) e as classes entre eles; a bateria roda
                   em todas as telas que o proxy manda ao 8.5 (location + map). E a bateria completa do fim da
@@ -36,7 +36,7 @@ Pre-requisitos:
     - o Rector ja aplicado (passo 4). Este script NAO altera codigo nem o banco.
 
 O que ele roda, nesta ordem (os detalhes de cada passo estao em docs/migrar-um-modulo.md):
-    4b  funcoes novas no diff existem no PHP 5.6?
+    4b  funcoes novas no diff existem no PHP 7.4?
     5   php -l no universo, nos dois runtimes
     5b  cada arquivo com extends/implements carrega nos dois (assinatura incompativel, LSP)
     6   instanciar as classes: o estado inicial e igual nos dois?
@@ -53,9 +53,10 @@ o nivel 3 (POST real: grava no banco e exige escolher a tela), os passos 8/8b (m
 e qualquer correcao (guarda_ciclo, negada_corrige: exigem olhar caso a caso).
 
 Saida: uma pasta por execucao, ecidade/tmp/verif/<lote>-<AAAAMMDD-HHMM>/, com
-    RELATORIO.md   o resumo e, para cada passo, o criterio, os numeros e as linhas que importam.
-                   E o UNICO arquivo que precisa ser lido; os demais sao a saida bruta de cada
-                   passo, para quem quiser conferir ou diagnosticar.
+    RELATORIO.md   uma pagina: o veredito, uma linha de numeros por passo e o que corrigir.
+                   E o UNICO arquivo que precisa ser lido.
+    DETALHES.md    tudo: para cada passo, o criterio, os numeros e as linhas que importam, o
+                   diagnostico de cada tela divergente e os artefatos conhecidos.
     <passo>_*.txt  saida bruta de cada passo
 A pasta fica dentro de ecidade/ (montada nos containers como /var/www/html), entao os
 containers leem e escrevem nela sem `docker cp`. ecidade/tmp/ e ignorada pelo git.
@@ -84,7 +85,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # raiz do r
 os.chdir(RAIZ)
 ECIDADE = os.path.join(RAIZ, "ecidade")      # montado como /var/www/html nos dois containers
 WEB = "/var/www/html"
-RT = {"56": "ecidade_php74", "85": "ecidade_php85"}
+RT = {"74": "ecidade_php74", "85": "ecidade_php85"}
 PASSOS = ["4b", "5", "5b", "6", "6b", "6c", "7"]
 
 # Artefatos conhecidos dos harnesses dos passos 6 e 6b: classes que aparecem diferentes entre
@@ -95,18 +96,20 @@ PASSOS = ["4b", "5", "5b", "6", "6b", "6c", "7"]
 #   (padrao no texto da linha, classe, o que aparece no diff, por que nao e defeito)
 ARTEFATOS_LISTA = [
     (r"requisicaoMaterial\.model", "RequisicaoMaterial",
-     "`ArgumentCountError` so no 8.5 (no 5.6, valores `NULL`)",
-     "o construtor exige 1 argumento e o teste faz `new X()` sem nenhum. O PHP 5.6 so avisava e seguia; o 8 recusa. "
+     "`ArgumentCountError` so no 8.5 (no 7.4, valores `NULL`)",
+     "o construtor exige 1 argumento e o teste faz `new X()` sem nenhum. O PHP 7.4 so avisava e seguia; o 8 recusa. "
      "O sistema de verdade sempre passa o argumento"),
     (r"solicitacaocompras\.model", "solicitacaoCompra",
-     "`ArgumentCountError` so no 8.5 (no 5.6, `SEM_SAIDA`)", "idem"),
+     "`ArgumentCountError` so no 8.5 (no 7.4, `SEM_SAIDA`)", "idem"),
     (r"lancamentoContabil", "lancamentoContabil", "`ArgumentCountError` so no 8.5", "idem"),
     (r"ordemPagamento", "ordemPagamento", "`ArgumentCountError` so no 8.5", "idem"),
     (r"avaliacaogruporespostatrabalhointermitente", "cl_avaliacaogruporespostatrabalhointermitente",
-     "`ERRO ... Exception` no 8.5 e `SEM_SAIDA` (ou um \"pulado\") no 5.6",
+     "`ERRO ... Exception` no 8.5 e `SEM_SAIDA` (ou um \"pulado\") no 7.4",
      "o construtor procura um arquivo `.dd.xml` que nao existe nesta base e falha NOS DOIS: o 8.5 captura a "
-     "excecao e o teste a imprime; o 5.6 morre sem imprimir nada"),
-    (r"classes/empenho\.php", "empenho, campo datausu", "`1969-12-31` no 5.6 contra a data de hoje no 8.5",
+     "excecao e o teste a imprime; o 7.4 morre sem imprimir nada"),
+    # SO a linha do campo datausu: o padrao era a classe inteira e, na base-php74 (empenho.php com construtor
+    # PHP 4 ainda nao portado), escondia o defeito real -- sCamposNota vazio no 8.5 e o estado do passo 6.
+    (r"classes/empenho\.php\tdatausu\t", "empenho, campo datausu", "`1969-12-31` no 7.4 contra a data de hoje no 8.5",
      "so acontece SEM sessao (sem a data do usuario logado), que e condicao do teste, nao do uso real"),
 ]
 ARTEFATOS = re.compile("|".join(p for p, *_ in ARTEFATOS_LISTA))
@@ -156,10 +159,18 @@ def amostra(itens, n=15):
         corpo += f"\n... e mais {len(itens) - n} (ver o arquivo bruto)"
     return corpo
 
+def curta(itens, n=5):
+    """Lista curta para o RELATORIO.md: os n primeiros em `codigo`, e "(+N)" com o resto."""
+    itens = list(itens)
+    corpo = ", ".join(f"`{x}`" for x in itens[:n])
+    return corpo + (f" (+{len(itens) - n})" if len(itens) > n else "")
+
 class Resultado:
-    """O que cada passo devolve: situacao, uma linha de resumo e o texto do relatorio."""
-    def __init__(self, situacao, resumo, detalhe="", arquivos=()):
+    """O que cada passo devolve: situacao, uma linha de resumo e o texto completo (DETALHES.md).
+    numeros: a coluna "Numeros" do RELATORIO.md (padrao: o resumo); itens: as linhas de "O que corrigir"."""
+    def __init__(self, situacao, resumo, detalhe="", arquivos=(), numeros=None, itens=()):
         self.situacao, self.resumo, self.detalhe, self.arquivos = situacao, resumo, detalhe, list(arquivos)
+        self.numeros, self.itens = numeros or resumo, list(itens)
 
 # ---------------------------------------------------------------------------------------------
 # Pre-requisitos
@@ -182,7 +193,7 @@ def preparar(args):
     if args.tudo:
         # TUDO: o universo sao os arquivos que a migracao alterou (diff contra o master, o codigo antes
         # da migracao). Sao eles que podem regredir; e as classes alteradas sao as portadas -- uma classe
-        # nunca portada pertence a area que o 5.6 ainda serve e diverge por construcao (6c).
+        # nunca portada pertence a area que o 7.4 ainda serve e diverge por construcao (6c).
         codigo = sorted(f for f in alterados if f.endswith((".php", ".class", ".inc"))
                         and os.path.isfile(os.path.join(ECIDADE, f)))
         telas = telas_servidas()
@@ -268,7 +279,7 @@ def carregar_conhecidas(caminho):
     return {"arquivo": rel if not rel.startswith("..") else caminho, "nomes": nomes}
 
 def achar_sessao():
-    """A sessao autenticada MAIS RECENTE do 5.6. O sess_?* exclui o arquivo "sess_" sem
+    """A sessao autenticada MAIS RECENTE do 7.4. O sess_?* exclui o arquivo "sess_" sem
     identificador (criado por requisicao com cookie vazio), que vinha primeiro e dava SID vazio."""
     _, out, _ = sh(["docker", "exec", "-i", "ecidade_php74", "sh", "-c",
                     "ls -t $(grep -la DB_modulo /var/lib/php/sessions/sess_?*) | head -1"])
@@ -282,14 +293,15 @@ def achar_sessao():
 # ---------------------------------------------------------------------------------------------
 
 def passo_4b(ctx, args):
-    """Funcoes que APARECERAM nas linhas novas do diff e nao existem no PHP 5.6.
-    O Rector pode emitir funcao do PHP 7/8 (str_contains, array_key_first) que compila no 5.6
+    """Funcoes que APARECERAM nas linhas novas do diff e nao existem no PHP 7.4.
+    O Rector pode emitir funcao do PHP 7/8 (str_contains, array_key_first) que compila no 7.4
     e so explode em execucao -- nenhum `php -l` pega."""
     _, d, _ = sh(["git", "diff", "-U0", args.base, "--", "ecidade/"])
     if not d.strip():
         return Resultado("AVISO", f"nenhuma alteracao em ecidade/ em relacao a {args.base}",
                          f"O diff contra `{args.base}` esta vazio. Se o lote ja foi commitado, rode com "
-                         "`--base <commit anterior ao lote>`; se o Rector ainda nao rodou, rode-o antes.")
+                         "`--base <commit anterior ao lote>`; se o Rector ainda nao rodou, rode-o antes.",
+                         numeros="nada alterado no lote")
     # (?<!function ) exclui DECLARACOES: sem ele, "__construct" seria acusada como ausente
     rx = re.compile(r"(?<![\$>:\w])(?<!function )([a-z_][a-z0-9_]{2,})\s*\(")
     nov, vel = set(), set()
@@ -303,25 +315,27 @@ def passo_4b(ctx, args):
     novas = sorted(nov - vel)
     arq = os.path.join(ctx["pasta"], "4b_funcoes_novas.txt")
     gravar(arq, "\n".join(novas) + "\n")
-    # A pergunta e "o 8.5 conhece e o 5.6 NAO?": so isso e funcao NOVA do PHP (str_contains...). Perguntar so
-    # ao 5.6 acusaria tambem nomes que nao sao funcoes do PHP -- JavaScript dentro do PHP (alert, append) e
+    # A pergunta e "o 8.5 conhece e o 7.4 NAO?": so isso e funcao NOVA do PHP (str_contains...). Perguntar so
+    # ao 7.4 acusaria tambem nomes que nao sao funcoes do PHP -- JavaScript dentro do PHP (alert, append) e
     # funcoes do proprio e-cidade, que nao estao carregadas -- e no --tudo deu 286 falsos "ausentes".
     existe = {}
-    for rt in ("56", "85"):
+    for rt in ("74", "85"):
         _, out, _ = sh(["docker", "exec", "-i", f"ecidade_php{rt}", "php", "-r",
                         f'foreach(file("{dentro(arq)}", FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $f)'
                         ' if(function_exists(trim($f))) echo trim($f),"\\n";'])
         existe[rt] = {l.strip() for l in out.split("\n") if l.strip()}
-    # exit e die sao CONSTRUCOES da linguagem no 5.6 (funcionam, mas function_exists diz que nao) e viraram
+    # exit e die sao CONSTRUCOES da linguagem no 7.4 (funcionam, mas function_exists diz que nao) e viraram
     # funcoes de verdade no PHP 8.4. Aparecem pelas correcoes `break` -> `exit` e nao sao ausencia nenhuma.
-    ausentes = sorted(existe["85"] - existe["56"] - {"exit", "die"})
+    ausentes = sorted(existe["85"] - existe["74"] - {"exit", "die"})
     if ausentes:
-        return Resultado("FALHA", f"{len(novas)} nomes novos, {len(ausentes)} funcoes do PHP 8 AUSENTES no 5.6",
-                         "Funcoes que o Rector emitiu e o PHP 5.6 nao tem. Banir a regra que as emitiu e refazer o "
-                         "passo 4 (guia: 'Como banir uma regra').\n\n```\n" + amostra(ausentes) + "\n```", [arq])
-    do_php = sorted(existe["56"] & existe["85"])
-    return Resultado("OK", f"{len(do_php)} funcoes do PHP novas no diff, 0 ausentes no 5.6",
-                     "Funcoes do PHP que aparecem nas linhas novas (todas existem no 5.6): " + (", ".join(do_php) or "nenhuma")
+        return Resultado("FALHA", f"{len(novas)} nomes novos, {len(ausentes)} funcoes do PHP 8 AUSENTES no 7.4",
+                         "Funcoes que o Rector emitiu e o PHP 7.4 nao tem. Banir a regra que as emitiu e refazer o "
+                         "passo 4 (guia: 'Como banir uma regra').\n\n```\n" + amostra(ausentes) + "\n```", [arq],
+                         numeros=f"{len(ausentes)} funcoes que o 7.4 nao tem",
+                         itens=[f"funcoes que o 7.4 nao tem (banir a regra do Rector que as emitiu): {curta(ausentes)}"])
+    do_php = sorted(existe["74"] & existe["85"])
+    return Resultado("OK", f"{len(do_php)} funcoes do PHP novas no diff, 0 ausentes no 7.4",
+                     "Funcoes do PHP que aparecem nas linhas novas (todas existem no 7.4): " + (", ".join(do_php) or "nenhuma")
                      + f". Outros {len(novas) - len(do_php)} nomes novos nao sao funcoes do PHP (funcoes do e-cidade, "
                      "JavaScript dentro do PHP) e nao interessam aqui.", [arq])
 
@@ -336,11 +350,11 @@ def lint(ctx, rt, lista):
     return dict(l.split("\t", 1) for l in out.splitlines() if "\t" in l)
 
 def passo_5(ctx, args):
-    """`php -l` em TODO o universo, nos dois runtimes. Um arquivo que nao parseia no 5.6 derruba
+    """`php -l` em TODO o universo, nos dois runtimes. Um arquivo que nao parseia no 7.4 derruba
     o runtime que serve o login; um que nao parseia no 8.5 derruba a tela migrada."""
     lista = os.path.join(ctx["pasta"], "universo_codigo.txt")
-    e56, e85 = lint(ctx, "56", lista), lint(ctx, "85", lista)
-    for rt, e in (("56", e56), ("85", e85)):
+    e56, e85 = lint(ctx, "74", lista), lint(ctx, "85", lista)
+    for rt, e in (("74", e56), ("85", e85)):
         gravar(os.path.join(ctx["pasta"], f"5_lint_erros_{rt}.txt"), "".join(f"{k}\t{v}\n" for k, v in sorted(e.items())))
     so56 = sorted(set(e56) - set(e85))
     so85 = sorted(set(e85) - set(e56))
@@ -349,7 +363,7 @@ def passo_5(ctx, args):
     n = len(ctx["codigo"])
     det = [f"{n} arquivos verificados em cada runtime."]
     if so56:
-        det.append("**So no 5.6** (o lote quebrou o runtime de referencia):\n```\n" + amostra(f"{f}  {e56[f]}" for f in so56) + "\n```")
+        det.append("**So no 7.4** (o lote quebrou o runtime de referencia):\n```\n" + amostra(f"{f}  {e56[f]}" for f in so56) + "\n```")
     if so85:
         det.append("**So no 8.5:**\n```\n" + amostra(f"{f}  {e85[f]}" for f in so85) + "\n```")
     if quebrados_pelo_lote:
@@ -357,15 +371,22 @@ def passo_5(ctx, args):
                    + amostra(quebrados_pelo_lote) + "\n```")
     if nos_dois:
         det.append(f"Falham nos dois e nao foram alterados (pre-existentes, so registrar): {len(nos_dois) - len(quebrados_pelo_lote)}.")
-    arqs = [os.path.join(ctx["pasta"], f"5_lint_erros_{rt}.txt") for rt in ("56", "85")]
+    arqs = [os.path.join(ctx["pasta"], f"5_lint_erros_{rt}.txt") for rt in ("74", "85")]
     if so56 or so85 or quebrados_pelo_lote:
-        return Resultado("FALHA", f"{n} arquivos: {len(so56)} so no 5.6, {len(so85)} so no 8.5, "
-                         f"{len(quebrados_pelo_lote)} alterados que falham nos dois", "\n\n".join(det), arqs)
+        partes = [f"{len(so85)} quebram so no 8.5"] + ([f"{len(so56)} so no 7.4"] if so56 else []) \
+                 + ([f"{len(quebrados_pelo_lote)} alterados quebram nos dois"] if quebrados_pelo_lote else [])
+        nome = lambda fs: curta(os.path.basename(f) for f in fs)
+        itens = ([f"nao compilam no 8.5: {nome(so85)}"] if so85 else []) \
+                + ([f"o lote quebrou no 7.4: {nome(so56)}"] if so56 else []) \
+                + ([f"alterados pelo lote e quebrados nos dois: {nome(quebrados_pelo_lote)}"] if quebrados_pelo_lote else [])
+        return Resultado("FALHA", f"{n} arquivos: {len(so56)} so no 7.4, {len(so85)} so no 8.5, "
+                         f"{len(quebrados_pelo_lote)} alterados que falham nos dois", "\n\n".join(det), arqs,
+                         numeros=", ".join(partes), itens=itens)
     return Resultado("OK", f"{n} arquivos, 0 erros novos ({len(nos_dois)} pre-existentes)", "\n\n".join(det), arqs)
 
 def por_processo(ctx, rt, harness, lista, saida):
     """Roda um harness PHP UMA ENTRADA POR PROCESSO (scratchpad/porclasse.sh): um fatal mata so
-    aquele processo, e o resto da lista continua. Com a lista inteira num processo so, o 5.6
+    aquele processo, e o resto da lista continua. Com a lista inteira num processo so, o 7.4
     morreu na classe 119 de 772 no soc e o diff comparou 103 classes sem acusar nada.
     Devolve o numero de entradas processadas (o #TOTAL do porclasse.sh)."""
     c = RT[rt]
@@ -385,7 +406,7 @@ def comparar_harness(ctx, nome, harness, explicacao):
     n = len(ctx["classes"])
     s = {rt: os.path.join(ctx["pasta"], f"{nome}_{rt}.txt") for rt in RT}
     tot = {rt: por_processo(ctx, rt, harness, lista, s[rt]) for rt in RT}
-    a, b = linhas(s["56"]), linhas(s["85"])
+    a, b = linhas(s["74"]), linhas(s["85"])
     so56, so85 = diff_linhas(a, b)
     reais56 = [l for l in so56 if not ARTEFATOS.search(l)]
     reais85 = [l for l in so85 if not ARTEFATOS.search(l)]
@@ -393,19 +414,33 @@ def comparar_harness(ctx, nome, harness, explicacao):
     ctx.setdefault("artefatos_vistos", set()).update(vistos)
     sem = {rt: sum(1 for l in linhas(s[rt]) if l.startswith("SEM_SAIDA")) for rt in RT}
     det = [explicacao,
-           f"Classes na lista: {n}. Processadas: 5.6={tot['56']}, 8.5={tot['85']}. "
-           f"Sem saida (nada a testar ou o processo morreu): 5.6={sem['56']}, 8.5={sem['85']}.",
+           f"Classes na lista: {n}. Processadas: 7.4={tot['74']}, 8.5={tot['85']}. "
+           f"Sem saida (nada a testar ou o processo morreu): 7.4={sem['74']}, 8.5={sem['85']}.",
            "Artefatos conhecidos que apareceram (ignorados; explicados no fim do relatorio): "
            + (", ".join(sorted(vistos)) or "nenhum")]
     if reais56 or reais85:
-        det.append("**Diferencas fora dos artefatos** (`<` = 5.6, `>` = 8.5):\n```\n"
+        det.append("**Diferencas fora dos artefatos** (`<` = 7.4, `>` = 8.5):\n```\n"
                    + amostra([f"< {l}" for l in reais56] + [f"> {l}" for l in reais85], 30) + "\n```")
-    if tot["56"] != n or tot["85"] != n:
-        return Resultado("FALHA", f"incompleto: {n} classes, processadas 5.6={tot['56']} 8.5={tot['85']}",
+    if tot["74"] != n or tot["85"] != n:
+        return Resultado("FALHA", f"incompleto: {n} classes, processadas 7.4={tot['74']} 8.5={tot['85']}",
                          "\n\n".join(det), s.values())
     if reais56 or reais85:
+        # para o RELATORIO.md: as classes (e, no 6b, os campos) por tras das linhas de diferenca; linhas que
+        # nao comecam por um arquivo .php (avisos que o harness imprime sem sessao) ficam so no DETALHES.md
+        cols = [l.split("\t") for l in reais56 + reais85]
+        cols = [c for c in cols if c[0].endswith(".php")]
+        classes = collections.Counter(c[0] for c in {tuple(c[:2]) for c in cols})
+        mais = [f"{os.path.basename(c)} ({k})" for c, k in classes.most_common()]
+        if nome.startswith("6b"):
+            numeros = f"{len(classes)} classes, {sum(classes.values())} campos"
+            itens = [f"campos lidos errado no 8.5 (falta a guarda `0 == \"\"`): {len(classes)} classes; "
+                     f"as com mais campos: {curta(mais)}"]
+        else:
+            numeros = f"{len(classes)} classes"
+            itens = [f"estado inicial diferente (construtor que nao roda no 8.5?): "
+                     f"{curta(os.path.basename(c) for c in sorted(classes))}"]
         return Resultado("FALHA", f"{n} classes, {len(reais56) + len(reais85)} linhas de diferenca fora dos artefatos",
-                         "\n\n".join(det), s.values())
+                         "\n\n".join(det), s.values(), numeros=numeros, itens=itens)
     return Resultado("OK", f"{n} classes, so artefatos conhecidos ({len(vistos)})", "\n\n".join(det), s.values())
 
 def passo_5b(ctx, args):
@@ -440,17 +475,23 @@ def passo_5b(ctx, args):
         for l in linhas(s[rt]):
             f, _, r = l.partition("\t")
             res[rt][f] = ["OK"] if r.endswith("\tOK") else [r.split("\t", 1)[-1] or "sem saida"]
-    quebra = sorted(f for f in alvo if res["56"].get(f, ["?"])[0] == "OK" and res["85"].get(f, ["?"])[0] != "OK")
-    nos_dois = sum(1 for f in alvo if res["56"].get(f, ["?"])[0] != "OK" and res["85"].get(f, ["?"])[0] != "OK")
-    det = [f"Arquivos com extends/implements: {len(alvo)}. Com resultado: 5.6={len(res['56'])}, 8.5={len(res['85'])}. "
+    quebra = sorted(f for f in alvo if res["74"].get(f, ["?"])[0] == "OK" and res["85"].get(f, ["?"])[0] != "OK")
+    nos_dois = sum(1 for f in alvo if res["74"].get(f, ["?"])[0] != "OK" and res["85"].get(f, ["?"])[0] != "OK")
+    det = [f"Arquivos com extends/implements: {len(alvo)}. Com resultado: 7.4={len(res['74'])}, 8.5={len(res['85'])}. "
            f"Falham nos dois (pre-existentes): {nos_dois}."]
-    if len(res["56"]) != len(alvo) or len(res["85"]) != len(alvo):
-        return Resultado("FALHA", f"incompleto: {len(alvo)} arquivos, resultados 5.6={len(res['56'])} 8.5={len(res['85'])}",
+    if len(res["74"]) != len(alvo) or len(res["85"]) != len(alvo):
+        return Resultado("FALHA", f"incompleto: {len(alvo)} arquivos, resultados 7.4={len(res['74'])} 8.5={len(res['85'])}",
                          "\n\n".join(det), s.values())
     if quebra:
-        det.append("**Carregam no 5.6 e NAO no 8.5:**\n```\n"
+        det.append("**Carregam no 7.4 e NAO no 8.5:**\n```\n"
                    + amostra(f"{f}  {' '.join(res['85'][f])}" for f in quebra) + "\n```")
-        return Resultado("FALHA", f"{len(alvo)} arquivos, {len(quebra)} so quebram no 8.5", "\n\n".join(det), s.values())
+        lsp = [f for f in quebra if re.search(r"must be compatible|Could not check compatibility", " ".join(res["85"][f]))]
+        outros = [f for f in quebra if f not in lsp]
+        itens = ([f"heranca (assinatura incompativel com a mae): {curta(os.path.basename(f) for f in lsp)}"] if lsp else []) \
+                + ([f"outro motivo (nao compila no 8.5, ou inclui arquivo que nao compila): "
+                    f"{curta(os.path.basename(f) for f in outros)}"] if outros else [])
+        return Resultado("FALHA", f"{len(alvo)} arquivos, {len(quebra)} so quebram no 8.5", "\n\n".join(det), s.values(),
+                         numeros=f"{len(quebra)} quebram so no 8.5 ({len(lsp)} por heranca)", itens=itens)
     return Resultado("OK", f"{len(alvo)} arquivos, 0 so no 8.5 ({nos_dois} falham nos dois)", "\n\n".join(det), s.values())
 
 def passo_6(ctx, args):
@@ -483,7 +524,7 @@ def passo_6c(ctx, args):
         _, out, _ = sh(["docker", "exec", "-i", RT[rt], "sh", "-c", script], timeout=7200)
         s[rt] = os.path.join(p, f"6c_negada_{rt}.txt")
         gravar(s[rt], out)
-    _, out, _ = sh(["python3", "scratchpad/negada_compara.py", s["56"], s["85"], os.path.join(p, "classes.txt")])
+    _, out, _ = sh(["python3", "scratchpad/negada_compara.py", s["74"], s["85"], os.path.join(p, "classes.txt")])
     rel = os.path.join(p, "6c_comparacao.txt")
     gravar(rel, out)
     # o negada_compara.py imprime "VEREDITO: PASSOU|INCOMPLETO|INVESTIGAR" e os cabecalhos "== DO LOTE: N pares"
@@ -494,9 +535,27 @@ def passo_6c(ctx, args):
     dentro_lote = re.search(r"^== DO LOTE: (\d+) pares", out, re.M)   # ^ e "== ": senao casa com o "FORA DO LOTE"
     resumo = f"{dentro_lote.group(1) if dentro_lote else '?'} divergencias no lote ({fora.group(1) if fora else '?'} fora do lote, ignoradas)"
     det = ("Saida do negada_compara.py. Os pares FORA DO LOTE sao de classes que o lote nao usa (areas ainda "
-           "servidas pelo 5.6) e nao se corrigem aqui.\n\n```\n" + out.strip() + "\n```")
+           "servidas pelo 7.4) e nao se corrigem aqui.\n\n```\n" + out.strip() + "\n```")
     situacao = {"PASSOU": "OK", "INCOMPLETO": "FALHA", "INVESTIGAR": "INVESTIGAR"}.get(veredito, "FALHA")
-    return Resultado(situacao, resumo, det, [s["56"], s["85"], rel])
+    # para o RELATORIO.md: os pares DO LOTE por tipo (linhas "   TIPO classe campo metodo   7.4=... 8.5=...")
+    pares = collections.defaultdict(list)
+    for l in out.split("== DO LOTE", 1)[-1].splitlines():
+        c = l.split()
+        if len(c) >= 4 and c[0] in ("FORMA_NEGADA", "VALOR_DIFERENTE", "ERRO", "SO_DE_UM_LADO"):
+            pares[c[0]].append(f"{os.path.basename(c[1])} {c[2]} {c[3]}")
+    itens = []
+    if pares["FORMA_NEGADA"]:
+        ncls = len({p.split()[0] for p in pares["FORMA_NEGADA"]})
+        itens.append(f"forma negada a corrigir (`negada_corrige.py`): {len(pares['FORMA_NEGADA'])} pares em {ncls} classes: "
+                     f"{curta(pares['FORMA_NEGADA'], 3)}")
+    if pares["VALOR_DIFERENTE"]:
+        itens.append(f"{len(pares['VALOR_DIFERENTE'])} pares com valor diferente: a classe ficou sem a guarda do `==` (o mesmo do 6b)")
+    for t in ("ERRO", "SO_DE_UM_LADO"):
+        if pares[t]:
+            itens.append(f"{t}: {curta(pares[t], 3)}")
+    numeros = (f"{len(pares['FORMA_NEGADA'])} pares a corrigir" if situacao != "FALHA" else resumo) \
+              + (f", {len(pares['VALOR_DIFERENTE'])} sem a guarda do ==" if pares["VALOR_DIFERENTE"] else "")
+    return Resultado(situacao, resumo, det, [s["74"], s["85"], rel], numeros=numeros, itens=itens)
 
 def normalizacao_do_cmp():
     """A MESMA normalizacao que o cmp.py aplica antes de comparar (sid, nomes temporarios, datas
@@ -563,14 +622,14 @@ def diagnosticar(telas, sid, p):
             elif c56 == "200" and c85 != "200":
                 tipo = "REGRESSAO: quebra so no 8.5 -> corrigir"
             elif c56 != "200" and c85 == "200":
-                tipo = "PRE-EXISTENTE: quebra so no 5.6 (defeito da referencia) -> registrar, nao corrigir"
+                tipo = "PRE-EXISTENTE: quebra so no 7.4 (defeito da referencia) -> registrar, nao corrigir"
             elif c56 != "200" and c85 != "200":
                 tipo = "QUEBRA NOS DOIS (pre-existente ou dado ausente) -> nao mexer; conferir se a causa e a mesma"
             else:
                 tipo = "SILENCIOSA: 200 nos dois, conteudo diferente -> o tipo mais perigoso, ver o trecho"
-            bloco = [f"### {tela}", "", f"- 5.6: HTTP {c56}, {len(b56)} bytes; 8.5: HTTP {c85}, {len(b85)} bytes",
+            bloco = [f"### {tela}", "", f"- 7.4: HTTP {c56}, {len(b56)} bytes; 8.5: HTTP {c85}, {len(b85)} bytes",
                      f"- **Classificacao: {tipo}**"]
-            for rt, fat, sql in (("8.5", f85, q85), ("5.6", f56, q56)):
+            for rt, fat, sql in (("8.5", f85, q85), ("7.4", f56, q56)):
                 for x in fat[:3]:
                     bloco.append(f"- erro do PHP no {rt}: `{x[:400]}`")
                 for x in sql[:3]:
@@ -578,10 +637,10 @@ def diagnosticar(telas, sid, p):
             if c56 == c85 == "200" and n56 != n85:
                 pos, t56, t85 = trecho_diferente(n56, n85)
                 bloco += [f"- as paginas comecam a diferir no byte {pos}:", "", "```",
-                          f"5.6: ...{t56}...", f"8.5: ...{t85}...", "```"]
+                          f"7.4: ...{t56}...", f"8.5: ...{t85}...", "```"]
             if not (f56 or f85 or q56 or q85) and not (c56 == c85 == "200"):
                 bloco.append("- nenhum erro registrado nos logs: ver o corpo da resposta (pagina de erro da aplicacao?)")
-            for rt, b in (("56", b56), ("85", b85)):
+            for rt, b in (("74", b56), ("85", b85)):
                 gravar(os.path.join(p, "7_corpo_" + tela.replace("/", "_") + f"_{rt}.html"), b.decode("latin-1"))
             saida.append("\n".join(bloco))
     finally:
@@ -652,9 +711,9 @@ def passo_7(ctx, args):
     nomes_con = con["nomes"] if con else set()
     novas = [x for x in divergentes if x not in nomes_con]
     velhas = [x for x in divergentes if x in nomes_con]
-    # Timeout so no 5.6 (56=000, 8.5 respondeu) e laco eterno da referencia: pre-existente. Timeout no 8.5 e
+    # Timeout so no 7.4 (ref=000, 8.5 respondeu) e laco eterno da referencia: pre-existente. Timeout no 8.5 e
     # que pode ser regressao (laco que o PHP 8 passou a fazer).
-    tout_56 = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT") and "56=000" in l and "85=000" not in l]
+    tout_56 = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT") and "ref=000" in l and "85=000" not in l]
     tout_novos = [x for x in tout if x not in nomes_con and x not in tout_56]
     testadas = set((t["location"] + t["map"]) if t else [])
     sumiram = sorted(x for x in nomes_con & testadas if x not in divergentes and x not in tout) if con else []
@@ -673,13 +732,13 @@ def passo_7(ctx, args):
     else:
         det += ("\n\nSem lista de divergencias conhecidas (`--conhecidas`, ou docs/divergencias-conhecidas.md): "
                 "toda divergencia e tratada como nova.")
-    # Independe da lista de conhecidas: timeout so no 5.6 e sempre pre-existente. (O `if sumiram` e o `else`
+    # Independe da lista de conhecidas: timeout so no 7.4 e sempre pre-existente. (O `if sumiram` e o `else`
     # acima ja estiveram presos a este `if` por engano -- ver scratchpad/testes/test_verifica_relatorio.py.)
     if tout_56:
-        det += ("\n\nTimeout so no 5.6 (laco eterno da referencia; o 8.5 respondeu) -- pre-existente, nao conta: "
+        det += ("\n\nTimeout so no 7.4 (laco eterno da referencia; o 8.5 respondeu) -- pre-existente, nao conta: "
                 + ", ".join(tout_56))
     det += ("\n\nCada divergencia nova precisa de diagnostico (guia, passo 7: tabela de decisao): pode ser regressao "
-            "(quebra so no 8.5) ou defeito pre-existente (quebra igual, ou so no 5.6).")
+            "(quebra so no 8.5) ou defeito pre-existente (quebra igual, ou so no 7.4).")
     if linhas_div:
         det += "\n\n```\n" + amostra(linhas_div, 40) + "\n```"
     if novas:
@@ -687,34 +746,78 @@ def passo_7(ctx, args):
         # 60 s cada e o motivo de um timeout raramente aparece em log).
         det += ("\n\n**Diagnostico automatico** (cada tela pedida de novo aos dois runtimes, com os logs limpos; "
                 "a classificacao segue a tabela de decisao do guia, passo 7). As paginas de cada lado ficam na "
-                "pasta como `7_corpo_<tela>_56.html` / `_85.html`.\n\n" + "\n\n".join(diagnosticar(novas, sid, p)))
+                "pasta como `7_corpo_<tela>_74.html` / `_85.html`.\n\n" + "\n\n".join(diagnosticar(novas, sid, p)))
     arquivos = [log, div] if divergentes else [log]
     if novas or tout_novos:
+        # para o RELATORIO.md: as telas novas agrupadas pela causa, lida dos codigos HTTP do cmp.py
+        # (linha "DIVERGE <tela>  ref=<cod>/<bytes>B  85=<cod>/<bytes>B")
+        grupos = collections.defaultdict(list)
+        for l in linhas_div:
+            c = l.split()
+            if c[0] == "DIVERGE" and c[1] in novas:
+                cr = c[2].split("=")[1].split("/")[0] if len(c) > 2 else "?"
+                c8 = c[3].split("=")[1].split("/")[0] if len(c) > 3 else "?"
+                causa = (f"erro {c8} so no 8.5" if c8.startswith("5") and not cr.startswith("5")
+                         else "conteudo diferente" if cr == c8 else f"codigo diferente (7.4 {cr}, 8.5 {c8})")
+                grupos[causa].append(c[1])
+        itens = [f"{len(v)} com {k}: {curta(v)}" for k, v in sorted(grupos.items(), key=lambda x: -len(x[1]))]
+        if tout_novos:
+            itens.append(f"{len(tout_novos)} com timeout no 8.5: {curta(tout_novos)}")
+        itens.append("diagnostico de cada tela (log de erro de cada lado) em DETALHES.md")
         return Resultado("INVESTIGAR", f"{ok}/{tot} identicas, {len(novas)} divergencias novas"
-                         + (f" ({len(velhas)} conhecidas)" if con else "") + f", {len(tout_novos)} timeout", det, arquivos)
+                         + (f" ({len(velhas)} conhecidas)" if con else "") + f", {len(tout_novos)} timeout", det, arquivos,
+                         numeros=f"{len(novas)} de {tot} divergem" + (f", {len(tout_novos)} timeout" if tout_novos else ""),
+                         itens=itens)
     if divergentes or tout:
         return Resultado("OK", f"{ok}/{tot} identicas; as {len(divergentes) + len(tout)} restantes sao conhecidas "
                          "ou pre-existentes", det, arquivos)
     return Resultado("OK", f"{ok}/{tot} telas identicas", det, arquivos)
 
 FUNCOES = {"4b": passo_4b, "5": passo_5, "5b": passo_5b, "6": passo_6, "6b": passo_6b, "6c": passo_6c, "7": passo_7}
-TITULOS = {"4b": "funcoes novas existem no 5.6", "5": "php -l nos dois runtimes", "5b": "carga dos arquivos (LSP)",
-           "6": "instanciar as classes", "6b": "caminho de escrita", "6c": "forma negada != \"\"",
-           "7": "bateria byte a byte"}
+TITULOS = {"4b": "funcoes que so existem no PHP 8", "5": "php -l nos dois runtimes", "5b": "heranca (carga dos arquivos)",
+           "6": "construtor (instanciar classes)", "6b": "formulario lido errado (0 == \"\")",
+           "6c": "forma negada != \"\"", "7": "telas byte a byte"}
 
 # ---------------------------------------------------------------------------------------------
 # Relatorio
 # ---------------------------------------------------------------------------------------------
 
 def relatorio(ctx, args, resultados, inicio):
-    """Escreve RELATORIO.md: cabecalho, tabela-resumo e uma secao por passo."""
+    """Escreve os dois arquivos da pasta: RELATORIO.md (uma pagina: veredito, tabela e o que corrigir) e
+    DETALHES.md (tudo: cabecalho completo, uma secao por passo com as linhas e o diagnostico, os artefatos)."""
     _, br, _ = sh(["git", "branch", "--show-current"])
     _, hd, _ = sh(["git", "log", "-1", "--format=%h %s"])
     fim = datetime.datetime.now()
     alvo = ("TUDO o que a migracao alterou (contra `" + args.base + "`)") if args.tudo else " ".join(args.prefixos)
     if args.amostra:
         alvo += f" -- AMOSTRA de {args.amostra} por lista (nao vale como bateria completa)"
-    r = [f"# Verificacao do lote `{args.lote}` ({alvo})", "",
+
+    # --- RELATORIO.md: uma pagina ---
+    ruins = [k for k, res in resultados.items() if res.situacao in ("FALHA", "INVESTIGAR")]
+    veredito = "REPROVADO" if ruins else "APROVADO"
+    rodou = [k for k in PASSOS if k in resultados]
+    if len(rodou) < len(PASSOS):
+        veredito += f" (so os passos {', '.join(rodou)})"
+    duracao = str(fim - inicio).split(".")[0]
+    s = [f"# Lote `{args.lote}` ({alvo}): {veredito}", "",
+         f"{inicio:%d/%m/%Y %H:%M} | {duracao} | {len(ctx['codigo'])} arquivos, {len(ctx['classes'])} classes | "
+         f"base: `{args.base}`", "",
+         "| Passo | Verifica | Resultado | Numeros |", "| --- | --- | --- | --- |"]
+    for k in PASSOS:
+        res = resultados.get(k)
+        s.append(f"| {k} | {TITULOS[k]} | {res.situacao if res else 'pulado'} | {res.numeros if res else ''} |")
+    corrigir = [(k, i) for k in PASSOS if k in ruins for i in resultados[k].itens]
+    if corrigir:
+        s += ["", "## O que corrigir", ""] + [f"- **{k}:** {i}" for k, i in corrigir]
+    s += ["", "Detalhes completos (linhas de cada passo, diagnostico de cada tela, artefatos conhecidos): "
+          "`DETALHES.md`. Arquivos brutos de cada passo: nesta pasta.",
+          "Fora desta verificacao (rodar a mao, ver o guia): passo 4 (Rector), nivel 3 (POST real), passos 8/8b."]
+    caminho = os.path.join(ctx["pasta"], "RELATORIO.md")
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write("\n".join(s) + "\n")
+
+    # --- DETALHES.md: tudo ---
+    r = [f"# Detalhes da verificacao do lote `{args.lote}` ({alvo})", "",
          f"- Data: {inicio:%d/%m/%Y %H:%M} (duracao {str(fim - inicio).split('.')[0]})",
          f"- Branch: `{br.strip()}`, HEAD `{hd.strip()}`; alteracoes medidas contra `{args.base}` "
          f"({len(ctx['alterados'])} arquivos alterados em ecidade/)",
@@ -737,14 +840,13 @@ def relatorio(ctx, args, resultados, inicio):
     # Secao final: o que sao os artefatos conhecidos que os passos 6 e 6b ignoram
     vistos = ctx.get("artefatos_vistos", set())
     r += ["", "## Artefatos conhecidos (passos 6 e 6b)", "",
-          "Classes que aparecem diferentes entre o 5.6 e o 8.5 por causa do **teste**, nao da migracao. Os passos 6 e 6b "
+          "Classes que aparecem diferentes entre o 7.4 e o 8.5 por causa do **teste**, nao da migracao. Os passos 6 e 6b "
           "ignoram as linhas delas; qualquer **outra** diferenca conta como defeito. Registrados nas areas Patrimonial, "
           "Financeiro e Saude e explicados no guia (`docs/migrar-um-modulo.md`, passos 6 e 6b).", "",
           "| Apareceu nesta execucao? | Classe | O que aparece | Por que nao e defeito |", "| --- | --- | --- | --- |"]
     for _, cls, oque, porque in ARTEFATOS_LISTA:
         r.append(f"| {'**sim**' if cls in vistos else 'nao'} | `{cls}` | {oque} | {porque} |")
-    caminho = os.path.join(ctx["pasta"], "RELATORIO.md")
-    with open(caminho, "w", encoding="utf-8") as f:
+    with open(os.path.join(ctx["pasta"], "DETALHES.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(r) + "\n")
     return caminho
 

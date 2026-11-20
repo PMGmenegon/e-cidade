@@ -15,14 +15,14 @@ Opcoes:
     --tabelas T    tabelas que a tela grava (padrao: a da classe que a tela instancia, achada no codigo).
                    Todas sao fotografadas e restauradas; informe as filhas quando a tela gravar mais de uma
     --payload P    o formulario a enviar (padrao: gerado pelo scratchpad/payload_auto.py lendo a tela)
-    --sid SID      sessao autenticada (padrao: a mais recente do 5.6)
+    --sid SID      sessao autenticada (padrao: a mais recente do 7.4)
 
 O que o teste faz (cada item era um bloco do nivel 3 no guia):
     1. confere que a tela existe (e sugere o nome certo se nao existir) e acha a tabela no codigo dela;
     2. acha a sessao, confere que ela vale (prova de fumaca) e prepara a copia que o payload_auto.py usa;
     3. liga o log de SQL (log_statement='all') e, ACONTECA O QUE ACONTECER, desliga no fim (finally);
     4. gera o payload lendo o formulario real (payload_auto.py);
-    5. roda o scratchpad/escrita_post.py: fotografa as tabelas e sequencias, faz o POST no 5.6, restaura,
+    5. roda o scratchpad/escrita_post.py: fotografa as tabelas e sequencias, faz o POST no 7.4, restaura,
        faz no 8.5, restaura, e compara o SQL de escrita de NEGOCIO dos dois lados;
     6. confere, pelas ESTATISTICAS do PostgreSQL (pg_stat_user_tables), se alguma OUTRA tabela recebeu
        linha inserida/alterada/apagada durante o teste. Isso pega o que o log de SQL nao mostra: escrita
@@ -117,7 +117,7 @@ def candidatas(prefixos):
     print("\nCriterio (guia, nivel 3): uma tela de inclusao por prefixo; prefira a RECOMENDADA.\n"
           "A tabela e a da PRIMEIRA classe que a tela instancia: se a tela gravar outra (ou mais de uma), use --tabelas.")
 
-# Sessao autenticada mais recente do 5.6 (as que tem DB_modulo sao as logadas). O sess_?* exclui um
+# Sessao autenticada mais recente do 7.4 (as que tem DB_modulo sao as logadas). O sess_?* exclui um
 # arquivo "sess_" sem identificador (cookie vazio), que dava SID vazio. SID valido tem 40 caracteres.
 def achar_sessao():
     _, out, _ = sh(["docker", "exec", "-i", "ecidade_php74", "sh", "-c",

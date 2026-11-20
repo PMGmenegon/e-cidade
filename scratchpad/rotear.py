@@ -11,22 +11,22 @@ Uso (da raiz do repositorio):
     python3 scratchpad/rotear.py location soc hab --aplicar    # aplica, testa, recria o proxy e confere
     python3 scratchpad/rotear.py map assist:pre,con --aplicar   # so as telas que o banco da a area
     python3 scratchpad/rotear.py abas hab1_avaliacao004 --aplicar
-    python3 scratchpad/rotear.py 8b ASSIST                     # abas/redirecionamentos que voltam ao 5.6
+    python3 scratchpad/rotear.py 8b ASSIST                     # abas/redirecionamentos que voltam ao 7.4
 
 Os modos (qual usar: guia, "O fluxo de uma area", B, e passo 8):
     location  prefixo INTEIRO para o 8.5 (nenhuma outra area pendente usa o prefixo). Acrescenta os
               prefixos a alternancia do `location` em docker/proxy/nginx.conf E as duas copias desse
               regex que os scripts usam para saber o que o 8.5 serve (scratchpad/dimensiona.py e
               scratchpad/redirecionamentos.py) -- esquecer as copias faz as medicoes seguintes contarem
-              as telas como "no 5.6".
+              as telas como "no 7.4".
     map       so as telas que o banco atribui a area (prefixo compartilhado). Acrescenta o argumento ao
               comando da linha 2 do docker/proxy/faseb_map.conf e regenera o arquivo com o
               scratchpad/gera_map_faseb.py -- que REESCREVE o arquivo inteiro, por isso o comando dos
               lotes anteriores e reaproveitado -- e confere que nenhuma tela saiu do map.
-    abas      destinos que o 8b achou no 5.6 (abas, redirecionamentos): acrescenta os nomes, em
+    abas      destinos que o 8b achou no 7.4 (abas, redirecionamentos): acrescenta os nomes, em
               minuscula, a docker/proxy/faseb_map_abas.txt e regenera o map do mesmo jeito.
     8b        roda o scratchpad/redirecionamentos.py nas telas de menu da AREA (e, com --todas, das
-              areas ja concluidas) e mostra as que ainda mandam o usuario ao 5.6. Nao altera nada.
+              areas ja concluidas) e mostra as que ainda mandam o usuario ao 7.4. Nao altera nada.
 
 Com --aplicar (location, map, abas):
     1. grava as alteracoes, guardando o conteudo anterior de cada arquivo;
@@ -37,7 +37,7 @@ Com --aplicar (location, map, abas):
     Depois, rode o modo 8b. Os arquivos alterados entram no commit do lote (passo 9).
 
 Pre-requisitos: os containers no ar (o proxy e o banco). O 8b precisa de sessao autenticada (achada sozinha).
-Codigo de saida: 0 = OK; 1 = nginx -t falhou, conferencia falhou ou 8b achou telas no 5.6; 2 = uso/pre-requisito.
+Codigo de saida: 0 = OK; 1 = nginx -t falhou, conferencia falhou ou 8b achou telas no 7.4; 2 = uso/pre-requisito.
 
 As ALTERACOES ficam no git (docker/proxy/ e scratchpad/): para desfazer, `git checkout -- <arquivo>` e
 recriar o proxy.
@@ -46,7 +46,7 @@ Como faz: edita texto com regex (location), ou regenera o map com o gerador vers
 entradas `<tela> php85;` antes e depois (map/abas); valida com `nginx -t` antes de tocar no proxy de verdade e,
 depois de recriado, pede as telas por curl a :8090 e le o cabecalho X-Ecidade-Runtime.
 Entradas: docker/proxy/nginx.conf, faseb_map.conf, faseb_map_abas.txt, as listas LOC de dimensiona.py e
-redirecionamentos.py, os .php de ecidade/ e (8b) a sessao do 5.6. Saidas: o resumo no terminal; com --aplicar,
+redirecionamentos.py, os .php de ecidade/ e (8b) a sessao do 7.4. Saidas: o resumo no terminal; com --aplicar,
 esses arquivos alterados e o container ecidade_proxy recriado; o 8b grava ecidade/tmp/rotear_8b.tsv.
 """
 import argparse, os, re, subprocess, sys, time
@@ -131,7 +131,7 @@ def testar_nginx():
 
 def aplicar(novos_conteudos, conferir):
     """Grava os arquivos, testa o nginx, recria o proxy e confere as URLs. Desfaz tudo se o teste falhar.
-    novos_conteudos: {arquivo: texto novo}; conferir: [(url, runtime esperado '8.5' ou '5.6')]."""
+    novos_conteudos: {arquivo: texto novo}; conferir: [(url, runtime esperado '8.5' ou '7.4')]."""
     antigos = {p: ler(p) for p in novos_conteudos}
     for p, t in novos_conteudos.items():
         gravar(p, t)
@@ -161,7 +161,7 @@ def aplicar(novos_conteudos, conferir):
 
 def modo_location(prefixos, aplicar_):
     """Acrescenta os prefixos que faltam as tres copias da lista (LISTAS), mostra antes/depois e quantas telas
-    passam ao 8.5; com --aplicar, chama aplicar() conferindo o login.php (5.6) e uma tela de cada prefixo,
+    passam ao 8.5; com --aplicar, chama aplicar() conferindo o login.php (7.4) e uma tela de cada prefixo,
     com e sem /w/2/ (8.5)."""
     novos, mostrar = {}, []
     for arq, rx in LISTAS:
@@ -234,7 +234,7 @@ def mostrar_e_aplicar_map(args_gera, extras, aplicar_, novo_texto=None):
     if novas:
         print("  novas: " + ", ".join(novas[:15]) + (" ..." if len(novas) > 15 else ""))
     if sairam:
-        print("  SAIRIAM do map (voltariam ao 5.6!): " + ", ".join(sairam[:15]))
+        print("  SAIRIAM do map (voltariam ao 7.4!): " + ", ".join(sairam[:15]))
         print("RECUSADO: nenhuma tela pode sair do map. Confira o comando da linha 2 do faseb_map.conf.")
         sys.exit(1)
     if not novas:
@@ -299,12 +299,12 @@ def modo_abas(telas, aplicar_):
     mostrar_e_aplicar_map(args_gera, {ABAS: novo_abas}, aplicar_, novo_texto)
 
 def modo_8b(areas, todas):
-    """Abas e redirecionamentos que voltam ao 5.6 (passo 8b), sem alterar nada."""
+    """Abas e redirecionamentos que voltam ao 7.4 (passo 8b), sem alterar nada."""
     if todas:
         # areas ja concluidas: a tupla JA = ("TRIBUT", ...) do dimensiona.py (prefixos dos nomes de area)
         m = re.search(r"JA = \(([^)]*)\)", ler("scratchpad/dimensiona.py"))
         areas = [a.strip(' "\'') for a in m.group(1).split(",") if a.strip()] + areas
-    # sessao autenticada mais recente do 5.6 (a que tem DB_modulo); sess_?* exclui o arquivo "sess_" vazio
+    # sessao autenticada mais recente do 7.4 (a que tem DB_modulo); sess_?* exclui o arquivo "sess_" vazio
     _, out, _ = sh(["docker", "exec", "-i", "ecidade_php74", "sh", "-c",
                     "ls -t $(grep -la DB_modulo /var/lib/php/sessions/sess_?*) | head -1"])
     sid = out.strip().rsplit("sess_", 1)[-1]
@@ -314,14 +314,14 @@ def modo_8b(areas, todas):
     print(f"Levantamento do 8b nas areas {','.join(areas)} (abre cada tela de menu no 8.5; pode levar minutos)...")
     rc, out, err = sh(["python3", "scratchpad/redirecionamentos.py", sid, saida, ",".join(areas)], timeout=6 * 3600)
     print("\n".join(l for l in out.splitlines() if not l.strip().startswith("...")))
-    # cada linha do TSV (redirecionamentos.py): classe (NO_5.6...), tipo, tela de origem, destino, areas
+    # cada linha do TSV (redirecionamentos.py): classe (NO_7.4...), tipo, tela de origem, destino, areas
     linhas = [l.split("\t") for l in open(saida, encoding="latin-1").read().splitlines() if l.strip()]
     # corpo.php (voltar ao inicio) e db_erros.php (pagina de erro) nao sao formulario nem lacuna
-    no56 = [l for l in linhas if l[0] == "NO_5.6" and not re.search(r"^(corpo|db_erros)\.php", l[3])]
+    no56 = [l for l in linhas if l[0] == "NO_7.4" and not re.search(r"^(corpo|db_erros)\.php", l[3])]
     if not no56:
-        print("\nOK: nenhuma aba ou redirecionamento das telas no 8.5 manda o usuario ao 5.6.")
+        print("\nOK: nenhuma aba ou redirecionamento das telas no 8.5 manda o usuario ao 7.4.")
         sys.exit(0)
-    print(f"\n{len(no56)} destino(s) ainda no 5.6 (tipo, tela de origem -> destino):")
+    print(f"\n{len(no56)} destino(s) ainda no 7.4 (tipo, tela de origem -> destino):")
     for l in no56:
         print(f"  {l[1]:12} {l[2]} -> {l[3]}")
     destinos = sorted({re.split(r"[?#]", l[3])[0] for l in no56})

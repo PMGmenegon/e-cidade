@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 """Telas de menu servidas pelo 8.5 que, ao abrir, mandam o navegador para uma tela que
-o proxy serve pelo 5.6 (redirecionamento imediato ou iframe carregado na abertura).
+o proxy serve pelo 7.4 (redirecionamento imediato ou iframe carregado na abertura).
 
 Uso (da raiz do repo):
      python3 scratchpad/redirecionamentos.py <SID> <saida.tsv> [AREA,AREA...]
      (areas: inicio do nome em atendcadarea, sem "DB:"; padrao TRIBUT,EDUCA,RECURSOS.
       No SQL o filtro e ILIKE '%AREA%', ou seja, TRECHO do nome, nao so o inicio.)
-     <SID>: sessao autenticada do 5.6 (o rotear.py 8b acha a mais recente sozinho).
+     <SID>: sessao autenticada do 7.4 (o rotear.py 8b acha a mais recente sozinho).
      Antes de cada GET copia /tmp/_sess.bak (dentro do ecidade_php74; quem o cria e o
      cmp.py) sobre a sessao <SID>, porque uma tela pode estragar a sessao. Nem este script
      nem o rotear.py criam o .bak: se ele nao existe o cp falha em silencio; se e de outra
      sessao, sobrescreve a do <SID> com aquele conteudo.
 
-Saida: uma linha por (classe, tipo, tela de origem, destino, areas). Classe NO_5.6 e o
-que importa: destino que o proxy manda ao 5.6. Os destinos que JA estao no 8.5 (abas
+Saida: uma linha por (classe, tipo, tela de origem, destino, areas). Classe NO_7.4 e o
+que importa: destino que o proxy manda ao 7.4. Os destinos que JA estao no 8.5 (abas
 roteadas) tambem sao abertos, para pegar o segundo salto.
 
 Como faz: lista do banco as telas de menu das areas e fica com as que o proxy ja serve pelo
 8.5 (mesmo criterio do nginx: LOC + MAP). Faz GET de cada uma DIRETO no 8.5 (:8085, com o
 cookie da sessao) e procura no cabecalho `Location:`, no corpo `<script>location=...</script>`
-e `<iframe|frame src=...>`. Cada destino .php e classificado: pasta, inexistente, NO_5.6 ou,
+e `<iframe|frame src=...>`. Cada destino .php e classificado: pasta, inexistente, NO_7.4 ou,
 se ja esta no 8.5, entra na fila para ser aberto tambem (segundo salto). So ve o que a tela
 faz ao abrir por GET sem parametros; aba criada por JavaScript ao clicar fica de fora.
 
@@ -28,7 +28,7 @@ Entradas: o banco, docker/proxy/faseb_map.conf, a lista de ecidade/, a copia do 
 Saida: <saida.tsv> (classe, tipo, origem, destino, areas; ordenado, sem repeticao) e, no
   terminal, progresso a cada 200 telas e a contagem por (classe, tipo).
 Usado em: passo 8b do guia (abas e redirecionamentos, 14a lacuna), normalmente via
-  `python3 scratchpad/rotear.py 8b <AREA>`; a lista NO_5.6/iframe alimenta
+  `python3 scratchpad/rotear.py 8b <AREA>`; a lista NO_7.4/iframe alimenta
   docker/proxy/faseb_map_abas.txt.
 """
 import os, re, subprocess, sys, collections
@@ -115,7 +115,7 @@ while fila:
                 vistos.add(d.lower()); fila.append(disco[d.lower()]); itens[disco[d.lower()]] |= itens[funcao]
             continue
         else:
-            classe = "NO_5.6"
+            classe = "NO_7.4"
         areas = "; ".join(sorted(f"{a}/{mo}" for a, mo in itens[funcao]))
         linhas.append((classe, tipo, funcao, d, areas))
     if n % 200 == 0: print(f"  ... {n}/{len(vistos)}", flush=True)

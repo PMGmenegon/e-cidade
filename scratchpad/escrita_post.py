@@ -19,12 +19,12 @@ Exemplo:
      'db_opcao=Incluir&v57_numcgm=19&v57_oab=OAB123&v57_matriculaadvogado=M1'
 
 Como faz (passo a passo):
-  1. copia a sessao do 5.6 para /tmp/_sess.bak (a sessao e compartilhada pelos dois
+  1. copia a sessao do 7.4 para /tmp/_sess.bak (a sessao e compartilhada pelos dois
      runtimes, via volume; o /tmp tambem);
   2. fotografa cada tabela em public._n3snap_<tabela> (CREATE TABLE AS) e guarda
      last_value/is_called das sequencias dela;
   3. restaura a sessao, anota quantas linhas o log do ecidade_database tem, faz o
-     POST no 5.6 (:8080) e le do log so os statements emitidos depois disso;
+     POST no 7.4 (:8080) e le do log so os statements emitidos depois disso;
   4. restaura as tabelas (so a diferenca) e as sequencias;
   5. repete 3 e 4 no 8.5 (:8085);
   6. apaga as copias _n3snap_, filtra INSERT/UPDATE/DELETE, tira as tabelas de
@@ -40,7 +40,7 @@ Efeitos colaterais: GRAVA NO BANCO DE VERDADE (o POST) e depois desfaz pelo
   restore; cria e apaga as tabelas public._n3snap_*; reescreve o arquivo de
   sessao e o /tmp/_sess.bak no container ecidade_php74. NAO liga nem desliga o
   log_statement (quem chama faz isso: nivel3.py ou demo_nivel3.sh). Se ABORTAR,
-  o POST do 5.6 JA GRAVOU e as _n3snap_ ficam no banco -- conferir e limpar a mao.
+  o POST do 7.4 JA GRAVOU e as _n3snap_ ficam no banco -- conferir e limpar a mao.
   Escrita feita por GATILHO nao aparece no log e nao e vista aqui (o nivel3.py
   confere isso pelas estatisticas do PostgreSQL).
 Usado em: "Nivel 3" do guia (docs/migrar-um-modulo.md, secao dentro de "Passos
@@ -201,21 +201,21 @@ a = requisitar(8080); restaurar(snap)
 b = requisitar(8085); restaurar(snap)
 for t in TABELAS:
     sh(f'{DB} -c "DROP TABLE IF EXISTS {copia(t)}"')
-print(f"  statements: 5.6={len(a)}  8.5={len(b)}")
+print(f"  statements: 7.4={len(a)}  8.5={len(b)}")
 
 # so o que escreve -- e onde o defeito aparece
 # (SELECTs variam por cache/estado de sessao e nao provam nada sobre a gravacao)
 esc = re.compile(rb'^\s*(insert|update|delete)\b', re.I)
 ea, eb = [s for s in a if esc.match(s)], [s for s in b if esc.match(s)]
-print(f"  destes, INSERT/UPDATE/DELETE: 5.6={len(ea)}  8.5={len(eb)}")
+print(f"  destes, INSERT/UPDATE/DELETE: 7.4={len(ea)}  8.5={len(eb)}")
 
 # Separa escrita de NEGOCIO da de INFRAESTRUTURA. A auditoria (db_acount*) e a
 # sessao (db_usuariosonline) carregam sequencia e relogio, que divergem por
 # construcao entre duas requisicoes -- nao sao defeito.
 INFRA = re.compile(rb'\b(db_acount\w*|db_usuariosonline|db_logsacessa|db_menu\w*|db_sessao\w*)\b', re.I)
 na, nb = [s for s in ea if not INFRA.search(s)], [s for s in eb if not INFRA.search(s)]
-print(f"  destes, escrita de NEGOCIO: 5.6={len(na)}  8.5={len(nb)}")
-for s in na[:6]: print(f"    5.6> {s.decode('latin1')[:140]}")
+print(f"  destes, escrita de NEGOCIO: 7.4={len(na)}  8.5={len(nb)}")
+for s in na[:6]: print(f"    7.4> {s.decode('latin1')[:140]}")
 for s in nb[:6]: print(f"    8.5> {s.decode('latin1')[:140]}")
 ea, eb = na, nb
 
@@ -250,6 +250,6 @@ else:
         x = ea[i].decode('latin1') if i < len(ea) else '<ausente>'
         y = eb[i].decode('latin1') if i < len(eb) else '<ausente>'
         if x != y:
-            print(f"    5.6: {x[:150]}")
+            print(f"    7.4: {x[:150]}")
             print(f"    8.5: {y[:150]}")
 sys.exit(0 if ea == eb else 1)

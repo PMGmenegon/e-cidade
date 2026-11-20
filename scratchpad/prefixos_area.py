@@ -6,7 +6,7 @@ Uso (da raiz do repo):  python3 scratchpad/prefixos_area.py <AREA>
 
 Para cada prefixo das telas de menu da area: quantas existem em disco, quantas o proxy ja manda
 ao 8.5 (pelo `location` do nginx.conf ou pelo faseb_map.conf), quantas faltam, e quais OUTRAS
-areas ainda tem telas desse prefixo no 5.6. Sem outra area pendente -> o prefixo inteiro vai pelo
+areas ainda tem telas desse prefixo no 7.4. Sem outra area pendente -> o prefixo inteiro vai pelo
 `location`; com outra area pendente -> so as telas desta area, pelo `map`. A coluna "em disco" conta
 os .php do prefixo inteiro: se ela e muito maior que "telas", rotear pelo `location` obriga a portar
 o prefixo todo -- compare o custo com `enumera.py <pref>` antes (ver docs/migrar-um-modulo.md).
@@ -16,7 +16,7 @@ Como faz: uma consulta ao banco (container ecidade_database) lista cada tela de 
 areas que a abrem; le do nginx.conf o regex do `location` (o ORIGINAL, nao uma copia) e do
 faseb_map.conf as telas do `map`; agrupa as telas da area por prefixo e conta, para cada
 prefixo, as que ja vao ao 8.5 e as que faltam. Uma segunda volta junta as OUTRAS areas que
-tem telas desse prefixo ainda no 5.6 -- e o que decide entre `location` e `map`.
+tem telas desse prefixo ainda no 7.4 -- e o que decide entre `location` e `map`.
 
 Entradas: o banco, docker/proxy/nginx.conf, docker/proxy/faseb_map.conf, a lista de ecidade/.
 Saida: so imprime a tabela (prefixo, telas, no 8.5, faltam, em disco, outras areas) e o total
@@ -71,7 +71,7 @@ for t, a in areas.items():
         r = tab[pref(t)]
         r[0] += 1
         r[1 if no85(t) else 2] += 1
-# 2a volta: telas de OUTRAS areas, ainda no 5.6, com prefixo que esta area usa
+# 2a volta: telas de OUTRAS areas, ainda no 7.4, com prefixo que esta area usa
 for t, a in areas.items():
     if t in disco and not no85(t) and pref(t) in tab:
         tab[pref(t)][3].update(x for x in a if not x.startswith(AREA))
@@ -80,7 +80,7 @@ if not tab:
 
 # .php do prefixo inteiro em disco -- o que o `location` mandaria ao 8.5
 emdisco = lambda p: sum(1 for f in disco if f.endswith(".php") and re.match(rf'^{p}[0-9]*_', f))
-print(f"{'prefixo':8} {'telas':>5} {'no 8.5':>6} {'faltam':>6} {'em disco':>8}  outras areas com telas desse prefixo ainda no 5.6")
+print(f"{'prefixo':8} {'telas':>5} {'no 8.5':>6} {'faltam':>6} {'em disco':>8}  outras areas com telas desse prefixo ainda no 7.4")
 for p, (n, ok, f, outras) in sorted(tab.items(), key=lambda x: (-x[1][2], x[0])):
     print(f"{p:8} {n:5} {ok:6} {f:6} {emdisco(p):8}  {', '.join(sorted(outras)) or '-'}")
 print(f"\nfaltam {sum(r[2] for r in tab.values())} telas")
