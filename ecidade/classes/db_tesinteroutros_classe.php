@@ -69,8 +69,8 @@ class cl_tesinteroutros {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->j84_tesintertipo = ($this->j84_tesintertipo == ""?@$GLOBALS["HTTP_POST_VARS"]["j84_tesintertipo"]:$this->j84_tesintertipo);
-       $this->j84_tesinter = ($this->j84_tesinter == ""?@$GLOBALS["HTTP_POST_VARS"]["j84_tesinter"]:$this->j84_tesinter);
+       $this->j84_tesintertipo = ($this->j84_tesintertipo === 0 || $this->j84_tesintertipo === 0.0 || $this->j84_tesintertipo == ""?@$GLOBALS["HTTP_POST_VARS"]["j84_tesintertipo"]:$this->j84_tesintertipo);
+       $this->j84_tesinter = ($this->j84_tesinter === 0 || $this->j84_tesinter === 0.0 || $this->j84_tesinter == ""?@$GLOBALS["HTTP_POST_VARS"]["j84_tesinter"]:$this->j84_tesinter);
        $this->j84_observacao = ($this->j84_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["j84_observacao"]:$this->j84_observacao);
      }else{
      }
