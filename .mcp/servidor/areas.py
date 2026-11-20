@@ -20,6 +20,8 @@ AREAS_GRUPO: dict[str, dict] = {
                      "siglas": ("sau", "ate", "lab", "far", "agu", "mer", "vei", "bib", "ouv", "soc"),
                      "pastas": (), "arquivos": ()},
 }
+SEM_AREA = "sem_area"  # nao e dono de ninguem na tabela: func_*, classes/, pre*, rec*, jur* ... (escolha-a de proposito)
+AREAS_VALIDAS = (*AREAS_GRUPO, SEM_AREA)
 _SIGLA = re.compile(r"^([a-z]+)\d*_")
 
 
@@ -39,10 +41,15 @@ def area_do_arquivo(rel: str) -> str | None:
     return None
 
 
+def area_efetiva(rel: str) -> str:
+    """Como area_do_arquivo, mas devolve 'sem_area' em vez de None (permite escolher esse trabalho)."""
+    return area_do_arquivo(rel) or SEM_AREA
+
+
 def validar_area(area: str | None) -> str | None:
     if area in (None, ""):
         return None
-    if area not in AREAS_GRUPO:
+    if area not in AREAS_VALIDAS:
         from servidor.seguranca import ErroFerramenta
-        raise ErroFerramenta("parametro_invalido", f"area {area!r}; validas: {', '.join(AREAS_GRUPO)}")
+        raise ErroFerramenta("parametro_invalido", f"area {area!r}; validas: {', '.join(AREAS_VALIDAS)}")
     return area

@@ -1,5 +1,320 @@
 {
   "concluidos": {
+    "ecidade/app/Domain/Configuracao/Departamento/Models/Departamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/CentralMatriculas/Models/ObservacaoInscricao.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Aluno.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/AtividadeProfissionalEscola.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Calendario.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/ExcecaoBloqueioNota.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Matricula.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/ProfissionalEscola.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Alocado.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Candidato.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Ciclo.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Fase.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFerias.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFeriasLancamentos.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/Lancamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Orcamento/Models/Recurso.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Planejamento/Models/Planejamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Tesouraria/Models/Slip.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Saude/Farmacia/Models/BnafarBatchProtocolo.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
     "ecidade/cai1_calend001.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -623,6 +938,24 @@
       "padroes": [],
       "quando": "2026-11-20T18:14:50Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_aidofautenticidade_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_aidofweb_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_aidofweblogin_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_andamentoemppreautorizacao_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -1343,6 +1676,30 @@
       "padroes": [],
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_configdbpref_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_configdbprefagua_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_configdbprefarretipo_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_confsite_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_congrupo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2190,6 +2547,12 @@
       "quando": "2026-11-19T22:49:46Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_aliqissretido_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_almox_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -2220,11 +2583,47 @@
       "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
-    "ecidade/classes/db_db_certidaoweb_classe.php": {
-      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+    "ecidade/classes/db_db_calendario_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
       "padroes": [],
-      "quando": "2026-11-20T18:15:05Z",
-      "quem": "Segundo"
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_caritbi_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_caritbilan_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_certidaoweb_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_cgmatualiza_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_cgmatualizaliga_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_chat_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_config_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2238,11 +2637,65 @@
       "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_confip_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_confplan_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_contatos_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_dae_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_daeend_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_daesocios_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_daevalores_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_dairetido_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_daitomador_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_daitomadorpaga_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_depart_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2334,6 +2787,18 @@
       "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_guia_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_itbi_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_itenshelp_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -2382,6 +2847,12 @@
       "quando": "2026-11-20T18:15:06Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_leis_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_menuacesso_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -2399,6 +2870,12 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:06Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_noticias_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_ordem_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2441,6 +2918,12 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:06Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ouvidoria_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_paragrafo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2537,6 +3020,18 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:06Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_secretaria_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_db_secrunid_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_sysarqcamp_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2639,6 +3134,12 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:07Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tipo_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_db_tipodoc_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -2747,6 +3248,66 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:07Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_dbempresaatividade_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbempresaatividaderhcbo_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefcgm_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefcgmcnae_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefcgmrhcbo_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefempresa_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefempresaatividadecnae_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefempresafisica_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefempresajuridica_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_dbprefempresasocios_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_debcontaarquivo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -3708,6 +4269,12 @@
       "quando": "2026-11-19T22:49:47Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_id_tipo_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_infocomplementarvalor_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3750,6 +4317,12 @@
       "quando": "2026-11-19T22:49:48Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_junior_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_linhaspacto_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3773,6 +4346,18 @@
       "padroes": [],
       "quando": "2026-11-19T22:49:48Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_listainscr_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:18Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_listainscrcab_classe.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_listanotifica_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -5760,6 +6345,24 @@
       "quando": "2026-11-19T22:49:52Z",
       "quem": "Segundo"
     },
+    "ecidade/composer-85.json": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-79",
+        "PHP8-39"
+      ],
+      "quando": "2026-11-20T04:57:36Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/composer-85.lock": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-79",
+        "PHP8-39"
+      ],
+      "quando": "2026-11-20T04:57:36Z",
+      "quem": "Gustavo"
+    },
     "ecidade/con1_cadinst.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -7158,6 +7761,294 @@
       "quando": "2026-11-19T22:49:56Z",
       "quem": "Segundo"
     },
+    "ecidade/pre1_configdbprefagua001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_configdbprefarretipo001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_confsitealt001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_confsitealt002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_confsitealt003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbi001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbi002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbi003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbilan001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbilan002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_caritbilan003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confip001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confip002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confip003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confplan.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confplan001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confplan002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confplan003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_confplanalt002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_dae001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_dae002alt.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_dae003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_liberadae.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_tipo001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_tipo002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_db_tipo003.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre1_leis001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre2_relatorioouvidoria001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre2_relautenticacertidao001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre3_guiasitbiliberadas001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre3_logs001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre3_ouvidoriaantigas001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre3_solicitantigas001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre3_solicitantigas002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_atuend001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_atuend002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_cadusu.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_configdbpref001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_digitaitbi.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_downloadouvidoria001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_email.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_imgsitbi001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_liberaitbi001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_liberaitbi002.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_liberalinks001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_mensagens001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_mensboleto001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/pre4_respostaouvidoria001.php": {
+      "observacao": "PHP8-41: migracao 7.4 -> 8.5 do Cidadao (ver commits PHP8-41)",
+      "padroes": [],
+      "quando": "2026-11-20T03:28:19Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/src/Financeiro/Contabilidade/ExercicioContabil/Abertura.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -7225,6 +8116,91 @@
       "quem": "Segundo"
     }
   },
-  "reivindicacoes": {},
+  "reivindicacoes": {
+    "ecidade/app/Domain/Financeiro/Orcamento/Services/Relatorios/VinculosRecursoService.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Planejamento/Services/ProjecaoDespesaService.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/Concessao.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/ConcessaoCalculo.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/RecursosHumanos/RH/ConcessaoDireitos/Providers/Rhpessoal.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/CotaUnicaRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/DataLancamentoRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/ReciboRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Arrecadacao/Repositories/TipoDebitoRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/Caixa/Models/Arrecad.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/ISSQN/Repository/SimplesNacional/AtualizaCadastroOptantesSimplesNacionalRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Tributario/ISSQN/Repository/SimplesNacional/AtualizaDataCadastrosRepository.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    },
+    "ecidade/composer-85.json": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-79",
+      "quem": "Gustavo"
+    },
+    "ecidade/database/migrations/2023_10_16_161806_m24478_criando_tabelas_novas_configuracoes.php": {
+      "desde": "2026-11-20T04:57:36Z",
+      "expira": "2026-11-20T08:57:36Z",
+      "motivo": "PHP8-77",
+      "quem": "Gustavo"
+    }
+  },
   "versao": 1
 }
