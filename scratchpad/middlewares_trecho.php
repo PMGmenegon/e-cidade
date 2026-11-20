@@ -7,6 +7,7 @@ set_error_handler(function ($no, $msg, $arq, $lin) use (&$avisos) {
     $avisos[] = $msg . ' @ ' . basename($arq) . ':' . $lin; return true;
 });
 error_reporting(E_ALL);
+foreach (array('logs', 'framework/cache/data', 'framework/sessions', 'framework/views') as $d) { if (!is_dir('/tmp/storage/' . $d)) { mkdir('/tmp/storage/' . $d, 0777, true); } }   // storage em /tmp (tmpfs do roda-isolado.sh)
 ob_start();
 ini_set('session.save_path', '/tmp/storage/framework/sessions');
 define('LARAVEL_START', microtime(true));
@@ -21,7 +22,19 @@ use Illuminate\Pipeline\Pipeline;
 $app = require $raiz . '/bootstrap/app.php';
 $app->useStoragePath('/tmp/storage');
 $app->instance('request', Request::create('/'));
-$app->make(Illuminate\Contracts\Http\Kernel::class)->bootstrap();
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+$pular = isset($argv[3]) && $argv[3] !== '' ? explode(',', $argv[3]) : array();   // providers do app a nao carregar (so para medir os middlewares quando o app ainda nao sobe no Laravel 13)
+if (!$pular) {
+    $kernel->bootstrap();
+} else {
+    $rm = new ReflectionObject($kernel);
+    if ($rm->hasMethod('bootstrappers')) { $m = $rm->getMethod('bootstrappers'); if (PHP_VERSION_ID < 80100) { $m->setAccessible(true); } $boots = $m->invoke($kernel); }
+    else { $pp = new ReflectionProperty('Illuminate\\Foundation\\Http\\Kernel', 'bootstrappers'); if (PHP_VERSION_ID < 80100) { $pp->setAccessible(true); } $boots = $pp->getValue($kernel); }
+    $app->bootstrapWith(array_slice($boots, 0, 2));   // LoadEnvironmentVariables, LoadConfiguration
+    config(array('app.providers' => array_values(array_diff(config('app.providers'), $pular))));
+    $app->bootstrapWith(array_slice($boots, 2));
+    echo 'PROVIDERS NAO CARREGADOS: ' . implode(',', $pular) . "\n";
+}
 date_default_timezone_set(config('app.timezone'));
 
 $e = function ($s) { return str_replace(array("\r", "\n"), array('\\r', '\\n'), $s); };

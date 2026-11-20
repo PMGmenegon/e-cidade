@@ -3,9 +3,9 @@
 // Laravel (SyncQueue), com o uuid normalizado, e o unserialize de volta. Uso: php jobs.php <classe>
 // Objeto: construtor real com argumentos fixos (classe tipada -> instancia sem construtor); se o construtor
 // precisar de banco/servico e falhar, objeto sem construtor com cada propriedade propria = valor fixo.
-chdir('/e');
-require '/e/bootstrap.php';
-$app = require '/e/bootstrap/app.php';
+chdir('/app');
+require '/app/bootstrap.php';
+$app = require '/app/bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 $classe = $argv[1];
 $rc = new ReflectionClass($classe);
