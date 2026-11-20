@@ -203,7 +203,7 @@ $resultado = $clcorrente->sql_record($sql);
 
 //db_criatabela($resultado);
 
-if( pg_num_rows($resultado) == 0 ){
+if( ($resultado ? pg_num_rows($resultado) : null) == 0 ){
 
    $sql      = "select distinct
                        cgmempenho.z01_numcgm,

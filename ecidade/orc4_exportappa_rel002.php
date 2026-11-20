@@ -59,7 +59,7 @@ $sql = "select orcppa.*, orcppaval.*
             ";            
 $res = db_query($sql);
 //db_criatabela($res);exit;
-if (pg_numrows($res) == 0 ){      
+if (($res ? pg_numrows($res) : null) == 0 ){      
     db_redireciona('db_erros.php?fechar=true&db_erro=Nenhum registro encontrado ! ');   
 }
 /*
@@ -90,7 +90,7 @@ $pdf->addpage();
 $quantidade = 0;
 $valor_total =0;
 
-for($x=0;$x <pg_numrows($res);$x++){
+for($x=0;$x <($res ? pg_numrows($res) : null);$x++){
    db_fieldsmemory($res,$x);
 	
    $pdf->cell(15,$alt,$o23_orgao,  1,0,"C",0);

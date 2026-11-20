@@ -162,10 +162,11 @@ def test_catalogo_linha_malformada_nomeia_a_linha(tmp_path):
 
 def test_catalogo_semeado_carrega():
     casos = carrega_catalogo(posts.CATALOGO)
-    assert len(casos) == 52 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
+    assert len(casos) == 55 and all(c.tela.endswith(".php") and c.tabelas and c.campos for c in casos)
     # reverificado ao vivo na referencia 7.4 (2026-11-18): sem escrita de negocio na referencia -> nao-verificado.
     # Dump v2 (com as migrations do PR): rec1_assentamentos.RPC passou a gravar na referencia -> verificado.
-    assert sum(c.verificado for c in casos) == 48
+    # +3 do Financeiro (2026-11-20): con1_conhistdoctipo001, cus1_custotipoconta001, emp1_empagetipo001.
+    assert sum(c.verificado for c in casos) == 51
     assert len({c.tela for c in casos}) == len(casos)
     assert [c.tela for c in casos if not c.verificado] == [
         "pes1_pensao001.php", "rec4_rpcexame.php", "rec1_rhestagioresultado001.php", "cai1_caiparametro001.php"]

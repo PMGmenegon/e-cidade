@@ -132,7 +132,7 @@ $sql = " select * from (
 	      order by $ord ) as x $where ";
 
 $result = db_query($sql);
-if (pg_numrows($result) == 0) {
+if (($result ? pg_numrows($result) : null) == 0) {
     db_redireciona('db_erros.php?fechar=true&db_erro=Não existem registros cadastrados.');
 }
 
@@ -151,7 +151,7 @@ $total_por_conta = 0;
 $total_geral = 0;
 $conta = 0;
 
-for ($x = 0; $x < pg_numrows($result); $x++) {
+for ($x = 0; $x < ($result ? pg_numrows($result) : null); $x++) {
     db_fieldsmemory($result, $x);
 
     if ($total_por_conta == 0) {
@@ -231,7 +231,7 @@ for ($x = 0; $x < pg_numrows($result); $x++) {
         $pdf->setfont('arial', 'b', 8);
         $pdf->cell(50, $alt, 'LANÇAMENTOS NO CAIXA', 0, 1, "L", 0);
         $pdf->setfont('arial', '', 7);
-        for ($xx = 0; $xx < pg_numrows($res1); $xx++) {
+        for ($xx = 0; $xx < ($res1 ? pg_numrows($res1) : null); $xx++) {
             db_fieldsmemory($res1, $xx);
             $pdf->cell(30, $alt, 'Débito  : ' . ($k12_estorn == 'f' ? $corl : $corr), 0, 0, "L", $prenc);
             $pdf->cell(30, $alt, 'Crédito : ' . ($k12_estorn == 'f' ? $corr : $corl), 0, 0, "L", $prenc);

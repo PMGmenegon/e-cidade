@@ -57,7 +57,7 @@ if (isset($retorno)) {
 if (isset($HTTP_POST_VARS["incluir"])) {
   db_postmemory($HTTP_POST_VARS);
   $dtcont = "'".$dtcont_ano."-".$dtcont_mes."-".$dtcont_dia."'";
-  if (!checkdate($dtcont_mes,$dtcont_dia,$dtcont_ano)) {
+  if (!checkdate((int)$dtcont_mes,(int)$dtcont_dia,(int)$dtcont_ano)) {
     db_erro("Campo 'Data da Contabilidade' está inválido: $dtcont");
   }
   $tx_banc = $tx_banc == ""?"null":$tx_banc;
@@ -135,7 +135,7 @@ if (isset($HTTP_POST_VARS["incluir"])) {
   db_postmemory($HTTP_POST_VARS);
   
   $dtcont = "'".$dtcont_ano."-".$dtcont_mes."-".$dtcont_dia."'";
-  if (!checkdate($dtcont_mes,$dtcont_dia,$dtcont_ano)) {
+  if (!checkdate((int)$dtcont_mes,(int)$dtcont_dia,(int)$dtcont_ano)) {
     db_erro("Campo 'Data da Contabilidade' está inválido: $dtcont");
   }
   $tx_banc = $tx_banc == ""?"null":$tx_banc;

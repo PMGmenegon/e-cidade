@@ -99,7 +99,7 @@ $sqlprestador = "
 
 
 $resultprestador = db_query($sqlprestador);
-$linhasprestador=pg_num_rows($resultprestador);
+$linhasprestador=($resultprestador ? pg_num_rows($resultprestador) : null);
 	if($linhasprestador>0){
 		echo "<center>";
 

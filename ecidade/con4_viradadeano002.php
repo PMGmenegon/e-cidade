@@ -85,7 +85,7 @@ function js_imprime(virada){
 
     $sSqlConsultaInstit = " select codigo,nomeinst from db_config where db21_tipoinstit in (1,2,5)";
     $rsConsultaInstit   = db_query($sSqlConsultaInstit);
-    $iLinhasInstit      = pg_num_rows($rsConsultaInstit);
+    $iLinhasInstit      = ($rsConsultaInstit ? pg_num_rows($rsConsultaInstit) : null);
 
     $aInstit = array();
     for ( $iInd=0; $iInd < $iLinhasInstit; $iInd++ ) {
@@ -112,7 +112,7 @@ function js_imprime(virada){
     $sSqlVirada .= "  where c31_db_viradacaditem in ({$sListaItens}) and c31_db_viradacaditem not in(23,24)        ";
 
     $rsConsultaVirada = db_query($sSqlVirada);
-    $iLinhasVirada    = pg_num_rows($rsConsultaVirada);
+    $iLinhasVirada    = ($rsConsultaVirada ? pg_num_rows($rsConsultaVirada) : null);
 
     if ( $iLinhasVirada > 0 ) {
     	$aListaItemErro = array();
@@ -147,7 +147,7 @@ function js_imprime(virada){
 		    $sSqlPPAVersao   .= "   from ppaversao                ";
 		    $sSqlPPAVersao   .= "  where o119_versaofinal is true ";
 		    $rsPPAVersao      = db_query($sSqlPPAVersao);
-		    $iLinhasPPAVersao = pg_num_rows($rsPPAVersao);
+		    $iLinhasPPAVersao = ($rsPPAVersao ? pg_num_rows($rsPPAVersao) : null);
 
 		  	if ( $iLinhasPPAVersao == 0 ) {
 		    	$sErroMsg = '';
@@ -164,7 +164,7 @@ function js_imprime(virada){
 
 		        $rsConPlano    = db_query($sSqlConPlano);
 
-		        if ( pg_num_rows($rsConPlano) == 0 ) {
+		        if ( ($rsConPlano ? pg_num_rows($rsConPlano) : null) == 0 ) {
 		          $sErroMsg = "Cadastro de contas para o exercício {$iAnoDestino} não encontrado na instituição {$sDescrInstit}!\\n";
 		        	$sqlerro  = true;
 		        }
@@ -177,7 +177,7 @@ function js_imprime(virada){
 
 		        $rsOrcReceita    = db_query($sSqlOrcReceita);
 
-		        if ( pg_num_rows($rsOrcReceita) == 0 ) {
+		        if ( ($rsOrcReceita ? pg_num_rows($rsOrcReceita) : null) == 0 ) {
 		          $sErroMsg = "Nenhuma receita encontrada para o orçamento de {$iAnoDestino} na instituição {$sDescrInstit}\\n";
 		          $sqlerro  = true;
 		        }
@@ -190,7 +190,7 @@ function js_imprime(virada){
 
 		        $rsOrcDotacao    = db_query($sSqlOrcDotacao);
 
-		        if ( pg_num_rows($rsOrcDotacao) == 0 ) {
+		        if ( ($rsOrcDotacao ? pg_num_rows($rsOrcDotacao) : null) == 0 ) {
 		          $sErroMsg = "Nenhuma conta de despesa cadastrada para o exercício {$iAnoDestino} na instituição {$sDescrInstit}\\n";
 		          $sqlerro  = true;
 		        }

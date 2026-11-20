@@ -41,7 +41,7 @@ $sql = "select proprietario.*,ll.j34_descr , c.z01_nome as promitente, c.z01_end
  			                      where j01_matric = $cod_matricula limit 1";
 
 $matriculaSelecionada = db_query($sql);
-$numMatriculaSelecionada = pg_numrows($matriculaSelecionada);
+$numMatriculaSelecionada = ($matriculaSelecionada ? pg_numrows($matriculaSelecionada) : null);
 
  /***********************************************************************************************/
  // Verifica se encontrou a matrícula. Caso não tenha encontrado exibe a mensagem abaixo.

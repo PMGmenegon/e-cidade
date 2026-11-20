@@ -163,7 +163,7 @@ $troca = 1;
 $alt = 4;
 
 $pagina = 1;
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
 
   db_fieldsmemory($result,$i);
 
