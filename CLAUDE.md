@@ -242,6 +242,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `validacao-laravel8-7.4-x-8.5.md` | PHP8-94: validação do Laravel 8 do PR no 7.4 × 8.5 sem banco: inventário (289 declarações de form request, 0 `validated()`, 5 `only()`, 104 `validate()`), 1.350 casos de form request e 348 regra × valor iguais salvo `digits` com array (`TypeError` no 8.5), 49 `Deprecated` só no 8.5, 54 form requests com regra de banco (`.tsv`); comandos que conferem as contagens |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
