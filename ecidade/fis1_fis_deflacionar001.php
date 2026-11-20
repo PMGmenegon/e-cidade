@@ -30,7 +30,7 @@ function Deflacionar_valores( $dtVencimento , $dtPagamento , $dValor , $sIntit )
   $sMesPag  = substr( $dtPagamento  , 3 , 2 );
   
   /* -- [ Verifica sempre o mes anterior da competencia ] -- */
-  $sMesPag = ( $sMesPag - 1 );
+  $sMesPag = ( (int)$sMesPag - 1 );
   if( $sMesPag == 0){
     $sMesPag = 12;
     $sAnoPag = ( $sAnoPag - 1 );
