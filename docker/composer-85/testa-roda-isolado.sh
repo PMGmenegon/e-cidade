@@ -61,4 +61,10 @@ grep -q '^Warning: Undefined' "$W/err8.5" && grep -q '^Notice: Undefined' "$W/er
 n=$((n+1)); echo x | env VENDOR="$V85" AVISOS=0 STDERR_ARQ="$W/errsem" bash "$S" 8.5 "$W/t/opcoes.php" >"$W/o" 2>/dev/null; { ! grep -q Undefined "$W/errsem" && grep -q 'display_errors=' "$W/o"; } && echo "ok   AVISOS=0 nao liga display_errors (php.ini da imagem)" || { f=$((f+1)); echo "FALHOU: AVISOS=0"; cat "$W/o"; }
 quebra env EXTRA_RO="/nao/existe:/x" bash "$S" 7.4 "$W/t/ok.php"
 quebra env ENV_EXTRA="$W/nao-existe" bash "$S" 7.4 "$W/t/ok.php"
+# --- APP_KEY de teste gerada na hora (nunca a real)
+echo '<?php echo getenv("APP_KEY"), PHP_EOL;' > "$W/t/appkey.php"
+bash "$S" 7.4 "$W/t/appkey.php" > "$W/k1" 2>/dev/null; bash "$S" 7.4 "$W/t/appkey.php" > "$W/k2" 2>/dev/null; printf 'APP_KEY=base64:%s\n' "$(head -c 32 /dev/zero | base64)" > "$W/envkey"
+env ENV_EXTRA="$W/envkey" bash "$S" 7.4 "$W/t/appkey.php" > "$W/k3" 2>/dev/null
+n=$((n+1)); { k=$(sed 's/^base64://' "$W/k1"); [ "$(printf %s "$k" | base64 -d 2>/dev/null | wc -c)" -eq 32 ] && grep -q '^base64:' "$W/k1" && ! cmp -s "$W/k1" "$W/k2" \
+  && [ "$(cat "$W/k3")" = "base64:$(head -c 32 /dev/zero | base64)" ]; } && echo "ok   APP_KEY: 32 bytes, nova a cada execucao, ENV_EXTRA a fixa" || { f=$((f+1)); echo "FALHOU: APP_KEY: $(cat "$W/k1" "$W/k2" "$W/k3")"; }
 echo "$((n-f))/$n"; [ "$f" -eq 0 ]

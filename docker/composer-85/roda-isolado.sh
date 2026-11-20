@@ -2,7 +2,7 @@
 # Roda um trecho PHP isolado no 7.4 ou no 8.5, sem rede e sem banco, e FALHA ALTO.
 # Uso (qualquer pasta):  bash docker/composer-85/roda-isolado.sh <7.4|8.5> <trecho.php> [args do trecho]
 # Variaveis: IMAGEM (imagem a usar), VENDOR (vendor montado em /app/vendor), DOCKER (comando docker; padrao docker)
-#   ENV_EXTRA=<arquivo K=V>   linhas acrescentadas ao ambiente de teste (valores ficticios, sem segredo)
+#   ENV_EXTRA=<arquivo K=V>   linhas acrescentadas ao ambiente de teste (valores ficticios, sem segredo; vale a ultima; ex.: APP_KEY fixa para saida reproduzivel)
 #   EXTRA_RO=<host>:<conteiner>[,<host>:<conteiner>...]   montagens extras somente leitura
 #   AVISOS=0                  desliga os avisos (padrao: php -d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0)
 #   STDERR_ARQ=<arquivo>      grava o stderr do trecho (avisos) nesse arquivo, separado do stderr do script
@@ -12,7 +12,7 @@
 # - ecidade/ em /app somente leitura; vendor: 7.4 = ecidade/vendor (ou VENDOR); 8.5 = runtime-85/vendor (ou VENDOR)
 # - gravavel so em memoria (tmpfs): /app/bootstrap/cache, /app/storage/logs, /app/storage/framework, /tmp
 # - variaveis de ambiente de teste so no conteiner (--env-file gerado de ecidade/.env.example, host de banco inexistente,
-#   APP_KEY de teste): nenhum ecidade/.env e criado na arvore; um ecidade/.env que ja exista nao e alterado
+#   APP_KEY de teste gerada a cada execucao com 32 bytes aleatorios, nunca a real): nenhum ecidade/.env e criado na arvore; um ecidade/.env que ja exista nao e alterado
 # - --network none; o trecho fica em /trecho (somente leitura)
 # - sai com erro se: argumento invalido, imagem ausente e sem build, docker run falhar, trecho sair com rc != 0 ou a saida vier vazia
 #   (saida vazia contra saida vazia vira "igual" falso numa comparacao 7.4 x 8.5)
@@ -53,7 +53,7 @@ fi
 TD="$(cd "$(dirname "$T")" && pwd)"; TN="$(basename "$T")"
 OUT="$(mktemp)"; ERR="$(mktemp)"; ENVF="$(mktemp)"; trap 'rm -f "$OUT" "$ERR" "$ENVF"' EXIT
 { grep -E '^[A-Z_]+=' "$R/ecidade/.env.example" | grep -vE '^(APP_KEY|DB_HOST|APP_ENV)='
-  echo APP_ENV=local; echo APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=; echo DB_HOST=banco.invalido
+  echo APP_ENV=local; echo "APP_KEY=base64:$(head -c 32 /dev/urandom | base64)"; echo DB_HOST=banco.invalido
   [ -z "${ENV_EXTRA:-}" ] || { echo; grep -E '^[A-Za-z_][A-Za-z0-9_]*=' "$ENV_EXTRA"; }; } > "$ENVF"
 FLAGS=(); [ -t 0 ] || FLAGS+=(-i)
 PHPOPT=(); [ "${AVISOS:-1}" = 0 ] || PHPOPT=(-d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0)

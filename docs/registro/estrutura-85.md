@@ -200,6 +200,12 @@ falso. Apareceu em 4 tarefas. O script **sai com erro** quando:
 | saída do trecho vazia | 66 |
 | `docker run` ou o trecho falhar | o próprio rc (nunca 0) |
 
+**`APP_KEY` de teste:** o Laravel exige uma chave de 32 bytes em base64 (`AES-256-CBC`) para subir o kernel e usar o criptografador.
+O script gera uma a cada execução (`base64:` + 32 bytes de `/dev/urandom`), só no `--env-file` temporário do contêiner, que é
+apagado ao fim: **nunca a chave real**, e o script não lê o `ecidade/.env` de ninguém. Pré-requisito: o trecho que cifra ou
+decifra algo só compara com outra execução se a chave for fixa; para isso `ENV_EXTRA` com `APP_KEY=base64:<32 bytes>`
+(a última linha vale) fixa uma chave fictícia.
+
 **Opções (variáveis de ambiente; nada de segredo, só valores fictícios):**
 
 | Variável | Efeito |
@@ -215,7 +221,7 @@ Com isso os avisos 7.4 × 8.5 se comparam à parte: o mesmo `echo $variavel_inex
 
 A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo
 (`bash docker/composer-85/testa-roda-isolado.sh`; precisa dos vendors em `TESTA_VENDOR74` e `TESTA_VENDOR85`, padrão
-`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 17 casos, 17/17 (os 10 do começo e 7 das opções: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
+`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 18 casos, 18/18 (os 10 do começo, 7 das opções e a `APP_KEY`: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
 kernel do Laravel do PR nos dois (`App\Application env=local`, rc 0, nenhum `Deprecated` no stdout); `exit(3)`, trecho vazio,
 imagem ausente, `docker run` quebrado, versão e arquivo inválidos falham com `roda-isolado: ERRO`. **Aviso:** tarefa que roda
 trecho isolado passa a chamar este script em vez de montar o `docker run` à mão.
