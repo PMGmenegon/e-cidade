@@ -82,7 +82,7 @@ class cl_parjuridico
                  v19_parcelacustasmanual = bool = Parcela custas com autorização";
 
     //funcao construtor da classe
-    public function cl_parjuridico()
+    public function __construct()
     {
         //classes dos rotulos dos campos
         $this->rotulo = new rotulo("parjuridico");

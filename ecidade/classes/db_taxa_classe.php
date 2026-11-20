@@ -71,7 +71,7 @@ class cl_taxa {
                  ar36_permiteparcelamento = bool = Permite parcelamento de taxa
                  ";
    //funcao construtor da classe
-   public function cl_taxa() {
+   public function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("taxa");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
