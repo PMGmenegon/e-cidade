@@ -36,6 +36,7 @@ combinou; este arquivo só junta as regras num lugar para a sua IA.
 | Financeiro | `financeiro` | `con`, `cai`, `orc`, `emp` |
 | Tributário e Patrimonial | `tributario_patrimonial` | `cad`, `iss`, `fis`, `pro`, `arr`, `div`, `itb`, `com`, `mat`, `pat`, `lic`, `aco` |
 | Saúde e demais | `saude_demais` | `sau`, `ate`, `lab`, `far`, `agu`, `mer`, `vei`, `bib`, `ouv`, `soc` |
+| Sem dono na tabela | `sem_area` | `func_*`, `classes/`, `pre*`, `rec*`, `jur*`, `cem*` … (o grupo ainda não distribuiu; escolha de propósito e combine com o coordenador) |
 
 Arquivo fora da tabela (ex.: `app/`, outros prefixos): combine com o coordenador.
 

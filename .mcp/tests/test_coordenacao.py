@@ -182,3 +182,18 @@ def test_padroes_ja_corrigidos(repo):
 def test_padroes_ja_corrigidos_git_falha_vira_aviso(repo):
     r = co.padroes_ja_corrigidos(repo, git_runner=git_falso("", 128))
     assert any("git" in a for a in r["avisos"])
+
+
+def test_arquivos_sem_dono_aparecem_e_podem_ser_escolhidos(repo):
+    e = repo.raiz / "ecidade"
+    (e / "con1_a.php").write_text("<?php\nparse_str($q);\n")
+    (e / "pre1_x.php").write_text("<?php\nparse_str($q);\n")
+    (e / "func_y.php").write_text("<?php\nparse_str($q);\n")
+    r = co.proximo_trabalho(repo, quem="ana", minha_area="financeiro")
+    assert r["arquivos_de_outras_areas_pulados"]["sem_area"] >= 2
+    assert "minha_area='sem_area'" in r["sem_area"]
+    r = co.proximo_trabalho(repo, quem="ana", minha_area="sem_area")
+    achados = {a["arquivo"] for a in r["arquivos"]}
+    assert {"ecidade/func_y.php", "ecidade/pre1_x.php"} <= achados and "ecidade/con1_a.php" not in achados
+    assert all(a["area"] is None for a in r["arquivos"])
+    assert "financeiro" in r["arquivos_de_outras_areas_pulados"]

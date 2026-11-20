@@ -28,7 +28,7 @@ from servidor import prompts, resources  # noqa: E402
 from servidor.busca import buscar  # noqa: E402
 from servidor.config import carregar_config  # noqa: E402
 from servidor.padroes import APELIDOS, PADROES, SEVERIDADES  # noqa: E402
-from servidor.areas import AREAS_GRUPO  # noqa: E402
+from servidor.areas import AREAS_VALIDAS  # noqa: E402
 from servidor.tools import grupo  # noqa: E402
 from servidor.seguranca import ErroFerramenta  # noqa: E402
 from servidor.tools import coordenacao, regressao  # noqa: E402
@@ -41,7 +41,7 @@ VERSAO = "0.1.0"
 NomePadrao = Literal[("todos", *SEVERIDADES, *PADROES, *APELIDOS)]  # type: ignore[valid-type]
 Caminho = Annotated[str, Field(min_length=1, max_length=1024,
                                description="caminho relativo a raiz do repositorio, ex.: ecidade/arr1_grupotaxa001.php")]
-Area = Literal[tuple(AREAS_GRUPO)]  # type: ignore[valid-type]
+Area = Literal[tuple(AREAS_VALIDAS)]  # type: ignore[valid-type]
 Quem = Annotated[str | None, Field(default=None, max_length=80,
                                    description="seu nome (padrao: ECIDADE_MCP_USUARIO ou git config user.name)")]
 

@@ -272,7 +272,7 @@ Defina também quem você é e a sua área (no `~/.bashrc` do WSL):
 
 ```bash
 export ECIDADE_MCP_USUARIO="Seu Nome"
-export ECIDADE_MCP_AREA=financeiro     # nucleo, educacao, pessoal, financeiro, tributario_patrimonial ou saude_demais
+export ECIDADE_MCP_AREA=financeiro     # nucleo, educacao, pessoal, financeiro, tributario_patrimonial, saude_demais ou sem_area
 ```
 
 **Passo 3. Abra o repositório na sua IA** (a configuração já está no repositório):
