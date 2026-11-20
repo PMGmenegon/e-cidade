@@ -17,46 +17,13 @@ Uso:
 Exemplo:
   python3 scratchpad/escrita_post.py <SID> jur1_advog001.php advog \
      'db_opcao=Incluir&v57_numcgm=19&v57_oab=OAB123&v57_matriculaadvogado=M1'
-
-Como faz (passo a passo):
-  1. copia a sessao do 7.4 para /tmp/_sess.bak (a sessao e compartilhada pelos dois
-     runtimes, via volume; o /tmp tambem);
-  2. fotografa cada tabela em public._n3snap_<tabela> (CREATE TABLE AS) e guarda
-     last_value/is_called das sequencias dela;
-  3. restaura a sessao, anota quantas linhas o log do ecidade_database tem, faz o
-     POST no 7.4 (:8080) e le do log so os statements emitidos depois disso;
-  4. restaura as tabelas (so a diferenca) e as sequencias;
-  5. repete 3 e 4 no 8.5 (:8085);
-  6. apaga as copias _n3snap_, filtra INSERT/UPDATE/DELETE, tira as tabelas de
-     infraestrutura (auditoria, sessao) e compara a lista de escrita de NEGOCIO.
-
-Entradas: SID de uma sessao autenticada; a tela (relativa a ecidade/); as tabelas
-  que a tela grava, separadas por virgula, FILHAS ANTES DA MAE (ver restaurar());
-  o payload (querystring; varios POSTs em sequencia separados por "|||").
-Saida (stdout): contagens, ate 6 statements de negocio de cada lado e o veredito.
-Codigo de saida: 0 = IDENTICO; 1 = DIVERGE (ou ABORTADO: sys.exit(<texto>) sai
-  com 1); 2 = INCONCLUSIVO (nenhuma escrita de negocio nos dois lados).
-Efeitos colaterais: GRAVA NO BANCO DE VERDADE (o POST) e depois desfaz pelo
-  restore; cria e apaga as tabelas public._n3snap_*; reescreve o arquivo de
-  sessao e o /tmp/_sess.bak no container ecidade_php74. NAO liga nem desliga o
-  log_statement (quem chama faz isso: nivel3.py ou demo_nivel3.sh). Se ABORTAR,
-  o POST do 7.4 JA GRAVOU e as _n3snap_ ficam no banco -- conferir e limpar a mao.
-  Escrita feita por GATILHO nao aparece no log e nao e vista aqui (o nivel3.py
-  confere isso pelas estatisticas do PostgreSQL).
-Usado em: "Nivel 3" do guia (docs/migrar-um-modulo.md, secao dentro de "Passos
-  4b a 6c -- os portoes", Passo 4 do nivel 3); chamado pelo nivel3.py e pelo
-  demo_nivel3.sh.
 """
 import re, subprocess, sys, os
 
 SID, TELA, TABELAS, PAYLOAD = sys.argv[1], sys.argv[2], sys.argv[3].split(','), sys.argv[4]
-# arquivo de sessao dentro do container; o diretorio e o volume ecidade_sessions,
-# montado tambem no 8.5 -- restaurar pelo 5.6 vale para os dois
 SESS = f"/var/lib/php/sessions/sess_{SID}"
 DB   = "docker exec -i ecidade_database psql -U postgres -d ecidade"
 
-# roda um comando de shell (bash -lc) e devolve o CompletedProcess com stdout/stderr
-# em BYTES -- o banco e LATIN1, cada chamador decodifica
 def sh(c, entrada=None):
     return subprocess.run(["bash","-lc",c], capture_output=True, input=entrada)
 
@@ -70,7 +37,6 @@ def sequencias(t):
     # Casar so a primeira deixava a sequencia de `legista` para tras, e o INSERT
     # do segundo runtime saia com o numero seguinte -- divergencia benigna que
     # parecia defeito de migracao.
-    # No LIKE, o '\\_' do Python chega como \_ no SQL: _ literal (sem escape, _ casa qualquer caractere)
     q = ("select relname from pg_class where relkind='S' and ("
          "relname like '" + t + "\\_%\\_seq' or "
          "relname like '%\\_" + t + "\\_seq' or "
@@ -78,7 +44,6 @@ def sequencias(t):
     r = sh(DB + ' -tAc "' + q + '"')
     return [x for x in r.stdout.decode("latin1").split() if x]
 
-# nome da tabela auxiliar com a foto de t (schema.tabela -> schema_tabela)
 def copia(t):
     return "public._n3snap_" + t.replace(".", "_")
 
@@ -91,12 +56,10 @@ def snapshot():
         r = sh(f'{DB} -c "DROP TABLE IF EXISTS {copia(t)}; CREATE TABLE {copia(t)} AS SELECT * FROM {t}"')
         if r.returncode != 0:
             sys.exit(f"ABORTADO: nao consegui copiar {t}: {r.stderr.decode('latin1')[:200]}")
-        # a contagem serve para conferir, no fim do restore, que voltou ao mesmo numero de linhas
         snap[t] = sh(f'{DB} -tAc "select count(*) from {t}"').stdout.decode().strip()
     seq = {}
     for t in TABELAS:
         for sq in sequencias(t):
-            # guardado como texto 'last_value|is_called' (saida -tA do psql)
             seq[sq] = sh(DB + ' -tAc "select last_value, is_called from ' + sq + '"').stdout.decode().strip()
     snap["__seq__"] = seq
     return snap
@@ -108,11 +71,6 @@ def restaurar(snap):
     referenciado por rhpessoal. O DELETE continua respeitando FK: se uma linha NOVA
     estiver referenciada, falha e aborta (rede de seguranca). TRUNCATE CASCADE
     apagaria tabelas vizinhas em silencio."""
-    # A ORDEM vem da linha de comando: as tabelas tem de ser passadas FILHAS ANTES DA
-    # MAE, para o DELETE apagar o filho antes do pai (FK) e o INSERT, que percorre
-    # ao contrario, repovoar o pai antes do filho.
-    # s::text = x::text compara a linha INTEIRA convertida em texto (a tabela pode
-    # nao ter chave primaria); linha alterada pelo POST conta como apagada + nova.
     for t in TABELAS:                      # apaga filho -> pai
         r = sh(f'{DB} -c "DELETE FROM {t} x WHERE NOT EXISTS (SELECT 1 FROM {copia(t)} s WHERE s::text = x::text)"')
         if r.returncode != 0:
@@ -124,29 +82,18 @@ def restaurar(snap):
         n = sh(f'{DB} -tAc "select count(*) from {t}"').stdout.decode().strip()
         if n != snap[t]:
             sys.exit(f"ABORTADO: {t} tinha {snap[t]} linhas e ficou com {n} depois do restore")
-    # setval com o is_called original: sem ele o proximo nextval pularia ou repetiria um numero
     for sq, v in snap['__seq__'].items():
         lv, chamada = [x.strip() for x in v.split('|')]
         cal = 'true' if chamada == 't' else 'false'
         sh(DB + ' -c "select setval(\'' + sq + '\', ' + lv + ', ' + cal + ')"')
 
-# Volta a sessao ao estado salvo antes de CADA runtime: a requisicao do 5.6 pode
-# alterar a sessao (variaveis de tela, DB_*), e o 8.5 tem de partir do mesmo estado,
-# senao a divergencia viria da sessao e nao do runtime.
 def restaurar_sessao():
     sh("docker exec -u root ecidade_php74 sh -c "
        f"'cp /tmp/_sess.bak {SESS}; chown www-data:www-data {SESS}; chmod 600 {SESS}'")
 
-# marca d'agua no log do PostgreSQL (stdout do container): o que vier depois desta
-# linha foi emitido pela requisicao. O log e compartilhado, entao statements de
-# outras conexoes no mesmo intervalo tambem entram (sao filtrados como INFRA ou
-# aparecem como ruido na contagem total).
 def linhas_log():
     return int(sh("docker logs ecidade_database 2>&1 | wc -l").stdout.strip() or 0)
 
-# Linha de log que ABRE um statement: '<data> <hora> <tz> [<pid>] LOG:  <rotulo>: '
-# (o [^:]*: casa o rotulo do statement, que vem traduzido para o portugues). O que
-# casa aqui e removido, sobrando so o SQL.
 PREFIXO = re.compile(rb'^\d{4}-\d{2}-\d{2} [\d:.]+ [^ ]+ \[\d+\] LOG:\s+[^:]*:\s*')
 # QUALQUER linha de log do PostgreSQL, nao so as de LOG: -- ERRO:, INSTRUCAO:,
 # DICA: e AVISO: tambem comecam assim. Sem distinguir, a juncao de continuacao
@@ -169,8 +116,6 @@ def capturar(desde):
             out[-1] += b' ' + l.strip()
     return [bytes(x) for x in out if x.strip()]
 
-# Normalizacao antes de comparar: literal de data/hora vira '<TS>' (o relogio difere
-# entre as duas requisicoes) e qualquer sequencia de espacos vira um espaco.
 NORM = [(re.compile(rb"'\d{4}-\d{2}-\d{2}[ T][\d:.]+'"), b"'<TS>'"),   # timestamps
         (re.compile(rb'\s+'), b' ')]
 def norm(s):
@@ -186,12 +131,9 @@ def requisitar(porta):
     for parte in PAYLOAD.split("|||"):
         sh(f"curl -s -m 60 -b 'ECIDADEWINDOWMAIN={SID}' -X POST "
            f"--data '{parte}' -o /dev/null http://localhost:{porta}/{TELA}")
-    # da tempo de o PostgreSQL escrever o log antes de le-lo
     sh("sleep 1")
     return [norm(s) for s in capturar(antes)]
 
-# --- execucao: backup da sessao, foto, POST 5.6 + restore, POST 8.5 + restore ---
-# (o /tmp/_sess.bak criado aqui tambem e usado pelos *_ciclo.py)
 sh(f"docker exec -u root ecidade_php74 cp {SESS} /tmp/_sess.bak")
 snap = snapshot()
 print("  snapshot: " + "  ".join(t + "=" + snap[t] + " linhas"
@@ -201,21 +143,20 @@ a = requisitar(8080); restaurar(snap)
 b = requisitar(8085); restaurar(snap)
 for t in TABELAS:
     sh(f'{DB} -c "DROP TABLE IF EXISTS {copia(t)}"')
-print(f"  statements: 7.4={len(a)}  8.5={len(b)}")
+print(f"  statements: 5.6={len(a)}  8.5={len(b)}")
 
 # so o que escreve -- e onde o defeito aparece
-# (SELECTs variam por cache/estado de sessao e nao provam nada sobre a gravacao)
 esc = re.compile(rb'^\s*(insert|update|delete)\b', re.I)
 ea, eb = [s for s in a if esc.match(s)], [s for s in b if esc.match(s)]
-print(f"  destes, INSERT/UPDATE/DELETE: 7.4={len(ea)}  8.5={len(eb)}")
+print(f"  destes, INSERT/UPDATE/DELETE: 5.6={len(ea)}  8.5={len(eb)}")
 
 # Separa escrita de NEGOCIO da de INFRAESTRUTURA. A auditoria (db_acount*) e a
 # sessao (db_usuariosonline) carregam sequencia e relogio, que divergem por
 # construcao entre duas requisicoes -- nao sao defeito.
 INFRA = re.compile(rb'\b(db_acount\w*|db_usuariosonline|db_logsacessa|db_menu\w*|db_sessao\w*)\b', re.I)
 na, nb = [s for s in ea if not INFRA.search(s)], [s for s in eb if not INFRA.search(s)]
-print(f"  destes, escrita de NEGOCIO: 7.4={len(na)}  8.5={len(nb)}")
-for s in na[:6]: print(f"    7.4> {s.decode('latin1')[:140]}")
+print(f"  destes, escrita de NEGOCIO: 5.6={len(na)}  8.5={len(nb)}")
+for s in na[:6]: print(f"    5.6> {s.decode('latin1')[:140]}")
 for s in nb[:6]: print(f"    8.5> {s.decode('latin1')[:140]}")
 ea, eb = na, nb
 
@@ -223,7 +164,6 @@ ea, eb = na, nb
 # outra, essa escrita FICA no banco (ou, se ela referencia linha nova, o restore
 # aborta pela FK -- foi o que aconteceu com pensao/pensaoretencao e rhipe/rhipenumcgm
 # no RH, e as linhas de teste tiveram de ser apagadas a mao).
-# captura o nome da tabela-alvo do INSERT/UPDATE/DELETE (com schema, se houver)
 alvo = re.compile(rb'^\s*(?:insert\s+into|update|delete\s+from)\s+([\w.]+)', re.I)
 fora = sorted({m.group(1).decode('latin1').split('.')[-1].lower() for s in na + nb
                for m in [alvo.match(s)] if m} - {t.split('.')[-1].lower() for t in TABELAS})
@@ -245,11 +185,10 @@ if ea == eb:
     print("  == SQL de escrita de NEGOCIO IDENTICO nos dois runtimes ==")
 else:
     print("  == DIVERGE ==")
-    # compara posicao a posicao; um statement a mais de um lado aparece como <ausente>
     for i in range(max(len(ea), len(eb))):
         x = ea[i].decode('latin1') if i < len(ea) else '<ausente>'
         y = eb[i].decode('latin1') if i < len(eb) else '<ausente>'
         if x != y:
-            print(f"    7.4: {x[:150]}")
+            print(f"    5.6: {x[:150]}")
             print(f"    8.5: {y[:150]}")
 sys.exit(0 if ea == eb else 1)
