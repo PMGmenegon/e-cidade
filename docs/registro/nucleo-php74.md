@@ -111,3 +111,43 @@ Diferenças do 8.5 que ficam para os próximos lotes. Hoje não aparecem, porque
   `PieGraph::Add`, `PiePlotC::StrokeLabel`, `PolarAxis::Stroke`, `PolarGraph::SetScale`, `StockPlot::Stroke`,
   `TextPropertyBelow::GetColWidth`, mais 7 de `Radar*` e 7 de `Spider*`. Os módulos equivalentes de `libs/` não
   foram medidos, porque o carregamento para no `plotmark`.
+
+## 5. Lote 3 — funções centrais que mudaram de resultado (20/11/2026)
+
+Três commits manuais, só nas linhas indicadas:
+
+| Categoria | Onde | Forma |
+|---|---|---|
+| `is_resource()`/`gettype() == "resource"` sobre resultado ou conexão do PostgreSQL (no 8.5 são objetos: o teste dá falso sem aviso) | `db_funcoes.php`: `db_multiploselect` (416, 475), `db_selectrecord` (859), `db_selectmultiple` (927, 937, 984); `db_stdlib.php:2911` (`db_logsmanual_demais`); `db_libconsole.php:83, 172`; `db_stdlibwebseller.php:4389`; `db_libcontabilidade.php:3678` | o teste do 7.4 `\|\| $x instanceof \PgSql\Result` (ou `Connection`); no 7.4 a classe não existe e o `instanceof` é sempre falso |
+| `pg_*` sobre consulta que falhou (decisão 2a) | `db_funcoes.php:1342` (`ultimo_dia_mes`), `db_stdlibwebseller.php:437` (`eduparametros`), `db_libcontabilidade.php:4636` | `($rs ? pg_x($rs) : null)` |
+| `pg_query()` sem conexão aberta: aviso e `false` no 7.4, `Error` no 8.x | `db_stdlib.php:100` (`db_query`) | `try`/`catch` só do `Error` dessa situação, que vira `false` |
+| `date()` com texto | `db_stdlib.php:1651` (`db_vencimento`) | `false` para texto sem número, `(int)` nos demais (o 7.4 usa o número do começo do texto e trata `null` como 0; o 8.5 usava a hora atual) |
+| número × texto não numérico (`"" == 0` era verdadeiro) | `db_funcoes.php`: `db_select` (1055, 1071), `db_selectrecord` (761, 861), `db_selectmultiple` (966), `db_ancora` e `db_inputdata` (`$db_opcao < 3`) | forma do precedente do Tributário: compara com `(float)` do texto quando um lado é número e o outro texto não numérico |
+| `!= ""` com o valor 0 | `db_funcoes.php:822` | `($x != "" && $x !== 0 && $x !== 0.0)` |
+| lista nula no `db_select` (`reset`/`sizeof` de `null`: aviso no 7.4, `TypeError` no 8) | `db_funcoes.php:1051, 1069` | pula o `reset` e conta 0 quando a lista é `null` |
+
+Prova:
+- `php -l` nos dois runtimes nos 5 arquivos.
+- Cada forma caracterizada numa grade de valores (original no 7.4 = nova no 7.4 = nova no 8.5). As funções chamadas
+  direto com resultado real do banco, em 42 casos, dão o mesmo resultado nos três. Sem o lote, 13 deles diferiam no
+  8.5. Exemplos: com a variável vazia, o `db_select` deixava de marcar a opção 0; o `db_selectrecord` somente leitura
+  perdia a descrição; o `db_multiploselect` saía vazio.
+- `db_libconsole`: o `db_query` do 8.5 recusava a conexão válida e o script morria. `db_logsmanual_demais`: o 8.5 não
+  gravava o log de acesso; agora grava como o 7.4 (medido numa transação desfeita, sem gravar nada).
+- **7.4 inalterado:** 210 telas sorteadas entre as da bateria, antes e depois: 206 iguais byte a byte; as 4 restantes
+  diferem só na hora atual (um campo de hora e 3 PDFs com o texto idêntico, que mudam sozinhos entre capturas).
+- **8.5:** bateria 7.4 × 8.5 nas 4.324 telas que chamam essas funções, direto ou pelo formulário que incluem:
+  **253 → 167 divergentes, 86 resolvidas, nenhuma nova**.
+
+O que as 167 mostram agora:
+- **Formulários das áreas** (cerca de 30 telas): `label()` sobre nulo, porque o construtor estilo PHP 4 da classe de
+  dados não roda.
+- **`pg_*` sobre consulta que falhou na própria tela** (decisão 2a, trabalho das áreas).
+- **Assinaturas de `RelatoriosLegaisBase`**, do Financeiro.
+- **Núcleo, ainda pendente:** `db_stdlibwebseller.php:479` e `libs/db_conecta.php:284` (`pg_*` sobre consulta que
+  falhou), `dbforms/db_classesgenericas.php:756` (`reset` de `null`), `libs/db_app.utils.php:39` (constante
+  `DB_VERSION`) e `model/dbGeradorRelatorio.model.php:602` (`$s{i}`).
+
+Fica para decisão do grupo, sem correção: no 8, dois textos numéricos com espaço no fim (`"1" == "1 "`) passaram a
+ser comparados como número (verdadeiro); no 7.4 o `"1 "` não era numérico e a comparação era de texto (falso). A
+mudança vale para todo `==` do sistema, e as colunas `char(n)` completadas com espaço são o caso real.
