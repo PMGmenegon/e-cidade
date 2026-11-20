@@ -299,7 +299,7 @@ $this->SetLeftMargin($S);
         else
         {
             reset($this->PileStyle);
-            while(list($k,$val)=each($this->PileStyle))
+            foreach ($this->PileStyle as $k => $val)
             {
                 $val=trim($val);
                 if($this->TagStyle[$val]['family']!="") {
@@ -315,7 +315,7 @@ $this->SetLeftMargin($S);
         else
         {
             reset($this->PileStyle);
-            while(list($k,$val)=each($this->PileStyle))
+            foreach ($this->PileStyle as $k => $val)
             {
                 $val=trim($val);
                 $style1=strtoupper($this->TagStyle[$val]['style']);
@@ -340,7 +340,7 @@ $this->SetLeftMargin($S);
         else
         {
             reset($this->PileStyle);
-            while(list($k,$val)=each($this->PileStyle))
+            foreach ($this->PileStyle as $k => $val)
             {
                 $val=trim($val);
                 if($this->TagStyle[$val]['size']!=0) {
@@ -356,7 +356,7 @@ $this->SetLeftMargin($S);
         else
         {
             reset($this->PileStyle);
-            while(list($k,$val)=each($this->PileStyle))
+            foreach ($this->PileStyle as $k => $val)
             {
                 $val=trim($val);
                 if($this->TagStyle[$val]['color']!="") {
@@ -393,7 +393,7 @@ $this->SetLeftMargin($S);
             if(preg_match("(.+) (.+)='(.+)' *",$regs[2])) {
                 $tab1= explode(" +",$regs[2]);
                 $tab[2]=trim($tab1[0]);
-                while(list($i,$couple)=each($tab1))
+                foreach ($tab1 as $i => $couple)
                 {
                     if($i>0) {
                         $tab2=explode("=",$couple);

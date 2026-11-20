@@ -312,7 +312,7 @@ class pdf1 extends fpdf
             $family = $this->TagStyle[$tag]['family'];
         } else {
             reset($this->PileStyle);
-            while (list($k, $val) = each($this->PileStyle)) {
+            foreach ($this->PileStyle as $k => $val) {
                 $val = trim($val);
                 if ($this->TagStyle[$val]['family'] != "") {
                     $family = $this->TagStyle[$val]['family'];
@@ -326,7 +326,7 @@ class pdf1 extends fpdf
             $style = "";
         } else {
             reset($this->PileStyle);
-            while (list($k, $val) = each($this->PileStyle)) {
+            foreach ($this->PileStyle as $k => $val) {
                 $val = trim($val);
                 $style1 = strtoupper($this->TagStyle[$val]['style']);
                 if ($style1 == "N") {
@@ -351,7 +351,7 @@ class pdf1 extends fpdf
             $size = $this->TagStyle[$tag]['size'];
         } else {
             reset($this->PileStyle);
-            while (list($k, $val) = each($this->PileStyle)) {
+            foreach ($this->PileStyle as $k => $val) {
                 $val = trim($val);
                 if ($this->TagStyle[$val]['size'] != 0) {
                     $size = $this->TagStyle[$val]['size'];
@@ -365,7 +365,7 @@ class pdf1 extends fpdf
             $color = $this->TagStyle[$tag]['color'];
         } else {
             reset($this->PileStyle);
-            while (list($k, $val) = each($this->PileStyle)) {
+            foreach ($this->PileStyle as $k => $val) {
                 $val = trim($val);
                 if ($this->TagStyle[$val]['color'] != "") {
                     $color = $this->TagStyle[$val]['color'];
@@ -400,7 +400,7 @@ class pdf1 extends fpdf
             if (preg_match("(.+) (.+)='(.+)' *", $regs[2])) {
                 $tab1 = explode(" +", $regs[2]);
                 $tab[2] = trim($tab1[0]);
-                while (list($i, $couple) = each($tab1)) {
+                foreach ($tab1 as $i => $couple) {
                     if ($i > 0) {
                         $tab2 = explode("=", $couple);
                         $tab2[0] = trim($tab2[0]);

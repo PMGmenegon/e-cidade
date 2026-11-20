@@ -3208,7 +3208,7 @@ function print_vars($obj)
     $arr = get_object_vars($obj);
     echo "<table border=0 bgcolor=#AAAAFF style='border:1px solid'>";
     echo "<tr><td colspan=3>Debug da classe " . get_class($obj) . " </td></tr>";
-    while (list ($prop, $val) = each($arr)) {
+    foreach ($arr as $prop => $val) {
         echo "<tr><td>&nbsp; </td><td align=left>var ${$prop} </td><td> $val </td>";
     }
 }

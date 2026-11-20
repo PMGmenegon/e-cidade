@@ -1552,7 +1552,7 @@ class Graph {
 		// us from recursively coming here again
 		$urlarg='?'._CSIM_DISPLAY.'=1';
 
-		while( list($key,$value) = each($HTTP_GET_VARS) ) {
+		foreach ($HTTP_GET_VARS as $key => $value) {
 		    if( is_array($value) ) {
 			$n = count($value);
 			for( $i=0; $i < $n; ++$i ) {

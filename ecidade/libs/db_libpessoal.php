@@ -118,7 +118,7 @@ function db_sel_pessal($tabela, $cmp_ = null, $where = null)
         }
     } else {
         reset($campos);
-        while (list($key, $val) = each($campos)) {
+        while (($key = key($campos)) !== null) { $val = current($campos); next($campos);
             $cmp .= $vircula." ".$key." AS ".$val;
             $vircula = ",";
         }
@@ -128,7 +128,7 @@ function db_sel_pessal($tabela, $cmp_ = null, $where = null)
     if ($where == null || $where == "") {
         $where = "";
     } else {
-        while (list($key, $val) = each($campos)) {
+        while (($key = key($campos)) !== null) { $val = current($campos); next($campos);
             $where =  str_replace($key, $val, $where);
         }
     }
