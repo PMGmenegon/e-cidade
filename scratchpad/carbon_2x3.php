@@ -61,4 +61,9 @@ $t('timestamp', function () use ($d) { return $d->timestamp; });
 $t('year/month/day', function () use ($d) { return $d->year . '-' . $d->month . '-' . $d->day; });
 $t('dayOfWeek', function () use ($d) { return $d->dayOfWeek; });
 $t('lte/gt', function () use ($d) { return array($d->lte(Carbon::parse('2021-02-01')), $d->gt(Carbon::parse('2021-02-01'))); });
+// age (RhDepend.php:27, RhDependController.php:73, AjudaCustoService.php:247 com subMonth)
+foreach (array('1990-05-20', '2029-12-31', '2031-06-01') as $nasc) {
+    $t("parse($nasc)->age", function () use ($nasc) { return Carbon::parse($nasc)->age; });
+    $t("parse($nasc)->subMonth(3)->age", function () use ($nasc) { return Carbon::parse($nasc)->subMonth(3)->age; });
+}
 echo "TZ " . date_default_timezone_get() . "\n";
