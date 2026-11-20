@@ -9568,6 +9568,18 @@
       "quando": "2026-11-20T21:26:13Z",
       "quem": "Thiago432544"
     },
+    "ecidade/dbagata/classes/jpgraph/gd_image.inc.php": {
+      "observacao": "nucleo lote 2: assinaturas compativeis com a mae e metodos chamados como estaticos (79e078faf, 394b1fabf). O jpgraph nao desenha grafico nem no 7.4 (defeitos registrados em docs/registro/nucleo-php74.md).",
+      "padroes": [],
+      "quando": "2026-11-20T21:45:07Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dbagata/classes/jpgraph/jpgraph.php": {
+      "observacao": "nucleo lote 2: assinaturas compativeis com a mae e metodos chamados como estaticos (79e078faf, 394b1fabf). O jpgraph nao desenha grafico nem no 7.4 (defeitos registrados em docs/registro/nucleo-php74.md).",
+      "padroes": [],
+      "quando": "2026-11-20T21:45:06Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/dbagata/classes/util/editor.class": {
       "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
       "padroes": [
@@ -18436,6 +18448,24 @@
         "chaves_offset_string"
       ],
       "quando": "2026-11-20T21:26:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/libs/jpgraph/jpgraph.php": {
+      "observacao": "nucleo lote 2: assinaturas compativeis com a mae e metodos chamados como estaticos (79e078faf, 394b1fabf). O jpgraph nao desenha grafico nem no 7.4 (defeitos registrados em docs/registro/nucleo-php74.md).",
+      "padroes": [],
+      "quando": "2026-11-20T21:44:58Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/libs/jpgraph/jpgraph_pie.php": {
+      "observacao": "nucleo lote 2: assinaturas compativeis com a mae e metodos chamados como estaticos (79e078faf, 394b1fabf). O jpgraph nao desenha grafico nem no 7.4 (defeitos registrados em docs/registro/nucleo-php74.md).",
+      "padroes": [],
+      "quando": "2026-11-20T21:45:01Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/libs/jpgraph/jpgraph_pie3d.php": {
+      "observacao": "nucleo lote 2: assinaturas compativeis com a mae e metodos chamados como estaticos (79e078faf, 394b1fabf). O jpgraph nao desenha grafico nem no 7.4 (defeitos registrados em docs/registro/nucleo-php74.md).",
+      "padroes": [],
+      "quando": "2026-11-20T21:45:03Z",
       "quem": "Thiago432544"
     },
     "ecidade/libs/mail/func.php": {
