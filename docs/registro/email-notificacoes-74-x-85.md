@@ -69,7 +69,7 @@ python3 scratchpad/emails_compara.py <saida>/l8-74.json <saida>/l8-85.json     #
 python3 scratchpad/emails_compara.py <saida>/l8-85.json <saida>/l13-85.json    # Laravel 8 x 13
 ```
 
-As imagens são as de `docker/php74-apache` e `docker/php85-apache`. Os resultados desta medição estão em `docs/registro/email-notificacoes-resultados/` (`l8-74.json`, `l8-85.json`, `l13-85.json`).
+As imagens são as construídas de `docker/php74-apache` e `docker/php85-apache` (com o `php.ini` delas; os nomes locais usados foram `t102-php74-ref` e `ecidade-login-php85`, equivalentes às `ecidade-php74-apache` e `ecidade-php85-apache` que o `docker/composer-85/roda-isolado.sh` constrói). Uma primeira rodada em imagens só de CLI, sem `php.ini`, deu os mesmos JSON; a medição foi repetida nas imagens do projeto e os três arquivos de resultado saíram idênticos aos desta pasta. Os resultados desta medição estão em `docs/registro/email-notificacoes-resultados/` (`l8-74.json`, `l8-85.json`, `l13-85.json`).
 
 O script monta um `Application` mínimo (config, view, mail, notifications, fila `sync`), com `mail.driver = array`, e usa as classes **reais** de `app/`:
 `Mail::send` para o Mailable do Redesim (como no `RedesimService.php:440`); `Notification::sendNow` com o `Usuario` real do PR (atributos em memória) para o e-mail do acordo, passando pelo `ChannelManager` e pelo `MailChannel`; e `via()`/`toArray()` das outras notificações.
