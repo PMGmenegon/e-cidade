@@ -9552,6 +9552,30 @@
       "quando": "2026-11-20T06:05:28Z",
       "quem": "Thiago432544"
     },
+    "ecidade/dbagata/classes/fpdf151/fpdf.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:11Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dbagata/classes/fpdf151/teste.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:13Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dbagata/classes/util/editor.class": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:16Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/div1_consulta001.php": {
       "observacao": "PHP8-01: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -14862,6 +14886,46 @@
       "quando": "2026-11-20T06:05:59Z",
       "quem": "Thiago432544"
     },
+    "ecidade/fpdf151/fpdf.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/fpdf151/impmodelos/mod_imprime10.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/fpdf151/impmodelos/mod_imprime12.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:22Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/fpdf151/impmodelos/mod_imprime13.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:24Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/fpdf151/impmodelos/mod_imprime1333.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:25Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/inf1_infla001.php": {
       "observacao": "PHP8-01: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
@@ -18364,6 +18428,22 @@
       "observacao": "PHP8-01: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T06:06:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/libs/JSON.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/libs/mail/func.php": {
+      "observacao": "PHP8-01: nucleo lote 1, $s{i} -> $s[i] (Rector); validado 7.4 e 8.5",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-20T21:26:29Z",
       "quem": "Thiago432544"
     },
     "ecidade/mar1_cancmarca001.php": {
