@@ -200,9 +200,22 @@ falso. Apareceu em 4 tarefas. O script **sai com erro** quando:
 | saída do trecho vazia | 66 |
 | `docker run` ou o trecho falhar | o próprio rc (nunca 0) |
 
+**Opções (variáveis de ambiente; nada de segredo, só valores fictícios):**
+
+| Variável | Efeito |
+|---|---|
+| `ENV_EXTRA=<arquivo K=V>` | linhas acrescentadas ao `--env-file`, depois das do `.env.example` (ex.: `API_DATA_AVAILABLE_URL=http://api.invalid/`; sem aspas) |
+| `EXTRA_RO=<host>:<contêiner>[,...]` | montagens extras **somente leitura** (o caminho do host precisa existir, senão rc 64) |
+| stdin | repassado ao trecho (`docker run -i`) quando não é terminal: `echo x \| roda-isolado.sh 7.4 trecho.php` |
+| avisos | por padrão `php -d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0`: aviso, notice e deprecated saem no **stderr**, nunca no stdout; `AVISOS=0` desliga e vale o `php.ini` da imagem (`display_errors=Off`, `error_log` dentro do contêiner). O `php.ini` da imagem não muda |
+| `STDERR_ARQ=<arquivo>` | grava o stderr do trecho nesse arquivo, separado do stderr do script (as mensagens `roda-isolado: ERRO` continuam no stderr do script) |
+
+Com isso os avisos 7.4 × 8.5 se comparam à parte: o mesmo `echo $variavel_inexistente` dá `Notice: Undefined variable` no 7.4 e
+`Warning: Undefined variable` no 8.5, que o `display_errors=Off` das imagens escondia.
+
 A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo
 (`bash docker/composer-85/testa-roda-isolado.sh`; precisa dos vendors em `TESTA_VENDOR74` e `TESTA_VENDOR85`, padrão
-`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 10 casos, 10/10. O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
+`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 17 casos, 17/17 (os 10 do começo e 7 das opções: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
 kernel do Laravel do PR nos dois (`App\Application env=local`, rc 0, nenhum `Deprecated` no stdout); `exit(3)`, trecho vazio,
 imagem ausente, `docker run` quebrado, versão e arquivo inválidos falham com `roda-isolado: ERRO`. **Aviso:** tarefa que roda
 trecho isolado passa a chamar este script em vez de montar o `docker run` à mão.
