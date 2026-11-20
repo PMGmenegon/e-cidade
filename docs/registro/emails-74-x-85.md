@@ -3,7 +3,7 @@
 **Resumo:** os e-mails do código próprio saem **iguais** em conteúdo no PHP 7.4 (Laravel 8.73.2 + SwiftMailer 6.3.0) e no PHP 8.5
 (Laravel 13.43.0 + Symfony Mailer 8.1.10): 4 de 4 (assunto, remetente, destinatários, cabeçalhos relevantes, tipo e charset das partes, corpo
 decodificado), 0 diferenças. A `configuration/mail.php` do PR (formato antigo, com `driver`) é lida pelo Laravel 13; 8 cenários de
-configuração, 5 iguais e 3 com diferença de mecanismo (seção 3). Nada foi enviado: transporte `array`, `--network none`, sem banco.
+configuração, 7 iguais ou equivalentes e 1 com diferença de mecanismo (`smtp` com `tls` na 587, seção 3). Nada foi enviado: transporte `array`, `--network none`, sem banco.
 
 ## 1. O que existe no código próprio
 
@@ -21,7 +21,7 @@ Os 3 pontos de e-mail do PR usam só a API do `Mailable`/`Mail::send`, que o Lar
 
 Roda `email.php` no 7.4 (vendor do `ecidade/composer.lock` do PR) e no 8.5 (vendor da integração) por `docker/composer-85/roda-isolado.sh`, com
 `ENV_EXTRA` (`MAIL_DRIVER=array`, remetente e destinatários fictícios), num `Application` do Laravel sem o bootstrap do kernel (o app do PR
-ainda não sobe no 8.5, ver o registro de defeitos, seção 9). Dubles só para as duas buscas no banco que os `Mailable` fazem; o resto é o código do PR.
+ainda não sobe no 8.5: `php artisan list` termina com `Call to undefined method Laravel\Passport\Passport::routes()` em `app/Providers/AuthServiceProvider.php:31`, porque o Passport 13 não tem `routes()`). Dubles só para as duas buscas no banco que os `Mailable` fazem; o resto é o código do PR.
 
 | E-mail | Assunto / remetente / destinatários | Corpo |
 |---|---|---|
