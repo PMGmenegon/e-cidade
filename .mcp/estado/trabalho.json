@@ -1,5 +1,2724 @@
 {
-  "concluidos": {},
+  "concluidos": {
+    "ecidade/Cem1_legista001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/Cem1_legista002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/Cem1_legista003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_campas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_campas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_campas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cancsepultamentos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_causa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_causa002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_causa003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterio001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterio002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterio003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriocgm001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriocgm002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriocgm003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterioisencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterioisencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiterioisencao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriorural001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriorural002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_cemiteriorural003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_funerarias001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_funerarias002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_funerarias003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_gavetas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_gavetas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_gavetas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_hospitais001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_hospitais002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_hospitais003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_itenserv001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_itenserv002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_itenserv003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_itenserv111.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_jazigos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_jazigos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_jazigos003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_legista001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_legista002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_legista003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_lotecemit001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_notaserv001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_notaserv002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_notaserv003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoario001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoario002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoario003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:16Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariojazigo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariojazigo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariojazigo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariopart000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariopart001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariopart002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_ossoariopart003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_propricemit000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_propricemit001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_propricemit002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_propricemit003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_proprijazigo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_proprijazigo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_proprijazigo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_quadracemit000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_quadracemit001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_quadracemit002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_quadracemit003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_renovacoes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_renovacoes002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_renovacoes003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_restos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_restos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_restos003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_retiradas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_retiradas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_retiradas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentoisencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentoisencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentoisencao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepultamentos007.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepulturas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepulturas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_sepulturas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxaserv006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_taxavalorserv001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_transacao000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_transacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem1_transacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem2_edital001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem2_emitecertisen001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_jazigos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_ossoariojazigo000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_ossoariojazigo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_ossoarios001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_proprijazigo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultados001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultamentos000.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultamentos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultamentos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultamentos003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_sepultamentos004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/cem3_taxas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadorigem_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadtipoitem_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadtipoitemgrupo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadtipoorigem_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_campas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cancmarca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_causa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cemiterio_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cemiteriocgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cemiterioisencao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cemiteriorural_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_diverimporta_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_diverimportaold_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_diverimportareg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_diversos_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_diversoslancamentotaxa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_funerarias_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_gavetas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_gavetas_old_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_hospitais_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_infcab_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_infcor_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_infla_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_inflan_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaocgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaoinscr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaolanc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaomatric_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaoproc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isencaotipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbi_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbialt_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiavalia_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiavaliaformapagamentovalor_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbicancela_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbicgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiconstr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiconstrespecie_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiconstrpadraoconstrutivo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiconstrtipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbidadosimovel_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbidadosimovelsetorloc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbidbpref_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiformapagamento_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiformapagamentovalor_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiintermediador_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbilocalidaderural_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbilogin_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbimatric_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbinome_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbinomecgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbinumpre_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiparespecie_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbipartipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbipropriold_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiretificacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbirural_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbiruralcaract_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbisituacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbitipocaract_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbitipoformapag_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbitransacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itbitransacaoformapag_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itburbano_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_itenserv_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_jazigos_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_legista_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_localmarca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_lotecemit_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_marca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_marcaloc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notidebitosreg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notiemissao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notiemissaoreg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notificaarretipodoc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notificadoc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notificatipogeracao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ossoario_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ossoariojazigo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ossoariopart_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_pardiver_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_parissqn_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_paritbi_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_parnotificacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_parreciboitbi_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_procdiver_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_propricemit_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_proprijazigo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_quadracemit_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_recparprocdiver_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_renovacoes_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_restos_old_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_restosgavetas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_retiradas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_sepulta_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_sepultamentoisencao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_sepultamentos_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_sepulthist_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_sepulturas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_setorloc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_taxaserv_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_taxaservval_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_transfmarca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_txossoariojazigo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_txsepultamentos_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr2_capaloteamento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr2_relatoriodebitosimportados001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr2_reldiversos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_cancelimpgeraliptu001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_cancelimpiptu001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_consdiversos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_consdiversos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_consdiversos003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_consdiversos004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_diversos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_diversos004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_diversos005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_diversos006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_diversos007.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_impgeraliptu001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_impparcialiptu001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_parclote003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr3_procedper001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_altrecdiver001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_cancelaimportacaodiversos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_importacaodiversos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_parclote001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_parclote002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/dvr4_parclote003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_infla001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_infla002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_infla003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_inflan006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf1_infracaotransito.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf2_arrecmultastransito001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf2_importacaomultasnaocadastradas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf2_inflan001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf2_pagamentoduplicidade001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_atuavalores001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_atuavalores002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_atuavalores003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_consvalores001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_criainfla001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_importacaoinfracaotransito005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_manvalores001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_manvalores002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/inf4_receitasinfracaotransito004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_dadosmatric001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi001_old.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi002_old.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbi005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbianexo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiavalia001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiavalia002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiavalia003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiavaliacancelliberacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicancela001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicancela002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicancela003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicgm001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicgm002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbicgm003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstr002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstr003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrespecie001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrespecie002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrespecie003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrpadraoconstrutivo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrpadraoconstrutivo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrpadraoconstrutivo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrtipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrtipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiconstrtipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbidadosimovel001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbidadosimovel002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbidadosimovel003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiemite001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiformapagamento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiformapagamento002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiformapagamento003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiintermediario001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilib001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilib002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilibdadosimovel002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilogin001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilogin002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbilogin003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbimatric001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbimatric002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbimatric003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinome001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinome002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinome003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinome011.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecgm001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecgm002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecgm003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecomp001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecomp002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinomecomp003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinumpre001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinumpre002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbinumpre003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiparespecie002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbipartipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbipropriold001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbipropriold002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbipropriold003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiretificacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiretificacaodadosimovel001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbirural001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbirural002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbirural003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbiruralcaract002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbisituacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbisituacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbisituacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao011.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao012.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao013.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itbitransacao111.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itburbano001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itburbano002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_itburbano003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_paritbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_paritbi002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_paritbi003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb1_parreciboitbi002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb2_relresumoitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb2_relresumoitbi002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb2_relsetorquadralote001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaadquirenteitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaanexos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultacancelamento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultacaracruraldist001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultacaracruralutil001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultadadosalteracoes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultadadosbenfeitoriasl001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultadadosimovel001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultadadosimovelrural001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultadocumentos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaformaspgtoavaliaitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaformaspgtoitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaguiaemitidas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultaitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultatransmitenteitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_consultavaloresitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itb4_situacaoitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itbi_simulacaorural001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itbi_simulacaourbano001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itbi_situacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itbi_taxasitbi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/itbi_tipotransacoes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_cancmarca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_cancmarca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_cancmarca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_framefile.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_localmarca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_localmarca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_localmarca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marcaalt.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marcainc.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marcaloc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marcaloc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_marcaloc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_transfmarca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_transfmarca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar1_transfmarca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar2_cancelamento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar2_marcacanc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar2_marcaprop001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar2_transferencia001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_histcanc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_histcanc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_marcacanc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_marcacanc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_marcaprop001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_marcaprop002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_transfmarca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar3_transfmarca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/mar4_mostraimagem.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not1_notificaarretipodoc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not1_notificaarretipodoc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not1_notificaarretipodoc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not2_geratxtcorreios001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not2_geratxtgeral001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not2_geratxtlayout001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not2_notificpendentes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not4_doclista001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not4_notiedital001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/not4_parnotificacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadorigem001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadorigem002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadorigem003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadtipoitemgrupo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadtipoitemgrupo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_cadtipoitemgrupo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencao005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencao006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaocalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaocgm001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaocgm002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaocgm003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoinscr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoinscr002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoinscr003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaolanc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaomatric001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaomatric002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaomatric003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoproc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoproc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:19Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaoproc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaotipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_isencaotipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_meievento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_meievento002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri1_meievento003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri4_cadisencaoalt001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/tri4_carregadadosisencao.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T03:30:20Z",
+      "quem": "Thiago432544"
+    }
+  },
   "reivindicacoes": {},
   "versao": 1
 }
