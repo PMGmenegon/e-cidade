@@ -69,7 +69,7 @@ O texto do `session_destroy(): Trying to destroy uninitialized session` (caso se
 O kernel inicializa nos dois PHP. No 8.5 o `vendor` do PR (Laravel 8, Guzzle, `lcobucci/jwt`, Passport, Opis) emite `Deprecated` (parametro implicitamente
 nulo); como a configuracao `logging.php` nao tem o canal `deprecations`, o Laravel grava, para cada aviso, um par de linhas
 (`laravel.EMERGENCY: Unable to create configured logger ... Log [deprecations] is not defined` + `laravel.WARNING: ...`) em `storage/logs`:
-89 pares na rodada (69 mensagens distintas), 0 no 7.4. Isso nao muda resposta de middleware, mas enche o log; ver PHP8-62 e o registro da PHP8-49.
+84 pares na rodada (64 mensagens distintas), 0 no 7.4 (numero que o `roda_middlewares.sh` imprime num checkout limpo; num worktree de desenvolvimento com arquivos locais nao versionados a mesma rodada deu 89 pares, 5 a mais, de avisos do Carbon). Isso nao muda resposta de middleware, mas enche o log; ver PHP8-62 e o registro da PHP8-49.
 
 ## 3. Sessao
 
@@ -108,8 +108,8 @@ O script faz tudo o que a medicao precisou e que um checkout novo nao tem:
 - **storage gravavel** em pasta nova a cada rodada, ja com `logs`, `framework/sessions`, `framework/cache/data` e `framework/views` (sem eles aparecem erros de `session_start`/`file_put_contents`).
 - **encoding:** a saida do trecho e ISO-8859-1 (mensagens do `AuthRedesim`); o script converte para UTF-8 (`iconv`) e tira as linhas `Deprecated`/`LOG laravel.` do vendor antes de comparar.
 - **comparacao:** `cmp` da saida do 7.4 com `middlewares-sessao/saida-7.4.txt` e do `diff` 7.4 x 8.5 com `middlewares-sessao/diferenca-7.4-8.5.txt`; imprime 32 casos nos dois e os
-  pares `EMERGENCY` do vendor (0 no 7.4, 89 no 8.5).
+  pares `EMERGENCY` do vendor (0 no 7.4, 84 no 8.5 em checkout limpo).
 
-Medido do zero (pasta nova, vendor instalado na hora): `7.4: 32 casos`, `8.5: 32 casos`, `89` pares no 8.5, as duas comparacoes iguais.
+Medido do zero (pasta nova, vendor instalado na hora): `7.4: 32 casos`, `8.5: 32 casos`, `84` pares no 8.5 (84 `laravel.EMERGENCY` + 84 `laravel.WARNING`, 64 mensagens distintas), as duas comparacoes iguais.
 
 Com o vendor do 8.5 (PHP8-79): usar uma pasta de trabalho cujo `pr/vendor` seja o dele, instalado com o mesmo layout (autoload de `App\` em `../ecidade/app/`); o script so instala se nao houver `pr/vendor/autoload.php`.
