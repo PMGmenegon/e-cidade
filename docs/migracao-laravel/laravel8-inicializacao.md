@@ -6,7 +6,7 @@ outro. O aceite e repetir os mesmos comandos com o `vendor` do 8.5 integrado (se
 
 Sem banco: conteineres `php:7.4-cli` e `php:8.5-cli` com `--network none`, `.env` vazio, chaves do Passport geradas so para o teste (sem segredo real),
 `storage/` e `bootstrap/cache/` gravaveis em pasta nova a cada rodada. O `ecidade/` e montado somente leitura (o 7.4 le o mesmo `./ecidade`).
-Defeitos do Laravel 8 do PR e das bibliotecas ficam no registro da PHP8-49; aqui so se aponta.
+Defeitos do Laravel 8 do PR e das bibliotecas ficam no registro da PHP8-49; aqui so se mede e se descreve o resultado.
 
 ## Como foi montado
 
@@ -36,39 +36,46 @@ Valores de uma lista sem segredo (`V` na saida): `cache.default=file`, `session.
 
 `php artisan route:list` **nao roda sem banco**: o comando instancia os controllers para ler os middlewares e um deles consulta
 `secretariadeeducacao.sec_parametros` ao ser construido (`could not find driver (SQL: ...)`, igual no 7.4 e no 8.5). Por isso a tabela de rotas e lida
-direto do roteador (`$app['router']->getRoutes()`), que e o que o comando listaria. Ver registro da PHP8-49.
+direto do roteador (`$app['router']->getRoutes()`), que e o que o comando listaria.
 
 ## Pontos conhecidos do criterio 2
 
 | Ponto | Medido | 7.4 x 8.5 |
 |---|---|---|
-| `env()` fora de `configuration/` | 109 usos em 46 arquivos fora de `configuration/` (`app/` 85 em 33; raiz 7 em 6; `model/` 5 em 1; `fpdf151/` 4 em 4; `extension/` 4 em 1; `src/` 4 em 1; contagem por expressao regular, sem `getenv`/metodos), mais 78 em 11 dentro de `configuration/` (a especificacao falava em 82 em 33) | leitura de `true`, `false`, `null`, `(empty)`, vazio, texto, `0`, texto entre aspas e ausente (com e sem padrao): iguais |
-| `Cache::put` (5 pontos: `PNCPClient`, `LicitaconObrasClient`, `AssinadorAPI`, `BnafarClient`, `EmissaoContraChequeJob`) | no Laravel 8 o inteiro e **segundos** (como no 7.4): `put(.., 60)` grava expiracao em 60 s; `put(.., DateInterval)` e `remember(.., 30, ..)` funcionam | igual; a mudanca de unidade nao existe do 7.4 para o 8.5 (so aparece em saltos posteriores) |
+| `env()` fora de `configuration/` | 109 usos em 46 arquivos (`app/` 85 em 33; raiz 7 em 6; `model/` 5 em 1; `fpdf151/` 4 em 4; `extension/` 4 em 1; `src/` 4 em 1) e 78 em 11 dentro de `configuration/`; comando: `python3 scratchpad/conta_laravel_init.py ecidade` (expressao regular, sem `getenv` nem metodos; a especificacao falava em 82 em 33) | leitura de `true`, `false`, `null`, `(empty)`, vazio, texto, `0`, texto entre aspas e ausente (com e sem padrao): iguais |
+| `Cache::put` (6 pontos, mesmo comando: `AssinadorAPI.php:177`, `LicitaconObrasClient.php:47`, `PNCPClient.php:67`, `BnafarClient.php:234`, `EmissaoContraChequeJob.php:124`, `src/Lib/Request/ProcessoEletronico/ProcessoEletronico.php:209`) | no Laravel 8 o inteiro e **segundos** (como no 7.4): `put(.., 60)` grava expiracao em 60 s; `put(.., DateInterval)` e `remember(.., 30, ..)` funcionam; o ponto de `ProcessoEletronico` passa um `Carbon` (`addMinutes(10)`), sem efeito de unidade | igual; a mudanca de unidade nao existe do 7.4 para o 8.5 (so aparece em saltos posteriores) |
 | Dotenv | `\Dotenv\Dotenv::createImmutable()` existe (`bootstrap.php:158`, `emp4_empempenho004.php:1344`) | igual; `.env` vazio carrega sem erro |
-| Sessao (Laravel) | driver `file`, `FileSessionHandler`, cookie `laravel_session`, 120 min | igual (ver tambem `middlewares-sessao.md`) |
+| Sessao (Laravel) | driver `file`, `FileSessionHandler`, cookie `laravel_session`, 120 min | igual |
 | Cache | store `file` (`FileStore`) | igual |
 
-## So no 8.5: avisos `Deprecated` ao subir o kernel (16 mensagens)
+## So no 8.5: avisos `Deprecated` ao subir o kernel (15 mensagens)
 
-Nada muda na saida acima; sao avisos do PHP 8.x, ate o PHP 8.4. Origem (arquivo:linha, medido):
+Nada muda na saida acima; sao avisos do PHP 8.x, ate o PHP 8.4. Contagem: `grep -c '^Deprecated' saida-8.5.err` (stderr do `laravel_init.php`).
+Origem (arquivo:linha, medido):
 
-- **Vendor do PR (13):** Guzzle promises (6, `functions.php:24,262,263,288,289,310`), `lcobucci/jwt` `Token.php:75,77,289` (3), Opis `functions.php:32`, Laravel `helpers.php:184,375`
-  (`optional()` e `with()`). Mudam com o `vendor` do 8.5; nao se mexe aqui.
-- **Codigo do proprio e-Cidade (3, vistos no 8.5):** `src/V3/Extension/ParameterBag.php:133` e `:142` (tipo de retorno de `getIterator()` e `count()`),
-  `config/application.php:27` e `config/application.default.php:27` (constante `E_STRICT`, descontinuada no 8.4). Nao fazem parte da
-  inicializacao do Laravel; ficam como ponteiro para quem faz o lint do 8.5.
-- Como o Laravel 8 liga o tratamento de `Deprecated` no boot e a configuracao de log nao tem o canal `deprecations`, cada aviso gera um par de linhas no
-  log (ver `middlewares-sessao.md`) e a chave `logging.channels.deprecations` aparece na configuracao: e a unica diferenca da tabela. Ver registro da PHP8-49.
+- **Vendor do PR (12):** Guzzle promises (6, `functions.php:24,262,263,288,289,310`), `lcobucci/jwt` `Token.php:75,77,289` (3), Opis `functions.php:32`,
+  Laravel `helpers.php:184,375` (`optional()` e `with()`). Mudam com o `vendor` do 8.5; nao se mexe aqui.
+- **Codigo versionado do e-Cidade (3):** `src/V3/Extension/ParameterBag.php:133` e `:142` (tipo de retorno de `getIterator()` e `count()`) e
+  `config/application.default.php:27` (constante `E_STRICT`, descontinuada no 8.4). Nao fazem parte da inicializacao do Laravel; ficam como ponteiro
+  para quem faz o lint do 8.5.
+- **`config/application.php` nao entra na medicao.** O arquivo e opcional e nao versionado (`ecidade/.gitignore:9`; o `bootstrap.php:77-78` so o carrega se existir) e
+  nao existe na base. A primeira rodada rodou com uma copia local antiga dele (de 12/11, de outra base), que acrescentava um `Deprecated` (`application.php:27`, 16 no total);
+  a rodada guardada aqui usa so o `config/` versionado (`git archive HEAD ecidade/config`, montado por cima de `ecidade/config`): saida do 7.4 e do 8.5 sem mudanca
+  em nenhuma linha em relacao a primeira, 15 `Deprecated` em vez de 16. O comando de repeticao fixa isso.
+- Como o Laravel 8 liga o tratamento de `Deprecated` no boot e a configuracao de log nao tem o canal `deprecations`, a chave
+  `logging.channels.deprecations` aparece na configuracao do 8.5: e a unica diferenca da tabela.
 
 ## Repetir com o vendor do 8.5 (aceite)
 
 ```bash
 # vendor do 8.5 (PHP8-79): COMPOSER=composer-85.json, via docker/composer-85/composer-85.sh; autoload completo montado em ecidade/vendor
+# config/ so com os arquivos versionados (sem config/application.php local):
+mkdir -p /tmp/cfg && git archive HEAD ecidade/config | tar -x -C /tmp/cfg
 for v in 7.4 8.5; do
-  docker run --rm --network none -w /w/ecidade -v $PWD/ecidade:/w/ecidade:ro -v /tmp/vazio:/w/ecidade/.env:ro \
+  docker run --rm --network none -w /w/ecidade -v $PWD/ecidade:/w/ecidade:ro -v /tmp/vazio:/w/ecidade/.env:ro -v /tmp/cfg/ecidade/config:/w/ecidade/config:ro \
     -v <vendor do $v>:/w/ecidade/vendor:ro -v <storage gravavel>:/w/ecidade/storage -v <cache gravavel>:/w/ecidade/bootstrap/cache \
     -v <tmp gravavel>:/w/ecidade/tmp -v <arquivos gravavel>:/w/ecidade/arquivos -v $PWD/scratchpad:/s:ro \
-    -e APP_ENV=production -e APP_KEY=<chave de teste> php:$v-cli php -d display_errors=stderr /s/laravel_init.php /w/ecidade > saida-$v.txt
+    -e APP_ENV=production -e APP_KEY=<chave de teste> php:$v-cli php -d display_errors=stderr /s/laravel_init.php /w/ecidade > saida-$v.txt 2> saida-$v.err
 done
 diff saida-7.4.txt saida-8.5.txt     # a referencia (7.4) e a do PR; o 8.5 vem do vendor novo
 ```
