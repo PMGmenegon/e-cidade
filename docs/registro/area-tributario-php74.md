@@ -134,6 +134,31 @@ mensagem do `Dialog` só no 7.4); 2 de `db_select()` com lista nula (`iss2_calcu
 propósito (contata o servidor externo do SISS) e ela não foi comparada. O quadro não tem operação para desmarcar e não
 deve ser editado à mão; quem for testá-la, com dublê local do serviço, deve conferir antes de confiar na marca.
 
+## 4e. Lote 5 — `fis` (20/11/2026)
+
+| Commit | O quê | Prova |
+|---|---|---|
+| construtor (manual) | `__construct` em `cl_vistorias` | instanciação: antes ≠; depois 8.5 = 7.4 e 7.4 = 7.4 |
+| assinaturas (manual) | `cl_fis_procfiscal_estendida` não carregava no 8: `incluir($y100_sequencial)` → `= null` (os dois chamadores passam `null`) e `sql_query` com um parâmetro a menos que a mãe → `$dbwhere = ""` sem uso no corpo (precedente do Financeiro) | a classe carrega no 8.5 com o estado do 7.4; 4/5 telas idênticas (a 5ª mostrou a camada seguinte) |
+| `0 == ""` (Rector, automático) | 121 classes (tabelas do módulo fiscal; 126 tabelas); 643 linhas, só inserção | caminho de escrita: antes 121 classes ≠ (702 linhas); depois 0 |
+| `pg_*` (script, automático) | 26 arquivos (15 telas, 11 formulários), 65 chamadas; depois mais 3 em `forms/db_frm_fis_levvalor.php` (camada seguinte) | 7.4 igual antes/depois nas 36 telas; 36/36 idênticas |
+| aritmética com texto vazio (manual) | `(int)$x` em `fis1_fis_deflacionar001:33` e no `$i<$fim+1` de `forms/db_frm_fis_levvalor.php` (2 laços) e `forms/db_frmlevvalor.php` — precedente do Financeiro | caracterizado com 7 valores: igual ao 7.4 nos dois |
+| `substr()` e divisão (manual) | `fis1_fis_deflacionar001`: `substr($data, 6, 10)` de data vazia é `false` no 7.4 e `""` no 8 (muda `0 == false` x `0 == ""` e o laço dos meses passava a rodar) → `(strlen((string)$x) < N ? false : substr(...))`, forma do catálogo, só nas 4 linhas; `$v / $cValor` com `$cValor` `""` → a forma da `DivisaoComoNo74Rector`, escrita à mão (o Rector também apagava espaços de linhas em branco) | `substr` com 10 entradas e divisão com 6 pares: iguais ao 7.4 nos dois; tela idêntica |
+
+`split()` em 12 arquivos do Fiscal mantido (função de compatibilidade nos dois runtimes).
+
+**Resultado:** bateria do lote **686/792 → 727/792**. As **65** restantes:
+- 54 de `fpdf151/fpdf.php` e `libs/JSON.php`;
+- 6 telas de AIDOF (`fis1_aidof002/003`, `fis1_fis_aidof002/003`, `fis4_aidof005`, `fis4_fis_aidof005`): o campo de descrição
+  do tipo de nota some no 8.5 porque `db_selectrecord()` (`dbforms/db_funcoes.php:859`) testa `is_resource($record)`, falso
+  para o objeto `PgSql\Result` do 8 — núcleo;
+- 1, `fis1_fis_procfiscalfinalizacao002`: a tela liga `display_errors` e `error_reporting(-1)` (linhas 2–4) e mostra os
+  `Deprecated` do 8.1+ que o núcleo emite (`pg_query()`/`pg_escape_string()` sem a conexão em `libs/db_stdlib.php:100` e
+  `libs/db_libsession.php:63`) — núcleo;
+- 2, `fis4_importalevan001` e `fis4_fis_importalevan001`: construtor estilo PHP 4 de `cl_cadtipo` (módulo caixa), já
+  corrigido na branch do Financeiro, ainda não integrada a esta base;
+- 2, `fis1_sanitario004` e `fis1_fis_sanitario004`: respondem 500 **no 7.4** — defeito da referência, não corrigido.
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
@@ -143,6 +168,8 @@ deve ser editado à mão; quem for testá-la, com dublê local do serviço, deve
 | `dbagata/` (128 classes) | construtor estilo PHP 4 não roda | relatórios do Agata (1 no lote 1, 1 no lote 2, 4 no lote 4) |
 | `dbforms/db_funcoes.php:761` (`db_select`) | `@$GLOBALS[$nome] == $chave` com variável `""` e chave `0`: marcada no 7.4, não no 8 | todo select com opção de chave 0 (1 no lote 2) |
 | `dbforms/db_funcoes.php:1051` (`db_select`) | `reset($db_matriz)` com lista nula: aviso no 7.4, `TypeError` no 8 | 2 no lote 4 |
+| `dbforms/db_funcoes.php:859` (`db_selectrecord`, somente leitura) | `is_resource($record)` é falso para `PgSql\Result`: a descrição do registro não aparece | todo select somente leitura (6 no lote 5) |
+| `libs/db_stdlib.php:100`, `libs/db_libsession.php:63` | `pg_query()`/`pg_escape_string()` sem conexão: `Deprecated` no 8.1+ (aparece em tela que liga `display_errors`) | 1 no lote 5 |
 | `classes/db_db_logsacessa_classe.php` | construtor estilo PHP 4 | usada pela Configuração e por webservices |
 | `abrir.php:372` | `db_verifica_ip_banco()` chamada sem o argumento que o PR passou a exigir; quebra **igual no 7.4** (depois de gravar a sessão) | login direto pelo `abrir.php` |
 
