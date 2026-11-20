@@ -312,7 +312,7 @@ class cl_conplanoexecontacorrente
                         $resac = db_query("insert into db_acount values($acount,1011021,1014740,'" . AddSlashes(pg_result($resaco, $conresaco, 'c143_exercicio')) . "','$this->c143_exercicio'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
                     if (isset($GLOBALS["HTTP_POST_VARS"]["c143_conplanosistema"]) || $this->c143_conplanosistema != "")
                         $resac = db_query("insert into db_acount values($acount,1011021,1014741,'" . AddSlashes(pg_result($resaco, $conresaco, 'c143_conplanosistema')) . "','$this->c143_conplanosistema'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
-                    if (isset($GLOBALS["HTTP_POST_VARS"]["c143_saldo"]) || $this->c143_saldo != "")
+                    if (isset($GLOBALS["HTTP_POST_VARS"]["c143_saldo"]) || ($this->c143_saldo != "" && $this->c143_saldo !== 0 && $this->c143_saldo !== 0.0))
                         $resac = db_query("insert into db_acount values($acount,1011021,1014742,'" . AddSlashes(pg_result($resaco, $conresaco, 'c143_saldo')) . "','$this->c143_saldo'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
                     if (isset($GLOBALS["HTTP_POST_VARS"]["c143_natureza"]) || $this->c143_natureza != "")
                         $resac = db_query("insert into db_acount values($acount,1011021,1014743,'" . AddSlashes(pg_result($resaco, $conresaco, 'c143_natureza')) . "','$this->c143_natureza'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
