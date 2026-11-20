@@ -242,6 +242,7 @@ Medidos pela bateria; cada um derruba telas da área no 8.5 e **não foi alterad
 - `fpdf151/fpdf.php` (l. 614, `$s{$i}`): derruba todo relatório PDF que o carrega (aqui, `eso3_qualificacaocadastral002.php`);
 - `dbforms/db_funcoes.php` (`db_multiploselect`, l. 416 e 475; ainda 859, 927 e 984): `gettype() == "resource"` perde dado em silêncio no 8.5;
 - (lote 1B) `fpdf151/fpdf.php:614` derruba 8 relatórios do ponto/DIRF e `libs/JSON.php:188` 9 RPC de `pes4`/`rec`; `func_tipoasse.php:36` (`parse_str` de 1 argumento, fora da área);
+- (lote 2) `dbforms/db_funcoes.php` (`db_inputdata` l. 1096 perde o calendário; `db_select` l. 1023 perde o `selected` de `0`), `libs/db_utils.php:70` e `libs/db_stdlib.php:1929` (`pg_*` com resultado `false`), `classes/db_protelac_classe.php` (construtor PHP 4);
 - `model/dbGeradorRelatorio.model.php` e `src/Financeiro/Contabilidade/MatrizSaldoContabil/Repository/Lancamento.php`: não compilam no 8.5 (`php -l`);
 - DAOs de `classes/`: 864 das 876 classes com campos leem o formulário no 7.4 e mantêm `0` no 8.5 (caminho de escrita, passo 6b); 883 alvos do Rector do universo estão fora da área
   (865 `classes/`, 12 `func_*.php`: `func_avaliacaogruporespostacat`, `..monitoramentosaude`, `..obras`, `..processo`, `func_desligamentoservidor`,
@@ -323,6 +324,44 @@ e guardadas em `ecidade/tmp/medidas/` (gitignored) para os próximos lotes.
 Limite: as telas que de fato executam o `Falta.php`, o `Evento` e o `EspelhoPonto` (ponto eletrônico) respondem 500 no 8.5 por `libs/JSON.php`/`fpdf151/fpdf.php`;
 o efeito das 7 alterações só fica comprovado por `php -l` e carga, não por execução. Reexecutar `rec2_espelhoponto*`/`rec4_pontoeletronico*` depois que o núcleo trouxer P5.
 
+## Lote 2 (`rec`): resultado (20/11/2026)
+
+Dois commits `PHP8-96`: Rector (4 arquivos) e à mão (63 arquivos da 84 + resolução dos 13 conflitos + roteamento + registro). Como os 76 arquivos que a 84
+também alterou entram por 3 vias (`git merge-file`, base `e640eb485`, ours = 74, theirs = 84), o Rector do 1º commit só pegou os arquivos fora desse conjunto;
+depois da mesclagem o Rector rodou de novo sobre os 76 (1 arquivo: `rec1_protelac002.php`, do trecho mantido da 74) e esse resultado está no 2º commit.
+
+| Passo | Resultado |
+|---|---|
+| Enumerar (`rec`, 283 telas) | universo 2.924; 1.000 alvos, **58 na área, todos nos 76 arquivos vindos da 84**; os 942 restantes são de fora (`classes/` etc.); 436 arquivos ainda não medidos |
+| Classificação (base × 74 × 84) | sem mudança 86; só 84 (a1) **13**; só 74 (b) 121; as duas (63): mesclagem limpa (a2) **50**, conflito **13**. Igual ao dimensionamento |
+| 1º commit (Rector nos 207 arquivos fora do conjunto da 84) | 4 arquivos: `WrapVariableVariableNameInCurlyBraces` (2: `rec1_admissao002`, `rec1_leis_iframe001`), `ConsistentImplode` (2: `rec1_rhestagioresultado001/002`) |
+| a1 (13) e a2 (50) | trazidos da 84 / mesclados sem conflito |
+| 13 conflitos (decisão c2/c1: manter a 74, acrescentar só o que o 8.5 exige) | **todos ficaram com a versão da 74** nos trechos em conflito (`explode`, `parse_str($_SERVER['QUERY_STRING'], $query)`, reformatação, e a numeração `$mar1[1]`..`[9]` da DBSeller em `rec2_certcomprobatorio002`/`rec2_vantagens002`, que corrige o octal inválido `08`/`09` da base). Acrescentados à mão: `preg_split("#\|#m")` nas 2 linhas de separador `\|` (`rec1_leis001`/`002`, regra da decisão 2) e a guarda `($result ? pg_num_rows($result) : null)` em `rec2_relassentaporperiodo002` (a 84 a trouxe; sem ela `pg_num_rows(false)` é TypeError no 8.5, e o 7.4 só avisa e redireciona) |
+| 4 Rector sobre os 76 depois da mesclagem | 1 arquivo (`rec1_protelac002`), 2ª passada = 0. **Alvos na área depois: 0** |
+| 4b portão de funções (contra o 7.4) | 2 funções novas, **0 ausentes** |
+| 5 `php -l` nos 436 não medidos | **0 erros no 7.4 e 0 no 8.5** |
+| LSP (4 arquivos de `src/` novos com `extends`) | 4/4 `OK` nos dois |
+| 6/6b classes (83 de `classes/`) | instanciar: 82 de 83 idênticas, `db_protelac_classe.php` difere; escrita: 65 de 68 divergem: **depende do núcleo** |
+| 6c forma negada | n/a: nenhuma classe de dados alterada |
+| 7 Bateria (`cmp.py`, 283 telas) | **213 idênticas, 69 divergentes, 1 timeout** (`rec2_espelhoponto002`, 500 no 8.5). Causas abaixo |
+| 8 Roteamento | 213 telas no `faseb_map.conf` (bloco `Lote 2 do RH`); `nginx -t` ok; proxy recriado; cabeçalho conferido |
+
+### As 70 que não são idênticas: todas dependem do núcleo
+
+| Qtd | Sintoma | Arquivo do núcleo |
+|---:|---|---|
+| 30 | `ParseError` em `libs/JSON.php:188` (500 no 8.5, 200 no 7.4) | `libs/JSON.php` |
+| 30 | `ParseError` em `fpdf151/fpdf.php:614` (relatórios PDF) | `fpdf151/fpdf.php` |
+| 3 | `rec1_protelac001/002/003`: `label() on null` em `forms/db_frmprotelac.php:32`: o DAO `cl_protelac` não executa o construtor (PHP 4) | `classes/db_protelac_classe.php` |
+| 2 | `rec3_rhestagioavaliacoes003`, `rec4_avaliacaocancelamento002`: `pg_num_fields(false)` | `libs/db_utils.php:70` |
+| 1 | `rec2_rhestagioBoletim001`: `pg_fetch_result(false)` | `libs/db_stdlib.php:1929` |
+| 3 | `rec1_rhestagioagenda004/005/006` (200/200): o bloco do calendário (`db_inputdata`) some | `dbforms/db_funcoes.php` (`db_inputdata`, l. 1096) |
+| 1 | `rec2_rhestagio001` (200/200): `<option value="0" selected>` perde o `selected` (`db_select`, `0 == ""`) | `dbforms/db_funcoes.php` (`db_select`, l. 1023) |
+
+Os `.RPC.php` e relatórios que só falham por JSON/fpdf contam como não verificados: a sua lógica de `rec` só fica comprovada por `php -l` e pelo merge com a 84,
+até o núcleo trazer P5. Reexecutar as 70 depois (`ONLY=` com `ecidade/tmp/medidas/rec_naoidenticas.txt`, gitignored) e acrescentar ao `faseb_map.conf`.
+Limite: a bateria faz só `GET`; o caminho de escrita das classes do `rec` não pôde ser comprovado porque os DAOs não estão portados (P1/P3).
+
 ## PROGRESSO
 
 | Lote | Escopo | Estado | Commit | Observações |
@@ -330,7 +369,7 @@ o efeito das 7 alterações só fica comprovado por `php -l` e carga, não por e
 | 0 | Dimensionamento, decisões (c), conferência do c1, recontagem dos DAOs | **feito** (18/11/2026) | este commit | só documentação |
 | 1 | `rh` + `eso` + 2 `.RPC.php` | **feito** (19/11/2026) | `PHP8-32` (a mão; o Rector não alterou nada) | 96 telas, 0 alterações de código na área; bateria **57/96 idênticas**, 39 dependem do núcleo; 57 roteadas no `faseb_map.conf`. Ver *Lote 1: resultado* |
 | 1B | `src/RecursosHumanos` (aprovado) | **feito** (20/11/2026) | `PHP8-95` (Rector + à mão) | 584 `.php`; Rector em 7 arquivos; `Falta.php` compila; LSP 218/218. Ver *Lote 1B: resultado* |
-| 2 | `rec` | pendente | — | — |
+| 2 | `rec` | **feito** (20/11/2026) | `PHP8-96` (Rector + à mão) | 283 telas; 63 trazidas da 84 + 13 conflitos resolvidos; bateria **213/283 idênticas**, 70 dependem do núcleo; 213 roteadas. Ver *Lote 2 (rec): resultado* |
 | 3 | `pes3` + `pes4` | pendente | — | — |
 | 4 | `pes1` | pendente | — | `pes1_reajusteprog001.php` não compila: caracterizado, não se altera, reportar |
 | 5 | `pes2` | pendente | — | — |
