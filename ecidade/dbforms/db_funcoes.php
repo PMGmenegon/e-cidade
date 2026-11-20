@@ -352,7 +352,7 @@ if (!function_exists("db_ancora")) {
         //#20#//Script : Função JAVASCRIPT que será executado no onclik do objeto label
         //#20#//Opcao : *db_opcao* do programa a ser executado neste objeto input, inclusão(1) alteração(2) exclusão(3)
         //#20#//Style : Opção para programador mudar o estilo da âncora
-        if (($db_opcao < 3) || ($db_opcao == 4)) {
+        if (((is_string($db_opcao) && !is_numeric($db_opcao) ? (float) $db_opcao < 3 : $db_opcao < 3)) || ($db_opcao == 4)) {
             if ($varnome != "") {
                 ?>
                 <a id="<?php echo  $varnome ?>" class='DBAncora'
@@ -758,7 +758,7 @@ if (!function_exists("db_selectrecord")) {
                         $sqlv = pg_fetch_result($record, $sqli, 0);
                         ?>
                         <option
-                            value="<?php echo  $sqlv ?>" <?php echo  (@$GLOBALS[$nome] == $sqlv ? "selected" : "") ?>><?php echo  $sqlv ?></option>
+                            value="<?php echo  $sqlv ?>" <?php echo  (((is_int(@$GLOBALS[$nome]) || is_float(@$GLOBALS[$nome])) && is_string($sqlv) && !is_numeric($sqlv) ? @$GLOBALS[$nome] == (float) $sqlv : @$GLOBALS[$nome] == $sqlv) ? "selected" : "") ?>><?php echo  $sqlv ?></option>
                         <?php
                     }
                     ?>
@@ -819,7 +819,7 @@ if (!function_exists("db_selectrecord")) {
 
 
                     if (isset($GLOBALS[$nome])) {
-                        if ($GLOBALS[$nome] != "") {
+                        if ($GLOBALS[$nome] != "" && $GLOBALS[$nome] !== 0 && $GLOBALS[$nome] !== 0.0) {
                             echo "var sel1 = document.form1.$nome;\n";
                             echo "for(var i = 0;i < sel1.options.length;i++) {\n";
                             echo "  if(sel1.options[i].value == '" . $GLOBALS[$nome] . "')\n";
@@ -858,7 +858,7 @@ if (!function_exists("db_selectrecord")) {
 
             if (is_resource($record) || $record instanceof \PgSql\Result) {
                 for ($sqli = 0; $sqli < pg_num_rows($record); $sqli++) {
-                    if (pg_fetch_result($record, $sqli, 0) == @ $GLOBALS[$nome]) {
+                    if (((is_int(@$GLOBALS[$nome]) || is_float(@$GLOBALS[$nome])) && is_string(pg_fetch_result($record, $sqli, 0)) && !is_numeric(pg_fetch_result($record, $sqli, 0)) ? @$GLOBALS[$nome] == (float) pg_fetch_result($record, $sqli, 0) : @$GLOBALS[$nome] == pg_fetch_result($record, $sqli, 0))) {
                         $nomec = pg_field_name($record, 1);
                         global $$nomec;
                         $$nomec = pg_fetch_result($record, $sqli, 1);
@@ -963,7 +963,7 @@ if (!function_exists("db_selectmultiple")) {
                             reset($record_select);
                             for ($sqls = 0; $sqls < count($record_select); $sqls++) {
                                 $sqlsv = key($record_select);
-                                if ($sqlsv == $valueobj) {
+                                if (((is_int($sqlsv) || is_float($sqlsv)) && is_string($valueobj) && !is_numeric($valueobj) ? $sqlsv == (float) $valueobj : ((is_int($valueobj) || is_float($valueobj)) && is_string($sqlsv) && !is_numeric($sqlsv) ? (float) $sqlsv == $valueobj : $sqlsv == $valueobj))) {
                                     $esta_selecionado = " selected ";
                                 }
                                 next($record_select);
@@ -1048,11 +1048,13 @@ if (!function_exists("db_select")) {
                 $nomevar = $nomevar == "" ? $nome : $nomevar;
 
                 //x = array("a"=>"1","2")
-                reset($db_matriz);
-                for ($i = 0; $i < sizeof($db_matriz); $i++) {
+                if ($db_matriz !== null) {
+                    reset($db_matriz);
+                }
+                for ($i = 0; $i < ($db_matriz === null ? 0 : sizeof($db_matriz)); $i++) {
                     ?>
                     <option
-                        value="<?php echo  key($db_matriz) ?>" <?php echo  (@$GLOBALS[$nomevar] == key($db_matriz) ? "selected" : "") ?>><?php echo  $db_matriz[key($db_matriz)] ?></option>
+                        value="<?php echo  key($db_matriz) ?>" <?php echo  (((is_int(@$GLOBALS[$nomevar]) || is_float(@$GLOBALS[$nomevar])) && is_string(key($db_matriz)) && !is_numeric(key($db_matriz)) ? @$GLOBALS[$nomevar] == (float) key($db_matriz) : ((is_int(key($db_matriz)) || is_float(key($db_matriz))) && is_string(@$GLOBALS[$nomevar]) && !is_numeric(@$GLOBALS[$nomevar]) ? (float) @$GLOBALS[$nomevar] == key($db_matriz) : @$GLOBALS[$nomevar] == key($db_matriz))) ? "selected" : "") ?>><?php echo  $db_matriz[key($db_matriz)] ?></option>
                     <?php
 
 
@@ -1066,9 +1068,11 @@ if (!function_exists("db_select")) {
             global $$nome_select_descr, $$nome;
             $$nome = $GLOBALS[$nome];
 
-            reset($db_matriz);
-            for ($matsel = 0; $matsel < sizeof($db_matriz); $matsel++) {
-                if (key($db_matriz) == $$nome) {
+            if ($db_matriz !== null) {
+                reset($db_matriz);
+            }
+            for ($matsel = 0; $matsel < ($db_matriz === null ? 0 : sizeof($db_matriz)); $matsel++) {
+                if (((is_int(key($db_matriz)) || is_float(key($db_matriz))) && is_string($$nome) && !is_numeric($$nome) ? key($db_matriz) == (float) $$nome : ((is_int($$nome) || is_float($$nome)) && is_string(key($db_matriz)) && !is_numeric(key($db_matriz)) ? (float) key($db_matriz) == $$nome : key($db_matriz) == $$nome))) {
                     $$nome_select_descr = $db_matriz[key($db_matriz)];
                     $$nome = key($db_matriz);
                 }
@@ -1154,7 +1158,7 @@ if (!function_exists("db_inputdata")) {
         <input name="<?php echo  ($nomevar == "" ? $nome : $nomevar) . "_ano" ?>" type="hidden" title=""
                id="<?php echo  ($nomevar == "" ? $nome : $nomevar) . "_ano" ?>" value="<?php echo  @$ano ?>" size="4" maxlength="4">
         <?php
-        if (($db_opcao < 3) || ($db_opcao == 4)) {
+        if (((is_string($db_opcao) && !is_numeric($db_opcao) ? (float) $db_opcao < 3 : $db_opcao < 3)) || ($db_opcao == 4)) {
             ?>
             <script>
                 var PosMouseY, PosMoudeX;
