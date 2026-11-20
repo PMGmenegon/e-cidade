@@ -27,8 +27,9 @@ STATUS=0
 for RT in $RUNTIMES; do
   if [ "$RT" = 74 ]; then PHP=7.4; VENDOR="$V74"; else PHP=8.5; VENDOR="$V85"; fi
   [ -f "$VENDOR/autoload.php" ] || { echo "sem vendor do $PHP em $VENDOR" >&2; exit 2; }
-  IMG="ecidade-testes-php$PHP"
-  docker build -q --build-arg PHP="$PHP" -t "$IMG" "$AQUI" >/dev/null || exit 2
+  # imagem do projeto (mesmas extensoes e php.ini do runtime), nao a php:<v>-cli oficial; construida 1x se faltar (precisa de rede)
+  IMG="ecidade-php${RT}-apache"
+  docker image inspect "$IMG" >/dev/null 2>&1 || docker build -q -t "$IMG" "$RAIZ/docker/php${RT}-apache" >/dev/null || { echo "imagem $IMG ausente e o build falhou" >&2; exit 2; }
   echo "=== PHP $PHP ==="
   mkdir -p "$SAIDA/$RT/tmp"; chmod 777 "$SAIDA/$RT/tmp"
   while IFS= read -r ENTRADA; do

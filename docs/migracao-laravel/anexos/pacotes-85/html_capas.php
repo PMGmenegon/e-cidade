@@ -1,6 +1,6 @@
 <?php
-// T-102: gera o HTML das 4 capas do Protocolo (Blade do PR) com dados fixos, sem banco. Roda uma vez; a MESMA
-// entrada alimenta o dompdf do 7.4 e o do 8.5. Uso: php html_capas.php <ecidade> <vendor> <saida>
+// T-102: gera o HTML das 4 capas do Protocolo (Blade do vendor de cada lado) com dados fixos, sem banco. Roda no
+// 7.4 e no 8.5; o HTML dos dois e comparado e cada dompdf le o do proprio lado. Uso: php html_capas.php <ecidade> <vendor> <saida>
 list(, $e, $v, $out) = $argv;
 require "$v/autoload.php";
 require "$e/std/DBDate.php";

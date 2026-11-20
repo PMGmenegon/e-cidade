@@ -133,6 +133,10 @@ por merge de texto.
 | `nette/utils` v3.2.10 | `>=7.2 <8.4` | PHP8-87 |
 | `fzaninotto/faker` v1.9.2 (dev) | `^5.3.3 \|\| ^7.0` | PHP8-87 |
 
+**Atualização (Laravel 13.43, 20/11/2026):** a trava do 8.5 já não tem 8 dos 10; `prohibits php 8.5.12 --locked` lista só `bacon/bacon-qr-code` 1.0.3 e
+`khanamiryan/qrcode-detector-decoder` 1, via `endroid/qr-code` 2.5.1 exigido pelo `proner/phppimaco` v1.4.5 (a última). A flag fica; ver
+`documentos-74-x-85.md`, seção 8.
+
 Quando essas tarefas tirarem os 10, o `--ignore-platform-req=php+` sai dos comandos acima e o `prohibits` não
 lista nada.
 
