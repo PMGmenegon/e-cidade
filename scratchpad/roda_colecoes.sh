@@ -1,7 +1,7 @@
 #!/bin/bash
 # PHP8-62 (T-155): Collection / Str / Arr / helpers do codigo no 7.4 (Laravel 8), no 8.5 com o Laravel 13 e no 8.5 com o Laravel 8 (isola o que e do PHP), pelo roda-isolado.sh
 # (imagens do projeto, sem rede, falha alto). Na raiz do repositorio:   bash scratchpad/roda_colecoes.sh [pasta-de-trabalho]
-# Pre-requisitos: runtime-85/vendor (Laravel 13, composer-85.sh install) e runtime-85/referencia-74/vendor (vendor do PR; ver docs/migracao-laravel/middlewares-laravel13.md).
+# Pre-requisitos: runtime-85/vendor (Laravel 13: bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+) e runtime-85/referencia-74/vendor (vendor do PR; ver docs/migracao-laravel/middlewares-laravel13.md).
 set -euo pipefail
 R="$(cd "$(dirname "$0")/.." && pwd)"
 W="${1:-$(mktemp -d /tmp/t155-XXXXXX)}"; mkdir -p "$W"
