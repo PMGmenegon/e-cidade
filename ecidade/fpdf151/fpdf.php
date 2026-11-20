@@ -611,7 +611,7 @@ function GetStringWidth($s)
   $w=0;
   $l=strlen($s);
   for($i=0;$i<$l;$i++)
-    $w+=$cw[$s{$i}];
+    $w+=$cw[$s[$i]];
   return $w*$this->FontSize/1000;
 }
 
@@ -1263,7 +1263,7 @@ function Write($h,$txt,$link='')
   while($i<$nb)
   {
     //Get next character
-    $c=$s{$i};
+    $c=$s[$i];
     if($c=="\n")
     {
       //Explicit line break
@@ -1905,7 +1905,7 @@ function _beginpage($orientation)
     $orientation=$this->DefOrientation;
   else
   {
-    $orientation=strtoupper($orientation{0});
+    $orientation=strtoupper($orientation[0]);
     if($orientation!=$this->DefOrientation)
       $this->OrientationChanges[$this->page]=true;
   }
