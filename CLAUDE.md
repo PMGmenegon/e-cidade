@@ -241,6 +241,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `estrutura-85.md` | PHP8-79: código só do PHP 8.5 sem tocar o 7.4: `ecidade/composer-85.json`/`.lock` (cópia do PR + sobreposição `app-85/` no PSR-4), `vendor/` em `runtime-85/` montado sobre `vendor/` só no 8.5, comando único pinado `docker/composer-85/composer-85.sh` (dono da trava: time do banco), os 10 pacotes que excluem o 8.5, regra e pergunta do lint do grupo |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
 | `passport13-leitura-e-plano.md` | PHP8-39: Passport 13 e `/v4/login` sobre o código do PR (Passport 10.4.2) só por leitura: 14 pontos com arquivo:linha (6 mudam, 3 a conferir, 5 compatíveis), esquema `oauth_*` do PR × migrations do 13, o que o medido na base antiga ainda vale e o plano das provas P0-P9 para quando houver banco |
 
