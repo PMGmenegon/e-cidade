@@ -5,11 +5,17 @@ O **como usar** de cada passo está no guia (`docs/migrar-um-modulo.md`); aqui e
 o que ele altera**. Cada arquivo também traz, no topo, um cabeçalho com uso, entradas e saídas.
 
 > **Na `base-php74`** (18/11/2026): a referência é o **PHP 7.4** (`ecidade_php74`, porta 8080), no papel que era
-> do 5.6 — onde este texto e as mensagens dos scripts dizem 5.6, leia 7.4. Adaptações feitas para esta base: o nome do
+> do 5.6 — as mensagens dos scripts já dizem 7.4 (`ref=` na saída do `cmp.py`, `NO_7.4` no `redirecionamentos.py`); onde
+> este texto diz 5.6, leia 7.4. Adaptações feitas para esta base: o nome do
 > container de referência; a leitura do `location` no `nginx.conf` considera só a linha **ativa** (o bloco nasce
 > comentado, e sem linha ativa nada vai ao 8.5); o `rotear.py location` cria o bloco quando ele não existe; o
-> `dimensiona.py` começa sem nenhuma área concluída, e as cópias `LOC` começam com o marcador `nenhum_prefixo_no_85`.
-> As ferramentas ainda **não foram exercitadas** com o 7.4 em Docker.
+> `dimensiona.py` começa sem nenhuma área concluída, e as cópias `LOC` começam com o marcador `nenhum_prefixo_no_85`;
+> o `gera_map_faseb.py` lê do `nginx.conf` os prefixos do `location` (era uma cópia à mão); o `faseb_map_abas.txt`
+> começa vazio; o `NUCLEO` do `enumera.py`/`residuo.py` é vazio (o núcleo desta base não foi portado); o Rector usa
+> 2 processos em paralelo (o padrão travou um notebook de 7,4 GB).
+> **Exercitadas com o 7.4 em Docker em 19/11/2026:** os testes, `prefixos_area`, `dimensiona`, `nivel3 --candidatas`,
+> `rotear` (simulação), `rector_lote soc` (simulação) e `verifica_lote` no `soc` não migrado (reprova, e cada passo
+> bate com a conferência manual de *Como provar que o verificador funciona*). Os modos `--aplicar` ainda não.
 
 Todos rodam **da raiz do repositório**. Os `.php` são *harnesses*: são copiados para dentro dos containers e rodados nos
 **dois** runtimes (5.6 e 8.5), e o que se compara é a saída de um com a do outro.
@@ -89,6 +95,19 @@ sessão de login usado nos testes).
 | `teste_phar.php` | testa o `PHPExcel.phar` (carrega as classes e gera um XLS para comparar o md5 entre os runtimes) | 12ª lacuna, RH |
 | `valida_token.php` | confere se um token do Passport antigo é aceito pelo `league/oauth2-server` novo | migração do Laravel |
 
+## Conferência manual do verificador
+
+Caminhos **independentes** do `verifica_lote.py`, para conferir o resultado dele em vez de confiar no veredito
+(documento *Como provar que o verificador funciona*). Nenhum altera nada.
+
+| Arquivo | O que faz | Confere o passo |
+| --- | --- | --- |
+| `e1_lsp.py` | lê o código (sem executar) e lista as heranças que carregam no 7.4 e dão fatal no 8.5; resolve a mãe pelo namespace e pelos `use` | 5b |
+| `carga_isolada.php` | carrega um arquivo num PHP de verdade sem o bootstrap da aplicação (autoload do `vendor/` + mapa de classes), em contêiner descartável | confere o `e1_lsp.py` |
+| `e1_mapa.py` | gera o mapa classe → arquivo que o `carga_isolada.php` usa | confere o `e1_lsp.py` |
+| `sem_guarda.sh` | lista os campos com valor inicial numérico comparados com `""` sem a guarda `=== 0` | 6b |
+| `e1_cobertura.py` | compara as classes que a regressão do grupo testa com as que o universo do `enumera.py` alcança | cobertura |
+
 ## Defeitos conhecidos nestes scripts
 
 Levantados na revisão de 17/11/2026, que acrescentou os comentários. **Ainda não corrigidos**: a revisão mudou só
@@ -111,6 +130,16 @@ comentários.
 | `verifica_lote.py` | no passo 7, o `if sumiram:` e o `else:` estavam presos ao `if tout_56:`: as conhecidas que voltaram a ficar idênticas só apareciam com timeout no 5.6, e com a lista carregada o relatório podia dizer "sem lista de conhecidas" | `testes/test_verifica_relatorio.py` |
 | `rotear.py` | o modo `abas` gravava o `faseb_map_abas.txt` antes de guardar a cópia de segurança: se o `nginx -t` falhasse, ou com "Nada a mudar"/"RECUSADO" sob `--aplicar`, a lista ficava alterada | `testes/test_rotear_abas.py` |
 | `rotear.py` | na `base-php74` o `faseb_map.conf` nasce sem o comando do gerador: o modo `map` recusava o primeiro lote, e o `abas` parava deixando a lista alterada. Agora o primeiro `map` começa do zero e o `abas` recusa antes de mexer em qualquer arquivo | `testes/test_rotear_abas.py` (caso 0) |
+
+**Corrigidos em 19/11/2026**, achados ao testar com o 7.4 em Docker:
+
+| Arquivo | Defeito | Como foi conferido |
+| --- | --- | --- |
+| `docker/proxy/faseb_map_abas.txt` | ainda tinha as 365 abas da `base-php84`: o primeiro `rotear.py map` mandaria ao 8.5 ~360 telas não migradas | `rotear.py map assist:rec,pro`: de 366 entradas para as 4 da área |
+| `gera_map_faseb.py` | a lista de prefixos do `location` era uma cópia à mão da `base-php84`: telas `rec`, `cai`, `pes`... nunca entravam no `map` | agora lê o `nginx.conf`; com o da `base-php84` reproduz a lista antiga exatamente |
+| `enumera.py`, `residuo.py` | o `NUCLEO` marcava 21 arquivos como já portados, mas na `base-php74` o núcleo não foi portado | coluna "Pago" do `dimensiona.py` vai a 0; o `soc` ganha 5 alvos |
+| `rector-curado.php` | o Rector abria um processo por núcleo (até 1,2 GB cada) e travou um notebook de 7,4 GB | `rector_lote.py soc` com 2 processos: no máximo ~470 MB no contêiner |
+| `verifica_lote.py` | o artefato `datausu` do `empenho.php` descartava a **classe inteira** e escondia o construtor PHP 4 dela (`sCamposNota` vazio no 8.5) | a conferência manual do passo 6 dava 16 classes e o script 15; com o filtro só na linha do `datausu`, 16 |
 
 ## Testes (`testes/`)
 
