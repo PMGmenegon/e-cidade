@@ -2,7 +2,7 @@
 
 Mede se o cliente HTTP do codigo do PR faz os mesmos pedidos no 8.5 com o vendor do Laravel 13 que no 7.4 com o vendor do PR. **Sem banco e sem rede**: um servidor `php -S 127.0.0.1` dentro do proprio contêiner faz o papel do servico externo. O SDK do Pix (`Pix/Bancos/*`, `dbseller/sdk-api-pix-bb`) ja foi medido a parte (`sdk-pix-bb-php85.md`) e fica de fora.
 
-**Resultado:** o codigo nao usa o cliente do Laravel (`Http::`: 0 usos); usa o **Guzzle direto**. Em 24 casos (pedido e resposta/erro) os pedidos recebidos pelo duble (metodo, URI, cabecalhos, corpo) e o que o cliente observa (status, corpo, classe e texto das excecoes) sao **iguais no 7.4 com o Guzzle 7.5.0 e no 8.5 com o Guzzle 7.16.3**, exceto 4 linhas de ambiente, nenhuma do Guzzle (secao 3). Nada a corrigir no codigo.
+**Resultado:** o codigo nao usa o cliente do Laravel (`Http::`: 0 usos); usa o **Guzzle direto**. Em 26 casos de Guzzle (pedido e resposta/erro) e 1 de objetos PSR-7 os pedidos recebidos pelo duble (metodo, URI, cabecalhos, corpo) e o que o cliente observa (status, corpo, classe e texto das excecoes) sao **iguais no 7.4 com o Guzzle 7.5.0 e no 8.5 com o Guzzle 7.16.3**, exceto 4 linhas de ambiente, nenhuma do Guzzle (secao 3). Nada a corrigir no codigo.
 
 ## 1. O que o codigo usa
 
@@ -19,7 +19,7 @@ Versoes: PR `guzzlehttp/guzzle` 7.5.0, `psr7` 2.7.0, `promises` 1.5.3 (`composer
 
 ## 2. Como foi medido
 
-`scratchpad/http_cliente_prova.php`: sobe o duble (`php -S` com um roteador que grava cada pedido e responde `/ok`, `/criado` 201 com `Location`, `/vazio` 204, `/xml`, `/e400`, `/e401`, `/e404` com corpo de 300 bytes, `/e500`, `/e503`, `/redireciona` 302, `/gz` com `Content-Encoding: gzip` e `/lento` 1,5 s) e roda 22 casos Guzzle e 1 de objetos PSR-7 do `AuthService`:
+`scratchpad/http_cliente_prova.php`: sobe o duble (`php -S` com um roteador que grava cada pedido e responde `/ok`, `/criado` 201 com `Location`, `/vazio` 204, `/xml`, `/e400`, `/e401`, `/e404` com corpo de 300 bytes, `/e500`, `/e503`, `/redireciona` 302, `/gz` com `Content-Encoding: gzip` e `/lento` 1,5 s) e roda 26 casos Guzzle (H01 a H22; o H13 tem 5 variantes de erro) e 1 de objetos PSR-7 do `AuthService` (H23):
 `request GET` com `headers`; `get` com `verify=false`; `post` com `form_params`, `json`, `multipart` (boundary normalizado), `auth` basico; `base_uri` com URI relativa; `put`, `delete`; `requestAsync(...)->wait()` com POST, DELETE e PUT; os erros 400, 401, 404, 500, 503 (`ClientException`/`ServerException`, com o corpo da resposta e o texto da mensagem); `http_errors=false`; `requestAsync` com 404; redirecionamento; gzip; 204; XML; timeout de 1 s numa resposta de 1,5 s; porta fechada e host que nao resolve (`ConnectException`).
 
 Pelo `docker/composer-85/roda-isolado.sh` (imagens do projeto, sem rede, falha alto):
@@ -46,7 +46,7 @@ As 4 linhas, todas de ambiente:
 | H13e500, H17, H18: `Content-Type` da resposta do duble sem charset explicito | `charset=UTF-8` | `charset=ISO-8859-1` | e o duble (`php -S` na propria imagem) quem anexa o `default_charset`: 7.4 sem diretiva no `php.ini` (padrao UTF-8), 8.5 com `default_charset = "ISO-8859-1"` do `docker/php85-apache`. Nao e o Guzzle; vale para qualquer resposta que o PHP do e-Cidade mande sem charset |
 | H21: `ConnectException` de porta fechada | `... Connection refused` | `... Could not connect to server` | texto da libcurl (7.81.0 na imagem do 7.4, 8.14.1 na do 8.5); a classe, o codigo `cURL error 7` e o resto da mensagem sao iguais |
 
-Pedidos recebidos: todos os 22 casos com pedido (H01 a H22, menos o de porta fechada e o de host invalido, que nao chegam ao duble) saem **byte a byte iguais** no duble: metodo, URI com a query (`?x=1&y=a b` vira `y=a%20b` nos dois), cabecalhos (inclusive o `User-Agent` de `GuzzleHttp/7`, cuja parte de versao do curl e do PHP e o unico que difere e esta normalizada), `Content-Length` e corpo (`form_params`, `json` e `multipart`, com o boundary normalizado). As mensagens de `ClientException`/`ServerException` (`... resulted in a `404 Not Found` response:` seguido dos 120 primeiros bytes do corpo) tambem saem iguais; o timeout (`cURL error 28`) sai igual depois de normalizado o tempo (1000 ms x 1001 ms). Objetos PSR-7 (`ServerRequest`, `Response`) iguais.
+Pedidos recebidos: os 24 casos que chegam ao duble (todos, menos H21 porta fechada e H22 host que nao resolve) saem **byte a byte iguais** no duble: metodo, URI com a query (`?x=1&y=a b` vira `y=a%20b` nos dois), cabecalhos (inclusive o `User-Agent` de `GuzzleHttp/7`, cuja parte de versao do curl e do PHP e o unico que difere e esta normalizada), `Content-Length` e corpo (`form_params`, `json` e `multipart`, com o boundary normalizado). As mensagens de `ClientException`/`ServerException` (`... resulted in a `404 Not Found` response:` seguido dos 120 primeiros bytes do corpo) tambem saem iguais; o timeout (`cURL error 28`) sai igual depois de normalizado o tempo (1000 ms x 1001 ms). Objetos PSR-7 (`ServerRequest`, `Response`) iguais.
 
 ## 4. O que nao foi coberto
 
