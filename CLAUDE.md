@@ -242,6 +242,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `defeitos-laravel8-do-pr.md` | PHP8-49: defeitos do Laravel 8 do PR #8 já presentes no 7.4, medidos por trecho isolado sem banco: `Cache::put` com TTL em minutos (5 das 6 chamadas expiram em segundos), `array_pluck`/`str_random` sem `laravel/helpers` (2 chamadas), `env()` fora de `configuration/` (105 chamadas em 46 arquivos PHP), `DBFormRequest::response()` sem efeito (105 form requests), tela sem rota (`con4_manutencaoformulario001`), `AutenticacaoRequest` declarado em 2 arquivos e a factory legada `ModelFactory.php` sem o pacote que a carrega; cada contagem com o comando que a confere |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
