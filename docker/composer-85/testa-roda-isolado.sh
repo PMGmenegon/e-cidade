@@ -52,13 +52,13 @@ PHP
 mkdir "$W/dados"; echo -n conteudo-ro > "$W/dados/oi.txt"; printf 'API_DATA_AVAILABLE_URL=http://api.invalid/\nOUTRA=valor\n' > "$W/envx"
 for v in 7.4 8.5; do
   ven="$V74"; [ "$v" = 8.5 ] && ven="$V85"
-  echo ola | env VENDOR="$ven" ENV_EXTRA="$W/envx" EXTRA_RO="$W/dados:/dados" STDERR_ARQ="$W/err$v" bash "$S" "$v" "$W/t/opcoes.php" > "$W/o$v" 2>"$W/e$v"; rc=$?; n=$((n+1))
+  echo ola | env STDIN=1 VENDOR="$ven" ENV_EXTRA="$W/envx" EXTRA_RO="$W/dados:/dados" STDERR_ARQ="$W/err$v" bash "$S" "$v" "$W/t/opcoes.php" > "$W/o$v" 2>"$W/e$v"; rc=$?; n=$((n+1))
   { [ $rc -eq 0 ] && grep -q '^API=http://api.invalid/ extra=valor$' "$W/o$v" && grep -q '^stdin=ola$' "$W/o$v" && grep -q '^ro=conteudo-ro$' "$W/o$v" \
     && grep -q '^gravavel=false$' "$W/o$v" && grep -q '^display_errors=.*log_errors=false' "$W/o$v"; } && echo "ok   opcoes $v (ENV_EXTRA, stdin, EXTRA_RO somente leitura)" || { f=$((f+1)); echo "FALHOU: opcoes $v rc=$rc"; cat "$W/o$v" "$W/e$v"; }
   n=$((n+1)); { grep -q 'Undefined variable' "$W/err$v" && ! grep -q 'Undefined variable' "$W/o$v" "$W/e$v"; } && echo "ok   aviso do $v so no STDERR_ARQ: $(grep -o '[A-Za-z ]*: Undefined variable' "$W/err$v" | head -1)" || { f=$((f+1)); echo "FALHOU: aviso $v"; cat "$W/err$v"; }
 done
 grep -q '^Warning: Undefined' "$W/err8.5" && grep -q '^Notice: Undefined' "$W/err7.4" && echo "ok   a diferenca 7.4 (Notice) x 8.5 (Warning) fica visivel" || { f=$((f+1)); echo "FALHOU: Notice x Warning"; }
-n=$((n+1)); echo x | env VENDOR="$V85" AVISOS=0 STDERR_ARQ="$W/errsem" bash "$S" 8.5 "$W/t/opcoes.php" >"$W/o" 2>/dev/null; { ! grep -q Undefined "$W/errsem" && grep -q 'display_errors=' "$W/o"; } && echo "ok   AVISOS=0 nao liga display_errors (php.ini da imagem)" || { f=$((f+1)); echo "FALHOU: AVISOS=0"; cat "$W/o"; }
+n=$((n+1)); echo x | env STDIN=1 VENDOR="$V85" AVISOS=0 STDERR_ARQ="$W/errsem" bash "$S" 8.5 "$W/t/opcoes.php" >"$W/o" 2>/dev/null; { ! grep -q Undefined "$W/errsem" && grep -q 'display_errors=' "$W/o"; } && echo "ok   AVISOS=0 nao liga display_errors (php.ini da imagem)" || { f=$((f+1)); echo "FALHOU: AVISOS=0"; cat "$W/o"; }
 quebra env EXTRA_RO="/nao/existe:/x" bash "$S" 7.4 "$W/t/ok.php"
 quebra env ENV_EXTRA="$W/nao-existe" bash "$S" 7.4 "$W/t/ok.php"
 # --- APP_KEY de teste gerada na hora (nunca a real)
@@ -67,4 +67,13 @@ bash "$S" 7.4 "$W/t/appkey.php" > "$W/k1" 2>/dev/null; bash "$S" 7.4 "$W/t/appke
 env ENV_EXTRA="$W/envkey" bash "$S" 7.4 "$W/t/appkey.php" > "$W/k3" 2>/dev/null
 n=$((n+1)); { k=$(sed 's/^base64://' "$W/k1"); [ "$(printf %s "$k" | base64 -d 2>/dev/null | wc -c)" -eq 32 ] && grep -q '^base64:' "$W/k1" && ! cmp -s "$W/k1" "$W/k2" \
   && [ "$(cat "$W/k3")" = "base64:$(head -c 32 /dev/zero | base64)" ]; } && echo "ok   APP_KEY: 32 bytes, nova a cada execucao, ENV_EXTRA a fixa" || { f=$((f+1)); echo "FALHOU: APP_KEY: $(cat "$W/k1" "$W/k2" "$W/k3")"; }
+# --- stdin so com STDIN=1: um while read do chamador nao pode ser consumido pelo script
+printf '<?php echo "ok\\n";' > "$W/t/curto.php"
+for v in 7.4 8.5; do
+  n=$((n+1)); linhas=$(printf 'a\nb\nc\n' | { c=0; while read -r _; do bash "$S" "$v" "$W/t/curto.php" >/dev/null 2>&1; c=$((c+1)); done; echo $c; })
+  [ "$linhas" = 3 ] && echo "ok   while read com 3 linhas roda 3x no $v (stdin do chamador intacto sem STDIN=1)" || { f=$((f+1)); echo "FALHOU: while read rodou ${linhas}x no $v (esperava 3)"; }
+done
+echo '<?php echo trim(stream_get_contents(STDIN)), "|", PHP_EOL;' > "$W/t/le.php"
+n=$((n+1)); r=$(printf 'x\ny\n' | env STDIN=1 VENDOR="$V85" bash "$S" 8.5 "$W/t/le.php" 2>/dev/null | tr '\n' ' '); r2=$(printf 'x\ny\n' | env VENDOR="$V85" bash "$S" 8.5 "$W/t/le.php" 2>/dev/null | tr '\n' ' ')
+[ "$r" = "x y| " ] && [ "$r2" = "| " ] && echo "ok   STDIN=1 repassa o stdin; sem ele o trecho le vazio" || { f=$((f+1)); echo "FALHOU: stdin '$r' / '$r2'"; }
 echo "$((n-f))/$n"; [ "$f" -eq 0 ]

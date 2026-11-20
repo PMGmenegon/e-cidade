@@ -212,7 +212,7 @@ decifra algo só compara com outra execução se a chave for fixa; para isso `EN
 |---|---|
 | `ENV_EXTRA=<arquivo K=V>` | linhas acrescentadas ao `--env-file`, depois das do `.env.example` (ex.: `API_DATA_AVAILABLE_URL=http://api.invalid/`; sem aspas) |
 | `EXTRA_RO=<host>:<contêiner>[,...]` | montagens extras **somente leitura** (o caminho do host precisa existir, senão rc 64) |
-| stdin | repassado ao trecho (`docker run -i`) quando não é terminal: `echo x \| roda-isolado.sh 7.4 trecho.php` |
+| `STDIN=1` | repassa o stdin do chamador ao trecho (`docker run -i`): `echo x \| STDIN=1 roda-isolado.sh 7.4 trecho.php`. **Sem `STDIN=1` o trecho recebe `/dev/null` e o stdin do chamador não é consumido**: com `-i` sempre, um `while read` que chama o script rodava 1 vez em vez de 3 |
 | avisos | por padrão `php -d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0`: aviso, notice e deprecated saem no **stderr**, nunca no stdout; `AVISOS=0` desliga e vale o `php.ini` da imagem (`display_errors=Off`, `error_log` dentro do contêiner). O `php.ini` da imagem não muda |
 | `STDERR_ARQ=<arquivo>` | grava o stderr do trecho nesse arquivo, separado do stderr do script (as mensagens `roda-isolado: ERRO` continuam no stderr do script) |
 
@@ -221,7 +221,7 @@ Com isso os avisos 7.4 × 8.5 se comparam à parte: o mesmo `echo $variavel_inex
 
 A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo
 (`bash docker/composer-85/testa-roda-isolado.sh`; precisa dos vendors em `TESTA_VENDOR74` e `TESTA_VENDOR85`, padrão
-`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 18 casos, 18/18 (os 10 do começo, 7 das opções e a `APP_KEY`: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
+`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 21 casos, 21/21 (os 10 do começo, 7 das opções, a `APP_KEY` e o `while read` de 3 linhas nos dois runtimes + `STDIN=1`: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
 kernel do Laravel do PR nos dois (`App\Application env=local`, rc 0, nenhum `Deprecated` no stdout); `exit(3)`, trecho vazio,
 imagem ausente, `docker run` quebrado, versão e arquivo inválidos falham com `roda-isolado: ERRO`. **Aviso:** tarefa que roda
 trecho isolado passa a chamar este script em vez de montar o `docker run` à mão.

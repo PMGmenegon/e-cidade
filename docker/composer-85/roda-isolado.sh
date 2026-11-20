@@ -6,7 +6,8 @@
 #   EXTRA_RO=<host>:<conteiner>[,<host>:<conteiner>...]   montagens extras somente leitura
 #   AVISOS=0                  desliga os avisos (padrao: php -d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0)
 #   STDERR_ARQ=<arquivo>      grava o stderr do trecho (avisos) nesse arquivo, separado do stderr do script
-# - stdin do chamador e repassado ao trecho (docker run -i) quando nao e terminal
+# - stdin: so com STDIN=1 o stdin do chamador vai ao trecho (docker run -i); sem STDIN=1 o trecho recebe /dev/null e o
+#   stdin do chamador nao e consumido (um while read que chama este script continua em todas as linhas)
 # - imagem = a do runtime, construida do Dockerfile do repositorio (docker/php74-apache -> ecidade-php74-apache;
 #   docker/php85-apache -> ecidade-php85-apache): mesmas extensoes e php.ini do runtime. Se faltar, e construida (1x, precisa de rede)
 # - ecidade/ em /app somente leitura; vendor: 7.4 = ecidade/vendor (ou VENDOR); 8.5 = runtime-85/vendor (ou VENDOR)
@@ -55,11 +56,11 @@ OUT="$(mktemp)"; ERR="$(mktemp)"; ENVF="$(mktemp)"; trap 'rm -f "$OUT" "$ERR" "$
 { grep -E '^[A-Z_]+=' "$R/ecidade/.env.example" | grep -vE '^(APP_KEY|DB_HOST|APP_ENV)='
   echo APP_ENV=local; echo "APP_KEY=base64:$(head -c 32 /dev/urandom | base64)"; echo DB_HOST=banco.invalido
   [ -z "${ENV_EXTRA:-}" ] || { echo; grep -E '^[A-Za-z_][A-Za-z0-9_]*=' "$ENV_EXTRA"; }; } > "$ENVF"
-FLAGS=(); [ -t 0 ] || FLAGS+=(-i)
+FLAGS=(); ENTRADA=/dev/null; [ "${STDIN:-0}" != 1 ] || { FLAGS+=(-i); ENTRADA=/dev/stdin; }
 PHPOPT=(); [ "${AVISOS:-1}" = 0 ] || PHPOPT=(-d display_errors=stderr -d error_reporting=E_ALL -d log_errors=0)
 "$DOCKER" run --rm "${FLAGS[@]}" --network none -u "$(id -u):$(id -g)" --env-file "$ENVF" "${MONTA[@]}" -v "$TD:/trecho:ro" \
   --tmpfs /tmp --tmpfs /app/bootstrap/cache:mode=1777 --tmpfs /app/storage/logs:mode=1777 --tmpfs /app/storage/framework:mode=1777 \
-  -w /app "$IMG" php "${PHPOPT[@]}" "/trecho/$TN" "$@" >"$OUT" 2>"$ERR"
+  -w /app "$IMG" php "${PHPOPT[@]}" "/trecho/$TN" "$@" >"$OUT" 2>"$ERR" <"$ENTRADA"
 RC=$?
 cat "$OUT"
 if [ -n "${STDERR_ARQ:-}" ]; then cp "$ERR" "$STDERR_ARQ"; else cat "$ERR" >&2; fi
