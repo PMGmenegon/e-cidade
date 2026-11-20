@@ -10745,6 +10745,12 @@
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/classes/db_db_periodicidade_classe.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_plugin_classe.php": {
       "desde": "2026-11-20T19:04:41Z",
       "expira": "2026-11-21T00:45:36Z",
@@ -11002,6 +11008,24 @@
       "expira": "2026-11-21T00:45:37Z",
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/classes/db_gestorgrupoindicador_classe.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_gestorindicador_classe.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_gestorindicadorregistro_classe.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_histbem_classe.php": {
       "desde": "2026-11-20T19:04:41Z",
@@ -12646,6 +12670,102 @@
       "expira": "2026-11-21T00:45:42Z",
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/forms/db_frmgestorgrupoindicador.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/forms/db_frmgestorindicador.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/forms/db_frmgestorindicadorregistro.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/func_gestorgrupoindicador.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/func_gestorindicador.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/func_gestorindicadorregistro.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorgrupoindicador.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorindicador.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorindicadorregistro.php": {
+      "desde": "2026-11-20T21:20:26Z",
+      "expira": "2026-11-21T01:20:26Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador001.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador002.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador003.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador001.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador002.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador003.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicadorregistro001.php": {
+      "desde": "2026-11-20T21:20:25Z",
+      "expira": "2026-11-21T01:20:25Z",
+      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
+      "quem": "Pedro Gomide"
     },
     "ecidade/model/pessoal/PontoFerias.model.php": {
       "desde": "2026-11-20T20:45:42Z",
