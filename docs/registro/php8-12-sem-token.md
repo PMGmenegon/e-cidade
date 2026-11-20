@@ -42,7 +42,7 @@ precisam existir como pontos de montagem, criadas pelo usuario antes (`mkdir -p`
 
 ```bash
 # imagem: php:<v>-cli + docker-php-ext-install bcmath calendar pcntl   (so isso; sem pgsql de proposito)
-# vendor 7.4: composer install do composer.lock do PR (COMPOSER_VENDOR_DIR fora da arvore); vendor 8.5: composer-85.sh install
+# vendor 7.4: composer install do composer.lock do PR (COMPOSER_VENDOR_DIR fora da arvore); vendor 8.5: composer-85.sh install --no-scripts --no-plugins --ignore-platform-req=php+
 mkdir -p ecidade/vendor ecidade/bootstrap/cache ecidade/storage ecidade/tmp
 KEY="base64:$(head -c 32 /dev/urandom | base64)"      # chave de teste, descartada no fim
 docker run --rm --network none -u $(id -u):$(id -g) -v $PWD/ecidade:/app:ro -v <vendor>:/app/vendor:ro \
