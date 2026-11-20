@@ -85,7 +85,7 @@
 								order by q21_nota ";
 							//	die("xxxxxxxxxx".$sql1);
 				$result1 = db_query($sql1);			
-        $linhas  = pg_num_rows($result1);
+        $linhas  = ($result1 ? pg_num_rows($result1) : null);
         $notas="";
         $susteni="";
 	for($c=0; $c<$linhas; $c++){
