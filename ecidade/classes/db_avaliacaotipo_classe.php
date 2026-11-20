@@ -67,10 +67,10 @@ class cl_avaliacaotipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db100_sequencial = ($this->db100_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db100_sequencial"]:$this->db100_sequencial);
+       $this->db100_sequencial = ($this->db100_sequencial === 0 || $this->db100_sequencial === 0.0 || $this->db100_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db100_sequencial"]:$this->db100_sequencial);
        $this->db100_descricao = ($this->db100_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["db100_descricao"]:$this->db100_descricao);
      }else{
-       $this->db100_sequencial = ($this->db100_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db100_sequencial"]:$this->db100_sequencial);
+       $this->db100_sequencial = ($this->db100_sequencial === 0 || $this->db100_sequencial === 0.0 || $this->db100_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db100_sequencial"]:$this->db100_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_avaliacaotipo {
          $this->db100_sequencial = $db100_sequencial; 
        }
      }
-     if(($this->db100_sequencial == null) || ($this->db100_sequencial == "") ){ 
+     if(($this->db100_sequencial == null) || ($this->db100_sequencial === 0 || $this->db100_sequencial === 0.0 || $this->db100_sequencial == "") ){ 
        $this->erro_sql = " Campo db100_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
