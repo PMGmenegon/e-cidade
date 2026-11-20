@@ -58,6 +58,8 @@ return RectorConfig::configure()
     // 2 processos em paralelo. O padrao do Rector 2.x e um por nucleo (ate 16), e cada um chega a 1,2 GB:
     // num notebook de 12 nucleos e 7,4 GB a maquina travou, e com 4 processos ainda faltou memoria (19/11/2026). So muda a
     // velocidade, nao o resultado. (timeout por lote em segundos, processos, arquivos por lote)
+    // NAO use 1 processo: com um so, o Rector 2.6.7 para depois de 9 lotes (144 arquivos) e reporta sucesso, sem
+    // erro -- medido em 20/11/2026: 1 processo = 144 de 516 alterados, 2 processos = 514. Para a memoria, use o vigia.
     ->withParallel(120, 2, 16)
     // OBRIGATORIO. Sem este pin, o Rector resolve a versao alvo do composer.json do
     // projeto (">=5.6.4") e DESLIGA EM SILENCIO toda regra com version bonding --
