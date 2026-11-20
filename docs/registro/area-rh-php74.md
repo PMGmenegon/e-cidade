@@ -241,6 +241,7 @@ Medidos pela bateria; cada um derruba telas da área no 8.5 e **não foi alterad
 - `libs/JSON.php` (l. 188, `$utf16{0}`/`{1}`): derruba **37** `.RPC.php` de `eso*`/`rh*`;
 - `fpdf151/fpdf.php` (l. 614, `$s{$i}`): derruba todo relatório PDF que o carrega (aqui, `eso3_qualificacaocadastral002.php`);
 - `dbforms/db_funcoes.php` (`db_multiploselect`, l. 416 e 475; ainda 859, 927 e 984): `gettype() == "resource"` perde dado em silêncio no 8.5;
+- (lote 1B) `fpdf151/fpdf.php:614` derruba 8 relatórios do ponto/DIRF e `libs/JSON.php:188` 9 RPC de `pes4`/`rec`; `func_tipoasse.php:36` (`parse_str` de 1 argumento, fora da área);
 - `model/dbGeradorRelatorio.model.php` e `src/Financeiro/Contabilidade/MatrizSaldoContabil/Repository/Lancamento.php`: não compilam no 8.5 (`php -l`);
 - DAOs de `classes/`: 864 das 876 classes com campos leem o formulário no 7.4 e mantêm `0` no 8.5 (caminho de escrita, passo 6b); 883 alvos do Rector do universo estão fora da área
   (865 `classes/`, 12 `func_*.php`: `func_avaliacaogruporespostacat`, `..monitoramentosaude`, `..obras`, `..processo`, `func_desligamentoservidor`,
@@ -300,13 +301,35 @@ O `/tmp` é compartilhado entre os contêineres: não rodar duas passadas ao mes
 `git log --all`: o maior `PHP8-NN` é o **31** (`origin/migracao/parse-str-e-guardas-sql` e outras). O `PHP8-25` do commit de dimensionamento
 **não colide** com nenhum outro (só ele usa o 25). Este lote usa o **`PHP8-32`**.
 
+## Lote 1B (`src/RecursosHumanos`): resultado (20/11/2026)
+
+Dois commits `PHP8-95`: Rector (6 arquivos) e à mão (`Falta.php` + registro). O lote não tem telas; a verificação é `php -l`, carga das
+classes (LSP) e uma bateria dirigida às telas que chegam aos arquivos alterados. Medições reaproveitadas do lote 1 (arquivos fora da área já medidos)
+e guardadas em `ecidade/tmp/medidas/` (gitignored) para os próximos lotes.
+
+| Passo | Resultado |
+|---|---|
+| Enumerar (`TELAS=@lista`, 584 `.php`; o `README.md` de `Templates/` não é PHP) | universo 2.749 (2.610 únicos); 880 alvos, **0 dentro de `src/RecursosHumanos`**; 224 arquivos ainda não medidos no lote 1 (169 da área + 55 de fora) |
+| 4 Rector (pin `PHP_80` conferido; blocos de 60: o modo paralelo estoura 120 s) | **7 arquivos**, 2ª e 3ª passadas = 0: `ConsistentImplode` (`Dirf.php:68`, `implode($array, 'union')` seria TypeError no 8.x), `OptionalParametersAfterRequired` (3 construtores: `Evento`, `HoraEvento`, `HoraTrabalhada`, mãe e filhas juntas), `ThisCallOnStaticMethodToStaticCall` (`EspelhoPonto`), `FinalPrivateToPrivateVisibility` (`Layout`), `ParenthesizeNestedTernary` (`Falta.php`) |
+| Correção à mão | **`Falta.php`**: a saída do Rector deixava o ternário de 3 níveis associado à direita; o 7.4 associa à esquerda. Reescrito como na 84 (`((a ? x : b) ? y : c) ? z : ''`), com comentário. Bug da regra, não do código |
+| 4b portão de funções | n/a: o diff só traz `implode` (existe no 7.4) |
+| 5 `php -l` nos 224 não medidos | **0 erros no 7.4 e 0 no 8.5** (`Falta.php` agora compila) |
+| LSP (`carrega_arquivo.php`, 218 arquivos com `extends`/`implements`, um por processo) | **218/218 `OK` nos dois runtimes** |
+| 6/6b classes (23 de `classes/` novas no universo) | instanciar: 23 idênticas; escrita: 20 de 21 DAOs divergem (7.4 lê o POST, 8.5 mantém `0`): **depende do núcleo** (já registrado) |
+| 6c forma negada | n/a: nenhuma classe de dados alterada |
+| Bateria dirigida (40 telas da raiz que citam `PontoEletronico`, `Layout`, `Dirf`, `EspelhoPonto`) | **20 idênticas**, 19 divergentes, 1 timeout. Causas, todas fora de `src/RecursosHumanos`: `libs/JSON.php:188` (9), `fpdf151/fpdf.php:614` (8), `func_tipoasse.php:36` (`parse_str` de 1 argumento: `func_*`, fora da área), `rec4_pontoeletronicoimportacaoarquivo002.php:116` (`count(null)`: tela do lote rec) + `rec2_espelhoponto002.php` (timeout) e `pes1_rhpessoal005.php` (200/200, 436 B de diferença): ficam para os lotes rec e pes1 |
+| 8 Roteamento | **nada a rotear**: o lote não tem telas. As 20 idênticas são de `eso`/`pes`/`rec`/`func`; entram quando o lote delas for portado (lista em `ecidade/tmp/medidas/cmp_dirigida_1B_identicas.txt`) |
+
+Limite: as telas que de fato executam o `Falta.php`, o `Evento` e o `EspelhoPonto` (ponto eletrônico) respondem 500 no 8.5 por `libs/JSON.php`/`fpdf151/fpdf.php`;
+o efeito das 7 alterações só fica comprovado por `php -l` e carga, não por execução. Reexecutar `rec2_espelhoponto*`/`rec4_pontoeletronico*` depois que o núcleo trouxer P5.
+
 ## PROGRESSO
 
 | Lote | Escopo | Estado | Commit | Observações |
 |---|---|---|---|---|
 | 0 | Dimensionamento, decisões (c), conferência do c1, recontagem dos DAOs | **feito** (18/11/2026) | este commit | só documentação |
 | 1 | `rh` + `eso` + 2 `.RPC.php` | **feito** (19/11/2026) | `PHP8-32` (a mão; o Rector não alterou nada) | 96 telas, 0 alterações de código na área; bateria **57/96 idênticas**, 39 dependem do núcleo; 57 roteadas no `faseb_map.conf`. Ver *Lote 1: resultado* |
-| 1B | `src/RecursosHumanos` (aprovado) | pendente | — | `Falta.php` não compila (a1) |
+| 1B | `src/RecursosHumanos` (aprovado) | **feito** (20/11/2026) | `PHP8-95` (Rector + à mão) | 584 `.php`; Rector em 7 arquivos; `Falta.php` compila; LSP 218/218. Ver *Lote 1B: resultado* |
 | 2 | `rec` | pendente | — | — |
 | 3 | `pes3` + `pes4` | pendente | — | — |
 | 4 | `pes1` | pendente | — | `pes1_reajusteprog001.php` não compila: caracterizado, não se altera, reportar |
