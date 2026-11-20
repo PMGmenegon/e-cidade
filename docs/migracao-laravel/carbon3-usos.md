@@ -2,6 +2,7 @@
 
 O Laravel 13 traz o Carbon 3. Aqui cada uso do Carbon do codigo do e-Cidade (base-php74) foi medido com a **entrada real** nos dois Carbon, num composer
 descartavel, sem banco. Os patches ficam **anexados e nao aplicados**: so depois do Laravel 13 integrar (PHP8-55 com Laravel 13).
+Depois da integracao do Laravel 13 os patches 01 a 04 foram aplicados (o 05 nao, sem diferenca com o dado real): ver `carbon3-aplicacao.md`.
 A trava da integracao nao foi tocada.
 
 ## Como foi medido
