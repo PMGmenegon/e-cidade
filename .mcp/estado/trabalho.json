@@ -336,6 +336,12 @@
       "quando": "2026-11-19T22:49:43Z",
       "quem": "Segundo"
     },
+    "ecidade/cai3_gerfinanc050.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:43Z",
+      "quem": "Segundo"
+    },
     "ecidade/cai3_gerfinanc052.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -540,6 +546,84 @@
       "quando": "2026-11-19T22:49:43Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_acordo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:43Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordocomissao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordocomissaomembro_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordodocumento_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordogarantia_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordogrupo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:45Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordoitemprevisao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:45Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordomovimentacao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:46Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordonatureza_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:47Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordopenalidade_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:48Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordoposicaoperiodo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:49Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordoprogramacaofinanceira_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:50Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_acordotipo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:50Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_andamentoemppreautorizacao_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -720,10 +804,34 @@
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_avaliacaoestruturanota_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:51Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_avaliacaoestruturaregra_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:52Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_avaliacaogruporespostaconta_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_avaliacaoperguntaopcaolayoutcampo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:53Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_bancoagencia_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:54Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_bancoaplic_classe.php": {
@@ -756,6 +864,18 @@
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_bens_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:55Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_bensdepreciacao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:55Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_boletim_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -774,6 +894,72 @@
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_caddocumento_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:57Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_caddocumentoatributo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:56Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderbairro_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:59Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderbairrocadenderrua_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:58Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderestado_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:14:59Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadendermunicipio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:00Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadendermunicipiosistema_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:01Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderpais_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:02Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderparam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:03Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderrua_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadenderruacep_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_cadmodcarne_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -784,6 +970,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cadtipodocumento_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_cadtipomod_classe.php": {
@@ -906,6 +1098,18 @@
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_ceplocalidades_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_certidao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_cfautent_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -930,10 +1134,40 @@
       "quando": "2026-11-19T22:49:44Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_cflicita_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_cfop_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cfpatri_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cgm_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cgmalt_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cgmtipoempresa_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:04Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_clabensconplano_classe.php": {
@@ -970,6 +1204,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:44Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_clientes_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_complementofonterecurso_classe.php": {
@@ -1392,6 +1632,12 @@
       "quando": "2026-11-19T22:49:45Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_conparlancam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_conplano_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -1554,6 +1800,12 @@
       "quando": "2026-11-19T22:49:45Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_contabancaria_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_contacorrente_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -1614,6 +1866,18 @@
       "quando": "2026-11-19T22:49:45Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_contlot_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_contlotv_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_contrans_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -1642,6 +1906,30 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:45Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_contrib_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_contricalc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_contrinot_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_convenio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_corautent_classe.php": {
@@ -1764,6 +2052,12 @@
       "quando": "2026-11-19T22:49:46Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_cronogramabasecalculo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_cronogramabasecalculoreceita_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -1774,6 +2068,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:46Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_cronogramabasereceita_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_cronogramametadespesa_classe.php": {
@@ -1806,10 +2106,208 @@
       "quando": "2026-11-19T22:49:46Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_custocriteriopcmater_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custocriteriorateio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custocriteriorateiobens_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoliberaplanilhamovimentos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanilha_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanilhaorigem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplano_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanoanalitica_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanoanaliticabens_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanoanaliticacriteriorateio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanocriterio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custoplanotipoconta_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_custotipoconta_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_datadebitos_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:46Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_almox_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_almoxdepto_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_arquivos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_bancos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_cadhelp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_certidaoweb_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_config_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_configarquivos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_contatos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_depart_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_departender_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_departorg_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_depusu_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_depusuemp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_docparag_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_docparagpadrao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_documento_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_documentopadrao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_documentotemplate_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_documentotemplatepadrao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_db_errobanco_classe.php": {
@@ -1818,10 +2316,436 @@
       "quando": "2026-11-19T22:49:46Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_estrutura_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_estruturanivel_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_formulas_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:05Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_itenshelp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_itensmenu_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layoutcampos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layoutformat_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layoutlinha_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layouttxt_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layouttxtgrupo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_layouttxtgrupotipo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_menuacesso_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_menupref_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_modulos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordemandam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordematend_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordemcli_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordemimagens_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordemmod_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_ordemorigem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_paragrafo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_paragrafopadrao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_permemp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_permherda_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_permissao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_proced_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_db_reciboweb_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:46Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_registrosinconsistentes_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relat_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatcabec_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatfiltros_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatorio_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatquebra_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatselecionados_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relatsoma_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_relattabelas_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysarqcamp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_syscadproced_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_syscadproceditem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_syscampo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_syscampodep_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysfuncoes_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysfuncoescliente_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysfuncoesparam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysmodulo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysprocedarq_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysregrasacesso_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysregrasacessocanc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:06Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysregrasacessoip_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_sysregrasacessousu_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tarefas_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tarefasit_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_textos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tipodoc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tipohelp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_tipoinstit_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_userinst_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_usuacgm_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_usuarios_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_usupermemp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaoant_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaoclientes_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaocpd_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaocpdarq_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaotarefa_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaousu_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_versaousutarefa_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_virada_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_viradaitem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_db_viradaitemlog_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_debcontaarquivo_classe.php": {
@@ -2038,6 +2962,48 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:46Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_edital_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editaldoc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editalproj_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editalrua_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editalruaproj_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editalserv_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_editaltipo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_empage_classe.php": {
@@ -2640,10 +3606,100 @@
       "quando": "2026-11-19T22:49:47Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_fis_auto_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_fis_fiscal_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_fis_lancamento_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_fis_levanta_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_fis_vistorias_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_folha_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_fonterecurso_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:47Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerfadi_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerfcom_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:07Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerffer_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerffx_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerfres_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerfs13_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_gerfsal_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_habitparametro_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_hist_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_histcalc_classe.php": {
@@ -2730,6 +3786,54 @@
       "quando": "2026-11-19T22:49:48Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_matestoqueitemoc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matordem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matordemanu_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matordemitem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matordemmail_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matparam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matparaminstit_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_matrequi_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_matriz_saldo_contabil_lancamentos_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -2740,6 +3844,18 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:48Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_mensageriaacordo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_mensageriaacordodb_usuario_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_modcarne_classe.php": {
@@ -2772,6 +3888,12 @@
       "quando": "2026-11-19T22:49:48Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_modcarnepadraogeral_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_modcarnepadraolayouttxt_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -2782,6 +3904,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:48Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_movrel_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_naturezarendimento_classe.php": {
@@ -2860,6 +3988,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:48Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_orcam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_orccenarioeconomico_classe.php": {
@@ -3180,6 +4314,12 @@
       "quando": "2026-11-19T22:49:49Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_orcparamrelperiodos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_orcparamseq_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3202,6 +4342,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:49Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_orcparamseqorcparamseqcoluna_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_orcparamseqsigap_classe.php": {
@@ -3522,6 +4668,12 @@
       "quando": "2026-11-19T22:49:50Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_ouvidoriaparametro_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_pactoacoes_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3684,6 +4836,84 @@
       "quando": "2026-11-19T22:49:50Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_parcontrib_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_parcustos_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcdotac_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcforne_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcfornecon_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcforneconpad_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcmater_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcmaterele_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcparam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcproc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pcprocitem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_pctipocompra_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_periodo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_placaixa_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3810,10 +5040,52 @@
       "quando": "2026-11-19T22:49:50Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_procandam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_procedarretipo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:50Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_procrec_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_proctipovar_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_proctransand_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_proctransfer_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:08Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_proctransferproc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_procvar_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_programacaofinanceira_classe.php": {
@@ -3834,6 +5106,36 @@
       "quando": "2026-11-19T22:49:50Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_projmelhorias_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_projmelhoriasmatric_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_projmelhoriasresp_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_protprocesso_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_protprocessonumeracao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_publicidadesigap_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -3846,10 +5148,22 @@
       "quando": "2026-11-19T22:49:50Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_receita_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_recibo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:50Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_recibocanc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_recibocodbar_classe.php": {
@@ -4014,6 +5328,36 @@
       "quando": "2026-11-19T22:49:51Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_rharqbanco_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_rhlotavinc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_rhlotavincativ_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_rhlotavincele_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_rhlotavincrec_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_sagresarquivogerado_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4048,6 +5392,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:51Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_selecao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_slip_classe.php": {
@@ -4146,6 +5496,54 @@
       "quando": "2026-11-19T22:49:51Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_solandam_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solandamand_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solandpadraodepto_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solicita_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solicitem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solicitemele_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solicitemprot_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_solordemtransf_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_tabdesc_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4162,6 +5560,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:51Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_tabela_mar_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_taborc_classe.php": {
@@ -4230,6 +5634,12 @@
       "quando": "2026-11-19T22:49:52Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_tarefacadsituacao_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_taxagrupo_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4240,6 +5650,12 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:52Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_termoresultadofinal_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_teto_orcamentario_classe.php": {
@@ -4260,10 +5676,40 @@
       "quando": "2026-11-19T22:49:52Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_tipoempresa_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
     "ecidade/classes/db_tipopacto_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:52Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_tipoproc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_tipoprocgrupo_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_tnomeitem_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_tnomes_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/db_transferenciafinanceira_classe.php": {
@@ -4288,6 +5734,24 @@
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:52Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_workflow_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_workflowativ_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
+      "quem": "Segundo"
+    },
+    "ecidade/classes/db_workflowtipoproc_classe.php": {
+      "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
+      "padroes": [],
+      "quando": "2026-11-20T18:15:09Z",
       "quem": "Segundo"
     },
     "ecidade/classes/empenho.php": {
