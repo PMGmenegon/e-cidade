@@ -69,8 +69,8 @@ execuções de cada lado:
   - `config/application.default.php:27`: 1 (constante `E_STRICT`).
 - Tirando essas linhas, a saída sem a máscara é igual à saída com ela em todos os arquivos comparados.
 
-As 9 do `vendor/` são as da carga do `vendor/autoload.php` em `docs/registro/estrutura-85.md`, menos as 3 do
-`lcobucci/jwt`, que saíram com a versão 4.1.5 da trava do 8.5. As 3 do código do e-cidade (`ParameterBag.php` e
+São as mesmas 12 que o 8.5 dá ao subir o kernel em `laravel85-inicializacao.md` (lista em
+`laravel85-inicializacao/deprecated-8.5.txt`). As 3 do código do e-cidade (`ParameterBag.php` e
 `config/application.default.php`) vêm do `bootstrap.php`. Uma instalação com `config/application.php` local (fora do
 git) soma mais 1 `E_STRICT` do mesmo tipo.
 
