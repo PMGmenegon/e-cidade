@@ -10239,6 +10239,12 @@
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/classes/db_avaliacaotipo_classe.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/classes/db_base_classe.php": {
       "desde": "2026-11-20T19:04:39Z",
       "expira": "2026-11-21T01:43:24Z",
@@ -12909,6 +12915,30 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/hab1_avaliacao004.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_avaliacao005.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_avaliacao006.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_cadastroavaliacao001.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/hab1_cadastrosocioeconomico001.php": {
       "desde": "2026-11-20T21:43:34Z",
       "expira": "2026-11-21T01:43:34Z",
@@ -12921,10 +12951,28 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/hab1_cadastrosocioeconomico004.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_composicaofamiliar001.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/hab1_formaavaliacao002.php": {
       "desde": "2026-11-20T21:43:34Z",
       "expira": "2026-11-21T01:43:34Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_formaavaliacao005.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
       "quem": "Diego Ribeiro Wanderley"
     },
     "ecidade/hab1_habitparametro001.php": {
@@ -12951,10 +12999,34 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/hab1_habitprograma004.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_habitprograma005.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_habitprograma006.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/hab1_tipogrupoprograma002.php": {
       "desde": "2026-11-20T21:43:34Z",
       "expira": "2026-11-21T01:43:34Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_tipogrupoprograma005.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
       "quem": "Diego Ribeiro Wanderley"
     },
     "ecidade/hab1_workflow001.php": {
@@ -12973,6 +13045,30 @@
       "desde": "2026-11-20T21:43:34Z",
       "expira": "2026-11-21T01:43:34Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_workflow004.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_workflow005.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_workflow006.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab1_workflowativ001.php": {
+      "desde": "2026-11-20T21:53:47Z",
+      "expira": "2026-11-21T01:53:47Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, abas (passo 8b)",
       "quem": "Diego Ribeiro Wanderley"
     },
     "ecidade/hab2_inscricoes001.php": {
