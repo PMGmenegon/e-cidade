@@ -110,7 +110,9 @@ que o `composer audit --locked` acusa sobre o `composer.lock`). Conferido:
 ## Prova 7.4 × 8.5 nos usos do código (critério 2)
 
 `anexos/pacotes-85/roda.sh` roda tudo sem rede. Ele monta o `ecidade/` só para leitura e o `vendor/` de cada lado em
-`ecidade/vendor`, como no runtime, e compara:
+`ecidade/vendor`, como no runtime, e compara. Antes, cria `ecidade/vendor` como ponto de montagem, se faltar. Se um
+`docker run` falha ou falta saída de um dos lados, ele para com `FALHOU` e código de saída 1, em vez de comparar
+saídas vazias:
 
 ```bash
 bash docs/migracao-laravel/anexos/pacotes-85/roda.sh ecidade <vendor do 7.4> runtime-85/vendor <imagem 7.4> <imagem 8.5> <saída>
