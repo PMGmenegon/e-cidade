@@ -53,8 +53,12 @@ docker run --rm --network none -u $(id -u):$(id -g) -v $PWD/ecidade:/app:ro -v <
 python3 scratchpad/php8_12_sem_token_compara.py neutro-74.jsonl neutro-85.jsonl diferencas.tsv
 ```
 
+Para o 8.5 troque `<vendor>` (`runtime-85/vendor`), `<imagem>` e o nome em `SAIDA`.
+
 Conferido a partir de um checkout novo (`git worktree add --detach`, sem `ecidade/.env` e sem `libs/db_conn.php`), com
-`APP_KEY` gerada na hora: 5.280 pedidos nos dois runtimes, 5.228 iguais e 52 diferentes (as mesmas 52 de
+o bloco acima extraido deste arquivo e rodado **exatamente como impresso** (so os 3 marcadores `<...>` trocados; as duas
+rodadas sairam com rc=0, e o vendor 8.5 veio de `composer-85.sh install --no-scripts --ignore-platform-req=php+`, sem
+`--no-plugins`, com o patch da dompdf aplicado), `APP_KEY` e chaves OAuth geradas na hora: 5.280 pedidos nos dois runtimes, 5.228 iguais e 52 diferentes (as mesmas 52 de
 `php8-12-sem-token-diferencas.tsv`), 4.356 `Unauthenticated.` e 195 metodo+rota (780 pedidos) que tentam o banco.
 
 
