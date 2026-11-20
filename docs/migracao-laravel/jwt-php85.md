@@ -52,7 +52,7 @@ O 8.5 com a 3.4.0 morre no primeiro caso (`InvalidKeyProvided`). O 7.4 com a 3.4
 - Saem as classes soltas da 3.x (`new Builder()`, `Signer\Key`, `ValidationData`, `Token::getClaim()`); ficam `Configuration`, `Signer\Key\InMemory`, `Validation\Constraint\*` e `claims()->get()`.
 - 4.2 em diante recusa chave vazia (por isso o teto 4.1).
 - Quem chama a biblioteca no código próprio: `git grep -i lcobucci -- ecidade ':!ecidade/composer.lock'` só acha `ecidade/composer.json` (a restrição) e `ecidade/symfony.lock`. Nenhum arquivo PHP do e-cidade usa a biblioteca; só `league/oauth2-server` e `laravel/passport` (em `vendor/`).
-- O `league/oauth2-server` 8.3.2 solta 5 avisos `Deprecated` no 8.5 (parâmetro `$previous` implicitamente anulável em `OAuthServerException`); não afetam o resultado.
+- Defeitos das bibliotecas do PR vistos no 8.5 (avisos `Deprecated` do `league/oauth2-server` 8.3.2) ficam no registro da PHP8-49, não aqui.
 
 ## Estado
 
