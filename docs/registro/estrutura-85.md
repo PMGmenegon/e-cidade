@@ -8,6 +8,12 @@ sobreposição no PSR-4 e o `allow-plugins` só com o `cweagans/composer-patches
 com 165 pacotes, ignorando só o teto de versão do PHP, que 10 pacotes ainda pedem (lista abaixo). O desenho reaproveita
 o do runtime novo da base anterior (`composer-runtime-novo.json`, `app-runtime-novo/`, `vendor/` montado por cima).
 
+Depois desta estrutura, a lista e a trava do 8.5 mudaram em três tarefas:
+
+- PHP8-60: `lcobucci/jwt`;
+- PHP8-87: os 9 pacotes, em `docs/migracao-laravel/pacotes-php85.md`;
+- PHP8-62: Laravel 13.43.0 e Passport 13.12.0, com 171 pacotes, em `docs/migracao-laravel/composer-85-laravel13.md`.
+
 ## Onde fica cada coisa
 
 | O quê | Onde | Quem lê |
