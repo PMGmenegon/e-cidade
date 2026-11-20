@@ -1,13 +1,13 @@
 <?php
 // Matriz regra x tipo de entrada com o validador do Laravel 8.73.2, sem banco e sem rede: cada regra que o codigo da base-php74 usa
 // (so as que nao tocam o banco) contra 12 valores (inclusive array, null, '' e tipos trocados). Saida JSON canonica; igual nos dois PHPs => sem diferenca.
-// Uso: php laravel8_validacao_matriz.php <pasta ecidade> <saida.json>   (autoload do vendor ao lado: laravel/framework 8.73.2)
+// Uso: php laravel8_validacao_matriz.php <pasta ecidade> <saida.json>   (autoload do vendor ao lado ou em $VENDOR)
 $deprec = array();
 set_error_handler(function ($no, $str) use (&$deprec) {
     if ($no === E_DEPRECATED || $no === E_USER_DEPRECATED) { return true; }
     return false;
 });
-require __DIR__ . '/vendor/autoload.php';
+require (getenv('VENDOR') ?: __DIR__ . '/vendor') . '/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Translation\FileLoader;
