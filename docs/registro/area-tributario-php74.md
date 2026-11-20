@@ -130,6 +130,10 @@ As telas `iss4_meicompetenciasemmovimento001/003` e `iss1_parissqn` passaram com
 `iss2_relatorioinscricoes002`, `iss2_relinconsistenciassimples` e `iss4_relinconsistenciassimples` mostram a
 mensagem do `Dialog` só no 7.4); 2 de `db_select()` com lista nula (`iss2_calculadoepago001`, `iss2_issqnpago001`).
 
+**Ressalva do quadro:** `iss4_siss002.php` ficou marcada como concluída por engano: a bateria do grupo a pula de
+propósito (contata o servidor externo do SISS) e ela não foi comparada. O quadro não tem operação para desmarcar e não
+deve ser editado à mão; quem for testá-la, com dublê local do serviço, deve conferir antes de confiar na marca.
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
