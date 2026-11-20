@@ -6,12 +6,11 @@ A trava da integracao nao foi tocada.
 
 ## Como foi medido
 
-- **Composer descartavel** (fora do repositorio, so baixa pacotes): `composer require nesbot/carbon:2.72.5` (o do PR; `config.audit.block-insecure=false` porque a
-  2.72.5 tem aviso de seguranca e o Composer a bloqueia) e `composer require nesbot/carbon:^3` (3.15.1). Conteineres `php:7.4-cli` e `php:8.5-cli` com `--network none`.
+- **Composer descartavel** (fora do repositorio, so baixa pacotes): para o Carbon 2, o **vendor do PR** (`composer install` da `ecidade/composer.lock`: `nesbot/carbon` 2.72.5, `symfony/translation` 5.4.42); para o Carbon 3, `composer require nesbot/carbon:^3` (3.15.1). Conteineres `php:7.4-cli` e `php:8.5-cli` com `--network none`.
 - **Locale:** para `formatLocalized` (que usa `strftime`), duas imagens descartaveis `php:7.4-cli`/`php:8.5-cli` com o pacote `locales` e `pt_BR` gerado (so isso a mais).
 - Script: `scratchpad/carbon_usos_2x3.php <vendor>` (relogio fixo 2030-01-01 23:30 `America/Sao_Paulo`; cada linha da saida e um uso com o seu arquivo:linha).
-  Saidas: `carbon3-usos/carbon2-php7.4.txt`, `carbon2-php8.5.txt` e `carbon3-php8.5.txt` (80 linhas cada).
-- Carbon 2 no 7.4 x Carbon 2 no 8.5: **iguais**, so o texto de 2 mensagens do PHP em `createFromFormat` vazio/`null` (`Data missing` x `Not enough data available to satisfy format`).
+  Saidas: `carbon3-usos/carbon2-php7.4.txt`, `carbon2-php8.5.txt` e `carbon3-php8.5.txt` (76 linhas cada).
+- Carbon 2 no 7.4 x Carbon 2 no 8.5: iguais, **exceto** (a) o texto de 2 mensagens do PHP em `createFromFormat` vazio/`null` (`Data missing` x `Not enough data available to satisfy format`) e (b) o mes por extenso da tabela abaixo, que depende de o `AppServiceProvider` achar o locale `pt_BR` (so no 7.4, ver nota). A igualdade "Carbon 2 igual no 7.4 e no 8.5" vale no script isolado, sem o boot do provider.
 
 ## Contagem do que usa Carbon
 
@@ -24,9 +23,9 @@ A trava da integracao nao foi tocada.
 
 | # | Uso (arquivo:linha) | Entrada | Carbon 2 (7.4 = 8.5) | Carbon 3 (8.5) | Patch |
 |---|---|---|---|---|---|
-| U1 | `ApropriacaoDecimoFeriasService.php:61` `formatLocalized('%B')` | `c01_data` = 2025-03-01 | `'March'` (ver nota do locale) | `UnknownMethodException: Method formatLocalized does not exist.` | 01 |
-| U2 | `ApropriacaoDecimoFeriasService.php:73` e `:98` `Carbon::create($ano,$mes,1)->formatLocalized('%B')` | 2025-03-01 | `'March'` | idem | 01 |
-| U3 | `ImprimirRelatorioTemplateService.php:87` `formatLocalized('%d de %B de %Y')` | agora = 2030-01-01 | `'01 de January de 2030'` | idem | 01 |
+| U1 | `ApropriacaoDecimoFeriasService.php:61` `ucfirst(...->formatLocalized('%B'))` | `c01_data` = 2025-03-01, depois do boot do `AppServiceProvider` | **7.4: `mar\xe7o`** (`LC_TIME=pt_BR`, hex `6d6172e76f`); 8.5: `March` (`LC_TIME=C`, o bloco `< 74000` nao roda; corrigido na PHP8-62, T-139) | `UnknownMethodException: Method formatLocalized does not exist.` | 01 |
+| U2 | `ApropriacaoDecimoFeriasService.php:73` e `:98` `Carbon::create($ano,$mes,1)->formatLocalized('%B')` | 2025-03-01 | idem U1 | idem | 01 |
+| U3 | `ImprimirRelatorioTemplateService.php:87` `formatLocalized('%d de %B de %Y')` | agora = 2030-01-01 | 7.4: `01 de janeiro de 2030`; 8.5: `01 de January de 2030` | idem | 01 |
 | U5 | `RegistroAulaController.php:67` e `:77`, `CalendarioController.php:83` `Carbon::createFromTimestamp($request->get('DB_datausu'))->format('Y-m-d')` (vai para o SQL em `ProfissionalEscolaRepository.php:120` e `ConteudoDesenvolvidoRepository.php:87`) | `DB_datausu` = `time()` (`DefaultSession.php:115`), as 23:30 locais | `'2030-01-01'` (fuso `America/Sao_Paulo`) | **`'2030-01-02'`** (UTC, `+00:00`) | 02 |
 | U6 | `DiarioClassePdf.php:362`, `:1110`, `:1116` `createFromTimestamp(...)` e `->month`/`->day`/`lt()` | data de encerramento/dia do diario (`getTimestamp()` de uma data, meia-noite local) | `3/15` | `3/15` (com 22:00 local passaria a `3/16`; com o dado real, meia-noite, nao muda) | 05 (opcional) |
 | U7 | `ApropriacaoDecimoFeriasService.php:377`/`:382` `createFromTimestamp(mtime)->diffInMinutes(new Carbon()) > 10` | arquivo de trava de 15 min atras | `15`, `true` | `15.0`, `true` | 03 |
@@ -34,9 +33,11 @@ A trava da integracao nao foi tocada.
 | U8 | `RhDepend.php:27`, `RhDependController.php:73`, `AjudaCustoService.php:246-247` `->age` | nascimento `1990-05-20` / `2012-12-31` | 39 / 17 | 39 / 17 | - |
 | U8 | idem | nascimento no **futuro** `2031-06-01` | `1` | **`-1`** | 04 |
 
-**Nota sobre o locale (U1, U2, U4).** `formatLocalized` usa `strftime` com o `LC_TIME` do processo. Medido com a imagem com `pt_BR`:
-`setlocale(LC_TIME,'pt-br')` (o valor de `config('app.locale')` em `AppServiceProvider.php:25`) **devolve `false`** e deixa o locale em `C`, entao o resultado no 7.4 e `March`/`January`
-(ingles); com `setlocale(LC_TIME,'pt_BR')` seria `mar\xe7o` / `01 de janeiro de 2030`. O Carbon 3 nao tem o metodo em nenhum dos casos.
+**Nota sobre o locale (U1, U2, U3).** O boot do `AppServiceProvider` (linhas 25-39) faz `setlocale(LC_TIME,'pt-br')` (valor de `config('app.locale')`, que falha) e, **se `PHP_VERSION_ID < 74000`**,
+tenta `['ptb','pt_BR',...]`. `74000` e maior que `70433` (7.4.33) e menor que `80512` (8.5): o bloco **roda no 7.4 e nao roda no 8.5**. Medido reproduzindo essa sequencia, com `pt_BR` gerado nas
+imagens e o Carbon 2.72.5 do vendor do PR: no 7.4 `LC_TIME=pt_BR` e `formatLocalized('%B')` da `mar\xe7o` (ISO-8859-1, `6d6172e76f`); no 8.5, `LC_TIME=C` e `March`, **mesmo com o Carbon 2**.
+O 7.4 de referencia imprime o mes **em portugues**. A guarda e o assunto da PHP8-62 (T-139: `74000` -> `90000`); as medidas abaixo mostram os dois estados do boot (`boot original` e `boot com a T-139`).
+O Carbon 3 nao tem o metodo em nenhum dos casos.
 
 ## Usos medidos que **nao** mudam
 
@@ -51,14 +52,14 @@ Cada um e valido no 7.4 (mesmo resultado medido no Carbon 2) e no Carbon 3:
 
 | Patch | O que muda | Prova (saida do script) |
 |---|---|---|
-| `01-formatLocalized.patch` | `->formatLocalized('%B')` -> `->format('F')` (3x) e `formatLocalized('%d de %B de %Y')` -> `format('d \d\e F \d\e Y')` | igual ao Carbon 2 com `LC_TIME=C` (o caso do `'pt-br'` invalido): `March`, `01 de January de 2030`. Se o ambiente tiver `LC_TIME` em `pt_BR`, o 7.4 imprime em portugues e o patch nao; alternativa **B**: `strftime($fmt, $carbon->getTimestamp())` (igual em qualquer locale, mas `Deprecated` a partir do 8.1). Decidir antes de aplicar |
+| `01-formatLocalized.patch` | `formatLocalized('%B')` -> `mb_convert_encoding(<Carbon>->locale('pt_BR')->translatedFormat('F'), 'ISO-8859-1', 'UTF-8')` (3x; o primeiro com `->copy()` porque o Carbon e atributo do model) e `'%d de %B de %Y'` -> `translatedFormat('d \d\e F \d\e Y')` | **mesmos bytes do 7.4** (`mar\xe7o`, `01 de janeiro de 2030`) no Carbon 2 no 7.4, no Carbon 2 e no Carbon 3 no 8.5, **nos dois estados do boot** (nao depende do `LC_TIME` nem da T-139), sem `Deprecated`. Alternativa **B**, `strftime($fmt, ts)`: mesmos bytes so se `LC_TIME=pt_BR` (depende da T-139; com `boot original` o 8.5 imprime `March`) e `Deprecated` a partir do 8.1 |
 | `02-createFromTimestamp-datausu.patch` | passa `date_default_timezone_get()` como 2o argumento nos 3 usos de `DB_datausu` | `'2030-01-01'` nos dois Carbon (o Carbon 2 com fuso explicito e igual ao padrao) |
 | `03-diffInMinutes-absoluto.patch` | `diffInMinutes(new Carbon(), true)` | passado `15`/`true` e futuro `15`/`true` nos dois Carbon (o Carbon 2 ja era absoluto) |
 | `04-age-absoluto.patch` | `abs(...->age)` nos 3 usos | `39`, `17`, `1` nos dois Carbon (`->age` do Carbon 2 nunca e negativo) |
 | `05-createFromTimestamp-diario-opcional.patch` | mesmo fuso explicito nos 3 usos do `DiarioClassePdf` | opcional: o dado real e meia-noite local e nao muda; so protege contra um horario depois de 21:00 |
 
 `git apply --check` passa nos cinco; aplicados juntos em 8 arquivos (18 linhas a mais, 15 a menos), `php -l` limpo no 7.4 e no 8.5 (o 8.5 so repete o `Deprecated` de
-`DiarioClassePdf.php:1768`, que ja existe). Ordem de aplicacao: depois da integracao do Laravel 13; 01 depende da decisao A x B.
+`DiarioClassePdf.php:1768`, que ja existe). Ordem de aplicacao: depois da integracao do Laravel 13; o 01 nao depende da T-139 (a B dependeria).
 
 ## Repetir
 

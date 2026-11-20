@@ -15,14 +15,29 @@ $caso = function ($id, $rot, $fn) use ($f) {
     echo "$id | $rot => $o\n";
 };
 // 1) formatLocalized: ApropriacaoDecimoFeriasService.php:61,73,98 e ImprimirRelatorioTemplateService.php:87
-foreach (array('sem setlocale' => null, "setlocale(LC_TIME,'pt-br') (config app.locale)" => 'pt-br', "setlocale(LC_TIME,'pt_BR')" => 'pt_BR') as $nome => $loc) {
-    if ($loc !== null) { $ok = setlocale(LC_TIME, $loc); } else { $ok = setlocale(LC_TIME, 'C'); }
-    $caso('U1', "$nome [setlocale=" . var_export($ok, true) . "] c01_data=2025-03-01 ->formatLocalized('%B')", function () { return Carbon::parse('2025-03-01')->formatLocalized('%B'); });
-    $caso('U2', "$nome Carbon::create(2025,3,1)->formatLocalized('%B')", function () { return Carbon::create(2025, 3, 1)->formatLocalized('%B'); });
-    $caso('U3', "$nome Carbon::now()->formatLocalized('%d de %B de %Y')", function () { return Carbon::now()->formatLocalized('%d de %B de %Y'); });
-    $caso('U1', "  proposta A: Carbon::parse('2025-03-01')->format('F')", function () { return Carbon::parse('2025-03-01')->format('F'); });
-    $caso('U3', "  proposta A: Carbon::now()->format('d \\d\\e F \\d\\e Y')", function () { return Carbon::now()->format('d \\d\\e F \\d\\e Y'); });
-    $caso('U3', "  proposta B: strftime('%d de %B de %Y', Carbon::now()->getTimestamp())", function () { return @strftime('%d de %B de %Y', Carbon::now()->getTimestamp()); });
+//    O locale vem do boot do AppServiceProvider (linhas 25-39): setlocale(LC_TIME,'pt-br') (falha) e, se PHP_VERSION_ID < LIMITE, a lista ptb/pt_BR/...
+//    LIMITE = 74000 no PR (vale so no PHP 7); 90000 com a correcao da PHP8-62 (T-139). Saida em hexa: o mes vem em ISO-8859-1 (mar\xe7o).
+$hx = function ($v) { return is_string($v) ? $v . ' [' . bin2hex($v) . ']' : var_export($v, true); };
+$caso1 = function ($id, $rot, $fn) use ($hx) {
+    try { $o = $hx($fn()); } catch (Throwable $e) { $o = 'EXC ' . get_class($e) . ': ' . substr(preg_replace('/\s+/', ' ', $e->getMessage()), 0, 70); }
+    echo "$id | $rot => $o\n";
+};
+$boot = function ($limite) {
+    setlocale(LC_TIME, 'C');
+    $a = setlocale(LC_TIME, 'pt-br');
+    if (PHP_VERSION_ID < $limite) { setlocale(LC_TIME, array('ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br')); }
+    return setlocale(LC_TIME, 0);
+};
+$pt = function ($c, $fmt) { return mb_convert_encoding($c->copy()->locale('pt_BR')->translatedFormat($fmt), 'ISO-8859-1', 'UTF-8'); };
+foreach (array('boot original (PHP_VERSION_ID < 74000)' => 74000, 'boot com a T-139 (PHP_VERSION_ID < 90000)' => 90000) as $nome => $lim) {
+    $lc = $boot($lim);
+    $caso1('U1', "$nome [LC_TIME=$lc] c01_data=2025-03-01 ->formatLocalized('%B')", function () { return Carbon::parse('2025-03-01')->formatLocalized('%B'); });
+    $caso1('U2', "$nome Carbon::create(2025,3,1)->formatLocalized('%B')", function () { return Carbon::create(2025, 3, 1)->formatLocalized('%B'); });
+    $caso1('U3', "$nome Carbon::now()->formatLocalized('%d de %B de %Y')", function () { return Carbon::now()->formatLocalized('%d de %B de %Y'); });
+    $caso1('U1', "  proposta B: strftime('%B', ts)", function () { return @strftime('%B', Carbon::parse('2025-03-01')->getTimestamp()); });
+    $caso1('U3', "  proposta B: strftime('%d de %B de %Y', ts)", function () { return @strftime('%d de %B de %Y', Carbon::now()->getTimestamp()); });
+    $caso1('U1', "  proposta C: locale('pt_BR')->translatedFormat('F') em ISO-8859-1", function () use ($pt) { return $pt(Carbon::parse('2025-03-01'), 'F'); });
+    $caso1('U3', "  proposta C: locale('pt_BR')->translatedFormat('d \\d\\e F \\d\\e Y') em ISO-8859-1", function () use ($pt) { return $pt(Carbon::now(), 'd \\d\\e F \\d\\e Y'); });
 }
 setlocale(LC_TIME, 'C');
 // 2) createFromTimestamp: DB_datausu = time() (DefaultSession.php:115), usado em ->format('Y-m-d') (ProfissionalEscolaRepository.php:120, ConteudoDesenvolvidoRepository.php:87)
