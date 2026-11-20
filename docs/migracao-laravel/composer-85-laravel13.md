@@ -130,10 +130,11 @@ Os outros pacotes que sobem de versão maior (contratos `psr/*`, `symfony/*-cont
 `voku/portable-ascii`, `egulias/email-validator`, `league/event`, `maennchen/zipstream-php`...) têm 0 citações no código:
 só o Laravel e as bibliotecas os usam.
 
-**Classes que deixam de carregar:** cada arquivo de `ecidade/` que cita um desses pacotes e declara classe, interface ou
-trait (288) foi carregado num processo próprio, na imagem do 8.5, com o vendor da trava anterior e depois com o da nova
-(`scratchpad/php8_62_carrega.php`). Com a anterior carregam 270; com a nova, 250. A diferença são exatamente os 20
-comandos do Console:
+**Classes que deixam de carregar:** foram 288 arquivos de `ecidade/`, os que citam um desses pacotes e declaram
+classe, interface ou trait. Cada um foi carregado num processo próprio no 8.5 pelo `docker/composer-85/roda-isolado.sh`,
+primeiro com o vendor da trava anterior e depois com o da nova (`scratchpad/php8_62_carrega_lista.php` chama
+`scratchpad/php8_62_carrega.php` arquivo por arquivo). Com a trava anterior carregam 270, e com a nova, 250. A
+diferença são exatamente os 20 comandos do Console:
 
 ```
 Fatal error: Declaration of ECidade\Console\Command\Tools\DiffCache::configure() must be compatible with
@@ -146,11 +147,15 @@ que o carregador do trecho não acha. As outras 2 são do legado: `FpdfMultiCell
 Lista dos arquivos e comando:
 
 ```bash
-cd ecidade && git ls-files -z -- '*.php' ':!vendor/' | xargs -0 grep -laP -- "$(cut -f2 ../scratchpad/php8_62_usos.tsv | paste -sd'|')" \
-  | xargs grep -laP '^\s*(abstract\s+|final\s+)?(class|interface|trait)\s+\w+' > /tmp/carrega.lst
-docker run --rm --network none -v $PWD:/app:ro -v <vendor>:/app/vendor:ro -v /tmp:/s -v $PWD/../scratchpad:/t:ro -w /app <imagem do php85-apache> \
-  sh -c 'while read f; do printf "%s\t%s\n" "$f" "$(php -d display_errors=1 /t/php8_62_carrega.php "$f" 2>&1 </dev/null | grep -m1 -E "Fatal|OK$")"; done < /s/carrega.lst'
+(cd ecidade && git ls-files -z -- '*.php' ':!vendor/' | xargs -0 grep -laP -- "$(cut -f2 ../scratchpad/php8_62_usos.tsv | paste -sd'|')" \
+  | xargs grep -laP '^\s*(abstract\s+|final\s+)?(class|interface|trait)\s+\w+') > scratchpad/php8_62_carrega.lst   # 288
+bash docker/composer-85/roda-isolado.sh 8.5 scratchpad/php8_62_carrega_lista.php /trecho/php8_62_carrega.lst > l13.tsv
+VENDOR=<vendor da trava anterior> bash docker/composer-85/roda-isolado.sh 8.5 scratchpad/php8_62_carrega_lista.php /trecho/php8_62_carrega.lst > l8.tsv
+grep -c $'\tOK$' l8.tsv l13.tsv   # 270 e 250
 ```
+
+O vendor da trava anterior sai de `git show 016147447:ecidade/composer-85.lock`, instalado numa pasta à parte com o
+mesmo contêiner do `composer-85.sh`.
 
 ## O que não foi feito
 
