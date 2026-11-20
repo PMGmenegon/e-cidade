@@ -531,11 +531,11 @@ class JpGraphErrObjectImg {
 // in all methods.
 //
 class JpGraphError {
-    public function Install($aErrObject) {
+    public static function Install($aErrObject) {
 	GLOBAL $__jpg_err;
 	$__jpg_err = $aErrObject;
     }
-    public function Raise($aMsg,$aHalt=true){
+    public static function Raise($aMsg,$aHalt=true){
 	GLOBAL $__jpg_err;
 	$tmp = new $__jpg_err;
 	$tmp->Raise($aMsg,$aHalt);
@@ -5644,7 +5644,7 @@ class Image {
 	return imagesy($aImg);
     }
 
-    public function CreateFromString($aStr) {
+    public static function CreateFromString($aStr) {
 	return imagecreatefromstring($aStr);
     }
 
