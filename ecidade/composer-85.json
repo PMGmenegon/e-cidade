@@ -140,8 +140,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "kylekatarnls/update-helper": true,
-            "symfony/flex": true
+            "cweagans/composer-patches": true
         }
     }
 }
