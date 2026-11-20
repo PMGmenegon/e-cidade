@@ -81,13 +81,32 @@ Do menor para o maior, um por vez:
   antes `<b>Mensagem: </b><br>`: a mensagem vem de `dbagata/classes/util/Dialog.class`, cujo construtor
   `Dialog()` é estilo PHP 4 e não roda no 8.5. O `dbagata/` tem 128 classes com construtor estilo PHP 4.
 
+## 4b. Lote 2 — `jur`, `div`, `arr` (20/11/2026)
+
+| Commit | O quê | Prova |
+|---|---|---|
+| construtores (manual) | `__construct` em `cl_divida`, `cl_parjuridico`, `cl_taxa`, `cl_termoanu`, `cl_termoreparc`; sem filha nem chamada ao nome antigo | instanciação: antes 5 ≠; depois 8.5 = 7.4 e 7.4 = 7.4 |
+| `0 == ""` (Rector, automático) | mesma regra e config do lote 1 em 140 classes (tabelas dos módulos juridico, divida e arrecadacao; 200 tabelas, 169 classes não tratadas antes); 911 linhas, só inserção | caminho de escrita: antes 140 classes ≠ (1.240 linhas); depois 0 |
+| `pg_*` (script, automático) | `arr2_exercproced001`, `arr2_gerardiscorelatorioconsolidado001`, `div2_exercproced001`, `div2_resumogeraldivida001`, `jur1_emiteinicial011` (10 chamadas) | 7.4 igual antes/depois; 5/5 idênticas |
+| `sizeof()` de não contável (manual) | `jur2_trocapropriiframe`: `sizeof($matriz1/2)` → `sizeof((array)...)` nas 8 chamadas; no 7.4 os dois dão o mesmo para null, "", 0, texto e arrays | 7.4 igual antes/depois; idêntica |
+
+`split()` em `db_divida_classe` e `db_termoinscrreg_classe` mantido: a função de compatibilidade existe nos dois
+runtimes (regra do grupo).
+
+**Resultado:** bateria do lote **344/462 → 360/462**. As **102** restantes dependem só do núcleo: 100 de
+`fpdf151/fpdf.php` e `libs/JSON.php`; `arr3_condeclquitacaoanual002` (o `Dialog` do Agata, como no lote 1); e
+`div4_alteracda001`, em que a opção "Selecione" (chave 0) sai marcada só no 7.4 — `db_select()` em
+`dbforms/db_funcoes.php:761` compara `@$GLOBALS[$nome] == $chave` e a tela inicia a variável com `""`
+(`"" == 0`: verdadeiro no 7.4, falso no 8).
+
 ## 5. Pendências do núcleo (avisar o dono)
 
 | Arquivo | Defeito no 8.5 | Telas do Tributário afetadas |
 |---|---|---|
 | `fpdf151/fpdf.php:614` | `ParseError`: offset de string com chaves | 248 (todos os relatórios em PDF) |
 | `libs/JSON.php:188` | o mesmo | 130 (RPCs) |
-| `dbagata/` (128 classes) | construtor estilo PHP 4 não roda | relatórios do Agata (1 no lote 1) |
+| `dbagata/` (128 classes) | construtor estilo PHP 4 não roda | relatórios do Agata (1 no lote 1, 1 no lote 2) |
+| `dbforms/db_funcoes.php:761` (`db_select`) | `@$GLOBALS[$nome] == $chave` com variável `""` e chave `0`: marcada no 7.4, não no 8 | todo select com opção de chave 0 (1 no lote 2) |
 | `classes/db_db_logsacessa_classe.php` | construtor estilo PHP 4 | usada pela Configuração e por webservices |
 | `abrir.php:372` | `db_verifica_ip_banco()` chamada sem o argumento que o PR passou a exigir; quebra **igual no 7.4** (depois de gravar a sessão) | login direto pelo `abrir.php` |
 
