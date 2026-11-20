@@ -27,21 +27,22 @@ As versões menores foram escolhidas com `--with` no `update`, sem mudar a restr
 **Como saiu a trava** (o comando único de `docker/composer-85/composer-85.sh`):
 
 ```bash
-bash docker/composer-85/composer-85.sh update --no-install --no-scripts --no-plugins --ignore-platform-req=php+ \
+bash docker/composer-85/composer-85.sh update --no-install --no-scripts --ignore-platform-req=php+ \
   dompdf/dompdf mpdf/mpdf ezyang/htmlpurifier laminas/laminas-escaper nette/schema nette/utils \
   fakerphp/faker fzaninotto/faker cweagans/composer-patches \
   --with mpdf/mpdf:8.2.6 --with ezyang/htmlpurifier:4.19.0 --with laminas/laminas-escaper:2.18.0 \
   --with nette/schema:1.3.3 --with nette/utils:4.0.8 --with fakerphp/faker:1.10.0 --with cweagans/composer-patches:1.7.3
 ```
 
-Resultado: 166 pacotes. Comparado com o 7.4 (165): 5 sobem de versão, 1 sai (`fzaninotto/faker`) e entram 2
-(`fakerphp/faker` e `cweagans/composer-patches`). O dompdf fica no mesmo commit (`db91d81`).
+Resultado: 167 pacotes. Sobre a trava anterior do 8.5 (a do PR com a troca do `lcobucci/jwt` para 4.1.5 e o
+`lcobucci/clock` 2.0.0 da PHP8-60): 5 sobem de versão, 1 sai (`fzaninotto/faker`) e entram 2 (`fakerphp/faker` e
+`cweagans/composer-patches`). O dompdf fica no mesmo commit (`db91d81`). O `composer.json`/`composer.lock` do 7.4
+seguem com o `sha256` da base (`69367bdc…` e `38fe5a63…`).
 
-**`composer prohibits php 8.5.12 --locked` depois:** sobram 3, que não são desta tarefa:
+**`composer prohibits php 8.5.12 --locked` depois:** sobram 2, que não são desta tarefa:
 
 | Pacote | Exige | Fica para |
 |---|---|---|
-| `lcobucci/jwt` 3.4.0 | `^5.6 \|\| ^7.0` | PHP8-60 (token) |
 | `bacon/bacon-qr-code` 1.0.3 | `^5.4\|^7.0` | PHP8-70 (documentos): vem do `proner/phppimaco` 1.4.5 → `endroid/qr-code` 2.5.1 (`bacon ^1.0.3`) |
 | `khanamiryan/qrcode-detector-decoder` 1 | `^5.6\|^7.0` | idem (`endroid/qr-code` 2.5.1 fixa a versão `1`) |
 
@@ -79,10 +80,12 @@ coordenada, que não aparece no PDF.
 mesmo commit da 0.8.6 (`db91d81866c69a42dad1d2926f61515a1e3f42c5`). Ele declara a mesma `require` do pacote, menos a
 versão do PHP, que passa de `^7.1` para `^7.1 || ^8.0`. Repositório declarado no `composer.json` raiz vence o
 packagist, então só essa definição do `dompdf/dompdf` existe para o Composer do 8.5. Nenhum outro pacote ganha
-exceção de versão do PHP. O `--ignore-platform-req=php+` do comando continua, por causa dos 3 da tabela acima.
+exceção de versão do PHP. O `--ignore-platform-req=php+` do comando continua, por causa dos 2 da tabela acima.
 
-**O patch na instalação:** `cweagans/composer-patches` (`extra.patches`, `allow-plugins`). O `install` tem de rodar
-**com plugins** (sem `--no-plugins`), senão o dompdf entra sem patch. Conferido numa instalação limpa: a saída mostra
+**O patch na instalação:** `cweagans/composer-patches` (`extra.patches`; o `allow-plugins` do `composer-85.json` já
+libera só ele). O `install` roda **com plugins** (o comando registrado não usa `--no-plugins`); sem eles, o dompdf
+entraria sem patch. Conferido com `docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+`
+sobre a trava nova: a saída mostra
 `Applying patches for dompdf/dompdf`, e o `diff -r` contra o zip da 0.8.6 mostra só as 2 linhas e o `PATCHES.txt`
 que o plugin grava. A licença do dompdf é LGPL-2.1, e o patch traz só as linhas trocadas.
 
@@ -99,8 +102,9 @@ O Composer 2.11 bloqueia no `update` as versões com aviso de segurança publica
 - `update` com a lista: passa.
 - Aviso que não está na lista continua bloqueando. Teste: pedir `twig/twig` 2.0.0 deu `found twig/twig[v2.0.0] but
   these were not loaded, because they are affected by security advisories`.
-- `composer audit --locked` da trava do 8.5, contra o `composer.json` do 7.4, sem a lista: os mesmos 120 IDs nos
-  mesmos 26 pacotes, nenhum a mais e nenhum a menos.
+- `composer audit --locked` da trava do 8.5, contra o `composer.json` do 7.4, sem a lista: 119 IDs em 25 pacotes,
+  todos da trava do PR, nenhum a mais. O que falta é o do `lcobucci/jwt` 3.4.0, que saiu da trava do 8.5 com a troca
+  da PHP8-60. Ele continua na lista, que é a da trava do PR.
 
 ## Prova 7.4 × 8.5 nos usos do código (critério 2)
 
