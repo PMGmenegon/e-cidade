@@ -15,14 +15,14 @@ fica em tarefa própria.
 | `artisan list --raw` | 111 linhas | igual byte a byte |
 | comandos: nome, classe, descrição, oculto, apelidos, argumentos e opções com padrão | 112 comandos (15 do e-cidade, em `app/Console/Commands`) | igual byte a byte |
 | agendamento (`app/Console/Kernel.php`): comando, cron, fuso, descrição, `withoutOverlapping`, `onOneServer`, `runInBackground`, `evenInMaintenanceMode` e as 3 próximas execuções a partir de 01/01/2026 | 10 eventos | igual byte a byte |
-| payload de fila (`createPayload` do Laravel): `displayName`, `job`, `maxTries`, `maxExceptions`, `failOnTimeout`, `backoff`, `timeout`, `retryUntil`, `commandName` e o `unserialize` de volta | 16 classes `ShouldQueue` (14 jobs e 2 notificações) | igual |
-| objeto da fila gravado num runtime e lido no outro (estado de todas as propriedades, recursivo) | 16 classes × 4 combinações (7.4→7.4, 7.4→8.5, 8.5→7.4, 8.5→8.5) | 1 estado só nas 4 |
-| `array_pluck` (`ComissaoController.php:75`) e `str_random` (`ModelFactory.php:22`) | 2 | igual: `Error: Call to undefined function` nos dois |
-| `str_contains`: polyfill `symfony/polyfill-php80` no 7.4, nativa no 8.5 | 14 entradas | 12 iguais; as 2 com array dão `TypeError` nos dois, só o texto da mensagem muda |
+| payload de fila (`createPayload` do Laravel): `displayName`, `job`, `maxTries`, `maxExceptions`, `failOnTimeout`, `backoff`, `timeout`, `retryUntil`, `commandName` e o `unserialize` de volta | 18 classes `ShouldQueue` (16 jobs e 2 notificações) | igual |
+| objeto da fila gravado num runtime e lido no outro (estado de todas as propriedades, recursivo) | 18 classes × 4 combinações (7.4→7.4, 7.4→8.5, 8.5→7.4, 8.5→8.5) | 1 estado só nas 4 |
+| `array_pluck` (`ComissaoController.php:75`) e `str_random` (`ModelFactory.php:22`) | 2 casos | igual: `Error: Call to undefined function` nos dois |
+| `str_contains`: polyfill `symfony/polyfill-php80` no 7.4, nativa no 8.5 | 14 casos | 12 com o mesmo resultado; os 2 com array dão `TypeError` nos dois, só o texto da mensagem muda |
 
 ## Fila: o que muda e o que não muda
 
-O `command` serializado sai igual byte a byte em 14 das 16 classes. Nas 2 notificações enfileiradas
+O `command` serializado sai igual byte a byte em 16 das 18 classes. Nas 2 notificações enfileiradas
 (`EmissaoRelatorioLegalNotification`, `UserNotificationAcordoVencimento`, embrulhadas em `SendQueuedNotifications`,
 como o Laravel faz), muda a **ordem** das propriedades na string. O `SerializesModels::__serialize` percorre
 `ReflectionClass::getProperties()`. No 7.4, essa lista traz as propriedades herdadas (`id`, `locale` de
@@ -31,10 +31,16 @@ mesmos, e o `unserialize` monta o objeto por nome. A leitura cruzada prova isso:
 8.5, ou o contrário, chega ao mesmo estado. Por isso a fila pode ser gravada por um runtime e consumida pelo outro
 durante a migração.
 
+Quais classes: as de `app/` cujo arquivo cita `ShouldQueue` (21) e que implementam a interface, conferido por
+reflexão (`anexos/filas-comandos-85/lista_filas.php`): 18. A busca por reflexão pega também as 2 declaradas com nome
+qualificado (`implements \Illuminate\Contracts\Queue\ShouldQueue`: `EmissaoLrfJob`,
+`ProcessarLancamentoContabilRequisicaoJob`). As outras 3 só importam a interface sem usá-la (2 Mailables e
+`SolicitacaoAssinaturaNotification`).
+
 Como o objeto foi montado (`anexos/filas-comandos-85/jobs.php`): primeiro o construtor real, com argumentos fixos
 (classe tipada recebe instância sem construtor; `datausu` e `filtros` recebem o tipo que o código espera). Se o
 construtor precisa de banco ou de serviço, vai sem construtor e cada propriedade da classe recebe um valor fixo. Os
-dois runtimes seguiram o mesmo caminho nas 16 classes: 6 pelo construtor, 7 sem construtor por `QueryException` (banco
+dois runtimes seguiram o mesmo caminho nas 18 classes: 7 pelo construtor, 8 sem construtor por `QueryException` (banco
 inexistente) e 3 sem construtor por `Exception` dos serviços do BNAFAR. Model vai como `ModelIdentifier`, e a
 restauração, que consultaria o banco, não é feita.
 
@@ -43,8 +49,8 @@ dois. Com os dois valores fictícios no `.env` de teste, o payload sai.
 
 ## Agendamento e lista de comandos: como foi lido
 
-O `artisan schedule:list` e o `artisan list --format=json` do PR não servem para comparar, porque falham do mesmo
-jeito no 7.4 e no 8.5 (registro da PHP8-49). Por isso `anexos/filas-comandos-85/console.php` lê direto do kernel: os
+O `artisan schedule:list` e o `artisan list --format=json` do PR não servem para comparar (erro igual nos dois).
+Por isso `anexos/filas-comandos-85/console.php` lê direto do kernel: os
 comandos registrados e os eventos do `Schedule`, com a próxima execução calculada pela `CronExpression` a partir de uma
 data fixa. A saída é `var_export`, porque as descrições estão em ISO-8859-1.
 
