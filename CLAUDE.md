@@ -242,6 +242,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `api-v1-levantamento.md` | PHP8-15: API V1 (Silex) no PR #8: o que o PR mudou (`FrontController.php`, `composer.json`, 1 linha em `api/`), as 7 rotas e quem as usa (1 consumidor interno já migrado, externos desconhecidos), as 3 opções (seguir o PR, container separado, perguntar à DBSeller) e o texto da pergunta |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
