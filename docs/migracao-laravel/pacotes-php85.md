@@ -65,8 +65,10 @@ Protocolo (`app/Domain/Patrimonial/Protocolo/Services/CapaDoDocumento.php` e `Ca
 As 2 linhas (`ecidade/patches/dompdf-0.8.6-php85.patch`) reproduzem o que o 7.4 faz:
 
 - `src/Css/Style.php`, `set_z_index`: `round($val) != $val && $val !== "auto"` vira
-  `$val !== "auto" && (!is_numeric($val) || round($val) != $val)`. No 7.4, `round('auto')` só avisa e devolve `NULL`,
-  e o valor `auto` é aceito. No 8.x, a mesma chamada é `TypeError`.
+  `round((float)$val) != (float)$val && $val !== "auto"`. No 7.4, `round('auto')` só avisa e devolve `float(0)`; no
+  8.x, a mesma chamada é `TypeError`. Com o `(float)` explícito, a condição dá o mesmo resultado que a linha original
+  no 7.4, nos 7.4 e 8.5: 19 valores iguais (`auto`, números, texto numérico, `5px`, `abc`, `inherit`, vazio, `null`,
+  espaços, `1e2`, `0x1A`, `true`, `false`; `anexos/pacotes-85/zindex.php`).
 - `src/FrameReflower/Block.php:378`: `$height === "auto" && $content_height > $height` vira
   `$height === "auto" && $content_height > 0`. No 7.4, `11.8 > "auto"` compara com `"auto"` convertido em 0 e dá
   verdadeiro, então a altura do bloco vira a do conteúdo. No 8.x, número contra texto não numérico compara como texto
@@ -95,16 +97,15 @@ outro pacote o usar. Depois, regerar a trava com o comando único.
 
 ## Avisos de segurança: os mesmos do 7.4, ignorados por ID
 
-O Composer 2.11 bloqueia no `update` as versões com aviso de segurança publicado. A trava do PR já tem 120 avisos em
-26 pacotes (`composer audit --locked` sobre o `composer.lock`). O `composer-85.json` lista esses 120 IDs em
-`config.audit.ignore`, e nada além dos IDs. Conferido:
+O Composer 2.11 bloqueia no `update` as versões com aviso de segurança publicado, e a trava do PR já tem versões com
+aviso. O `composer-85.json` lista em `config.audit.ignore` só os IDs dos avisos que a trava do PR já tem (os mesmos
+que o `composer audit --locked` acusa sobre o `composer.lock`). Conferido:
 
 - `update` com a lista: passa.
-- Aviso que não está na lista continua bloqueando. Teste: pedir `twig/twig` 2.0.0 deu `found twig/twig[v2.0.0] but
-  these were not loaded, because they are affected by security advisories`.
-- `composer audit --locked` da trava do 8.5, contra o `composer.json` do 7.4, sem a lista: 119 IDs em 25 pacotes,
-  todos da trava do PR, nenhum a mais. O que falta é o do `lcobucci/jwt` 3.4.0, que saiu da trava do 8.5 com a troca
-  da PHP8-60. Ele continua na lista, que é a da trava do PR.
+- Aviso que não está na lista continua bloqueando. Teste: pedir `twig/twig` 2.0.0 foi recusado com `these were not
+  loaded, because they are affected by security advisories`.
+- `composer audit --locked` da trava do 8.5, contra o `composer.json` do 7.4 e sem a lista: nenhum aviso que a trava
+  do PR não tenha.
 
 ## Prova 7.4 × 8.5 nos usos do código (critério 2)
 
@@ -129,16 +130,14 @@ o PDF grava a data de criação.
 | nette/schema, nette/utils | sem chamada no código do e-cidade; entram por `Str::markdown` do Laravel (`league/config`). Markdown com tabela, link, HTML e vazio | 6 | 0 |
 | PhpWord (escaper por dentro) | writer HTML com textos acentuados e link | 1 | 0 |
 
-A `ModelFactory.php` não roda no Laravel 8 do PR, por defeito de antes desta tarefa (registro da PHP8-49). Aqui se
-prova só o que ela pede ao Faker.
+A `ModelFactory.php` não roda no Laravel 8 do PR, por defeito de antes desta tarefa
+(`docs/registro/defeitos-laravel8-do-pr.md`). Aqui se prova só o que ela pede ao Faker.
 
 ## Lacunas
 
 - Só os usos achados no código foram reproduzidos, com HTML e dados fixos. Uma capa com CSS que os 4 templates não
   usam pode passar por linha do dompdf 0.8.6 que não foi exercitada. O mesmo tipo de comparação (número × texto) pode
   existir em outro ponto do pacote.
-- No `set_z_index` corrigido, um `z-index` com unidade (ex.: `5px`, CSS inválido) seria aceito pelo 7.4 e recusado
-  pelo 8.5. Os templates não usam `z-index`.
 - Os trechos não passam pelo Laravel de pé, que é da etapa da inicialização (PHP8-62), nem pelo banco: os dados das
   capas são fixos.
 - Os `Deprecated` do 8.5 nesses pacotes (parâmetro nulo implícito, `E_STRICT`, tipos de retorno) não mudam a saída e
