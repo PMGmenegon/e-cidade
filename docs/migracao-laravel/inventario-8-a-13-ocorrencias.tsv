@@ -161,7 +161,7 @@ versao	item do guia	tarefa	arquivo:linha
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Planejamento/Services/Relatorios/ReceitaService.php:188
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Planejamento/Services/Relatorios/ReceitaService.php:191
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Planejamento/Services/Relatorios/ReceitaService.php:194
-9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Recurso.php:235
+9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Recurso.php:232
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Orcamento/Models/FonteRecurso.php:58
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Orcamento/Models/FonteRecurso.php:71
 9.x	The when / unless Methods	PHP8-55	app/Domain/Financeiro/Orcamento/Controllers/RecursoController.php:136
@@ -633,27 +633,6 @@ versao	item do guia	tarefa	arquivo:linha
 10.x	Database Expressions	PHP8-77	app/Jobs/RecursosHumanos/Pessoal/ProcessPayrollDataJob.php:142
 10.x	Database Expressions	PHP8-77	app/Jobs/RecursosHumanos/Pessoal/ProcessPayrollDataJob.php:143
 10.x	ULID Columns	PHP8-55	database/migrations/2022_10_24_103009_create_notifications_table.php:17
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php:13
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php:18
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/Lancamento.php:30
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFeriasLancamentos.php:24
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFerias.php:31
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Tesouraria/Models/Slip.php:14
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Planejamento/Models/Planejamento.php:41
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Recurso.php:35
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/CentralMatriculas/Models/ObservacaoInscricao.php:53
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Candidato.php:46
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Alocado.php:12
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Ciclo.php:21
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Fase.php:33
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/Aluno.php:98
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/Matricula.php:39
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/Calendario.php:34
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/AtividadeProfissionalEscola.php:11
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/ProfissionalEscola.php:12
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Educacao/Escola/Models/ExcecaoBloqueioNota.php:26
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Saude/Farmacia/Models/BnafarBatchProtocolo.php:22
-10.x	Model "Dates" Property	PHP8-55	app/Domain/Configuracao/Departamento/Models/Departamento.php:66
 10.x	Monolog 3	PHP8-62	configuration/logging.php:3
 10.x	The dispatch() Helper Return Value	PHP8-51	app/Domain/RecursosHumanos/Pessoal/Services/ContraChequeService.php:50
 10.x	The dispatch() Helper Return Value	PHP8-51	app/Domain/Financeiro/Contabilidade/Services/Relatorios/NovaLRF/EmiteControleVersaoService.php:22
@@ -708,7 +687,13 @@ versao	item do guia	tarefa	arquivo:linha
 11.x	The AuthenticationException Class	PHP8-62	app/Exceptions/Handler.php:111
 11.x	The AuthenticationException Class	PHP8-62	app/Exceptions/Handler.php:114
 11.x	Cache Key Prefixes	PHP8-62	configuration/cache.php:97
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php:13
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php:18
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/Lancamento.php:30
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFeriasLancamentos.php:24
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/PlanoReceita.php:33
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFerias.php:31
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Tesouraria/Models/Slip.php:14
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/Configuracao.php:43
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/CronogramaDesembolsoReceita.php:55
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/FatorCorrecaoDespesa.php:30
@@ -716,16 +701,26 @@ versao	item do guia	tarefa	arquivo:linha
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/MetasIniciativa.php:48
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/Status.php:19
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/DetalhamentoDespesa.php:70
-11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/Planejamento.php:46
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Planejamento/Models/Planejamento.php:41
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/ValorEstrutural.php:26
-11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Recurso.php:39
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Recurso.php:35
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/CaracteristicaPeculiar.php:43
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/FonteReceita.php:56
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Financeiro/Orcamento/Models/Complemento.php:23
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/CentralMatriculas/Models/Escola.php:39
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/CentralMatriculas/Models/ObservacaoInscricao.php:53
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Candidato.php:46
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Alocado.php:12
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Ciclo.php:21
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/MatriculaOnline/Models/Fase.php:33
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/CensoMunicipio.php:21
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/Aluno.php:98
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/Disciplina.php:49
-11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/Calendario.php:40
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/Matricula.php:39
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/Calendario.php:34
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/AtividadeProfissionalEscola.php:11
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/ProfissionalEscola.php:12
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/ExcecaoBloqueioNota.php:26
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/TurmaEspecial.php:33
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Escola/Models/DisciplinaEnsino.php:47
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Educacao/Secretaria/Models/TiposIntrumentosAvaliativos.php:19
@@ -739,7 +734,7 @@ versao	item do guia	tarefa	arquivo:linha
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Farmacia/Models/BnafarEnvio.php:26
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Farmacia/Models/DemandaReprimida.php:31
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Farmacia/Models/BnafarConferencia.php:19
-11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Farmacia/Models/BnafarBatchProtocolo.php:23
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Farmacia/Models/BnafarBatchProtocolo.php:22
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Ambulatorial/Models/Unidade.php:44
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Ambulatorial/Models/ProfissionalUnidade.php:35
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Ambulatorial/Models/Prontuario.php:52
@@ -747,7 +742,7 @@ versao	item do guia	tarefa	arquivo:linha
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Ambulatorial/Models/ProcedimentoProntuario.php:31
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Saude/Ambulatorial/Models/ProblemaPaciente.php:32
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Configuracao/Usuario/Models/Usuario.php:77
-11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Configuracao/Departamento/Models/Departamento.php:68
+11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Configuracao/Departamento/Models/Departamento.php:66
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Tributario/ISSQN/Model/Base/IssAlvara.php:26
 11.x	Eloquent Model casts Method	PHP8-55	app/Domain/Tributario/ISSQN/Model/Base/IssMovAlvara.php:26
 11.x	Modifying Columns	PHP8-55	database/migrations/2021_10_25_083540_alter_secret_to_oauth_clients.php:17
@@ -2771,9 +2766,11 @@ versao	item do guia	tarefa	arquivo:linha
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/RecursosHumanos/Pessoal/ProcessPayrollDataJob.php:17
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/RecursosHumanos/Pessoal/EmissaoContraChequeJob.php:18
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/RecursosHumanos/RH/ProcessamentoConcessao.php:18
+13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Financeiro/Contabilidade/EmissaoLrfJob.php:13
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Patrimonial/Protocolo/DeleteFileStorage.php:12
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Patrimonial/Protocolo/NotificarTransferenciaProcessoJob.php:12
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Patrimonial/Protocolo/NotificarEauth.php:12
+13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Patrimonial/Material/ProcessarLancamentoContabilRequisicaoJob.php:18
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Saude/Farmacia/ProcessarProtocoloBnafarJob.php:16
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Saude/Farmacia/ExportarLoteBnafarJob.php:15
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Saude/Farmacia/ExportarBnafarJob.php:17
