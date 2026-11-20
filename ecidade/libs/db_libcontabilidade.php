@@ -4633,7 +4633,7 @@ select estrut_mae,
     $work_plano = array();
     $seq = 0;
 
-    for ($i = 0; $i < pg_num_rows($result); $i++) {
+    for ($i = 0; $i < ($result ? pg_num_rows($result) : null); $i++) {
         //  for($i = 0;$i < 20;$i++){
         db_fieldsmemory($result, $i);
         if ($sinal_anterior == "C") {

@@ -97,7 +97,15 @@ function db_query($param1, $param2 = null, $param3 = "SQL")
                 }
             }
         }
-        $dbresult = pg_query($dbsql);
+        try {
+            $dbresult = pg_query($dbsql);
+        } catch (\Error $e) {
+            // 8.x: sem conexao aberta, pg_query() lanca Error; o 7.4 avisava e devolvia false
+            if (get_class($e) != 'Error') {
+                throw $e;
+            }
+            $dbresult = false;
+        }
     } else {
         $dbsql = $sBackTrace . $param2;
         if ($lExecutaAccount) {
@@ -1648,7 +1656,7 @@ function db_vencimento($dt = "")
     if (empty($dt)) {
         $dt = db_getsession("DB_datausu");
     }
-    $data = date("Y-m-d", $dt);
+    $data = (is_array($dt) || (is_string($dt) && !preg_match('/^\s*[+-]?\.?\d/', $dt)) ? false : date("Y-m-d", (int) $dt));
 
     return $data;
 }

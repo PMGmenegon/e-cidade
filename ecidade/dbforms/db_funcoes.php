@@ -1339,7 +1339,7 @@ if (!function_exists("ultimo_dia_mes")) {
     function ultimo_dia_mes($mes = 1, $ano = "")
     {
         $res = db_query("select fc_ultimodiames($ano,$mes)"); //fc_ultimodiames(anousu,mes); // retorna ultimo da do mes
-        $ultimo_dia = pg_fetch_result($res, 0, 0);
+        $ultimo_dia = ($res ? pg_fetch_result($res, 0, 0) : null);
         return $ultimo_dia;
     }
 }
