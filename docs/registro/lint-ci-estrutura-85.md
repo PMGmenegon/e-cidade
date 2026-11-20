@@ -4,7 +4,7 @@
 commit `8a2e43837`) foi rodado localmente, sem GitHub e sem push, com o `php:7.4-cli` e o `php:8.5-cli` descartaveis
 (`--network none`, como o proprio script faz). Sobre o diff real `origin/base-php74...laravel/integracao-74` (35b39e7a2)
 ele seleciona 2 arquivos `.php` e os dois passam nos dois runtimes. Sobre 4 classes de exemplo em `ecidade/app-85/` com
-sintaxe so do 8.x, o job do 7.4 sai com `NOVA_FALHA` (codigo 1) em 2 delas e o do 8.5 passa nas 4. O workflow do MAX nao
+sintaxe so do 8.x, o job do 7.4 sai com `NOVA_FALHA` (codigo 1) em 2 delas e o do 8.5 passa nas 4. O workflow do CI nao
 foi alterado.
 
 ## Como foi rodado
@@ -61,7 +61,30 @@ Tabela do que o `php -l` do 7.4 aceita e rejeita (medida, `php:7.4-cli` e `php:8
 | argumento nomeado, `new` em valor padrao, `throw` como expressao | **falha** | passa |
 | virgula final na lista de parametros, `final const` | **falha** | passa |
 
-## Proposta de texto para o coordenador e o MAX
+## Alinhamento com `estrutura-85.md` (regra e pergunta de la, contra o que foi medido)
+
+`estrutura-85.md` (secao "Lint do grupo (CI) e a pergunta ao coordenador") traz uma regra e uma pergunta. As duas foram
+conferidas contra o script do CI e uma parte delas nao confere:
+
+| O que diz `estrutura-85.md` | O que o script do CI faz (medido acima) |
+|---|---|
+| Regra: em `app-85/` nao vale "tipos `mixed`" de retorno | `: mixed` **passa** no 7.4 (o `php -l` do 7.4 le `mixed` como nome de classe; so deixa de ser aceito no 8.x se for nome de classe) |
+| Regra: nao vale "atributos `#[...]` fora de comentario" | `#[Atributo]` de **uma linha** passa no 7.4 (vira comentario); so o atributo em **varias linhas** falha |
+| Pergunta: "por exemplo, retorno `mixed` numa interface do framework" deixaria o job do 7.4 vermelho | **nao deixa**: `: mixed` passa. O exemplo nao ilustra o problema |
+| Regra: `static`, uniao, `match`, argumentos nomeados, `readonly`, `enum`, promocao no construtor | confere: todos falham no 7.4 |
+
+Conclusao: **a regra do time e mais estrita que o CI.** O que realmente deixa o job do 7.4 vermelho (`NOVA_FALHA`) em
+`app-85/`: retorno `static`, tipo uniao `A|B`, intersecao `A&B`, promocao no construtor, `readonly`, `enum`, `match`,
+`?->`, argumento nomeado, `new` em valor padrao, `throw` como expressao, virgula final em parametros, `final const` e
+atributo em varias linhas. `: mixed`, `: never` e `#[Atributo]` de uma linha passam. A pergunta ao coordenador continua
+valida, mas o exemplo dela deve ser um destes (por exemplo, uma assinatura do Laravel 13 com tipo uniao ou `static`
+de retorno), nao `mixed`.
+
+Das duas saidas que a pergunta de `estrutura-85.md` oferece, a **sobreposicao fora de `ecidade/`** e a que foi
+**descartada**: o script nao filtra por caminho, entao mudar a pasta de lugar nao tira o `.php` do lint. Fica a primeira:
+o job do 7.4 pular `ecidade/app-85/` (texto abaixo).
+
+## Proposta de texto para o coordenador e o autor do CI
 
 > **Assunto: lint do job do 7.4 e a sobreposicao so do PHP 8.5 (`ecidade/app-85/`).**
 >
@@ -85,6 +108,6 @@ Tabela do que o `php -l` do 7.4 aceita e rejeita (medida, `php:7.4-cli` e `php:8
 ## Lacunas
 
 - Nao rodado no GitHub: so o script, localmente. O comportamento do job (permissoes, tempo) e o da primeira
-  execucao remota do MAX.
+  execucao remota do CI.
 - O script ignora `.inc`, que o sistema tambem usa; fora do escopo daqui.
 - A tabela de sintaxe e de `php -l`: nao mede comportamento de execucao.
