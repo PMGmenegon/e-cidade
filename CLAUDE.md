@@ -243,6 +243,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
 | `estrutura-85.md` | PHP8-79: código só do PHP 8.5 sem tocar o 7.4: `ecidade/composer-85.json`/`.lock` (cópia do PR + sobreposição `app-85/` no PSR-4), `vendor/` em `runtime-85/` montado sobre `vendor/` só no 8.5, comando único pinado `docker/composer-85/composer-85.sh` (dono da trava: time do banco), os 10 pacotes que excluem o 8.5, regra e pergunta do lint do grupo |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
+| `validacao-laravel8-7.4-x-8.5.md` | PHP8-94: validação do Laravel 8 do PR no 7.4 × 8.5 sem banco: inventário (289 declarações de form request, 0 `validated()`, 5 `only()`, 104 `validate()`), 1.350 casos de form request e 348 regra × valor iguais salvo `digits` com array (`TypeError` no 8.5), 49 `Deprecated` só no 8.5, 54 form requests com regra de banco (`.tsv`); comandos que conferem as contagens |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
