@@ -55,6 +55,10 @@ if (!$paths) { fwrite(STDERR, "SEM ALVOS em $lista\n"); exit(2); }
 
 return RectorConfig::configure()
     ->withPaths($paths)
+    // 2 processos em paralelo. O padrao do Rector 2.x e um por nucleo (ate 16), e cada um chega a 1,2 GB:
+    // num notebook de 12 nucleos e 7,4 GB a maquina travou, e com 4 processos ainda faltou memoria (19/11/2026). So muda a
+    // velocidade, nao o resultado. (timeout por lote em segundos, processos, arquivos por lote)
+    ->withParallel(120, 2, 16)
     // OBRIGATORIO. Sem este pin, o Rector resolve a versao alvo do composer.json do
     // projeto (">=5.6.4") e DESLIGA EM SILENCIO toda regra com version bonding --
     // inclusive Php4ConstructorRector (122 arquivos) e EregToPregMatchRector (118).

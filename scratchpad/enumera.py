@@ -12,7 +12,7 @@ Como faz:
   3. fecho transitivo pelas frentes de diretas(): include/require, `new cl_X`,
      getDao('X'), classes de model/ e std/ por autoload, e classes com namespace
      (src/app/api, via ns_fecho.refs);
-  4. descarta o que ja esta pago (NUCLEO + arquivos de commits "Porta ...") e, em cada
+  4. descarta o que ja esta pago (NUCLEO, vazio na base-php74, + commits "Porta ...") e, em cada
      arquivo restante, conta as categorias que quebram no PHP 8 (CAT, parse_str de 1
      argumento, construtor PHP 4, `$this->X == "<literal>"`); quem tem alguma vira alvo.
 
@@ -35,15 +35,10 @@ import os, re, sys, collections, subprocess
 os.chdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ecidade'))
 PREF = sys.argv[1]
 
-# Arquivos do nucleo, portados a mao antes da receita: sempre contam como ja pagos.
-NUCLEO = {
- "libs/db_stdlib.php","libs/db_conecta.php","libs/db_sessoes.php","libs/db_usuariosonline.php",
- "libs/db_acessa.php","libs/db_calcula.php","libs/db_libpessoal.php","libs/db_utils.php",
- "libs/db_sql.php","libs/db_app.utils.php","libs/JSON.php","dbforms/db_funcoes.php",
- "dbforms/db_classesgenericas.php","std/DBString.php","std/db_stdClass.php",
- "config/ecidade_config.php","fpdf151/fpdf.php","fpdf151/pdf.php",
- "model/pessoal/std/DBPessoal.model.php","model/configuracao/mensagem/DBMensagem.model.php",
- "classes/db_cgm_classe.php"}
+# Arquivos do nucleo ja portados a mao: contam como pagos (nunca viram alvo).
+# base-php74: VAZIO -- o nucleo desta base NAO foi portado (fpdf.php:614 e JSON.php:188 quebram no 8.5).
+# A lista de 21 arquivos da base-php84: git show origin/base-php84:scratchpad/enumera.py
+NUCLEO = set()
 # Os commits anteriores a reorganizacao registram "classes/x.php"; os
 # posteriores registrarao "ecidade/classes/x.php". Como o universo e relativo a
 # ecidade/, normaliza-se o prefixo -- senao o proximo modulo veria tudo como

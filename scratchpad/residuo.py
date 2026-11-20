@@ -40,16 +40,9 @@ import os, re, sys, subprocess, collections
 # scratchpad/ continua na raiz, ao lado dele.
 os.chdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ecidade'))
 
-# Nucleo portado a mao (mesma lista do enumera.py) + libs/exceptions/: custo zero.
-NUCLEO = {
- "libs/db_stdlib.php","libs/db_conecta.php","libs/db_sessoes.php","libs/db_usuariosonline.php",
- "libs/db_acessa.php","libs/db_calcula.php","libs/db_libpessoal.php","libs/db_utils.php",
- "libs/db_sql.php","libs/db_app.utils.php","libs/JSON.php","dbforms/db_funcoes.php",
- "dbforms/db_classesgenericas.php","std/DBString.php","std/db_stdClass.php",
- "config/ecidade_config.php","fpdf151/fpdf.php","fpdf151/pdf.php",
- "model/pessoal/std/DBPessoal.model.php","model/configuracao/mensagem/DBMensagem.model.php",
- "classes/db_cgm_classe.php",
-}
+# Nucleo portado a mao (mesma lista do enumera.py; VAZIA na base-php74, onde o nucleo nao foi portado)
+# + libs/exceptions/: custo zero.
+NUCLEO = set()
 if os.path.isdir("libs/exceptions"):
     NUCLEO |= {f"libs/exceptions/{x}" for x in os.listdir("libs/exceptions")}
 
