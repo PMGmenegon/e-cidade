@@ -109,10 +109,34 @@ a configuração do disco apontando para uma pasta `tmpfs` descartável, com o t
 O `delete` de arquivo inexistente difere, mas o único chamador (`removeLock()`, linha 399) ignora o retorno: a tela
 sai igual. Por isso não houve ajuste.
 
+## Repetição com o Laravel 13 da trava do 8.5
+
+A prova acima usou um vendor mínimo e descartável no 8.5. Ela foi repetida com o vendor completo de cada trava,
+pelo `docker/composer-85/roda-isolado.sh`, nas imagens de `docker/php74-apache` (PHP 7.4.33) e
+`docker/php85-apache` (PHP 8.5.13):
+
+- **7.4:** o `ecidade/composer.lock` do PR, com Laravel 8.73.2 (`content-hash` `5ef6154f…`);
+- **8.5:** o `ecidade/composer-85.lock` da PHP8-62, com Laravel 13.43.0 (`content-hash` `e40f4c67…`).
+
+O resultado é o mesmo da tabela acima. Das 30 linhas, 25 saem iguais. As 5 que diferem são:
+
+- os 4 "hoje" que quebram no 13: 3 `TypeError: strlen()` da conexão e o `Error` do `selectRaw(implode(...))`;
+- o `delete` de arquivo inexistente.
+
+As 4 formas ajustadas dão o mesmo SQL do 7.4, e nada sai no stderr dos dois lados.
+
+```bash
+# vendor do 7.4: composer install do ecidade/composer.lock numa pasta a parte (mesmo conteiner do composer-85.sh,
+# --no-scripts --no-plugins --no-autoloader --ignore-platform-reqs) e dump-autoload com ecidade/ montado em /app
+VENDOR=<vendor do 7.4> bash docker/composer-85/roda-isolado.sh 7.4 scratchpad/php8_77_trecho.php /app/vendor/autoload.php /tmp > 74.txt
+bash docker/composer-85/roda-isolado.sh 8.5 scratchpad/php8_77_trecho.php /app/vendor/autoload.php /tmp > 85.txt
+diff 74.txt 85.txt | grep -c '^<'   # 5
+```
+
 ## Lacunas
 
 - Nada foi executado contra banco: os 23 pontos mandam ao PostgreSQL o mesmo texto que mandavam (provado pelo SQL
   gerado), mas o resultado das consultas no 8.5 depende das rotas `/v4` e do Laravel 13 de pé.
 - As 98 `VER` que ficam foram decididas lendo o código. O `default(DB::raw)` de migration não foi executado (só lido).
-- O 8.5 mediu com o Laravel 13 num vendor descartável: o `composer-85.lock` ainda tem o Laravel 8 (estrutura do 8.5,
-  PHP8-79).
+- A primeira medição do 8.5 usou o Laravel 13 num vendor descartável, porque o `composer-85.lock` ainda tinha o
+  Laravel 8. A repetição acima usa a trava do 8.5 com o Laravel 13 (PHP8-62).
