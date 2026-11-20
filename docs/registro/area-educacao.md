@@ -379,7 +379,7 @@ na base; os quatro juntos dão exatamente a árvore final). Commits do Rector e 
 | `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 51 classes `ed*`/`bi*` achadas pela regressão | 481 |
 | `educacao/telas` | Rector nas telas; em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 7 telas; `parse_str` na forma decidida pelo grupo | 532 |
 | `educacao/func` | Rector nas `func_` e `parse_str` na forma decidida pelo grupo (3 commits) — separado: descartável se outra branch de `func_` entrar antes | 258 |
-| `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; este registro | 84 |
+| `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; guardas achadas na regressão final; este registro | 104 |
 
 
 `parse_str` com um argumento usa a forma decidida pelo grupo em 19/11/2026 (decisão 3):
@@ -455,6 +455,46 @@ e 1 `pro` (`pro1_tipoarq002.php`) que o menu da Educação também abre. As `mat
 
 Conclusão: nenhuma das 23 precisa de alteração da Educação; nenhum arquivo delas entra nos PRs.
 
+### Regressão final e causa de cada tela que ainda diverge (20/11/2026)
+
+Nova rodada completa da bateria do grupo (e74, mesmo universo de 1.570 telas) com o código final, seguida da
+classificação **tela a tela** das que ainda divergiam: para cada uma, a mensagem real do erro no 8.5 foi lida com o
+modo de depuração ligado só na sessão de teste, e o 7.4 foi lido com a sessão restaurada, como faz a bateria.
+
+| Bloco | Antes (base) idêntico / diverge | Final idêntico / diverge |
+| --- | --- | --- |
+| Classes (320) | 1 / 317 | 282 / 36 |
+| Sintaxe (1.569) | 1.563 / 2 | 1.565 / 0 |
+| Telas (1.570) | 650 / 851 | 1.072 / 420 |
+
+**Nenhum caso que era idêntico passou a divergir.** A classificação achou 23 arquivos da Educação que ainda lançavam
+erro só no 8.5, onde o 7.4 só avisava e seguia (alguns só apareciam como página cortada no meio, com HTTP 200).
+Corrigidos num commit próprio, cada forma medida nos dois runtimes:
+
+| Expressão | 7.4 | 8.5 | Correção fiel | Arquivos |
+| --- | --- | --- | --- | --- |
+| `pg_num_rows`/`pg_result`/`pg_fetch_assoc` recebendo `false` | aviso, `NULL` | `TypeError` | forma da decisão 2a; chamada aninhada `pg_x(db_query(...))` ganha uma variável | 18 (29 linhas) |
+| `count(null)` | 0 com aviso | `TypeError` | `count((array)$x)` | 3 |
+| `mktime` com `substr` de data vazia | aviso, `false` | `TypeError` | `(is_numeric(ano) ? mktime((int)...) : false)` | 1 (5 linhas) |
+| `$GLOBALS[Sed47_x]` fora de string | aviso, usa o texto | `Error` (constante indefinida) | chave entre aspas | 1 (2 linhas) |
+
+**Prova com o núcleo corrigido** (só no ambiente de teste, desfeita no fim): aplicando as correções de núcleo que já
+existem em outras branches — guardas da decisão 2a em `libs/db_stdlib.php` e `libs/db_utils.php` (`PHP8-31`), e
+`fpdf151/fpdf.php`, `libs/JSON.php`, `dbforms/db_funcoes.php`, `dbforms/db_classesgenericas.php` da
+`nucleo/correcoes-transversais` — mais a assinatura do tratador de erros (abaixo), **347 das 428 telas que divergiam
+ficam idênticas**. Das 20 que sobram, **nenhuma é da Educação**:
+
+- 16 quebram **também no 7.4** (bug antigo, registrado e não corrigido): `bib3_leitorcons002`,
+  `edu1_diarioavaliacao001`, `edu1_diarioavaliacaoobs001`, `mer1_mer_desper_und003` (não compilam);
+  `edu1_grauensino001/002/003` (classe `cl_grauensino` inexistente); `edu1_matriculadependecia002/003` (arquivo de
+  classe inexistente); `edu2_avaliacoesperiodo004`; `edu2_relacaonominal002` (classe de exceção inexistente em
+  `src/Educacao`); `edu3_consultafuncaoexercida003`; `mer1_mer_cardapionutri002/003`; `mer1_mer_cardapioturma002/003`.
+  Divergem só porque a página de erro tem tamanho diferente.
+- 4 param no núcleo: `libs/db_libsys.php:146` e `libs/db_stdlibwebseller.php:437` (`pg_*` com `false`) e
+  `std/DBDate.php:497` (`cal_days_in_month` com mês 0: aviso no 7.4, `ValueError` no 8.5), em 2 telas.
+
+As 61 restantes são inconclusivas (página de erro idêntica nos dois lados ou resposta vazia): a tela não foi exercitada.
+
 ### Fora da Educação (anotado para os donos)
 
 - `libs/db_app.utils.php:39` (`DB_VERSION` indefinida com a sessão da API) e o retorno
@@ -476,5 +516,9 @@ Conclusão: nenhuma das 23 precisa de alteração da Educação; nenhum arquivo 
 - 4 arquivos não compilam nem no 7.4 (pré-existentes): `bib3_leitorcons002`,
   `edu1_diarioavaliacao001` (`<?php` duplicado), `edu1_diarioavaliacaoobs001`,
   `mer1_mer_desper_und003`.
+- `src/V3/Error/Handler/Error.php`: `_handle` e `handle` exigem 5 parâmetros (`$context`), mas o PHP 8 chama o
+  tratador de erros com 4. Todo aviso vira `ArgumentCountError` e a página para no meio (HTTP 200 cortado ou 500).
+  Nenhuma branch corrige ainda; com `$context = null` o comportamento volta ao do 7.4.
+- `libs/db_libsys.php:146`, `libs/db_stdlibwebseller.php:437` e `std/DBDate.php:497`: ver a regressão final acima.
 - Bateria byte a byte (passo 7) bloqueada até o núcleo ser portado; roteamento no nginx
   deliberadamente **não** feito.
