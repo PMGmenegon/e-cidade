@@ -2,9 +2,8 @@
 
 Branch `nucleo/8.5`, criada da `tributario/8.5` (PR #29), que parte de `migracao/parse-str-e-guardas-sql`: o
 `parse_str` de 1 argumento e as guardas `pg_*` dos *wrappers* centrais já vêm de lá e não são refeitos aqui.
-Escopo combinado com o grupo. Ferramentas: o MCP do grupo (`.mcp/`) para reivindicar/liberar arquivos no quadro,
-validar nos dois runtimes (`validar_arquivo_php`) e buscar padrões (`buscar_codigo_legado`); `scratchpad/cmp.py` para
-as baterias.
+Escopo combinado com o grupo. Cada arquivo é reservado e concluído no quadro de trabalho (`.mcp/estado/trabalho.json`),
+com `php -l` nos dois runtimes; as baterias de telas usam `scratchpad/cmp.py` (`docs/como-testamos.md`).
 
 ## 1. Tamanho (20/11/2026)
 
@@ -59,3 +58,56 @@ com mês vazio, `mktime` com texto, assinaturas do `RelatoriosLegaisBase` (Finan
 aparecem `dbforms/db_funcoes.php:1342` (5 telas), `fpdf151/pdf1.php:165` (4), `model/dbGeradorRelatorio.model.php` e
 `model/cda.model.php` com `$s{i}` (8; `model/` não estava no escopo medido do lote 1) e uma divisão de texto em
 `fpdf151/fpdf.php` (1).
+
+## 4. Lote 2 — jpgraph (20/11/2026)
+
+Só três pontos do sistema carregam o jpgraph: `tra_estatdia002.php` (linha, jpgraph de `libs/`; no menu por
+`tra_estatdia001.php`), `libs/jpgraph/ass_rreqtotais002.php` (pizza e pizza 3D, `libs/`; fora do menu) e
+`dbagata/classes/reports/AgataGraph.class` (linha e barra, jpgraph do Agata). O lote ficou no que esses pontos
+carregam; os módulos que ninguém carrega estão no fim desta seção.
+
+Dois commits manuais, só a linha da declaração:
+
+| Arquivo | Método | Mudança |
+|---|---|---|
+| `libs/jpgraph/jpgraph.php`, `dbagata/classes/jpgraph/jpgraph.php` | `GraphTabTitle::SetPos`, `::Stroke` | parâmetros que a mãe (`Text`) tem: acrescentados com padrão, sem uso |
+| `libs/jpgraph/jpgraph.php`, `dbagata/classes/jpgraph/gd_image.inc.php` | `RotImage::FilledArc` | `$style=""`, como na mãe, sem uso |
+| `libs/jpgraph/jpgraph.php` | `SuperScriptText::GetWidth`, `::GetFontHeight` | sem `&`, como na mãe (o método não reatribui `$aImg`) |
+| `libs/jpgraph/jpgraph_pie.php` | `PiePlotC::Stroke`, `PieGraph::Add` | com `&`, como na mãe (não reatribuem; as chamadas passam variável) |
+| `libs/jpgraph/jpgraph_pie3d.php` | `PiePlot3D::Stroke`; `::AddSliceToCSIM` | `&` como na mãe; os 2 últimos parâmetros com padrão (a única chamada passa os 8) |
+| `libs/jpgraph/jpgraph.php` | `JpGraphError::Install`, `::Raise`, `Image::CreateFromString` | `static`: o próprio jpgraph os chama como `Classe::metodo()` e nenhum usa `$this` (no 8.5 é erro fatal) |
+
+Prova:
+- `php -l` nos dois runtimes: 5 de 5 sem erro (antes, os dois `jpgraph.php` falhavam no 8.5).
+- **7.4 inalterado:** `tra_estatdia001`, `tra_estatdia002` e `ass_rreqtotais002` com a mesma resposta antes e depois; os
+  gráficos desenhados direto (linha, linha girada, pizza, pizza 3D, barra, imagem de erro) com a mesma saída ou o
+  mesmo erro antes e depois.
+- **7.4 × 8.5 nas telas:** 3 de 3 idênticas **antes e depois** do lote: `tra_estatdia002` e `ass_rreqtotais002` dão HTTP
+  500 nos dois, porque o jpgraph não desenha nem no 7.4 (defeitos abaixo). O que muda é onde o 8.5 para: antes, na
+  declaração das classes; agora, no mesmo ponto do 7.4.
+- Numa cópia de teste do jpgraph de `libs/` (fora do repositório, igual nos dois runtimes) com os defeitos de
+  carregamento do 7.4 contornados, a imagem de erro do jpgraph sai com **os mesmos pixels no 7.4 e no 8.5** (antes, o
+  8.5 não gerava imagem), e linha e pizza 3D param no mesmo erro nos dois.
+
+Defeitos encontrados, todos já no 7.4 (registrados, não corrigidos):
+
+| Onde | O quê | Efeito no 7.4 |
+|---|---|---|
+| `libs/jpgraph/jpgraph_plotmark.inc:63`, incluído no fim de `libs/jpgraph/jpgraph.php` | `=& new` | erro de sintaxe: nenhum gráfico de `libs/` é desenhado |
+| `libs/jpgraph/jpgraph.php:3225` e `:7064`, `jpgraph_line.php:38`, `jpgraph_pie.php:595` e `:763` (e o mesmo em `jpgraph_bar`, `_canvas`, `_error`, `_log`) | construtor da mãe chamado pelo nome antigo depois de virar `__construct` | `Call to undefined method` |
+| `libs/jpgraph/jpgraph.php:2623` e `:4380` | `Text::GetTextHeight()` não existe; `Ticks::__construct()` chamado sem o argumento | erro fatal |
+| `libs/jpgraph/jpgraph.php:632` | `GenImgName()` lê `$HTTP_SERVER_VARS` (removida no PHP 5.4) | nome de arquivo `'auto'` sempre vira imagem de erro |
+| `dbagata/classes/jpgraph/gd_image.inc.php:2016` | `RotImage` chama `$this->Image()`, que virou `__construct` | `new Graph()` morre: nenhum gráfico do Agata |
+| `dbagata/classes/jpgraph/jpgraph_errhandler.inc.php:192` | chama `adie()`, que não existe | erro fatal quando o erro do jpgraph sai em texto |
+| `dbagata/classes/jpgraph/jpgraph.php:193` | `CheckPHPVersion()` usa `explode()` com expressão regular | aviso (no 8.5, `Warning`) |
+
+Diferenças do 8.5 que ficam para os próximos lotes. Hoje não aparecem, porque o 7.4 falha antes:
+- **Construtores estilo PHP 4 no jpgraph** (24 no jpgraph do Agata, como `Text`, `GraphTabTitle` e `RotImage`, e
+  `PlotMark` em `libs/`). No 8.5 deixam de ser construtores (lote 4). É por isso que, no 8.5, o gráfico do Agata não
+  para em `RotImage::Image()` e estoura a memória ao desenhar.
+- **`imagefilledarc()` com a cor em texto** (`libs/jpgraph/jpgraph.php:6483`): `TypeError` no 8.5, aviso no 7.4.
+- **Assinaturas incompatíveis em módulos que nenhuma tela carrega.** No Agata são 27: `BoxPlot::ModBox`,
+  `DateScale::AutoScale`, `GanttGraph::Add`/`SetScale`, `LogScale::AutoScale`, `OdoGraph::Add`, `OdoNeedle::Stroke`,
+  `PieGraph::Add`, `PiePlotC::StrokeLabel`, `PolarAxis::Stroke`, `PolarGraph::SetScale`, `StockPlot::Stroke`,
+  `TextPropertyBelow::GetColWidth`, mais 7 de `Radar*` e 7 de `Spider*`. Os módulos equivalentes de `libs/` não
+  foram medidos, porque o carregamento para no `plotmark`.
