@@ -34,7 +34,7 @@ require_once modification("fpdf151/assinatura.php");
 require_once modification("libs/db_libcontabilidade.php");
 
 db_postmemory($_POST);
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $clempresto = new cl_empresto;
 $clorcprojativ = new cl_orcprojativ;

@@ -29,7 +29,7 @@
   include(modification("fpdf151/pdf.php"));
   // variaveis de cabeçalho
 
-  parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+  parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
   $sql=base64_decode($sql);
 
   $pega = @db_query("select * from db_gerador where codger=$codigo");

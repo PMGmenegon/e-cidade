@@ -105,7 +105,7 @@ Detalhes em `ecidade://regressao/triagem` e `ecidade://regressao/decisoes` (tool
 | `pg_lo_export($oid, $arq, $conn)` (conexão no fim) | erro de tipo; o arquivo não é exportado | `pg_lo_export_ordem_antiga` | conexão primeiro: `pg_lo_export($conn, $oid, $arq)` |
 | Ternário aninhado sem parênteses `a ? b : c ? d : e` | **erro de compilação** (o 7.4 só avisava) | `ternario_encadeado` (heurística ruidosa; o `php -l` do 8.5 via `validar_arquivo_php` é quem decide) | parênteses explícitos, mantendo a associatividade do 7.4: `(a ? b : c) ? d : e` |
 | `count(null)` / `sizeof` de não contável | `TypeError` **(verificado)** (7.4: warning e seguia) | `count_null` (baixa confiança: acha todos os `count($x)`) | `is_countable($x) ? count($x) : 0` ou `count($x ?? [])` só onde pode ser null |
-| `pg_*` recebendo `false` (consulta que falhou) | `TypeError: pg_numrows(): Argument #1 ($result) must be of type PgSql\Result, false given` **(verificado)** | `pg_resultado_false` (só o caso aninhado `pg_numrows(db_query(...))`) | guardar o resultado e testar `=== false` antes; decisão de negócio sobre a mensagem |
+| `pg_*` recebendo `false` (consulta que falhou) | `TypeError: pg_numrows(): Argument #1 ($result) must be of type PgSql\Result, false given` **(verificado)** | `pg_resultado_false` (só o caso aninhado `pg_numrows(db_query(...))`) | decisão 2a (19/11/2026): reproduzir o 7.4, que devolvia `null` e seguia com a tela vazia: `$rs ? pg_num_rows($rs) : null`. Os wrappers centrais (`db_fieldsmemory`, `db_lovrot`, `db_utils::fieldsMemory`/`getCollectionByRecord`/`makeCollectionFromRecord`, menu do Agata, `cl_estrutura::db_mascara`, `linhaRelatorioContabil`) já fazem isso; chamada direta na tela continua caso a caso |
 | Comparação número × string | `0 == ""` e `0 == "abc"` passam a ser **false** (eram true) **(verificado)** | `comparacao_vazio` para `== ""` (o resto não dá para achar por regex) | regra Rector do grupo `GuardaComparacaoLiteralRector`, em commit separado; prove com `escrita.php` (o caminho de escrita das classes de dados não é exercitado por GET) |
 | Aritmética com texto não numérico | `"abc" + 1` → `TypeError: Unsupported operand types: string + int` **(verificado)**; `"10abc" + 1` só avisa | — | converter/validar a entrada (`(int)`, `is_numeric`); em biblioteca (Agata: acumulador não inicializado) corrigir 1 vez na origem |
 | `implode($array, ',')` (ordem invertida) | `TypeError` **(verificado)** | regex livre: `implode\(\s*\$\w+\s*,\s*['"]` | `implode(',', $array)` |
@@ -208,7 +208,7 @@ Número de ocorrências é teto (comentários e strings também casam).
 
 | Padrão | Ocorrências | Arquivos | Efeito no 8.5 |
 |---|---:|---:|---|
-| `parse_str_1_arg` | 7.645 | 7.560 | **fatal** (tela 500) |
+| `parse_str_1_arg` | 46 (eram 7.645) | 44 (eram 7.560) | **fatal** (tela 500). Na branch `migracao/decisoes-2a-3-11` (19/11/2026) as 7.610 chamadas de verdade em 7.535 arquivos viraram `parse_str(x, $__qs); unset(...); extract($__qs);`; as 46 que sobram são comentários e strings (o analisador de tokens do PHP não acha nenhuma chamada) |
 | `construtor_php4` | 253 | 202 | **silencioso** (construtor não roda); classes com `namespace` ficam de fora (no 7.4 já não eram construtor); só `.php`: 150 arquivos, o grupo mediu 143 |
 | `split` | 368 | 86 | já quebrado no 7.4 |
 | `each` | 85 | 28 | **fatal** |

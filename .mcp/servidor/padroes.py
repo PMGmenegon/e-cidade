@@ -192,11 +192,12 @@ CATALOGO: tuple[Padrao, ...] = (
         "pg_resultado_false", "pg_num_rows/pg_numrows/pg_fetch_* direto sobre db_query()/pg_query()", "php",
         "no 8.0 pg_* com `false` (consulta que falhou) levanta TypeError: `pg_numrows(): Argument #1 must be of "
         "type PgSql\\Result, false given`. No 7.4 era so warning e a tela seguia vazia",
-        "Guarde o resultado e teste antes: `$rs = db_query($sql); if ($rs === false) { ...mensagem/relatorio "
-        "vazio... }`. Decisao de negocio (decisoes-migracao.md, causa 4): reproduzir o silencio ou mostrar erro.",
+        "Decisao 2a (19/11/2026): reproduzir o 7.4, que devolvia null (aviso escondido) e a tela seguia vazia. Os "
+        "wrappers centrais (db_fieldsmemory, db_lovrot, db_utils::fieldsMemory/getCollectionByRecord...) ja fazem "
+        "isso; fora deles, guarde o resultado e devolva o mesmo null: `$rs ? pg_num_rows($rs) : null`. Mostrar "
+        "erro claro e mudanca de comportamento (opcao b, fora da migracao).",
         "$n = pg_numrows(db_query($sql));",
-        "$rs = db_query($sql);\nif ($rs === false) {\n  db_redireciona('db_erros.php?db_erro=...');\n}\n"
-        "$n = pg_num_rows($rs);",
+        "$rs = db_query($sql);\n$n = $rs ? pg_numrows($rs) : null; // como o 7.4: null quando a consulta falha",
         "nao", "media", 40,
         regex=FN + r"pg_(?:num_?rows|num_?fields|fetch_\w+|result|affected_rows|free_result)\s*\(\s*@?\s*"
                    r"(?:db_query|pg_query|pg_exec|pg_query_params)\s*\(",

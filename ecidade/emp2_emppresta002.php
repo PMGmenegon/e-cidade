@@ -42,7 +42,7 @@ $clrotulo->label('e44_descr');
 $clrotulo->label('z01_nome');
 $clrotulo->label('e60_codemp');
 
-parse_str($_SERVER['QUERY_STRING']);
+parse_str($_SERVER['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 //db_postmemory($HTTP_SERVER_VARS,2);exit;
 
 $valortotal = 0;

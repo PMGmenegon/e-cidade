@@ -264,15 +264,29 @@ Um verde só vale para o que foi **exercitado**. Hoje ficam de fora (fonte: seç
 
 ## 8. Decisões pendentes para o gestor
 
-As quatro primeiras vêm de `decisoes-migracao.md` (seção B); as demais apareceram durante o trabalho.
+As quatro primeiras vêm de `decisoes-migracao.md` (seção B); as demais apareceram durante o trabalho. **Situação em
+19/11/2026: as decisões 2 (opção a), 3 e 11 foram tomadas e executadas na branch `migracao/decisoes-2a-3-11`** (ainda
+não publicada nem integrada à `base-php74`); as demais continuam pendentes.
 
 1. **Aprovar a ordem de trabalho**: (1) as 2 linhas do núcleo; (1b) os outros 30 arquivos que não compilam; (2)
    `parse_str`; (3) `0 == ""`; (4) construtor antigo; (5) SQL que falha; depois a cauda tela a tela.
-2. **SQL que falha (428 telas)**: (a) reproduzir o 7.4 num ponto central (a tela sai vazia, sem aviso; 1 a 2 dias) ou
-   (b) mostrar erro claro tela por tela (mudança de comportamento: pela regra "só atualizar", precisa de decisão). A
-   recomendação do documento é (a) agora e (b), se o grupo quiser, como melhoria fora da migração.
-3. **`parse_str`**: confirmar que se segue o precedente da `base-php84` (`parse_str(x, $v); extract($v)`), adaptado ao
-   arquivo do PR, em commit separado do automático.
+2. **SQL que falha (428 telas)**: **TOMADA em 19/11/2026: opção (a)**, feita na branch `migracao/decisoes-2a-3-11`.
+   `db_query()` não muda (continua devolvendo `false`); nos wrappers centrais que recebem o resultado, a chamada
+   `pg_*()` sobre consulta que falhou devolve o mesmo `null` que o 7.4 devolvia (`$rs ? pg_num_rows($rs) : null`):
+   19 linhas em 5 arquivos (`libs/db_stdlib.php`: `db_fieldsmemory` e `db_lovrot`; `libs/db_utils.php`;
+   `libs/db_libsys.php`; `dbforms/db_classesgenericas.php`; `model/linhaRelatorioContabil.model.php`). Cobre a
+   primeira quebra de **304 das 428** telas; as outras **124** quebram no próprio arquivo (122 arquivos: 32
+   Tributário/Patrimonial, 21 Financeiro, 20 Educação, 17 Saúde, 3 Pessoal, 29 sem área) e ficam para a mesma guarda,
+   arquivo a arquivo, por área. Prova: amostra de 36 telas centrais, **31 passaram de DIVERGE a IDENTICO** (bateria
+   e sonda); as 5 restantes mostram a camada seguinte (4 relatórios do Agata sem erro no log, 1 `pg_numrows` na
+   própria tela). Detalhes: `.superpowers/sdd/regressao-php74/task-decisoes-report.md` (local).
+3. **`parse_str`**: **TOMADA em 19/11/2026**, feita na mesma branch. Forma do precedente da `base-php84` na mesma
+   linha, com o filtro do catálogo: `parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`.
+   Script por tokens do PHP: **7.610 chamadas em 7.535 arquivos** (7.603 automáticas em 7.530 arquivos, 8 commits
+   por área; 7 `if` sem chaves feitos à parte, 2 commits manuais). `php -l` nos dois PHPs: os mesmos 3 (7.4) e 4
+   (8.5) arquivos que já não compilavam antes. Prova: 36 telas da bateria, **34 de DIVERGE a IDENTICO** (2 mostram a
+   camada seguinte: `pg_result` na tela e construtor antigo) e 8 janelas `func_*`, **8 de 8** iguais; o 7.4 ficou
+   idêntico a si mesmo em todas.
 4. **`0 == ""`**: aplicar em massa a regra Rector do grupo (4.054 arquivos, um commit automático por área), provando
    com a etapa de classes e os cadastros que o 8.5 grava igual ao 7.4.
 5. **Quando as telas adaptadas passam a ir ao 8.5 no proxy**: até lá, os fluxos de navegador não medem a migração.
@@ -286,8 +300,10 @@ As quatro primeiras vêm de `decisoes-migracao.md` (seção B); as demais aparec
 9. **Janelas `func_*`**: incluir na rotina (`--prefixo '^func_'`) depois do passo de `parse_str`.
 10. **Laravel 13**: a troca do `lcobucci/jwt` (e dos outros 9 pacotes que excluem o PHP 8.5, ver `analisar_composer`)
     é do grupo Laravel; só depois o laboratório mede alguma coisa.
-11. **Formato de commit**: o `CONTRIBUINDO.md` pede `PHP8-NN: descrição`; o histórico recente e o MCP usam "verbo no
-    presente, sem acento, com números". Escolher um.
+11. **Formato de commit**: **TOMADA em 19/11/2026**: vale o do `CONTRIBUINDO.md`, `PHP8-NN: descrição curta`, com NN
+    = número da tarefa do grupo. O MCP sugere commits nesse formato (o número vem de `ECIDADE_MCP_TAREFA`; sem ela sai
+    `NN` com aviso), e os documentos e prompts foram atualizados. Pergunta aberta: quem distribui os números (o
+    documento só dá o exemplo 31, usado nos commits desta branch).
 12. **Ferramentas**: instalar Pint no `vendor/` (hoje o MCP responde `ferramenta_indisponivel`) e decidir se um dia vale
     a abordagem C do MCP (servidor central).
 

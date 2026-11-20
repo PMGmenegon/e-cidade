@@ -33,6 +33,12 @@ class Config:
     expira_horas: float = 4.0
     usuario: str | None = None
     area: str | None = None                  # sua area no grupo (ECIDADE_MCP_AREA): nucleo, educacao, pessoal...
+    tarefa: str | None = None                # numero da tarefa do grupo (ECIDADE_MCP_TAREFA): vira o NN de "PHP8-NN:"
+
+    @property
+    def prefixo_commit(self) -> str:
+        """Prefixo do assunto do commit (CONTRIBUINDO.md, "Commits"): `PHP8-NN:`, NN = numero da tarefa do grupo."""
+        return f"PHP8-{self.tarefa or 'NN'}:"
 
     @property
     def arquivo_estado(self) -> Path:
@@ -64,6 +70,15 @@ def _num(env: Mapping[str, str], nome: str, padrao: float, tipo=float):
     return v
 
 
+def _tarefa(env: Mapping[str, str]) -> str | None:
+    bruto = (env.get("ECIDADE_MCP_TAREFA") or "").strip()
+    if not bruto:
+        return None
+    if not bruto.isascii() or not bruto.isdigit() or len(bruto) > 6:
+        raise ErroFerramenta("config_invalida", f"ECIDADE_MCP_TAREFA={bruto!r}: use so o numero da tarefa (ex.: 31)")
+    return str(int(bruto))
+
+
 def carregar_config(env: Mapping[str, str] | None = None) -> Config:
     env = os.environ if env is None else env
     raiz = Path(env.get("ECIDADE_MCP_RAIZ") or RAIZ_PADRAO).resolve()
@@ -79,4 +94,5 @@ def carregar_config(env: Mapping[str, str] | None = None) -> Config:
         expira_horas=float(_num(env, "ECIDADE_MCP_EXPIRA_HORAS", 4.0)),
         usuario=env.get("ECIDADE_MCP_USUARIO") or None,
         area=env.get("ECIDADE_MCP_AREA") or None,
+        tarefa=_tarefa(env),
     )

@@ -37,12 +37,39 @@ def test_sugestoes_de_commit_com_aspas_de_shell(repo):
     import shlex
     r = co.reivindicar_arquivo(repo, "ecidade/t1.php", "x", quem="ana")
     partes = shlex.split(r["sugestao_commit"])
-    assert partes[-2:] == ["-m", "estado: reivindica ecidade/t1.php"]
+    assert partes[-2:] == ["-m", "PHP8-NN: reivindica ecidade/t1.php no quadro"]
+    assert "ECIDADE_MCP_TAREFA" in r["aviso_commit"]
     r = co.liberar_arquivo(repo, "ecidade/t1.php", quem="ana", concluido=True, padroes_corrigidos=["split"])
     assert shlex.split(r["commit_do_codigo"]) == ["git", "add", "--", "ecidade/t1.php", "&&", "git", "commit", "-m",
-                                                  "Corrige split em 1 arquivo (ecidade/t1.php)",
+                                                  "PHP8-NN: corrige split em ecidade/t1.php",
                                                   "-m", "Padrao-MCP: split"]
     assert "Rector" in r["lembrete"]
+
+
+def test_sugestoes_de_commit_com_o_numero_da_tarefa(repo):
+    """Formato do CONTRIBUINDO.md: `PHP8-NN: descricao curta`, com NN vindo de ECIDADE_MCP_TAREFA."""
+    import dataclasses
+    import shlex
+    cfg = dataclasses.replace(repo, tarefa="31")
+    r = co.reivindicar_arquivo(cfg, "ecidade/t2.php", "x", quem="ana")
+    assert shlex.split(r["sugestao_commit"])[-1] == "PHP8-31: reivindica ecidade/t2.php no quadro"
+    assert "aviso_commit" not in r
+    r = co.liberar_arquivo(cfg, "ecidade/t2.php", quem="ana", concluido=True, padroes_corrigidos=["parse_str_1_arg"])
+    assert "PHP8-31: corrige parse_str_1_arg em ecidade/t2.php" in shlex.split(r["commit_do_codigo"])
+    r = co.proximo_trabalho(cfg, padrao="split", quem="ana", reivindicar=True)
+    assert shlex.split(r["sugestao_commit"])[-1] == "PHP8-31: reivindica lote de split no quadro"
+    assert co.padroes_ja_corrigidos(cfg, git_runner=git_falso())["convencao_commit"].startswith(
+        "assunto no formato do CONTRIBUINDO.md: 'PHP8-31: descricao curta'")
+
+
+def test_tarefa_do_commit_vem_do_ambiente():
+    from servidor.config import carregar_config
+    assert carregar_config({"ECIDADE_MCP_TAREFA": " 031 "}).prefixo_commit == "PHP8-31:"
+    assert carregar_config({}).prefixo_commit == "PHP8-NN:"
+    for ruim in ("31a", "-3", "PHP8-31", "1234567", "３１"):
+        with pytest.raises(ErroFerramenta) as e:
+            carregar_config({"ECIDADE_MCP_TAREFA": ruim})
+        assert e.value.codigo == "config_invalida", ruim
 
 
 def test_area_do_arquivo_pela_tabela_do_grupo():

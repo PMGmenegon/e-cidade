@@ -38,7 +38,7 @@ $clrotulo->label('k11_anousu');
 $clrotulo->label('k11_libera');
 $clrotulo->label('nomeinst');
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 //db_postmemory($HTTP_SERVER_VARS,2);exit;
 
 //verifica se as datas estão setadas para montar o where

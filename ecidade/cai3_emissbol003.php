@@ -109,7 +109,7 @@ $pdf->Cell($CoL6,5,"VALOR",1,1,"C",0);
 //$pdf->Cell($CoL7,5,"NUMPRE",1,0,"C",0);
 //$pdf->Cell($CoL8,5,"PARCELA",1,1,"C",0);
 
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $exercicio = $GLOBALS["DB_anousu"];
 //echo
 //$sql  = "select distinct a.k12_id,a.k12_data,a.k12_autent,

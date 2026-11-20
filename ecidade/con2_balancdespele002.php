@@ -35,7 +35,7 @@ include(modification("dbforms/db_balanc_desp.php"));
 $classinatura = new cl_assinatura;
 
 //db_postmemory($HTTP_SERVER_VARS,2);exit;
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $estrut = str_replace('.', '', $elemento);
 //echo $estrut;exit;

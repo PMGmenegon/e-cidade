@@ -54,7 +54,7 @@ use ECidade\Tributario\Arrecadacao\Repository\TaxaEspecifica as TaxaEspecificaRe
 use ECidade\Tributario\Arrecadacao\Service\TaxaEspecifica as TaxaEspecificaService;
 
 $historico = "";
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 db_postmemory($_SERVER);
 db_postmemory($_GET);
 db_postmemory($_POST);

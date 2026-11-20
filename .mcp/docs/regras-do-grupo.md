@@ -48,7 +48,7 @@ git pull
 git checkout -b area/assunto           # ex.: financeiro/each-removido
 # ... trabalhe; a cada coisa pronta:
 git add arquivo1.php arquivo2.php      # sempre arquivo por arquivo
-git commit -m "Troca each() por foreach em 3 arquivos (5 linhas)"
+git commit -m "PHP8-31: troca each() por foreach em 3 arquivos"   # PHP8-NN: NN = número da tarefa do grupo
 git pull origin base-php74             # resolva conflitos do seu lado
 # abra o pull request de area/assunto para base-php74 (o coordenador aceita)
 ```
@@ -68,7 +68,7 @@ Nome da branch: `area/assunto`, minúsculo, sem espaço.
 | **Não limpar registros de auditoria** | Gravação de auditoria feita pelo próprio sistema durante o teste fica como está. |
 | **Seguir precedente** | Se o grupo já resolveu um caso igual de um jeito, siga o mesmo jeito e registre a diferença medida (ex.: `break` fora de laço virou `exit`). |
 | **Regressão em área de outro** | Só documentar e avisar o dono. |
-| **Commits** | Assunto começando com **verbo no presente, sem acento, com números** (ex.: `Troca $s{i} por $s[i] em 20 arquivos (20 linhas)`); corpo dizendo o que foi medido. O `CONTRIBUINDO.md` pede o prefixo `PHP8-NN:`, mas o histórico do grupo não usa (decisão em aberto). |
+| **Commits** | Formato do `CONTRIBUINDO.md`: **`PHP8-NN: descrição curta`**, NN = número da tarefa do grupo (ex.: `PHP8-31: troca $str{i} por $str[i] em db_stdlib.php`); corpo dizendo o que foi medido. Decidido em 19/11/2026 (decisão 11); o histórico anterior, com "verbo no presente" sem prefixo, fica como está. |
 | **Documentos autocontidos** | Cada registro em `docs/registro/` se explica sozinho, sem citar ferramentas internas nem nomes de quem fez. **Falha de segurança nunca vai para o repositório.** |
 
 ## Usar a `base-php84` como guia, com cuidado
@@ -117,7 +117,8 @@ comporta como o 7.4, não mexa. Se precisa mexer, parta do arquivo da `base-php7
 - `reivindicar_arquivo` recusa arquivo de outra área (`outra_area`) se você informar a sua; `proximo_trabalho` só
   devolve arquivos da sua área e na ordem **não compila no 8.5 > quebra em execução > silencioso > obsoleto**.
 - `buscar_codigo_legado` lê o código como ISO-8859-1 e nunca grava nada.
-- As sugestões de commit seguem o formato do histórico do grupo e lembram de separar Rector de manual.
+- As sugestões de commit seguem o formato `PHP8-NN: descrição curta` (o NN vem de `ECIDADE_MCP_TAREFA`; sem ela, a
+  sugestão sai com `NN` e um aviso para trocar) e lembram de separar Rector de manual.
 - Os prompts `migrar-arquivo` e `corrigir-padrao-mecanico` repetem: mínimo no arquivo do PR, nada copiado da
   `base-php84`, prova 7.4 × 8.5 antes e depois, ISO-8859-1, commit do Rector separado, defeito registrado e não
   corrigido.

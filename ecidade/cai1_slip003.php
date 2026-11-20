@@ -5,7 +5,7 @@ require_once modification("classes/db_saltes_classe.php");
 
 $clsaltes = new cl_saltes;
 
-parse_str(base64_decode($_SERVER['QUERY_STRING']));
+parse_str(base64_decode($_SERVER['QUERY_STRING']), $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $motivo = "";
 // Dados
