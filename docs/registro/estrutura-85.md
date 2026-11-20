@@ -3,8 +3,8 @@
 **Resumo:** o PHP 8.5 ganha composer, trava e `vendor/` próprios, sem mudar nada que o 7.4 lê. A lista é
 `ecidade/composer-85.json`, a trava `ecidade/composer-85.lock`, e o `vendor/` fica em `runtime-85/vendor/`, fora de
 `ecidade/` e fora do git. A sobreposição de classes só do 8.5 fica em `ecidade/app-85/`: só o PSR-4 do
-`composer-85.json` a enxerga. Hoje o `composer-85.json` é a cópia do `composer.json` do PR com uma linha a mais (a
-sobreposição), e o `composer-85.lock` é a cópia byte a byte do `composer.lock` do PR. O `composer install` no 8.5 passa
+`composer-85.json` a enxerga. Hoje o `composer-85.json` é a cópia do `composer.json` do PR com duas diferenças: a
+sobreposição no PSR-4 e o `allow-plugins` só com o `cweagans/composer-patches`. O `composer-85.lock` é a cópia byte a byte do `composer.lock` do PR. O `composer install` no 8.5 passa
 com 165 pacotes, ignorando só o teto de versão do PHP, que 10 pacotes ainda pedem (lista abaixo). O desenho reaproveita
 o do runtime novo da base anterior (`composer-runtime-novo.json`, `app-runtime-novo/`, `vendor/` montado por cima).
 
@@ -57,11 +57,11 @@ versão do Composer, e essas são fixas.
 
 ```bash
 # gerar/atualizar a trava (resolve no 8.5; nao instala)
-bash docker/composer-85/composer-85.sh update --no-install --no-scripts --no-plugins --ignore-platform-req=php+ [pacotes]
+bash docker/composer-85/composer-85.sh update --no-install --no-scripts --ignore-platform-req=php+ [pacotes]
 # instalar o vendor/ do 8.5 a partir da trava (runtime-85/vendor)
-bash docker/composer-85/composer-85.sh install --no-scripts --no-plugins --ignore-platform-req=php+
+bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+
 # depois de criar/mudar classe em ecidade/app-85/
-bash docker/composer-85/composer-85.sh dump-autoload --no-scripts --no-plugins
+bash docker/composer-85/composer-85.sh dump-autoload --no-scripts
 # conferir
 bash docker/composer-85/composer-85.sh validate --no-check-publish
 bash docker/composer-85/composer-85.sh prohibits php 8.5.12 --locked
@@ -77,6 +77,29 @@ Depois disso o `composer install` do 7.4 não consegue gravar nela (`Permission 
 o script cria `ecidade/vendor` antes do `docker run`, vazia e com o dono de quem chama: fica no mesmo estado de um
 checkout sem `vendor/`. Se a pasta já existe, nada nela é tocado. Medido num worktree novo, antes e depois da
 correção: `root:root 755` × `<usuário>:<grupo> 775`, gravável e vazia, com `validate` rc=0.
+
+**Repositório do `dbseller/session` por HTTPS:** o `composer.json` do PR declara o repositório vcs
+`git@github.com:DBSeller/Session.git` (SSH), e a imagem não tem `ssh`. Sem ajuste, o `update` para em
+`error: cannot run ssh: No such file or directory`. O script passa ao `git` do contêiner
+`GIT_CONFIG_COUNT=1`, `GIT_CONFIG_KEY_0=url.https://github.com/.insteadOf` e `GIT_CONFIG_VALUE_0=git@github.com:`, e o
+clone sai por HTTPS (repositório público), sem mudar o `composer-85.json`. Medido em 20/11: `update dbseller/session
+--no-install --dry-run` com rc=0 e o espelho em `composer-home/cache/vcs/git-github.com-DBSeller-Session.git`. O
+`update` de todos os pacotes passa do SSH, mas a resolução ainda não fecha com as versões que o PR fixa: o Composer
+2.11 recusa algumas delas. Sair dessas versões é das tarefas que trocam pacotes (PHP8-60, PHP8-87, PHP8-91 e
+PHP8-62), que regeram a trava.
+
+**Plugins: só o de patches.** Os comandos rodam **sem `--no-plugins`**, para o `cweagans/composer-patches` aplicar os
+patches que as tarefas de pacote declaram em `extra.patches` (por exemplo, o patch da dompdf no 8.5). O
+`config.allow-plugins` do `composer-85.json` libera só ele: `{"cweagans/composer-patches": true}`. O PR libera
+`kylekatarnls/update-helper` e `symfony/flex`, mas nenhum dos dois está na trava, e o 7.4 continua com a lista do PR.
+Prova com um patch de teste, num worktree descartável e fora do commit:
+- o `composer-85.json` ganhou `cweagans/composer-patches` `^1.7` (resolveu 1.7.3) e um patch de uma linha no
+  `Readme.md` do `michelf/php-markdown`;
+- `update cweagans/composer-patches michelf/php-markdown` saiu com rc=0 e `Applying patches for michelf/php-markdown`,
+  com a linha no arquivo;
+- apagado o pacote, o `install` da trava nova saiu com rc=0 e reaplicou o patch.
+
+A imagem tem `patch` e `git`. O `install` real, com a trava de hoje e sem `--no-plugins`, sai com rc=0.
 
 **`--no-scripts` sempre, por enquanto:** os scripts do `composer.json` do PR chamam `$(which php7.4)`, e o
 `package:discover` precisa do Laravel de pé. Ligar os scripts no 8.5 é da etapa da inicialização (PHP8-62).
@@ -119,7 +142,8 @@ lista nada.
 - **Trava:** `composer-85.lock` tem o mesmo `sha256` do `composer.lock` (`38fe5a63…`, `content-hash`
   `5ef6154f379714faf53777f1d4c8d0d1`). O `validate` não acusa trava desatualizada: a linha a mais do
   `composer-85.json` é de `autoload`, que não entra no `content-hash`.
-- **Instalação:** `install --no-scripts --no-plugins --ignore-platform-req=php+` com rc=0: 165 pacotes (136 + 29 de
+- **Instalação:** `install --no-scripts --ignore-platform-req=php+` com rc=0 (medida feita com `--no-plugins`, antes da
+  regra dos plugins; sem plugin na trava, o resultado é o mesmo): 165 pacotes (136 + 29 de
   desenvolvimento, os mesmos do 7.4), 3 min 10 s, `runtime-85/vendor` com 264 MB. Os avisos de classe fora do PSR-4
   (`app/` e `tests/`) são os mesmos do 7.4 (código de hoje).
 - **Sobreposição:** com uma cópia temporária de `app/Exceptions/Handler.php` em `app-85/Exceptions/Handler.php`
