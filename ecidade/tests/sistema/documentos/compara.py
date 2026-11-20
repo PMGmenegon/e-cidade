@@ -6,12 +6,11 @@ import base64, hashlib, io, json, os, re, subprocess, sys, tempfile, zipfile
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
 RODA = os.path.join(RAIZ, 'docker/composer-85/roda-isolado.sh')
-IMAGENS = {'7.4': 'ecidade-php74-cli', '8.5': 'ecidade-composer-85:2.11.2'}
 GERADORES = ['gera_dompdf', 'gera_mpdf', 'gera_planilha', 'gera_word', 'gera_etiquetas']
 
 
 def roda(versao, gerador):
-    env = dict(os.environ, IMAGEM=IMAGENS[versao])
+    env = dict(os.environ)
     if versao == '7.4':
         env['VENDOR'] = os.path.join(RAIZ, 'runtime-85/referencia-74/vendor')  # vendor do composer.lock do PR
     p = subprocess.run(['bash', RODA, versao, os.path.join(os.path.dirname(__file__), gerador + '.php')],
@@ -40,15 +39,19 @@ def resumo_pdf(b):
         texto = sh('pdftotext', '-layout', f.name, '-')
         bbox = sh('pdftotext', '-bbox', f.name, '-')
         palavras = re.findall(r'<word xMin="([\d.]+)" yMin="([\d.]+)"[^>]*>(.*?)</word>', bbox)
+        with tempfile.TemporaryDirectory() as td:
+            subprocess.run(['pdftoppm', '-r', '80', '-png', f.name, td + '/p'], capture_output=True)
+            visual = hashlib.sha256(b''.join(open(os.path.join(td, n), 'rb').read() for n in sorted(os.listdir(td)))).hexdigest()
         imgs = [re.sub(r'^\s*\d+\s+\d+\s+', '', l) for l in sh('pdfimages', '-list', f.name).splitlines()[2:]]
         return {'paginas': paginas, 'tamanho': tam, 'texto': texto,
                 'posicoes': [(round(float(x), 1), round(float(y), 1), w) for x, y, w in palavras],
-                'imagens': [' '.join(l.split()[:4]) for l in imgs]}
+                'imagens': [' '.join(l.split()[:4]) for l in imgs], 'visual': visual}
 
 
 def norm_xml(b):
     s = b.decode('utf-8', 'replace')
     s = re.sub(r'(<(?:dcterms:created|dcterms:modified|cp:lastModifiedBy|dc:creator|Application|meta:creation-date|dc:date)[^>]*>)[^<]*', r'\1', s)
+    s = s.replace('&#039;', "'").replace('&apos;', "'")  # htmlspecialchars: o padrao do 8.1+ escapa aspas simples (XML equivalente)
     s = re.sub(r'\b(rsid\w*|w14:paraId|w14:textId)="[0-9A-Fa-f]+"', '', s)
     return s
 
@@ -90,8 +93,14 @@ def main():
                 chaves = [k for k in r74 if r74[k] != r85.get(k)] if isinstance(r74, dict) and all(k in r85 for k in r74) else ['conteudo']
                 print('  DIFERE  %s: %s' % (nome, ', '.join(str(k)[:60] for k in chaves[:8])))
         for rotulo, av in (('7.4', a74), ('8.5', a85)):
-            for t, n in sorted(__import__('collections').Counter(re.sub(r' in /app/.*| on line \d+', '', a)[:110] for a in av).items()):
-                print('  aviso %s x%d: %s' % (rotulo, n, t))
+            if av:
+                pacotes = __import__('collections').Counter(
+                    (re.search(r'in /app/vendor/([^/]+/[^/]+)', a) or re.search(r'in (/\S+?)(?::| on)', a) or [0, 'outro'])[1] if re.search(r' in /', a) else 'outro'
+                    for a in av)
+                proprios = sorted({re.sub(r'\d+', 'N', re.sub(r'^(\w+): ', '', a))[:170] for a in av if re.search(r' in /app/(app|src|std|classes|libs)/', a)})
+                for pr in proprios[:6]:
+                    print('    codigo proprio %s: %s' % (rotulo, pr))
+                print('  avisos %s: %d (%s)' % (rotulo, len(av), ', '.join('%s=%d' % kv for kv in pacotes.most_common(6))))
     print('DIFERENCAS: %d' % dif)
     sys.exit(1 if dif else 0)
 

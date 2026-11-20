@@ -11,7 +11,7 @@ date_default_timezone_set('America/Sao_Paulo');
 require '/app/vendor/autoload.php';
 require_once '/app/src/Core/Autoloader.php'; // namespace ECidade\ (como bootstrap.php, sem as outras dependencias do bootstrap)
 $ecidadeLoader = new ECidade\Core\Autoloader();
-$ecidadeLoader->addNamespace('ECidade\\', ECIDADE_PATH . 'src/');
+$ecidadeLoader->addNamespace('ECidade\\', ECIDADE_PATH . 'src/', false, false); // sem modification()
 $ecidadeLoader->register();
 
 function emitir($nome, $bytes)

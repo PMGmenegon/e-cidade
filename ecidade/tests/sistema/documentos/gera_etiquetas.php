@@ -4,21 +4,23 @@ require __DIR__ . '/lib.php';
 
 use App\Domain\Patrimonial\Patrimonio\Builders\EtiquetaModelo01Builder;
 use App\Domain\Patrimonial\Patrimonio\Builders\EtiquetaModelo02Builder;
-use App\Domain\Patrimonial\Patrimonio\Relatorios\EtiquetasPimacoPDF;
 
-class EtiquetasParaTeste extends EtiquetasPimacoPDF
+// EtiquetasPimacoPDF::gerar() faz addTag + WriteHTML(render) + Output em arquivo, e o construtor dela nao repassa o tempDir do mPDF
+// (no runtime o padrao, vendor/mpdf/mpdf/tmp, e gravavel; aqui o vendor e somente leitura). Esta subclasse do Pimaco repete essas
+// tres linhas com o tempDir em /tmp e devolve o PDF em string; as tags vem dos Builders reais.
+class EtiquetasParaTeste extends \Proner\PhpPimaco\Pimaco
 {
-    private $tags;
+    private $dados;
 
-    public function __construct($tags, $template, $path = null)
+    public function __construct($dados, $template, $path)
     {
-        parent::__construct($tags, $template, $path);
-        $this->tags = $tags;
+        parent::__construct($template, $path, '/tmp/mpdf/');
+        $this->dados = $dados;
     }
 
     public function pdfEmString()
     {
-        foreach ($this->tags as $tag) {
+        foreach ($this->dados as $tag) {
             $this->addTag($tag);
         }
         $this->pdf->WriteHTML($this->render());
