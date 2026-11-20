@@ -242,3 +242,14 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
 título num desses arquivos (`grep -rn "Seção X" docs/registro/`).
+
+## Suíte de regressão e servidor MCP (base 7.4)
+
+- **Suíte de regressão** (`regressao/`): compara a referência PHP 7.4/Laravel 8 com o PHP 8.5 (telas, POSTs,
+  relatórios, rotas `/v4`, fluxos de navegador). Como usar, em português simples: `regressao/COMO-USAR.md`;
+  detalhe técnico: `regressao/README.md`. Roda num ambiente próprio (projeto compose `e74`, contêineres
+  `ecidade74_*`, portas 8074/8185/8190/8187), que não mexe na pilha da raiz (8080/8085/8090).
+- **Servidor MCP** (`.mcp/`): regras do grupo, busca de padrões legados, validação no 7.4 e no 8.5, regressão e
+  coordenação de quem mexe em qual arquivo, para qualquer IA. Instalação em 3 passos: `.mcp/README.md`.
+- As regras do grupo (`CONTRIBUINDO.md`) valem igual para a suíte e o MCP: arquivo por arquivo no `git add`,
+  ISO-8859-1, cada um na sua área. Um veredito INCONCLUSIVO ou ERRO_AMBIENTE da suíte nunca conta como aprovação.
