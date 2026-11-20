@@ -2,6 +2,8 @@
 // App\Domain\Assinador\CertificadoUsuario declara 'c142_data' => 'DateTime' (nome de classe, nao 'datetime'): o Eloquent o trata como cast
 // de CLASSE (class_exists('DateTime')), nao como cast de data. Mede leitura e escrita do modelo real, sem banco.
 require '/app/vendor/autoload.php';
+// o arquivo do PR e carregado de proposito, antes do autoload: a sobreposicao do 8.5 (app-85/), se existir, vence no PSR-4 e mediria outro codigo
+require_once '/app/app/Domain/Assinador/CertificadoUsuario.php';
 use App\Domain\Assinador\CertificadoUsuario;
 
 // formato de data fixo: sem ele o modelo pede a conexao ao banco (getDateFormat) e o trecho nao tem banco

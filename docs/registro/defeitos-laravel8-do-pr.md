@@ -1,6 +1,6 @@
 # Defeitos do Laravel 8 do PR #8 já presentes no PHP 7.4
 
-Registro de dez famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as quatro seguintes lidas no código a oitava rodada com o `artisan` (sem banco e sem rede), a nona lida no inventário das chamadas do front a `/v4` e a décima medida no modelo `CertificadoUsuario` (sem banco e sem rede).
+Registro de dez famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as quatro seguintes lidas no código, a oitava rodada com o `artisan` (sem banco e sem rede), a nona lida no inventário das chamadas do front a `/v4` e a décima medida no modelo `CertificadoUsuario` (sem banco e sem rede).
 São herança do código escrito para o Laravel 5.4 e rodado sobre o Laravel 8: não dependem do PHP 8.5 e **não foram corrigidos aqui** (só registro, para o grupo e para a DBSeller decidirem).
 
 | Família | Pontos na `base-php74` | Efeito no 7.4 |
@@ -136,6 +136,7 @@ Conferência: `awk -F'\t' 'NR>1 && $6=="sem_rota"' docs/registro/inventario-v4-c
 | escrita de outro atributo (`c142_codigo`) | normal | igual |
 
 Ou seja: gravar um certificado já falhava no 7.4 (defeito herdado, não corrigido aqui); o que o Laravel 13 acrescenta é a **leitura** quebrar (o Laravel 8 lia por causa do `strtolower` no tipo do cast). A sobreposição do 8.5 dessa classe (`app-85/`, tarefa de Eloquent e datas) cobre a leitura e mantém a escrita como no 7.4.
+O trecho carrega de propósito o arquivo do PR (`app/Domain/Assinador/CertificadoUsuario.php`) nos dois lados, antes do autoload: a sobreposição do 8.5 (`app-85/`), quando existe, vence no PSR-4 e mediria outro código.
 Conferência: `bash ecidade/tests/sistema/defeitos-laravel/roda.sh 09_cast_datetime.php`.
 
 ## 11. Revalidação no Laravel 13.43 (PHP 8.5)
