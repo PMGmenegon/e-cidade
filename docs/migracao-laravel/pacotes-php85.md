@@ -124,7 +124,7 @@ o PDF grava a data de criação.
 
 | Pacote | Uso real reproduzido | Casos | Diferentes |
 |---|---|---|---|
-| dompdf | `CapaDoDocumento`/`CapaDoDespacho` sobre o HTML dos 4 templates `resources/views/layouts/documentos-template/capa-do-*.blade.php` (compilados pelo Blade do PR, dados fixos, logo PNG e JPG): completa; sem logo, sem titular e texto curto; texto longo | 12 PDFs | 0 (também a 300 dpi e na posição de cada palavra, `pdftotext -bbox`) |
+| dompdf | `CapaDoDocumento`/`CapaDoDespacho` sobre o HTML dos 4 templates `resources/views/layouts/documentos-template/capa-do-*.blade.php` (compilados pelo Blade de cada lado, dados fixos, logo PNG e JPG): completa; sem logo, sem titular e texto curto; texto longo | 12 PDFs | 0 (também a 300 dpi e na posição de cada palavra, `pdftotext -bbox`) |
 | mPDF | `forms/pdf_lovrot.php` (ISO-8859-1, CSS, cabeçalho com imagem, rodapé `{PAGENO}/{nbpg}`), `RelatorioSubcontratacaoController` (opções, CSS, `SetHTMLHeader`, `AddPage` com margens), `db_download_todos_arquivos_visualizador.php` (`Image` por página) e o writer `Mpdf` do PhpSpreadsheet de `src/Library/SpreadSheet/Template/Parser.php` (paisagem e retrato) | 5 PDFs | 0 |
 | Faker | `database/factories/ModelFactory.php` (`name`, `unique()->safeEmail`), sementes 1, 42 e 2026 | 150 | 0 |
 | laminas-escaper | sem chamada no código do e-cidade; é usado pelo writer HTML do PhpWord. `escapeHtml`, `escapeHtmlAttr`, `escapeJs`, `escapeUrl` e `escapeCss` sobre 11 entradas (acentos, `<>&"'`, controle, UTF-8 inválido) | 55 | 0 |
@@ -134,6 +134,30 @@ o PDF grava a data de criação.
 
 A `ModelFactory.php` não roda no Laravel 8 do PR, por defeito de antes desta tarefa
 (`docs/registro/defeitos-laravel8-do-pr.md`). Aqui se prova só o que ela pede ao Faker.
+
+## Com o Laravel 13 na trava do 8.5
+
+A trava do 8.5 passou a ter o Laravel 13.43.0 (PHP8-62). Nenhum dos 9 pacotes desta tarefa muda de versão com ela:
+dompdf 0.8.6 com o patch, mPDF 8.2.6, PhpSpreadsheet 1.29.1, PhpWord 0.18.3, htmlpurifier 4.19.0, laminas-escaper
+2.18.0, nette/schema 1.3.3, nette/utils 4.0.8 e Faker 1.10.0 continuam como estavam. Mudam pacotes que esses usos
+atravessam, e a prova os alcança:
+
+- o Blade que compila as capas (`laravel/framework` 13): o `roda.sh` compila o HTML das capas nos dois lados e compara
+  os 12 antes do dompdf;
+- o `Str::markdown` (`laravel/framework` 13 e `league/commonmark` 2.10.7), por onde entram os pacotes `nette`;
+- o `mpdf/psr-http-message-shim` 2.0.1, o `psr/log` 2.0.0 e o `psr/simple-cache` 3.0.0, que o mPDF e o PhpSpreadsheet
+  carregam.
+
+O `composer-85.sh install --no-scripts --ignore-platform-req=php+` sobre a trava do Laravel 13 instala o dompdf com o
+patch: o `diff -r` contra o do 7.4 mostra só as 2 linhas e o `PATCHES.txt`. Com essa trava, o mesmo `roda.sh` dá:
+
+| O quê | Casos | Diferentes |
+|---|---|---|
+| HTML das capas compilado pelo Blade (Laravel 8.73.2 no 7.4, 13.43.0 no 8.5) | 12 | 0 |
+| dompdf | 12 PDFs | 0 |
+| mPDF | 5 PDFs | 0 |
+| Faker | 150 | 0 |
+| laminas-escaper, htmlpurifier, nette, PhpWord | 55, 11, 6, 1 | 0 |
 
 ## Lacunas
 
