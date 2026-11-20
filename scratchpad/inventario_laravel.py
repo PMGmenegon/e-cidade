@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""T-039: inventario do codigo proprio do Laravel (ecidade/app, routes, configuration, bootstrap, database, public, tests)
-contra as quebras documentadas nos guias oficiais de upgrade 5.5 -> 13 (raw.githubusercontent.com/laravel/docs/<versao>/upgrade.md).
+"""Inventario do codigo proprio do Laravel (ecidade/app, routes, configuration, bootstrap, database, public, tests, resources)
+contra as quebras documentadas nos guias oficiais de upgrade 9 -> 13 (raw.githubusercontent.com/laravel/docs/<versao>/upgrade.md).
 
 Somente leitura. Uso (da raiz do repositorio):
   python3 scratchpad/inventario_laravel.py contagem                 # item 1 do relatorio: o que existe no codigo proprio
-  python3 scratchpad/inventario_laravel.py guias <pasta-dos-guias>  # baixa os 12 guias (precisa de rede)
+  python3 scratchpad/inventario_laravel.py guias <pasta-dos-guias>  # baixa os guias 9 a 13 (precisa de rede)
   python3 scratchpad/inventario_laravel.py itens <pasta-dos-guias>  # TSV: uma linha por quebra dos guias, com ocorrencias
   python3 scratchpad/inventario_laravel.py helpers                  # funcoes globais do codigo proprio x helpers do Laravel
+  python3 scratchpad/inventario_laravel.py ocorrencias <pasta-dos-guias>  # TSV com todas as ocorrencias (arquivo:linha)
   python3 scratchpad/inventario_laravel.py md <itens.tsv>           # tabela markdown so dos itens em que o codigo usa algo
 Cada padrao e uma regex (PCRE-ish do Python) aplicada linha a linha; "0" significa que o padrao nao casou em nenhuma linha.
 Padrao nao e prova de ausencia semantica (ex.: uma chamada dinamica nao aparece); a coluna 'tipo' diz quando e so um sinal.
@@ -14,7 +15,7 @@ Padrao nao e prova de ausencia semantica (ex.: uma chamada dinamica nao aparece)
 import os, re, sys, glob, collections
 
 RAIZ = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ecidade')
-ESCOPO = ['app', 'routes', 'configuration', 'bootstrap', 'database', 'public', 'tests']
+ESCOPO = ['app', 'routes', 'configuration', 'bootstrap', 'database', 'public', 'tests', 'resources']
 VERSOES = ['9.x', '10.x', '11.x', '12.x', '13.x']  # guias 9 a 13 (o 8 ja e o do PR)
 PULA = {'High Impact Changes', 'Medium Impact Changes', 'Low Impact Changes'}
 

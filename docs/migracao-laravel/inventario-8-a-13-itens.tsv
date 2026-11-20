@@ -1,10 +1,10 @@
 versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motivo	tarefa
 9.x	Upgrading To 9.0 From 8.x	NAO APLICA				manual	titulo de secao
-9.x	Estimated Upgrade Time: 30 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-9.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-9.x	PHP 8.0.2 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-9.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-9.x	PHP Return Types	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+9.x	Estimated Upgrade Time: 30 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+9.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+9.x	PHP 8.0.2 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+9.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+9.x	PHP Return Types	NAO USA				manual	conferido a mao: so ha private function count em PodeTotalizar.php:9, usado por RelatorioPDF (extends Pdf) e RelatorioCSV (extends Dumper), nao por classe do Laravel
 9.x	Application	NAO APLICA				manual	titulo de grupo
 9.x	The Application Contract	NAO USA	0	0		uso	Contracts\\Foundation\\Application	
 9.x	Exception Handler ignore Method	NAO USA	0	0		uso	function\s+ignore\s*\(|->ignore\(	
@@ -77,14 +77,14 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 9.x	Unvalidated Array Keys	USA	82	37	app/Domain/RecursosHumanos/ESocial/Controller/ExameToxicologicoController.php:21 app/Domain/RecursosHumanos/Pessoal/Controller/ContraChequesController.php:119 app/Domain/Integracoes/EFDReinf/Controllers/ConfiguracaoController.php:37	sinal	->validated\s*\(|->validate\s*\(	PHP8-94
 9.x	Miscellaneous	MANUAL				manual	o guia so remete ao diff do esqueleto laravel/laravel entre versoes; nao ha lista de quebras para varrer
 10.x	Upgrading to 10.0 from 9.x	NAO APLICA				manual	titulo de secao
-10.x	Estimated Upgrade Time: 10 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-10.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-10.x	PHP 8.1.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-10.x	Composer 2.2.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-10.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+10.x	Estimated Upgrade Time: 10 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+10.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+10.x	PHP 8.1.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+10.x	Composer 2.2.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+10.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 10.x	Minimum Stability	USA	1	1	composer.json:96	config	minimum-stability	PHP8-62
 10.x	Application	NAO APLICA				manual	titulo de grupo
-10.x	Public Path Binding	USA	12	1	routes/api/educacao/files.php:5 routes/api/educacao/files.php:9 routes/api/educacao/files.php:13	uso	path\.public|public_path\(	PHP8-62
+10.x	Public Path Binding	NAO USA	0	0		uso	path\.public	
 10.x	Authorization	NAO APLICA				manual	titulo de grupo
 10.x	The registerPolicies Method	USA	1	1	app/Providers/AuthServiceProvider.php:29	uso	registerPolicies	PHP8-39
 10.x	Cache	NAO APLICA				manual	titulo de grupo
@@ -114,11 +114,11 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 10.x	Form Request After Method	NAO USA	0	0		uso	function\s+after\s*\(	
 10.x	Miscellaneous	MANUAL				manual	o guia so remete ao diff do esqueleto laravel/laravel entre versoes; nao ha lista de quebras para varrer
 11.x	Upgrading To 11.0 From 10.x	NAO APLICA				manual	titulo de secao
-11.x	Estimated Upgrade Time: 15 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-11.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-11.x	PHP 8.2.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-11.x	curl 7.34.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-11.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+11.x	Estimated Upgrade Time: 15 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+11.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+11.x	PHP 8.2.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+11.x	curl 7.34.0 Required	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+11.x	Composer Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 11.x	Application Structure	USA	4	2	app/Http/Kernel.php:19 app/Http/Kernel.php:45 app/Http/Kernel.php:74	uso	class\s+Kernel\b|\$middlewareGroups|\$routeMiddleware	PHP8-62
 11.x	Authentication	NAO APLICA				manual	titulo de grupo
 11.x	Password Rehashing	USA	1	1	app/Http/Controllers/Auth/RegisterController.php:68	sinal	Hash::|bcrypt\(|password_hash	PHP8-39
@@ -165,8 +165,8 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 11.x	Spatie Once Package	NAO USA	0	0		uso	spatie/once	
 11.x	Miscellaneous	MANUAL				manual	o guia so remete ao diff do esqueleto laravel/laravel entre versoes; nao ha lista de quebras para varrer
 12.x	Upgrading To 12.0 From 11.x	NAO APLICA				manual	titulo de secao
-12.x	Estimated Upgrade Time: 5 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
-12.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+12.x	Estimated Upgrade Time: 5 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
+12.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 12.x	Carbon 3	USA	256	100	app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:5 app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:27 app/Domain/RecursosHumanos/Pessoal/Services/Relatorios/TipoGuiaPrevidenciaService.php:7	uso	Carbon\\Carbon|Carbon::|\bnew\s+Carbon\b|diffIn\w+\(	PHP8-55
 12.x	Updating the Laravel Installer	NAO APLICA				manual	ferramenta fora do sistema (instalador, Dusk, Pusher, Spark, Cashier, Sanctum, Telescope, Ide-helper): nao e codigo proprio do e-Cidade
 12.x	Authentication	NAO APLICA				manual	titulo de grupo
@@ -190,9 +190,9 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 12.x	Image Validation Now Excludes SVGs	NAO USA	0	0		sinal	\|image\b|'image'	
 12.x	Miscellaneous	MANUAL				manual	o guia so remete ao diff do esqueleto laravel/laravel entre versoes; nao ha lista de quebras para varrer
 13.x	Upgrading To 13.0 From 12.x	NAO APLICA				manual	titulo de secao
-13.x	Estimated Upgrade Time: 10 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+13.x	Estimated Upgrade Time: 10 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 13.x	Upgrading Using AI	NAO APLICA				manual	ferramenta fora do sistema (instalador, Dusk, Pusher, Spark, Cashier, Sanctum, Telescope, Ide-helper): nao e codigo proprio do e-Cidade
-13.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo
+13.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 13.x	Updating the Laravel Installer	NAO APLICA				manual	ferramenta fora do sistema (instalador, Dusk, Pusher, Spark, Cashier, Sanctum, Telescope, Ide-helper): nao e codigo proprio do e-Cidade
 13.x	Cache	NAO APLICA				manual	titulo de grupo
 13.x	Cache Prefixes and Session Cookie Names	USA	7	4	configuration/database.php:39 configuration/database.php:52 configuration/database.php:65	config	'(cookie|prefix)'\s*=>	PHP8-62
@@ -202,7 +202,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 13.x	Container::call and Nullable Class Defaults	NAO USA	0	0		sinal	->call\(\s*\[|app\(\)->call|Container::call	
 13.x	Contracts	NAO APLICA				manual	titulo de grupo
 13.x	Dispatcher Contract: dispatchAfterResponse	NAO USA	0	0		uso	Contracts\\Bus\\Dispatcher	
-13.x	ResponseFactory Contract: eventStream	USA	1	1	app/Domain/Configuracao/Usuario/Controller/LoginController.php:11	uso	Contracts\\Routing\\ResponseFactory	PHP8-62
+13.x	ResponseFactory Contract: eventStream	NAO USA	0	0		uso	implements\s+[\w\\, ]*ResponseFactory\b	
 13.x	MustVerifyEmail Contract: markEmailAsUnverified	NAO USA	0	0		uso	MustVerifyEmail	
 13.x	Database	NAO APLICA				manual	titulo de grupo
 13.x	Database upsert With MySQL or MariaDB	NAO USA	0	0		uso	->upsert\(	
@@ -219,7 +219,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 13.x	Queue	NAO APLICA				manual	titulo de grupo
 13.x	JobAttempted Event Exception Payload	NAO USA	0	0		uso	JobAttempted	
 13.x	QueueBusy Event Property Rename	NAO USA	0	0		uso	QueueBusy	
-13.x	Queue Contract Method Additions	USA	2	2	app/Jobs/Financeiro/Contabilidade/EmissaoLrfJob.php:13 app/Jobs/Patrimonial/Material/ProcessarLancamentoContabilRequisicaoJob.php:18	uso	implements\s+\\?(\w+\\)*Queue\b|Contracts\\Queue\\Queue	PHP8-51
+13.x	Queue Contract Method Additions	NAO USA	0	0		uso	implements\s+([\w\\]+\s*,\s*)*([\w\\]*\\)?Queue\s*(,|\{|$)	
 13.x	Routing	NAO APLICA				manual	titulo de grupo
 13.x	Domain Route Registration Precedence	NAO USA	0	0		uso	->domain\(|Route::domain|\'domain\'	
 13.x	Session	NAO APLICA				manual	titulo de grupo

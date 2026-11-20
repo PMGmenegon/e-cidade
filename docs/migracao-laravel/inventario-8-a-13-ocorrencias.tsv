@@ -329,18 +329,6 @@ versao	item do guia	tarefa	arquivo:linha
 9.x	Unvalidated Array Keys	PHP8-94	app/Domain/Tributario/Cadastro/Controllers/CadastroController.php:207
 9.x	Unvalidated Array Keys	PHP8-94	app/Domain/Tributario/Cadastro/Controllers/CadastroController.php:226
 10.x	Minimum Stability	PHP8-62	composer.json:96
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:5
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:9
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:13
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:17
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:21
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:25
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:29
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:33
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:37
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:41
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:45
-10.x	Public Path Binding	PHP8-62	routes/api/educacao/files.php:49
 10.x	The registerPolicies Method	PHP8-39	app/Providers/AuthServiceProvider.php:29
 10.x	Database Expressions	PHP8-77	app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:217
 10.x	Database Expressions	PHP8-77	app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:224
@@ -2735,7 +2723,6 @@ versao	item do guia	tarefa	arquivo:linha
 13.x	Cache Prefixes and Session Cookie Names	PHP8-62	configuration/queue.php:55
 13.x	Cache Prefixes and Session Cookie Names	PHP8-62	configuration/cache.php:97
 13.x	Cache Prefixes and Session Cookie Names	PHP8-62	configuration/session.php:125
-13.x	ResponseFactory Contract: eventStream	PHP8-62	app/Domain/Configuracao/Usuario/Controller/LoginController.php:11
 13.x	Collection Model Serialization Restores Eager-Loaded Relations	PHP8-51	app/Notifications/UserNotificationAcordoVencimento.php:11
 13.x	Collection Model Serialization Restores Eager-Loaded Relations	PHP8-51	app/Notifications/UserNotificationAcordoVencimento.php:15
 13.x	Collection Model Serialization Restores Eager-Loaded Relations	PHP8-51	app/Notifications/EmissaoRelatorioLegalNotification.php:10
@@ -2793,8 +2780,6 @@ versao	item do guia	tarefa	arquivo:linha
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Tributario/Arrecadacao/CancelamentoParcelamentoJob.php:16
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Tributario/Juridico/CancelamentoCDALista.php:16
 13.x	Queued Notifications and Missing Models	PHP8-51	app/Jobs/Tributario/Juridico/InclusaoInicialListaJob.php:17
-13.x	Queue Contract Method Additions	PHP8-51	app/Jobs/Financeiro/Contabilidade/EmissaoLrfJob.php:13
-13.x	Queue Contract Method Additions	PHP8-51	app/Jobs/Patrimonial/Material/ProcessarLancamentoContabilRequisicaoJob.php:18
 13.x	withScheduling Registration Timing	PHP8-51	app/Console/Kernel.php:51
 13.x	Request Forgery Protection	PHP8-38	app/Http/Kernel.php:52
 13.x	Request Forgery Protection	PHP8-38	app/Http/Middleware/VerifyCsrfToken.php:5

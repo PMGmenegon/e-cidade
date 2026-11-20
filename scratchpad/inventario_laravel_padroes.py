@@ -259,7 +259,7 @@ PADROES = {
     ('9.x', 'The password Rule'): (r"password:|'password'\s*=>\s*'[^']*password", 'app/', 'sinal'),
     # ---------------- 10.x ----------------
     ('10.x', 'Minimum Stability'): (r'minimum-stability', 'composer.json', 'config'),
-    ('10.x', 'Public Path Binding'): (r"path\.public|public_path\(", None, 'uso'),
+    ('10.x', 'Public Path Binding'): (r"path\.public", None, 'uso'),
     ('10.x', 'The registerPolicies Method'): (r'registerPolicies', None, 'uso'),
     ('10.x', 'Redis Cache Tags'): (r'Cache::tags|->tags\(', None, 'uso'),
     ('10.x', 'Database Expressions'): (r'DB::raw|Expression', 'app/', 'uso'),
@@ -315,7 +315,7 @@ PADROES = {
     ('13.x', 'Cache serializable_classes Configuration'): (r'serializable_classes', 'configuration/', 'config'),
     ('13.x', 'Container::call and Nullable Class Defaults'): (r'->call\(\s*\[|app\(\)->call|Container::call', 'app/', 'sinal'),
     ('13.x', 'Dispatcher Contract: dispatchAfterResponse'): (r'Contracts\\Bus\\Dispatcher', None, 'uso'),
-    ('13.x', 'ResponseFactory Contract: eventStream'): (r'Contracts\\Routing\\ResponseFactory', None, 'uso'),
+    ('13.x', 'ResponseFactory Contract: eventStream'): (r'implements\s+[\w\\, ]*ResponseFactory\b', None, 'uso'),
     ('13.x', 'MustVerifyEmail Contract: markEmailAsUnverified'): (r'MustVerifyEmail', None, 'uso'),
     ('13.x', 'Database upsert With MySQL or MariaDB'): (r'->upsert\(', None, 'uso'),
     ('13.x', 'MySQL DELETE Queries With JOIN, ORDER BY, and LIMIT'): (r'->delete\(\).*(join|orderBy|limit)|(join|orderBy|limit).*->delete\(\)', 'app/', 'sinal'),
@@ -327,7 +327,7 @@ PADROES = {
     ('13.x', 'Queued Notifications and Missing Models'): (r'implements\s+ShouldQueue', 'app/', 'uso'),
     ('13.x', 'JobAttempted Event Exception Payload'): (r'JobAttempted', None, 'uso'),
     ('13.x', 'QueueBusy Event Property Rename'): (r'QueueBusy', None, 'uso'),
-    ('13.x', 'Queue Contract Method Additions'): (r'implements\s+\\?(\w+\\)*Queue\b|Contracts\\Queue\\Queue', None, 'uso'),
+    ('13.x', 'Queue Contract Method Additions'): (r'implements\s+([\w\\]+\s*,\s*)*([\w\\]*\\)?Queue\s*(,|\{|$)', None, 'uso'),
     ('13.x', 'Domain Route Registration Precedence'): (r'->domain\(|Route::domain|\'domain\'', 'routes/', 'uso'),
     ('13.x', 'Session serialization Configuration'): (r"'serialization'", 'configuration/session.php', 'config'),
     ('13.x', 'withScheduling Registration Timing'): (r'withScheduling|function\s+schedule\s*\(', 'app/', 'uso'),
@@ -338,7 +338,7 @@ PADROES = {
     ('13.x', 'Pagination Bootstrap View Names'): (r'bootstrap-3|bootstrap-4|useBootstrap', None, 'uso'),
 }
 
-_AMB = ('NAO APLICA', 'versao de PHP/Composer/dependencias do composer.json: tratada na matriz de versoes (docs/migracao-laravel/matriz-versoes.md), nao e uso no codigo')
+_AMB = ('NAO APLICA', 'versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo')
 _FERR = ('NAO APLICA', 'ferramenta fora do sistema (instalador, Dusk, Pusher, Spark, Cashier, Sanctum, Telescope, Ide-helper): nao e codigo proprio do e-Cidade')
 _MISC = ('MANUAL', 'o guia so remete ao diff do esqueleto laravel/laravel entre versoes; nao ha lista de quebras para varrer')
 _STRUCT = ('MANUAL', 'estrutura/arquivo de configuracao do projeto (configuration/, bootstrap/app.php): conferencia a mao na secao de configuracao do relatorio')
@@ -351,7 +351,7 @@ DISPOSICOES = {
     ('*', 'PHP'): _AMB, ('*', 'Updating Dependencies'): _AMB, ('*', 'Composer Dependencies'): _AMB,
     ('*', 'PHP 7.2 Required'): _AMB, ('*', 'PHP 7.2.5 Required'): _AMB, ('*', 'PHP 7.3.0 Required'): _AMB,
     ('*', 'PHP 8.0.2 Required'): _AMB, ('*', 'PHP 8.1.0 Required'): _AMB, ('*', 'PHP 8.2.0 Required'): _AMB,
-    ('*', 'Composer 2.2.0 Required'): _AMB, ('*', 'curl 7.34.0 Required'): _AMB, ('*', 'PHP Return Types'): _AMB,
+    ('*', 'Composer 2.2.0 Required'): _AMB, ('*', 'curl 7.34.0 Required'): _AMB, ('9.x', 'PHP Return Types'): ('NAO USA', 'conferido a mao: so ha private function count em PodeTotalizar.php:9, usado por RelatorioPDF (extends Pdf) e RelatorioCSV (extends Dumper), nao por classe do Laravel'),
     ('*', 'Laravel Installer'): _FERR, ('*', 'Updating the Laravel Installer'): _FERR, ('*', 'Laravel Dusk'): _FERR,
     ('*', 'Dusk 4.0.0'): _FERR, ('*', 'Passport 6.0.7'): ('NAO APLICA', 'correcao de seguranca do 5.6 ja coberta pelo Passport do alvo (ver docs/registro/passport-esquema.md)'),
     ('*', 'Pusher'): _FERR, ('*', 'Swift Mailer'): ('CONFERIDO', 'coberto pelo item Swift_ (7.x/9.x): ver os padroes de SwiftMailer'),

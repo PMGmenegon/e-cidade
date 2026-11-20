@@ -7,7 +7,7 @@ Somente leitura: nada neste inventário muda código.
 ## 1. Método
 
 - **Guias:** `upgrade.md` de cada branch `9.x`…`13.x` de `github.com/laravel/docs`. Cada título de seção é um item.
-- **Código varrido** (`ecidade/`): `app/`, `routes/`, `configuration/`, `bootstrap/`, `database/`, `public/`, `tests/` e `composer.json`. Ficam de fora o legado procedural, `src/`, `api/` (Silex) e `vendor/`.
+- **Código varrido** (`ecidade/`): `app/`, `routes/`, `configuration/`, `bootstrap/`, `database/`, `public/`, `tests/`, `resources/` (116 arquivos Blade e 8 de `lang`; só os `.php`) e `composer.json`. Ficam de fora o legado procedural, `src/`, `api/` (Silex) e `vendor/`.
 - **Varredura:** uma expressão regular por item, aplicada linha a linha (arquivos lidos como ISO-8859-1). Resultados:
   **USA** (padrão achado, com contagem e `arquivo:linha`), **NAO USA** (padrão sem ocorrência), **NAO APLICA** (item que não é código: versão de PHP, instalador, título de grupo) e **MANUAL** (não varrível por regex).
   Tipo **uso** = a regex acha o recurso; **sinal** = indício que precisa de olho (pode ser falso positivo); **config** = chave de configuração.
@@ -16,15 +16,15 @@ Somente leitura: nada neste inventário muda código.
 
 | Resultado | Itens |
 |---|---|
-| USA | 46 |
-| NAO USA | 87 |
-| NAO APLICA | 100 |
+| USA | 43 |
+| NAO USA | 91 |
+| NAO APLICA | 99 |
 | MANUAL | 5 |
 | **Total** | **238** |
 
 Arquivos de dados desta pasta:
 - `inventario-8-a-13-itens.tsv`: os 238 itens (resultado, contagem, até 3 exemplos, tipo, padrão ou motivo, tarefa).
-- `inventario-8-a-13-ocorrencias.tsv`: **todas** as ocorrências (versão, item, tarefa, `arquivo:linha`) dos itens que o código usa (2.800 linhas).
+- `inventario-8-a-13-ocorrencias.tsv`: **todas** as ocorrências (versão, item, tarefa, `arquivo:linha`) dos itens que o código usa (2.785 linhas).
 
 ## 2. O que existe no código próprio
 
@@ -49,7 +49,7 @@ Mesmos padrões, mesma `base-php74`, repetidos em 20/11:
 | `$dates`: 21 models | **21** em 21 arquivos | `Model "Dates" Property` (10.x) | igual |
 | Carbon: 256 usos | **256** em 100 arquivos | `Carbon 3` (11.x e 12.x, mesmo padrão) | igual. Contar toda menção à palavra `Carbon` dá 343 em 102 arquivos (inclui `use`, comentários e nomes de classe) |
 | `DB::raw`: 302 | **302** em 75 arquivos | `Database Expressions` (10.x) | igual |
-| `validated()`: 82 | **82** em 37 arquivos | `Unvalidated Array Keys` (9.x) | igual; é `->validated()`/`validate()` |
+| `validated()`: 82 | **0** `->validated(` e **82** `->validate(` em 37 arquivos | `Unvalidated Array Keys` (9.x) | o número de 18/11, rotulado `validated()`, na verdade conta `->validate(`; não há nenhum `->validated(` no código |
 | datas em JSON: 242 | **242** em 125 arquivos | `serializeDate\|->toArray()\|->toJson()` em `app/` (item 7.x, fora dos guias 9–13) | igual. É sinal: a data só muda se o model tiver atributo de data |
 | 1.300 rotas | **1.407** definições `Route::get\|post\|put\|patch\|delete\|any` em 73 arquivos de `routes/`; **1.309** com caminho literal e sem comentário | `Route Precedence` (12.x) | a diferença para 1.300 é de contagem: 98 definições têm caminho não literal ou estão em comentário (11 comentadas com caminho literal), e `resource`/`apiResource` (6 + 2) expandem em várias rotas. O número exato de `route:list` exige subir o kernel, que depende de `vendor/` completo e do banco; **não foi medido** |
 
@@ -72,7 +72,6 @@ Contra o inventário anterior (feito sobre outra base, com 1.259 arquivos em `ap
 | 9.x | The opis/closure Library | 1 | 1 | `composer.json:33` | uso | PHP8-62 |
 | 9.x | Unvalidated Array Keys | 82 | 37 | `app/Domain/RecursosHumanos/ESocial/Controller/ExameToxicologicoController.php:21` `app/Domain/RecursosHumanos/Pessoal/Controller/ContraChequesController.php:119` `app/Domain/Integracoes/EFDReinf/Controllers/ConfiguracaoController.php:37` | sinal | PHP8-94 |
 | 10.x | Minimum Stability | 1 | 1 | `composer.json:96` | config | PHP8-62 |
-| 10.x | Public Path Binding | 12 | 1 | `routes/api/educacao/files.php:5` `routes/api/educacao/files.php:9` `routes/api/educacao/files.php:13` | uso | PHP8-62 |
 | 10.x | The registerPolicies Method | 1 | 1 | `app/Providers/AuthServiceProvider.php:29` | uso | PHP8-39 |
 | 10.x | Database Expressions | 302 | 75 | `app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:217` `app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:224` `app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:225` | uso | PHP8-77 |
 | 10.x | ULID Columns | 1 | 1 | `database/migrations/2022_10_24_103009_create_notifications_table.php:17` | uso | PHP8-55 |
@@ -100,11 +99,9 @@ Contra o inventário anterior (feito sobre outra base, com 1.259 arquivos em `ap
 | 12.x | Route Precedence | 1407 | 73 | `routes/web/configuracao/configuracao.php:7` `routes/web/configuracao/configuracao.php:15` `routes/web/configuracao/configuracao.php:19` | sinal | PHP8-12 |
 | 12.x | Local Filesystem Disk Default Root Path | 3 | 1 | `configuration/filesystems.php:48` `configuration/filesystems.php:53` `configuration/filesystems.php:60` | config | PHP8-77 |
 | 13.x | Cache Prefixes and Session Cookie Names | 7 | 4 | `configuration/database.php:39` `configuration/database.php:52` `configuration/database.php:65` | config | PHP8-62 |
-| 13.x | ResponseFactory Contract: eventStream | 1 | 1 | `app/Domain/Configuracao/Usuario/Controller/LoginController.php:11` | uso | PHP8-62 |
 | 13.x | Collection Model Serialization Restores Eager-Loaded Relations | 40 | 20 | `app/Notifications/UserNotificationAcordoVencimento.php:11` `app/Notifications/UserNotificationAcordoVencimento.php:15` `app/Notifications/EmissaoRelatorioLegalNotification.php:10` | uso | PHP8-51 |
 | 13.x | Default Password Reset Subject | 1 | 1 | `app/Http/Controllers/Auth/ResetPasswordController.php:8` | uso | PHP8-51 |
 | 13.x | Queued Notifications and Missing Models | 16 | 16 | `app/Notifications/UserNotificationAcordoVencimento.php:13` `app/Notifications/EmissaoRelatorioLegalNotification.php:12` `app/Jobs/RequisicaoAPIPixJob.php:21` | uso | PHP8-51 |
-| 13.x | Queue Contract Method Additions | 2 | 2 | `app/Jobs/Financeiro/Contabilidade/EmissaoLrfJob.php:13` `app/Jobs/Patrimonial/Material/ProcessarLancamentoContabilRequisicaoJob.php:18` | uso | PHP8-51 |
 | 13.x | withScheduling Registration Timing | 1 | 1 | `app/Console/Kernel.php:51` | uso | PHP8-51 |
 | 13.x | Request Forgery Protection | 3 | 2 | `app/Http/Kernel.php:52` `app/Http/Middleware/VerifyCsrfToken.php:5` `app/Http/Middleware/VerifyCsrfToken.php:7` | uso | PHP8-38 |
 
@@ -117,9 +114,9 @@ Quantidade de itens que o código usa, por tarefa. Cada tarefa fica com a lista 
 | PHP8-12 | 1 | 12.x Route Precedence |
 | PHP8-38 | 3 | 10.x Middleware Aliases; 12.x Nested Array Request Merging; 13.x Request Forgery Protection |
 | PHP8-39 | 3 | 10.x The registerPolicies Method; 11.x Password Rehashing; 11.x Updating Passport |
-| PHP8-51 | 7 | 10.x The dispatch() Helper Return Value; 11.x Synchronous Jobs in Database Transactions; 13.x Collection Model Serialization Restores Eager-Loaded Relations; 13.x Default Password Reset Subject; 13.x Queued Notifications and Missing Models; 13.x Queue Contract Method Additions; 13.x withScheduling Registration Timing |
+| PHP8-51 | 6 | 10.x The dispatch() Helper Return Value; 11.x Synchronous Jobs in Database Transactions; 13.x Collection Model Serialization Restores Eager-Loaded Relations; 13.x Default Password Reset Subject; 13.x Queued Notifications and Missing Models; 13.x withScheduling Registration Timing |
 | PHP8-55 | 9 | 9.x Belongs To Many firstOrNew, firstOrCreate, and updateOrCreate Methods; 9.x The when / unless Methods; 10.x ULID Columns; 10.x Model "Dates" Property; 11.x Eloquent Model casts Method; 11.x Modifying Columns; 11.x Floating-Point Types; 11.x Carbon 3; 12.x Carbon 3 |
-| PHP8-62 | 13 | 9.x Exception Handler Contract Binding; 9.x The FILESYSTEM_DRIVER Environment Variable; 9.x The opis/closure Library; 10.x Minimum Stability; 10.x Public Path Binding; 10.x Monolog 3; 11.x Application Structure; 11.x The AuthenticationException Class; 11.x Cache Key Prefixes; 11.x Doctrine DBAL Removal; 12.x Container Class Dependency Resolution; 13.x Cache Prefixes and Session Cookie Names; 13.x ResponseFactory Contract: eventStream |
+| PHP8-62 | 11 | 9.x Exception Handler Contract Binding; 9.x The FILESYSTEM_DRIVER Environment Variable; 9.x The opis/closure Library; 10.x Minimum Stability; 10.x Monolog 3; 11.x Application Structure; 11.x The AuthenticationException Class; 11.x Cache Key Prefixes; 11.x Doctrine DBAL Removal; 12.x Container Class Dependency Resolution; 13.x Cache Prefixes and Session Cookie Names |
 | PHP8-71 | 1 | 10.x Service Mocking |
 | PHP8-77 | 6 | 9.x Flysystem 3.x; 9.x Overwriting Existing Files; 9.x Write Exceptions; 9.x Deleting Missing Files; 10.x Database Expressions; 12.x Local Filesystem Disk Default Root Path |
 | PHP8-94 | 3 | 9.x Unvalidated Array Keys; 10.x Closure Validation Rule Messages; 10.x Validation Messages and Closure Rules |
@@ -132,8 +129,8 @@ Pontos que merecem atenção do dono (todos medidos acima):
 - **PHP8-62:** `app/Http/Kernel.php` ainda usa `$routeMiddleware`/estrutura antiga (aceita no 11, 12 e 13); `bootstrap/app.php:42` faz o binding do handler de exceções; `configuration/filesystems.php:16` lê `FILESYSTEM_DRIVER`; `configuration/filesystems.php:48-60` depende da raiz padrão do disco local (muda no 12); `configuration/logging.php` (Monolog 3).
 - **PHP8-55:** 21 models com `$dates` (removida no 10), 42 com método/propriedade `casts`, 256 usos de Carbon (Carbon 3 muda o retorno de `diffIn*`).
 - **PHP8-77:** 302 `DB::raw`/expressões (a partir do 10 devolvem objeto `Expression`, não string); 7 usos de Flysystem em `ApropriacaoDecimoFeriasService.php:371-399` (3.x: sobrescrita, exceções de escrita, arquivo ausente).
-- **PHP8-94:** 82 pontos com `validated()`/`validate()` (a partir do 9 o validador exclui chaves sem regra) e 4 regras com closure em `TriagemLaboratorialRequest.php:59-80`.
-- **PHP8-12:** 1.407 definições (precedência de rotas no 12 pode mudar o despacho de caminhos que se sobrepõem) e 12 usos de `public_path` em `routes/api/educacao/files.php`.
+- **PHP8-94:** 82 chamadas `->validate(` (0 de `->validated(`) (a partir do 9 o validador exclui chaves sem regra) e 4 regras com closure em `TriagemLaboratorialRequest.php:59-80`.
+- **PHP8-12:** 1.407 definições (precedência de rotas no 12 pode mudar o despacho de caminhos que se sobrepõem).
 
 ## 6. Como reproduzir
 
