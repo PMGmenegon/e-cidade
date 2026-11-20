@@ -35,5 +35,6 @@ for v in 74 85; do
       php -v | head -1 > /o/versao_'$v'.txt
     '
   rc=$?; [ $rc -eq 0 ] || { echo "ERRO: docker run do php$v saiu com $rc"; exit $rc; }
+  for f in a b c; do [ -s "$O/resp_${v}_${f}_frio.txt" ] || { echo "ERRO: resposta vazia ou ausente: resp_${v}_${f}_frio.txt"; exit 1; }; done
   echo "php$v: $(ls "$O" | grep -c "_$v")"
 done
