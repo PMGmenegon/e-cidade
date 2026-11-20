@@ -241,6 +241,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `estrutura-85.md` | PHP8-79: código só do PHP 8.5 sem tocar o 7.4: `ecidade/composer-85.json`/`.lock` (cópia do PR + sobreposição `app-85/` no PSR-4), `vendor/` em `runtime-85/` montado sobre `vendor/` só no 8.5, comando único pinado `docker/composer-85/composer-85.sh` (dono da trava: time do banco), os 10 pacotes que excluem o 8.5, regra e pergunta do lint do grupo |
 | `php8-12-rotas-v4.md` | PHP8-12: as 1.454 rotas da base-php74 sem banco (`php8-12-rotas.tsv`, arquivo:linha): 1.425 vivas, 27 pares método+URI repetidos (vence a última no 8 e no 12+), nome `jobs.` que muda no 12+ (sem uso), 125 closures, 5 arquivos de `routes/` não carregados, 460 GET `/v4` que só leem para o lote 1 |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
 
