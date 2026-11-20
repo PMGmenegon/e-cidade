@@ -63,7 +63,7 @@ class cl_pcproc {
                  pc80_tipoprocesso = int4 = Tipo de Processo
                  ";
    //funcao construtor da classe
-   function cl_pcproc() {
+   function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("pcproc");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
