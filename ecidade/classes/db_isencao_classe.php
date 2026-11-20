@@ -63,7 +63,7 @@ class cl_isencao {
                  v10_observacao = text = Observação isenção
                  ";
    //funcao construtor da classe 
-   public function cl_isencao() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("isencao");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
