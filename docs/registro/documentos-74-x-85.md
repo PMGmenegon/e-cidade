@@ -1,6 +1,6 @@
 # Documentos (PDF, planilha, Word, etiquetas e QR) no 7.4 × 8.5, sem banco
 
-**Resumo:** 39 documentos gerados pelo código próprio, com dados de exemplo e sem banco, saem **iguais** no PHP 7.4 (vendor do
+**Resumo (PHP8-70):** 39 documentos gerados pelo código próprio, com dados de exemplo e sem banco, saem **iguais** no PHP 7.4 (vendor do
 `ecidade/composer.lock` do PR) e no PHP 8.5 (`runtime-85/vendor`): 0 diferenças. Iguais em páginas, tamanho de página, texto,
 posição das palavras, imagens e pixels (PDF), nas partes do zip (xlsx, docx) e nos pixels (PNG). Ajuste no código próprio: 2 linhas
 em `Parser.php` e 1 propriedade em cada `EtiquetaModelo0{1,2}Builder.php` (avisos do 8.5; o 7.4 fica provado igual).
@@ -81,3 +81,33 @@ python3 ecidade/tests/sistema/documentos/compara.py            # todos; ou: ... 
 ```
 
 Precisa de `pdfinfo`, `pdftotext`, `pdfimages`, `pdftoppm` (poppler-utils) e Python com Pillow no computador de quem roda.
+
+## 8. Repetição com o Laravel 13.43 e o Passport 13.12 no 8.5 (PHP8-70, T-142)
+
+`runtime-85/vendor` reinstalado do `ecidade/composer-85.lock` com `laravel/framework` v13.43.0 (era v8.73.2); o 7.4 continua com o
+lock do PR. Dois documentos novos no gerador de etiquetas: o QR da própria Pimaco (`Tag::qrcode`, que usa `endroid/qr-code` 2.5.1 e
+`bacon/bacon-qr-code` 1.0.3), sem e com rótulo. Resultado de `compara.py`: **41 documentos, 40 iguais, 1 conhecida, 0 diferenças**
+(dompdf 4, mPDF 2, planilha 23, Word 6, etiquetas e QR 6). Com o Laravel 13 o Blade (`Illuminate\View`) dos 4 modelos de capa
+continua renderizando igual, e somem os avisos de `laravel/framework`, `guzzlehttp/promises` e `opis/closure` que a carga do vendor
+dava no Laravel 8 (9 a 43 por gerador).
+
+| Gerador | Avisos no 8.5 (Laravel 13) |
+|---|---|
+| dompdf | 418 (`dompdf/dompdf` 416, `std/DBDate.php` 2) |
+| mPDF | 1 (o 7.4 também tem) |
+| planilha | 1.344 (`phpoffice/phpspreadsheet`) |
+| Word | 17 (`phpoffice/phpword` 15, `aferrandini/phpqrcode` 2) |
+| etiquetas e QR | 7.348 (`bacon/bacon-qr-code` 6.542, `picqer/php-barcode-generator` 510, `proner/phppimaco` 163, `aferrandini/phpqrcode` 133) |
+
+**Diferença conhecida (`pimaco-qrcode-rotulo.pdf`):** o QR em si sai igual (`pimaco-qrcode.pdf`, sem rótulo, é igual em páginas, texto,
+posições, imagens e pixels). Com rótulo, só as linhas do texto sob o QR da imagem embutida (120 × 143 px, linhas 121 a 133) diferem
+em pixels: o `endroid/qr-code` desenha o rótulo com o GD, e o 7.4 do PR usa o `libgd` do sistema (GD 2.3.3) enquanto a imagem do 8.5
+(`php:8.5-apache`) traz o GD embutido (compatível com 2.1.0): o antialiasing do texto muda. É diferença das imagens dos runtimes, não
+do código ou das bibliotecas; o código próprio não chama `Tag::qrcode`. `compara.py` imprime `conhecida` e não conta como diferença.
+
+**`--ignore-platform-req=php+` não sai:** `composer-85.sh prohibits php 8.5.12 --locked` agora lista só 2 pacotes (eram 10):
+`bacon/bacon-qr-code` 1.0.3 (`^5.4|^7.0`) e `khanamiryan/qrcode-detector-decoder` 1 (`^5.6|^7.0`). Os dois vêm de
+`endroid/qr-code` 2.5.1, que o `proner/phppimaco` v1.4.5 exige (`^2.5`); v1.4.5 é a última versão da Pimaco e não há `endroid/qr-code` 2.x
+mais novo. Sem a flag a resolução falha. Os dois pacotes funcionam no 8.5 (o QR sai igual), então a flag fica nos comandos do
+`estrutura-85.md`. Sair dela exige trocar a Pimaco por outra biblioteca de etiquetas ou aceitar uma versão própria de
+`endroid/qr-code` (4.x ou 5.x), com API diferente do que a Pimaco chama.

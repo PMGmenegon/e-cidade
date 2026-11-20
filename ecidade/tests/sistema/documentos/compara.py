@@ -6,6 +6,8 @@ import base64, hashlib, io, json, os, re, subprocess, sys, tempfile, zipfile
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
 RODA = os.path.join(RAIZ, 'docker/composer-85/roda-isolado.sh')
+# diferenca conhecida e medida: {documento: chaves do resumo que podem diferir}; nao conta como DIFERENCA
+CONHECIDAS = {'pimaco-qrcode-rotulo.pdf': {'visual'}}
 GERADORES = ['gera_dompdf', 'gera_mpdf', 'gera_planilha', 'gera_word', 'gera_etiquetas']
 
 
@@ -89,6 +91,9 @@ def main():
             if r74 == r85:
                 print('  igual   %s' % nome)
             else:
+                chaves0 = set(k for k in r74 if r74[k] != r85.get(k)) if isinstance(r74, dict) else set()
+                if nome in CONHECIDAS and chaves0 and chaves0 <= CONHECIDAS[nome]:
+                    print('  conhecida %s: %s (ver docs/registro/documentos-74-x-85.md)' % (nome, ', '.join(sorted(chaves0)))); continue
                 dif += 1
                 chaves = [k for k in r74 if r74[k] != r85.get(k)] if isinstance(r74, dict) and all(k in r85 for k in r74) else ['conteudo']
                 print('  DIFERE  %s: %s' % (nome, ', '.join(str(k)[:60] for k in chaves[:8])))
