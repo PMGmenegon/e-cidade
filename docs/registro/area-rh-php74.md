@@ -234,18 +234,78 @@ mas **fora** de `model/pessoal/`: `model/pontoFolha.model.php` (P3, conflito) e 
 
 `libs/db_libgertxtfolha.php`, `model/pessoal/ReajustePadroes.php`.
 
+### P5 — bloqueadores achados pela bateria do lote 1 (19/11/2026)
+
+Medidos pela bateria; cada um derruba telas da área no 8.5 e **não foi alterado aqui**:
+
+- `libs/JSON.php` (l. 188, `$utf16{0}`/`{1}`): derruba **37** `.RPC.php` de `eso*`/`rh*`;
+- `fpdf151/fpdf.php` (l. 614, `$s{$i}`): derruba todo relatório PDF que o carrega (aqui, `eso3_qualificacaocadastral002.php`);
+- `dbforms/db_funcoes.php` (`db_multiploselect`, l. 416 e 475; ainda 859, 927 e 984): `gettype() == "resource"` perde dado em silêncio no 8.5;
+- `model/dbGeradorRelatorio.model.php` e `src/Financeiro/Contabilidade/MatrizSaldoContabil/Repository/Lancamento.php`: não compilam no 8.5 (`php -l`);
+- DAOs de `classes/`: 864 das 876 classes com campos leem o formulário no 7.4 e mantêm `0` no 8.5 (caminho de escrita, passo 6b); 883 alvos do Rector do universo estão fora da área
+  (865 `classes/`, 12 `func_*.php`: `func_avaliacaogruporespostacat`, `..monitoramentosaude`, `..obras`, `..processo`, `func_desligamentoservidor`,
+  `func_desligamentotrabalhadorsemvinculo`, `func_grupomotivoafastamentoesocial`, `func_rhlota`, `func_rhlotacaotributaria`, `func_rhpessoaladmiss`, `func_selecao`, `func_tipoasse`;
+  `model/dbGeradorRelatorio.model.php`, `FolhaPagamento.model.php`, `FolhaPagamentoSuplementar.model.php`; `pro2_despachointer002.php`).
+  `db_cursoedu_classe.php` (Educação) declara `cl_curso` de novo: sai com código diferente nos dois runtimes (7.4: fatal; 8.5: `exit` 0).
+
+Depois que o núcleo trouxer esses arquivos, rodar de novo a bateria das 39 telas (as 96 do lote menos as 57 do bloco `Lote 1 do RH` do `faseb_map.conf`, via `ONLY=`) e acrescentá-las ao `faseb_map.conf`.
+
 ### Observações
 
 - `libs/db_calcula.php` foi alterado pelos dois, mas **não** está no universo do RH.
 - Sem P1–P3, a bateria do lote mede o núcleo, não a tela. Sugestão: o núcleo trata P1 e os 29 não-DAO de P2/P3 antes do lote 2;
   os DAOs (42 limpos + 975, dos quais só 85 têm conflito real) são o maior volume: ver a divisão RH × compartilhado em P3.
 
+## Lote 1 (rh + eso + 2 `.RPC.php`): resultado (19/11/2026)
+
+Branch `pessoal/rh-php85`. Referência: 7.4 (`:8080`); runtime migrado: 8.5 (`:8085`). **O lote não alterou nenhum arquivo de código**:
+as 96 telas já estavam sem as categorias do 8.5, e tudo o que falha vem de arquivo fora da área (núcleo).
+
+| Passo | Resultado |
+|---|---|
+| 1-3 Enumerar (`enumera.py`, `TELAS=@lista`, 96 telas: 94 `(rh\|eso)[0-9]*_` + `esocial_externo.RPC.php` + `rhpessoalmov001.RPC.php`) | universo **2.701** arquivos; **883 a alterar, todos fora da área** (865 `classes/`, 12 `func_*`, 3 `model/`, 1 `src/Financeiro`, 1 `pro2`); **0 das 96 telas** tem `$this->X == literal`, `split`, `each`, `parse_str`, `ereg` ou construtor PHP 4 |
+| 4 Rector (`rector-curado.php`, pin `PHP_80` conferido, config com `php -l` limpo) | dry-run sobre as 96: **0 arquivos**. Controle positivo (`func_rhlota.php`): 1 arquivo, `ParseStrComExtractRector`. **Não houve commit do Rector** (nada a commitar). 4b (portão de funções) n/a: sem diff |
+| 5 `php -l` sobre o universo (2.701) | **7.4: 0 erros. 8.5: 6**, nenhum na área: `fpdf151/fpdf.php`, `libs/JSON.php`, `model/dbGeradorRelatorio.model.php` (2 caminhos do mesmo arquivo), `src/Financeiro/.../Lancamento.php`, `src/RecursosHumanos/.../Falta.php` (lote 1B) |
+| 6 Instanciar classes (948 de `classes/`, `ic`) | 7.4: 951 linhas; 8.5: 949. Divergem **17 DAOs** (estado inicial): `arrenumcgm`, `concilia`, `conparametro`, `db_logsacessa`, `empnotasigfistipodocliquidacao`, `historicompsfora`, `liclicitem`, `liclicitemlote`, `matestoqueitemfabric`, `padroes`, `parissqn`, `pcproc`, `recibopaga`, `rhpesrescisao`, `taxa`, `empenho.php` + `db_cursoedu_classe.php` (declara `cl_curso` de novo: sai com fatal no 7.4 e com código 0 no 8.5). **Todos em `classes/`: dependem do núcleo** |
+| 6b Caminho de escrita (`escrita.php`) | 876 classes com campos; **864 divergem**: o 7.4 lê o valor do formulário e o 8.5 mantém `0` (idioma `$this->X == ""`). **Todas são DAOs de `classes/`, não portados na 74 (P1/P3): dependem do núcleo.** Os 12 que não divergem não têm campo inteiro |
+| 6c Forma negada `!=` | não rodado: nenhuma classe foi alterada no lote |
+| 7 Bateria (`cmp.py`, 96 telas) | **57/96 idênticas, 39 divergentes, 0 timeout**. As 57 respondem 200 nos dois. Causa das 39: ver abaixo |
+| 8 Roteamento | 57 telas acrescentadas a `docker/proxy/faseb_map.conf` (lista exata; `nginx -t` ok; proxy recriado; `X-Ecidade-Runtime` conferido). O `location` por prefixo **não foi tocado**. As 39 ficam no 7.4 |
+| 8b Abas/redirecionamentos (`redirecionamentos.py`) | **não rodado** neste lote; fica para o fim da área |
+
+### As 39 divergências: todas dependem do núcleo (nenhuma é defeito de arquivo da área)
+
+| Qtd | Tela(s) | Causa | Arquivo do núcleo | A 84 |
+|---:|---|---|---|---|
+| 37 | `.RPC.php` de `eso*`/`rh*`, incl. `rhpessoalmov001.RPC.php` | `ParseError` em `libs/JSON.php:188` (`$utf16{0}`): 7.4 responde 200, 8.5 responde 500 de ~3,7 KB | `libs/JSON.php` | `$utf16[0]` |
+| 1 | `eso3_qualificacaocadastral002.php` | `ParseError` em `fpdf151/fpdf.php:614` (`$cw[$s{$i}]`) | `fpdf151/fpdf.php` | `$cw[$s[$i]]` |
+| 1 | `rh4_gerarempenhosfolha001.php` | 200 nos dois, 32 B de diferença: a opção `<option value='3'>INSS</option>` some do `<select>`. `db_multiploselect()` testa `gettype($rs) == "resource"` e no 8.5 o resultado do `pg_*` é objeto | `dbforms/db_funcoes.php` (l. 416 e 475) | `(gettype(...) == "resource" \|\| is_object(...))` |
+
+Esse último é silencioso (a tela abre, perde uma opção): a mesma troca vale para `gettype($record) == "resource"` nas linhas 927, 984 e para
+`is_resource` na 859 da 84.
+
+### Ferramental: `cmp.py` falhava em silêncio no Windows (corrigido neste lote)
+
+O `bash` que o Python acha no PATH do Windows é o do WSL, sem distribuição: toda requisição voltava vazia nos dois lados e a bateria
+dizia **"96/96 idênticas" sem ter requisitado nada** (a primeira rodada deste lote caiu nisso; foi descartada). Correções em
+`scratchpad/cmp.py`: variável `BASH_BIN` (caminho do Git Bash) e aborto quando o código volta `???`. Como rodar no Windows:
+`BASH_BIN="$(cygpath -w /usr/bin/bash.exe)" MSYS_NO_PATHCONV=1 PYTHONIOENCODING=utf-8 python scratchpad/cmp.py ...` (usar `python`, não `python3`).
+O cookie de sessão é `ECIDADEWINDOWMAIN=<SID>`, não `PHPSESSID`.
+`scratchpad/runner_resumivel.sh` roda `instancia_classes.php`/`escrita.php` numa lista inteira, dentro do contêiner, e retoma depois de fatal ou
+`exit` (marca a classe como `FATAL_RC<n>`/`SAIU_RC0`); substitui o `porclasse.sh` (um processo por classe levou ~65 min por passada).
+O `/tmp` é compartilhado entre os contêineres: não rodar duas passadas ao mesmo tempo.
+
+### Numeração dos commits
+
+`git log --all`: o maior `PHP8-NN` é o **31** (`origin/migracao/parse-str-e-guardas-sql` e outras). O `PHP8-25` do commit de dimensionamento
+**não colide** com nenhum outro (só ele usa o 25). Este lote usa o **`PHP8-32`**.
+
 ## PROGRESSO
 
 | Lote | Escopo | Estado | Commit | Observações |
 |---|---|---|---|---|
 | 0 | Dimensionamento, decisões (c), conferência do c1, recontagem dos DAOs | **feito** (18/11/2026) | este commit | só documentação |
-| 1 | `rh` + `eso` + 2 `.RPC.php` | pendente | — | — |
+| 1 | `rh` + `eso` + 2 `.RPC.php` | **feito** (19/11/2026) | `PHP8-32` (a mão; o Rector não alterou nada) | 96 telas, 0 alterações de código na área; bateria **57/96 idênticas**, 39 dependem do núcleo; 57 roteadas no `faseb_map.conf`. Ver *Lote 1: resultado* |
 | 1B | `src/RecursosHumanos` (aprovado) | pendente | — | `Falta.php` não compila (a1) |
 | 2 | `rec` | pendente | — | — |
 | 3 | `pes3` + `pes4` | pendente | — | — |

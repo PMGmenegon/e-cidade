@@ -16,7 +16,9 @@ OUT  = sys.argv[3] if len(sys.argv) > 3 else None
 SESS = f"/var/lib/php/sessions/sess_{SID}"
 
 def sh(c):
-    return subprocess.run(["bash", "-lc", c], capture_output=True)
+    # BASH_BIN: no Windows o "bash" do PATH do Python e o do WSL (sem distribuicao) e toda
+    # requisicao falha vazia nos dois lados -- "identico" sem ter requisitado nada.
+    return subprocess.run([os.environ.get("BASH_BIN", "bash"), "-lc", c], capture_output=True)
 
 sh(f"docker exec -u root ecidade_php74 cp {SESS} /tmp/_sess.bak")
 
@@ -69,6 +71,8 @@ def fetch(port, page):
     i = out.rfind(b'\n@@')
     code = out[i+3:].decode(errors='replace') if i >= 0 else '???'
     code, _, t = code.partition('@')
+    if code == '???':
+        sys.exit("cmp.py: requisicao sem resposta (curl/bash indisponivel?) -- abortado para nao declarar 'identica' por falha igual")
     # Resposta que bateu no -m 60 sai TRUNCADA com codigo 200, e cada lado corta num
     # ponto diferente: parecia divergencia. Achado no mer3_mer_nutriitem002 (~53 s nos
     # dois runtimes; sob a carga da bateria passa de 60). Vira TIMEOUT.
