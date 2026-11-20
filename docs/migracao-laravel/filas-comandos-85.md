@@ -62,7 +62,9 @@ bash docs/migracao-laravel/anexos/filas-comandos-85/roda.sh ecidade <vendor do 7
 
 O script monta `ecidade/` só para leitura, o `vendor/` de cada lado em `ecidade/vendor`, o `.env` de teste por cima,
 `bootstrap/cache` em `tmpfs` e `storage/` numa pasta da saída. Ele roda tudo com `--network none` e imprime o resumo
-da tabela acima.
+da tabela acima. Antes, cria `ecidade/vendor` e um `ecidade/.env` vazio como pontos de montagem, se faltarem. Se um
+`docker run` falha ou falta saída de um dos lados, ele para com `FALHOU` e código de saída 1, em vez de comparar
+saídas vazias.
 
 ## Lacunas
 
