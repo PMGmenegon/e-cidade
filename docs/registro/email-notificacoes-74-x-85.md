@@ -3,7 +3,7 @@
 Mostra o que o PR (Laravel 8.73.2) monta de e-mail e de notificação, e se o PHP 8.5 monta o mesmo que o 7.4.
 **Nada saiu e nenhum banco foi aberto**: o mailer foi o `array` (a mensagem fica na memória do transporte), os contêineres rodaram com `--network none`, e as 6 buscas no banco que as classes fazem foram trocadas por dados de exemplo em memória (seção 3).
 
-**Resultado em uma linha:** com o mesmo vendor do Laravel 8.73.2, as 2 mensagens de e-mail (assunto, remetente, destinatários, corpo HTML e a mensagem serializada como sairia) e os 4 payloads de notificação saem **idênticos no 7.4 e no 8.5**; a única diferença é que o 8.5 registra 79 avisos de depreciação (77 em `vendor/`, 2 em código do PR). Com o Laravel 13 (SwiftMailer sai, Symfony Mailer entra), o assunto, os endereços e o corpo continuam iguais; muda só a ordem dos cabeçalhos.
+**Resultado em uma linha:** com o mesmo vendor do Laravel 8.73.2, as 2 mensagens de e-mail (assunto, remetente, destinatários, corpo HTML e a mensagem serializada como sairia) e os 4 payloads de notificação saem **idênticos no 7.4 e no 8.5**; a única diferença é que o 8.5 registra 76 avisos de depreciação (74 em `vendor/`, 2 em código do PR). Com o Laravel 13 (SwiftMailer sai, Symfony Mailer entra), o assunto, os endereços e o corpo continuam iguais; muda só a ordem dos cabeçalhos.
 
 ## 1. Inventário
 
@@ -60,7 +60,7 @@ Esses caminhos não usam `Mail::`/`Mailable` e dependem de servidor SMTP ou `sen
 | Execução | PHP | Vendor |
 |---|---|---|
 | `l8-74` | 7.4.33 | `composer install` do `ecidade/composer.lock` do PR (Laravel 8.73.2, SwiftMailer 6.3.0) |
-| `l8-85` | 8.5.12 | vendor do `composer-85.lock` (`docker/composer-85/composer-85.sh install`; Laravel 8.73.2, SwiftMailer 6.3.0) |
+| `l8-85` | 8.5.12 | vendor do `composer-85.lock` (`docker/composer-85/composer-85.sh install`; Laravel 8.73.2, SwiftMailer 6.3.0, `lcobucci/jwt` 4.1.5) |
 | `l13-85` | 8.5.12 | Laravel 13.43.0 (Symfony Mailer 8.1) resolvido à parte, só para esta comparação |
 
 ```bash
@@ -113,7 +113,7 @@ Na leitura em memória, o nome do destinatário vem `null` no SwiftMailer e `""`
 | Execução | Avisos |
 |---|---|
 | `l8-74` (PHP 7.4) | 0 |
-| `l8-85` (PHP 8.5, Laravel 8) | 79: `laravel/framework` 54, `swiftmailer/swiftmailer` 13, `guzzlehttp/promises` 6, `lcobucci/jwt` 3, `opis/closure` 1 (77 em `vendor/`) e 2 em código do PR |
+| `l8-85` (PHP 8.5, Laravel 8) | 76: `laravel/framework` 54, `swiftmailer/swiftmailer` 13, `guzzlehttp/promises` 6, `opis/closure` 1 (74 em `vendor/`) e 2 em código do PR; sem `lcobucci/jwt`, que o `composer-85.lock` já traz na 4.1.5 (a 3.4 gerava 3 avisos de `Token`) |
 | `l13-85` (PHP 8.5, Laravel 13) | 2 (os mesmos 2 do PR) |
 
 Os 2 do PR: `app/Notifications/EmissaoRelatorioLegalNotification.php:49` (propriedade dinâmica `$titulo`, criação depreciada desde o PHP 8.2) e `std/DBString.php:813` (`utf8_encode()`, depreciada desde o 8.2; usada por `utf8_encode_all`, que as notificações chamam). O `HandleExceptions` do Laravel 8.73.2 registra depreciação no canal `deprecations` em vez de lançar exceção (`handleError` → `handleDeprecation`), então nenhum dos dois derruba a notificação no 8.5.
