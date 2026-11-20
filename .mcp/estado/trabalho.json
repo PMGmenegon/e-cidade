@@ -3597,6 +3597,14 @@
       "quando": "2026-11-20T18:15:06Z",
       "quem": "Segundo"
     },
+    "ecidade/classes/db_db_periodicidade_classe.php": {
+      "observacao": "PHP8-28: correcao automatica Rector (base 6d881031b, candidato 75649b823, commit 1511235e3). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [
+        "comparacao_vazio"
+      ],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/classes/db_db_permemp_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
@@ -4910,6 +4918,30 @@
       "padroes": [],
       "quando": "2026-11-20T18:15:08Z",
       "quem": "Segundo"
+    },
+    "ecidade/classes/db_gestorgrupoindicador_classe.php": {
+      "observacao": "PHP8-28: correcao automatica Rector (base 6d881031b, candidato 75649b823, commit 1511235e3). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [
+        "comparacao_vazio"
+      ],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_gestorindicador_classe.php": {
+      "observacao": "PHP8-28: correcao automatica Rector (base 6d881031b, candidato 75649b823, commit 1511235e3). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [
+        "comparacao_vazio"
+      ],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/classes/db_gestorindicadorregistro_classe.php": {
+      "observacao": "PHP8-28: correcao automatica Rector (base 6d881031b, candidato 75649b823, commit 1511235e3). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [
+        "comparacao_vazio"
+      ],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_habitparametro_classe.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -7834,11 +7866,109 @@
       "quando": "2026-11-19T22:49:54Z",
       "quem": "Segundo"
     },
+    "ecidade/forms/db_frmgestorgrupoindicador.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/forms/db_frmgestorindicador.php": {
+      "observacao": "PHP8-28: correcao manual pg_fetch_array (base 6d881031b, candidato 75649b823, commit 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [
+        "pg_resultado_false"
+      ],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/forms/db_frmgestorindicadorregistro.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
     "ecidade/forms/db_frmmatordemaltera.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
       "padroes": [],
       "quando": "2026-11-19T22:49:54Z",
       "quem": "Segundo"
+    },
+    "ecidade/func_gestorgrupoindicador.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/func_gestorindicador.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/func_gestorindicadorregistro.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorgrupoindicador.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorindicador.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/funcoes/db_func_gestorindicadorregistro.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador001.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador002.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorgrupoindicador003.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador001.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador002.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicador003.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
+    },
+    "ecidade/ges1_gestorindicadorregistro001.php": {
+      "observacao": "PHP8-28: revisado e validado em runtime sem alteracao (base 6d881031b, candidato 75649b823). Evidencias: ~/.gemini/antigravity-cli/brain/70761daf-397f-4ed8-9ac7-d738660e050a/scratch/evidencias_gestor_php85/ (JSON sha256 de3f6a02296253f5a2cfd30d06f98cc6a56bcf74e37d03b552cba9fd9198be80). Aceite técnico local do Gestor. Integração, destino do PR, dependência #16 e roteamento pelo proxy permanecem pendentes.",
+      "padroes": [],
+      "quando": "2026-11-20T21:47:28Z",
+      "quem": "Pedro Gomide"
     },
     "ecidade/model/PadArquivoEscritorTXT.model.php": {
       "observacao": "PHP8-40: migracao 7.4 -> 8.5 do Financeiro (ver commits PHP8-40)",
@@ -10745,12 +10875,6 @@
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
     },
-    "ecidade/classes/db_db_periodicidade_classe.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
     "ecidade/classes/db_db_plugin_classe.php": {
       "desde": "2026-11-20T19:04:41Z",
       "expira": "2026-11-21T01:43:26Z",
@@ -11008,24 +11132,6 @@
       "expira": "2026-11-21T01:43:27Z",
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
-    },
-    "ecidade/classes/db_gestorgrupoindicador_classe.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/classes/db_gestorindicador_classe.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/classes/db_gestorindicadorregistro_classe.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
     },
     "ecidade/classes/db_habitcandidato_classe.php": {
       "desde": "2026-11-20T21:43:34Z",
@@ -12784,102 +12890,6 @@
       "expira": "2026-11-21T01:43:34Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
-    },
-    "ecidade/forms/db_frmgestorgrupoindicador.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/forms/db_frmgestorindicador.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/forms/db_frmgestorindicadorregistro.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/func_gestorgrupoindicador.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/func_gestorindicador.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/func_gestorindicadorregistro.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/funcoes/db_func_gestorgrupoindicador.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/funcoes/db_func_gestorindicador.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/funcoes/db_func_gestorindicadorregistro.php": {
-      "desde": "2026-11-20T21:20:26Z",
-      "expira": "2026-11-21T01:20:26Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorgrupoindicador001.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorgrupoindicador002.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorgrupoindicador003.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorindicador001.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorindicador002.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorindicador003.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
-    },
-    "ecidade/ges1_gestorindicadorregistro001.php": {
-      "desde": "2026-11-20T21:20:25Z",
-      "expira": "2026-11-21T01:20:25Z",
-      "motivo": "PHP8-28: Modulo Gestor (Issue #28)",
-      "quem": "Pedro Gomide"
     },
     "ecidade/hab1_avaliacao001.php": {
       "desde": "2026-11-20T21:43:34Z",
