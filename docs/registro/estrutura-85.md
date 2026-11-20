@@ -221,7 +221,7 @@ Com isso os avisos 7.4 × 8.5 se comparam à parte: o mesmo `echo $variavel_inex
 
 A saída e o `stderr` do trecho passam para quem chamou. Teste em clone limpo
 (`bash docker/composer-85/testa-roda-isolado.sh`; precisa dos vendors em `TESTA_VENDOR74` e `TESTA_VENDOR85`, padrão
-`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 21 casos, 21/21 (os 10 do começo, 7 das opções, a `APP_KEY` e o `while read` de 3 linhas nos dois runtimes + `STDIN=1`: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
+`runtime-85/referencia-74/vendor` e `runtime-85/vendor`): 22 casos, 22/22 (os 10 do começo, 7 das opções, a `APP_KEY` e o `while read` de 3 linhas nos dois runtimes + `STDIN=1`: `ENV_EXTRA`, stdin, `EXTRA_RO` somente leitura, aviso só no `STDERR_ARQ`, Notice × Warning, `AVISOS=0`, `EXTRA_RO`/`ENV_EXTRA` inválidos). O 7.4 e o 8.5 imprimem a versão; um trecho sobe o
 kernel do Laravel do PR nos dois (`App\Application env=local`, rc 0, nenhum `Deprecated` no stdout); `exit(3)`, trecho vazio,
 imagem ausente, `docker run` quebrado, versão e arquivo inválidos falham com `roda-isolado: ERRO`. **Aviso:** tarefa que roda
 trecho isolado passa a chamar este script em vez de montar o `docker run` à mão.

@@ -57,7 +57,7 @@ for v in 7.4 8.5; do
     && grep -q '^gravavel=false$' "$W/o$v" && grep -q '^display_errors=.*log_errors=false' "$W/o$v"; } && echo "ok   opcoes $v (ENV_EXTRA, stdin, EXTRA_RO somente leitura)" || { f=$((f+1)); echo "FALHOU: opcoes $v rc=$rc"; cat "$W/o$v" "$W/e$v"; }
   n=$((n+1)); { grep -q 'Undefined variable' "$W/err$v" && ! grep -q 'Undefined variable' "$W/o$v" "$W/e$v"; } && echo "ok   aviso do $v so no STDERR_ARQ: $(grep -o '[A-Za-z ]*: Undefined variable' "$W/err$v" | head -1)" || { f=$((f+1)); echo "FALHOU: aviso $v"; cat "$W/err$v"; }
 done
-grep -q '^Warning: Undefined' "$W/err8.5" && grep -q '^Notice: Undefined' "$W/err7.4" && echo "ok   a diferenca 7.4 (Notice) x 8.5 (Warning) fica visivel" || { f=$((f+1)); echo "FALHOU: Notice x Warning"; }
+n=$((n+1)); grep -q '^Warning: Undefined' "$W/err8.5" && grep -q '^Notice: Undefined' "$W/err7.4" && echo "ok   a diferenca 7.4 (Notice) x 8.5 (Warning) fica visivel" || { f=$((f+1)); echo "FALHOU: Notice x Warning"; }
 n=$((n+1)); echo x | env STDIN=1 VENDOR="$V85" AVISOS=0 STDERR_ARQ="$W/errsem" bash "$S" 8.5 "$W/t/opcoes.php" >"$W/o" 2>/dev/null; { ! grep -q Undefined "$W/errsem" && grep -q 'display_errors=' "$W/o"; } && echo "ok   AVISOS=0 nao liga display_errors (php.ini da imagem)" || { f=$((f+1)); echo "FALHOU: AVISOS=0"; cat "$W/o"; }
 quebra env EXTRA_RO="/nao/existe:/x" bash "$S" 7.4 "$W/t/ok.php"
 quebra env ENV_EXTRA="$W/nao-existe" bash "$S" 7.4 "$W/t/ok.php"
