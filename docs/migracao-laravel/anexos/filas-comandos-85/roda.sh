@@ -11,11 +11,12 @@ mkdir -p "$O"; python3 "$T/gera_env.py" "$E/.env.example" "$O/env"
 r() {   # r <74|85> <script> [args]
   local v=$1 img=$I74 ven=$V74; shift; [ $v = 85 ] && img=$I85 && ven=$V85
   mkdir -p "$O/storage$v"; (cd "$E/storage" && find . -type d -exec mkdir -p "$O/storage$v/{}" \;)
-  docker run --rm --network none -u "$(id -u):$(id -g)" -v "$E:/e:ro" -v "$ven:/e/vendor:ro" -v "$O/env:/e/.env:ro" \
+  docker run --rm -i --network none -u "$(id -u):$(id -g)" -v "$E:/e:ro" -v "$ven:/e/vendor:ro" -v "$O/env:/e/.env:ro" \
     --tmpfs "/e/bootstrap/cache:uid=$(id -u)" -v "$O/storage$v:/e/storage" -v "$T:/s:ro" -v "$O:/o:ro" -w /e "$img" \
     php -d error_reporting='E_ALL&~E_DEPRECATED&~E_NOTICE&~E_WARNING' "$@"
 }
-grep -l -a -r 'implements ShouldQueue' "$E/app" | sed "s#^$E/app/#App/#; s#\.php\$##; s#/#\\\\#g" | sort > "$O/jobs.lista"
+# classes ShouldQueue: candidatas = arquivos de app/ que citam ShouldQueue; confirmadas por reflexao no 7.4
+(cd "$E" && grep -l -a -r 'ShouldQueue' app | sort) | r 74 /s/lista_filas.php > "$O/jobs.lista"
 for v in 74 85; do
   r $v /s/console.php > "$O/console$v.txt" 2>&1
   r $v artisan list --raw > "$O/list$v.txt" 2>&1
@@ -28,4 +29,4 @@ echo "artisan list:          $(c list74.txt list85.txt) ($(wc -l < "$O/list74.tx
 echo "comandos e agenda:     $(c console74.txt console85.txt) ($(grep -c "'classe' =>" "$O/console74.txt") comandos, $(grep -c "'cron' =>" "$O/console74.txt") eventos)"
 echo "jobs (payload):        $(diff <(grep -v '^command:' "$O/jobs74.txt") <(grep -v '^command:' "$O/jobs85.txt") >/dev/null && echo igual || echo DIFERE) ($(grep -c '^== ' "$O/jobs74.txt") classes; command serializado diferente em $(diff <(grep '^command' "$O/jobs74.txt") <(grep '^command' "$O/jobs85.txt") | grep -c '^<'))"
 echo "jobs (estado cruzado): $(md5sum "$O"/cruzado_* | awk '{print $1}' | sort -u | wc -l) estado(s) distinto(s) em 4 leituras (1 = igual)"
-echo "funcoes:               $(diff "$O/funcoes74.txt" "$O/funcoes85.txt" | grep -c '^<') linha(s) diferente(s) de $(wc -l < "$O/funcoes74.txt")"
+echo "funcoes:               $(grep -c ' => ' "$O/funcoes74.txt") casos ($(grep -c '^array_pluck\|^str_random' "$O/funcoes74.txt") removidas + $(grep -c '^str_contains #' "$O/funcoes74.txt") str_contains); resultado diferente em $(diff <(grep ' => ' "$O/funcoes74.txt") <(grep ' => ' "$O/funcoes85.txt") | grep -c '^<'), dos quais TypeError nos dois: $(paste -d'|' <(grep ' => ' "$O/funcoes74.txt") <(grep ' => ' "$O/funcoes85.txt") | awk -F'|' '$1!=$2' | grep -c 'TypeError.*|.*TypeError')"
