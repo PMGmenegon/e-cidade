@@ -56,5 +56,7 @@ O 8.5 com a 3.4.0 morre no primeiro caso (`InvalidKeyProvided`). O 7.4 com a 3.4
 
 ## Estado
 
-- Troca no composer do 8.5: `"lcobucci/jwt": "~4.1.0"`, a entrar sobre o `composer-85` assim que a estrutura (PHP8-79) estiver na integração; o lock do 8.5 é regerado com o comando registrado por ela. Os arquivos do 7.4 não mudam.
+- Feito: `ecidade/composer-85.json` com `"lcobucci/jwt": "~4.1.0"` e `ecidade/composer-85.lock` regerado com `bash docker/composer-85/composer-85.sh update lcobucci/jwt --no-install --no-scripts --ignore-platform-req=php+`. A trava muda em 3 pacotes, de 165 para 167: `lcobucci/jwt` 3.4.0 para 4.1.5, e entram `lcobucci/clock` 2.3.0 e `stella-maris/clock` 0.1.7. `validate` sem erro; `install` da trava no `runtime-85/vendor` com rc=0 e `lcobucci/jwt` 4.1.5.
+- O 7.4 não muda: `ecidade/composer.json` e `ecidade/composer.lock` iguais aos da `laravel/integracao-74` (`git diff` vazio); nenhum PHP mudou.
+- A mesma prova rodada com o `vendor/` real do 8.5 (`runtime-85/vendor` montado em `/app/vendor`, PHP 8.5.12, `league/oauth2-server` 8.3.2 e `nyholm/psr7` da trava) dá saída idêntica à do 7.4 + jwt 3.4.0 nos 9 casos.
 - A prova HTTP (`POST /v4/oauth/token`, Bearer de verdade) depende de banco e fica para quando houver decisão sobre o banco.
