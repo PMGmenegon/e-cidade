@@ -56,6 +56,11 @@
 # substitui este roteiro para uma tela qualquer.
 set -u
 cd "$(dirname "$0")/.."
+# o escrita_post.py le portas e containers de regressao/nucleo/ambiente.py (padrao: ambiente e74 da suite);
+# esta demonstracao usa a pilha da RAIZ, salvo se as variaveis ja vierem exportadas
+export REGRESSAO_REF_URL=${REGRESSAO_REF_URL:-http://localhost:8080} REGRESSAO_PHP_NOVO_URL=${REGRESSAO_PHP_NOVO_URL:-http://localhost:8085} \
+       REGRESSAO_CONTAINER_REF=${REGRESSAO_CONTAINER_REF:-ecidade_php74} REGRESSAO_CONTAINER_PHP_NOVO=${REGRESSAO_CONTAINER_PHP_NOVO:-ecidade_php85} \
+       REGRESSAO_CONTAINER_BANCO=${REGRESSAO_CONTAINER_BANCO:-ecidade_database}
 
 DB="docker exec -i ecidade_database psql -U postgres -d ecidade"
 

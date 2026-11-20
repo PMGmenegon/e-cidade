@@ -57,6 +57,12 @@ import argparse, datetime, difflib, os, re, subprocess, sys, time
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(RAIZ)
 ECIDADE = os.path.join(RAIZ, "ecidade")
+# O escrita_post.py le portas e containers de regressao/nucleo/ambiente.py, cujo padrao e o ambiente e74 da suite
+# de regressao (:8074/:8185, ecidade74_*). Este script testa a pilha da RAIZ; as variaveis exportadas valem.
+for _k, _v in {"REGRESSAO_REF_URL": "http://localhost:8080", "REGRESSAO_PHP_NOVO_URL": "http://localhost:8085",
+               "REGRESSAO_CONTAINER_REF": "ecidade_php74", "REGRESSAO_CONTAINER_PHP_NOVO": "ecidade_php85",
+               "REGRESSAO_CONTAINER_BANCO": "ecidade_database"}.items():
+    os.environ.setdefault(_k, _v)
 # psql -tA (sem cabecalho, colunas separadas por |) e -c no fim: basta acrescentar o SQL
 PSQL = ["docker", "exec", "-i", "ecidade_database", "psql", "-U", "postgres", "-d", "ecidade", "-tAc"]
 

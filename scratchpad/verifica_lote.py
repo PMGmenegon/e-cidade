@@ -87,6 +87,13 @@ ECIDADE = os.path.join(RAIZ, "ecidade")      # montado como /var/www/html nos do
 WEB = "/var/www/html"
 RT = {"74": "ecidade_php74", "85": "ecidade_php85"}
 PASSOS = ["4b", "5", "5b", "6", "6b", "6c", "7"]
+# O cmp.py (passo 7) le portas e containers de regressao/nucleo/ambiente.py, cujo padrao e o ambiente e74 da
+# suite de regressao (:8074/:8185, ecidade74_*). Este script mede a pilha da RAIZ: sem estas variaveis o passo 7
+# compararia outro ambiente (ou nenhum). Exportadas antes de rodar, as do usuario valem (setdefault).
+for _k, _v in {"REGRESSAO_REF_URL": "http://localhost:8080", "REGRESSAO_PHP_NOVO_URL": "http://localhost:8085",
+               "REGRESSAO_CONTAINER_REF": "ecidade_php74", "REGRESSAO_CONTAINER_PHP_NOVO": "ecidade_php85",
+               "REGRESSAO_CONTAINER_BANCO": "ecidade_database"}.items():
+    os.environ.setdefault(_k, _v)
 
 # Artefatos conhecidos dos harnesses dos passos 6 e 6b: classes que aparecem diferentes entre
 # os runtimes por causa do TESTE, nao da migracao. Registrados em Patrimonial, Financeiro e
@@ -561,16 +568,13 @@ def normalizacao_do_cmp():
     """A MESMA normalizacao que o cmp.py aplica antes de comparar (sid, nomes temporarios, datas
     de PDF...). Lida do proprio cmp.py, e nao copiada, para o diagnostico enxergar exatamente a
     diferenca que a bateria enxergou. Devolve uma funcao bytes -> bytes."""
-    fonte = ler("scratchpad/cmp.py")
-    # depende do layout do cmp.py: a lista NORM = [...] tem de vir antes de "def norm(" e nao usar nada alem de re
-    bloco = fonte[fonte.index("NORM = ["): fonte.index("def norm(")]
-    ns = {"re": re}
-    exec(bloco, ns)
-    def norm(b):
-        for rx, rep in ns["NORM"]:
-            b = rx.sub(rep, b)
-        return b
-    return norm
+    # o cmp.py so roda a bateria sob __main__: importado, da as mesmas regras (fixas + host:porta de cada runtime)
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("cmp_bateria", os.path.join(RAIZ, "scratchpad", "cmp.py"))
+    cmp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cmp)
+    regras = cmp.regras_norm()
+    return lambda b: cmp.norm(b, regras)
 
 LOG_PHP = os.path.join(ECIDADE, "extension", "log", "error.log")
 
