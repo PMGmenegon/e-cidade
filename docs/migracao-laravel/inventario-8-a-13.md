@@ -36,7 +36,8 @@ Arquivos de dados desta pasta:
 | `database/migrations` | 1.186 migrations do Laravel |
 | Providers / middlewares | 7 em `app/Providers/` (8 classes `ServiceProvider` em `app/`) / 17 |
 | Controllers | 5 em `app/Http/Controllers/` + 262 em `app/Domain/**/Controllers/` |
-| Form requests / models Eloquent | 140 / 690 |
+| Form requests | 289 declarações em `app/` (140 estendem `FormRequest` direto, 105 `DBFormRequest`, 44 `BaseFormRequest`) |
+| Models Eloquent | 690 (os que estendem `Model` direto; subclasses de outros models não entram) |
 | Jobs / commands / notifications | 16 / 15 / 6 |
 | Funções globais próprias (`app/Helpers`) | nenhuma com nome de helper atual ou removido do Laravel (0 conflitos) |
 
@@ -53,7 +54,7 @@ Mesmos padrões, mesma `base-php74`, repetidos em 20/11:
 | datas em JSON: 242 | **242** em 125 arquivos | `serializeDate\|->toArray()\|->toJson()` em `app/` (item 7.x, fora dos guias 9–13) | igual. É sinal: a data só muda se o model tiver atributo de data |
 | 1.300 rotas | **1.407** definições `Route::get\|post\|put\|patch\|delete\|any` em 73 arquivos de `routes/`; **1.309** com caminho literal e sem comentário | `Route Precedence` (12.x) | a diferença para 1.300 é de contagem: 98 definições têm caminho não literal ou estão em comentário (11 comentadas com caminho literal), e `resource`/`apiResource` (6 + 2) expandem em várias rotas. O número exato de `route:list` exige subir o kernel, que depende de `vendor/` completo e do banco; **não foi medido** |
 
-Contra o inventário anterior (feito sobre outra base, com 1.259 arquivos em `app/`, 325 models, 86 form requests e 561 rotas), os números subiram porque a `base-php74` tem o dobro de código (2.640 arquivos em `app/`, 690 models, 140 form requests).
+Contra o inventário anterior (feito sobre outra base, com 1.259 arquivos em `app/`, 325 models, 86 form requests e 561 rotas), os números subiram porque a `base-php74` tem o dobro de código (2.640 arquivos em `app/`, 690 models, 289 form requests contra 86).
 
 ## 4. Itens que o código usa
 
@@ -129,7 +130,7 @@ Pontos que merecem atenção do dono (todos medidos acima):
 - **PHP8-62:** `app/Http/Kernel.php` ainda usa `$routeMiddleware`/estrutura antiga (aceita no 11, 12 e 13); `bootstrap/app.php:42` faz o binding do handler de exceções; `configuration/filesystems.php:16` lê `FILESYSTEM_DRIVER`; `configuration/filesystems.php:48-60` depende da raiz padrão do disco local (muda no 12); `configuration/logging.php` (Monolog 3).
 - **PHP8-55:** 21 models com `$dates` (removida no 10), 42 com método/propriedade `casts`, 256 usos de Carbon (Carbon 3 muda o retorno de `diffIn*`).
 - **PHP8-77:** 302 `DB::raw`/expressões (a partir do 10 devolvem objeto `Expression`, não string); 7 usos de Flysystem em `ApropriacaoDecimoFeriasService.php:371-399` (3.x: sobrescrita, exceções de escrita, arquivo ausente).
-- **PHP8-94:** 82 chamadas `->validate(` (0 de `->validated(`) (a partir do 9 o validador exclui chaves sem regra) e 4 regras com closure em `TriagemLaboratorialRequest.php:59-80`.
+- **PHP8-94:** 82 chamadas `->validate(` só em `app/` (0 de `->validated(`; a contagem da PHP8-94 inclui `src/` e dá 104) (a partir do 9 o validador exclui chaves sem regra) e 4 regras com closure em `TriagemLaboratorialRequest.php:59-80`.
 - **PHP8-12:** 1.407 definições (precedência de rotas no 12 pode mudar o despacho de caminhos que se sobrepõem).
 
 ## 6. Como reproduzir
