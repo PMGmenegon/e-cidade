@@ -241,6 +241,7 @@ Registro (o que antes ficava todo aqui), em `docs/registro/`:
 | `trabalho-relacionado.md` | monografia do TCC de referência, análise dos commits e a comparação medida sobre o mesmo universo |
 | `catalogo-e-metodo.md` | `while read`, `modification()`, LSP e `=& new`, `php -l` na base inteira, experimento do Rector, cobertura dos caminhos de escrita (níveis 1–3), decisões de porte, bugs latentes |
 | `laravel.md` | login bloqueado, dimensionamento, migração em paralelo com `vendor/` próprio, Tributário × API, token do Passport, **pontos de contato telas × Laravel** (5 relatórios que sobem o kernel na página, 30 chamadas `/v4/`) |
+| `php8-77-db-raw-storage.md` | PHP8-77: os 414 `DB::raw(` classificados (`php8-77-db-raw.tsv`, comando no registro); 23 quebram no Laravel 10+ (`DB::select`/`statement` com `DB::raw`, `selectRaw(implode)`) e foram ajustados tirando o `DB::raw` (SQL igual 7.4 x 8.5 pelo Grammar, sem banco); `Storage`/`Filesystem` iguais em pasta descartável, menos `delete` de inexistente (retorno ignorado) |
 | `ambiente.md` | uids, ferramental versionado, php.ini de paridade, armadilhas de ferramental, permissões do `storage/`, proxy reverso, `/tmp` e sessão compartilhados, comandos úteis |
 
 Referências cruzadas antigas do tipo "ver *Seção X*" continuam valendo: a seção existe com o mesmo
