@@ -56,7 +56,7 @@ class cl_ruascep {
                  j29_lado = int4 = Lado
                  ";
    //funcao construtor da classe
-   function cl_ruascep() {
+   function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("ruascep");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

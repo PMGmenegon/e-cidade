@@ -60,7 +60,7 @@ class cl_averbacgmold {
                   j79_tipopromitente = int4 = Tipo de Promitente
                  ";
    //funcao construtor da classe 
-   public function cl_averbacgmold() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("averbacgmold"); 
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

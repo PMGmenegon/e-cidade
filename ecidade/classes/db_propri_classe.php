@@ -55,7 +55,7 @@ class cl_propri {
                  j42_arealoteproprietario = float8 = Área do lote por proprietário 
                  ";
    //funcao construtor da classe 
-   public function cl_propri() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("propri"); 
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

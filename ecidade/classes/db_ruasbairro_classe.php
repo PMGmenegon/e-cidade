@@ -54,7 +54,7 @@ class cl_ruasbairro {
                  j16_cep    = char(8) = CEP
                  ";
    //funcao construtor da classe
-   function cl_ruasbairro() {
+   function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("ruasbairro");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);

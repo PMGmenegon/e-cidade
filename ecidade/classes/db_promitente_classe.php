@@ -56,7 +56,7 @@ class cl_promitente {
                  j41_tipopromitente = int4 = Tipo do promitente
                  ";
    //funcao construtor da classe 
-   public function cl_promitente() { 
+   public function __construct() { 
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("promitente"); 
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
