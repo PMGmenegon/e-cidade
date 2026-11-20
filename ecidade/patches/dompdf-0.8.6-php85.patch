@@ -6,7 +6,7 @@ diff -ru a/src/Css/Style.php b/src/Css/Style.php
          $this->_prop_cache["z_index"] = null;
  
 -        if (round($val) != $val && $val !== "auto") {
-+        if ($val !== "auto" && (!is_numeric($val) || round($val) != $val)) {
++        if (round((float)$val) != (float)$val && $val !== "auto") {
              return;
          }
  
