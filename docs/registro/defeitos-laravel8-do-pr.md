@@ -1,6 +1,6 @@
 # Defeitos do Laravel 8 do PR #8 já presentes no PHP 7.4
 
-Registro de sete famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as quatro últimas lidas no código.
+Registro de oito famílias de defeito que o código do PR #8 da DBSeller (`base-php74`, `laravel/framework` 8.73.2) já tem **no PHP 7.4**: as três primeiras medidas por trecho isolado (sem banco e sem rede), as quatro seguintes lidas no código e a última rodada com o `artisan` (sem banco e sem rede).
 São herança do código escrito para o Laravel 5.4 e rodado sobre o Laravel 8: não dependem do PHP 8.5 e **não foram corrigidos aqui** (só registro, para o grupo e para a DBSeller decidirem).
 
 | Família | Pontos na `base-php74` | Efeito no 7.4 |
@@ -12,6 +12,7 @@ São herança do código escrito para o Laravel 5.4 e rodado sobre o Laravel 8: 
 | Rota ausente para a tela `con4_manutencaoformulario001.php` | 1 chamada (`:500-506`), 1 controller sem rota | a chamada a `v4/api/configuracao/formulario/{id}/instituicao/{instituicao}` não tem rota em `routes/` |
 | Form request duplicado com o mesmo nome completo (`AutenticacaoRequest`) | 2 arquivos, 1 nome de classe | só o arquivo da pasta `ITBI` é carregado pelo autoload; o outro, com mais uma regra, nunca vale |
 | Factory legada sem o pacote que a carrega (`database/factories/ModelFactory.php`) | 1 arquivo, 1 `$factory->define` (`:15`) | o arquivo não roda; falha em `$factory` antes do `str_random` da linha 22 |
+| `artisan schedule:list` e `artisan list --format=json` | 2 comandos do console que não funcionam, iguais no 7.4 e no 8.5 | `schedule:list` termina com erro (rc 1); `list --format=json` termina sem saída (rc 0) |
 
 ## 1. `Cache::put` com TTL em minutos
 
@@ -102,6 +103,18 @@ O Laravel 8.73.2 do PR **não tem** essa classe (só `Illuminate\Database\Eloque
 Resultado no 7.4: o arquivo não é carregado por nada e, se fosse incluído, falharia na linha 15 (`$factory` indefinida) antes de chegar ao `str_random` da linha 22. A factory inteira está morta, não só uma chamada.
 Conferência: `git grep -nE '\$factory->define' -- ecidade/database | wc -l` dá 1 e `git grep -nE 'laravel/legacy-factories' -- ecidade/composer.json ecidade/composer.lock | wc -l` dá 0.
 
+## 8. Dois comandos do `artisan` que não funcionam
+
+Medido com o `artisan` do PR (`php artisan ...`), sem banco e sem rede: o PHP 7.4.33 e o 8.5.12 com o Laravel 8.73.2, o `.env` de teste com host de banco inexistente. O resultado é o mesmo nos dois PHPs.
+
+**8.1 `schedule:list` falha sempre.** `vendor/laravel/framework/src/Illuminate/Console/Scheduling/ScheduleListCommand.php:42` faz `->setTimezone($this->option('timezone', config('app.timezone')))`, mas `option()` aceita um só argumento (`Illuminate/Console/Concerns/InteractsWithIO.php:105`, `option($key = null)`):
+o segundo é ignorado e o valor passado a `setTimezone()` é `null`. Saída (rc 1): no 7.4, `DateTime::setTimezone() expects parameter 1 to be DateTimeZone, null given`; no 8.5, `DateTime::setTimezone(): Argument #1 ($timezone) must be of type DateTimeZone, null given`.
+Com `--timezone=America/Sao_Paulo` o erro é o mesmo, com a diferença de que o valor chega como texto (`string given`). O defeito é do pacote nesta versão (nenhum arquivo do PR chama `schedule:list`); atinge quem rodar o comando para ver o agendamento.
+
+**8.2 `list --format=json` sai vazio com rc 0.** O `JsonDescriptor` do Symfony Console faz `json_encode($data, $flags)` sem `JSON_PARTIAL_OUTPUT_ON_ERROR` (`symfony/console/Descriptor/JsonDescriptor.php:103`); se qualquer descrição de comando não for UTF-8 válido, `json_encode` devolve `false` e nada é escrito.
+No PR, 3 comandos têm a `$description` em ISO-8859-1: `RedesimAutomaticEstablishmentProcessTask.php:31` (`tributario:redesim:automaticEstablishmentProcess`), `ReenvioLancamentosRequisicaoMaterial.php:24` (`lancamento:requisicao-material-reenvio`) e `AlteracaoSituacaoInscricaoTask.php:28` (`matriculaonline:alteracaoinscricao`), todos em `app/Console/Commands/`.
+Prova da causa: `list --format=json` de um namespace sem esses comandos funciona (`migrate`: 17.314 bytes), e dos três namespaces deles (`tributario`, `lancamento`, `matriculaonline`) sai com 0 byte. `list`, `list --raw` e `list --format=xml` funcionam (111 comandos no `--raw`).
+
 ## Como foi medido
 
 Sem banco e sem rede. `illuminate/support`, `illuminate/cache` (e as dependências) 8.73.2 baixados por `composer install --ignore-platform-reqs` numa pasta
@@ -123,4 +136,5 @@ As buscas de arquivo:linha são `git grep` na `base-php74`; cada contagem do res
 | arquivos que declaram `class AutenticacaoRequest` (seção 6) | `git grep -lE '^class AutenticacaoRequest' -- ecidade/app \| wc -l` | 2 |
 | …deles com a namespace de `ITBI` dentro da pasta `Arrecadacao` | `git grep -nE '^namespace App.Domain.Tributario.ITBI.Requests;' -- ecidade/app/Domain/Tributario/Arrecadacao \| wc -l` | 1 |
 | `$factory->define` / pacote `laravel/legacy-factories` (seção 7) | os dois comandos da seção 7 | 1 / 0 |
+| `$description` em ISO-8859-1 (seção 8) | `python3 -c "import re,glob;print(sum(1 for f in glob.glob('ecidade/app/**/*.php',recursive=True) for m in re.finditer(rb'\\\$description\s*=\s*([^;]*);',open(f,'rb').read()) if m.group(1).decode('utf-8','ignore').encode()!=m.group(1)))"` | 3 |
 | form requests que herdam `DBFormRequest` (seção 4) | `git grep -lE 'extends DBFormRequest' -- ecidade/app ecidade/src \| wc -l` | 105 |
