@@ -68,7 +68,7 @@ conferidas contra o script do CI e uma parte delas nao confere:
 
 | O que diz `estrutura-85.md` | O que o script do CI faz (medido acima) |
 |---|---|
-| Regra: em `app-85/` nao vale "tipos `mixed`" de retorno | `: mixed` **passa** no 7.4 (o `php -l` do 7.4 le `mixed` como nome de classe; so deixa de ser aceito no 8.x se for nome de classe) |
+| Regra: em `app-85/` nao vale "tipos `mixed`" de retorno | `: mixed` **passa** no 7.4 (o `php -l` do 7.4 le `mixed` como nome de classe, e o `-l` nao confere se a classe existe) |
 | Regra: nao vale "atributos `#[...]` fora de comentario" | `#[Atributo]` de **uma linha** passa no 7.4 (vira comentario); so o atributo em **varias linhas** falha |
 | Pergunta: "por exemplo, retorno `mixed` numa interface do framework" deixaria o job do 7.4 vermelho | **nao deixa**: `: mixed` passa. O exemplo nao ilustra o problema |
 | Regra: `static`, uniao, `match`, argumentos nomeados, `readonly`, `enum`, promocao no construtor | confere: todos falham no 7.4 |
