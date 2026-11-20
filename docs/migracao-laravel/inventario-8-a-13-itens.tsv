@@ -23,7 +23,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 9.x	Postgres "Schema" Configuration	NAO USA	0	0		config	'schema'\s*=>	
 9.x	Schema Builder registerCustomDoctrineType Method	NAO USA	0	0		uso	registerCustomDoctrineType	
 9.x	Eloquent	NAO APLICA				manual	titulo de grupo
-9.x	Custom Casts & null	NAO USA	0	0		uso	CastsAttributes|implements\s+CastsInboundAttributes	
+9.x	Custom Casts & null	NAO USA	0	0		uso	CastsAttributes|implements\s+[\w\\, ]*CastsInboundAttributes\b|use\s+[\w\\]*\\CastsInboundAttributes\s+as\s+\w+	
 9.x	Belongs To Many firstOrNew, firstOrCreate, and updateOrCreate Methods	USA	1	1	app/Domain/Educacao/Secretaria/Repositories/BaseDisciplinaRepository.php:29	sinal	->(firstOrNew|firstOrCreate|updateOrCreate)\(	PHP8-55
 9.x	The touch Method	NAO USA	0	0		sinal	->touch\(	
 9.x	Encryption	NAO APLICA				manual	titulo de grupo
@@ -91,10 +91,10 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 10.x	Redis Cache Tags	NAO USA	0	0		uso	Cache::tags|->tags\(	
 10.x	Database	NAO APLICA				manual	titulo de grupo
 10.x	Database Expressions	USA	302	75	app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:217 app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:224 app/Domain/RecursosHumanos/Pessoal/Repository/TipoGuiaPrevidenciaRepository.php:225	uso	DB::raw|Expression	PHP8-77
-10.x	Query Exception Constructor	NAO USA	0	0		uso	new\s+QueryException	
+10.x	Query Exception Constructor	NAO USA	0	0		uso	new\s+\\?([\w\\]*\\)?QueryException\b	
 10.x	ULID Columns	USA	1	1	database/migrations/2022_10_24_103009_create_notifications_table.php:17	uso	->ulid\(|->uuid\(	PHP8-55
 10.x	Eloquent	NAO APLICA				manual	titulo de grupo
-10.x	Model "Dates" Property	USA	21	21	app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php:13 app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php:18 app/Domain/Financeiro/Contabilidade/Models/Lancamento.php:30	uso	\$dates\s*=	PHP8-55
+10.x	Model "Dates" Property	NAO USA	0	0		uso	\$dates\s*=	
 10.x	Localization	NAO APLICA				manual	titulo de grupo
 10.x	The Language Directory	NAO USA	0	0		uso	resources/lang|lang_path	
 10.x	Logging	NAO APLICA				manual	titulo de grupo
@@ -122,8 +122,8 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 11.x	Application Structure	USA	4	2	app/Http/Kernel.php:19 app/Http/Kernel.php:45 app/Http/Kernel.php:74	uso	class\s+Kernel\b|\$middlewareGroups|\$routeMiddleware	PHP8-62
 11.x	Authentication	NAO APLICA				manual	titulo de grupo
 11.x	Password Rehashing	USA	1	1	app/Http/Controllers/Auth/RegisterController.php:68	sinal	Hash::|bcrypt\(|password_hash	PHP8-39
-11.x	The UserProvider Contract	NAO USA	0	0		uso	Contracts\\Auth\\UserProvider|implements\s+UserProvider	
-11.x	The Authenticatable Contract	NAO USA	0	0		uso	implements\s+\\?(\w+\\)*Authenticatable|AuthenticatableContract	
+11.x	The UserProvider Contract	NAO USA	0	0		uso	Contracts\\Auth\\UserProvider|implements\s+[\w\\, ]*UserProvider\b	
+11.x	The Authenticatable Contract	NAO USA	0	0		uso	implements\s+[\w\\, ]*Authenticatable\b|AuthenticatableContract	
 11.x	The AuthenticationException Class	USA	4	1	app/Exceptions/Handler.php:7 app/Exceptions/Handler.php:19 app/Exceptions/Handler.php:111	uso	AuthenticationException	PHP8-62
 11.x	Email Verification Notification on Registration	NAO USA	0	0		uso	event\(\s*new\s+Registered|Registered\b	
 11.x	Cache	NAO APLICA				manual	titulo de grupo
@@ -132,7 +132,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 11.x	The Enumerable Contract	NAO USA	0	0		uso	Enumerable\b	
 11.x	Database	NAO APLICA				manual	titulo de grupo
 11.x	SQLite 3.26.0+	NAO APLICA				manual	o e-Cidade so usa PostgreSQL
-11.x	Eloquent Model casts Method	USA	42	42	app/Domain/Financeiro/Contabilidade/Models/PlanoReceita.php:33 app/Domain/Financeiro/Planejamento/Models/Configuracao.php:43 app/Domain/Financeiro/Planejamento/Models/CronogramaDesembolsoReceita.php:55	uso	\$casts\s*=	PHP8-55
+11.x	Eloquent Model casts Method	USA	58	58	app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php:13 app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php:18 app/Domain/Financeiro/Contabilidade/Models/Lancamento.php:30	uso	\$casts\s*=	PHP8-55
 11.x	Modifying Columns	USA	3	2	database/migrations/2021_10_25_083540_alter_secret_to_oauth_clients.php:17 database/migrations/2021_10_25_083540_alter_secret_to_oauth_clients.php:29 database/migrations/2024_08_13_093320_M28685_ajuste_schema_tabela_mensageriaacordo.php:243	uso	->change\(\)	PHP8-55
 11.x	Floating-Point Types	USA	14	5	database/migrations/2024_08_08_094811_m28016_rotina_elaboracao_pca.php:93 database/migrations/2024_08_08_094811_m28016_rotina_elaboracao_pca.php:94 database/migrations/2024_08_08_094811_m28016_rotina_elaboracao_pca.php:95	uso	->(double|float|unsignedDouble|unsignedFloat|unsignedDecimal)\(	PHP8-55
 11.x	Dedicated MariaDB Driver	NAO APLICA				manual	o e-Cidade so usa PostgreSQL
@@ -142,7 +142,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 11.x	Schema Builder getColumnType() Method	NAO USA	0	0		uso	getColumnType\s*\(	
 11.x	Database Connection Interface	NAO USA	0	0		uso	ConnectionInterface	
 11.x	Dates	NAO APLICA				manual	titulo de grupo
-11.x	Carbon 3	USA	256	100	app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:5 app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:27 app/Domain/RecursosHumanos/Pessoal/Services/Relatorios/TipoGuiaPrevidenciaService.php:7	uso	Carbon\\Carbon|Carbon::|\bnew\s+Carbon\b|diffIn\w+\(	PHP8-55
+11.x	Carbon 3	USA	256	100	app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:5 app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:27 app/Domain/RecursosHumanos/Pessoal/Services/Relatorios/TipoGuiaPrevidenciaService.php:7	uso	Carbon\\Carbon|Carbon::|\bnew\s+\\?Carbon\b|diffIn\w+\(	PHP8-55
 11.x	Mail	NAO APLICA				manual	titulo de grupo
 11.x	The Mailer Contract	NAO USA	0	0		uso	Contracts\\Mail\\Mailer	
 11.x	Packages	NAO APLICA				manual	titulo de grupo
@@ -167,7 +167,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 12.x	Upgrading To 12.0 From 11.x	NAO APLICA				manual	titulo de secao
 12.x	Estimated Upgrade Time: 5 Minutes	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
 12.x	Updating Dependencies	NAO APLICA				manual	versao de PHP/Composer/dependencias do composer.json: tratada na verificacao de ambiente/composer.json, nao e uso no codigo
-12.x	Carbon 3	USA	256	100	app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:5 app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:27 app/Domain/RecursosHumanos/Pessoal/Services/Relatorios/TipoGuiaPrevidenciaService.php:7	uso	Carbon\\Carbon|Carbon::|\bnew\s+Carbon\b|diffIn\w+\(	PHP8-55
+12.x	Carbon 3	USA	256	100	app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:5 app/Domain/RecursosHumanos/Pessoal/Model/RhDepend.php:27 app/Domain/RecursosHumanos/Pessoal/Services/Relatorios/TipoGuiaPrevidenciaService.php:7	uso	Carbon\\Carbon|Carbon::|\bnew\s+\\?Carbon\b|diffIn\w+\(	PHP8-55
 12.x	Updating the Laravel Installer	NAO APLICA				manual	ferramenta fora do sistema (instalador, Dusk, Pusher, Spark, Cashier, Sanctum, Telescope, Ide-helper): nao e codigo proprio do e-Cidade
 12.x	Authentication	NAO APLICA				manual	titulo de grupo
 12.x	Updated DatabaseTokenRepository Constructor Signature	NAO USA	0	0		uso	DatabaseTokenRepository	
@@ -177,7 +177,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 12.x	Container Class Dependency Resolution	USA	8	6	app/Domain/Patrimonial/Protocolo/Services/ProcessoService.php:629 app/Domain/Patrimonial/Protocolo/Services/NotificarTransferenciaProcessoService.php:40 app/Domain/Tributario/Arrecadacao/Repositories/TermoRepository.php:241	sinal	app\(\s*[\w\\]+::class\s*\)|->make\(	PHP8-62
 12.x	Database	NAO APLICA				manual	titulo de grupo
 12.x	Multi-Schema Database Inspecting	NAO USA	0	0		uso	Schema::getTables|getTableListing|getViews|getTypes	
-12.x	Database Constructor Signature Changes	NAO USA	0	0		uso	new\s+\w*(Connection|Grammar|SchemaState)\(|extends\s+\\?(\w+\\)*(Connection|Grammar)\b	
+12.x	Database Constructor Signature Changes	NAO USA	0	0		uso	new\s+\\?([\w\\]*\\)?\w*(Connection|Grammar|SchemaState)\(|extends\s+\\?(\w+\\)*(Connection|Grammar)\b	
 12.x	Eloquent	NAO APLICA				manual	titulo de grupo
 12.x	Models and UUIDv7	NAO USA	0	0		uso	HasUuids	
 12.x	Requests	NAO APLICA				manual	titulo de grupo
@@ -215,7 +215,7 @@ versao	item do guia	resultado	ocorrencias	arquivos	exemplos	tipo	padrao ou motiv
 13.x	HTTP Client Response::throw and throwIf Signatures	NAO USA	0	0		uso	->throw(If)?\s*\(	
 13.x	Notifications	NAO APLICA				manual	titulo de grupo
 13.x	Default Password Reset Subject	USA	1	1	app/Http/Controllers/Auth/ResetPasswordController.php:8	uso	ResetPassword|Reset Password Notification	PHP8-51
-13.x	Queued Notifications and Missing Models	USA	16	16	app/Notifications/UserNotificationAcordoVencimento.php:13 app/Notifications/EmissaoRelatorioLegalNotification.php:12 app/Jobs/RequisicaoAPIPixJob.php:21	uso	implements\s+ShouldQueue	PHP8-51
+13.x	Queued Notifications and Missing Models	USA	18	18	app/Notifications/UserNotificationAcordoVencimento.php:13 app/Notifications/EmissaoRelatorioLegalNotification.php:12 app/Jobs/RequisicaoAPIPixJob.php:21	uso	implements\s+[\w\\, ]*ShouldQueue\b|use\s+[\w\\]*\\ShouldQueue\s+as\s+\w+	PHP8-51
 13.x	Queue	NAO APLICA				manual	titulo de grupo
 13.x	JobAttempted Event Exception Payload	NAO USA	0	0		uso	JobAttempted	
 13.x	QueueBusy Event Property Rename	NAO USA	0	0		uso	QueueBusy	
