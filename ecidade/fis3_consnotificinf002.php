@@ -41,7 +41,7 @@ $clfiscalbaixa = new cl_fiscalbaixa;
 $sql = " ";
 //echo ($clfiscal->sql_query($codfiscal,"*",null," y30_instit = ".db_getsession('DB_instit')));
 $result = $clfiscal->sql_record($clfiscal->sql_query($codfiscal,"*",null," y30_codnoti = $codfiscal and y30_instit = ".db_getsession('DB_instit')));
-$num = pg_numrows($result);
+$num = ($result ? pg_numrows($result) : null);
 
 ?>
 

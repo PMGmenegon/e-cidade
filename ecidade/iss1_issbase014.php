@@ -108,7 +108,7 @@ if ($numrowsParissqn > 0) {
 //************************************************************************************************//
 //Busca o parametro na tabela parissqn para gerar risco automaticamente apartir do CNAE
 $selectRiscoAutomatico = db_query("select q60_riscoautomatico from issqn.parissqn;");
-$riscoAutomatico = pg_result($selectRiscoAutomatico,0,0);
+$riscoAutomatico = ($selectRiscoAutomatico ? pg_result($selectRiscoAutomatico,0,0) : null);
 //************************************************************************************************//
 
 $result02=$cldb_config->sql_record($cldb_config->sql_query_file(db_getsession("DB_instit"),"munic,cep"));

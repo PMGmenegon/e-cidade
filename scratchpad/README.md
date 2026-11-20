@@ -5,7 +5,11 @@ O **como usar** de cada passo está no guia (`docs/migrar-um-modulo.md`); aqui e
 o que ele altera**. Cada arquivo também traz, no topo, um cabeçalho com uso, entradas e saídas.
 
 > **Na `base-php74`** (18/11/2026): a referência é o **PHP 7.4** (`ecidade_php74`, porta 8080), no papel que era
-> do 5.6 — as mensagens dos scripts já dizem 7.4 (`ref=` na saída do `cmp.py`, `NO_7.4` no `redirecionamentos.py`); onde
+> do 5.6 — as mensagens dos scripts já dizem 7.4 (`NO_7.4` no `redirecionamentos.py`). O `cmp.py` e o
+> `escrita_post.py` ficam como na base (o `cmp.py` marca a referência com `56=`) para não conflitar com a
+> versão da `regressao-php74`, que o PR #30 traz (marca `ref=` e lê portas do `regressao/nucleo/ambiente.py`);
+> o `verifica_lote.py` funciona com as duas, e ele, o `nivel3.py` e o `demo_nivel3.sh` apontam as variáveis
+> `REGRESSAO_*` para a pilha da raiz (8080/8085). Onde
 > este texto diz 5.6, leia 7.4. Adaptações feitas para esta base: o nome do
 > container de referência; a leitura do `location` no `nginx.conf` considera só a linha **ativa** (o bloco nasce
 > comentado, e sem linha ativa nada vai ao 8.5); o `rotear.py location` cria o bloco quando ele não existe; o
@@ -147,6 +151,7 @@ Rodam sem Docker e sem banco, sobre cópias temporárias e com dublês no lugar 
 
 ```bash
 python3 scratchpad/testes/test_verifica_relatorio.py     # relatório do passo 7: conhecidas x novas
+python3 scratchpad/testes/test_verifica_cmp_compat.py    # verifica_lote com o cmp.py da base e o da regressao-php74
 python3 scratchpad/testes/test_rotear_abas.py            # rotear.py abas: a lista nunca fica alterada sem aplicar
 ```
 

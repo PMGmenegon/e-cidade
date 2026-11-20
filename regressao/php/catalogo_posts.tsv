@@ -74,3 +74,7 @@ agu1_aguacoletor001.php	aguacoletor	x46_sequencial=&x46_descricao=TESTE_N3&x46_o
 agu1_aguacondominiomat001.php	aguacondominiomat	x40_codcondominio=1&x40_matric=1&z01_nome=TESTE_N3&incluir=Incluir	tributario	verificado
 agu1_aguaconfvenc001.php	aguaconfvenc	x33_exerc=1&x33_parcela=1&x33_dtvenc=31/12/2026&x33_dtvenc_dia=31&x33_dtvenc_mes=12&x33_dtvenc_ano=2026&incluir=Incluir	tributario	verificado
 agu1_aguaconsumorec001.php	aguaconsumorec	x20_codconsumo=1&x19_descr=TESTE_N3&x20_codconsumotipo=1&x25_descr=TESTE_N3&x20_valor=1&incluir=Incluir	tributario	verificado
+# Financeiro (PHP8-02, 20/11/2026): nivel 3 de Contabilidade, Custos e Empenho, IDENTICO 7.4 x 8.5 no baseline.dump. Planejamento (pla*) grava so pela API Laravel: sem caminho legado.
+con1_conhistdoctipo001.php	conhistdoctipo	c57_sequencial=9001&c57_descricao=TESTE_N3&incluir=Incluir	financeiro	verificado
+emp1_empagetipo001.php	empagetipo	e83_codtipo=&e83_descr=TESTE_N3&e83_conta=1303&e83_codmod=1&e83_codigocompromisso=12&e83_convenio=1&e83_sequencia=1&incluir=Incluir	financeiro	verificado
+cus1_custotipoconta001.php	custotipoconta	cc02_sequencial=&cc02_descricao=TESTE_N3&incluir=Incluir	financeiro	verificado

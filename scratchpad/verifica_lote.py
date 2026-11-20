@@ -568,13 +568,26 @@ def normalizacao_do_cmp():
     """A MESMA normalizacao que o cmp.py aplica antes de comparar (sid, nomes temporarios, datas
     de PDF...). Lida do proprio cmp.py, e nao copiada, para o diagnostico enxergar exatamente a
     diferenca que a bateria enxergou. Devolve uma funcao bytes -> bytes."""
-    # o cmp.py so roda a bateria sob __main__: importado, da as mesmas regras (fixas + host:porta de cada runtime)
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("cmp_bateria", os.path.join(RAIZ, "scratchpad", "cmp.py"))
-    cmp = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(cmp)
-    regras = cmp.regras_norm()
-    return lambda b: cmp.norm(b, regras)
+    fonte = ler("scratchpad/cmp.py")
+    if "def regras_norm(" in fonte:
+        # cmp.py da regressao-php74 (PR #30): so roda a bateria sob __main__; importado, da as mesmas regras
+        # (fixas + host:porta de cada runtime)
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("cmp_bateria", os.path.join(RAIZ, "scratchpad", "cmp.py"))
+        cmp = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cmp)
+        regras = cmp.regras_norm()
+        return lambda b: cmp.norm(b, regras)
+    # cmp.py da base: roda a bateria ao ser importado, entao so a lista NORM = [...] e lida (ela vem antes de
+    # "def norm(" e nao usa nada alem de re)
+    bloco = fonte[fonte.index("NORM = ["): fonte.index("def norm(")]
+    ns = {"re": re}
+    exec(bloco, ns)
+    def norm(b):
+        for rx, rep in ns["NORM"]:
+            b = rx.sub(rep, b)
+        return b
+    return norm
 
 LOG_PHP = os.path.join(ECIDADE, "extension", "log", "error.log")
 
@@ -715,9 +728,11 @@ def passo_7(ctx, args):
     nomes_con = con["nomes"] if con else set()
     novas = [x for x in divergentes if x not in nomes_con]
     velhas = [x for x in divergentes if x in nomes_con]
-    # Timeout so no 7.4 (ref=000, 8.5 respondeu) e laco eterno da referencia: pre-existente. Timeout no 8.5 e
-    # que pode ser regressao (laco que o PHP 8 passou a fazer).
-    tout_56 = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT") and "ref=000" in l and "85=000" not in l]
+    # Timeout so no 7.4 (8.5 respondeu) e laco eterno da referencia: pre-existente. Timeout no 8.5 e
+    # que pode ser regressao (laco que o PHP 8 passou a fazer). O cmp.py marca a referencia com `56=` (versao
+    # da base) ou `ref=` (versao da regressao-php74, que o PR #30 traz): os dois rotulos valem.
+    tout_56 = [l.split()[1] for l in linhas_div if l.strip().startswith("TIMEOUT")
+               and re.search(r"\b(?:56|ref)=000\b", l) and "85=000" not in l]
     tout_novos = [x for x in tout if x not in nomes_con and x not in tout_56]
     testadas = set((t["location"] + t["map"]) if t else [])
     sumiram = sorted(x for x in nomes_con & testadas if x not in divergentes and x not in tout) if con else []
