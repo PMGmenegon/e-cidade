@@ -2928,6 +2928,30 @@
       "quando": "2026-11-20T04:06:29Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_areapont_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_arquivosimplesimportacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_arquivosimplesimportacaodetalhe_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_arquivosimplesimportacaoretorno_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_arrecadcompos_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -2952,10 +2976,52 @@
       "quando": "2026-11-20T03:58:35Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_atinota_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ativid_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_atividcbo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_atividcnae_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ativprinc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_ativtipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_cadarrecadacao_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadcalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_cadconvenio_classe.php": {
@@ -2974,6 +3040,18 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadescrito_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadescritoresp_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_cadorigem_classe.php": {
@@ -3006,10 +3084,34 @@
       "quando": "2026-11-20T03:30:17Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_cadvenc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadvencdesc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cadvencdescban_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_campas_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cancdebitosissplan_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_cancdebitossusp_classe.php": {
@@ -3064,6 +3166,12 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_certbaixanumero_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_certdiv_classe.php": {
@@ -3130,6 +3238,66 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cissqn_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_clasativ_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_classe_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_classepont_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cnae_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_cnaeanalitica_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_confissqnretidopublica_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_confissqnretidopublicatipoempresa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_confvencissqnavulso_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_confvencissqnvariavel_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_consolidacaodebitos_classe.php": {
@@ -3282,6 +3450,18 @@
       "quando": "2026-11-20T03:58:35Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_empregpont_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_escrito_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_evolucaodividaativa_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -3300,6 +3480,12 @@
       "quando": "2026-11-20T03:58:35Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_forcaldesc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_funerarias_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
@@ -3316,6 +3502,18 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_geradesc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_gruponotaiss_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_grupotaxa_classe.php": {
@@ -3480,10 +3678,478 @@
       "quando": "2026-11-20T03:30:17Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_issalvara_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issalvaradocumento_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimples_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesdisarq_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesreg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:32Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesregdisbanco_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesregerro_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesregissbase_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarqsimplesregissvar_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaodisarq_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaoregistro_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaoregistrodisbanco_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaoregistroissbase_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaoregistroissplan_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issarquivoretencaoregistroissvar_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issatividconfdocumento_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbairro_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbase_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbasecaracteristica_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbaselog_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbaselogtipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbaseparalisacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issbaseporte_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscadlogcalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscadsimples_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscadsimplesbaixa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_isscalc_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscalcant_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscalclog_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscalcloginscr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isscnaeanexos_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issconfiguracaogruposervico_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issgruposervico_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issgruposervicoativid_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issgrupotipoalvara_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmatric_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmotivobaixa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmotivoparalisacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmovalvara_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmovalvarabaixa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issmovalvaraprocesso_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsacanc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsaemissao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsanumpre_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsaservico_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsatomador_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsatomadorcgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issnotaavulsatomadorinscr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplan_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplananula_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplaninscr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplanit_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplanitinscr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplanitold_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplanitop_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplannumpre_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issplannumpreissplanit_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issporte_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issportetipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issprocesso_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:33Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issquant_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issruas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isssimulacalculo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isssimulacalculoatividade_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isssimulacalculotipocalculo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isstipoalvara_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isstipoalvaradepto_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvar_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvardiv_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarlancval_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarlev_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarnotas_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarnotasold_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarold_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarsemmov_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_issvarsemmovreg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_isszona_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_itbi_classe.php": {
@@ -3702,6 +4368,12 @@
       "quando": "2026-11-20T03:30:17Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_juntacomercialprotocoloretorno_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_jurpeticoes_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -3754,6 +4426,114 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meicgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meicgmvalida_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meievento_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meigrupoevento_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimporta_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportamei_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportameireg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportameiregatividade_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportameiregcontador_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportameiregempresa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportameiregresponsavel_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiimportasemmov_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiprocessa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiprocessareg_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meiprocessaregmeicgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_meisituacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_municipiosiafi_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_notasiss_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_notidebitosreg_classe.php": {
@@ -3838,6 +4618,12 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:17Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_parissqnviasnotaavulsavias_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_paritbi_classe.php": {
@@ -4146,6 +4932,12 @@
       "quando": "2026-11-20T03:58:36Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_socios_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_suspensao_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -4156,6 +4948,30 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_tabativ_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_tabativbaixa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_tabativportetipcalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_tabativtipcalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_tabdesccadban_classe.php": {
@@ -4266,6 +5082,18 @@
       "quando": "2026-11-20T03:58:36Z",
       "quem": "Thiago432544"
     },
+    "ecidade/classes/db_tipcalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_tipcalcexe_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/classes/db_tipoabatimento_classe.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -4312,6 +5140,42 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_varfix_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_varfixnotifica_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_varfixproc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_varfixval_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_viabilidade_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_zonapont_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
       "quem": "Thiago432544"
     },
     "ecidade/div1_consulta001.php": {
@@ -5178,6 +6042,12 @@
       "quando": "2026-11-20T04:06:29Z",
       "quem": "Thiago432544"
     },
+    "ecidade/forms/db_frmissnotaavulsaservico.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/inf1_infla001.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
@@ -5314,6 +6184,1980 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss01_inscricaoveiculos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss01_inscricaoveiculos002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss01_inscricaoveiculos003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:34Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss03_inscricaoveiculos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss04_baixainscricaoveiculo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss04_baixainscricaoveiculo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss04_calculoinscricaoveiculogeral001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss04_calculoinscricaoveiculoindividual001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss04_liberacaoinscricaoveiculo_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss179_inscricaoredesim.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_altcgminscr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_altcgminscr002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_areapont001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativid001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativid002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativid003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_ativtipo044.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadcalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadcalc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadcalc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescrito006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadescritoresp001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvenc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvenc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvenc004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc015.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdesc016.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdescban001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdescban002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cadvencdescban003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cancelanota001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cissqn001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cissqn002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cissqn003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_clasativ.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_clasativ001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_clasativ002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_clasativ003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_clasativ011.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_classe001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_classe002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_classe003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_classepont001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cnae001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cnae002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_cnae003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_empregpont001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_escrito001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_escrito002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_escrito003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_forcaldesc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_forcaldesc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_forcaldesc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_geradesc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_geradesc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_geradesc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_importararquivosimplesnacional001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_inscr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimples006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesdisarq001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesdisarq002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesdisarq003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesreg001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesreg002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesreg003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregdisbanco001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregdisbanco002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregdisbanco003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregerro001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregerro002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issarqsimplesregerro003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase015.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase016.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbase017.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaseiframe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaseiframe004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:36Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselog001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselog002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselog003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselogtipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselogtipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaselogtipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaseparalisacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaseparalisacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issbaseparalisacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimples002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimples003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimplesbaixa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimplesbaixa002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscadsimplesbaixa003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isscalc004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issconfiguracaogruposervico002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issmotivoparalisacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issmotivoparalisacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issmotivoparalisacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsa006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsacanc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsacanc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsacanc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsainscr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsainscr002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsainscr003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsaservico001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsaservico002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsaservico003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsatomador001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsatomador002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issnotaavulsatomador003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issporte001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issporte002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issporte003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isstipoalvara006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:37Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar015.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvar016.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvariframe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvarnotas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvarnotas002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_issvarnotas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isszona001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isszona002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_isszona003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_listinscrweb001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_municipiosiafi001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_municipiosiafi002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_municipiosiafi003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_notasiss001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_notasiss002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_notasiss003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_parissqn002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_parissqnprocessoeletronico.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_parissqnviasnotaavulsavias001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_parissqnviasnotaavulsavias002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_parissqnviasnotaavulsavias003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_processararquivosimplesnacional004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_socios001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_socios002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_socios003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_socios004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_socios014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabalvara_depto001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativ001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativ002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativ003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativ004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativ014.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativbaixa004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativbaixacancela004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativbaixaiframe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativbaixaiframe02.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativtipcalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativtipcalc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tabativtipcalc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalc006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:38Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipcalcexe001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipoativcal001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_tipoativcal002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfix001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfix002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfix003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixnotifica001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixnotifica002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixnotifica003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixproc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixproc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_varfixproc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_viabilidade001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_viabilidade002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_viabilidade003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss1_zonapont001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_atividade001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_ativsclasconf001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_ativtipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_cadcal001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_cadgeral001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_cadgeral003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_cadgeral004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_classes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_contribativ001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_dadosimportacaomei001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_escritctb001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_imprimebiciss.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_imprimetermo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_inscrescrito001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_inscrlograd001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_inscrlograd_aba001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_inscrlograd_aba002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_inscrsemativprinc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_issativtipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_issvaraber001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_issvaraber003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_issvaraber004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_listinscrweb001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_lograd001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_optsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_processaarquivoretencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relarrec1001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relatorioinscricoes001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relatorioreciboswebiss001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relatorioregin001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:39Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relatorioruas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relinconsistenciassimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relissret001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_relissvariavel001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_rescalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_simples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_tipcalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss2_tiponotas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_cadbase.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_carnesiss.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr003_detalhes.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr003_isencao.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consinscr003_movimentacao.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_consissvar006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_impressaoalvaraevento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavulsa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavulsa002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavulsa003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavulsacancelado.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavulsasituacao.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavusaservicosprestados.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issnotaavusatomador.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_issvar001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss3_relret002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_alvaraeventos001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_baixaalvara_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_baixageralsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_calcissgeral001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_calcissgeral002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_cancelamentoalvara001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_certbaixanumero002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ_aba001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ_aba002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_contativ_aba003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_daienviada.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:40Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_docalvaratab_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_emiteissqn.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_emiteissqn_20060116.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_emiteissqnaba002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_emitenotaavulsa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_emitetxtissqn003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_gissonline001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_importaarqsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_importaarquivoretencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_importaarquivoretencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_importararquivosimplesnacional001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_issbasecaracteristicas001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_issbasecaracteristicas003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_isscalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_issportetipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_issvarsemmov001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_issvarsemmov002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_liberacaoalvara_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_meicompetenciasemmovimento001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_meicompetenciasemmovimento003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_meiimportaarquivo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_meiprocessaarquivo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_ordemservico001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_pgtoclasse001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_pgtoclasse002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_pgtoclasse004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_processaarqsimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_processaarquivoretencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_processaarquivosimples001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_processararquivosimplesnacional001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_reemiterecibonotaavulsa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_renovacaoalvara001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_siss002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_testaender.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/iss4_transformacaoalvara001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 4 (iss; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:22:41Z",
       "quem": "Thiago432544"
     },
     "ecidade/itb1_dadosmatric001.php": {
