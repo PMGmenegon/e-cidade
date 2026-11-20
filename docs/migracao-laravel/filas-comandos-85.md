@@ -49,8 +49,8 @@ dois. Com os dois valores fictícios no `.env` de teste, o payload sai.
 
 ## Agendamento e lista de comandos: como foi lido
 
-O `artisan schedule:list` e o `artisan list --format=json` do PR não servem para comparar (erro igual nos dois).
-Por isso `anexos/filas-comandos-85/console.php` lê direto do kernel: os
+O `artisan schedule:list` e o `artisan list --format=json` do PR não servem para comparar: dão o mesmo erro nos dois
+(defeitos do Laravel 8 do PR: `docs/registro/defeitos-laravel8-do-pr.md`). Por isso `anexos/filas-comandos-85/console.php` lê direto do kernel: os
 comandos registrados e os eventos do `Schedule`, com a próxima execução calculada pela `CronExpression` a partir de uma
 data fixa. A saída é `var_export`, porque as descrições estão em ISO-8859-1.
 
