@@ -48,14 +48,14 @@ if(isset($HTTP_POST_VARS["confirmar"])) {
     $data = @$aux[1]."-".@$aux[2]."-".substr(@$aux[3],0,strpos(@$aux[3],"."));
     $data_input = $HTTP_POST_VARS["data_ano"]."-".$HTTP_POST_VARS["data_mes"]."-".$HTTP_POST_VARS["data_dia"];
     if($data != $data_input) {
-      if(checkdate($HTTP_POST_VARS["data_mes"],$HTTP_POST_VARS["data_dia"],$HTTP_POST_VARS["data_ano"])) {
+      if(!is_array($HTTP_POST_VARS["data_mes"]) && !is_array($HTTP_POST_VARS["data_dia"]) && !is_array($HTTP_POST_VARS["data_ano"]) && checkdate((int)$HTTP_POST_VARS["data_mes"],(int)$HTTP_POST_VARS["data_dia"],(int)$HTTP_POST_VARS["data_ano"])) {
         $data = $data_input;
 	  } else {
         db_msgbox("Data do formulário inválida");
 	    db_redireciona();
 	  }
     } else {
-      if(!checkdate($aux[2],substr($aux[3],0,strpos($aux[3],".")),$aux[1])) {
+      if(!checkdate((int)$aux[2],(int)substr($aux[3],0,strpos($aux[3],".")),(int)$aux[1])) {
         db_msgbox("Data do arquivo inválida");
 	    db_redireciona();
 	    exit;

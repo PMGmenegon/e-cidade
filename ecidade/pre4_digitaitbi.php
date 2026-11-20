@@ -35,7 +35,7 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
   db_postmemory($HTTP_POST_VARS);
   if(empty($id_itbi)) {
     $result = db_query("select max(id_itbi) from db_itbi");
-    $id_itbi = (integer)($result ? pg_result($result,0,0) : null) + 1;
+    $id_itbi = (int)($result ? pg_result($result,0,0) : null) + 1;
     db_query("BEGIN");
     //Soma das caracteristicas e grava
     $tam_vetor = sizeof($HTTP_POST_VARS);
@@ -45,7 +45,7 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
       if(db_indexOf(key($HTTP_POST_VARS),"CARAC") > 0) {
         $str = "insert into db_caritbilan values($id_itbi,".db_parse_int(key($HTTP_POST_VARS)).",".$HTTP_POST_VARS[key($HTTP_POST_VARS)].")";
         db_query($str);
-        $areaedificada += $HTTP_POST_VARS[key($HTTP_POST_VARS)];	
+        $areaedificada += (is_array($HTTP_POST_VARS[key($HTTP_POST_VARS)]) ? $HTTP_POST_VARS[key($HTTP_POST_VARS)] : (float)$HTTP_POST_VARS[key($HTTP_POST_VARS)]);	
       }
       next($HTTP_POST_VARS);
     }  
@@ -107,7 +107,7 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
         $str = "update db_caritbilan  set area = ".$HTTP_POST_VARS[key($HTTP_POST_VARS)]."
 			   where codigo = ".db_parse_int(key($HTTP_POST_VARS));
         db_query($str);
-        $areaedificada += $HTTP_POST_VARS[key($HTTP_POST_VARS)];	
+        $areaedificada += (is_array($HTTP_POST_VARS[key($HTTP_POST_VARS)]) ? $HTTP_POST_VARS[key($HTTP_POST_VARS)] : (float)$HTTP_POST_VARS[key($HTTP_POST_VARS)]);	
       }
       next($HTTP_POST_VARS);
     }  
@@ -131,7 +131,7 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
 									   email='$email',
 									   obs='$obs'
 							   where id_itbi = $id_itbi") or die('Erro no Sql');
-    if(pg_cmdtuples($result) == 0) {
+    if(($result ? pg_cmdtuples($result) : null) == 0) {
       db_query("rollback");
 	  echo('Erro ao Gravar Solicitação.');
 	  db_redireciona("digitamatricula.php");

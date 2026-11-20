@@ -127,7 +127,7 @@ input {
   db_query("BEGIN");
   db_query("delete from db_caritbilan where id_itbi = ".$HTTP_POST_VARS["itbi"]);
   $result = db_query("delete from db_itbi where id_itbi = ".$HTTP_POST_VARS["itbi"]);
-  if(pg_cmdtuples($result) > 0) {
+  if(($result ? pg_cmdtuples($result) : null) > 0) {
     db_query("COMMIT");
     echo "<script>
 	        alert('itbi excluido.');
@@ -161,7 +161,7 @@ input {
 					  					 liberado = 1,
 										 obsliber = '$obsliber' 
 				         WHERE id_itbi = $itbi");
-     if(pg_cmdtuples($result) <= 0) {
+     if(($result ? pg_cmdtuples($result) : null) <= 0) {
 	    db_query("ROLLBACK");
 	    echo "Erro atualizando tabela db_itbi. <a href=\"\" onclick=\"history.back();return false\">Voltar</a><br>\n";
 	    exit;
@@ -330,7 +330,7 @@ input {
       <tr> 
         <td><strong>Valor:</strong></td>
         <td>
-          <?=@number_format($valortransacao,2,".",",")?>
+          <?=@($valortransacao === null || is_numeric($valortransacao) ? number_format((float)$valortransacao,2,".",",") : null)?>
         </td>
         <td><strong>Situação:</strong></td>
         <td><?=@$situacao?></td>

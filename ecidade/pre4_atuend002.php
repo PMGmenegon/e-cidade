@@ -102,7 +102,7 @@ input {
 
         if(!empty($numcgm)){
          $result = db_query("UPDATE db_cgmatualiza SET w11_revisado = 't' WHERE w11_sequencial = $retorno") or die("Erro(53) atualizando tabela db_cgmatualiza");
-         if(pg_cmdtuples($result) <= 0)
+         if(($result ? pg_cmdtuples($result) : null) <= 0)
           db_erro("Erro atualizando tabela db_cgmatualiza.");
            $sql = "UPDATE cgm SET
                        z01_cgccpf = '$cgccpf',

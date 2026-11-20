@@ -33,7 +33,7 @@ include(modification("libs/db_usuariosonline.php"));
 if(isset($HTTP_POST_VARS["incluir"])) {
   db_postmemory($HTTP_POST_VARS);
   $result = db_query("select max(m_codigo) from db_menupref");
-  $codigo = ($result ? pg_result($result,0,0) : null) == ""?"1":((integer)($result ? pg_result($result,0,0) : null) + 1);
+  $codigo = ($result ? pg_result($result,0,0) : null) == ""?"1":((int)($result ? pg_result($result,0,0) : null) + 1);
   $ativo = @$ativo=="1"?"1":"0";
   $publico = @$publico=="f"?"f":"t";
   db_query("BEGIN");
@@ -43,7 +43,7 @@ if(isset($HTTP_POST_VARS["incluir"])) {
 										  '$imgs',
 										  '$ativo',
 										  '$publico')");
-  if(pg_cmdtuples($result) > 0) {
+  if(($result ? pg_cmdtuples($result) : null) > 0) {
     db_query("COMMIT");
 	db_msgbox("Item Incluido");
   } else {
