@@ -2,7 +2,7 @@
 # Suite unica dos testes proprios (sem banco): PHPUnit de cada composer, no 7.4 (referencia) e no 8.5.
 # Uso (raiz do repositorio):  bash ecidade/tests/suite/rodar.sh [--runtime 74|85|ambos] [--saida PASTA]
 # Pre-requisitos: vendor do 7.4 em ecidade/vendor (ou VENDOR_74=<pasta>) e vendor do 8.5 em runtime-85/vendor
-#   (bash docker/composer-85/composer-85.sh install --no-scripts --no-plugins --ignore-platform-req=php+).
+#   (bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+). ecidade/vendor e ecidade/tmp sao criados aqui.
 # Nada aqui usa banco nem rede: os contêineres sobem com --network none, ecidade/ somente leitura, vendor somente
 #   leitura e so tmp/ gravavel (pasta de saida). Entradas: camadas/unitario.lista. Lacunas: camadas/lacunas.lista.
 # Saida: 0 = tudo passou nos runtimes pedidos; 1 = algum teste falhou; 2 = uso/ambiente.
@@ -19,6 +19,9 @@ while [ $# -gt 0 ]; do
     *) echo "opcao desconhecida: $1" >&2; exit 2;;
   esac
 done
+# ecidade/ sobe somente leitura: vendor/ e tmp/ sao pontos de montagem e precisam existir (num checkout novo nao existem;
+# se o Docker os criasse, viriam root:root e o composer install do 7.4 deixaria de gravar em vendor/). Criados aqui, como o usuario.
+mkdir -p "$ECIDADE/vendor" "$ECIDADE/tmp" || exit 2
 mkdir -p "$SAIDA"; SAIDA="$(cd "$SAIDA" && pwd)"
 STATUS=0
 for RT in $RUNTIMES; do

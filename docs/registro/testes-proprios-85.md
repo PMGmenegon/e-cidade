@@ -9,10 +9,15 @@ mais 5, todos por duas linhas do codigo que usam `$texto{n}`, sintaxe removida n
 ## Como rodar
 
 ```bash
-bash docker/composer-85/composer-85.sh install --no-scripts --no-plugins --ignore-platform-req=php+   # runtime-85/vendor
+bash docker/composer-85/composer-85.sh install --no-scripts --ignore-platform-req=php+   # runtime-85/vendor (com o plugin de patches, como em estrutura-85.md)
 # vendor do 7.4: composer install do PR em ecidade/vendor (ou VENDOR_74=<pasta>)
 bash ecidade/tests/suite/rodar.sh [--runtime 74|85|ambos] [--saida PASTA]
 ```
+
+Num checkout novo `ecidade/vendor` e `ecidade/tmp` nao existem: o `rodar.sh` os cria (vazios, com o dono de quem roda)
+antes dos contêineres, porque `ecidade/` sobe somente leitura e o Docker nao monta em ponto inexistente
+(`read-only file system`) nem o cria com o dono certo. O `rodar.sh` sai com erro se o `docker run` falhar ou o PHPUnit
+nao imprimir a linha de resultado: saida vazia nao vira "igual".
 
 Cada entrada de `camadas/unitario.lista` roda num `docker run --rm --network none` (imagem `php:<versao>-cli` mais
 `bcmath` e `calendar`, `tests/suite/Dockerfile`), com `ecidade/` e o `vendor/` somente leitura e so `tmp/` gravavel (uma
