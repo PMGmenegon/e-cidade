@@ -40,9 +40,12 @@ No runtime da base anterior foi assim (`docker-compose.runtime-novo.yml`), inclu
 `ecidade/storage` montadas somente leitura por cima do `storage/` próprio.
 
 **Sobreposição:** uma classe em `ecidade/app-85/` com o mesmo nome de uma de `ecidade/app/` vence no 8.5. O
-`composer dump-autoload` do 8.5 põe no classmap o arquivo de `app-85/`, e a de `app/` fica para o 7.4. Hoje a pasta
-não existe: a primeira classe sobreposta cria a pasta, e depois de criar ou mudar um arquivo nela é preciso rodar o
-`dump-autoload` do 8.5 (comando abaixo).
+`composer dump-autoload` do 8.5 põe no classmap o arquivo de `app-85/`, e a de `app/` fica para o 7.4. Para cada
+classe sobreposta, o `dump-autoload` avisa (esperado, não é erro):
+`Warning: Ambiguous class resolution, "App\Exceptions\Handler" was found in both "/app/app-85/Exceptions/Handler.php"
+and "/app/app/Exceptions/Handler.php", the first will be used.` O "first" é o `app-85/`, primeiro da lista do PSR-4. Hoje
+a pasta não existe: a primeira classe sobreposta cria a pasta, e depois de criar ou mudar um arquivo nela é preciso
+rodar o `dump-autoload` do 8.5 (comando abaixo).
 
 ## Comando único (o dono da trava do 8.5 é o time do banco)
 
@@ -67,6 +70,13 @@ bash docker/composer-85/composer-85.sh prohibits php 8.5.12 --locked
 O script monta `ecidade/` em `/app`, `runtime-85/vendor` em `/app/vendor` e `runtime-85/composer-home` como cache.
 Ele roda com o uid de quem chama e com `--network host`, porque a rede bridge desta máquina não resolve DNS. A rede
 serve só para baixar pacotes: nada se conecta a banco. O `ecidade/vendor` do 7.4 nunca é montado.
+
+**`ecidade/vendor` como ponto de montagem:** a `base-php74` não versiona o `vendor/`, então um checkout novo não tem
+essa pasta. Sem ela, o Docker cria `ecidade/vendor` para montar `/app/vendor` por cima, e cria como `root:root 755`.
+Depois disso o `composer install` do 7.4 não consegue gravar nela (`Permission denied`), e só `root` a apaga. Por isso
+o script cria `ecidade/vendor` antes do `docker run`, vazia e com o dono de quem chama: fica no mesmo estado de um
+checkout sem `vendor/`. Se a pasta já existe, nada nela é tocado. Medido num worktree novo, antes e depois da
+correção: `root:root 755` × `<usuário>:<grupo> 775`, gravável e vazia, com `validate` rc=0.
 
 **`--no-scripts` sempre, por enquanto:** os scripts do `composer.json` do PR chamam `$(which php7.4)`, e o
 `package:discover` precisa do Laravel de pé. Ligar os scripts no 8.5 é da etapa da inicialização (PHP8-62).
