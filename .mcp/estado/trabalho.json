@@ -1,5 +1,320 @@
 {
   "concluidos": {
+    "ecidade/app/Domain/Configuracao/Departamento/Models/Departamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/CentralMatriculas/Models/ObservacaoInscricao.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Aluno.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/AtividadeProfissionalEscola.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Calendario.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/ExcecaoBloqueioNota.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/Matricula.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/Escola/Models/ProfissionalEscola.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Alocado.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Candidato.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Ciclo.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Educacao/MatriculaOnline/Models/Fase.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFerias.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ApropriacaoDecimoFeriasLancamentos.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/EncerramentoPeriodoContabil.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/Lancamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Contabilidade/Models/ParametroIntegracaoPatrimonial.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Orcamento/Models/Recurso.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Planejamento/Models/Planejamento.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Financeiro/Tesouraria/Models/Slip.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
+    "ecidade/app/Domain/Saude/Farmacia/Models/BnafarBatchProtocolo.php": {
+      "observacao": "time Laravel",
+      "padroes": [
+        "PHP8-15",
+        "PHP8-39",
+        "PHP8-49",
+        "PHP8-55",
+        "PHP8-60",
+        "PHP8-62",
+        "PHP8-79",
+        "PHP8-94"
+      ],
+      "quando": "2026-11-20T05:21:42Z",
+      "quem": "Gustavo"
+    },
     "ecidade/composer-85.json": {
       "observacao": "time Laravel",
       "padroes": [
