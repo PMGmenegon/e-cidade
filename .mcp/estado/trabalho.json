@@ -18,6 +18,1080 @@
       "quando": "2026-11-20T03:30:16Z",
       "quem": "Thiago432544"
     },
+    "ecidade/agu1_aguabase001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabase002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabase003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabase004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabase005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabase006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasebaixa001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasebaixa002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasebaixa003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasecar001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasecorresp001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabaseresp001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasevenc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasevenc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguabasevenc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalc006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacalcval001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacoletor001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacoletor002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacoletor003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominio006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominiomat001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominiomat002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacondominiomat003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconfvenc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconfvenc002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconfvenc003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconstr001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:25Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumo006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumorec001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumotipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumotipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaconsumotipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacontrato001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorresp001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorresp002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorresp003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacorte007.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortemat006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematmov001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematmov002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematmov003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematnumpre001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematnumpre002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortematnumpre003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortesituacao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortesituacao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortesituacao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortetipodebito001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortetipodebito002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguacortetipodebito003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrodiametro001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrodiametro002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrodiametro003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromarca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromarca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromarca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromatric001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromatric002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromatric003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromatricficha001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidromatricfichatroca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrotroca001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrotroca002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguahidrotroca003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencao006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencaorec001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencaotipo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:26Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencaotipo002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaisencaotipo003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeitura006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeiturista001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeiturista002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_agualeiturista003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaplanilha001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaplanilha002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguaplanilha003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarota006.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguarotarua001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguasitleitura001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguasitleitura002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguasitleitura003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_aguatipocontrato.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu1_histocorrencia001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_agualancpago001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_avscortevlrdivida001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_compleituras001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_hidrometro001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_imovlograd001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_matricbaix001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_planilhaleitura001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relconexc001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relconsumo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relimobiliarias001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relimoveis001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relimoveiscar001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relimovlograd001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_relreceitabairro001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu2_situacaohidro001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_agualeitura002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_conscadastro_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_conscadastro_002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_conscadastro_002_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_conscadastro_002_detalhes.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu3_conscadastro_003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguabase_alteracao_serie.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguacategoriaconsumo001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguacorte_processalista.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguacorte_processalista001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguacorte_processalista003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguahidrometroinvercao001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguahidrometrotransferencia001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_aguaisencaocgm.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_agualeitura004.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_calcgeral.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_calcparcial.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_calculotarifasgeral.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_calculotarifasgeral002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_calculotarifasparcial.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_confemissaodebitos.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:27Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_configuracoesexercicio.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_descontomatricula011.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_descontomatricula022.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaogeral001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaogeralcarnes.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaogeralcarnestarifa.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaoparcial001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaoparcial_cliente59_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_emissaoparcialcarnes.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_expdadoscoletores_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_expdadoscoletores_002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_expdadoscoletores_003.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_expdadoscoletores_005.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_geratxtcorte001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_impdadoscoletores_001.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_impdadoscoletores_002.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_impdadoscoletores_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/agu4_processaleituramanualgeral.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/arr1_cadconveniogrupotaxa001.php": {
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
@@ -1504,6 +2578,354 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 2 (jur, div, arr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:58:35Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabase_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabasebaixa_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabasecar_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabasecorresp_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabaseresp_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguabasevenc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacalc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacalcval_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacategoriaconsumo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletor_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexporta_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexportadados_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexportadadosfoto_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexportadadosleitura_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexportadadosreceita_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacoletorexportasituacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacondominio_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacondominiomat_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconf_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconfvenc_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconstr_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconstrcar_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconsumo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconsumorec_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaconsumotipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacontrato_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacontratoeconomia_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacontratoligacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacorresp_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacorte_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacortemat_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacortematmov_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacortematnumpre_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacortesituacao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguacortetipodebito_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguadebconta_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguadescarrecad_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguadescarrehist_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaestruturatarifaria_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidrodiametro_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:28Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidromarca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidromatric_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidromatricleitura_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidromatricultimaleitura_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguahidrotroca_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaisencao_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaisencaocgm_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaisencaorec_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaisencaotipo_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_agualeitura_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_agualeituracancela_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_agualeiturasaldoutilizado_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_agualeiturista_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguaplanilha_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguarota_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguarotarua_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguasitleitura_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/classes/db_aguatipocontrato_classe.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
       "quem": "Thiago432544"
     },
     "ecidade/classes/db_arrecadcompos_classe.php": {
@@ -3748,6 +5170,12 @@
       "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
       "quando": "2026-11-20T03:30:18Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/forms/db_frmaguacortematnumpre.php": {
+      "observacao": "PHP8-NN: migracao 7.4 -> 8.5 do Tributario, lote 3 (agu/agua; ver commits)",
+      "padroes": [],
+      "quando": "2026-11-20T04:06:29Z",
       "quem": "Thiago432544"
     },
     "ecidade/inf1_infla001.php": {
