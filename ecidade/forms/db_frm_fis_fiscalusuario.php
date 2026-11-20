@@ -57,7 +57,7 @@ Campo:y30_data                             ';
 }
 // -------------
 $rsConsultaProc = db_query(" select y110_procfiscal as procfiscal from fiscalizacao.fis_procfiscalnotificacao where y110_notificacaofiscal = $y38_codnoti");
-if( pg_num_rows( $rsConsultaProc ) > 0 ){
+if( ($rsConsultaProc ? pg_num_rows( $rsConsultaProc ) : null) > 0 ){
     db_fieldsmemory($rsConsultaProc,0);
 } 
 

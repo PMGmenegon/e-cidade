@@ -37,7 +37,7 @@ if(isset($opcao) && $opcao == "excluir"){
 }
 
 $rsConsultaProc = db_query(" select nl09_procfiscal as procfiscal from fiscalizacao.fis_procfiscallanc where nl09_lanc = $nl14_codlanc");
-if( pg_num_rows( $rsConsultaProc ) > 0 ){
+if( ($rsConsultaProc ? pg_num_rows( $rsConsultaProc ) : null) > 0 ){
     db_fieldsmemory($rsConsultaProc,0);
 } 
 
