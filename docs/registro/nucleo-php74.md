@@ -301,3 +301,41 @@ Registrado e não corrigido, porque já falha no 7.4:
 - as chamadas a construtores pelo nome antigo de classes que o PR #8 já tinha convertido.
 
 Fica para decisão do grupo: a comparação de texto numérico com espaço no fim (seção 5).
+
+## 10. Lote 6 — pontos expostos pela bateria completa (21/11/2026)
+
+| Onde | Problema no 8 | Forma |
+|---|---|---|
+| `std/DBDate.php` (`getQuantidadeDiasMes`) | `cal_days_in_month` com mês inválido: `ValueError` | `try`/`catch` devolve `false`; texto não numérico passa por `(int)`, como no 7.4 (`"2x"` vale 2) |
+| `libs/db_libtributario.php:370` | `sizeof(null)` | `null` conta 0 e escalar conta 1, como o `count()` do 7.4 |
+| `fpdf151/fpdf.php` (`SetDrawColor`, `SetFillColor`, `SetTextColor`) | cor em texto: `"" / 255` dá `TypeError`, e `"" == 0` passa a ser falso | texto não numérico convertido com `(float)` no começo da função |
+| `libs/db_libpessoal.php` (`db_val`), `dbagata/classes/reports/AgataReport.class` (soma e variância) | texto sem número numa conta: `TypeError` | texto sem número vale 0, com o mesmo valor e tipo do 7.4 |
+| `dbagata/classes/core/AgataQuery.class` (`Fetch`) | `Limit`/`OffSet` em texto vazio na soma e na comparação | forma do precedente, `(float)` do texto não numérico |
+| `dbagata/classes/reports/AgataReport.class:214, 281` | `array_merge` com lado nulo: `TypeError` | devolve `null`, como o 7.4 |
+| `dbagata/classes/pclzip/pclzip.lib.php:2381` | `fread` de tamanho 0: `ValueError` | devolve `false`, como o 7.4 |
+| `fpdf151/pdf.php` (13 leituras do cabeçalho), `libs/db_liborcamento.php:4728`, `fpdf151/impmodelos/mod_imprime49.php:193` | `pg_*` sobre consulta que falhou | decisão 2a |
+
+Prova, com o OPcache zerado em cada captura:
+- **Formas:** 246 combinações de valores dão o mesmo resultado no 7.4 original, no 7.4 novo e no 8.5 novo; sem o
+  lote, 106 delas diferiam no 8.5.
+- **6.791 telas (seção 9):**
+  - 7.4 igual, só com diferenças de hora e data.
+  - `fis2_emiteaidof002` oscila sozinha entre um PDF de 708 bytes e um de 19.219, nos dois estados; em 8 capturas
+    seguidas, 4 com o lote e 4 sem, deu 19.219 em todas.
+  - 8.5: 728 → 723 divergentes. As 2 "novas" da bateria já divergiam sem o lote, e na anterior tinham empatado por
+    acaso; foram medidas de novo nos dois estados.
+- **Segunda camada** (`AgataReport.class:168, 281` e `pclzip`), exposta depois da primeira, nas 210 telas do Agata:
+  42 → 40 divergentes, nenhuma nova; 7.4 igual.
+
+Das 11 telas que paravam no núcleo, 9 ficaram idênticas no 7.4 e no 8.5. As outras duas:
+- `emp2_relemprestoexecucaonotas002` para agora no código da própria tela (decisão 2a, Financeiro).
+- `soc2_declaracaoinss002` não tem mais erro de código: os dois runtimes mostram mensagens diferentes de falha na
+  conversão para PDF, porque os contêineres têm ferramentas diferentes. O do 7.4 tem `/usr/bin/soffice` e não tem o
+  comando `file`; o do 8.5 tem `file` e não tem `soffice`. É ambiente, não código.
+
+Com isso, **nenhuma tela do conjunto medido para mais em arquivo do núcleo**. O que resta:
+- **Das áreas:** `pg_*` sobre consulta que falhou no código de cada tela e as classes `cl_*` com construtor estilo PHP 4.
+- **Defeitos que já existem no 7.4:** seções 4, 8 e 9.
+- **Para decisão do grupo:**
+  - a comparação de texto numérico com espaço no fim (seção 5);
+  - o ambiente dos contêineres: o `soffice` no 8.5 e o OPcache, que exige reiniciar o Apache antes de cada bateria.
