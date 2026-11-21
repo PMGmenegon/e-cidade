@@ -499,9 +499,26 @@ As 61 restantes são inconclusivas (página de erro idêntica nos dois lados ou 
 
 Estas medições foram feitas sobre `982a95fb5`. Desde então a `base-php85` recebeu as guardas da decisão 2a em
 `libs/db_stdlib.php`, `libs/db_utils.php`, `libs/db_libsys.php` e `dbforms/db_classesgenericas.php`. Os PRs foram
-refeitos sobre ela sem mudar nenhuma linha de código da Educação (fora os espaços do `edu2_certconclusao002.php`), e
-a bateria ainda não foi repetida sobre a base nova. `php -l` dos 597 arquivos alterados, já juntos com a base nova:
-0 erros no 7.4 e no 8.5.
+refeitos sobre ela sem mudar nenhuma linha de código da Educação (fora os espaços do `edu2_certconclusao002.php`).
+`php -l` dos 597 arquivos alterados, já juntos com a base nova: 0 erros no 7.4 e no 8.5.
+
+### Regressão sobre a `base-php85` nova (20/11/2026)
+
+A bateria foi repetida duas vezes sobre `6d881031b`, no mesmo ambiente e universo: a base sozinha (referência) e a
+base com os 3 PRs juntos.
+
+| Bloco | `base-php85` idêntico / diverge | `base-php85` + 3 PRs idêntico / diverge |
+| --- | --- | --- |
+| Classes (320) | 12 / 306 | 291 / 27 |
+| Sintaxe (1.569) | 1.563 / 2 | 1.565 / 0 |
+| Telas (1.570) | 1.095 / 390 | 1.164 / 320 |
+
+- **350 casos de diverge → idêntico** com os PRs; **nenhum caso que era idêntico na base passou a divergir**.
+- Um caso foi de diverge para inconclusivo (`mer4_mer_subitem_ajax004.php`: resposta vazia nos dois lados).
+- As 27 classes que ainda divergem são de outras áreas (`mat`, `rh`, `veic`, `sau`, `lab`, `tfd`, `cidadao`, `db_uf`),
+  todas com o mesmo padrão (código gerado vira `0` no 8.5); ficam para os donos.
+- Comparado com a rodada final sobre a base antiga (mesmo código da Educação): mais 101 casos idênticos, graças às
+  guardas de núcleo que entraram na base, e nenhum caso que era idêntico deixou de ser.
 
 ### Fora da Educação (anotado para os donos)
 
