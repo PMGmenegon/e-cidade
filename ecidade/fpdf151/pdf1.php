@@ -162,7 +162,7 @@ class pdf1 extends fpdf
         */
         $sSqlMenuAcess = "SELECT fc_montamenu(funcao) as menu from db_itensmenu where id_item =" . db_getsession("DB_itemmenu_acessado");
         $rsMenuAcess = db_query($sSqlMenuAcess);
-        $sMenuAcess = substr(pg_fetch_result($rsMenuAcess, 0, "menu"), 0, 50);
+        $sMenuAcess = substr(($rsMenuAcess ? pg_fetch_result($rsMenuAcess, 0, "menu") : null), 0, 50);
 
         $this->Cell(0, 10, $url . '  ' . $sMenuAcess . '  ' . $nome . '  Emissor: ' . substr(ucwords(strtolower($emissor)), 0, 30) . '  Exercício: ' . db_getsession("DB_anousu") .
             '   Data: ' . date("d-m-Y", db_getsession("DB_datausu")) . " - " . date("H:i:s"), "T", 0, 'L');

@@ -1069,7 +1069,7 @@ function Image($file,$x,$y,$w,$h=0,$type='',$link='')
 			$type=substr($file,$pos+1);
 		}
 		$type=strtolower($type);
-		$mqr=get_magic_quotes_runtime();
+		$mqr=false; // get_magic_quotes_runtime() saiu no 8.0; desde o 5.4 devolvia false
 		// set_magic_quotes_runtime(0);
 		if($type=='jpg' or $type=='jpeg')
 			$info=$this->_parsejpg($file);

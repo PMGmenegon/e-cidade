@@ -3826,7 +3826,7 @@ function db_buscaImagemBanco($cadban, $conn)
             // seta os dados para o boleto passando as informações do logo
             db_query($conn, "begin");
             $caminho = "tmp/" . $banco . ".jpg";
-            pg_lo_export("$db90_logo", $caminho, $conn);
+            try { pg_lo_export($conn, "$db90_logo", $caminho); } catch (\ArgumentCountError | \ValueError | \TypeError $e) { /* 8.x: argumento invalido lanca erro; o 7.4 avisava e devolvia false */ }
             db_query($conn, "commit");
 
             $arr = array(
