@@ -72,8 +72,8 @@ class cl_dbempresaatividade {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->q58_sequencial = ($this->q58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_sequencial"]:$this->q58_sequencial);
-       $this->q58_dbprefempresa = ($this->q58_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_dbprefempresa"]:$this->q58_dbprefempresa);
+       $this->q58_sequencial = ($this->q58_sequencial === 0 || $this->q58_sequencial === 0.0 || $this->q58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_sequencial"]:$this->q58_sequencial);
+       $this->q58_dbprefempresa = ($this->q58_dbprefempresa === 0 || $this->q58_dbprefempresa === 0.0 || $this->q58_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_dbprefempresa"]:$this->q58_dbprefempresa);
        if($this->q58_dtinc == ""){
          $this->q58_dtinc_dia = ($this->q58_dtinc_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_dtinc_dia"]:$this->q58_dtinc_dia);
          $this->q58_dtinc_mes = ($this->q58_dtinc_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_dtinc_mes"]:$this->q58_dtinc_mes);
@@ -83,7 +83,7 @@ class cl_dbempresaatividade {
          }
        }
      }else{
-       $this->q58_sequencial = ($this->q58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_sequencial"]:$this->q58_sequencial);
+       $this->q58_sequencial = ($this->q58_sequencial === 0 || $this->q58_sequencial === 0.0 || $this->q58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q58_sequencial"]:$this->q58_sequencial);
      }
    }
    // funcao para inclusao
@@ -131,7 +131,7 @@ class cl_dbempresaatividade {
          $this->q58_sequencial = $q58_sequencial;
        }
      }
-     if(($this->q58_sequencial == null) || ($this->q58_sequencial == "") ){
+     if(($this->q58_sequencial == null) || ($this->q58_sequencial === 0 || $this->q58_sequencial === 0.0 || $this->q58_sequencial == "") ){
        $this->erro_sql = " Campo q58_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

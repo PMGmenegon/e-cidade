@@ -67,16 +67,16 @@ p {
  
     $sql = "select demodescr from db_itensmenudemonstracao where id_item = $divulgacao_codigo";
     $result = db_query($sql);
-    $numrows = pg_numrows($result);
+    $numrows = ($result ? pg_numrows($result) : null);
     if( $numrows > 0 ){
-      $descricao = pg_result($result,0,0); 
+      $descricao = ($result ? pg_result($result,0,0) : null); 
     }else{
       $descricao = "";
     }
 
     $sql = "select desctec from db_itensmenu where id_item = $divulgacao_codigo";
     $result = db_query($sql);
-    $descricao_item = pg_result($result,0,0); 
+    $descricao_item = ($result ? pg_result($result,0,0) : null); 
 
 
   }

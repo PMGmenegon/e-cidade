@@ -73,13 +73,13 @@ class cl_db_daeend {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w05_codigo = ($this->w05_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_codigo"]:$this->w05_codigo);
+       $this->w05_codigo = ($this->w05_codigo === 0 || $this->w05_codigo === 0.0 || $this->w05_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_codigo"]:$this->w05_codigo);
        $this->w05_rua = ($this->w05_rua == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_rua"]:$this->w05_rua);
-       $this->w05_numero = ($this->w05_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_numero"]:$this->w05_numero);
+       $this->w05_numero = ($this->w05_numero === 0 || $this->w05_numero === 0.0 || $this->w05_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_numero"]:$this->w05_numero);
        $this->w05_compl = ($this->w05_compl == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_compl"]:$this->w05_compl);
        $this->w05_bairro = ($this->w05_bairro == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_bairro"]:$this->w05_bairro);
      }else{
-       $this->w05_codigo = ($this->w05_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_codigo"]:$this->w05_codigo);
+       $this->w05_codigo = ($this->w05_codigo === 0 || $this->w05_codigo === 0.0 || $this->w05_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w05_codigo"]:$this->w05_codigo);
      }
    }
    // funcao para inclusao
@@ -122,7 +122,7 @@ class cl_db_daeend {
        return false;
      }
        $this->w05_codigo = $w05_codigo; 
-     if(($this->w05_codigo == null) || ($this->w05_codigo == "") ){ 
+     if(($this->w05_codigo == null) || ($this->w05_codigo === 0 || $this->w05_codigo === 0.0 || $this->w05_codigo == "") ){ 
        $this->erro_sql = " Campo w05_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

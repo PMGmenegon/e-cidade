@@ -74,8 +74,8 @@ class cl_db_daitomadorpaga {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w09_sequencial = ($this->w09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_sequencial"]:$this->w09_sequencial);
-       $this->w09_daitomador = ($this->w09_daitomador == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_daitomador"]:$this->w09_daitomador);
+       $this->w09_sequencial = ($this->w09_sequencial === 0 || $this->w09_sequencial === 0.0 || $this->w09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_sequencial"]:$this->w09_sequencial);
+       $this->w09_daitomador = ($this->w09_daitomador === 0 || $this->w09_daitomador === 0.0 || $this->w09_daitomador == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_daitomador"]:$this->w09_daitomador);
        if($this->w09_dtpaga == ""){
          $this->w09_dtpaga_dia = ($this->w09_dtpaga_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_dtpaga_dia"]:$this->w09_dtpaga_dia);
          $this->w09_dtpaga_mes = ($this->w09_dtpaga_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_dtpaga_mes"]:$this->w09_dtpaga_mes);
@@ -84,9 +84,9 @@ class cl_db_daitomadorpaga {
             $this->w09_dtpaga = $this->w09_dtpaga_ano."-".$this->w09_dtpaga_mes."-".$this->w09_dtpaga_dia;
          }
        }
-       $this->w09_valpago = ($this->w09_valpago == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_valpago"]:$this->w09_valpago);
+       $this->w09_valpago = ($this->w09_valpago === 0 || $this->w09_valpago === 0.0 || $this->w09_valpago == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_valpago"]:$this->w09_valpago);
      }else{
-       $this->w09_sequencial = ($this->w09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_sequencial"]:$this->w09_sequencial);
+       $this->w09_sequencial = ($this->w09_sequencial === 0 || $this->w09_sequencial === 0.0 || $this->w09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w09_sequencial"]:$this->w09_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_db_daitomadorpaga {
          $this->w09_sequencial = $w09_sequencial; 
        }
      }
-     if(($this->w09_sequencial == null) || ($this->w09_sequencial == "") ){ 
+     if(($this->w09_sequencial == null) || ($this->w09_sequencial === 0 || $this->w09_sequencial === 0.0 || $this->w09_sequencial == "") ){ 
        $this->erro_sql = " Campo w09_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -77,7 +77,7 @@ class cl_db_guia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_codigo = ($this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
+       $this->s_codigo = ($this->s_codigo === 0 || $this->s_codigo === 0.0 || $this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
        $this->s_localid = ($this->s_localid == ""?@$GLOBALS["HTTP_POST_VARS"]["s_localid"]:$this->s_localid);
        $this->s_servico = ($this->s_servico == ""?@$GLOBALS["HTTP_POST_VARS"]["s_servico"]:$this->s_servico);
        $this->s_nome = ($this->s_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["s_nome"]:$this->s_nome);

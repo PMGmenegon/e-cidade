@@ -86,10 +86,10 @@ class cl_dbprefempresa {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->q55_sequencial = ($this->q55_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_sequencial"]:$this->q55_sequencial);
-       $this->q55_dbprefcgm = ($this->q55_dbprefcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_dbprefcgm"]:$this->q55_dbprefcgm);
-       $this->q55_usuario = ($this->q55_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_usuario"]:$this->q55_usuario);
-       $this->q55_tipo = ($this->q55_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_tipo"]:$this->q55_tipo);
+       $this->q55_sequencial = ($this->q55_sequencial === 0 || $this->q55_sequencial === 0.0 || $this->q55_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_sequencial"]:$this->q55_sequencial);
+       $this->q55_dbprefcgm = ($this->q55_dbprefcgm === 0 || $this->q55_dbprefcgm === 0.0 || $this->q55_dbprefcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_dbprefcgm"]:$this->q55_dbprefcgm);
+       $this->q55_usuario = ($this->q55_usuario === 0 || $this->q55_usuario === 0.0 || $this->q55_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_usuario"]:$this->q55_usuario);
+       $this->q55_tipo = ($this->q55_tipo === 0 || $this->q55_tipo === 0.0 || $this->q55_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_tipo"]:$this->q55_tipo);
        if($this->q55_dtinc == ""){
          $this->q55_dtinc_dia = ($this->q55_dtinc_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_dtinc_dia"]:$this->q55_dtinc_dia);
          $this->q55_dtinc_mes = ($this->q55_dtinc_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_dtinc_mes"]:$this->q55_dtinc_mes);
@@ -98,13 +98,13 @@ class cl_dbprefempresa {
             $this->q55_dtinc = $this->q55_dtinc_ano."-".$this->q55_dtinc_mes."-".$this->q55_dtinc_dia;
          }
        }
-       $this->q55_area = ($this->q55_area == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_area"]:$this->q55_area);
-       $this->q55_funcionarios = ($this->q55_funcionarios == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_funcionarios"]:$this->q55_funcionarios);
+       $this->q55_area = ($this->q55_area === 0 || $this->q55_area === 0.0 || $this->q55_area == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_area"]:$this->q55_area);
+       $this->q55_funcionarios = ($this->q55_funcionarios === 0 || $this->q55_funcionarios === 0.0 || $this->q55_funcionarios == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_funcionarios"]:$this->q55_funcionarios);
        $this->q55_inscant = ($this->q55_inscant == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_inscant"]:$this->q55_inscant);
-       $this->q55_matric = ($this->q55_matric == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_matric"]:$this->q55_matric);
-       $this->q55_recbrutaano = ($this->q55_recbrutaano == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_recbrutaano"]:$this->q55_recbrutaano);
+       $this->q55_matric = ($this->q55_matric === 0 || $this->q55_matric === 0.0 || $this->q55_matric == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_matric"]:$this->q55_matric);
+       $this->q55_recbrutaano = ($this->q55_recbrutaano === 0 || $this->q55_recbrutaano === 0.0 || $this->q55_recbrutaano == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_recbrutaano"]:$this->q55_recbrutaano);
      }else{
-       $this->q55_sequencial = ($this->q55_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_sequencial"]:$this->q55_sequencial);
+       $this->q55_sequencial = ($this->q55_sequencial === 0 || $this->q55_sequencial === 0.0 || $this->q55_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q55_sequencial"]:$this->q55_sequencial);
      }
    }
    // funcao para inclusao
@@ -194,7 +194,7 @@ class cl_dbprefempresa {
          $this->q55_sequencial = $q55_sequencial;
        }
      }
-     if(($this->q55_sequencial == null) || ($this->q55_sequencial == "") ){
+     if(($this->q55_sequencial == null) || ($this->q55_sequencial === 0 || $this->q55_sequencial === 0.0 || $this->q55_sequencial == "") ){
        $this->erro_sql = " Campo q55_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

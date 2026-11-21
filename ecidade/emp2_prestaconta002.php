@@ -48,7 +48,7 @@ $resultinst = db_query("select codigo,nomeinst,nomeinstabrev from db_config wher
 $descr_inst = '';
 $xvirg = '';
 $flag_abrev = false;
-for ($xins = 0; $xins < pg_numrows($resultinst); $xins++) {
+for ($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++) {
     db_fieldsmemory($resultinst, $xins);
     if (strlen(trim($nomeinstabrev)) > 0) {
         $descr_inst .= $xvirg . $nomeinstabrev;

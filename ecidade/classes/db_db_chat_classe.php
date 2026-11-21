@@ -84,7 +84,7 @@ class cl_db_chat {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_id_chat = ($this->s_id_chat == ""?@$GLOBALS["HTTP_POST_VARS"]["s_id_chat"]:$this->s_id_chat);
+       $this->s_id_chat = ($this->s_id_chat === 0 || $this->s_id_chat === 0.0 || $this->s_id_chat == ""?@$GLOBALS["HTTP_POST_VARS"]["s_id_chat"]:$this->s_id_chat);
        $this->s_nome = ($this->s_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["s_nome"]:$this->s_nome);
        $this->s_email = ($this->s_email == ""?@$GLOBALS["HTTP_POST_VARS"]["s_email"]:$this->s_email);
        $this->s_login = ($this->s_login == ""?@$GLOBALS["HTTP_POST_VARS"]["s_login"]:$this->s_login);

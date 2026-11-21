@@ -86,7 +86,7 @@ $res1 = db_query("select c61_reduz
 	 order by c60_estrut");
 $virg = '';
 $conta_caixa = ''; 
-for($ii = 0;$ii < pg_numrows($res1); $ii++){
+for($ii = 0;$ii < ($res1 ? pg_numrows($res1) : null); $ii++){
    db_fieldsmemory($res1,$ii);
    $conta_caixa .= $virg.$c61_reduz;   
    $virg = ' ,';
@@ -136,7 +136,7 @@ $sql  = "
 $result = db_query($sql);
 //db_criatabela($result);
 //exit;
-$num = pg_numrows($result);
+$num = ($result ? pg_numrows($result) : null);
 //$num = 1;
 $xconta = '';
 for($conta=0;$conta<$num;$conta++){
@@ -211,7 +211,7 @@ $sql  = "select x.*,
 //echo $sql;
 $result1 = db_query($sql);
 //db_criatabela($result);
-$numrows = pg_numrows($result1);
+$numrows = ($result1 ? pg_numrows($result1) : null);
 
 $velho_nump_id     = ""; 
 $velho_nump_data   = "";

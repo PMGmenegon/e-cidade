@@ -174,12 +174,12 @@ class cl_dbprefcgm {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->z01_sequencial = ($this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
+       $this->z01_sequencial = ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
        $this->z01_baicon = ($this->z01_baicon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_baicon"]:$this->z01_baicon);
        $this->z01_bairro = ($this->z01_bairro == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_bairro"]:$this->z01_bairro);
        $this->z01_nome = ($this->z01_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_nome"]:$this->z01_nome);
        $this->z01_ender = ($this->z01_ender == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_ender"]:$this->z01_ender);
-       $this->z01_numero = ($this->z01_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_numero"]:$this->z01_numero);
+       $this->z01_numero = ($this->z01_numero === 0 || $this->z01_numero === 0.0 || $this->z01_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_numero"]:$this->z01_numero);
        $this->z01_compl = ($this->z01_compl == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_compl"]:$this->z01_compl);
        $this->z01_munic = ($this->z01_munic == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_munic"]:$this->z01_munic);
        $this->z01_uf = ($this->z01_uf == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_uf"]:$this->z01_uf);
@@ -195,12 +195,12 @@ class cl_dbprefcgm {
        }
        $this->z01_telef = ($this->z01_telef == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_telef"]:$this->z01_telef);
        $this->z01_ident = ($this->z01_ident == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_ident"]:$this->z01_ident);
-       $this->z01_login = ($this->z01_login == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_login"]:$this->z01_login);
+       $this->z01_login = ($this->z01_login === 0 || $this->z01_login === 0.0 || $this->z01_login == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_login"]:$this->z01_login);
        $this->z01_incest = ($this->z01_incest == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_incest"]:$this->z01_incest);
        $this->z01_telcel = ($this->z01_telcel == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_telcel"]:$this->z01_telcel);
        $this->z01_email = ($this->z01_email == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_email"]:$this->z01_email);
        $this->z01_endcon = ($this->z01_endcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_endcon"]:$this->z01_endcon);
-       $this->z01_numcon = ($this->z01_numcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_numcon"]:$this->z01_numcon);
+       $this->z01_numcon = ($this->z01_numcon === 0 || $this->z01_numcon === 0.0 || $this->z01_numcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_numcon"]:$this->z01_numcon);
        $this->z01_comcon = ($this->z01_comcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_comcon"]:$this->z01_comcon);
        $this->z01_muncon = ($this->z01_muncon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_muncon"]:$this->z01_muncon);
        $this->z01_ufcon = ($this->z01_ufcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_ufcon"]:$this->z01_ufcon);
@@ -209,10 +209,10 @@ class cl_dbprefcgm {
        $this->z01_telcon = ($this->z01_telcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_telcon"]:$this->z01_telcon);
        $this->z01_celcon = ($this->z01_celcon == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_celcon"]:$this->z01_celcon);
        $this->z01_emailc = ($this->z01_emailc == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_emailc"]:$this->z01_emailc);
-       $this->z01_nacion = ($this->z01_nacion == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_nacion"]:$this->z01_nacion);
-       $this->z01_estciv = ($this->z01_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_estciv"]:$this->z01_estciv);
+       $this->z01_nacion = ($this->z01_nacion === 0 || $this->z01_nacion === 0.0 || $this->z01_nacion == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_nacion"]:$this->z01_nacion);
+       $this->z01_estciv = ($this->z01_estciv === 0 || $this->z01_estciv === 0.0 || $this->z01_estciv == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_estciv"]:$this->z01_estciv);
        $this->z01_profis = ($this->z01_profis == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_profis"]:$this->z01_profis);
-       $this->z01_tipcre = ($this->z01_tipcre == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_tipcre"]:$this->z01_tipcre);
+       $this->z01_tipcre = ($this->z01_tipcre === 0 || $this->z01_tipcre === 0.0 || $this->z01_tipcre == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_tipcre"]:$this->z01_tipcre);
        $this->z01_cgccpf = ($this->z01_cgccpf == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_cgccpf"]:$this->z01_cgccpf);
        $this->z01_fax = ($this->z01_fax == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_fax"]:$this->z01_fax);
        if($this->z01_nasc == ""){
@@ -256,9 +256,9 @@ class cl_dbprefcgm {
             $this->z01_dtvencimento = $this->z01_dtvencimento_ano."-".$this->z01_dtvencimento_mes."-".$this->z01_dtvencimento_dia;
          }
        }
-       $this->z01_situacao = ($this->z01_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_situacao"]:$this->z01_situacao);
+       $this->z01_situacao = ($this->z01_situacao === 0 || $this->z01_situacao === 0.0 || $this->z01_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_situacao"]:$this->z01_situacao);
      }else{
-       $this->z01_sequencial = ($this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
+       $this->z01_sequencial = ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
      }
    }
    // funcao para inclusao
@@ -357,7 +357,7 @@ class cl_dbprefcgm {
          $this->z01_sequencial = $z01_sequencial;
        }
      }
-     if(($this->z01_sequencial == null) || ($this->z01_sequencial == "") ){
+     if(($this->z01_sequencial == null) || ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == "") ){
        $this->erro_sql = " Campo z01_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

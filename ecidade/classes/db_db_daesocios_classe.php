@@ -87,21 +87,21 @@ class cl_db_daesocios {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w06_codigo = ($this->w06_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_codigo"]:$this->w06_codigo);
-       $this->w06_socio = ($this->w06_socio == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_socio"]:$this->w06_socio);
+       $this->w06_codigo = ($this->w06_codigo === 0 || $this->w06_codigo === 0.0 || $this->w06_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_codigo"]:$this->w06_codigo);
+       $this->w06_socio = ($this->w06_socio === 0 || $this->w06_socio === 0.0 || $this->w06_socio == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_socio"]:$this->w06_socio);
        $this->w06_cgccpf = ($this->w06_cgccpf == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_cgccpf"]:$this->w06_cgccpf);
-       $this->w06_rg = ($this->w06_rg == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_rg"]:$this->w06_rg);
+       $this->w06_rg = ($this->w06_rg === 0 || $this->w06_rg === 0.0 || $this->w06_rg == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_rg"]:$this->w06_rg);
        $this->w06_nome = ($this->w06_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_nome"]:$this->w06_nome);
        $this->w06_ender = ($this->w06_ender == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_ender"]:$this->w06_ender);
-       $this->w06_numero = ($this->w06_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_numero"]:$this->w06_numero);
+       $this->w06_numero = ($this->w06_numero === 0 || $this->w06_numero === 0.0 || $this->w06_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_numero"]:$this->w06_numero);
        $this->w06_compl = ($this->w06_compl == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_compl"]:$this->w06_compl);
        $this->w06_bairro = ($this->w06_bairro == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_bairro"]:$this->w06_bairro);
-       $this->w06_cep = ($this->w06_cep == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_cep"]:$this->w06_cep);
+       $this->w06_cep = ($this->w06_cep === 0 || $this->w06_cep === 0.0 || $this->w06_cep == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_cep"]:$this->w06_cep);
        $this->w06_uf = ($this->w06_uf == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_uf"]:$this->w06_uf);
-       $this->w06_percent = ($this->w06_percent == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_percent"]:$this->w06_percent);
+       $this->w06_percent = ($this->w06_percent === 0 || $this->w06_percent === 0.0 || $this->w06_percent == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_percent"]:$this->w06_percent);
      }else{
-       $this->w06_codigo = ($this->w06_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_codigo"]:$this->w06_codigo);
-       $this->w06_socio = ($this->w06_socio == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_socio"]:$this->w06_socio);
+       $this->w06_codigo = ($this->w06_codigo === 0 || $this->w06_codigo === 0.0 || $this->w06_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_codigo"]:$this->w06_codigo);
+       $this->w06_socio = ($this->w06_socio === 0 || $this->w06_socio === 0.0 || $this->w06_socio == ""?@$GLOBALS["HTTP_POST_VARS"]["w06_socio"]:$this->w06_socio);
      }
    }
    // funcao para inclusao
@@ -199,7 +199,7 @@ class cl_db_daesocios {
      }
        $this->w06_codigo = $w06_codigo; 
        $this->w06_socio = $w06_socio; 
-     if(($this->w06_codigo == null) || ($this->w06_codigo == "") ){ 
+     if(($this->w06_codigo == null) || ($this->w06_codigo === 0 || $this->w06_codigo === 0.0 || $this->w06_codigo == "") ){ 
        $this->erro_sql = " Campo w06_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -207,7 +207,7 @@ class cl_db_daesocios {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->w06_socio == null) || ($this->w06_socio == "") ){ 
+     if(($this->w06_socio == null) || ($this->w06_socio === 0 || $this->w06_socio === 0.0 || $this->w06_socio == "") ){ 
        $this->erro_sql = " Campo w06_socio nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

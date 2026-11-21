@@ -67,10 +67,10 @@ class cl_dbprefempresafisica {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->q57_sequencial = ($this->q57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_sequencial"]:$this->q57_sequencial);
-       $this->q57_dbprefempresa = ($this->q57_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_dbprefempresa"]:$this->q57_dbprefempresa);
+       $this->q57_sequencial = ($this->q57_sequencial === 0 || $this->q57_sequencial === 0.0 || $this->q57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_sequencial"]:$this->q57_sequencial);
+       $this->q57_dbprefempresa = ($this->q57_dbprefempresa === 0 || $this->q57_dbprefempresa === 0.0 || $this->q57_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_dbprefempresa"]:$this->q57_dbprefempresa);
      }else{
-       $this->q57_sequencial = ($this->q57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_sequencial"]:$this->q57_sequencial);
+       $this->q57_sequencial = ($this->q57_sequencial === 0 || $this->q57_sequencial === 0.0 || $this->q57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q57_sequencial"]:$this->q57_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_dbprefempresafisica {
          $this->q57_sequencial = $q57_sequencial;
        }
      }
-     if(($this->q57_sequencial == null) || ($this->q57_sequencial == "") ){
+     if(($this->q57_sequencial == null) || ($this->q57_sequencial === 0 || $this->q57_sequencial === 0.0 || $this->q57_sequencial == "") ){
        $this->erro_sql = " Campo q57_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -53,7 +53,7 @@ $resultinst = db_query("select codigo,nomeinst,nomeinstabrev from db_config wher
 $descr_inst = '';
 $xvirg = '';
 $flag_abrev = false;
-for($xins = 0; $xins < pg_numrows($resultinst); $xins++){
+for($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++){
     db_fieldsmemory($resultinst,$xins);
     if (strlen(trim($nomeinstabrev)) > 0){
          $descr_inst .= $xvirg.$nomeinstabrev;
@@ -153,7 +153,7 @@ $total_saldo_arrecadado           = 0;
 $total_saldo_a_arrecadar          = 0;
 $total_saldo_arrecadado_acumulado = 0;
 
-for($i=0;$i<pg_numrows($result);$i++){
+for($i=0;$i<($result ? pg_numrows($result) : null);$i++){
   db_fieldsmemory($result,$i);
 
   if($pdf->gety()>$pdf->h-30 || $pagina ==1){

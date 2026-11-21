@@ -102,7 +102,7 @@ group by
 $result = db_query($sql);
 
 //db_criatabela($result);
-$xxnum = pg_numrows($result);
+$xxnum = ($result ? pg_numrows($result) : null);
 if ($xxnum == 0){
    db_redireciona('db_erros.php?fechar=true&db_erro=Não existem empenhos do tipo selecionado no período de '.$mes.' / '.$ano);
 
@@ -124,7 +124,7 @@ $total_anupago = 0;
       $total = 0;
       $troca = 0;
    $pdf->ln(2);
-   for($x=0;$x<pg_numrows($result);$x++){
+   for($x=0;$x<($result ? pg_numrows($result) : null);$x++){
    db_fieldsmemory($result,$x);
      if($pdf->gety() + 30 > $pdf->h  || $troca == 0 ){
       $pdf->addpage('L');

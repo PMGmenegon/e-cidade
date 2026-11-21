@@ -52,7 +52,7 @@ $result = $clorcprojativ->sql_record($clorcprojativ->sql_query(null,null,"*","o5
 $head3 = "RELATÓRIO DE $tipod";
 $head5 = "EXERCÍCIO: ".db_getsession("DB_anousu");
 
-$xxnum = pg_numrows($result);
+$xxnum = ($result ? pg_numrows($result) : null);
 if ($xxnum == 0){
    db_redireciona('db_erros.php?fechar=true&db_erro=Não existem '.$tipod.' cadastradas.');
    exit;
@@ -66,7 +66,7 @@ $pdf->setfillcolor(235);
 $pdf->setfont('arial','b',8);
 $troca = 1;
 $alt = 4;
-for($x = 0; $x < pg_numrows($result);$x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null);$x++){
    db_fieldsmemory($result,$x);
    if ($pdf->gety() > $pdf->h - 30 || $troca != 0 ){
       $pdf->addpage();

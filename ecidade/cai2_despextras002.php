@@ -205,7 +205,7 @@ $sql="select      coremp.k12_empen,
 //exit;
 $result = db_query($sql);
 //db_criatabela($result); exit;
-if (pg_numrows($result) == 0){
+if (($result ? pg_numrows($result) : null) == 0){
    db_redireciona('db_erros.php?fechar=true&db_erro=Não existem Pagamentos de Despesa Extra-Orçamentária.');
 
 }
@@ -226,7 +226,7 @@ $p           = 0;
 $imp_tran    = true;
 $imp_desp    = true;
 
-for($x = 0; $x < pg_numrows($result); $x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null); $x++){
    db_fieldsmemory($result,$x,true);
    if ($pdf->gety() > $pdf->h - 30 || $troca != 0 ){
       $pdf->addpage("L");

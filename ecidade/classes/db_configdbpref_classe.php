@@ -99,13 +99,13 @@ class cl_configdbpref
        $this->w13_liberapedsenha = ($this->w13_liberapedsenha == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_liberapedsenha"]:$this->w13_liberapedsenha);
        $this->w13_permfornsemlog = ($this->w13_permfornsemlog == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_permfornsemlog"]:$this->w13_permfornsemlog);
        $this->w13_permvarsemlog = ($this->w13_permvarsemlog == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_permvarsemlog"]:$this->w13_permvarsemlog);
-       $this->w13_liberaescritorios = ($this->w13_liberaescritorios == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_liberaescritorios"]:$this->w13_liberaescritorios);
+       $this->w13_liberaescritorios = ($this->w13_liberaescritorios === 0 || $this->w13_liberaescritorios === 0.0 || $this->w13_liberaescritorios == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_liberaescritorios"]:$this->w13_liberaescritorios);
        $this->w13_liberaimobiliaria = ($this->w13_liberaimobiliaria == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_liberaimobiliaria"]:$this->w13_liberaimobiliaria);
        $this->w13_permconscgm = ($this->w13_permconscgm == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_permconscgm"]:$this->w13_permconscgm);
        $this->w13_aliqissretido = ($this->w13_aliqissretido == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_aliqissretido"]:$this->w13_aliqissretido);
        $this->w13_liberaissretido = ($this->w13_liberaissretido == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_liberaissretido"]:$this->w13_liberaissretido);
        $this->w13_utilizafolha = ($this->w13_utilizafolha == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_utilizafolha"]:$this->w13_utilizafolha);
-       $this->w13_instit = ($this->w13_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_instit"]:$this->w13_instit);
+       $this->w13_instit = ($this->w13_instit === 0 || $this->w13_instit === 0.0 || $this->w13_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_instit"]:$this->w13_instit);
        $this->w13_libcertpos = ($this->w13_libcertpos == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_libcertpos"]:$this->w13_libcertpos);
        $this->w13_libcarnevariavel = ($this->w13_libcarnevariavel == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_libcarnevariavel"]:$this->w13_libcarnevariavel);
        $this->w13_libsociosdai = ($this->w13_libsociosdai == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_libsociosdai"]:$this->w13_libsociosdai);
@@ -114,18 +114,18 @@ class cl_configdbpref
        $this->w13_liberalancisssemmov = ($this->w13_liberalancisssemmov == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_liberalancisssemmov"]:$this->w13_liberalancisssemmov);
        $this->w13_exigecpfcnpjmatricula = ($this->w13_exigecpfcnpjmatricula == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_exigecpfcnpjmatricula"]:$this->w13_exigecpfcnpjmatricula);
        $this->w13_exigecpfcnpjinscricao = ($this->w13_exigecpfcnpjinscricao == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_exigecpfcnpjinscricao"]:$this->w13_exigecpfcnpjinscricao);
-       $this->w13_regracnd = ($this->w13_regracnd == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_regracnd"]:$this->w13_regracnd);
+       $this->w13_regracnd = ($this->w13_regracnd === 0 || $this->w13_regracnd === 0.0 || $this->w13_regracnd == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_regracnd"]:$this->w13_regracnd);
        $this->w13_permconsservdemit = ($this->w13_permconsservdemit == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_permconsservdemit"]:$this->w13_permconsservdemit);
-       $this->w13_tipocertidao = ($this->w13_tipocertidao == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_tipocertidao"]:$this->w13_tipocertidao);
+       $this->w13_tipocertidao = ($this->w13_tipocertidao === 0 || $this->w13_tipocertidao === 0.0 || $this->w13_tipocertidao == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_tipocertidao"]:$this->w13_tipocertidao);
        $this->w13_agrupadebrecibos = ($this->w13_agrupadebrecibos == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_agrupadebrecibos"]:$this->w13_agrupadebrecibos);
        $this->w13_msgaviso = ($this->w13_msgaviso == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_msgaviso"]:$this->w13_msgaviso);
-       $this->w13_tipocodigocertidao = ($this->w13_tipocodigocertidao == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_tipocodigocertidao"]:$this->w13_tipocodigocertidao);
+       $this->w13_tipocodigocertidao = ($this->w13_tipocodigocertidao === 0 || $this->w13_tipocodigocertidao === 0.0 || $this->w13_tipocodigocertidao == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_tipocodigocertidao"]:$this->w13_tipocodigocertidao);
        $this->w13_uploadarquivos = ($this->w13_uploadarquivos == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_uploadarquivos"]:$this->w13_uploadarquivos);
        $this->w13_recaptcha_sitekey = ($this->w13_recaptcha_sitekey == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_recaptcha_sitekey"]:$this->w13_recaptcha_sitekey);
        $this->w13_recaptcha_privatekey = ($this->w13_recaptcha_privatekey == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_recaptcha_privatekey"]:$this->w13_recaptcha_privatekey);
        $this->w13_comprovanterendimentosanoanterior = ($this->w13_comprovanterendimentosanoanterior == "f"?@$GLOBALS["HTTP_POST_VARS"]["w13_comprovanterendimentosanoanterior"]:$this->w13_comprovanterendimentosanoanterior);
      }else{
-       $this->w13_instit = ($this->w13_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_instit"]:$this->w13_instit);
+       $this->w13_instit = ($this->w13_instit === 0 || $this->w13_instit === 0.0 || $this->w13_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["w13_instit"]:$this->w13_instit);
      }
    }
 
@@ -375,7 +375,7 @@ class cl_configdbpref
        return false;
      }
        $this->w13_instit = $w13_instit;
-     if(($this->w13_instit == null) || ($this->w13_instit == "") ){
+     if(($this->w13_instit == null) || ($this->w13_instit === 0 || $this->w13_instit === 0.0 || $this->w13_instit == "") ){
        $this->erro_sql = " Campo w13_instit não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -41,7 +41,7 @@ $xinstit =explode("-", $db_selinstit);
 $resultinst = db_query("select codigo,nomeinstabrev from db_config where codigo in (".str_replace('-', ', ', $db_selinstit).") ");
 $descr_inst = '';
 $xvirg = '';
-for ($xins = 0; $xins < pg_numrows($resultinst); $xins ++) {
+for ($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins ++) {
 	db_fieldsmemory($resultinst, $xins);
 	$descr_inst .= $xvirg.$nomeinstabrev;
 	$xvirg = ', ';
@@ -147,7 +147,7 @@ $qualou = 0;
 
 $pagina = 1;
 
-for ($i = 0; $i < pg_numrows($result); $i ++) {
+for ($i = 0; $i < ($result ? pg_numrows($result) : null); $i ++) {
 
 	db_fieldsmemory($result, $i);
 

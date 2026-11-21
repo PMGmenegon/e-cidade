@@ -23,7 +23,7 @@ resources `ecidade://grupo/regras` e `ecidade://grupo/guia-7.4-para-8.5`):
   código é ISO-8859-1).
 - Rector num commit, correção manual em outro; pull request pequeno; nunca `push --force`/`reset --hard` sem avisar.
 - **Cada pessoa na sua área** (defina `ECIDADE_MCP_AREA`: `nucleo`, `educacao`, `pessoal`, `financeiro`,
-  `tributario_patrimonial`, `saude_demais`); `composer.json`/`composer.lock`/`vendor/` são do grupo Laravel.
+  `tributario_patrimonial`, `saude_demais`; `sem_area` para o que a tabela não cobre, como `func_*` e `classes/`); `composer.json`/`composer.lock`/`vendor/` são do grupo Laravel.
 - **O código do PR manda**: mexa o mínimo, nunca copie arquivo inteiro da `base-php84`; se o 8.5 já se comporta
   como o 7.4, não mexa; **prove 7.4 × 8.5 antes e depois**.
 - **Só atualizar**: defeito que já existe no 7.4 (até de segurança) é registrado e avisado ao dono, não corrigido.
