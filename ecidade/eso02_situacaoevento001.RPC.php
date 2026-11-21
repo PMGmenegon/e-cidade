@@ -431,7 +431,7 @@ try {
                 $dados = $oESocial->request("GET");
 
                 // Caso tenha retorno da api e no ecidade esteja como enviado para a api, atualiza no ecidade o status
-                if (sizeof($dados) > 0 && sizeof($oRetorno->dados) > 0 && $oRetorno->dados[0]->situacao == 'Enviado para a API') {
+                if ((is_array($dados) || $dados instanceof \Countable ? sizeof($dados) : ($dados === null ? 0 : 1)) > 0 && sizeof($oRetorno->dados) > 0 && $oRetorno->dados[0]->situacao == 'Enviado para a API') {
                     $daoeSocialEnvioStatus = new cl_esocialenviostatus();
                     $daoeSocialEnvioStatus->rh214_sequencial = $oDado->dado->rh214_sequencial;
                     $daoeSocialEnvioStatus->rh214_situacao = 'true';
