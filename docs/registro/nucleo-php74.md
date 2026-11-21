@@ -210,3 +210,94 @@ classificou como "já quebrada" a chamada `FPDF::FPDF()` de `reports/MyPdf.class
 que estava sendo renomeado. Por isso a comparação do 7.4 antes e depois acusou os relatórios do Agata respondendo
 com a página de erro. A classificação foi corrigida para tratar o `dbagata` inteiro como uma biblioteca, o lote foi
 reaplicado do zero e a bateria foi refeita; os números acima são da bateria refeita.
+
+## 8. Lote 5 — funções removidas no 8.0 que o 7.4 ainda tem (20/11/2026)
+
+Busca no núcleo pelos padrões do catálogo do grupo, conferindo em cada runtime se a função existe (o
+`vendor/dbseller/legacy` emula algumas):
+
+| Função | 7.4 | 8.5 | Decisão |
+|---|---|---|---|
+| `each`, `create_function`, `get_magic_quotes_runtime` | existe | não existe | corrigido |
+| `pg_lo_export` com a conexão no fim | aceita | não aceita | corrigido |
+| `split` | emulada pelo `vendor/dbseller/legacy` | emulada | nada a fazer |
+| `ereg*`, `set_magic_quotes_runtime`, `mysql_*` (`AgataMysql`, `nusoap`, `makefont`, telas GTK) | não existe | não existe | já quebrado no 7.4: registrado |
+| `convert_cyr_string` (jpgraph) | existe | não existe | só roda com `LANGUAGE_CYRILLIC`, desligado nos dois jpgraph: sem efeito |
+| `utf8_encode`, `strftime`, `E_STRICT`, `pg_*()` sem conexão explícita | existe | obsoleto (só aviso) | sem efeito na resposta com `display_errors` desligado: registrado |
+
+Dois commits manuais:
+- **`each()` (31 laços em 10 arquivos)**
+  - **`foreach`, a forma do grupo, em 29 laços.** O laço começa com `reset()` ou percorre um array recém-criado, não
+    altera o array e ninguém usa o ponteiro depois. É o caso do `pdf1`–`pdf4` (estilos e atributos do HTML), dos dois
+    jpgraph e de `print_vars`.
+  - **Avanço do ponteiro igual ao do `each()`, em `libs/db_libpessoal.php` (`db_sel_pessal`).** O segundo laço sobre
+    `$campos` não faz `reset()`. No 7.4, se o primeiro laço rodou, o segundo não executa e o `where` sai sem a tradução
+    dos campos. Por isso os dois laços avançam o ponteiro como o `each()`.
+- **Os demais:**
+  - **`create_function` (`dbagata/classes/core/Report.class`):** vira função anônima com o mesmo corpo.
+  - **`get_magic_quotes_runtime()` (`fpdf` do Agata):** vira `false`, o que ela devolvia desde o 5.4.
+  - **`pg_lo_export` na ordem nova** (`std/DBLargeObject.php`, `libs/db_stdlib.php` `db_buscaImagemBanco`). No 7.4,
+    as duas ordens dão o mesmo resultado. Com OID ou conexão inválidos, o 7.4 avisa e devolve `false`; o 8.x lança
+    `ArgumentCountError`, `ValueError` ou `TypeError`. Um `try`/`catch` só desses três devolve o mesmo `false`.
+  - **`fpdf151/pdf1.php:165`:** `pg_fetch_result` do menu do rodapé sobre consulta que falhou, com a forma da
+    decisão 2a.
+  - **`count(false)` do construtor do `ScatterPlot`:** passa a contar como o 7.4.
+
+Prova:
+- Cada forma caracterizada com o mesmo código das linhas: o original no 7.4 dá o mesmo resultado que o novo no 7.4 e
+  no 8.5. Isso vale também para o `where` sem tradução e para o `pg_lo_export` com 5 OIDs e conexão válida ou nula.
+- **7.4 inalterado** nas 345 telas que carregam esses arquivos; a única diferença é a hora atual.
+- **8.5:** 52 → 47 divergentes, nenhuma nova. As 5 resolvidas são a certidão de existência e as 4 telas do `pdf1`.
+
+**Achado de ambiente:** o OPcache do Apache dos contêineres não pegava todas as edições. Alguns arquivos continuavam
+sendo executados na versão anterior, apesar da data nova. A primeira bateria deste lote deu "52 → 52", e as telas
+acusavam a linha antiga do `DBLargeObject.php`. Depois de `apachectl -k graceful` nos dois contêineres, o resultado
+foi o de cima. Desde então, o OPcache é zerado antes de cada captura, nos dois estados. Por isso as baterias dos
+lotes 1 a 4 foram refeitas juntas na seção 9.
+
+## 9. Bateria completa do fim do núcleo (21/11/2026)
+
+O mesmo conjunto de telas foi medido em dois estados: **sem o núcleo**, com `ecidade/` igual a `1fe4d6945` (a
+`tributario/8.5` com as 3 telas da seção 7 do registro do Tributário), e **com o núcleo**, no estado final. Os dois
+estados diferem só nos 138 arquivos alterados pelos lotes 1 a 5. Antes de cada estado, o OPcache do Apache foi zerado
+nos dois contêineres (seção 8). São 6.791 telas: a união das telas de todos os lotes.
+
+| | Sem o núcleo | Com o núcleo |
+|---|---|---|
+| 7.4 × 8.5 idênticas | 4.257 / 6.790 | **6.054 / 6.790** |
+| divergentes | 2.525 | **728** |
+| timeout (os mesmos 8 nos dois) | 8 | 8 |
+
+- **Resolvidas: 1.797. Novas divergências: nenhuma.**
+- **7.4 inalterado nas 6.791 telas:** 6.400 iguais byte a byte e 388 diferentes só na hora ou na data. As outras 3
+  diferem só em valores que mudam a cada pedido:
+  - `DB_acessado` e o horário da sessão (`cai3_emissbol001ant`, `cad4_certidaoexistenciaconstrucao002`);
+  - o id aleatório do `sf-dump` (`lic1_trocpcorcamtroca001`).
+
+O que as 728 mostram agora:
+
+| Onde para | Telas |
+|---|---|
+| código da própria tela (quase tudo `pg_num_rows`/`pg_numrows` sobre consulta que falhou, decisão 2a) | 588 |
+| `classes/`, `forms/`, `model/` das áreas (`label()` sobre nulo por construtor estilo PHP 4 nas classes `cl_*`, assinaturas de `RelatoriosLegaisBase`) | 93 |
+| sem erro fatal (diferença de saída) | 36 |
+| núcleo | 11 |
+
+As 11 do núcleo param em 10 pontos, expostos agora que as camadas anteriores foram corrigidas:
+- `std/DBDate.php:497`: `cal_days_in_month` com mês vazio (2 telas);
+- `libs/db_libtributario.php:370`: `sizeof(null)`;
+- `fpdf151/fpdf.php:599` e `libs/db_libpessoal.php:519`: aritmética com texto;
+- `fpdf151/pdf.php:93`, `libs/db_liborcamento.php:4728` e `fpdf151/impmodelos/mod_imprime49.php:193`: `pg_*` sobre
+  consulta que falhou;
+- `dbagata/classes/reports/AgataReport.class:122` e `:214`, e `dbagata/classes/core/AgataQuery.class:95`:
+  aritmética com texto e `array_merge` de nulo.
+
+Ficam para o lote 6.
+
+Registrado e não corrigido, porque já falha no 7.4:
+- os defeitos do jpgraph (seção 4);
+- `model/contabilidade/arquivos/siai/v2021/SiaiArquivoPPAXML.model.php`;
+- `ereg*`, `set_magic_quotes_runtime` e `mysql_*` no Agata;
+- as chamadas a construtores pelo nome antigo de classes que o PR #8 já tinha convertido.
+
+Fica para decisão do grupo: a comparação de texto numérico com espaço no fim (seção 5).
