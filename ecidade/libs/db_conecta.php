@@ -281,7 +281,7 @@ db_logs();
  */
 if (isset($conn)) {
     $sIdUsuario  = $_SESSION["DB_id_usuario"];
-    $iPidConexao = pg_fetch_result(db_query("select pg_backend_pid()"), 0, 0);
+    $iPidConexao = (($rsPidConexao = db_query("select pg_backend_pid()")) ? pg_fetch_result($rsPidConexao, 0, 0) : null);
     $sMenu       = 0;
 
     if (!empty($_SESSION["DB_itemmenu_acessado"])) {

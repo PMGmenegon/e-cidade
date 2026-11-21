@@ -98,7 +98,12 @@ abstract class DBLargeObject
         if (!db_utils::inTransaction($conn)) {
             throw new Exception("Sem transação Ativa.");
         }
-        $lEscritaArquivo = pg_lo_export($iOid, $sCaminhoArquivo, $conn);
+        try {
+            $lEscritaArquivo = pg_lo_export($conn, $iOid, $sCaminhoArquivo);
+        } catch (\ArgumentCountError | \ValueError | \TypeError $e) {
+            // 8.x: OID ou conexao invalidos lancam erro; o 7.4 avisava e devolvia false
+            $lEscritaArquivo = false;
+        }
 
         return $lEscritaArquivo;
     }

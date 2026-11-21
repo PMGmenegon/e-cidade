@@ -34,7 +34,7 @@ class FontProp {
 class SpiderLogTicks extends Ticks {
 //---------------
 // CONSTRUCTOR
-    public function SpiderLogTicks() {
+    public function __construct() {
     }
 //---------------
 // PUBLIC METHODS	
@@ -103,7 +103,7 @@ class SpiderLogTicks extends Ticks {
 class SpiderLinearTicks extends LinearTicks {
 //---------------
 // CONSTRUCTOR
-    public function SpiderLinearTicks() {
+    public function __construct() {
 	// Empty
     }
 
@@ -171,8 +171,8 @@ class SpiderAxis extends Axis {
     var $title=null;
 //---------------
 // CONSTRUCTOR
-    function SpiderAxis(&$img,&$aScale,$color=array(0,0,0)) {
-	parent::Axis($img,$aScale,$color);
+    function __construct(&$img,&$aScale,$color=array(0,0,0)) {
+	parent::__construct($img,$aScale,$color);
 	$this->len=$img->plotheight;
 	$this->font_size = FF_FONT1;
 	$this->title = new FontProp();
@@ -267,7 +267,7 @@ class SpiderAxis extends Axis {
 class SpiderGrid extends Grid {
 //------------
 // CONSTRUCTOR
-    public function SpiderGrid() {
+    public function __construct() {
     }
 
 //----------------
@@ -405,7 +405,7 @@ class SpiderGraph extends Graph {
     var $grid,$axis=null;
 //---------------
 // CONSTRUCTOR
-    public function SpiderGraph($width=300,$height=200,$cachedName="",$timeout=0,$inline=1) {
+    public function __construct($width=300,$height=200,$cachedName="",$timeout=0,$inline=1) {
 	$this->Graph($width,$height,$cachedName,$timeout,$inline);
 	$this->posx=$width/2;
 	$this->posy=$height/2;

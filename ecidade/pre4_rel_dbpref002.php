@@ -135,7 +135,7 @@ if( !isset($HTTP_GET_VARS["data1"]) && !isset( $HTTP_GET_VARS["data2"])){
                 order by q50_data,q50_hora";
 
     $result = db_query($str_sql) or die("FALHA: <br>$str_sql" );
-    if(pg_numrows($result)==0){
+    if(($result ? pg_numrows($result) : null)==0){
       db_redireciona('db_erros.php?fechar=true&db_erro=Não existem informações pata gerar o relatório.');
     }
     $head2 = "Lançamentos efetuados no DBPREF";
@@ -150,7 +150,7 @@ if( !isset($HTTP_GET_VARS["data1"]) && !isset( $HTTP_GET_VARS["data2"])){
 
     $pag = 1;
 
-    for ($x = 0 ; $x < pg_numrows($result);$x++){
+    for ($x = 0 ; $x < ($result ? pg_numrows($result) : null);$x++){
         db_fieldsmemory($result,$x);
         if (($pdf->gety() > $pdf->h - 30) || $pag == 1 ){
             $pdf->addpage();

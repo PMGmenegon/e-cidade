@@ -531,11 +531,11 @@ class JpGraphErrObjectImg {
 // in all methods.
 //
 class JpGraphError {
-    public function Install($aErrObject) {
+    public static function Install($aErrObject) {
 	GLOBAL $__jpg_err;
 	$__jpg_err = $aErrObject;
     }
-    public function Raise($aMsg,$aHalt=true){
+    public static function Raise($aMsg,$aHalt=true){
 	GLOBAL $__jpg_err;
 	$tmp = new $__jpg_err;
 	$tmp->Raise($aMsg,$aHalt);
@@ -763,8 +763,8 @@ class DateLocale {
 
 	for ( $i = 0, $ofs = 0 - strftime('%w'); $i < 7; $i++, $ofs++ ){
 	    $day = strftime('%a', strtotime("$ofs day"));
-	    $day{0} = strtoupper($day{0});
-	    $this->iDayAbb[$aLocale][]= $day{0};
+	    $day[0] = strtoupper($day[0]);
+	    $this->iDayAbb[$aLocale][]= $day[0];
 	    $this->iShortDay[$aLocale][]= $day;
 	}
 
@@ -1552,7 +1552,7 @@ class Graph {
 		// us from recursively coming here again
 		$urlarg='?'._CSIM_DISPLAY.'=1';
 
-		while( list($key,$value) = each($HTTP_GET_VARS) ) {
+		foreach ($HTTP_GET_VARS as $key => $value) {
 		    if( is_array($value) ) {
 			$n = count($value);
 			for( $i=0; $i < $n; ++$i ) {
@@ -3123,7 +3123,7 @@ class GraphTabTitle extends Text{
 	$this->align = $aAlign;
     }
 
-    public function SetPos($aAlign) {
+    public function SetPos($aAlign = null, $aYAbsPos = 0, $aHAlign = 'left', $aVAlign = 'top') {
 	$this->align = $aAlign;
     }
 
@@ -3140,7 +3140,7 @@ class GraphTabTitle extends Text{
 	$this->corner = $aD ;
     }
 
-    public function Stroke($aImg) {
+    public function Stroke($aImg, $aX = null, $aY = null) {
 	if( $this->hide )
 	    return;
 	$this->boxed = false;
@@ -3262,7 +3262,7 @@ class SuperScriptText extends Text {
     }
 
     // Total width of text
-    function GetWidth(&$aImg) {
+    function GetWidth($aImg) {
 	$aImg->SetFont($this->font_family,$this->font_style,$this->font_size);
 	$w = $aImg->GetTextWidth($this->t);
 	$aImg->SetFont($this->sfont_family,$this->sfont_style,$this->sfont_size);
@@ -3272,7 +3272,7 @@ class SuperScriptText extends Text {
     }
 
     // Hight of font (approximate the height of the text)
-    function GetFontHeight(&$aImg) {
+    function GetFontHeight($aImg) {
 	$aImg->SetFont($this->font_family,$this->font_style,$this->font_size);
 	$h = $aImg->GetFontHeight();
 	$aImg->SetFont($this->sfont_family,$this->sfont_style,$this->sfont_size);
@@ -5644,7 +5644,7 @@ class Image {
 	return imagesy($aImg);
     }
 
-    public function CreateFromString($aStr) {
+    public static function CreateFromString($aStr) {
 	return imagecreatefromstring($aStr);
     }
 
@@ -7127,7 +7127,7 @@ class RotImage extends Image {
 	parent::Arc($xc,$yc,$w,$h,$s,$e);
     }
 
-    public function FilledArc($xc,$yc,$w,$h,$s,$e) {
+    public function FilledArc($xc,$yc,$w,$h,$s,$e,$style="") {
 	list($xc,$yc) = $this->Rotate($xc,$yc);
 	$s += $this->a;
 	$e += $this->a;

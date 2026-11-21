@@ -48,7 +48,7 @@ class PostgreSQLUtils
         return $this->_numrows;
     }
 
-    public function PostgreSQLUtils($conexao = null)
+    public function __construct($conexao = null)
     {
         $this->_conexao = $conexao;
         $this->_numrows = 0;

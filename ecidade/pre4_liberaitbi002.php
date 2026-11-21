@@ -51,7 +51,7 @@ parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs[
 <div align="left" class="observ">
 <?php
 $result = db_query("select obs from db_itbi where id_itbi = $itbi");
-echo str_replace("\n","<br>",pg_result($result,0,0));
+echo str_replace("\n","<br>",($result ? pg_result($result,0,0) : null));
 ?>
 </div>
 </td></tr>

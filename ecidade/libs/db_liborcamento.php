@@ -4725,7 +4725,7 @@ class cl_selorcdotacao
             $sql = "select nomeinst from db_config where codigo in ".$this->instit;
             $rr = db_query($sql);
             $sp = "";
-            for ($x = 0; $x < pg_num_rows($rr); $x ++) {
+            for ($x = 0; $x < ($rr ? pg_num_rows($rr) : null); $x ++) {
                 db_fieldsmemory($rr, $x);
                 $it = $it.$sp.$nomeinst;
                 $sp = ", ";

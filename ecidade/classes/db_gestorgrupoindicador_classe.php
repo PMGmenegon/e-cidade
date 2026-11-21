@@ -74,7 +74,7 @@ class cl_gestorgrupoindicador {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->g03_sequencial = ($this->g03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_sequencial"]:$this->g03_sequencial);
+       $this->g03_sequencial = ($this->g03_sequencial === 0 || $this->g03_sequencial === 0.0 || $this->g03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_sequencial"]:$this->g03_sequencial);
        $this->g03_descricao = ($this->g03_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_descricao"]:$this->g03_descricao);
        if($this->g03_datalimite == ""){
          $this->g03_datalimite_dia = ($this->g03_datalimite_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_datalimite_dia"]:$this->g03_datalimite_dia);
@@ -86,7 +86,7 @@ class cl_gestorgrupoindicador {
        }
        $this->g03_projeto = ($this->g03_projeto == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_projeto"]:$this->g03_projeto);
      }else{
-       $this->g03_sequencial = ($this->g03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_sequencial"]:$this->g03_sequencial);
+       $this->g03_sequencial = ($this->g03_sequencial === 0 || $this->g03_sequencial === 0.0 || $this->g03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g03_sequencial"]:$this->g03_sequencial);
      }
    }
    // funcao para inclusao
@@ -137,7 +137,7 @@ class cl_gestorgrupoindicador {
          $this->g03_sequencial = $g03_sequencial;
        }
      }
-     if(($this->g03_sequencial == null) || ($this->g03_sequencial == "") ){
+     if(($this->g03_sequencial == null) || ($this->g03_sequencial === 0 || $this->g03_sequencial === 0.0 || $this->g03_sequencial == "") ){
        $this->erro_sql = " Campo g03_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -15,7 +15,7 @@
 class RGB {
     var $rgb_table;
     var $img;
-    function RGB(&$aImg) {
+    function __construct(&$aImg) {
 	$this->img = &$aImg;
 
 	// Conversion array between color names and RGB
@@ -2012,7 +2012,7 @@ class RotImage extends Image {
     var $a=0;
     var $dx=0,$dy=0,$transx=0,$transy=0;
 
-    public function RotImage($aWidth,$aHeight,$a=0,$aFormat=DEFAULT_GFORMAT,$aSetAutoMargin=true) {
+    public function __construct($aWidth,$aHeight,$a=0,$aFormat=DEFAULT_GFORMAT,$aSetAutoMargin=true) {
 	$this->Image($aWidth,$aHeight,$aFormat,$aSetAutoMargin);
 	$this->dx=$this->left_margin+$this->plotwidth/2;
 	$this->dy=$this->top_margin+$this->plotheight/2;
@@ -2073,7 +2073,7 @@ class RotImage extends Image {
 	parent::Arc($xc,$yc,$w,$h,$s,$e);
     }
 
-    public function FilledArc($xc,$yc,$w,$h,$s,$e) {
+    public function FilledArc($xc,$yc,$w,$h,$s,$e,$style="") {
 	list($xc,$yc) = $this->Rotate($xc,$yc);
 	$s += $this->a;
 	$e += $this->a;

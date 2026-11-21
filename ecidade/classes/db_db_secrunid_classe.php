@@ -71,8 +71,8 @@ class cl_db_secrunid {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_codigounidade = ($this->s_codigounidade == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigounidade"]:$this->s_codigounidade);
-       $this->s_codigosecr = ($this->s_codigosecr == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigosecr"]:$this->s_codigosecr);
+       $this->s_codigounidade = ($this->s_codigounidade === 0 || $this->s_codigounidade === 0.0 || $this->s_codigounidade == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigounidade"]:$this->s_codigounidade);
+       $this->s_codigosecr = ($this->s_codigosecr === 0 || $this->s_codigosecr === 0.0 || $this->s_codigosecr == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigosecr"]:$this->s_codigosecr);
        $this->s_pagina = ($this->s_pagina == ""?@$GLOBALS["HTTP_POST_VARS"]["s_pagina"]:$this->s_pagina);
        $this->s_titulo = ($this->s_titulo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_titulo"]:$this->s_titulo);
      }else{

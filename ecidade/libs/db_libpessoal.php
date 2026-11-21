@@ -118,7 +118,7 @@ function db_sel_pessal($tabela, $cmp_ = null, $where = null)
         }
     } else {
         reset($campos);
-        while (list($key, $val) = each($campos)) {
+        while (($key = key($campos)) !== null) { $val = current($campos); next($campos);
             $cmp .= $vircula." ".$key." AS ".$val;
             $vircula = ",";
         }
@@ -128,7 +128,7 @@ function db_sel_pessal($tabela, $cmp_ = null, $where = null)
     if ($where == null || $where == "") {
         $where = "";
     } else {
-        while (list($key, $val) = each($campos)) {
+        while (($key = key($campos)) !== null) { $val = current($campos); next($campos);
             $where =  str_replace($key, $val, $where);
         }
     }
@@ -516,7 +516,7 @@ function db_datedif($pmktime = null, $smktime = null, $tipo = 'd')
 function db_val($string = 0)
 {
     if (!db_empty($string) && $string != null) {
-        return $string+0;
+        return (is_string($string) && !preg_match('/^\s*[+-]?\.?\d/', $string) ? 0 : $string)+0;
     } else {
         return 0;
     }
