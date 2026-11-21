@@ -18662,6 +18662,22 @@
       "quando": "2026-11-20T06:06:21Z",
       "quem": "Thiago432544"
     },
+    "ecidade/model/cda.model.php": {
+      "observacao": "nucleo lote 3b (866242a15)",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-21T00:25:03Z",
+      "quem": "Thiago432544"
+    },
+    "ecidade/model/dbGeradorRelatorio.model.php": {
+      "observacao": "nucleo lote 3b (866242a15)",
+      "padroes": [
+        "chaves_offset_string"
+      ],
+      "quando": "2026-11-21T00:25:05Z",
+      "quem": "Thiago432544"
+    },
     "ecidade/not1_notificaarretipodoc001.php": {
       "observacao": "PHP8-01: migracao 7.4 -> 8.5 do Tributario, lote 1 (cem, itb/itbi, mar, not, tri, inf, dvr; ver commits)",
       "padroes": [],
