@@ -151,3 +151,27 @@ O que as 167 mostram agora:
 Fica para decisão do grupo, sem correção: no 8, dois textos numéricos com espaço no fim (`"1" == "1 "`) passaram a
 ser comparados como número (verdadeiro); no 7.4 o `"1 "` não era numérico e a comparação era de texto (falso). A
 mudança vale para todo `==` do sistema, e as colunas `char(n)` completadas com espaço são o caso real.
+
+## 6. Lote 3b — pendências expostas pelo lote 3 (20/11/2026)
+
+| Onde | Problema no 8.5 | Forma |
+|---|---|---|
+| `model/cda.model.php:1276`, `model/dbGeradorRelatorio.model.php:602, 1235` | `$s{i}`: não compila | Rector, commit só dele (como no lote 1) |
+| `libs/db_stdlibwebseller.php:479` (`VerParametroNota`) | `pg_num_rows` sobre consulta que falhou | `($rs ? pg_num_rows($rs) : null)` (decisão 2a) |
+| `libs/db_conecta.php:284` (pid para o `application_name`) | `pg_fetch_result` sobre consulta que falhou | o mesmo, com o resultado guardado em `$rsPidConexao` |
+| `dbforms/db_classesgenericas.php:756–894` (abas) | `reset`/`sizeof`/`key` de lista `null`: aviso no 7.4, `TypeError` no 8 | pula o `reset`, conta 0 e devolve `null` como chave quando a lista é `null` |
+| `libs/db_app.utils.php:39–42` (`db_app::load`) | `DB_VERSION` não definida: no 7.4 virava o texto `"DB_VERSION"`; no 8, `Error` | `(defined("DB_VERSION") ? DB_VERSION : "DB_VERSION")` |
+
+Prova:
+- `php -l` nos dois runtimes nos 6 arquivos.
+- Cada forma caracterizada nos dois runtimes (original no 7.4 = nova no 7.4 = nova no 8.5).
+- **7.4 inalterado:** 216 telas (a amostra do lote 3 mais as 6 telas-alvo de fora dela) com a mesma resposta antes e
+  depois; as 4 que diferem são as mesmas do lote 3, só na hora atual (texto dos PDFs idêntico).
+- **8.5:** bateria nas 4.330 telas (as do lote 3 mais as 6): **173 → 161 divergentes, 12 resolvidas, nenhuma nova**.
+
+Fora do lote:
+- `model/contabilidade/arquivos/siai/v2021/SiaiArquivoPPAXML.model.php` não compila nem no 7.4 (literal numérico
+  inválido na linha 202). Fica registrado.
+- Das telas-alvo, 3 do Tributário ainda divergem, agora pelo código da própria área: `div2_certtermo_002.php:89`
+  (`pg_num_rows` sobre consulta que falhou) e `fis2_fis_autolote002`/`fis2_fis_notlanclote002`
+  (`classes/db_fis_parfiscal_classe.php:893`, `pg_*` sem conexão aberta).
