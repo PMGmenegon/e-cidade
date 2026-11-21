@@ -14,7 +14,7 @@ from typing import Any
 from servidor.busca import EXTENSOES_PADRAO, _Linhas, buscar, iterar_arquivos, ler_texto
 from servidor.config import Config
 from servidor.estado import MAX_QUEM, Estado, mesma_pessoa
-from servidor.areas import AREAS_GRUPO, area_do_arquivo, validar_area
+from servidor.areas import AREAS_GRUPO, SEM_AREA, area_do_arquivo, validar_area
 from servidor.padroes import CATALOGO, PADROES, nome_canonico, ocorrencias, ordem_trabalho, padroes_para
 from servidor.seguranca import ErroFerramenta, limpar_texto, relativo, resolver_caminho, tem_metacaractere
 from servidor.tools.regressao import ler_resultado_regressao
@@ -167,8 +167,8 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
         if rel in de_outros or tem_metacaractere(rel):  # nome estranho nao entra em lote (iria para comando git)
             continue
         area_arq = area_do_arquivo(rel)
-        if minha and area_arq != minha:
-            outras_areas[area_arq or "sem_area"] = outras_areas.get(area_arq or "sem_area", 0) + 1
+        if minha and (area_arq or SEM_AREA) != minha:
+            outras_areas[area_arq or SEM_AREA] = outras_areas.get(area_arq or SEM_AREA, 0) + 1
             continue
         texto = ler_texto(arq, config.max_arquivo)
         if texto is None:
@@ -204,6 +204,9 @@ def proximo_trabalho(config: Config, padrao: str | None = None, caminho: str | N
             out["aviso_area"] = "sem sua area definida (minha_area ou ECIDADE_MCP_AREA) o lote pode ter arquivo de outra area"
         if outras_areas:
             out["arquivos_de_outras_areas_pulados"] = outras_areas
+            if SEM_AREA in outras_areas:
+                out["sem_area"] = (f"{outras_areas[SEM_AREA]} arquivo(s) sem dono na tabela do grupo (func_*, classes/, pre*...) "
+                                   "ficaram de fora: use minha_area='sem_area' para pegar esse trabalho e combine com o coordenador")
             out["outras_areas"] = "achou trabalho em area de outro? so registre e avise o dono (regra do grupo)"
         if truncado:
             out["aviso"] = f"varredura parou em {config.timeout_busca_s:.0f}s (resultado parcial; restrinja `caminho`)"

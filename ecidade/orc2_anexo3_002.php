@@ -51,7 +51,7 @@ $xinstit =explode("-",$db_selinstit);
 $resultinst = db_query("select codigo,nomeinstabrev from db_config where codigo in (".str_replace('-',', ',$db_selinstit).") ");
 $descr_inst = '';
 $xvirg = '';
-for($xins = 0; $xins < pg_numrows($resultinst); $xins++){
+for($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++){
     db_fieldsmemory($resultinst,$xins);
      $descr_inst .= $xvirg.$nomeinstabrev;
      $xvirg = ', ';
@@ -84,11 +84,11 @@ $troca = 1;
 $alt = 4;
 $aux = 0;
 $col = 0;
-for($x = 0; $x < pg_numrows($result);$x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null);$x++){
    db_fieldsmemory($result,$x);
    $sQuery 	= "select o57_finali from orcfontes where o57_fonte = '$o57_fonte' and o57_anousu = ".db_getsession("DB_anousu");
    $rsQuery = db_query($sQuery);
-   if(pg_num_rows($rsQuery) > 0){
+   if(($rsQuery ? pg_num_rows($rsQuery) : null) > 0){
    	  db_fieldsmemory($rsQuery,0);
    }
    $aux = $o57_fonte;

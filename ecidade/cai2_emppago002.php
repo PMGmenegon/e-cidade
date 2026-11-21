@@ -137,7 +137,7 @@ where " . ($filtraemp == 0?"1 = 1":" tipo = '" . ($filtraemp == 1?"Emp":"RP") . 
 
 $result = db_query($sql);
 //db_criatabela($result);
-if (pg_numrows($result) == 0){
+if (($result ? pg_numrows($result) : null) == 0){
    db_redireciona('db_erros.php?fechar=true&db_erro=Não existem empenhos pagos.');
 
 }
@@ -160,7 +160,7 @@ $tot_valor = 0;
 $tot_geral = 0;
 $tot_banco = 0;
 $geral     = 0;
-for($x = 0; $x < pg_numrows($result);$x++){
+for($x = 0; $x < ($result ? pg_numrows($result) : null);$x++){
    db_fieldsmemory($result,$x,true);
    if ($pdf->gety() > $pdf->h - 30 || $troca != 0 ){
       $pdf->addpage("L");

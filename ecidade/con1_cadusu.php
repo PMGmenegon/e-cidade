@@ -250,7 +250,7 @@ input {
 		  }
 		  for($i = 0;$i < pg_numrows($result);$i++) {
 		    
-		    echo "<option ".($i==0?'selected':'')." value=\"".pg_result($result,$i,"codigo")."\" ".(pg_result($result,$i,"id_instit")==pg_result($result,$i,"codigo")?"selected":"").">".pg_result($result,$i,"nomeinst")."</option>\n";
+		    echo "<option ".($i==0?'selected':'')." value=\"".pg_result($result,$i,"codigo")."\" ".((isset($retorno) ? pg_result($result,$i,"id_instit") : false)==pg_result($result,$i,"codigo")?"selected":"").">".pg_result($result,$i,"nomeinst")."</option>\n";
 		  }
 	      ?>
                 </select> </td>

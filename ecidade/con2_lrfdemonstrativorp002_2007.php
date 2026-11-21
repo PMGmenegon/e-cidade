@@ -50,7 +50,7 @@ if (!isset($arqinclude)) { // se este arquivo no esta incluido por outro
   $descr_inst = '';
   $xvirg = '';
   $flag_abrev = false;
-  for($xins = 0; $xins < pg_numrows($resultinst); $xins++){
+  for($xins = 0; $xins < ($resultinst ? pg_numrows($resultinst) : null); $xins++){
     db_fieldsmemory($resultinst,$xins);
     if (strlen(trim($nomeinstabrev)) > 0){
       $descr_inst .= $xvirg.$nomeinstabrev;
@@ -337,7 +337,7 @@ $a_pagar_nao_processado = 0;
 
 //db_criatabela($result);exit;
 
-for ($x=0;$x<pg_numrows($result);$x++){
+for ($x=0;$x<($result ? pg_numrows($result) : null);$x++){
   db_fieldsmemory($result,$x);
 
   if ($instit != $e60_instit) {
@@ -538,7 +538,7 @@ if (!isset($arqinclude)) { // se este arquivo no esta incluido por outro
 
 //db_criatabela($result_intra);exit;
 
-for ($x=0;$x<pg_numrows($result_intra);$x++) {
+for ($x=0;$x<($result_intra ? pg_numrows($result_intra) : null);$x++) {
   db_fieldsmemory($result_intra,$x);
 
   if ($instit != $e60_instit){
