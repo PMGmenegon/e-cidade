@@ -69,11 +69,11 @@ class cl_aidofautenticidade {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->y01_sequencial = ($this->y01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_sequencial"]:$this->y01_sequencial);
-       $this->y01_aidof = ($this->y01_aidof == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_aidof"]:$this->y01_aidof);
+       $this->y01_sequencial = ($this->y01_sequencial === 0 || $this->y01_sequencial === 0.0 || $this->y01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_sequencial"]:$this->y01_sequencial);
+       $this->y01_aidof = ($this->y01_aidof === 0 || $this->y01_aidof === 0.0 || $this->y01_aidof == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_aidof"]:$this->y01_aidof);
        $this->y01_codautenticidade = ($this->y01_codautenticidade == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_codautenticidade"]:$this->y01_codautenticidade);
      }else{
-       $this->y01_sequencial = ($this->y01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_sequencial"]:$this->y01_sequencial);
+       $this->y01_sequencial = ($this->y01_sequencial === 0 || $this->y01_sequencial === 0.0 || $this->y01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["y01_sequencial"]:$this->y01_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_aidofautenticidade {
          $this->y01_sequencial = $y01_sequencial;
        }
      }
-     if(($this->y01_sequencial == null) || ($this->y01_sequencial == "") ){
+     if(($this->y01_sequencial == null) || ($this->y01_sequencial === 0 || $this->y01_sequencial === 0.0 || $this->y01_sequencial == "") ){
        $this->erro_sql = " Campo y01_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -69,11 +69,11 @@ class cl_db_cgmatualizaliga {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w12_sequencial = ($this->w12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_sequencial"]:$this->w12_sequencial);
-       $this->w12_cgmatualiza = ($this->w12_cgmatualiza == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_cgmatualiza"]:$this->w12_cgmatualiza);
-       $this->w12_numcgm = ($this->w12_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_numcgm"]:$this->w12_numcgm);
+       $this->w12_sequencial = ($this->w12_sequencial === 0 || $this->w12_sequencial === 0.0 || $this->w12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_sequencial"]:$this->w12_sequencial);
+       $this->w12_cgmatualiza = ($this->w12_cgmatualiza === 0 || $this->w12_cgmatualiza === 0.0 || $this->w12_cgmatualiza == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_cgmatualiza"]:$this->w12_cgmatualiza);
+       $this->w12_numcgm = ($this->w12_numcgm === 0 || $this->w12_numcgm === 0.0 || $this->w12_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_numcgm"]:$this->w12_numcgm);
      }else{
-       $this->w12_sequencial = ($this->w12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_sequencial"]:$this->w12_sequencial);
+       $this->w12_sequencial = ($this->w12_sequencial === 0 || $this->w12_sequencial === 0.0 || $this->w12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w12_sequencial"]:$this->w12_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_db_cgmatualizaliga {
          $this->w12_sequencial = $w12_sequencial;
        }
      }
-     if(($this->w12_sequencial == null) || ($this->w12_sequencial == "") ){
+     if(($this->w12_sequencial == null) || ($this->w12_sequencial === 0 || $this->w12_sequencial === 0.0 || $this->w12_sequencial == "") ){
        $this->erro_sql = " Campo w12_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

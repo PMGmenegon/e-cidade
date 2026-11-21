@@ -144,9 +144,9 @@ class cl_db_itbi {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->matricula = ($this->matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["matricula"]:$this->matricula);
-       $this->areaterreno = ($this->areaterreno == ""?@$GLOBALS["HTTP_POST_VARS"]["areaterreno"]:$this->areaterreno);
-       $this->areaedificada = ($this->areaedificada == ""?@$GLOBALS["HTTP_POST_VARS"]["areaedificada"]:$this->areaedificada);
+       $this->matricula = ($this->matricula === 0 || $this->matricula === 0.0 || $this->matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["matricula"]:$this->matricula);
+       $this->areaterreno = ($this->areaterreno === 0 || $this->areaterreno === 0.0 || $this->areaterreno == ""?@$GLOBALS["HTTP_POST_VARS"]["areaterreno"]:$this->areaterreno);
+       $this->areaedificada = ($this->areaedificada === 0 || $this->areaedificada === 0.0 || $this->areaedificada == ""?@$GLOBALS["HTTP_POST_VARS"]["areaedificada"]:$this->areaedificada);
        $this->nomecomprador = ($this->nomecomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["nomecomprador"]:$this->nomecomprador);
        $this->cgccpfcomprador = ($this->cgccpfcomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["cgccpfcomprador"]:$this->cgccpfcomprador);
        $this->enderecocomprador = ($this->enderecocomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["enderecocomprador"]:$this->enderecocomprador);
@@ -155,15 +155,15 @@ class cl_db_itbi {
        $this->cepcomprador = ($this->cepcomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["cepcomprador"]:$this->cepcomprador);
        $this->ufcomprador = ($this->ufcomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["ufcomprador"]:$this->ufcomprador);
        $this->tipotransacao = ($this->tipotransacao == ""?@$GLOBALS["HTTP_POST_VARS"]["tipotransacao"]:$this->tipotransacao);
-       $this->valortransacao = ($this->valortransacao == ""?@$GLOBALS["HTTP_POST_VARS"]["valortransacao"]:$this->valortransacao);
+       $this->valortransacao = ($this->valortransacao === 0 || $this->valortransacao === 0.0 || $this->valortransacao == ""?@$GLOBALS["HTTP_POST_VARS"]["valortransacao"]:$this->valortransacao);
        $this->caracteristicas = ($this->caracteristicas == ""?@$GLOBALS["HTTP_POST_VARS"]["caracteristicas"]:$this->caracteristicas);
-       $this->mfrente = ($this->mfrente == ""?@$GLOBALS["HTTP_POST_VARS"]["mfrente"]:$this->mfrente);
-       $this->mladodireito = ($this->mladodireito == ""?@$GLOBALS["HTTP_POST_VARS"]["mladodireito"]:$this->mladodireito);
-       $this->mfundos = ($this->mfundos == ""?@$GLOBALS["HTTP_POST_VARS"]["mfundos"]:$this->mfundos);
-       $this->mladoesquerdo = ($this->mladoesquerdo == ""?@$GLOBALS["HTTP_POST_VARS"]["mladoesquerdo"]:$this->mladoesquerdo);
+       $this->mfrente = ($this->mfrente === 0 || $this->mfrente === 0.0 || $this->mfrente == ""?@$GLOBALS["HTTP_POST_VARS"]["mfrente"]:$this->mfrente);
+       $this->mladodireito = ($this->mladodireito === 0 || $this->mladodireito === 0.0 || $this->mladodireito == ""?@$GLOBALS["HTTP_POST_VARS"]["mladodireito"]:$this->mladodireito);
+       $this->mfundos = ($this->mfundos === 0 || $this->mfundos === 0.0 || $this->mfundos == ""?@$GLOBALS["HTTP_POST_VARS"]["mfundos"]:$this->mfundos);
+       $this->mladoesquerdo = ($this->mladoesquerdo === 0 || $this->mladoesquerdo === 0.0 || $this->mladoesquerdo == ""?@$GLOBALS["HTTP_POST_VARS"]["mladoesquerdo"]:$this->mladoesquerdo);
        $this->email = ($this->email == ""?@$GLOBALS["HTTP_POST_VARS"]["email"]:$this->email);
        $this->obs = ($this->obs == ""?@$GLOBALS["HTTP_POST_VARS"]["obs"]:$this->obs);
-       $this->liberado = ($this->liberado == ""?@$GLOBALS["HTTP_POST_VARS"]["liberado"]:$this->liberado);
+       $this->liberado = ($this->liberado === 0 || $this->liberado === 0.0 || $this->liberado == ""?@$GLOBALS["HTTP_POST_VARS"]["liberado"]:$this->liberado);
        if($this->datavencimento == ""){
          $this->datavencimento_dia = ($this->datavencimento_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["datavencimento_dia"]:$this->datavencimento_dia);
          $this->datavencimento_mes = ($this->datavencimento_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["datavencimento_mes"]:$this->datavencimento_mes);
@@ -172,8 +172,8 @@ class cl_db_itbi {
             $this->datavencimento = $this->datavencimento_ano."-".$this->datavencimento_mes."-".$this->datavencimento_dia;
          }
        }
-       $this->aliquota = ($this->aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["aliquota"]:$this->aliquota);
-       $this->id_itbi = ($this->id_itbi == ""?@$GLOBALS["HTTP_POST_VARS"]["id_itbi"]:$this->id_itbi);
+       $this->aliquota = ($this->aliquota === 0 || $this->aliquota === 0.0 || $this->aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["aliquota"]:$this->aliquota);
+       $this->id_itbi = ($this->id_itbi === 0 || $this->id_itbi === 0.0 || $this->id_itbi == ""?@$GLOBALS["HTTP_POST_VARS"]["id_itbi"]:$this->id_itbi);
        if($this->dataliber == ""){
          $this->dataliber_dia = ($this->dataliber_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["dataliber_dia"]:$this->dataliber_dia);
          $this->dataliber_mes = ($this->dataliber_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["dataliber_mes"]:$this->dataliber_mes);
@@ -182,8 +182,8 @@ class cl_db_itbi {
             $this->dataliber = $this->dataliber_ano."-".$this->dataliber_mes."-".$this->dataliber_dia;
          }
        }
-       $this->valoravaliacao = ($this->valoravaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravaliacao"]:$this->valoravaliacao);
-       $this->valorpagamento = ($this->valorpagamento == ""?@$GLOBALS["HTTP_POST_VARS"]["valorpagamento"]:$this->valorpagamento);
+       $this->valoravaliacao = ($this->valoravaliacao === 0 || $this->valoravaliacao === 0.0 || $this->valoravaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravaliacao"]:$this->valoravaliacao);
+       $this->valorpagamento = ($this->valorpagamento === 0 || $this->valorpagamento === 0.0 || $this->valorpagamento == ""?@$GLOBALS["HTTP_POST_VARS"]["valorpagamento"]:$this->valorpagamento);
        $this->obsliber = ($this->obsliber == ""?@$GLOBALS["HTTP_POST_VARS"]["obsliber"]:$this->obsliber);
        $this->loginn = ($this->loginn == ""?@$GLOBALS["HTTP_POST_VARS"]["loginn"]:$this->loginn);
        $this->numpre = ($this->numpre == ""?@$GLOBALS["HTTP_POST_VARS"]["numpre"]:$this->numpre);
@@ -195,14 +195,14 @@ class cl_db_itbi {
             $this->datasolicitacao = $this->datasolicitacao_ano."-".$this->datasolicitacao_mes."-".$this->datasolicitacao_dia;
          }
        }
-       $this->libpref = ($this->libpref == ""?@$GLOBALS["HTTP_POST_VARS"]["libpref"]:$this->libpref);
-       $this->valoravterr = ($this->valoravterr == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravterr"]:$this->valoravterr);
-       $this->valoravconst = ($this->valoravconst == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravconst"]:$this->valoravconst);
-       $this->numerocomprador = ($this->numerocomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["numerocomprador"]:$this->numerocomprador);
+       $this->libpref = ($this->libpref === 0 || $this->libpref === 0.0 || $this->libpref == ""?@$GLOBALS["HTTP_POST_VARS"]["libpref"]:$this->libpref);
+       $this->valoravterr = ($this->valoravterr === 0 || $this->valoravterr === 0.0 || $this->valoravterr == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravterr"]:$this->valoravterr);
+       $this->valoravconst = ($this->valoravconst === 0 || $this->valoravconst === 0.0 || $this->valoravconst == ""?@$GLOBALS["HTTP_POST_VARS"]["valoravconst"]:$this->valoravconst);
+       $this->numerocomprador = ($this->numerocomprador === 0 || $this->numerocomprador === 0.0 || $this->numerocomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["numerocomprador"]:$this->numerocomprador);
        $this->complcomprador = ($this->complcomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["complcomprador"]:$this->complcomprador);
        $this->cxpostcomprador = ($this->cxpostcomprador == ""?@$GLOBALS["HTTP_POST_VARS"]["cxpostcomprador"]:$this->cxpostcomprador);
      }else{
-       $this->matricula = ($this->matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["matricula"]:$this->matricula);
+       $this->matricula = ($this->matricula === 0 || $this->matricula === 0.0 || $this->matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["matricula"]:$this->matricula);
      }
    }
    // funcao para inclusao
@@ -520,7 +520,7 @@ class cl_db_itbi {
          $this->id_itbi = $id_itbi;
        }
      }
-     if(($this->matricula == null) || ($this->matricula == "") ){
+     if(($this->matricula == null) || ($this->matricula === 0 || $this->matricula === 0.0 || $this->matricula == "") ){
        $this->erro_sql = " Campo matricula nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

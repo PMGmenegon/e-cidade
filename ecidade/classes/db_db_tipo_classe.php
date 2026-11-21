@@ -67,10 +67,10 @@ class cl_db_tipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w03_codtipo = ($this->w03_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w03_codtipo"]:$this->w03_codtipo);
+       $this->w03_codtipo = ($this->w03_codtipo === 0 || $this->w03_codtipo === 0.0 || $this->w03_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w03_codtipo"]:$this->w03_codtipo);
        $this->w03_tipo = ($this->w03_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w03_tipo"]:$this->w03_tipo);
      }else{
-       $this->w03_codtipo = ($this->w03_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w03_codtipo"]:$this->w03_codtipo);
+       $this->w03_codtipo = ($this->w03_codtipo === 0 || $this->w03_codtipo === 0.0 || $this->w03_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["w03_codtipo"]:$this->w03_codtipo);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_db_tipo {
          $this->w03_codtipo = $w03_codtipo;
        }
      }
-     if(($this->w03_codtipo == null) || ($this->w03_codtipo == "") ){
+     if(($this->w03_codtipo == null) || ($this->w03_codtipo === 0 || $this->w03_codtipo === 0.0 || $this->w03_codtipo == "") ){
        $this->erro_sql = " Campo w03_codtipo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

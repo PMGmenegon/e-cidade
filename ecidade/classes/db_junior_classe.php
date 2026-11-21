@@ -69,11 +69,11 @@ class cl_junior {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ssj_codigo = ($this->ssj_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codigo"]:$this->ssj_codigo);
+       $this->ssj_codigo = ($this->ssj_codigo === 0 || $this->ssj_codigo === 0.0 || $this->ssj_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codigo"]:$this->ssj_codigo);
        $this->ssj_nome = ($this->ssj_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_nome"]:$this->ssj_nome);
-       $this->ssj_codcid = ($this->ssj_codcid == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codcid"]:$this->ssj_codcid);
+       $this->ssj_codcid = ($this->ssj_codcid === 0 || $this->ssj_codcid === 0.0 || $this->ssj_codcid == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codcid"]:$this->ssj_codcid);
      }else{
-       $this->ssj_codigo = ($this->ssj_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codigo"]:$this->ssj_codigo);
+       $this->ssj_codigo = ($this->ssj_codigo === 0 || $this->ssj_codigo === 0.0 || $this->ssj_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ssj_codigo"]:$this->ssj_codigo);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_junior {
          $this->ssj_codigo = $ssj_codigo; 
        }
      }
-     if(($this->ssj_codigo == null) || ($this->ssj_codigo == "") ){ 
+     if(($this->ssj_codigo == null) || ($this->ssj_codigo === 0 || $this->ssj_codigo === 0.0 || $this->ssj_codigo == "") ){ 
        $this->erro_sql = " Campo ssj_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

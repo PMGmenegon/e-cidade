@@ -69,11 +69,11 @@ class cl_dbprefcgmcnae {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->z01_sequencial = ($this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
-       $this->z01_dbprefcgm = ($this->z01_dbprefcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_dbprefcgm"]:$this->z01_dbprefcgm);
-       $this->z01_cnaeanalitica = ($this->z01_cnaeanalitica == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_cnaeanalitica"]:$this->z01_cnaeanalitica);
+       $this->z01_sequencial = ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
+       $this->z01_dbprefcgm = ($this->z01_dbprefcgm === 0 || $this->z01_dbprefcgm === 0.0 || $this->z01_dbprefcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_dbprefcgm"]:$this->z01_dbprefcgm);
+       $this->z01_cnaeanalitica = ($this->z01_cnaeanalitica === 0 || $this->z01_cnaeanalitica === 0.0 || $this->z01_cnaeanalitica == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_cnaeanalitica"]:$this->z01_cnaeanalitica);
      }else{
-       $this->z01_sequencial = ($this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
+       $this->z01_sequencial = ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z01_sequencial"]:$this->z01_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_dbprefcgmcnae {
          $this->z01_sequencial = $z01_sequencial;
        }
      }
-     if(($this->z01_sequencial == null) || ($this->z01_sequencial == "") ){
+     if(($this->z01_sequencial == null) || ($this->z01_sequencial === 0 || $this->z01_sequencial === 0.0 || $this->z01_sequencial == "") ){
        $this->erro_sql = " Campo z01_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

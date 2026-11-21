@@ -111,8 +111,9 @@ input {
             <select name="po01_tipo" id="po01_tipo">
               <option value="">-</option>
             <?php
-              $results = pg_fetch_all($cldb_tipo->sql_record($cldb_tipo->sql_query("","*","","")));
-              foreach ($results as $result) {
+              $rs_tipo = $cldb_tipo->sql_record($cldb_tipo->sql_query("","*","",""));
+              $results = ($rs_tipo ? pg_fetch_all($rs_tipo) : false);
+              if (is_array($results)) foreach ($results as $result) {
             ?>
               <option value="<?=@$result['w03_codtipo']?>" <?=@($result['w03_codtipo']==$po01_tipo?"selected='selected'":"")?>><?=@$result['w03_tipo']?></option>
             <?php }?>
