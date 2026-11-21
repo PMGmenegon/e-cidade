@@ -105,7 +105,7 @@ class RectPattern {
 //=====================================================================
 class RectPatternSolid extends RectPattern {
 
-    public function RectPatternSolid($aColor="black",$aWeight=1) {
+    public function __construct($aColor="black",$aWeight=1) {
 	parent::RectPattern($aColor,$aWeight);
     }
 
@@ -122,7 +122,7 @@ class RectPatternSolid extends RectPattern {
 //=====================================================================
 class RectPatternHor extends RectPattern {
 		
-    public function RectPatternHor($aColor="black",$aWeight=1,$aLineSpacing=7) {
+    public function __construct($aColor="black",$aWeight=1,$aLineSpacing=7) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->linespacing = $aLineSpacing;
     }
@@ -145,7 +145,7 @@ class RectPatternHor extends RectPattern {
 class RectPatternVert extends RectPattern {
     var $linespacing=10;	// Line spacing in pixels
 		
-    public function RectPatternVert($aColor="black",$aWeight=1,$aLineSpacing=7) {
+    public function __construct($aColor="black",$aWeight=1,$aLineSpacing=7) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->linespacing = $aLineSpacing;
     }
@@ -172,7 +172,7 @@ class RectPatternVert extends RectPattern {
 class RectPatternRDiag extends RectPattern {
     var $linespacing;	// Line spacing in pixels
 		
-    public function RectPatternRDiag($aColor="black",$aWeight=1,$aLineSpacing=12) {
+    public function __construct($aColor="black",$aWeight=1,$aLineSpacing=12) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->linespacing = $aLineSpacing;
     }
@@ -242,7 +242,7 @@ class RectPatternRDiag extends RectPattern {
 class RectPatternLDiag extends RectPattern {
     var $linespacing;	// Line spacing in pixels
 		
-    public function RectPatternLDiag($aColor="black",$aWeight=1,$aLineSpacing=12) {
+    public function __construct($aColor="black",$aWeight=1,$aLineSpacing=12) {
 	$this->linespacing = $aLineSpacing;
 	parent::RectPattern($aColor,$aWeight);
     }
@@ -310,7 +310,7 @@ class RectPattern3DPlane extends RectPattern {
     // top of the band. Specifies how fast the lines
     // converge.
 
-    public function RectPattern3DPlane($aColor="black",$aWeight=1) {
+    public function __construct($aColor="black",$aWeight=1) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->SetDensity(10);  // Slightly larger default
     }
@@ -424,7 +424,7 @@ class RectPattern3DPlane extends RectPattern {
 class RectPatternCross extends RectPattern {
     var $vert=null;
     var $hor=null;
-    public function RectPatternCross($aColor="black",$aWeight=1) {
+    public function __construct($aColor="black",$aWeight=1) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->vert = new RectPatternVert($aColor,$aWeight);
 	$this->hor  = new RectPatternHor($aColor,$aWeight);
@@ -460,7 +460,7 @@ class RectPatternCross extends RectPattern {
 class RectPatternDiagCross extends RectPattern {
     var $left=null;
     var $right=null;
-    public function RectPatternDiagCross($aColor="black",$aWeight=1) {
+    public function __construct($aColor="black",$aWeight=1) {
 	parent::RectPattern($aColor,$aWeight);
 	$this->right = new RectPatternRDiag($aColor,$aWeight);
 	$this->left  = new RectPatternLDiag($aColor,$aWeight);

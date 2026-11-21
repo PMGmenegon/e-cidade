@@ -599,7 +599,7 @@ for($ii = 0; $ii < $this->linhasdositens; $ii++){
            
            // Percorre o resumo do limite de caraceters até um ponto que haja espaço em branco para não quebre alguma palavra 
            for ($iInd = $iTotalCaract; $iInd < strlen($resumo); $iInd++) {
-             if ( $resumo{$iInd} == ' ') {
+             if ( $resumo[$iInd] == ' ') {
                $iLimitString = $iInd;
                break;
              }

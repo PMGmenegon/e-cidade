@@ -57,7 +57,7 @@ class XmlArray
     var $docElement;
     var $document;
 
-    function XmlArray($FileName)
+    function __construct($FileName)
     {
         if (substr(PHP_VERSION, 0, 1) >= '5')
         {

@@ -155,7 +155,7 @@ class AntiSpam {
 
     var $iNumber='';
 
-    function AntiSpam($aNumber='') {
+    function __construct($aNumber='') {
 	$this->iNumber = $aNumber;
     }
 

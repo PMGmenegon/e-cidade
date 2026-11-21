@@ -494,7 +494,12 @@ class DBDate
      */
     public static function getQuantidadeDiasMes($iMes, $iAno)
     {
-        return cal_days_in_month(CAL_GREGORIAN, $iMes, $iAno);
+        try {
+            return cal_days_in_month(CAL_GREGORIAN, (is_string($iMes) && !is_numeric($iMes) ? (int) $iMes : $iMes), (is_string($iAno) && !is_numeric($iAno) ? (int) $iAno : $iAno));
+        } catch (\ValueError | \TypeError $e) {
+            // 8.x: mes/ano invalido lanca erro; o 7.4 avisava e devolvia false
+            return false;
+        }
     }
 
     /**

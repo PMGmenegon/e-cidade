@@ -547,7 +547,7 @@ class AntiSpam {
     var $iData='';
     var $iDD=null;
 
-    function AntiSpam($aData='') {
+    function __construct($aData='') {
 	$this->iData = $aData;
 	$this->iDD = new HandDigits();	
     }

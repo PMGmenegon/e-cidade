@@ -50,7 +50,7 @@ class XML extends Tree {
 	  *	@param		optional string argument
 	  *	@returns	none
 	  */
-	public function XML($argument = "") {
+	public function __construct($argument = "") {
 		$success = false;
 		$this->Tree();
 		$this->pathSeparator = "/";

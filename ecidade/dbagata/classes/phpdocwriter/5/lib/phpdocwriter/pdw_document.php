@@ -50,7 +50,7 @@ var $cursor;
 var $span;
 var $sautostyle;
 
-public function pdw_document()
+public function __construct()
 {
 	$this->tmpdir = $this->_uniquename();
 	$this->filename = 'document';

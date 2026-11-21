@@ -753,8 +753,8 @@ class cl_criaabas {
                   tab[x].style.border = '1px outset #cccccc';
                   tab[x].style.borderBottomColor = '#000000';
  <?php
-    reset($this->identifica);
- for($w=0; $w<sizeof($this->identifica); $w++){
+    if ($this->identifica !== null) { reset($this->identifica); }
+ for($w=0; $w<($this->identifica === null ? 0 : sizeof($this->identifica)); $w++){
        $chave=key($this->identifica);
  ?>
               document.formaba.<?php echo $chave?>.style.color ='<?php echo (isset($this->cortexto[$chave])&&$this->cortexto[$chave]!=""?$this->cortexto[$chave]:"black")?>';
@@ -837,8 +837,8 @@ class cl_criaabas {
         <table border="0" cellpadding="0" cellspacing="0" marginwidth="0">
         <tr>
  <?php
-    reset($this->identifica);
-    for($w=0; $w<sizeof($this->identifica); $w++){
+    if ($this->identifica !== null) { reset($this->identifica); }
+    for($w=0; $w<($this->identifica === null ? 0 : sizeof($this->identifica)); $w++){
        $chave     = key($this->identifica);
        $cortexto  = (isset($this->cortexto[$chave])&&$this->cortexto[$chave]!=""?$this->cortexto[$chave]:'black');
        $corfundo  = (isset($this->corfundo[$chave])&&$this->corfundo[$chave]!=""?$this->corfundo[$chave]:'#cccccc');
@@ -870,8 +870,8 @@ class cl_criaabas {
       <tr>
         <td height="340" align="center">
  <?php
-    reset($this->identifica);
-    for($w=0; $w<sizeof($this->identifica); $w++){
+    if ($this->identifica !== null) { reset($this->identifica); }
+    for($w=0; $w<($this->identifica === null ? 0 : sizeof($this->identifica)); $w++){
        $chave=key($this->identifica);
        $src=(isset($this->src[$chave]) && $this->src[$chave]!=null?"src=\"".$this->src[$chave]."\"":"");
        if($src==""){
@@ -890,8 +890,8 @@ class cl_criaabas {
       </form>
       </table>
  <?php
-  reset($this->identifica);
-  $chave=key($this->identifica);
+  if ($this->identifica !== null) { reset($this->identifica); }
+  $chave=($this->identifica === null ? null : key($this->identifica));
   echo " <script> mo_camada('$chave'); </script> ";
    }
 }

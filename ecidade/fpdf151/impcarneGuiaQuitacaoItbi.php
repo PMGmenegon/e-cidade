@@ -745,7 +745,7 @@ var $lUtilizaModeloDefault = true;
  * @param object  $objpdf    - Instancia da classe FPDF
  * @param integer $impmodelo - Numero do Modelo a ser utilizado.
  */
-  function db_impcarne($objpdf,$impmodelo){
+  function __construct($objpdf,$impmodelo){
     $this->objpdf = $objpdf;
     $this->impmodelo = $impmodelo;
   }

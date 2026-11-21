@@ -158,7 +158,7 @@ class PolarAxis extends Axis {
     var $radius_tick_color='black';
 
     public function __construct(&$img,&$aScale) {
-	parent::Axis($img,$aScale);
+	parent::__construct($img,$aScale);
     }
 
     public function ShowAngleDegreeMark($aFlg=true) {
@@ -573,7 +573,7 @@ class PolarAxis extends Axis {
 class PolarScale extends LinearScale {
     var $graph;
     public function __construct($aMax=0,&$graph) {
-	parent::LinearScale(0,$aMax,'x');
+	parent::__construct(0,$aMax,'x');
 	$this->graph = &$graph;
     }
 

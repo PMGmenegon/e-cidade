@@ -81,7 +81,7 @@ class FUNC {
 			for($i = 0; $i < $len1; $i++){
 				$found = false;
 				for($j = 0; $j < $len2; $j++){
-					if($lists{$j} == $strval{$i}){
+					if($lists[$j] == $strval[$i]){
 						$found = true;
 						break;
 					}

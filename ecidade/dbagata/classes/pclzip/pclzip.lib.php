@@ -2378,7 +2378,7 @@
         else {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "File will be compressed");
           // ----- Read the file content
-          $v_content = @fread($v_file, $p_header['size']);
+          $v_content = ($p_header['size'] > 0 ? @fread($v_file, $p_header['size']) : false); // 8.x: tamanho 0 lanca ValueError; o 7.4 devolvia false
 
           // ----- Calculate the CRC
           $p_header['crc'] = @crc32($v_content);

@@ -34,7 +34,7 @@ class AgataQuery
     /* Constructor method
     /***********************************************************/
     static public $Query;
-    function AgataQuery($agataConfig)
+    function __construct($agataConfig)
     {
         $this->agataConfig = $agataConfig;
     }
@@ -90,9 +90,9 @@ class AgataQuery
         $this->records ++;
         $row = $this->db->FetchRow($this->result);
         
-        if ($this->records > $this->OffSet)
+        if ($this->records > (is_string($this->OffSet) && !is_numeric($this->OffSet) ? (float) $this->OffSet : $this->OffSet))
         {
-            if (($this->records <= ($this->Limit + $this->OffSet)) or ($this->Limit == 0))
+            if (($this->records <= ((is_string($this->Limit) && !is_numeric($this->Limit) ? (float) $this->Limit : $this->Limit) + (is_string($this->OffSet) && !is_numeric($this->OffSet) ? (float) $this->OffSet : $this->OffSet))) or ((is_string($this->Limit) && !is_numeric($this->Limit) ? (float) $this->Limit : $this->Limit) == 0))
             {
                 return $row;
             }

@@ -367,7 +367,7 @@ function db_emitebic($parametro, $pdf, $tipo, $geracalculo, $dadosBic = null)
       $sigiloso = '*';
     }
 
-    for ($totalRegistos = 0; $totalRegistos < sizeof($parametro); $totalRegistos++) {
+    for ($totalRegistos = 0; $totalRegistos < (is_array($parametro) || $parametro instanceof \Countable ? sizeof($parametro) : ($parametro === null ? 0 : 1)); $totalRegistos++) {
         
         $lTemCalculo = true;
         if ($parametro[$totalRegistos] != "") {
