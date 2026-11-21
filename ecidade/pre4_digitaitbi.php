@@ -146,8 +146,8 @@ if(isset($HTTP_POST_VARS['id_itbi'])) {
 }
 $matricula = 200;
 parse_str(base64_decode($HTTP_SERVER_VARS["QUERY_STRING"]), $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
-$cod_matricula = 0 + $matricula;
-if ( !is_int($cod_matricula) or $cod_matricula == "" ){
+$cod_matricula = is_string($matricula) ? (preg_match('/^\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/', $matricula, $__m) ? 0 + $__m[0] : 0) : (0 + $matricula);
+if ( !is_int($cod_matricula) or $cod_matricula === 0 or $cod_matricula == "" ){
   // db_msgbox("Código da Matrícula Inválido.");
    db_redireciona("digitamatriculaitbi.php");
 }

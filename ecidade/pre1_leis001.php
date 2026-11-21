@@ -131,7 +131,7 @@ if(isset($HTTP_POST_VARS["incluir"])) {
   											    '$datalei_ano-$datalei_mes-$datalei_dia',
   												'$ementa',
   												'$atxtB',
-												'$ahtmlB')") or die("Erro(56) inserindo em db_leis: ".pg_errormessage());
+												'$ahtmlB')") or die("Erro(56) inserindo em db_leis: ".pg_last_error($conn));
  db_redireciona();
 } else if(isset($HTTP_POST_VARS["alterar"])) {
   db_postmemory($_FILES["arq"]);
@@ -141,7 +141,7 @@ if(isset($HTTP_POST_VARS["incluir"])) {
 	           numerolei = '$numerolei',
 			   datalei = '$datalei_ano-$datalei_mes-$datalei_dia',
 			   ementa = '$ementa'
-			 where id_lei = $id_lei") or die("Erro(81) atualizando db_leis: ".pg_errormessage());
+			 where id_lei = $id_lei") or die("Erro(81) atualizando db_leis: ".pg_last_error($conn));
     db_redireciona();
   } else {
     if($size == 0) {
@@ -204,10 +204,10 @@ if(isset($HTTP_POST_VARS["incluir"])) {
 			   ementa = '$ementa',
 			   texto = '$atxtB',
 			   documento = '$ahtmlB'
-		   where id_lei = $id_lei") or die("Erro(139) atualizando db_leis: ".pg_errormessage());  
+		   where id_lei = $id_lei") or die("Erro(139) atualizando db_leis: ".pg_last_error($conn));  
   db_redireciona();
 } else if(isset($HTTP_POST_VARS["excluir"])) {
-  db_query("delete from db_leis where id_lei = ".$HTTP_POST_VARS["id_lei"]) or die("Erro(141) excluindo db_leis: ".pg_errormessage());
+  db_query("delete from db_leis where id_lei = ".$HTTP_POST_VARS["id_lei"]) or die("Erro(141) excluindo db_leis: ".pg_last_error($conn));
   db_redireciona();
 }
 ?>

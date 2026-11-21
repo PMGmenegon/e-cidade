@@ -62,7 +62,7 @@ if(isset($HTTP_POST_VARS["confirmar"])) {
 	  }
     }
     db_query("begin");
-    $oid = pg_loimport($DocRoot."/tmp/".$imagem) or die("Erro(21) importando imagem");
+    $oid = pg_lo_import($conn, $DocRoot."/tmp/".$imagem) or die("Erro(21) importando imagem");
     db_query("insert into db_imgsitbi(matricula,data,arq) values('$matricula','$data',$oid)") or die("Erro(22) inserindo em db_imgsitbi");
     db_query("commit");
   } else {
