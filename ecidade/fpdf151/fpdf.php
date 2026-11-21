@@ -553,6 +553,7 @@ function SetDrawColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for all stroking operations
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->DrawColor=sprintf('%.3f G',$r/255);
   else
@@ -573,6 +574,7 @@ function SetFillColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for all filling operations
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->FillColor=sprintf('%.3f g',$r/255);
   else
@@ -593,6 +595,7 @@ function SetTextColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for text
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->TextColor=sprintf('%.3f g',$r/255);
   else

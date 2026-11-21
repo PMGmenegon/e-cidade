@@ -516,7 +516,7 @@ function db_datedif($pmktime = null, $smktime = null, $tipo = 'd')
 function db_val($string = 0)
 {
     if (!db_empty($string) && $string != null) {
-        return $string+0;
+        return (is_string($string) && !preg_match('/^\s*[+-]?\.?\d/', $string) ? 0 : $string)+0;
     } else {
         return 0;
     }
