@@ -67,10 +67,10 @@ class cl_db_periodicidade {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db84_sequencial = ($this->db84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db84_sequencial"]:$this->db84_sequencial);
+       $this->db84_sequencial = ($this->db84_sequencial === 0 || $this->db84_sequencial === 0.0 || $this->db84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db84_sequencial"]:$this->db84_sequencial);
        $this->db84_descricao = ($this->db84_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["db84_descricao"]:$this->db84_descricao);
      }else{
-       $this->db84_sequencial = ($this->db84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db84_sequencial"]:$this->db84_sequencial);
+       $this->db84_sequencial = ($this->db84_sequencial === 0 || $this->db84_sequencial === 0.0 || $this->db84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db84_sequencial"]:$this->db84_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_db_periodicidade {
          $this->db84_sequencial = $db84_sequencial;
        }
      }
-     if(($this->db84_sequencial == null) || ($this->db84_sequencial == "") ){
+     if(($this->db84_sequencial == null) || ($this->db84_sequencial === 0 || $this->db84_sequencial === 0.0 || $this->db84_sequencial == "") ){
        $this->erro_sql = " Campo db84_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

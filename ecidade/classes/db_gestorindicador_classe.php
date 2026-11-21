@@ -104,21 +104,21 @@ class cl_gestorindicador {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->g04_sequencial = ($this->g04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_sequencial"]:$this->g04_sequencial);
-       $this->g04_periodicidade = ($this->g04_periodicidade == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_periodicidade"]:$this->g04_periodicidade);
+       $this->g04_sequencial = ($this->g04_sequencial === 0 || $this->g04_sequencial === 0.0 || $this->g04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_sequencial"]:$this->g04_sequencial);
+       $this->g04_periodicidade = ($this->g04_periodicidade === 0 || $this->g04_periodicidade === 0.0 || $this->g04_periodicidade == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_periodicidade"]:$this->g04_periodicidade);
        $this->g04_descricao = ($this->g04_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_descricao"]:$this->g04_descricao);
        $this->g04_definicao = ($this->g04_definicao == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_definicao"]:$this->g04_definicao);
-       $this->g04_tipo = ($this->g04_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_tipo"]:$this->g04_tipo);
-       $this->g04_faixainicial = ($this->g04_faixainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixainicial"]:$this->g04_faixainicial);
-       $this->g04_faixafinal = ($this->g04_faixafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixafinal"]:$this->g04_faixafinal);
-       $this->g04_faixaverdeinicial = ($this->g04_faixaverdeinicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaverdeinicial"]:$this->g04_faixaverdeinicial);
-       $this->g04_faixaverdefinal = ($this->g04_faixaverdefinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaverdefinal"]:$this->g04_faixaverdefinal);
-       $this->g04_faixaamarelainicial = ($this->g04_faixaamarelainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaamarelainicial"]:$this->g04_faixaamarelainicial);
-       $this->g04_faixaamarelafinal = ($this->g04_faixaamarelafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaamarelafinal"]:$this->g04_faixaamarelafinal);
-       $this->g04_faixavermelhainicial = ($this->g04_faixavermelhainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixavermelhainicial"]:$this->g04_faixavermelhainicial);
-       $this->g04_faixavermelhafinal = ($this->g04_faixavermelhafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixavermelhafinal"]:$this->g04_faixavermelhafinal);
+       $this->g04_tipo = ($this->g04_tipo === 0 || $this->g04_tipo === 0.0 || $this->g04_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_tipo"]:$this->g04_tipo);
+       $this->g04_faixainicial = ($this->g04_faixainicial === 0 || $this->g04_faixainicial === 0.0 || $this->g04_faixainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixainicial"]:$this->g04_faixainicial);
+       $this->g04_faixafinal = ($this->g04_faixafinal === 0 || $this->g04_faixafinal === 0.0 || $this->g04_faixafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixafinal"]:$this->g04_faixafinal);
+       $this->g04_faixaverdeinicial = ($this->g04_faixaverdeinicial === 0 || $this->g04_faixaverdeinicial === 0.0 || $this->g04_faixaverdeinicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaverdeinicial"]:$this->g04_faixaverdeinicial);
+       $this->g04_faixaverdefinal = ($this->g04_faixaverdefinal === 0 || $this->g04_faixaverdefinal === 0.0 || $this->g04_faixaverdefinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaverdefinal"]:$this->g04_faixaverdefinal);
+       $this->g04_faixaamarelainicial = ($this->g04_faixaamarelainicial === 0 || $this->g04_faixaamarelainicial === 0.0 || $this->g04_faixaamarelainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaamarelainicial"]:$this->g04_faixaamarelainicial);
+       $this->g04_faixaamarelafinal = ($this->g04_faixaamarelafinal === 0 || $this->g04_faixaamarelafinal === 0.0 || $this->g04_faixaamarelafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixaamarelafinal"]:$this->g04_faixaamarelafinal);
+       $this->g04_faixavermelhainicial = ($this->g04_faixavermelhainicial === 0 || $this->g04_faixavermelhainicial === 0.0 || $this->g04_faixavermelhainicial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixavermelhainicial"]:$this->g04_faixavermelhainicial);
+       $this->g04_faixavermelhafinal = ($this->g04_faixavermelhafinal === 0 || $this->g04_faixavermelhafinal === 0.0 || $this->g04_faixavermelhafinal == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_faixavermelhafinal"]:$this->g04_faixavermelhafinal);
        $this->g04_emitealerta = ($this->g04_emitealerta == "f"?@$GLOBALS["HTTP_POST_VARS"]["g04_emitealerta"]:$this->g04_emitealerta);
-       $this->g04_valoralerta = ($this->g04_valoralerta == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_valoralerta"]:$this->g04_valoralerta);
+       $this->g04_valoralerta = ($this->g04_valoralerta === 0 || $this->g04_valoralerta === 0.0 || $this->g04_valoralerta == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_valoralerta"]:$this->g04_valoralerta);
        $this->g04_emailalerta = ($this->g04_emailalerta == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_emailalerta"]:$this->g04_emailalerta);
        $this->g04_mensagemalerta = ($this->g04_mensagemalerta == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_mensagemalerta"]:$this->g04_mensagemalerta);
        if($this->g04_limite == ""){
@@ -131,7 +131,7 @@ class cl_gestorindicador {
        }
        $this->g04_link = ($this->g04_link == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_link"]:$this->g04_link);
      }else{
-       $this->g04_sequencial = ($this->g04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_sequencial"]:$this->g04_sequencial);
+       $this->g04_sequencial = ($this->g04_sequencial === 0 || $this->g04_sequencial === 0.0 || $this->g04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["g04_sequencial"]:$this->g04_sequencial);
      }
    }
    // funcao para inclusao
@@ -299,7 +299,7 @@ class cl_gestorindicador {
          $this->g04_sequencial = $g04_sequencial;
        }
      }
-     if(($this->g04_sequencial == null) || ($this->g04_sequencial == "") ){
+     if(($this->g04_sequencial == null) || ($this->g04_sequencial === 0 || $this->g04_sequencial === 0.0 || $this->g04_sequencial == "") ){
        $this->erro_sql = " Campo g04_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
