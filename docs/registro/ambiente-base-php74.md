@@ -1,10 +1,10 @@
 # Ambiente local da base-php74
 
-Verificado em 19/11/2026, a partir do commit
+Verificado em 19/11/2026 e revalidado em 21/11/2026, a partir do commit
 `982a95fb5902186cab75fa25d30c83ee52e7695d`, na branch
 `nucleo/ambiente-base-php74`. Escopo: iniciar os runtimes e o proxy, preparar
-o banco local e registrar a abertura da tela de entrada. A migracao das areas,
-do Laravel e das APIs permanece com as respectivas frentes.
+o banco local e validar entrada, autenticacao, Desktop e uma consulta. A migracao
+das areas, do Laravel e das APIs permanece com as respectivas frentes.
 
 ## Servicos verificados
 
@@ -62,8 +62,8 @@ preservar esse volume e o container, e guardar dumps antes de recriar o banco.
   inalterados. Os avisos de autoload PSR-4 existentes nao foram corrigidos.
 - A configuracao local veio dos exemplos do projeto, por `configure-desktop`.
   O `.env` aponta para `ecidade_database:5432`, banco `ecidade`, com URL local
-  `http://localhost:8090`. Foram geradas a chave da aplicacao e as chaves locais
-  do Passport. Nao foi executado `passport:install`.
+  `http://localhost:8090`, com `APP_ENV=testing`. Foram geradas a chave da
+  aplicacao e as chaves locais do Passport. Nao foi executado `passport:install`.
 - Um PostgreSQL novo recebeu o dump `ecidade/docker/ecidade_base.sql.gz`,
   preservando o arquivo comprimido. Foram aplicadas somente as adaptacoes para
   PostgreSQL 16 e o `pos.sql` ja presentes no instalador do projeto.
@@ -91,15 +91,104 @@ O navegador confirmou a renderizacao do formulario, imagens e estilos.
 As extensoes exigidas pelo ambiente foram verificadas nos dois PHPs, e a
 conexao do PHP 8.5 ao PostgreSQL foi confirmada por leitura.
 
-## Limites e proximo passo
+## Validacao da abertura
 
-Nao foram executadas migrations. O dump restaurado registra 456 migrations;
-a ultima e `2022_12_29_093554_M23031_adiciona_formasarrecadacao_baixabanco`.
-Faltam `configuracoes.itens_menu_usuario_favoritos` e a coluna
-`db_itensmenu.api`, exigidas pelo Desktop da nova base.
+- Login real com a conta demonstrativa nas portas 8080 e 8090, emissao de
+  token, carregamento completo do Desktop e das 11 areas do menu: passou.
+- Logout com retorno a entrada e tentativa com senha incorreta recusada:
+  passaram. A credencial de teste foi preparada pela funcao do proprio projeto.
+- Navegacao por Configuracao > Consultas > Consulta procedimentos: passou,
+  incluindo os frames, o departamento e o exercicio. Os recursos dessa
+  navegacao nao apresentaram falhas HTTP.
+- A mesma consulta autenticada, `/w/1/sys3_proced001.php`, respondeu HTTP 200
+  nas tres portas, com 22.529 bytes identicos, sem normalizacao. SHA-256:
+  `1ced7c14a6b285b3a721a881cf6bb1dee0931a0640c2786cea6bfa78bd8d8f57`.
+- Na revalidacao de 21/11, os contadores registraram um token de acesso, um de
+  renovacao, um usuario on-line com tres atualizacoes e sete logs de acesso.
+  Nao houve gravacao de dados de negocio. A auditoria do sistema foi preservada.
+- Parada e retomada dos quatro containers, mantendo volumes e banco: passou.
+  A verificacao automatica detectou os servicos parados e voltou a passar
+  depois da retomada. O fluxo autenticado foi repetido apos o reinicio.
 
-A aplicacao das migrations no banco descartavel depende da decisao prevista
-no documento de migracao. A entrada foi validada; autenticacao, menu e telas
-internas ainda nao foram validados. A abertura da entrada no PHP 8.5 nao prova
-compatibilidade do Laravel 8, das rotas ou dos modulos com esse runtime.
-Nao foram chamados servicos externos durante os testes da aplicacao.
+As capturas, comparacoes e contagens estao em `ecidade/tmp/linha-base-php74/`.
+Os artefatos da revalidacao de 21/11 ficaram em diretorio temporario fora do
+repositorio; o perfil de navegador criado nessa rodada foi removido.
+Nao foram exercitadas integracoes externas de negocio, nem operacoes de
+cadastro, calculos, pagamentos ou emissao de documentos.
+
+## Preparar o Desktop em uma instalacao de teste
+
+Partir de uma instalacao do projeto com o dump original restaurado, dependencias
+do lock instaladas, configuracao local e chaves geradas, conforme o
+[README](../../README.md). Nunca repetir o instalador original em banco existente.
+Usar `APP_ENV=testing`, `APP_URL=http://localhost:8090` e `DB_PORT_ALT=5432` no
+`.env` local; a conexao deve apontar ao PostgreSQL descartavel deste ambiente.
+
+O script abaixo aplica apenas seis migrations existentes do PR: dois ajustes
+do Passport, notificacoes, coluna `db_itensmenu.api`, tabela de favoritos e
+item de menu de favoritos. Tambem prepara a conta demonstrativa
+`dbseller` / `dbseller`, usando a funcao de senha do projeto.
+
+**Somente banco descartavel restaurado do dump.** O script exige uma marcacao
+explicita e nao deve ser usado em instalacoes com usuarios ou dados reais.
+
+```bash
+mkdir -p ecidade/dumps
+docker exec ecidade_database pg_dump -U postgres -d ecidade -Fc > ecidade/dumps/base-php74-antes-desktop.dump
+docker exec -i --env ECIDADE_BANCO_DESCARTAVEL=1 ecidade_php74 bash -s < docker/prepara-desktop-php74.sh
+```
+
+A preparacao foi comprovada em uma segunda copia limpa do dump: passou de
+456 para 462 migrations registradas, autenticou a conta e carregou as 11
+areas do Desktop sem erros HTTP. Repetir o script retornou `Nothing to migrate`.
+O bloqueio sem a marcacao de banco descartavel tambem foi testado.
+
+Verificar as permissoes de escrita do grupo `www-data` em `storage`,
+`bootstrap/cache`, `tmp`, `extension/log`, `arquivos` e `extension/data`, alem
+de `config` para as preferencias locais. Os volumes comuns precisam das
+permissoes descritas no inicio deste registro.
+
+## Verificacao repetivel
+
+```bash
+python3 scratchpad/verifica_ambiente.py
+```
+
+Usa somente a biblioteca padrao do Python. Confere redirecionamento da raiz,
+HTTP 200 na entrada, formulario, JavaScript, charset, equivalencia dos corpos
+e encaminhamento do proxy ao 7.4. Sai com erro se algum criterio falhar.
+Esse comando verifica disponibilidade e entrada; os testes autenticados
+descritos acima foram feitos separadamente no navegador.
+
+Os padroes `*.dump`, `*.log`, `/ecidade/dumps/` e `/ecidade/tmp/` estao
+explicitamente ignorados na raiz. Configuracao local, bancos, logs e capturas
+nao integram os commits da linha de base.
+
+## Pendencias das outras frentes
+
+O login direto pelo PHP 8.5 ainda retorna HTTP 500 ao carregar o CAPTCHA
+legado; `securimage/securimage.php` nao compila nesse runtime. A frente PHP
+8.5 deve portar esse ponto. O login continua no 7.4 pelo proxy, e nenhum
+modulo foi roteado ao 8.5. A abertura da entrada e da consulta no 8.5 nao
+comprova a compatibilidade de todas as telas ou do Laravel 8 com esse runtime.
+
+A tentativa de executar todas as migrations encontrou problemas anteriores
+de instalacao no dump. No banco principal deste teste ficaram 593 registros
+de migrations; a execucao geral parou em
+`2023_04_17_134234_m23809_adicionando_campo_is_classe_bilingue`, que referencia
+o registro inexistente `db_sysarquivo.codarq=1010083`. Essa falha de Educacao
+nao foi corrigida nesta frente, nem marcada como executada.
+
+Antes desse bloqueio, foram conferidos dois estados ja existentes no dump
+(a estrutura de 2019 e a remocao das tabelas de tutorial) para regularizar seu
+historico. Duas views ausentes foram preparadas com as definicoes da propria
+migration; duas tabelas de backup conflitantes foram preservadas com sufixo
+`_antes_migracao`. Tres migrations de SQL legado exigiram
+`PGOPTIONS='-c standard_conforming_strings=off'` somente nas respectivas
+conexoes. Nenhum arquivo de migration foi modificado.
+
+Esses ajustes da tentativa geral nao sao necessarios para o procedimento
+minimo de abertura, comprovado separadamente na copia limpa. As migrations
+das areas continuam sob responsabilidade das respectivas frentes. A
+preparacao do Desktop nao significa que todas as migrations foram aplicadas
+ou que os modulos de negocio foram homologados.
