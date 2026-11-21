@@ -9687,30 +9687,6 @@
     }
   },
   "reivindicacoes": {
-    "ecidade/app-85/Auth/SegredoClienteTextoPuro.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-39",
-      "quem": "Gustavo"
-    },
-    "ecidade/app-85/Http/Middleware/DBRequestMiddleware.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-38",
-      "quem": "Gustavo"
-    },
-    "ecidade/app/Exceptions/Handler.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-62",
-      "quem": "Gustavo"
-    },
-    "ecidade/app/Providers/AuthServiceProvider.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-39",
-      "quem": "Gustavo"
-    },
     "ecidade/classes/db_abonofalta_classe.php": {
       "desde": "2026-11-20T19:04:38Z",
       "expira": "2026-11-21T01:43:22Z",
@@ -12921,24 +12897,6 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
-    "ecidade/configuration/hashing.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-39",
-      "quem": "Gustavo"
-    },
-    "ecidade/database/migrations/2021_10_25_083540_alter_secret_to_oauth_clients.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-77",
-      "quem": "Gustavo"
-    },
-    "ecidade/database/migrations/2024_08_13_093320_M28685_ajuste_schema_tabela_mensageriaacordo.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-77",
-      "quem": "Gustavo"
-    },
     "ecidade/hab1_avaliacao001.php": {
       "desde": "2026-11-20T21:43:34Z",
       "expira": "2026-11-21T01:43:34Z",
@@ -13817,108 +13775,6 @@
       "expira": "2026-11-21T01:43:32Z",
       "motivo": "PHP8-04: Assistencia Social, lote 1 (soc)",
       "quem": "Diego Ribeiro Wanderley"
-    },
-    "ecidade/tests/sistema/par.sh": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/provas.tsv": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/carbon.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/db-raw.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/documentos.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/emails.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/filas-comandos.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/inicializacao.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/middlewares.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/pix-bb-74.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/pix-bb-85.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/roda-isolado.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/storage.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/referencias/traducoes.txt": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/rodar-provas.sh": {
-      "desde": "2026-11-21T00:59:08Z",
-      "expira": "2026-11-21T04:59:08Z",
-      "motivo": "PHP8-71",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/views/compara.py": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-70",
-      "quem": "Gustavo"
-    },
-    "ecidade/tests/sistema/views/renderiza.php": {
-      "desde": "2026-11-21T00:59:07Z",
-      "expira": "2026-11-21T04:59:07Z",
-      "motivo": "PHP8-70",
-      "quem": "Gustavo"
     }
   },
   "versao": 1
