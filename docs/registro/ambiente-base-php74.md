@@ -192,3 +192,131 @@ minimo de abertura, comprovado separadamente na copia limpa. As migrations
 das areas continuam sob responsabilidade das respectivas frentes. A
 preparacao do Desktop nao significa que todas as migrations foram aplicadas
 ou que os modulos de negocio foram homologados.
+
+## Conferencia do Fluxo de Login Unificado (5.6 vs 7.4)
+
+Conferencia realizada em 22/11/2026. O objetivo foi identificar as chamadas
+do formulario antes e depois do PR #8, sem modificar codigo de autenticacao,
+dependencias ou dados de negocio. A comparacao historica usa o commit
+`e640eb485bf9a29f1fcda9c289c4ab23cffefe1d`, pai de
+`c2c9af06a8ac989c6c12699503a0d4234983b8fd` (PR incorporado na base).
+O manifesto anterior declara PHP >=5.6.4, Laravel 5.4 e Passport 4.
+
+### Fluxo anterior: duas etapas, precedidas por uma chamada de configuracao
+
+O handler ativo `js_acessar_dbportal()` do arquivo
+`ecidade/templates/template_login_e-cidade.php` executava esta sequencia:
+
+| Ordem | Chamada do navegador | Finalidade |
+| --- | --- | --- |
+| 1 | `POST /login.rpc.php` | `generateDatabase()` preparava ou removia os cookies de conexao, usando `setCookieDatabase` ou `destroyCookieDatabase`. Nao emitia token. |
+| 2 | `POST /v4/oauth/token` | Enviava `username`, `password`, `client_id`, `client_secret` e `grant_type=password`; armazenava `access_token` no armazenamento local. |
+| 3 | `GET /abrir.php?sAuth=...` | Abria uma janela com login e resumo MD5 da senha codificados em `sAuth`, alem do CAPTCHA e conexao quando aplicaveis. O PHP concluia a sessao legada e abria `inicio.php`. |
+
+Portanto, havia dois POSTs no formulario e uma requisicao PHP adicional.
+As duas etapas de autenticacao eram a emissao do token pelo Passport e a
+criacao da sessao por `abrir.php`; `login.rpc.php` era preparacao da conexao.
+Nao eram duas APIs independentes necessariamente, e nenhuma dessas chamadas
+era a API V1. O fluxo 5.6 foi conferido no historico, nao executado nesta bateria.
+
+### Fluxo atual: uma requisicao cria token e sessao
+
+No mesmo template, `js_acessar_dbportal()` agora envia somente
+`POST /v4/login`. Os campos observados foram `DB_HOST`, `DB_DATABASE`,
+`DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, `username`, `password` e
+`conteudoCaptcha`. Os valores de credenciais nao integram este registro.
+
+A rota e registrada por
+`ecidade/app/Providers/RouteServiceProvider.php::mapUserAuthRoutes()`,
+fora dos grupos definidos por `routes/api.php` e `routes/web.php`:
+
+1. `App\Domain\Configuracao\Usuario\Controller\LoginController::authenticate`
+   recebe `LoginRequest` e chama `AuthService::authenticate`.
+2. O servico inicia a sessao `MAIN`, verifica usuario, CAPTCHA e versao, e
+   chama `createToken()` com as credenciais do cliente obtidas no servidor.
+3. `requestToPassport()` cria um objeto `ServerRequest` e chama diretamente
+   `AuthorizationServer::respondToAccessTokenRequest`. E uma chamada PHP
+   dentro do processo, sem uma segunda requisicao HTTP a `/v4/oauth/token`.
+4. `buildSession()` preenche a sessao PHP com usuario, conexao e preferencias.
+5. O controller devolve `DBJsonResponse`, com `message`, `error` e `data`.
+   `data` contem `token_type`, `expires_in`, `access_token` e `refresh_token`.
+6. O navegador guarda os tokens em `ecidade@user_token` e navega na mesma
+   janela para `/extension/desktop`. Nao chama `abrir.php` nem `inicio.php`.
+
+`login.php` continua carregando o template configurado e ainda contem a
+funcao legada `js_acessar()`. Sua presenca no arquivo nao significa que ela
+seja chamada pelo botao atual. `abrir.php` e `login.rpc.php` permanecem no
+repositorio, sem alteracoes de conteudo nesse PR, mas sairam do percurso
+do formulario padrao medido.
+
+### Rotas preservadas e rotas novas
+
+| Rota registrada no 7.4 | Acao e finalidade |
+| --- | --- |
+| `POST /v4/login` | `LoginController@authenticate`: sessao e token na mesma resposta. |
+| `POST /v4/unblock` | `LoginController@unblock`: valida a senha, renova o token e desbloqueia a sessao existente. |
+| `PUT /v4/kill` | `LoginController@kill`: encerra sessoes e cookies. |
+| `PUT /v4/logout` | `LoginController@logout`: usa `api` e `auth:api`, revoga o token atual e encerra sessoes/cookies. |
+| `POST /v4/oauth/token` | `AccessTokenController@issueToken`: continua registrado pelo Passport, com prefixo `v4/oauth` em `AuthServiceProvider`. Nao foi removido. |
+
+As cinco rotas foram conferidas na colecao carregada do roteador. A listagem
+geral de rotas encontrou um controller de outra area com classe ausente;
+por isso a verificacao selecionou as rotas relevantes sem instanciar os
+controllers alheios. `unblock` e `kill` foram inspecionados, nao disparados.
+
+A API V1 e distinta de `/v4` e de `/rest/v1`. Seu codigo ainda declara
+`POST /api/v1/auth/login` em `APIServiceProvider`/`AuthControllerProvider`.
+No PR, o `FrontController.php` perdeu o desvio de `api/vN/` para `api/api.php`,
+e a dependencia Silex saiu do manifesto. Esse codigo remanescente nao participa
+do login padrao do 7.4 e nao foi reativado nesta conferencia.
+
+### Evidencia pratica pelo proxy
+
+Uma submissao do formulario e seu logout foram observados em
+`http://localhost:8090`, com a conta demonstrativa e `APP_ENV=testing`.
+Foram capturadas 90 requisicoes HTTP e 90 respostas, incluindo imagens,
+estilos, fontes e scripts; nenhuma resposta apresentou status 4xx/5xx.
+Metodos, caminhos e metadados foram registrados sem valores de cookies,
+senhas, tokens ou segredos. A sequencia relevante foi:
+
+| Quantidade | Metodo e caminho | Status |
+| --- | --- | --- |
+| 2 | `GET /login.php`, na entrada e depois de sair | 200 |
+| 1 | `POST /v4/login` | 200 |
+| 1 | `GET /extension/desktop`, depois de entrar | 200 |
+| 1 | `GET /v4/api/configuracao/menu/buscar-favoritos` | 200 |
+| 1 | `GET /v4/api/configuracao/usuario/notificacoes` | 200 |
+| 1 | `GET /v4/api/patrimonial/protocolo/documentos/usuario/total` | 200 |
+| 1 | `PUT /v4/logout` | 200 |
+| 1 | `GET /extension/desktop`, recarregado depois de sair | 302 para `login.php` |
+
+As tres chamadas GET de API pertencem ao carregamento do Desktop, nao sao
+novas autenticacoes. Durante a captura houve zero chamadas a `login.rpc.php`,
+`abrir.php`, `/v4/oauth/token`, `/api/v1/auth/login`, `unblock` e `kill`.
+
+`GET /login.php` manteve `text/html; charset=ISO-8859-1`. A resposta de
+`POST /v4/login` foi `application/json`, com token `Bearer`, duracao de
+86.400 segundos e ambos os campos de token preenchidos. Essa resposta emitiu
+`Set-Cookie` para `ECIDADEWINDOWMAIN`, com caminho `/` e `SameSite=Lax`;
+o cookie foi enviado no GET autenticado do Desktop. As respostas relevantes
+trouxeram `X-Ecidade-Runtime: PHP-7.4 (referencia)` e diretivas de nao cache.
+O Desktop abriu com 11 areas. O logout usou autorizacao Bearer, respondeu
+200, expirou o cookie `MAIN` e removeu os tokens do armazenamento local;
+o GET seguinte do Desktop voltou a entrada. Tambem foi observado `PHPSESSID`
+no encerramento, sem registrar seu valor.
+
+Os contadores do banco variaram somente em um log de acesso, um token de
+acesso inserido e atualizado pela revogacao, e um token de renovacao inserido.
+Nao houve exclusao manual de tokens ou auditoria nem escrita em tabelas de
+negocio. Os artefatos da captura ficaram fora do repositorio, com metadados
+sanitizados; o perfil temporario do navegador foi removido.
+
+`scratchpad/verifica_ambiente.py` permaneceu inalterado e retornou codigo 0.
+Ele verifica disponibilidade e equivalencia da entrada, sem autenticar ou
+gerar tokens; a medicao do fluxo unificado foi feita separadamente para nao
+transformar a verificacao de infraestrutura em um teste que grava no banco.
+
+Conclusao: o PR consolidou as etapas de token e sessao em uma unica chamada
+de autenticacao do formulario, `POST /v4/login`. Isso nao removeu todas as
+rotas antigas nem significa que abrir o sistema inteiro exija uma unica
+requisicao HTTP.
