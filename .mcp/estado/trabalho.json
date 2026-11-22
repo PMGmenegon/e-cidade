@@ -13113,10 +13113,22 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/hab4_contemplacao.RPC.php": {
+      "desde": "2026-11-22T00:01:37Z",
+      "expira": "2026-11-22T04:01:37Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, os 4 RPCs hab4_* (esperavam o JSON.php do nucleo)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/hab4_contemplacao001.php": {
       "desde": "2026-11-21T23:40:47Z",
       "expira": "2026-11-22T03:40:47Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab4_inscricaocanditado.RPC.php": {
+      "desde": "2026-11-22T00:01:37Z",
+      "expira": "2026-11-22T04:01:37Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, os 4 RPCs hab4_* (esperavam o JSON.php do nucleo)",
       "quem": "Diego Ribeiro Wanderley"
     },
     "ecidade/hab4_inscricaodadesistencia001.php": {
@@ -13125,10 +13137,22 @@
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
       "quem": "Diego Ribeiro Wanderley"
     },
+    "ecidade/hab4_selecaoinscricao.RPC.php": {
+      "desde": "2026-11-22T00:01:37Z",
+      "expira": "2026-11-22T04:01:37Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, os 4 RPCs hab4_* (esperavam o JSON.php do nucleo)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
     "ecidade/hab4_selecaoinscricao001.php": {
       "desde": "2026-11-21T23:40:47Z",
       "expira": "2026-11-22T03:40:47Z",
       "motivo": "PHP8-04: Assistencia Social, lote 2 (hab, rec, pro)",
+      "quem": "Diego Ribeiro Wanderley"
+    },
+    "ecidade/hab4_situacaocpf.RPC.php": {
+      "desde": "2026-11-22T00:01:37Z",
+      "expira": "2026-11-22T04:01:37Z",
+      "motivo": "PHP8-04: Assistencia Social, lote 2, os 4 RPCs hab4_* (esperavam o JSON.php do nucleo)",
       "quem": "Diego Ribeiro Wanderley"
     },
     "ecidade/hab4_situacaocpf001.php": {
