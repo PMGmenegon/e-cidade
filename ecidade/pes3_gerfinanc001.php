@@ -567,7 +567,8 @@ $iMesImplantacao = $aImplantacao[1];
                             <tr>
                               <td class="tabcols" title="Clique Aqui para ver os dados cadastrais." nowrap>
                                 <?php
-                                parse_str($arg);
+                                parse_str($arg, $__qs);
+      extract($__qs);
                                 $Label = "<a href='' onclick='js_mostrapessoal();return false;'>$Lr01_regist</a>";
                                 echo "<strong style=\"color:blue\">$Label</strong>";
                                 ?>
@@ -1125,7 +1126,7 @@ $iMesImplantacao = $aImplantacao[1];
 
                     db_fieldsmemory($result,$x,true);
                     $strrubrica  = $sigla."rubric";
-                    $rubrica     = $$strrubrica;
+                    $rubrica     = ${$strrubrica};
                     $condicaoaux = " where rh27_rubric = ".db_sqlformat( $rubrica) . " AND rh27_instit = {$instituicao}";
                     global $rubr_;
                     db_selectmax( "rubr_", "select * from rhrubricas ".$condicaoaux );

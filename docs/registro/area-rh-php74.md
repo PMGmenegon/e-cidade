@@ -362,6 +362,21 @@ Os `.RPC.php` e relatórios que só falham por JSON/fpdf contam como não verifi
 até o núcleo trazer P5. Reexecutar as 70 depois (`ONLY=` com `ecidade/tmp/medidas/rec_naoidenticas.txt`, gitignored) e acrescentar ao `faseb_map.conf`.
 Limite: a bateria faz só `GET`; o caminho de escrita das classes do `rec` não pôde ser comprovado porque os DAOs não estão portados (P1/P3).
 
+## Lote 3 (`pes3` + `pes4`): resultado (22/11/2026)
+
+Commit `PHP8-97` (único: a mesclagem com a 84 e o Rector convergido foram feitos na mesma árvore antes do commit, então não há commit separado só do Rector).
+45 arquivos alterados (+148/−110): os 41 a1/a2 trazidos da 84 e os conflitos c1/c2 resolvidos pelo critério (manter a 74, acrescentar só o que o 8.5 exige).
+
+| Passo | Resultado |
+|---|---|
+| Classificação | a1 6, a2 35, b 151, c1 4, c2 5, sem mudança 72 (igual ao dimensionamento) |
+| 4 Rector (pin `PHP_80`, até zero) | convergido antes do commit |
+| 4b portão de funções (contra o 7.4) | feito, sem função ausente |
+| 5 `php -l` (7.4 e 8.5) | nos 45 alterados: **0 erros nos dois runtimes** (reconferido em 22/11/2026) |
+| 6/6b classes | instanciação e escrita já feitas; DAOs de `classes/` seguem "depende do núcleo" |
+| 7 Bateria (`cmp.py`) | **INCOMPLETA**: interrompida duas vezes por falta de memória da máquina; chegou até `pes3_relchequesemitidos002`. **Fica para a verificação final** |
+| 8 Roteamento | **não feito** (o proxy não foi tocado; depende da bateria) |
+
 ## PROGRESSO
 
 | Lote | Escopo | Estado | Commit | Observações |
@@ -370,7 +385,7 @@ Limite: a bateria faz só `GET`; o caminho de escrita das classes do `rec` não 
 | 1 | `rh` + `eso` + 2 `.RPC.php` | **feito** (19/11/2026) | `PHP8-32` (a mão; o Rector não alterou nada) | 96 telas, 0 alterações de código na área; bateria **57/96 idênticas**, 39 dependem do núcleo; 57 roteadas no `faseb_map.conf`. Ver *Lote 1: resultado* |
 | 1B | `src/RecursosHumanos` (aprovado) | **feito** (20/11/2026) | `PHP8-95` (Rector + à mão) | 584 `.php`; Rector em 7 arquivos; `Falta.php` compila; LSP 218/218. Ver *Lote 1B: resultado* |
 | 2 | `rec` | **feito** (20/11/2026) | `PHP8-96` (Rector + à mão) | 283 telas; 63 trazidas da 84 + 13 conflitos resolvidos; bateria **213/283 idênticas**, 70 dependem do núcleo; 213 roteadas. Ver *Lote 2 (rec): resultado* |
-| 3 | `pes3` + `pes4` | pendente | — | — |
+| 3 | `pes3` + `pes4` | **feito, modo estático** (22/11/2026) | `PHP8-97` | 45 arquivos; `php -l` 0 erros nos dois; **bateria incompleta** (memória; até `pes3_relchequesemitidos002`); sem roteamento |
 | 4 | `pes1` | pendente | — | `pes1_reajusteprog001.php` não compila: caracterizado, não se altera, reportar |
 | 5 | `pes2` | pendente | — | — |
 | Pedidos ao núcleo (P1–P3) | fora da área | pendente | — | aguardam o dono do núcleo |
