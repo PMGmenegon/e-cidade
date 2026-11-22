@@ -27,3 +27,7 @@ hab1_workflow004.php
 hab1_workflow005.php
 hab1_workflow006.php
 hab1_workflowativ001.php
+hab4_inscricaocanditado.rpc.php
+hab4_contemplacao.rpc.php
+hab4_situacaocpf.rpc.php
+hab4_selecaoinscricao.rpc.php
