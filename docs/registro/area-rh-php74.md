@@ -377,6 +377,36 @@ Commit `PHP8-97` (único: a mesclagem com a 84 e o Rector convergido foram feito
 | 7 Bateria (`cmp.py`) | **INCOMPLETA**: interrompida duas vezes por falta de memória da máquina; chegou até `pes3_relchequesemitidos002`. **Fica para a verificação final** |
 | 8 Roteamento | **não feito** (o proxy não foi tocado; depende da bateria) |
 
+## Lote 4 (`pes1`): resultado (22/11/2026)
+
+Commit `PHP8-98` (único: mesclagem com a 84 e Rector na mesma árvore). 151 arquivos alterados (+431/−290). **Modo estático**: bateria não rodada (memória da máquina).
+`pes1_reajusteprog001.php` **não foi alterado** (defeito da DBSeller, ver *Defeitos caracterizados*).
+
+| Passo | Resultado |
+|---|---|
+| Classificação (base `e640eb485` × 74 × 84) | sem mudança 57; a1 **11**; a2 **129** (mesclagem limpa); b 159; conflito **14** (9 c1 + 5 c2). Igual ao dimensionamento |
+| a1/a2 | a1 trazidos da 84; a2 por `git merge-file` (ours = 74); 140 arquivos |
+| 14 conflitos | **todos com a versão da 74** nos trechos em conflito (`explode` literal; `parse_str` 2 argumentos; `js_tabulacaoforms` só de formatação; `db_postmemory($_POST)`), exceto `pes1_importainfla001.php` (ver DECISÕES A REVISAR) |
+| 4 Rector (pin `PHP_80` conferido; 7 blocos de 60 sobre os 369 `.php` da área; repetido até zero) | 7 arquivos alterados pelo Rector, passada seguinte = 0 em todos os blocos. Sem ternário aninhado novo no diff |
+| 4b portão de funções (contra o 7.4) | 9 funções novas no diff, 0 ausentes (`erro` é texto de comentário) |
+| 5 `php -l` | 151 alterados: **0 erros no 7.4 e no 8.5**; universo ainda não medido (599 arquivos, 9 deles de `model\...` com barra invertida): **0 erros nos dois** |
+| LSP (`carrega_arquivo.php`, 6 arquivos com `extends`/`implements` no universo novo) | 6/6 `OK` nos dois runtimes |
+| Alvos do Rector dentro da área depois | 0 reais (o detector acusa `pes1_importainfla001` e `pes1_rhrubricas007` por casar com a própria correção/comentário) |
+| 6/6b classes | **n/a**: nenhuma classe de dados alterada na área (só telas); os DAOs de `classes/` seguem "depende do núcleo" |
+| 7 Bateria | **NÃO RODADA** (limite de memória). Pendente |
+| 8 Roteamento | **não feito** |
+
+## DECISÕES A REVISAR
+
+Casos (c) resolvidos sem parar, pelo critério (manter a 74 + mínimo para o 8.5):
+
+| Arquivo | Trecho | Decisão | Motivo |
+|---|---|---|---|
+| `pes1_importainfla001.php` | `split($separador, …)` com separador **digitado** (regex) | ficou a linha da **84** (`preg_split` com guarda que devolve `false` para `\|`); o `explode("/")` ao lado ficou o da 74 | não dá para provar que `$separador` é literal; `explode` mudaria o resultado se ele tiver metacaractere. Rever a origem de `$separador` |
+| `pes1_relac002.php`, `pes1_rhteutri002/003.php` | `parse_str($_SERVER['QUERY_STRING'], $query)` da 74 × `parse_str(…,$__qs); extract($__qs)` da 84 | **74** | a DBSeller já passou para 2 argumentos; manter. Conferir se o restante da tela usa `$query`/`$queryString` ou variáveis extraídas |
+| `pes1_rhcontasrec003.php` | `parse_str($_SERVER["QUERY_STRING"])` (1 argumento) + `db_postmemory($_POST)` | **74**; o Rector converteu o `parse_str` | a 84 usa `$HTTP_POST_VARS`; manter `$_POST` da 74 |
+| `pes1_pontoRfx0011*.php`, `pes1_rhbases004`, `pes1_rhcadcalend002`, `pes1_rhempexcluirsol001`, `pes1_rhrubricas004/005`, `pes1_virafolha001/003` | `explode` (74) × `preg_split("#X#m")` (84) | **74** | separadores literais (`,` `-` `/` `_`): equivalentes |
+
 ## PROGRESSO
 
 | Lote | Escopo | Estado | Commit | Observações |
@@ -386,7 +416,7 @@ Commit `PHP8-97` (único: a mesclagem com a 84 e o Rector convergido foram feito
 | 1B | `src/RecursosHumanos` (aprovado) | **feito** (20/11/2026) | `PHP8-95` (Rector + à mão) | 584 `.php`; Rector em 7 arquivos; `Falta.php` compila; LSP 218/218. Ver *Lote 1B: resultado* |
 | 2 | `rec` | **feito** (20/11/2026) | `PHP8-96` (Rector + à mão) | 283 telas; 63 trazidas da 84 + 13 conflitos resolvidos; bateria **213/283 idênticas**, 70 dependem do núcleo; 213 roteadas. Ver *Lote 2 (rec): resultado* |
 | 3 | `pes3` + `pes4` | **feito, modo estático** (22/11/2026) | `PHP8-97` | 45 arquivos; `php -l` 0 erros nos dois; **bateria incompleta** (memória; até `pes3_relchequesemitidos002`); sem roteamento |
-| 4 | `pes1` | pendente | — | `pes1_reajusteprog001.php` não compila: caracterizado, não se altera, reportar |
+| 4 | `pes1` | **feito, modo estático** (22/11/2026) | `PHP8-98` | 151 arquivos; `php -l` 0 erros nos dois; **bateria não rodada** (memória); sem roteamento; `pes1_reajusteprog001.php` intacto (não compila: reportar) |
 | 5 | `pes2` | pendente | — | — |
 | Pedidos ao núcleo (P1–P3) | fora da área | pendente | — | aguardam o dono do núcleo |
 | Bateria completa (7.4 × 8.5) | área toda | pendente | — | ambiente do 7.4 ainda não está de pé |
