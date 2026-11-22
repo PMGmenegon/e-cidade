@@ -69,11 +69,11 @@ class cl_cidadaofamiliacadastrounico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as15_sequencial = ($this->as15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_sequencial"]:$this->as15_sequencial);
-       $this->as15_cidadaofamilia = ($this->as15_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_cidadaofamilia"]:$this->as15_cidadaofamilia);
+       $this->as15_sequencial = ($this->as15_sequencial === 0 || $this->as15_sequencial === 0.0 || $this->as15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_sequencial"]:$this->as15_sequencial);
+       $this->as15_cidadaofamilia = ($this->as15_cidadaofamilia === 0 || $this->as15_cidadaofamilia === 0.0 || $this->as15_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_cidadaofamilia"]:$this->as15_cidadaofamilia);
        $this->as15_codigofamiliarcadastrounico = ($this->as15_codigofamiliarcadastrounico == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_codigofamiliarcadastrounico"]:$this->as15_codigofamiliarcadastrounico);
      }else{
-       $this->as15_sequencial = ($this->as15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_sequencial"]:$this->as15_sequencial);
+       $this->as15_sequencial = ($this->as15_sequencial === 0 || $this->as15_sequencial === 0.0 || $this->as15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as15_sequencial"]:$this->as15_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_cidadaofamiliacadastrounico {
          $this->as15_sequencial = $as15_sequencial;
        }
      }
-     if(($this->as15_sequencial == null) || ($this->as15_sequencial == "") ){
+     if(($this->as15_sequencial == null) || ($this->as15_sequencial === 0 || $this->as15_sequencial === 0.0 || $this->as15_sequencial == "") ){
        $this->erro_sql = " Campo as15_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

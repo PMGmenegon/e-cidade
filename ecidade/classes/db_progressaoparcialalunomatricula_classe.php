@@ -71,12 +71,12 @@ class cl_progressaoparcialalunomatricula {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed150_sequencial = ($this->ed150_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_sequencial"]:$this->ed150_sequencial);
-       $this->ed150_progressaoparcialaluno = ($this->ed150_progressaoparcialaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_progressaoparcialaluno"]:$this->ed150_progressaoparcialaluno);
-       $this->ed150_ano = ($this->ed150_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_ano"]:$this->ed150_ano);
+       $this->ed150_sequencial = ($this->ed150_sequencial === 0 || $this->ed150_sequencial === 0.0 || $this->ed150_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_sequencial"]:$this->ed150_sequencial);
+       $this->ed150_progressaoparcialaluno = ($this->ed150_progressaoparcialaluno === 0 || $this->ed150_progressaoparcialaluno === 0.0 || $this->ed150_progressaoparcialaluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_progressaoparcialaluno"]:$this->ed150_progressaoparcialaluno);
+       $this->ed150_ano = ($this->ed150_ano === 0 || $this->ed150_ano === 0.0 || $this->ed150_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_ano"]:$this->ed150_ano);
        $this->ed150_encerrado = ($this->ed150_encerrado == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed150_encerrado"]:$this->ed150_encerrado);
      }else{
-       $this->ed150_sequencial = ($this->ed150_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_sequencial"]:$this->ed150_sequencial);
+       $this->ed150_sequencial = ($this->ed150_sequencial === 0 || $this->ed150_sequencial === 0.0 || $this->ed150_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed150_sequencial"]:$this->ed150_sequencial);
      }
    }
    // funcao para inclusao
@@ -127,7 +127,7 @@ class cl_progressaoparcialalunomatricula {
          $this->ed150_sequencial = $ed150_sequencial;
        }
      }
-     if(($this->ed150_sequencial == null) || ($this->ed150_sequencial == "") ){
+     if(($this->ed150_sequencial == null) || ($this->ed150_sequencial === 0 || $this->ed150_sequencial === 0.0 || $this->ed150_sequencial == "") ){
        $this->erro_sql = " Campo ed150_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

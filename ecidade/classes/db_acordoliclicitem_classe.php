@@ -73,13 +73,13 @@ class cl_acordoliclicitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac24_sequencial = ($this->ac24_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_sequencial"]:$this->ac24_sequencial);
-       $this->ac24_acordoitem = ($this->ac24_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_acordoitem"]:$this->ac24_acordoitem);
-       $this->ac24_liclicitem = ($this->ac24_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_liclicitem"]:$this->ac24_liclicitem);
-       $this->ac24_quantidade = ($this->ac24_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_quantidade"]:$this->ac24_quantidade);
-       $this->ac24_valor = ($this->ac24_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_valor"]:$this->ac24_valor);
+       $this->ac24_sequencial = ($this->ac24_sequencial === 0 || $this->ac24_sequencial === 0.0 || $this->ac24_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_sequencial"]:$this->ac24_sequencial);
+       $this->ac24_acordoitem = ($this->ac24_acordoitem === 0 || $this->ac24_acordoitem === 0.0 || $this->ac24_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_acordoitem"]:$this->ac24_acordoitem);
+       $this->ac24_liclicitem = ($this->ac24_liclicitem === 0 || $this->ac24_liclicitem === 0.0 || $this->ac24_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_liclicitem"]:$this->ac24_liclicitem);
+       $this->ac24_quantidade = ($this->ac24_quantidade === 0 || $this->ac24_quantidade === 0.0 || $this->ac24_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_quantidade"]:$this->ac24_quantidade);
+       $this->ac24_valor = ($this->ac24_valor === 0 || $this->ac24_valor === 0.0 || $this->ac24_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_valor"]:$this->ac24_valor);
      }else{
-       $this->ac24_sequencial = ($this->ac24_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_sequencial"]:$this->ac24_sequencial);
+       $this->ac24_sequencial = ($this->ac24_sequencial === 0 || $this->ac24_sequencial === 0.0 || $this->ac24_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac24_sequencial"]:$this->ac24_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_acordoliclicitem {
          $this->ac24_sequencial = $ac24_sequencial;
        }
      }
-     if(($this->ac24_sequencial == null) || ($this->ac24_sequencial == "") ){
+     if(($this->ac24_sequencial == null) || ($this->ac24_sequencial === 0 || $this->ac24_sequencial === 0.0 || $this->ac24_sequencial == "") ){
        $this->erro_sql = " Campo ac24_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

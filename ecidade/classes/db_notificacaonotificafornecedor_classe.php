@@ -69,11 +69,11 @@ class cl_notificacaonotificafornecedor {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc87_sequencial = ($this->pc87_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_sequencial"]:$this->pc87_sequencial);
-       $this->pc87_notificabloqueiofornecedor = ($this->pc87_notificabloqueiofornecedor == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_notificabloqueiofornecedor"]:$this->pc87_notificabloqueiofornecedor);
-       $this->pc87_notificacao = ($this->pc87_notificacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_notificacao"]:$this->pc87_notificacao);
+       $this->pc87_sequencial = ($this->pc87_sequencial === 0 || $this->pc87_sequencial === 0.0 || $this->pc87_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_sequencial"]:$this->pc87_sequencial);
+       $this->pc87_notificabloqueiofornecedor = ($this->pc87_notificabloqueiofornecedor === 0 || $this->pc87_notificabloqueiofornecedor === 0.0 || $this->pc87_notificabloqueiofornecedor == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_notificabloqueiofornecedor"]:$this->pc87_notificabloqueiofornecedor);
+       $this->pc87_notificacao = ($this->pc87_notificacao === 0 || $this->pc87_notificacao === 0.0 || $this->pc87_notificacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_notificacao"]:$this->pc87_notificacao);
      }else{
-       $this->pc87_sequencial = ($this->pc87_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_sequencial"]:$this->pc87_sequencial);
+       $this->pc87_sequencial = ($this->pc87_sequencial === 0 || $this->pc87_sequencial === 0.0 || $this->pc87_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc87_sequencial"]:$this->pc87_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_notificacaonotificafornecedor {
          $this->pc87_sequencial = $pc87_sequencial;
        }
      }
-     if(($this->pc87_sequencial == null) || ($this->pc87_sequencial == "") ){
+     if(($this->pc87_sequencial == null) || ($this->pc87_sequencial === 0 || $this->pc87_sequencial === 0.0 || $this->pc87_sequencial == "") ){
        $this->erro_sql = " Campo pc87_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

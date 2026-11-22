@@ -73,13 +73,13 @@ class cl_custoplanilhaapuracaoelemento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->cc19_sequencial = ($this->cc19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_sequencial"]:$this->cc19_sequencial);
-       $this->cc19_custoplanilhaapuracao = ($this->cc19_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_custoplanilhaapuracao"]:$this->cc19_custoplanilhaapuracao);
-       $this->cc19_codele = ($this->cc19_codele == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_codele"]:$this->cc19_codele);
-       $this->cc19_anousu = ($this->cc19_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_anousu"]:$this->cc19_anousu);
+       $this->cc19_sequencial = ($this->cc19_sequencial === 0 || $this->cc19_sequencial === 0.0 || $this->cc19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_sequencial"]:$this->cc19_sequencial);
+       $this->cc19_custoplanilhaapuracao = ($this->cc19_custoplanilhaapuracao === 0 || $this->cc19_custoplanilhaapuracao === 0.0 || $this->cc19_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_custoplanilhaapuracao"]:$this->cc19_custoplanilhaapuracao);
+       $this->cc19_codele = ($this->cc19_codele === 0 || $this->cc19_codele === 0.0 || $this->cc19_codele == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_codele"]:$this->cc19_codele);
+       $this->cc19_anousu = ($this->cc19_anousu === 0 || $this->cc19_anousu === 0.0 || $this->cc19_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_anousu"]:$this->cc19_anousu);
        $this->cc19_automatico = ($this->cc19_automatico == "f"?@$GLOBALS["HTTP_POST_VARS"]["cc19_automatico"]:$this->cc19_automatico);
      }else{
-       $this->cc19_sequencial = ($this->cc19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_sequencial"]:$this->cc19_sequencial);
+       $this->cc19_sequencial = ($this->cc19_sequencial === 0 || $this->cc19_sequencial === 0.0 || $this->cc19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc19_sequencial"]:$this->cc19_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_custoplanilhaapuracaoelemento {
          $this->cc19_sequencial = $cc19_sequencial;
        }
      }
-     if(($this->cc19_sequencial == null) || ($this->cc19_sequencial == "") ){
+     if(($this->cc19_sequencial == null) || ($this->cc19_sequencial === 0 || $this->cc19_sequencial === 0.0 || $this->cc19_sequencial == "") ){
        $this->erro_sql = " Campo cc19_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -78,8 +78,8 @@ class cl_liclicitemanu {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->l07_codigo = ($this->l07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_codigo"]:$this->l07_codigo);
-       $this->l07_usuario = ($this->l07_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_usuario"]:$this->l07_usuario);
+       $this->l07_codigo = ($this->l07_codigo === 0 || $this->l07_codigo === 0.0 || $this->l07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_codigo"]:$this->l07_codigo);
+       $this->l07_usuario = ($this->l07_usuario === 0 || $this->l07_usuario === 0.0 || $this->l07_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_usuario"]:$this->l07_usuario);
        if($this->l07_data == ""){
          $this->l07_data_dia = ($this->l07_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_data_dia"]:$this->l07_data_dia);
          $this->l07_data_mes = ($this->l07_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_data_mes"]:$this->l07_data_mes);
@@ -90,9 +90,9 @@ class cl_liclicitemanu {
        }
        $this->l07_hora = ($this->l07_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_hora"]:$this->l07_hora);
        $this->l07_motivo = ($this->l07_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_motivo"]:$this->l07_motivo);
-       $this->l07_liclicitem = ($this->l07_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_liclicitem"]:$this->l07_liclicitem);
+       $this->l07_liclicitem = ($this->l07_liclicitem === 0 || $this->l07_liclicitem === 0.0 || $this->l07_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_liclicitem"]:$this->l07_liclicitem);
      }else{
-       $this->l07_codigo = ($this->l07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_codigo"]:$this->l07_codigo);
+       $this->l07_codigo = ($this->l07_codigo === 0 || $this->l07_codigo === 0.0 || $this->l07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l07_codigo"]:$this->l07_codigo);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_liclicitemanu {
          $this->l07_codigo = $l07_codigo;
        }
      }
-     if(($this->l07_codigo == null) || ($this->l07_codigo == "") ){
+     if(($this->l07_codigo == null) || ($this->l07_codigo === 0 || $this->l07_codigo === 0.0 || $this->l07_codigo == "") ){
        $this->erro_sql = " Campo l07_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

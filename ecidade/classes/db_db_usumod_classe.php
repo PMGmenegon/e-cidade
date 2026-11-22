@@ -74,9 +74,9 @@ class cl_db_usumod {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->id_item = ($this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
-       $this->anousu = ($this->anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["anousu"]:$this->anousu);
-       $this->id_usuario = ($this->id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["id_usuario"]:$this->id_usuario);
+       $this->id_item = ($this->id_item === 0 || $this->id_item === 0.0 || $this->id_item == ""?@$GLOBALS["HTTP_POST_VARS"]["id_item"]:$this->id_item);
+       $this->anousu = ($this->anousu === 0 || $this->anousu === 0.0 || $this->anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["anousu"]:$this->anousu);
+       $this->id_usuario = ($this->id_usuario === 0 || $this->id_usuario === 0.0 || $this->id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["id_usuario"]:$this->id_usuario);
        if($this->datausu == ""){
          $this->datausu_dia = ($this->datausu_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["datausu_dia"]:$this->datausu_dia);
          $this->datausu_mes = ($this->datausu_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["datausu_mes"]:$this->datausu_mes);

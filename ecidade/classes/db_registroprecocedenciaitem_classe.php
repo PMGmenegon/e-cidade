@@ -73,13 +73,13 @@ class cl_registroprecocedenciaitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc36_sequencial = ($this->pc36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_sequencial"]:$this->pc36_sequencial);
-       $this->pc36_solicitemdestino = ($this->pc36_solicitemdestino == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_solicitemdestino"]:$this->pc36_solicitemdestino);
-       $this->pc36_solicitemorigem = ($this->pc36_solicitemorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_solicitemorigem"]:$this->pc36_solicitemorigem);
-       $this->pc36_registroprecocedencia = ($this->pc36_registroprecocedencia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_registroprecocedencia"]:$this->pc36_registroprecocedencia);
-       $this->pc36_quantidade = ($this->pc36_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_quantidade"]:$this->pc36_quantidade);
+       $this->pc36_sequencial = ($this->pc36_sequencial === 0 || $this->pc36_sequencial === 0.0 || $this->pc36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_sequencial"]:$this->pc36_sequencial);
+       $this->pc36_solicitemdestino = ($this->pc36_solicitemdestino === 0 || $this->pc36_solicitemdestino === 0.0 || $this->pc36_solicitemdestino == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_solicitemdestino"]:$this->pc36_solicitemdestino);
+       $this->pc36_solicitemorigem = ($this->pc36_solicitemorigem === 0 || $this->pc36_solicitemorigem === 0.0 || $this->pc36_solicitemorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_solicitemorigem"]:$this->pc36_solicitemorigem);
+       $this->pc36_registroprecocedencia = ($this->pc36_registroprecocedencia === 0 || $this->pc36_registroprecocedencia === 0.0 || $this->pc36_registroprecocedencia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_registroprecocedencia"]:$this->pc36_registroprecocedencia);
+       $this->pc36_quantidade = ($this->pc36_quantidade === 0 || $this->pc36_quantidade === 0.0 || $this->pc36_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_quantidade"]:$this->pc36_quantidade);
      }else{
-       $this->pc36_sequencial = ($this->pc36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_sequencial"]:$this->pc36_sequencial);
+       $this->pc36_sequencial = ($this->pc36_sequencial === 0 || $this->pc36_sequencial === 0.0 || $this->pc36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc36_sequencial"]:$this->pc36_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_registroprecocedenciaitem {
          $this->pc36_sequencial = $pc36_sequencial;
        }
      }
-     if(($this->pc36_sequencial == null) || ($this->pc36_sequencial == "") ){
+     if(($this->pc36_sequencial == null) || ($this->pc36_sequencial === 0 || $this->pc36_sequencial === 0.0 || $this->pc36_sequencial == "") ){
        $this->erro_sql = " Campo pc36_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

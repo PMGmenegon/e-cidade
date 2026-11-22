@@ -79,8 +79,8 @@ class cl_acordovigencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac18_sequencial = ($this->ac18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_sequencial"]:$this->ac18_sequencial);
-       $this->ac18_acordoposicao = ($this->ac18_acordoposicao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_acordoposicao"]:$this->ac18_acordoposicao);
+       $this->ac18_sequencial = ($this->ac18_sequencial === 0 || $this->ac18_sequencial === 0.0 || $this->ac18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_sequencial"]:$this->ac18_sequencial);
+       $this->ac18_acordoposicao = ($this->ac18_acordoposicao === 0 || $this->ac18_acordoposicao === 0.0 || $this->ac18_acordoposicao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_acordoposicao"]:$this->ac18_acordoposicao);
        if($this->ac18_datainicio == ""){
          $this->ac18_datainicio_dia = ($this->ac18_datainicio_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_datainicio_dia"]:$this->ac18_datainicio_dia);
          $this->ac18_datainicio_mes = ($this->ac18_datainicio_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_datainicio_mes"]:$this->ac18_datainicio_mes);
@@ -99,7 +99,7 @@ class cl_acordovigencia {
        }
        $this->ac18_ativo = ($this->ac18_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["ac18_ativo"]:$this->ac18_ativo);
      }else{
-       $this->ac18_sequencial = ($this->ac18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_sequencial"]:$this->ac18_sequencial);
+       $this->ac18_sequencial = ($this->ac18_sequencial === 0 || $this->ac18_sequencial === 0.0 || $this->ac18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac18_sequencial"]:$this->ac18_sequencial);
      }
    }
    // funcao para inclusao
@@ -165,7 +165,7 @@ class cl_acordovigencia {
          $this->ac18_sequencial = $ac18_sequencial;
        }
      }
-     if(($this->ac18_sequencial == null) || ($this->ac18_sequencial == "") ){
+     if(($this->ac18_sequencial == null) || ($this->ac18_sequencial === 0 || $this->ac18_sequencial === 0.0 || $this->ac18_sequencial == "") ){
        $this->erro_sql = " Campo ac18_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -82,9 +82,9 @@ class cl_notificabloqueiofornecedor {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc86_sequencial = ($this->pc86_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_sequencial"]:$this->pc86_sequencial);
-       $this->pc86_numcgm = ($this->pc86_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_numcgm"]:$this->pc86_numcgm);
-       $this->pc86_id_usuario = ($this->pc86_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_id_usuario"]:$this->pc86_id_usuario);
+       $this->pc86_sequencial = ($this->pc86_sequencial === 0 || $this->pc86_sequencial === 0.0 || $this->pc86_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_sequencial"]:$this->pc86_sequencial);
+       $this->pc86_numcgm = ($this->pc86_numcgm === 0 || $this->pc86_numcgm === 0.0 || $this->pc86_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_numcgm"]:$this->pc86_numcgm);
+       $this->pc86_id_usuario = ($this->pc86_id_usuario === 0 || $this->pc86_id_usuario === 0.0 || $this->pc86_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_id_usuario"]:$this->pc86_id_usuario);
        if($this->pc86_data == ""){
          $this->pc86_data_dia = ($this->pc86_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_data_dia"]:$this->pc86_data_dia);
          $this->pc86_data_mes = ($this->pc86_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_data_mes"]:$this->pc86_data_mes);
@@ -94,11 +94,11 @@ class cl_notificabloqueiofornecedor {
          }
        }
        $this->pc86_hora = ($this->pc86_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_hora"]:$this->pc86_hora);
-       $this->pc86_origem = ($this->pc86_origem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_origem"]:$this->pc86_origem);
+       $this->pc86_origem = ($this->pc86_origem === 0 || $this->pc86_origem === 0.0 || $this->pc86_origem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_origem"]:$this->pc86_origem);
        $this->pc86_observacao = ($this->pc86_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_observacao"]:$this->pc86_observacao);
-       $this->pc86_departamento = ($this->pc86_departamento == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_departamento"]:$this->pc86_departamento);
+       $this->pc86_departamento = ($this->pc86_departamento === 0 || $this->pc86_departamento === 0.0 || $this->pc86_departamento == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_departamento"]:$this->pc86_departamento);
      }else{
-       $this->pc86_sequencial = ($this->pc86_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_sequencial"]:$this->pc86_sequencial);
+       $this->pc86_sequencial = ($this->pc86_sequencial === 0 || $this->pc86_sequencial === 0.0 || $this->pc86_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc86_sequencial"]:$this->pc86_sequencial);
      }
    }
    // funcao para inclusao
@@ -182,7 +182,7 @@ class cl_notificabloqueiofornecedor {
          $this->pc86_sequencial = $pc86_sequencial;
        }
      }
-     if(($this->pc86_sequencial == null) || ($this->pc86_sequencial == "") ){
+     if(($this->pc86_sequencial == null) || ($this->pc86_sequencial === 0 || $this->pc86_sequencial === 0.0 || $this->pc86_sequencial == "") ){
        $this->erro_sql = " Campo pc86_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

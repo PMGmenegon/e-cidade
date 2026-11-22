@@ -71,12 +71,12 @@ class cl_habitcandidatointeresseprograma {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht13_sequencial = ($this->ht13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_sequencial"]:$this->ht13_sequencial);
-       $this->ht13_habitprograma = ($this->ht13_habitprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_habitprograma"]:$this->ht13_habitprograma);
-       $this->ht13_habitcandidatointeresse = ($this->ht13_habitcandidatointeresse == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_habitcandidatointeresse"]:$this->ht13_habitcandidatointeresse);
-       $this->ht13_codproc = ($this->ht13_codproc == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_codproc"]:$this->ht13_codproc);
+       $this->ht13_sequencial = ($this->ht13_sequencial === 0 || $this->ht13_sequencial === 0.0 || $this->ht13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_sequencial"]:$this->ht13_sequencial);
+       $this->ht13_habitprograma = ($this->ht13_habitprograma === 0 || $this->ht13_habitprograma === 0.0 || $this->ht13_habitprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_habitprograma"]:$this->ht13_habitprograma);
+       $this->ht13_habitcandidatointeresse = ($this->ht13_habitcandidatointeresse === 0 || $this->ht13_habitcandidatointeresse === 0.0 || $this->ht13_habitcandidatointeresse == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_habitcandidatointeresse"]:$this->ht13_habitcandidatointeresse);
+       $this->ht13_codproc = ($this->ht13_codproc === 0 || $this->ht13_codproc === 0.0 || $this->ht13_codproc == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_codproc"]:$this->ht13_codproc);
      }else{
-       $this->ht13_sequencial = ($this->ht13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_sequencial"]:$this->ht13_sequencial);
+       $this->ht13_sequencial = ($this->ht13_sequencial === 0 || $this->ht13_sequencial === 0.0 || $this->ht13_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht13_sequencial"]:$this->ht13_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_habitcandidatointeresseprograma {
          $this->ht13_sequencial = $ht13_sequencial;
        }
      }
-     if(($this->ht13_sequencial == null) || ($this->ht13_sequencial == "") ){
+     if(($this->ht13_sequencial == null) || ($this->ht13_sequencial === 0 || $this->ht13_sequencial === 0.0 || $this->ht13_sequencial == "") ){
        $this->erro_sql = " Campo ht13_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

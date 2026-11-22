@@ -71,13 +71,13 @@ class cl_cidadaocgm {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov03_sequencial = ($this->ov03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_sequencial"]:$this->ov03_sequencial);
-       $this->ov03_seq = ($this->ov03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_seq"]:$this->ov03_seq);
-       $this->ov03_cidadao = ($this->ov03_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_cidadao"]:$this->ov03_cidadao);
-       $this->ov03_numcgm = ($this->ov03_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_numcgm"]:$this->ov03_numcgm);
+       $this->ov03_sequencial = ($this->ov03_sequencial === 0 || $this->ov03_sequencial === 0.0 || $this->ov03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_sequencial"]:$this->ov03_sequencial);
+       $this->ov03_seq = ($this->ov03_seq === 0 || $this->ov03_seq === 0.0 || $this->ov03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_seq"]:$this->ov03_seq);
+       $this->ov03_cidadao = ($this->ov03_cidadao === 0 || $this->ov03_cidadao === 0.0 || $this->ov03_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_cidadao"]:$this->ov03_cidadao);
+       $this->ov03_numcgm = ($this->ov03_numcgm === 0 || $this->ov03_numcgm === 0.0 || $this->ov03_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_numcgm"]:$this->ov03_numcgm);
      }else{
-       $this->ov03_sequencial = ($this->ov03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_sequencial"]:$this->ov03_sequencial);
-       $this->ov03_seq = ($this->ov03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_seq"]:$this->ov03_seq);
+       $this->ov03_sequencial = ($this->ov03_sequencial === 0 || $this->ov03_sequencial === 0.0 || $this->ov03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_sequencial"]:$this->ov03_sequencial);
+       $this->ov03_seq = ($this->ov03_seq === 0 || $this->ov03_seq === 0.0 || $this->ov03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov03_seq"]:$this->ov03_seq);
      }
    }
    // funcao para inclusao
@@ -125,7 +125,7 @@ class cl_cidadaocgm {
          $this->ov03_sequencial = $ov03_sequencial;
        }
      }
-     if(($this->ov03_sequencial == null) || ($this->ov03_sequencial == "") ){
+     if(($this->ov03_sequencial == null) || ($this->ov03_sequencial === 0 || $this->ov03_sequencial === 0.0 || $this->ov03_sequencial == "") ){
        $this->erro_sql = " Campo ov03_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

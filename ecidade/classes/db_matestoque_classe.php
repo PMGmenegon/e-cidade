@@ -73,13 +73,13 @@ class cl_matestoque {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m70_codigo = ($this->m70_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codigo"]:$this->m70_codigo);
-       $this->m70_codmatmater = ($this->m70_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codmatmater"]:$this->m70_codmatmater);
-       $this->m70_coddepto = ($this->m70_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_coddepto"]:$this->m70_coddepto);
-       $this->m70_quant = ($this->m70_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_quant"]:$this->m70_quant);
-       $this->m70_valor = ($this->m70_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_valor"]:$this->m70_valor);
+       $this->m70_codigo = ($this->m70_codigo === 0 || $this->m70_codigo === 0.0 || $this->m70_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codigo"]:$this->m70_codigo);
+       $this->m70_codmatmater = ($this->m70_codmatmater === 0 || $this->m70_codmatmater === 0.0 || $this->m70_codmatmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codmatmater"]:$this->m70_codmatmater);
+       $this->m70_coddepto = ($this->m70_coddepto === 0 || $this->m70_coddepto === 0.0 || $this->m70_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_coddepto"]:$this->m70_coddepto);
+       $this->m70_quant = ($this->m70_quant === 0 || $this->m70_quant === 0.0 || $this->m70_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_quant"]:$this->m70_quant);
+       $this->m70_valor = ($this->m70_valor === 0 || $this->m70_valor === 0.0 || $this->m70_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_valor"]:$this->m70_valor);
      }else{
-       $this->m70_codigo = ($this->m70_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codigo"]:$this->m70_codigo);
+       $this->m70_codigo = ($this->m70_codigo === 0 || $this->m70_codigo === 0.0 || $this->m70_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m70_codigo"]:$this->m70_codigo);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_matestoque {
          $this->m70_codigo = $m70_codigo;
        }
      }
-     if(($this->m70_codigo == null) || ($this->m70_codigo == "") ){
+     if(($this->m70_codigo == null) || ($this->m70_codigo === 0 || $this->m70_codigo === 0.0 || $this->m70_codigo == "") ){
        $this->erro_sql = " Campo m70_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

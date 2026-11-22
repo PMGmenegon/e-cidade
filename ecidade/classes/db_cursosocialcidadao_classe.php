@@ -73,13 +73,13 @@ class cl_cursosocialcidadao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as22_sequencial = ($this->as22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_sequencial"]:$this->as22_sequencial);
-       $this->as22_cursosocial = ($this->as22_cursosocial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cursosocial"]:$this->as22_cursosocial);
-       $this->as22_cidadao = ($this->as22_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cidadao"]:$this->as22_cidadao);
-       $this->as22_cidadao_seq = ($this->as22_cidadao_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cidadao_seq"]:$this->as22_cidadao_seq);
+       $this->as22_sequencial = ($this->as22_sequencial === 0 || $this->as22_sequencial === 0.0 || $this->as22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_sequencial"]:$this->as22_sequencial);
+       $this->as22_cursosocial = ($this->as22_cursosocial === 0 || $this->as22_cursosocial === 0.0 || $this->as22_cursosocial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cursosocial"]:$this->as22_cursosocial);
+       $this->as22_cidadao = ($this->as22_cidadao === 0 || $this->as22_cidadao === 0.0 || $this->as22_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cidadao"]:$this->as22_cidadao);
+       $this->as22_cidadao_seq = ($this->as22_cidadao_seq === 0 || $this->as22_cidadao_seq === 0.0 || $this->as22_cidadao_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_cidadao_seq"]:$this->as22_cidadao_seq);
        $this->as22_observacao = ($this->as22_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_observacao"]:$this->as22_observacao);
      }else{
-       $this->as22_sequencial = ($this->as22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_sequencial"]:$this->as22_sequencial);
+       $this->as22_sequencial = ($this->as22_sequencial === 0 || $this->as22_sequencial === 0.0 || $this->as22_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as22_sequencial"]:$this->as22_sequencial);
      }
    }
    // funcao para inclusao
@@ -136,7 +136,7 @@ class cl_cursosocialcidadao {
          $this->as22_sequencial = $as22_sequencial;
        }
      }
-     if(($this->as22_sequencial == null) || ($this->as22_sequencial == "") ){
+     if(($this->as22_sequencial == null) || ($this->as22_sequencial === 0 || $this->as22_sequencial === 0.0 || $this->as22_sequencial == "") ){
        $this->erro_sql = " Campo as22_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

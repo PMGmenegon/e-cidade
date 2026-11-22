@@ -79,7 +79,7 @@ class cl_habittipogrupoprograma {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht02_sequencial = ($this->ht02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_sequencial"]:$this->ht02_sequencial);
+       $this->ht02_sequencial = ($this->ht02_sequencial === 0 || $this->ht02_sequencial === 0.0 || $this->ht02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_sequencial"]:$this->ht02_sequencial);
        $this->ht02_descricao = ($this->ht02_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_descricao"]:$this->ht02_descricao);
        $this->ht02_obs = ($this->ht02_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_obs"]:$this->ht02_obs);
        if($this->ht02_datainicial == ""){
@@ -99,7 +99,7 @@ class cl_habittipogrupoprograma {
          }
        }
      }else{
-       $this->ht02_sequencial = ($this->ht02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_sequencial"]:$this->ht02_sequencial);
+       $this->ht02_sequencial = ($this->ht02_sequencial === 0 || $this->ht02_sequencial === 0.0 || $this->ht02_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht02_sequencial"]:$this->ht02_sequencial);
      }
    }
    // funcao para inclusao
@@ -144,7 +144,7 @@ class cl_habittipogrupoprograma {
          $this->ht02_sequencial = $ht02_sequencial;
        }
      }
-     if(($this->ht02_sequencial == null) || ($this->ht02_sequencial == "") ){
+     if(($this->ht02_sequencial == null) || ($this->ht02_sequencial === 0 || $this->ht02_sequencial === 0.0 || $this->ht02_sequencial == "") ){
        $this->erro_sql = " Campo ht02_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

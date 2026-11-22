@@ -77,15 +77,15 @@ class cl_benstransforigemdestino {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t34_sequencial = ($this->t34_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_sequencial"]:$this->t34_sequencial);
-       $this->t34_transferencia = ($this->t34_transferencia == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_transferencia"]:$this->t34_transferencia);
-       $this->t34_bem = ($this->t34_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_bem"]:$this->t34_bem);
+       $this->t34_sequencial = ($this->t34_sequencial === 0 || $this->t34_sequencial === 0.0 || $this->t34_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_sequencial"]:$this->t34_sequencial);
+       $this->t34_transferencia = ($this->t34_transferencia === 0 || $this->t34_transferencia === 0.0 || $this->t34_transferencia == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_transferencia"]:$this->t34_transferencia);
+       $this->t34_bem = ($this->t34_bem === 0 || $this->t34_bem === 0.0 || $this->t34_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_bem"]:$this->t34_bem);
        $this->t34_divisaoorigem = ($this->t34_divisaoorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_divisaoorigem"]:$this->t34_divisaoorigem);
        $this->t34_divisaodestino = ($this->t34_divisaodestino == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_divisaodestino"]:$this->t34_divisaodestino);
-       $this->t34_departamentodestino = ($this->t34_departamentodestino == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_departamentodestino"]:$this->t34_departamentodestino);
-       $this->t34_departamentoorigem = ($this->t34_departamentoorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_departamentoorigem"]:$this->t34_departamentoorigem);
+       $this->t34_departamentodestino = ($this->t34_departamentodestino === 0 || $this->t34_departamentodestino === 0.0 || $this->t34_departamentodestino == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_departamentodestino"]:$this->t34_departamentodestino);
+       $this->t34_departamentoorigem = ($this->t34_departamentoorigem === 0 || $this->t34_departamentoorigem === 0.0 || $this->t34_departamentoorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_departamentoorigem"]:$this->t34_departamentoorigem);
      }else{
-       $this->t34_sequencial = ($this->t34_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_sequencial"]:$this->t34_sequencial);
+       $this->t34_sequencial = ($this->t34_sequencial === 0 || $this->t34_sequencial === 0.0 || $this->t34_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t34_sequencial"]:$this->t34_sequencial);
      }
    }
    // funcao para inclusao
@@ -157,7 +157,7 @@ class cl_benstransforigemdestino {
          $this->t34_sequencial = $t34_sequencial;
        }
      }
-     if(($this->t34_sequencial == null) || ($this->t34_sequencial == "") ){
+     if(($this->t34_sequencial == null) || ($this->t34_sequencial === 0 || $this->t34_sequencial === 0.0 || $this->t34_sequencial == "") ){
        $this->erro_sql = " Campo t34_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

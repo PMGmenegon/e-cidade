@@ -79,16 +79,16 @@ class cl_registroprecojulgamento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc65_sequencial = ($this->pc65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_sequencial"]:$this->pc65_sequencial);
-       $this->pc65_orcamitem = ($this->pc65_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamitem"]:$this->pc65_orcamitem);
-       $this->pc65_orcamforne = ($this->pc65_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamforne"]:$this->pc65_orcamforne);
-       $this->pc65_pontuacao = ($this->pc65_pontuacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_pontuacao"]:$this->pc65_pontuacao);
+       $this->pc65_sequencial = ($this->pc65_sequencial === 0 || $this->pc65_sequencial === 0.0 || $this->pc65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_sequencial"]:$this->pc65_sequencial);
+       $this->pc65_orcamitem = ($this->pc65_orcamitem === 0 || $this->pc65_orcamitem === 0.0 || $this->pc65_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamitem"]:$this->pc65_orcamitem);
+       $this->pc65_orcamforne = ($this->pc65_orcamforne === 0 || $this->pc65_orcamforne === 0.0 || $this->pc65_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamforne"]:$this->pc65_orcamforne);
+       $this->pc65_pontuacao = ($this->pc65_pontuacao === 0 || $this->pc65_pontuacao === 0.0 || $this->pc65_pontuacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_pontuacao"]:$this->pc65_pontuacao);
        $this->pc65_ativo = ($this->pc65_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc65_ativo"]:$this->pc65_ativo);
-       $this->pc65_orcamjulg = ($this->pc65_orcamjulg == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamjulg"]:$this->pc65_orcamjulg);
-       $this->pc65_solicitem = ($this->pc65_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_solicitem"]:$this->pc65_solicitem);
-       $this->pc65_valorunitario = ($this->pc65_valorunitario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_valorunitario"]:$this->pc65_valorunitario);
+       $this->pc65_orcamjulg = ($this->pc65_orcamjulg === 0 || $this->pc65_orcamjulg === 0.0 || $this->pc65_orcamjulg == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_orcamjulg"]:$this->pc65_orcamjulg);
+       $this->pc65_solicitem = ($this->pc65_solicitem === 0 || $this->pc65_solicitem === 0.0 || $this->pc65_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_solicitem"]:$this->pc65_solicitem);
+       $this->pc65_valorunitario = ($this->pc65_valorunitario === 0 || $this->pc65_valorunitario === 0.0 || $this->pc65_valorunitario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_valorunitario"]:$this->pc65_valorunitario);
      }else{
-       $this->pc65_sequencial = ($this->pc65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_sequencial"]:$this->pc65_sequencial);
+       $this->pc65_sequencial = ($this->pc65_sequencial === 0 || $this->pc65_sequencial === 0.0 || $this->pc65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc65_sequencial"]:$this->pc65_sequencial);
      }
    }
    // funcao para inclusao
@@ -175,7 +175,7 @@ class cl_registroprecojulgamento {
          $this->pc65_sequencial = $pc65_sequencial;
        }
      }
-     if(($this->pc65_sequencial == null) || ($this->pc65_sequencial == "") ){
+     if(($this->pc65_sequencial == null) || ($this->pc65_sequencial === 0 || $this->pc65_sequencial === 0.0 || $this->pc65_sequencial == "") ){
        $this->erro_sql = " Campo pc65_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

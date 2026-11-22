@@ -85,21 +85,21 @@ class cl_pontofe {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->r29_anousu = ($this->r29_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_anousu"]:$this->r29_anousu);
-       $this->r29_mesusu = ($this->r29_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_mesusu"]:$this->r29_mesusu);
-       $this->r29_regist = ($this->r29_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_regist"]:$this->r29_regist);
+       $this->r29_anousu = ($this->r29_anousu === 0 || $this->r29_anousu === 0.0 || $this->r29_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_anousu"]:$this->r29_anousu);
+       $this->r29_mesusu = ($this->r29_mesusu === 0 || $this->r29_mesusu === 0.0 || $this->r29_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_mesusu"]:$this->r29_mesusu);
+       $this->r29_regist = ($this->r29_regist === 0 || $this->r29_regist === 0.0 || $this->r29_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_regist"]:$this->r29_regist);
        $this->r29_rubric = ($this->r29_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_rubric"]:$this->r29_rubric);
-       $this->r29_valor = ($this->r29_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_valor"]:$this->r29_valor);
-       $this->r29_quant = ($this->r29_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_quant"]:$this->r29_quant);
+       $this->r29_valor = ($this->r29_valor === 0 || $this->r29_valor === 0.0 || $this->r29_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_valor"]:$this->r29_valor);
+       $this->r29_quant = ($this->r29_quant === 0 || $this->r29_quant === 0.0 || $this->r29_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_quant"]:$this->r29_quant);
        $this->r29_lotac = ($this->r29_lotac == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_lotac"]:$this->r29_lotac);
-       $this->r29_media = ($this->r29_media == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_media"]:$this->r29_media);
-       $this->r29_calc = ($this->r29_calc == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_calc"]:$this->r29_calc);
+       $this->r29_media = ($this->r29_media === 0 || $this->r29_media === 0.0 || $this->r29_media == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_media"]:$this->r29_media);
+       $this->r29_calc = ($this->r29_calc === 0 || $this->r29_calc === 0.0 || $this->r29_calc == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_calc"]:$this->r29_calc);
        $this->r29_tpp = ($this->r29_tpp == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_tpp"]:$this->r29_tpp);
-       $this->r29_instit = ($this->r29_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_instit"]:$this->r29_instit);
+       $this->r29_instit = ($this->r29_instit === 0 || $this->r29_instit === 0.0 || $this->r29_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_instit"]:$this->r29_instit);
      }else{
-       $this->r29_anousu = ($this->r29_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_anousu"]:$this->r29_anousu);
-       $this->r29_mesusu = ($this->r29_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_mesusu"]:$this->r29_mesusu);
-       $this->r29_regist = ($this->r29_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_regist"]:$this->r29_regist);
+       $this->r29_anousu = ($this->r29_anousu === 0 || $this->r29_anousu === 0.0 || $this->r29_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_anousu"]:$this->r29_anousu);
+       $this->r29_mesusu = ($this->r29_mesusu === 0 || $this->r29_mesusu === 0.0 || $this->r29_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_mesusu"]:$this->r29_mesusu);
+       $this->r29_regist = ($this->r29_regist === 0 || $this->r29_regist === 0.0 || $this->r29_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_regist"]:$this->r29_regist);
        $this->r29_rubric = ($this->r29_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_rubric"]:$this->r29_rubric);
        $this->r29_tpp = ($this->r29_tpp == ""?@$GLOBALS["HTTP_POST_VARS"]["r29_tpp"]:$this->r29_tpp);
      }
@@ -166,7 +166,7 @@ class cl_pontofe {
        $this->r29_regist = $r29_regist;
        $this->r29_rubric = $r29_rubric;
        $this->r29_tpp = $r29_tpp;
-     if(($this->r29_anousu == null) || ($this->r29_anousu == "") ){
+     if(($this->r29_anousu == null) || ($this->r29_anousu === 0 || $this->r29_anousu === 0.0 || $this->r29_anousu == "") ){
        $this->erro_sql = " Campo r29_anousu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -174,7 +174,7 @@ class cl_pontofe {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r29_mesusu == null) || ($this->r29_mesusu == "") ){
+     if(($this->r29_mesusu == null) || ($this->r29_mesusu === 0 || $this->r29_mesusu === 0.0 || $this->r29_mesusu == "") ){
        $this->erro_sql = " Campo r29_mesusu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -182,7 +182,7 @@ class cl_pontofe {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r29_regist == null) || ($this->r29_regist == "") ){
+     if(($this->r29_regist == null) || ($this->r29_regist === 0 || $this->r29_regist === 0.0 || $this->r29_regist == "") ){
        $this->erro_sql = " Campo r29_regist nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

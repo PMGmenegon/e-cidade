@@ -54,8 +54,8 @@ class cl_solicitaanulada {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc67_sequencial = ($this->pc67_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_sequencial"]:$this->pc67_sequencial);
-       $this->pc67_usuario = ($this->pc67_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_usuario"]:$this->pc67_usuario);
+       $this->pc67_sequencial = ($this->pc67_sequencial === 0 || $this->pc67_sequencial === 0.0 || $this->pc67_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_sequencial"]:$this->pc67_sequencial);
+       $this->pc67_usuario = ($this->pc67_usuario === 0 || $this->pc67_usuario === 0.0 || $this->pc67_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_usuario"]:$this->pc67_usuario);
        if($this->pc67_data == ""){
          $this->pc67_data_dia = ($this->pc67_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_data_dia"]:$this->pc67_data_dia);
          $this->pc67_data_mes = ($this->pc67_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_data_mes"]:$this->pc67_data_mes);
@@ -65,11 +65,11 @@ class cl_solicitaanulada {
          }
        }
        $this->pc67_hora = ($this->pc67_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_hora"]:$this->pc67_hora);
-       $this->pc67_solicita = ($this->pc67_solicita == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_solicita"]:$this->pc67_solicita);
+       $this->pc67_solicita = ($this->pc67_solicita === 0 || $this->pc67_solicita === 0.0 || $this->pc67_solicita == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_solicita"]:$this->pc67_solicita);
        $this->pc67_motivo = ($this->pc67_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_motivo"]:$this->pc67_motivo);
        $this->pc67_processoadministrativo = ($this->pc67_processoadministrativo == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_processoadministrativo"]:$this->pc67_processoadministrativo);
      }else{
-       $this->pc67_sequencial = ($this->pc67_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_sequencial"]:$this->pc67_sequencial);
+       $this->pc67_sequencial = ($this->pc67_sequencial === 0 || $this->pc67_sequencial === 0.0 || $this->pc67_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc67_sequencial"]:$this->pc67_sequencial);
      }
    }
    // funcao para inclusao
@@ -135,7 +135,7 @@ class cl_solicitaanulada {
          $this->pc67_sequencial = $pc67_sequencial; 
        }
      }
-     if(($this->pc67_sequencial == null) || ($this->pc67_sequencial == "") ){ 
+     if(($this->pc67_sequencial == null) || ($this->pc67_sequencial === 0 || $this->pc67_sequencial === 0.0 || $this->pc67_sequencial == "") ){ 
        $this->erro_sql = " Campo pc67_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

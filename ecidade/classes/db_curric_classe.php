@@ -82,8 +82,8 @@ class cl_curric {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->h03_seq = ($this->h03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_seq"]:$this->h03_seq);
-       $this->h03_numcgm = ($this->h03_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_numcgm"]:$this->h03_numcgm);
+       $this->h03_seq = ($this->h03_seq === 0 || $this->h03_seq === 0.0 || $this->h03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_seq"]:$this->h03_seq);
+       $this->h03_numcgm = ($this->h03_numcgm === 0 || $this->h03_numcgm === 0.0 || $this->h03_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_numcgm"]:$this->h03_numcgm);
        if($this->h03_data == ""){
          $this->h03_data_dia = ($this->h03_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_data_dia"]:$this->h03_data_dia);
          $this->h03_data_mes = ($this->h03_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_data_mes"]:$this->h03_data_mes);
@@ -92,13 +92,13 @@ class cl_curric {
             $this->h03_data = $this->h03_data_ano."-".$this->h03_data_mes."-".$this->h03_data_dia;
          }
        }
-       $this->h03_codigo = ($this->h03_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_codigo"]:$this->h03_codigo);
+       $this->h03_codigo = ($this->h03_codigo === 0 || $this->h03_codigo === 0.0 || $this->h03_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_codigo"]:$this->h03_codigo);
        $this->h03_descr = ($this->h03_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_descr"]:$this->h03_descr);
        $this->h03_detalh = ($this->h03_detalh == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_detalh"]:$this->h03_detalh);
-       $this->h03_tipopartic = ($this->h03_tipopartic == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_tipopartic"]:$this->h03_tipopartic);
-       $this->h03_cargahoraria = ($this->h03_cargahoraria == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_cargahoraria"]:$this->h03_cargahoraria);
+       $this->h03_tipopartic = ($this->h03_tipopartic === 0 || $this->h03_tipopartic === 0.0 || $this->h03_tipopartic == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_tipopartic"]:$this->h03_tipopartic);
+       $this->h03_cargahoraria = ($this->h03_cargahoraria === 0 || $this->h03_cargahoraria === 0.0 || $this->h03_cargahoraria == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_cargahoraria"]:$this->h03_cargahoraria);
      }else{
-       $this->h03_seq = ($this->h03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_seq"]:$this->h03_seq);
+       $this->h03_seq = ($this->h03_seq === 0 || $this->h03_seq === 0.0 || $this->h03_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["h03_seq"]:$this->h03_seq);
      }
    }
    // funcao para inclusao
@@ -191,7 +191,7 @@ class cl_curric {
          $this->h03_seq = $h03_seq;
        }
      }
-     if(($this->h03_seq == null) || ($this->h03_seq == "") ){
+     if(($this->h03_seq == null) || ($this->h03_seq === 0 || $this->h03_seq === 0.0 || $this->h03_seq == "") ){
        $this->erro_sql = " Campo h03_seq nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

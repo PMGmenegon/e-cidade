@@ -63,10 +63,10 @@ class cl_liclicitaevento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->l46_sequencial = ($this->l46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_sequencial"]:$this->l46_sequencial);
-       $this->l46_liclicita = ($this->l46_liclicita == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_liclicita"]:$this->l46_liclicita);
-       $this->l46_fase = ($this->l46_fase == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_fase"]:$this->l46_fase);
-       $this->l46_liclicitatipoevento = ($this->l46_liclicitatipoevento == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_liclicitatipoevento"]:$this->l46_liclicitatipoevento);
+       $this->l46_sequencial = ($this->l46_sequencial === 0 || $this->l46_sequencial === 0.0 || $this->l46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_sequencial"]:$this->l46_sequencial);
+       $this->l46_liclicita = ($this->l46_liclicita === 0 || $this->l46_liclicita === 0.0 || $this->l46_liclicita == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_liclicita"]:$this->l46_liclicita);
+       $this->l46_fase = ($this->l46_fase === 0 || $this->l46_fase === 0.0 || $this->l46_fase == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_fase"]:$this->l46_fase);
+       $this->l46_liclicitatipoevento = ($this->l46_liclicitatipoevento === 0 || $this->l46_liclicitatipoevento === 0.0 || $this->l46_liclicitatipoevento == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_liclicitatipoevento"]:$this->l46_liclicitatipoevento);
        if($this->l46_dataevento == ""){
          $this->l46_dataevento_dia = ($this->l46_dataevento_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_dataevento_dia"]:$this->l46_dataevento_dia);
          $this->l46_dataevento_mes = ($this->l46_dataevento_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_dataevento_mes"]:$this->l46_dataevento_mes);
@@ -88,7 +88,7 @@ class cl_liclicitaevento {
        $this->l46_descricaopublicacao = ($this->l46_descricaopublicacao == "" ? "null" : $this->l46_descricaopublicacao);
        $this->l46_tiporesultado = ($this->l46_tiporesultado == "" ? "null" : $this->l46_tiporesultado);
      }else{
-       $this->l46_sequencial = ($this->l46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_sequencial"]:$this->l46_sequencial);
+       $this->l46_sequencial = ($this->l46_sequencial === 0 || $this->l46_sequencial === 0.0 || $this->l46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l46_sequencial"]:$this->l46_sequencial);
      }
    }
    // funcao para Inclusão
@@ -166,7 +166,7 @@ class cl_liclicitaevento {
          $this->l46_sequencial = $l46_sequencial;
        }
      }
-     if(($this->l46_sequencial == null) || ($this->l46_sequencial == "") ){
+     if(($this->l46_sequencial == null) || ($this->l46_sequencial === 0 || $this->l46_sequencial === 0.0 || $this->l46_sequencial == "") ){
        $this->erro_sql = " Campo l46_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

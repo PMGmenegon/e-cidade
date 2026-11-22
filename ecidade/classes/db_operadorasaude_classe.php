@@ -49,13 +49,13 @@ class cl_operadorasaude
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->rh221_sequencial = ($this->rh221_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_sequencial"]:$this->rh221_sequencial);
-       $this->rh221_cgm = ($this->rh221_cgm == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_cgm"]:$this->rh221_cgm);
+       $this->rh221_sequencial = ($this->rh221_sequencial === 0 || $this->rh221_sequencial === 0.0 || $this->rh221_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_sequencial"]:$this->rh221_sequencial);
+       $this->rh221_cgm = ($this->rh221_cgm === 0 || $this->rh221_cgm === 0.0 || $this->rh221_cgm == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_cgm"]:$this->rh221_cgm);
        $this->rh221_ativo = ($this->rh221_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["rh221_ativo"]:$this->rh221_ativo);
-       $this->rh221_ans = ($this->rh221_ans == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_ans"]:$this->rh221_ans);
-       $this->rh221_instituicao = ($this->rh221_instituicao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_instituicao"]:$this->rh221_instituicao);
+       $this->rh221_ans = ($this->rh221_ans === 0 || $this->rh221_ans === 0.0 || $this->rh221_ans == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_ans"]:$this->rh221_ans);
+       $this->rh221_instituicao = ($this->rh221_instituicao === 0 || $this->rh221_instituicao === 0.0 || $this->rh221_instituicao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_instituicao"]:$this->rh221_instituicao);
      }else{
-       $this->rh221_sequencial = ($this->rh221_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_sequencial"]:$this->rh221_sequencial);
+       $this->rh221_sequencial = ($this->rh221_sequencial === 0 || $this->rh221_sequencial === 0.0 || $this->rh221_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh221_sequencial"]:$this->rh221_sequencial);
      }
    }
 
@@ -116,7 +116,7 @@ class cl_operadorasaude
          $this->rh221_sequencial = $rh221_sequencial; 
        }
      }
-     if(($this->rh221_sequencial == null) || ($this->rh221_sequencial == "") ){ 
+     if(($this->rh221_sequencial == null) || ($this->rh221_sequencial === 0 || $this->rh221_sequencial === 0.0 || $this->rh221_sequencial == "") ){ 
        $this->erro_sql = " Campo rh221_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

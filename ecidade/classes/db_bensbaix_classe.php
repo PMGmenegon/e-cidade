@@ -54,7 +54,7 @@ class cl_bensbaix
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->t55_codbem = ($this->t55_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_codbem"]:$this->t55_codbem);
+       $this->t55_codbem = ($this->t55_codbem === 0 || $this->t55_codbem === 0.0 || $this->t55_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_codbem"]:$this->t55_codbem);
        if($this->t55_baixa == ""){
          $this->t55_baixa_dia = ($this->t55_baixa_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_baixa_dia"]:$this->t55_baixa_dia);
          $this->t55_baixa_mes = ($this->t55_baixa_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_baixa_mes"]:$this->t55_baixa_mes);
@@ -63,11 +63,11 @@ class cl_bensbaix
             $this->t55_baixa = $this->t55_baixa_ano."-".$this->t55_baixa_mes."-".$this->t55_baixa_dia;
          }
        }
-       $this->t55_motivo = ($this->t55_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_motivo"]:$this->t55_motivo);
+       $this->t55_motivo = ($this->t55_motivo === 0 || $this->t55_motivo === 0.0 || $this->t55_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_motivo"]:$this->t55_motivo);
        $this->t55_obs = ($this->t55_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_obs"]:$this->t55_obs);
-       $this->t55_documento = ($this->t55_documento == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_documento"]:$this->t55_documento);
+       $this->t55_documento = ($this->t55_documento === 0 || $this->t55_documento === 0.0 || $this->t55_documento == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_documento"]:$this->t55_documento);
      }else{
-       $this->t55_codbem = ($this->t55_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_codbem"]:$this->t55_codbem);
+       $this->t55_codbem = ($this->t55_codbem === 0 || $this->t55_codbem === 0.0 || $this->t55_codbem == ""?@$GLOBALS["HTTP_POST_VARS"]["t55_codbem"]:$this->t55_codbem);
      }
    }
 
@@ -102,7 +102,7 @@ class cl_bensbaix
        return false;
      }
        $this->t55_codbem = $t55_codbem;
-     if(($this->t55_codbem == null) || ($this->t55_codbem == "") ){
+     if(($this->t55_codbem == null) || ($this->t55_codbem === 0 || $this->t55_codbem === 0.0 || $this->t55_codbem == "") ){
        $this->erro_sql = " Campo t55_codbem não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

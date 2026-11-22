@@ -73,13 +73,13 @@ class cl_procavalalternativaregra {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed282_i_codigo = ($this->ed282_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codigo"]:$this->ed282_i_codigo);
-       $this->ed282_i_procavalalternativa = ($this->ed282_i_procavalalternativa == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_procavalalternativa"]:$this->ed282_i_procavalalternativa);
-       $this->ed282_i_codavaliacao = ($this->ed282_i_codavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codavaliacao"]:$this->ed282_i_codavaliacao);
+       $this->ed282_i_codigo = ($this->ed282_i_codigo === 0 || $this->ed282_i_codigo === 0.0 || $this->ed282_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codigo"]:$this->ed282_i_codigo);
+       $this->ed282_i_procavalalternativa = ($this->ed282_i_procavalalternativa === 0 || $this->ed282_i_procavalalternativa === 0.0 || $this->ed282_i_procavalalternativa == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_procavalalternativa"]:$this->ed282_i_procavalalternativa);
+       $this->ed282_i_codavaliacao = ($this->ed282_i_codavaliacao === 0 || $this->ed282_i_codavaliacao === 0.0 || $this->ed282_i_codavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codavaliacao"]:$this->ed282_i_codavaliacao);
        $this->ed282_i_tipoaval = ($this->ed282_i_tipoaval == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_tipoaval"]:$this->ed282_i_tipoaval);
        $this->ed282_i_formaavaliacao = ($this->ed282_i_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_formaavaliacao"]:$this->ed282_i_formaavaliacao);
      }else{
-       $this->ed282_i_codigo = ($this->ed282_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codigo"]:$this->ed282_i_codigo);
+       $this->ed282_i_codigo = ($this->ed282_i_codigo === 0 || $this->ed282_i_codigo === 0.0 || $this->ed282_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed282_i_codigo"]:$this->ed282_i_codigo);
      }
    }
    // funcao para inclusao
@@ -140,7 +140,7 @@ class cl_procavalalternativaregra {
          $this->ed282_i_codigo = $ed282_i_codigo;
        }
      }
-     if(($this->ed282_i_codigo == null) || ($this->ed282_i_codigo == "") ){
+     if(($this->ed282_i_codigo == null) || ($this->ed282_i_codigo === 0 || $this->ed282_i_codigo === 0.0 || $this->ed282_i_codigo == "") ){
        $this->erro_sql = " Campo ed282_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

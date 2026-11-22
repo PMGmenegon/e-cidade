@@ -871,7 +871,7 @@ function Text($x,$y,$txt)
   //Output a string
   $txt=str_replace(')','\\)',str_replace('(','\\(',str_replace('\\','\\\\',$txt)));
   $s=sprintf('BT %.2f %.2f Td (%s) Tj ET',$x*$this->k,($this->h-$y)*$this->k,$txt);
-  if($this->underline and $txt!='')
+  if($this->underline and ($txt!='' && $txt!==0 && $txt!==0.0))
     $s.=' '.$this->_dounderline($x,$y,$txt);
   if($this->ColorFlag)
     $s='q '.$this->TextColor.' '.$s.' Q';
@@ -970,7 +970,7 @@ function Cell($w,$h=0,$txt='',$border=0,$ln=0,$align='',$fill=0,$link='',$preenc
     if(is_int(strpos($border,'B')))
       $s.=sprintf('%.2f %.2f m %.2f %.2f l S ',$x*$k,($this->h-($y+$h))*$k,($x+$w)*$k,($this->h-($y+$h))*$k);
   }
-  if($txt!='')
+  if($txt!='' && $txt!==0 && $txt!==0.0)
   {
     if($align=='R')
       $dx=$w-$this->cMargin-$this->GetStringWidth($txt);

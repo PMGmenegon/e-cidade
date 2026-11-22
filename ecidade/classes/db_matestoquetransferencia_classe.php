@@ -79,16 +79,16 @@ class cl_matestoquetransferencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m84_sequencial = ($this->m84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_sequencial"]:$this->m84_sequencial);
-       $this->m84_matestoqueitem = ($this->m84_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_matestoqueitem"]:$this->m84_matestoqueitem);
-       $this->m84_matestoqueini = ($this->m84_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_matestoqueini"]:$this->m84_matestoqueini);
-       $this->m84_coddepto = ($this->m84_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_coddepto"]:$this->m84_coddepto);
-       $this->m84_valortotal = ($this->m84_valortotal == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_valortotal"]:$this->m84_valortotal);
-       $this->m84_quantidade = ($this->m84_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_quantidade"]:$this->m84_quantidade);
+       $this->m84_sequencial = ($this->m84_sequencial === 0 || $this->m84_sequencial === 0.0 || $this->m84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_sequencial"]:$this->m84_sequencial);
+       $this->m84_matestoqueitem = ($this->m84_matestoqueitem === 0 || $this->m84_matestoqueitem === 0.0 || $this->m84_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_matestoqueitem"]:$this->m84_matestoqueitem);
+       $this->m84_matestoqueini = ($this->m84_matestoqueini === 0 || $this->m84_matestoqueini === 0.0 || $this->m84_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_matestoqueini"]:$this->m84_matestoqueini);
+       $this->m84_coddepto = ($this->m84_coddepto === 0 || $this->m84_coddepto === 0.0 || $this->m84_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_coddepto"]:$this->m84_coddepto);
+       $this->m84_valortotal = ($this->m84_valortotal === 0 || $this->m84_valortotal === 0.0 || $this->m84_valortotal == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_valortotal"]:$this->m84_valortotal);
+       $this->m84_quantidade = ($this->m84_quantidade === 0 || $this->m84_quantidade === 0.0 || $this->m84_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_quantidade"]:$this->m84_quantidade);
        $this->m84_transferido = ($this->m84_transferido == "f"?@$GLOBALS["HTTP_POST_VARS"]["m84_transferido"]:$this->m84_transferido);
        $this->m84_ativo = ($this->m84_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["m84_ativo"]:$this->m84_ativo);
      }else{
-       $this->m84_sequencial = ($this->m84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_sequencial"]:$this->m84_sequencial);
+       $this->m84_sequencial = ($this->m84_sequencial === 0 || $this->m84_sequencial === 0.0 || $this->m84_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m84_sequencial"]:$this->m84_sequencial);
      }
    }
    // funcao para inclusao
@@ -181,7 +181,7 @@ class cl_matestoquetransferencia {
          $this->m84_sequencial = $m84_sequencial;
        }
      }
-     if(($this->m84_sequencial == null) || ($this->m84_sequencial == "") ){
+     if(($this->m84_sequencial == null) || ($this->m84_sequencial === 0 || $this->m84_sequencial === 0.0 || $this->m84_sequencial == "") ){
        $this->erro_sql = " Campo m84_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -251,7 +251,7 @@ class cl_matestoquetransferencia {
      return true;
    }
    // funcao para alteracao
-   public function alterar ($m84_sequencial=null, $sWhereAlterar) {
+   public function alterar ($m84_sequencial=null, $sWhereAlterar = null) {
       $this->atualizacampos();
      $sql = " update matestoquetransferencia set ";
      $virgula = "";

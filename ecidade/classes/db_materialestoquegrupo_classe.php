@@ -69,11 +69,11 @@ class cl_materialestoquegrupo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m65_sequencial = ($this->m65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_sequencial"]:$this->m65_sequencial);
-       $this->m65_db_estruturavalor = ($this->m65_db_estruturavalor == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_db_estruturavalor"]:$this->m65_db_estruturavalor);
+       $this->m65_sequencial = ($this->m65_sequencial === 0 || $this->m65_sequencial === 0.0 || $this->m65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_sequencial"]:$this->m65_sequencial);
+       $this->m65_db_estruturavalor = ($this->m65_db_estruturavalor === 0 || $this->m65_db_estruturavalor === 0.0 || $this->m65_db_estruturavalor == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_db_estruturavalor"]:$this->m65_db_estruturavalor);
        $this->m65_ativo = ($this->m65_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["m65_ativo"]:$this->m65_ativo);
      }else{
-       $this->m65_sequencial = ($this->m65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_sequencial"]:$this->m65_sequencial);
+       $this->m65_sequencial = ($this->m65_sequencial === 0 || $this->m65_sequencial === 0.0 || $this->m65_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m65_sequencial"]:$this->m65_sequencial);
      }
    }
    // funcao para inclusao
@@ -115,7 +115,7 @@ class cl_materialestoquegrupo {
          $this->m65_sequencial = $m65_sequencial;
        }
      }
-     if(($this->m65_sequencial == null) || ($this->m65_sequencial == "") ){
+     if(($this->m65_sequencial == null) || ($this->m65_sequencial === 0 || $this->m65_sequencial === 0.0 || $this->m65_sequencial == "") ){
        $this->erro_sql = " Campo m65_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -96,6 +96,28 @@ def snapshot(tabelas):
     return snap
 
 
+def filhas_primeiro(tabelas):
+    """Ordena as tabelas para o DELETE: quem tem FK para outra da lista vem antes dela.
+    Antes valia a ordem do --tabelas, e passar a mae primeiro (workflowativ antes de
+    workflowativandpadrao) abortava o restore no meio e deixava a linha de teste."""
+    arr = "array[" + ",".join(f"'{t}'" for t in tabelas) + "]"
+    q = (f"select distinct f.n, p.n from unnest({arr}) f(n), unnest({arr}) p(n), pg_constraint c "
+         f"where c.contype = 'f' and f.n <> p.n and c.conrelid = f.n::regclass and c.confrelid = p.n::regclass")
+    r = sh(cmd_banco() + ' -tAc "' + q + '"')
+    if r.returncode != 0:
+        sys.exit(f"ABORTADO: nao consegui ler as FKs: {r.stderr.decode('latin1')[:200]}")
+    fks = [tuple(l.split("|")) for l in r.stdout.decode("latin1").splitlines() if "|" in l]
+    ordem, resto = [], list(tabelas)
+    while resto:
+        # pode sair quem nao e referenciada por nenhuma tabela que ainda falta apagar
+        livres = [t for t in resto if not any(p == t and f in resto for f, p in fks)]
+        if not livres:                     # ciclo de FK: mantem a ordem informada
+            livres = resto[:1]
+        ordem.append(livres[0])
+        resto.remove(livres[0])
+    return ordem
+
+
 def restaurar(tabelas, snap):
     """Restaura so a DIFERENCA, comparando a linha inteira: apaga o que nao estava no
     snapshot e reinsere o que sumiu. Apagar a tabela inteira (como era) falhava em
@@ -104,6 +126,7 @@ def restaurar(tabelas, snap):
     estiver referenciada, falha e aborta (rede de seguranca). TRUNCATE CASCADE
     apagaria tabelas vizinhas em silencio."""
     db = cmd_banco()
+    tabelas = filhas_primeiro(tabelas)
     for t in tabelas:                      # apaga filho -> pai
         r = sh(f'{db} -c "DELETE FROM {t} x WHERE NOT EXISTS (SELECT 1 FROM {copia(t)} s WHERE s::text = x::text)"')
         if r.returncode != 0:

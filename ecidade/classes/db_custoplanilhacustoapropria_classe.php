@@ -69,11 +69,11 @@ class cl_custoplanilhacustoapropria {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->cc18_sequencial = ($this->cc18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_sequencial"]:$this->cc18_sequencial);
-       $this->cc18_custoapropria = ($this->cc18_custoapropria == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_custoapropria"]:$this->cc18_custoapropria);
-       $this->cc18_custoplanilhaapuracao = ($this->cc18_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_custoplanilhaapuracao"]:$this->cc18_custoplanilhaapuracao);
+       $this->cc18_sequencial = ($this->cc18_sequencial === 0 || $this->cc18_sequencial === 0.0 || $this->cc18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_sequencial"]:$this->cc18_sequencial);
+       $this->cc18_custoapropria = ($this->cc18_custoapropria === 0 || $this->cc18_custoapropria === 0.0 || $this->cc18_custoapropria == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_custoapropria"]:$this->cc18_custoapropria);
+       $this->cc18_custoplanilhaapuracao = ($this->cc18_custoplanilhaapuracao === 0 || $this->cc18_custoplanilhaapuracao === 0.0 || $this->cc18_custoplanilhaapuracao == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_custoplanilhaapuracao"]:$this->cc18_custoplanilhaapuracao);
      }else{
-       $this->cc18_sequencial = ($this->cc18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_sequencial"]:$this->cc18_sequencial);
+       $this->cc18_sequencial = ($this->cc18_sequencial === 0 || $this->cc18_sequencial === 0.0 || $this->cc18_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc18_sequencial"]:$this->cc18_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_custoplanilhacustoapropria {
          $this->cc18_sequencial = $cc18_sequencial;
        }
      }
-     if(($this->cc18_sequencial == null) || ($this->cc18_sequencial == "") ){
+     if(($this->cc18_sequencial == null) || ($this->cc18_sequencial === 0 || $this->cc18_sequencial === 0.0 || $this->cc18_sequencial == "") ){
        $this->erro_sql = " Campo cc18_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

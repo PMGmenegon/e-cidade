@@ -75,14 +75,14 @@ class cl_matpedidoitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m98_sequencial = ($this->m98_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_sequencial"]:$this->m98_sequencial);
-       $this->m98_matpedido = ($this->m98_matpedido == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matpedido"]:$this->m98_matpedido);
-       $this->m98_matmater = ($this->m98_matmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matmater"]:$this->m98_matmater);
-       $this->m98_matunid = ($this->m98_matunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matunid"]:$this->m98_matunid);
-       $this->m98_quant = ($this->m98_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_quant"]:$this->m98_quant);
+       $this->m98_sequencial = ($this->m98_sequencial === 0 || $this->m98_sequencial === 0.0 || $this->m98_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_sequencial"]:$this->m98_sequencial);
+       $this->m98_matpedido = ($this->m98_matpedido === 0 || $this->m98_matpedido === 0.0 || $this->m98_matpedido == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matpedido"]:$this->m98_matpedido);
+       $this->m98_matmater = ($this->m98_matmater === 0 || $this->m98_matmater === 0.0 || $this->m98_matmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matmater"]:$this->m98_matmater);
+       $this->m98_matunid = ($this->m98_matunid === 0 || $this->m98_matunid === 0.0 || $this->m98_matunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_matunid"]:$this->m98_matunid);
+       $this->m98_quant = ($this->m98_quant === 0 || $this->m98_quant === 0.0 || $this->m98_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_quant"]:$this->m98_quant);
        $this->m98_obs = ($this->m98_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_obs"]:$this->m98_obs);
      }else{
-       $this->m98_sequencial = ($this->m98_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_sequencial"]:$this->m98_sequencial);
+       $this->m98_sequencial = ($this->m98_sequencial === 0 || $this->m98_sequencial === 0.0 || $this->m98_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m98_sequencial"]:$this->m98_sequencial);
      }
    }
    // funcao para inclusao
@@ -148,7 +148,7 @@ class cl_matpedidoitem {
          $this->m98_sequencial = $m98_sequencial;
        }
      }
-     if(($this->m98_sequencial == null) || ($this->m98_sequencial == "") ){
+     if(($this->m98_sequencial == null) || ($this->m98_sequencial === 0 || $this->m98_sequencial === 0.0 || $this->m98_sequencial == "") ){
        $this->erro_sql = " Campo m98_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -83,8 +83,8 @@ class cl_habitgrupoprograma {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht03_sequencial = ($this->ht03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_sequencial"]:$this->ht03_sequencial);
-       $this->ht03_habittipogrupoprograma = ($this->ht03_habittipogrupoprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_habittipogrupoprograma"]:$this->ht03_habittipogrupoprograma);
+       $this->ht03_sequencial = ($this->ht03_sequencial === 0 || $this->ht03_sequencial === 0.0 || $this->ht03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_sequencial"]:$this->ht03_sequencial);
+       $this->ht03_habittipogrupoprograma = ($this->ht03_habittipogrupoprograma === 0 || $this->ht03_habittipogrupoprograma === 0.0 || $this->ht03_habittipogrupoprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_habittipogrupoprograma"]:$this->ht03_habittipogrupoprograma);
        $this->ht03_descricao = ($this->ht03_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_descricao"]:$this->ht03_descricao);
        $this->ht03_obs = ($this->ht03_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_obs"]:$this->ht03_obs);
        if($this->ht03_datainicial == ""){
@@ -103,9 +103,9 @@ class cl_habitgrupoprograma {
             $this->ht03_datafinal = $this->ht03_datafinal_ano."-".$this->ht03_datafinal_mes."-".$this->ht03_datafinal_dia;
          }
        }
-       $this->ht03_resppagamento = ($this->ht03_resppagamento == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_resppagamento"]:$this->ht03_resppagamento);
+       $this->ht03_resppagamento = ($this->ht03_resppagamento === 0 || $this->ht03_resppagamento === 0.0 || $this->ht03_resppagamento == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_resppagamento"]:$this->ht03_resppagamento);
      }else{
-       $this->ht03_sequencial = ($this->ht03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_sequencial"]:$this->ht03_sequencial);
+       $this->ht03_sequencial = ($this->ht03_sequencial === 0 || $this->ht03_sequencial === 0.0 || $this->ht03_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht03_sequencial"]:$this->ht03_sequencial);
      }
    }
    // funcao para inclusao
@@ -168,7 +168,7 @@ class cl_habitgrupoprograma {
          $this->ht03_sequencial = $ht03_sequencial;
        }
      }
-     if(($this->ht03_sequencial == null) || ($this->ht03_sequencial == "") ){
+     if(($this->ht03_sequencial == null) || ($this->ht03_sequencial === 0 || $this->ht03_sequencial === 0.0 || $this->ht03_sequencial == "") ){
        $this->erro_sql = " Campo ht03_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

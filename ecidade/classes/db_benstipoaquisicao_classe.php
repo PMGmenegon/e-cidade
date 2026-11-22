@@ -67,10 +67,10 @@ class cl_benstipoaquisicao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t45_sequencial = ($this->t45_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t45_sequencial"]:$this->t45_sequencial);
+       $this->t45_sequencial = ($this->t45_sequencial === 0 || $this->t45_sequencial === 0.0 || $this->t45_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t45_sequencial"]:$this->t45_sequencial);
        $this->t45_descricao = ($this->t45_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["t45_descricao"]:$this->t45_descricao);
      }else{
-       $this->t45_sequencial = ($this->t45_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t45_sequencial"]:$this->t45_sequencial);
+       $this->t45_sequencial = ($this->t45_sequencial === 0 || $this->t45_sequencial === 0.0 || $this->t45_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t45_sequencial"]:$this->t45_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_benstipoaquisicao {
          $this->t45_sequencial = $t45_sequencial;
        }
      }
-     if(($this->t45_sequencial == null) || ($this->t45_sequencial == "") ){
+     if(($this->t45_sequencial == null) || ($this->t45_sequencial === 0 || $this->t45_sequencial === 0.0 || $this->t45_sequencial == "") ){
        $this->erro_sql = " Campo t45_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

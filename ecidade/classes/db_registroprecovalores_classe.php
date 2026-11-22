@@ -77,15 +77,15 @@ class cl_registroprecovalores {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc56_sequencial = ($this->pc56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_sequencial"]:$this->pc56_sequencial);
-       $this->pc56_orcamforne = ($this->pc56_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_orcamforne"]:$this->pc56_orcamforne);
-       $this->pc56_orcamitem = ($this->pc56_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_orcamitem"]:$this->pc56_orcamitem);
-       $this->pc56_valorunitario = ($this->pc56_valorunitario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_valorunitario"]:$this->pc56_valorunitario);
+       $this->pc56_sequencial = ($this->pc56_sequencial === 0 || $this->pc56_sequencial === 0.0 || $this->pc56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_sequencial"]:$this->pc56_sequencial);
+       $this->pc56_orcamforne = ($this->pc56_orcamforne === 0 || $this->pc56_orcamforne === 0.0 || $this->pc56_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_orcamforne"]:$this->pc56_orcamforne);
+       $this->pc56_orcamitem = ($this->pc56_orcamitem === 0 || $this->pc56_orcamitem === 0.0 || $this->pc56_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_orcamitem"]:$this->pc56_orcamitem);
+       $this->pc56_valorunitario = ($this->pc56_valorunitario === 0 || $this->pc56_valorunitario === 0.0 || $this->pc56_valorunitario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_valorunitario"]:$this->pc56_valorunitario);
        $this->pc56_ativo = ($this->pc56_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc56_ativo"]:$this->pc56_ativo);
-       $this->pc56_pcorcamval = ($this->pc56_pcorcamval == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_pcorcamval"]:$this->pc56_pcorcamval);
-       $this->pc56_solicitem = ($this->pc56_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_solicitem"]:$this->pc56_solicitem);
+       $this->pc56_pcorcamval = ($this->pc56_pcorcamval === 0 || $this->pc56_pcorcamval === 0.0 || $this->pc56_pcorcamval == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_pcorcamval"]:$this->pc56_pcorcamval);
+       $this->pc56_solicitem = ($this->pc56_solicitem === 0 || $this->pc56_solicitem === 0.0 || $this->pc56_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_solicitem"]:$this->pc56_solicitem);
      }else{
-       $this->pc56_sequencial = ($this->pc56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_sequencial"]:$this->pc56_sequencial);
+       $this->pc56_sequencial = ($this->pc56_sequencial === 0 || $this->pc56_sequencial === 0.0 || $this->pc56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc56_sequencial"]:$this->pc56_sequencial);
      }
    }
    // funcao para inclusao
@@ -163,7 +163,7 @@ class cl_registroprecovalores {
          $this->pc56_sequencial = $pc56_sequencial;
        }
      }
-     if(($this->pc56_sequencial == null) || ($this->pc56_sequencial == "") ){
+     if(($this->pc56_sequencial == null) || ($this->pc56_sequencial === 0 || $this->pc56_sequencial === 0.0 || $this->pc56_sequencial == "") ){
        $this->erro_sql = " Campo pc56_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

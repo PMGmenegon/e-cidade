@@ -75,14 +75,14 @@ class cl_benstipodepreciacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t46_sequencial = ($this->t46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_sequencial"]:$this->t46_sequencial);
+       $this->t46_sequencial = ($this->t46_sequencial === 0 || $this->t46_sequencial === 0.0 || $this->t46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_sequencial"]:$this->t46_sequencial);
        $this->t46_descricao = ($this->t46_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_descricao"]:$this->t46_descricao);
-       $this->t46_quantidadeano = ($this->t46_quantidadeano == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_quantidadeano"]:$this->t46_quantidadeano);
-       $this->t46_percentual = ($this->t46_percentual == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_percentual"]:$this->t46_percentual);
+       $this->t46_quantidadeano = ($this->t46_quantidadeano === 0 || $this->t46_quantidadeano === 0.0 || $this->t46_quantidadeano == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_quantidadeano"]:$this->t46_quantidadeano);
+       $this->t46_percentual = ($this->t46_percentual === 0 || $this->t46_percentual === 0.0 || $this->t46_percentual == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_percentual"]:$this->t46_percentual);
        $this->t46_observacao = ($this->t46_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_observacao"]:$this->t46_observacao);
        $this->t46_depreciavel = ($this->t46_depreciavel == "f"?@$GLOBALS["HTTP_POST_VARS"]["t46_depreciavel"]:$this->t46_depreciavel);
      }else{
-       $this->t46_sequencial = ($this->t46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_sequencial"]:$this->t46_sequencial);
+       $this->t46_sequencial = ($this->t46_sequencial === 0 || $this->t46_sequencial === 0.0 || $this->t46_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t46_sequencial"]:$this->t46_sequencial);
      }
    }
    // funcao para inclusao
@@ -157,7 +157,7 @@ class cl_benstipodepreciacao {
          $this->t46_sequencial = $t46_sequencial;
        }
      }
-     if(($this->t46_sequencial == null) || ($this->t46_sequencial == "") ){
+     if(($this->t46_sequencial == null) || ($this->t46_sequencial === 0 || $this->t46_sequencial === 0.0 || $this->t46_sequencial == "") ){
        $this->erro_sql = " Campo t46_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

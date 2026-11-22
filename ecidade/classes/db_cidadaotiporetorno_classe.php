@@ -71,13 +71,13 @@ class cl_cidadaotiporetorno {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov04_sequencial = ($this->ov04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_sequencial"]:$this->ov04_sequencial);
-       $this->ov04_seq = ($this->ov04_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_seq"]:$this->ov04_seq);
-       $this->ov04_tiporetorno = ($this->ov04_tiporetorno == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_tiporetorno"]:$this->ov04_tiporetorno);
-       $this->ov04_cidadao = ($this->ov04_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_cidadao"]:$this->ov04_cidadao);
+       $this->ov04_sequencial = ($this->ov04_sequencial === 0 || $this->ov04_sequencial === 0.0 || $this->ov04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_sequencial"]:$this->ov04_sequencial);
+       $this->ov04_seq = ($this->ov04_seq === 0 || $this->ov04_seq === 0.0 || $this->ov04_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_seq"]:$this->ov04_seq);
+       $this->ov04_tiporetorno = ($this->ov04_tiporetorno === 0 || $this->ov04_tiporetorno === 0.0 || $this->ov04_tiporetorno == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_tiporetorno"]:$this->ov04_tiporetorno);
+       $this->ov04_cidadao = ($this->ov04_cidadao === 0 || $this->ov04_cidadao === 0.0 || $this->ov04_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_cidadao"]:$this->ov04_cidadao);
      }else{
-       $this->ov04_sequencial = ($this->ov04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_sequencial"]:$this->ov04_sequencial);
-       $this->ov04_seq = ($this->ov04_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_seq"]:$this->ov04_seq);
+       $this->ov04_sequencial = ($this->ov04_sequencial === 0 || $this->ov04_sequencial === 0.0 || $this->ov04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_sequencial"]:$this->ov04_sequencial);
+       $this->ov04_seq = ($this->ov04_seq === 0 || $this->ov04_seq === 0.0 || $this->ov04_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov04_seq"]:$this->ov04_seq);
      }
    }
    // funcao para inclusao
@@ -125,7 +125,7 @@ class cl_cidadaotiporetorno {
          $this->ov04_sequencial = $ov04_sequencial;
        }
      }
-     if(($this->ov04_sequencial == null) || ($this->ov04_sequencial == "") ){
+     if(($this->ov04_sequencial == null) || ($this->ov04_sequencial === 0 || $this->ov04_sequencial === 0.0 || $this->ov04_sequencial == "") ){
        $this->erro_sql = " Campo ov04_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

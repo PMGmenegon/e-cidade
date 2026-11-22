@@ -74,7 +74,7 @@ class cl_matestoqueitemlote {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m77_sequencial = ($this->m77_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_sequencial"]:$this->m77_sequencial);
+       $this->m77_sequencial = ($this->m77_sequencial === 0 || $this->m77_sequencial === 0.0 || $this->m77_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_sequencial"]:$this->m77_sequencial);
        $this->m77_lote = ($this->m77_lote == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_lote"]:$this->m77_lote);
        if($this->m77_dtvalidade == ""){
          $this->m77_dtvalidade_dia = ($this->m77_dtvalidade_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_dtvalidade_dia"]:$this->m77_dtvalidade_dia);
@@ -84,9 +84,9 @@ class cl_matestoqueitemlote {
             $this->m77_dtvalidade = $this->m77_dtvalidade_ano."-".$this->m77_dtvalidade_mes."-".$this->m77_dtvalidade_dia;
          }
        }
-       $this->m77_matestoqueitem = ($this->m77_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_matestoqueitem"]:$this->m77_matestoqueitem);
+       $this->m77_matestoqueitem = ($this->m77_matestoqueitem === 0 || $this->m77_matestoqueitem === 0.0 || $this->m77_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_matestoqueitem"]:$this->m77_matestoqueitem);
      }else{
-       $this->m77_sequencial = ($this->m77_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_sequencial"]:$this->m77_sequencial);
+       $this->m77_sequencial = ($this->m77_sequencial === 0 || $this->m77_sequencial === 0.0 || $this->m77_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m77_sequencial"]:$this->m77_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_matestoqueitemlote {
          $this->m77_sequencial = $m77_sequencial;
        }
      }
-     if(($this->m77_sequencial == null) || ($this->m77_sequencial == "") ){
+     if(($this->m77_sequencial == null) || ($this->m77_sequencial === 0 || $this->m77_sequencial === 0.0 || $this->m77_sequencial == "") ){
        $this->erro_sql = " Campo m77_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

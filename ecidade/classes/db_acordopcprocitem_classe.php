@@ -73,13 +73,13 @@ class cl_acordopcprocitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac23_sequencial = ($this->ac23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_sequencial"]:$this->ac23_sequencial);
-       $this->ac23_pcprocitem = ($this->ac23_pcprocitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_pcprocitem"]:$this->ac23_pcprocitem);
-       $this->ac23_acordoitem = ($this->ac23_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_acordoitem"]:$this->ac23_acordoitem);
-       $this->ac23_quantidade = ($this->ac23_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_quantidade"]:$this->ac23_quantidade);
-       $this->ac23_valor = ($this->ac23_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_valor"]:$this->ac23_valor);
+       $this->ac23_sequencial = ($this->ac23_sequencial === 0 || $this->ac23_sequencial === 0.0 || $this->ac23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_sequencial"]:$this->ac23_sequencial);
+       $this->ac23_pcprocitem = ($this->ac23_pcprocitem === 0 || $this->ac23_pcprocitem === 0.0 || $this->ac23_pcprocitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_pcprocitem"]:$this->ac23_pcprocitem);
+       $this->ac23_acordoitem = ($this->ac23_acordoitem === 0 || $this->ac23_acordoitem === 0.0 || $this->ac23_acordoitem == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_acordoitem"]:$this->ac23_acordoitem);
+       $this->ac23_quantidade = ($this->ac23_quantidade === 0 || $this->ac23_quantidade === 0.0 || $this->ac23_quantidade == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_quantidade"]:$this->ac23_quantidade);
+       $this->ac23_valor = ($this->ac23_valor === 0 || $this->ac23_valor === 0.0 || $this->ac23_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_valor"]:$this->ac23_valor);
      }else{
-       $this->ac23_sequencial = ($this->ac23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_sequencial"]:$this->ac23_sequencial);
+       $this->ac23_sequencial = ($this->ac23_sequencial === 0 || $this->ac23_sequencial === 0.0 || $this->ac23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac23_sequencial"]:$this->ac23_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_acordopcprocitem {
          $this->ac23_sequencial = $ac23_sequencial;
        }
      }
-     if(($this->ac23_sequencial == null) || ($this->ac23_sequencial == "") ){
+     if(($this->ac23_sequencial == null) || ($this->ac23_sequencial === 0 || $this->ac23_sequencial === 0.0 || $this->ac23_sequencial == "") ){
        $this->erro_sql = " Campo ac23_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

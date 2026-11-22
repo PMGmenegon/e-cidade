@@ -75,14 +75,14 @@ class cl_bensplacaimpressa {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t73_sequencial = ($this->t73_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_sequencial"]:$this->t73_sequencial);
-       $this->t73_bensplaca = ($this->t73_bensplaca == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_bensplaca"]:$this->t73_bensplaca);
-       $this->t73_coddepto = ($this->t73_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_coddepto"]:$this->t73_coddepto);
-       $this->t73_departdiv = ($this->t73_departdiv == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_departdiv"]:$this->t73_departdiv);
+       $this->t73_sequencial = ($this->t73_sequencial === 0 || $this->t73_sequencial === 0.0 || $this->t73_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_sequencial"]:$this->t73_sequencial);
+       $this->t73_bensplaca = ($this->t73_bensplaca === 0 || $this->t73_bensplaca === 0.0 || $this->t73_bensplaca == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_bensplaca"]:$this->t73_bensplaca);
+       $this->t73_coddepto = ($this->t73_coddepto === 0 || $this->t73_coddepto === 0.0 || $this->t73_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_coddepto"]:$this->t73_coddepto);
+       $this->t73_departdiv = ($this->t73_departdiv === 0 || $this->t73_departdiv === 0.0 || $this->t73_departdiv == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_departdiv"]:$this->t73_departdiv);
        $this->t73_tipoloteindividual = ($this->t73_tipoloteindividual == "f"?@$GLOBALS["HTTP_POST_VARS"]["t73_tipoloteindividual"]:$this->t73_tipoloteindividual);
-       $this->t73_bensetiquetaimpressa = ($this->t73_bensetiquetaimpressa == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_bensetiquetaimpressa"]:$this->t73_bensetiquetaimpressa);
+       $this->t73_bensetiquetaimpressa = ($this->t73_bensetiquetaimpressa === 0 || $this->t73_bensetiquetaimpressa === 0.0 || $this->t73_bensetiquetaimpressa == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_bensetiquetaimpressa"]:$this->t73_bensetiquetaimpressa);
      }else{
-       $this->t73_sequencial = ($this->t73_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_sequencial"]:$this->t73_sequencial);
+       $this->t73_sequencial = ($this->t73_sequencial === 0 || $this->t73_sequencial === 0.0 || $this->t73_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t73_sequencial"]:$this->t73_sequencial);
      }
    }
    // funcao para inclusao
@@ -151,7 +151,7 @@ class cl_bensplacaimpressa {
          $this->t73_sequencial = $t73_sequencial;
        }
      }
-     if(($this->t73_sequencial == null) || ($this->t73_sequencial == "") ){
+     if(($this->t73_sequencial == null) || ($this->t73_sequencial === 0 || $this->t73_sequencial === 0.0 || $this->t73_sequencial == "") ){
        $this->erro_sql = " Campo t73_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -73,13 +73,13 @@ class cl_custoapropria {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->cc12_sequencial = ($this->cc12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_sequencial"]:$this->cc12_sequencial);
-       $this->cc12_custocriteriorateio = ($this->cc12_custocriteriorateio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_custocriteriorateio"]:$this->cc12_custocriteriorateio);
-       $this->cc12_matestoqueinimei = ($this->cc12_matestoqueinimei == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_matestoqueinimei"]:$this->cc12_matestoqueinimei);
-       $this->cc12_qtd = ($this->cc12_qtd == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_qtd"]:$this->cc12_qtd);
-       $this->cc12_valor = ($this->cc12_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_valor"]:$this->cc12_valor);
+       $this->cc12_sequencial = ($this->cc12_sequencial === 0 || $this->cc12_sequencial === 0.0 || $this->cc12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_sequencial"]:$this->cc12_sequencial);
+       $this->cc12_custocriteriorateio = ($this->cc12_custocriteriorateio === 0 || $this->cc12_custocriteriorateio === 0.0 || $this->cc12_custocriteriorateio == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_custocriteriorateio"]:$this->cc12_custocriteriorateio);
+       $this->cc12_matestoqueinimei = ($this->cc12_matestoqueinimei === 0 || $this->cc12_matestoqueinimei === 0.0 || $this->cc12_matestoqueinimei == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_matestoqueinimei"]:$this->cc12_matestoqueinimei);
+       $this->cc12_qtd = ($this->cc12_qtd === 0 || $this->cc12_qtd === 0.0 || $this->cc12_qtd == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_qtd"]:$this->cc12_qtd);
+       $this->cc12_valor = ($this->cc12_valor === 0 || $this->cc12_valor === 0.0 || $this->cc12_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_valor"]:$this->cc12_valor);
      }else{
-       $this->cc12_sequencial = ($this->cc12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_sequencial"]:$this->cc12_sequencial);
+       $this->cc12_sequencial = ($this->cc12_sequencial === 0 || $this->cc12_sequencial === 0.0 || $this->cc12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["cc12_sequencial"]:$this->cc12_sequencial);
      }
    }
    // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_custoapropria {
          $this->cc12_sequencial = $cc12_sequencial;
        }
      }
-     if(($this->cc12_sequencial == null) || ($this->cc12_sequencial == "") ){
+     if(($this->cc12_sequencial == null) || ($this->cc12_sequencial === 0 || $this->cc12_sequencial === 0.0 || $this->cc12_sequencial == "") ){
        $this->erro_sql = " Campo cc12_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

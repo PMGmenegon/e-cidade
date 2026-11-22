@@ -80,8 +80,8 @@ class cl_cidadaofamiliavisita {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as05_sequencial = ($this->as05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_sequencial"]:$this->as05_sequencial);
-       $this->as05_cidadaofamilia = ($this->as05_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_cidadaofamilia"]:$this->as05_cidadaofamilia);
+       $this->as05_sequencial = ($this->as05_sequencial === 0 || $this->as05_sequencial === 0.0 || $this->as05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_sequencial"]:$this->as05_sequencial);
+       $this->as05_cidadaofamilia = ($this->as05_cidadaofamilia === 0 || $this->as05_cidadaofamilia === 0.0 || $this->as05_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_cidadaofamilia"]:$this->as05_cidadaofamilia);
        if($this->as05_datavisita == ""){
          $this->as05_datavisita_dia = ($this->as05_datavisita_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_datavisita_dia"]:$this->as05_datavisita_dia);
          $this->as05_datavisita_mes = ($this->as05_datavisita_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_datavisita_mes"]:$this->as05_datavisita_mes);
@@ -92,10 +92,10 @@ class cl_cidadaofamiliavisita {
        }
        $this->as05_observacao = ($this->as05_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_observacao"]:$this->as05_observacao);
        $this->as05_horavisita = ($this->as05_horavisita == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_horavisita"]:$this->as05_horavisita);
-       $this->as05_profissional = ($this->as05_profissional == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_profissional"]:$this->as05_profissional);
-       $this->as05_visitatipo = ($this->as05_visitatipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_visitatipo"]:$this->as05_visitatipo);
+       $this->as05_profissional = ($this->as05_profissional === 0 || $this->as05_profissional === 0.0 || $this->as05_profissional == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_profissional"]:$this->as05_profissional);
+       $this->as05_visitatipo = ($this->as05_visitatipo === 0 || $this->as05_visitatipo === 0.0 || $this->as05_visitatipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_visitatipo"]:$this->as05_visitatipo);
      }else{
-       $this->as05_sequencial = ($this->as05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_sequencial"]:$this->as05_sequencial);
+       $this->as05_sequencial = ($this->as05_sequencial === 0 || $this->as05_sequencial === 0.0 || $this->as05_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as05_sequencial"]:$this->as05_sequencial);
      }
    }
    // funcao para inclusao
@@ -155,7 +155,7 @@ class cl_cidadaofamiliavisita {
          $this->as05_sequencial = $as05_sequencial;
        }
      }
-     if(($this->as05_sequencial == null) || ($this->as05_sequencial == "") ){
+     if(($this->as05_sequencial == null) || ($this->as05_sequencial === 0 || $this->as05_sequencial === 0.0 || $this->as05_sequencial == "") ){
        $this->erro_sql = " Campo as05_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

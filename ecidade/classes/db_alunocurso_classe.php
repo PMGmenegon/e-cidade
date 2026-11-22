@@ -81,17 +81,17 @@ class cl_alunocurso {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed56_i_codigo = ($this->ed56_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_codigo"]:$this->ed56_i_codigo);
-       $this->ed56_i_escola = ($this->ed56_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_escola"]:$this->ed56_i_escola);
-       $this->ed56_i_aluno = ($this->ed56_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_aluno"]:$this->ed56_i_aluno);
-       $this->ed56_i_base = ($this->ed56_i_base == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_base"]:$this->ed56_i_base);
-       $this->ed56_i_calendario = ($this->ed56_i_calendario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_calendario"]:$this->ed56_i_calendario);
+       $this->ed56_i_codigo = ($this->ed56_i_codigo === 0 || $this->ed56_i_codigo === 0.0 || $this->ed56_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_codigo"]:$this->ed56_i_codigo);
+       $this->ed56_i_escola = ($this->ed56_i_escola === 0 || $this->ed56_i_escola === 0.0 || $this->ed56_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_escola"]:$this->ed56_i_escola);
+       $this->ed56_i_aluno = ($this->ed56_i_aluno === 0 || $this->ed56_i_aluno === 0.0 || $this->ed56_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_aluno"]:$this->ed56_i_aluno);
+       $this->ed56_i_base = ($this->ed56_i_base === 0 || $this->ed56_i_base === 0.0 || $this->ed56_i_base == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_base"]:$this->ed56_i_base);
+       $this->ed56_i_calendario = ($this->ed56_i_calendario === 0 || $this->ed56_i_calendario === 0.0 || $this->ed56_i_calendario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_calendario"]:$this->ed56_i_calendario);
        $this->ed56_c_situacao = ($this->ed56_c_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_c_situacao"]:$this->ed56_c_situacao);
-       $this->ed56_i_baseant = ($this->ed56_i_baseant == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_baseant"]:$this->ed56_i_baseant);
-       $this->ed56_i_calendarioant = ($this->ed56_i_calendarioant == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_calendarioant"]:$this->ed56_i_calendarioant);
+       $this->ed56_i_baseant = ($this->ed56_i_baseant === 0 || $this->ed56_i_baseant === 0.0 || $this->ed56_i_baseant == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_baseant"]:$this->ed56_i_baseant);
+       $this->ed56_i_calendarioant = ($this->ed56_i_calendarioant === 0 || $this->ed56_i_calendarioant === 0.0 || $this->ed56_i_calendarioant == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_calendarioant"]:$this->ed56_i_calendarioant);
        $this->ed56_c_situacaoant = ($this->ed56_c_situacaoant == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_c_situacaoant"]:$this->ed56_c_situacaoant);
      }else{
-       $this->ed56_i_codigo = ($this->ed56_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_codigo"]:$this->ed56_i_codigo);
+       $this->ed56_i_codigo = ($this->ed56_i_codigo === 0 || $this->ed56_i_codigo === 0.0 || $this->ed56_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed56_i_codigo"]:$this->ed56_i_codigo);
      }
    }
    // funcao para inclusao
@@ -172,7 +172,7 @@ class cl_alunocurso {
          $this->ed56_i_codigo = $ed56_i_codigo;
        }
      }
-     if(($this->ed56_i_codigo == null) || ($this->ed56_i_codigo == "") ){
+     if(($this->ed56_i_codigo == null) || ($this->ed56_i_codigo === 0 || $this->ed56_i_codigo === 0.0 || $this->ed56_i_codigo == "") ){
        $this->erro_sql = " Campo ed56_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

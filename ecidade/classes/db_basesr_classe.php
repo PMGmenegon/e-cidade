@@ -73,15 +73,15 @@ class cl_basesr {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->r09_instit = ($this->r09_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_instit"]:$this->r09_instit);
-       $this->r09_anousu = ($this->r09_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_anousu"]:$this->r09_anousu);
-       $this->r09_mesusu = ($this->r09_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_mesusu"]:$this->r09_mesusu);
+       $this->r09_instit = ($this->r09_instit === 0 || $this->r09_instit === 0.0 || $this->r09_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_instit"]:$this->r09_instit);
+       $this->r09_anousu = ($this->r09_anousu === 0 || $this->r09_anousu === 0.0 || $this->r09_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_anousu"]:$this->r09_anousu);
+       $this->r09_mesusu = ($this->r09_mesusu === 0 || $this->r09_mesusu === 0.0 || $this->r09_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_mesusu"]:$this->r09_mesusu);
        $this->r09_base = ($this->r09_base == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_base"]:$this->r09_base);
        $this->r09_rubric = ($this->r09_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_rubric"]:$this->r09_rubric);
      }else{
-       $this->r09_instit = ($this->r09_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_instit"]:$this->r09_instit);
-       $this->r09_anousu = ($this->r09_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_anousu"]:$this->r09_anousu);
-       $this->r09_mesusu = ($this->r09_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_mesusu"]:$this->r09_mesusu);
+       $this->r09_instit = ($this->r09_instit === 0 || $this->r09_instit === 0.0 || $this->r09_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_instit"]:$this->r09_instit);
+       $this->r09_anousu = ($this->r09_anousu === 0 || $this->r09_anousu === 0.0 || $this->r09_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_anousu"]:$this->r09_anousu);
+       $this->r09_mesusu = ($this->r09_mesusu === 0 || $this->r09_mesusu === 0.0 || $this->r09_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_mesusu"]:$this->r09_mesusu);
        $this->r09_base = ($this->r09_base == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_base"]:$this->r09_base);
        $this->r09_rubric = ($this->r09_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r09_rubric"]:$this->r09_rubric);
      }
@@ -94,7 +94,7 @@ class cl_basesr {
        $this->r09_base = $r09_base;
        $this->r09_rubric = $r09_rubric;
        $this->r09_instit = $r09_instit;
-     if(($this->r09_anousu == null) || ($this->r09_anousu == "") ){
+     if(($this->r09_anousu == null) || ($this->r09_anousu === 0 || $this->r09_anousu === 0.0 || $this->r09_anousu == "") ){
        $this->erro_sql = " Campo r09_anousu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -102,7 +102,7 @@ class cl_basesr {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r09_mesusu == null) || ($this->r09_mesusu == "") ){
+     if(($this->r09_mesusu == null) || ($this->r09_mesusu === 0 || $this->r09_mesusu === 0.0 || $this->r09_mesusu == "") ){
        $this->erro_sql = " Campo r09_mesusu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -126,7 +126,7 @@ class cl_basesr {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r09_instit == null) || ($this->r09_instit == "") ){
+     if(($this->r09_instit == null) || ($this->r09_instit === 0 || $this->r09_instit === 0.0 || $this->r09_instit == "") ){
        $this->erro_sql = " Campo r09_instit nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

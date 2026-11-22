@@ -47,13 +47,13 @@ class cl_avaliacaoquestionariointerno {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db170_sequencial = ($this->db170_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_sequencial"]:$this->db170_sequencial);
-       $this->db170_avaliacao = ($this->db170_avaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_avaliacao"]:$this->db170_avaliacao);
+       $this->db170_sequencial = ($this->db170_sequencial === 0 || $this->db170_sequencial === 0.0 || $this->db170_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_sequencial"]:$this->db170_sequencial);
+       $this->db170_avaliacao = ($this->db170_avaliacao === 0 || $this->db170_avaliacao === 0.0 || $this->db170_avaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_avaliacao"]:$this->db170_avaliacao);
        $this->db170_transmitido = ($this->db170_transmitido == "f"?@$GLOBALS["HTTP_POST_VARS"]["db170_transmitido"]:$this->db170_transmitido);
        $this->db170_ativo = ($this->db170_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["db170_ativo"]:$this->db170_ativo);
-       $this->db170_codigo = ($this->db170_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_codigo"]:$this->db170_codigo);
+       $this->db170_codigo = ($this->db170_codigo === 0 || $this->db170_codigo === 0.0 || $this->db170_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_codigo"]:$this->db170_codigo);
      }else{
-       $this->db170_sequencial = ($this->db170_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_sequencial"]:$this->db170_sequencial);
+       $this->db170_sequencial = ($this->db170_sequencial === 0 || $this->db170_sequencial === 0.0 || $this->db170_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db170_sequencial"]:$this->db170_sequencial);
      }
    }
    // funcao para Inclusão
@@ -101,7 +101,7 @@ class cl_avaliacaoquestionariointerno {
          $this->db170_sequencial = $db170_sequencial; 
        }
      }
-     if(($this->db170_sequencial == null) || ($this->db170_sequencial == "") ){ 
+     if(($this->db170_sequencial == null) || ($this->db170_sequencial === 0 || $this->db170_sequencial === 0.0 || $this->db170_sequencial == "") ){ 
        $this->erro_sql = " Campo db170_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

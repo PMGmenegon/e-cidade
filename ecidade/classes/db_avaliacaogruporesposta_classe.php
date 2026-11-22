@@ -74,8 +74,8 @@ class cl_avaliacaogruporesposta {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db107_sequencial = ($this->db107_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_sequencial"]:$this->db107_sequencial);
-       $this->db107_usuario = ($this->db107_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_usuario"]:$this->db107_usuario);
+       $this->db107_sequencial = ($this->db107_sequencial === 0 || $this->db107_sequencial === 0.0 || $this->db107_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_sequencial"]:$this->db107_sequencial);
+       $this->db107_usuario = ($this->db107_usuario === 0 || $this->db107_usuario === 0.0 || $this->db107_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_usuario"]:$this->db107_usuario);
        if($this->db107_datalancamento == ""){
          $this->db107_datalancamento_dia = ($this->db107_datalancamento_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_datalancamento_dia"]:$this->db107_datalancamento_dia);
          $this->db107_datalancamento_mes = ($this->db107_datalancamento_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_datalancamento_mes"]:$this->db107_datalancamento_mes);
@@ -86,7 +86,7 @@ class cl_avaliacaogruporesposta {
        }
        $this->db107_hora = ($this->db107_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_hora"]:$this->db107_hora);
      }else{
-       $this->db107_sequencial = ($this->db107_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_sequencial"]:$this->db107_sequencial);
+       $this->db107_sequencial = ($this->db107_sequencial === 0 || $this->db107_sequencial === 0.0 || $this->db107_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db107_sequencial"]:$this->db107_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_avaliacaogruporesposta {
          $this->db107_sequencial = $db107_sequencial;
        }
      }
-     if(($this->db107_sequencial == null) || ($this->db107_sequencial == "") ){
+     if(($this->db107_sequencial == null) || ($this->db107_sequencial === 0 || $this->db107_sequencial === 0.0 || $this->db107_sequencial == "") ){
        $this->erro_sql = " Campo db107_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -490,7 +490,7 @@ class cl_avaliacaogruporesposta {
      return $sql;
   }
 
-  public function sql_query_respostas($iCodigoPergunta = null, $codigoAvaliacao, $campos = "*", $ordem = null, $dbwhere = "") {
+  public function sql_query_respostas($iCodigoPergunta = null, $codigoAvaliacao = null, $campos = "*", $ordem = null, $dbwhere = "") {
 
     $sql  = "select {$campos}";
     $sql .= "  from avaliacaogruporesposta ";

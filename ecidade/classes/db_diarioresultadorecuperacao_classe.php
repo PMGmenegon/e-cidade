@@ -67,10 +67,10 @@ class cl_diarioresultadorecuperacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed116_sequencial = ($this->ed116_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_sequencial"]:$this->ed116_sequencial);
-       $this->ed116_diarioresultado = ($this->ed116_diarioresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_diarioresultado"]:$this->ed116_diarioresultado);
+       $this->ed116_sequencial = ($this->ed116_sequencial === 0 || $this->ed116_sequencial === 0.0 || $this->ed116_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_sequencial"]:$this->ed116_sequencial);
+       $this->ed116_diarioresultado = ($this->ed116_diarioresultado === 0 || $this->ed116_diarioresultado === 0.0 || $this->ed116_diarioresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_diarioresultado"]:$this->ed116_diarioresultado);
      }else{
-       $this->ed116_sequencial = ($this->ed116_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_sequencial"]:$this->ed116_sequencial);
+       $this->ed116_sequencial = ($this->ed116_sequencial === 0 || $this->ed116_sequencial === 0.0 || $this->ed116_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed116_sequencial"]:$this->ed116_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_diarioresultadorecuperacao {
          $this->ed116_sequencial = $ed116_sequencial;
        }
      }
-     if(($this->ed116_sequencial == null) || ($this->ed116_sequencial == "") ){
+     if(($this->ed116_sequencial == null) || ($this->ed116_sequencial === 0 || $this->ed116_sequencial === 0.0 || $this->ed116_sequencial == "") ){
        $this->erro_sql = " Campo ed116_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

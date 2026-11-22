@@ -45,12 +45,12 @@ class cl_acordoparalisacaoperiodo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac49_sequencial = ($this->ac49_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_sequencial"]:$this->ac49_sequencial);
-       $this->ac49_acordoparalisacao = ($this->ac49_acordoparalisacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_acordoparalisacao"]:$this->ac49_acordoparalisacao);
-       $this->ac49_acordoposicaoperiodo = ($this->ac49_acordoposicaoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_acordoposicaoperiodo"]:$this->ac49_acordoposicaoperiodo);
-       $this->ac49_tipoperiodo = ($this->ac49_tipoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_tipoperiodo"]:$this->ac49_tipoperiodo);
+       $this->ac49_sequencial = ($this->ac49_sequencial === 0 || $this->ac49_sequencial === 0.0 || $this->ac49_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_sequencial"]:$this->ac49_sequencial);
+       $this->ac49_acordoparalisacao = ($this->ac49_acordoparalisacao === 0 || $this->ac49_acordoparalisacao === 0.0 || $this->ac49_acordoparalisacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_acordoparalisacao"]:$this->ac49_acordoparalisacao);
+       $this->ac49_acordoposicaoperiodo = ($this->ac49_acordoposicaoperiodo === 0 || $this->ac49_acordoposicaoperiodo === 0.0 || $this->ac49_acordoposicaoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_acordoposicaoperiodo"]:$this->ac49_acordoposicaoperiodo);
+       $this->ac49_tipoperiodo = ($this->ac49_tipoperiodo === 0 || $this->ac49_tipoperiodo === 0.0 || $this->ac49_tipoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_tipoperiodo"]:$this->ac49_tipoperiodo);
      }else{
-       $this->ac49_sequencial = ($this->ac49_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_sequencial"]:$this->ac49_sequencial);
+       $this->ac49_sequencial = ($this->ac49_sequencial === 0 || $this->ac49_sequencial === 0.0 || $this->ac49_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac49_sequencial"]:$this->ac49_sequencial);
      }
    }
    // funcao para inclusao
@@ -107,7 +107,7 @@ class cl_acordoparalisacaoperiodo {
          $this->ac49_sequencial = $ac49_sequencial;
        }
      }
-     if(($this->ac49_sequencial == null) || ($this->ac49_sequencial == "") ){
+     if(($this->ac49_sequencial == null) || ($this->ac49_sequencial === 0 || $this->ac49_sequencial === 0.0 || $this->ac49_sequencial == "") ){
        $this->erro_sql = " Campo ac49_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

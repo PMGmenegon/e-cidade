@@ -12,3 +12,22 @@
 # tela que a abre for roteada ao 8.5 nesta base (passo 8b: rotear.py 8b <AREA>; rotear.py abas <tela>).
 # A lista que valia para a base-php84 (365 abas e destinos de Tributario, Educacao, RH, Patrimonial e
 # Financeiro) esta em: git show origin/base-php84:docker/proxy/faseb_map_abas.txt
+hab1_avaliacao004.php
+hab1_avaliacao005.php
+hab1_avaliacao006.php
+hab1_cadastroavaliacao001.php
+hab1_cadastrosocioeconomico004.php
+hab1_composicaofamiliar001.php
+hab1_formaavaliacao005.php
+hab1_habitprograma004.php
+hab1_habitprograma005.php
+hab1_habitprograma006.php
+hab1_tipogrupoprograma005.php
+hab1_workflow004.php
+hab1_workflow005.php
+hab1_workflow006.php
+hab1_workflowativ001.php
+hab4_inscricaocanditado.rpc.php
+hab4_contemplacao.rpc.php
+hab4_situacaocpf.rpc.php
+hab4_selecaoinscricao.rpc.php

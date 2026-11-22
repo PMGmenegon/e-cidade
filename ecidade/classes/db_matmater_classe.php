@@ -80,16 +80,16 @@ class cl_matmater
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->m60_codmater = ($this->m60_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmater"]:$this->m60_codmater);
+       $this->m60_codmater = ($this->m60_codmater === 0 || $this->m60_codmater === 0.0 || $this->m60_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmater"]:$this->m60_codmater);
        $this->m60_descr = ($this->m60_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_descr"]:$this->m60_descr);
-       $this->m60_codmatunid = ($this->m60_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmatunid"]:$this->m60_codmatunid);
-       $this->m60_quantent = ($this->m60_quantent == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_quantent"]:$this->m60_quantent);
+       $this->m60_codmatunid = ($this->m60_codmatunid === 0 || $this->m60_codmatunid === 0.0 || $this->m60_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmatunid"]:$this->m60_codmatunid);
+       $this->m60_quantent = ($this->m60_quantent === 0 || $this->m60_quantent === 0.0 || $this->m60_quantent == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_quantent"]:$this->m60_quantent);
        $this->m60_codant = ($this->m60_codant == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codant"]:$this->m60_codant);
        $this->m60_ativo = ($this->m60_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["m60_ativo"]:$this->m60_ativo);
-       $this->m60_controlavalidade = ($this->m60_controlavalidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_controlavalidade"]:$this->m60_controlavalidade);
+       $this->m60_controlavalidade = ($this->m60_controlavalidade === 0 || $this->m60_controlavalidade === 0.0 || $this->m60_controlavalidade == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_controlavalidade"]:$this->m60_controlavalidade);
        $this->m60_servico = ($this->m60_servico == "f"?@$GLOBALS["HTTP_POST_VARS"]["m60_servico"]:$this->m60_servico);
      }else{
-       $this->m60_codmater = ($this->m60_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmater"]:$this->m60_codmater);
+       $this->m60_codmater = ($this->m60_codmater === 0 || $this->m60_codmater === 0.0 || $this->m60_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m60_codmater"]:$this->m60_codmater);
      }
    }
 
@@ -174,7 +174,7 @@ class cl_matmater
          $this->m60_codmater = $m60_codmater;
        }
      }
-     if(($this->m60_codmater == null) || ($this->m60_codmater == "") ){
+     if(($this->m60_codmater == null) || ($this->m60_codmater === 0 || $this->m60_codmater === 0.0 || $this->m60_codmater == "") ){
        $this->erro_sql = " Campo m60_codmater não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

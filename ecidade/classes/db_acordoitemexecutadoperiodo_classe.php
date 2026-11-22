@@ -79,9 +79,9 @@ class cl_acordoitemexecutadoperiodo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac38_sequencial = ($this->ac38_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_sequencial"]:$this->ac38_sequencial);
-       $this->ac38_acordoitemexecutado = ($this->ac38_acordoitemexecutado == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_acordoitemexecutado"]:$this->ac38_acordoitemexecutado);
-       $this->ac38_acordoitemprevisao = ($this->ac38_acordoitemprevisao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_acordoitemprevisao"]:$this->ac38_acordoitemprevisao);
+       $this->ac38_sequencial = ($this->ac38_sequencial === 0 || $this->ac38_sequencial === 0.0 || $this->ac38_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_sequencial"]:$this->ac38_sequencial);
+       $this->ac38_acordoitemexecutado = ($this->ac38_acordoitemexecutado === 0 || $this->ac38_acordoitemexecutado === 0.0 || $this->ac38_acordoitemexecutado == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_acordoitemexecutado"]:$this->ac38_acordoitemexecutado);
+       $this->ac38_acordoitemprevisao = ($this->ac38_acordoitemprevisao === 0 || $this->ac38_acordoitemprevisao === 0.0 || $this->ac38_acordoitemprevisao == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_acordoitemprevisao"]:$this->ac38_acordoitemprevisao);
        if($this->ac38_datainicial == ""){
          $this->ac38_datainicial_dia = ($this->ac38_datainicial_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_datainicial_dia"]:$this->ac38_datainicial_dia);
          $this->ac38_datainicial_mes = ($this->ac38_datainicial_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_datainicial_mes"]:$this->ac38_datainicial_mes);
@@ -99,7 +99,7 @@ class cl_acordoitemexecutadoperiodo {
          }
        }
      }else{
-       $this->ac38_sequencial = ($this->ac38_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_sequencial"]:$this->ac38_sequencial);
+       $this->ac38_sequencial = ($this->ac38_sequencial === 0 || $this->ac38_sequencial === 0.0 || $this->ac38_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac38_sequencial"]:$this->ac38_sequencial);
      }
    }
    // funcao para inclusao
@@ -165,7 +165,7 @@ class cl_acordoitemexecutadoperiodo {
          $this->ac38_sequencial = $ac38_sequencial;
        }
      }
-     if(($this->ac38_sequencial == null) || ($this->ac38_sequencial == "") ){
+     if(($this->ac38_sequencial == null) || ($this->ac38_sequencial === 0 || $this->ac38_sequencial === 0.0 || $this->ac38_sequencial == "") ){
        $this->erro_sql = " Campo ac38_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

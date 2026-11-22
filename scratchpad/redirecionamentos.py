@@ -43,7 +43,7 @@ SESS = f"/var/lib/php/sessions/sess_{SID}"          # dentro do container (volum
 # regex do nginx.conf -- prefixo novo no `location` tem de entrar aqui (o rotear.py faz isso)
 # base-php74: nada vai ao 8.5 ainda. "nenhum_prefixo_no_85" e um marcador que nao casa com nenhuma tela;
 # o rotear.py acrescenta os prefixos depois dele (ex.: nenhum_prefixo_no_85|soc|hab) ao rotear um lote.
-LOC = re.compile(r"^(?:nenhum_prefixo_no_85)[0-9]*_", re.I)
+LOC = re.compile(r"^(?:nenhum_prefixo_no_85|soc)[0-9]*_", re.I)
 MAP = {l.split()[0].lower() for l in open(os.path.join(RAIZ, "docker/proxy/faseb_map.conf"))
        if l.strip() and not l.startswith("#")}
 def no85(nome): return bool(LOC.match(nome)) or nome.lower() in MAP

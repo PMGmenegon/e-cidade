@@ -125,7 +125,7 @@ class cl_admissao
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->h07_regist = ($this->h07_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_regist"] : $this->h07_regist);
+            $this->h07_regist = ($this->h07_regist === 0 || $this->h07_regist === 0.0 || $this->h07_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_regist"] : $this->h07_regist);
             $this->h07_tipadm = ($this->h07_tipadm == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_tipadm"] : $this->h07_tipadm);
             if ($this->h07_dato == "") {
                 $this->h07_dato_dia = @$GLOBALS["HTTP_POST_VARS"]["h07_dato_dia"];
@@ -188,7 +188,7 @@ class cl_admissao
             }
             $this->h07_justif = ($this->h07_justif == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_justif"] : $this->h07_justif);
         } else {
-            $this->h07_regist = ($this->h07_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_regist"] : $this->h07_regist);
+            $this->h07_regist = ($this->h07_regist === 0 || $this->h07_regist === 0.0 || $this->h07_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["h07_regist"] : $this->h07_regist);
         }
     }
 
@@ -230,7 +230,7 @@ class cl_admissao
             $this->h07_termin = "null";
         }
         $this->h07_regist = $h07_regist;
-        if (($this->h07_regist == null) || ($this->h07_regist == "")) {
+        if (($this->h07_regist == null) || ($this->h07_regist === 0 || $this->h07_regist === 0.0 || $this->h07_regist == "")) {
             $this->erro_sql = " Campo h07_regist nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

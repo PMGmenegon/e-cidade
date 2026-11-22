@@ -114,10 +114,10 @@ class cl_esocialrubricas
     public function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->eso26_sequencial = ($this->eso26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_sequencial"]:$this->eso26_sequencial);
-       $this->eso26_rubrica = ($this->eso26_rubrica == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_rubrica"]:$this->eso26_rubrica);
-       $this->eso26_instituicao = ($this->eso26_instituicao == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_instituicao"]:$this->eso26_instituicao);
-       $this->eso26_natureza = ($this->eso26_natureza == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_natureza"]:$this->eso26_natureza);
+       $this->eso26_sequencial = ($this->eso26_sequencial === 0 || $this->eso26_sequencial === 0.0 || $this->eso26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_sequencial"]:$this->eso26_sequencial);
+       $this->eso26_rubrica = ($this->eso26_rubrica === 0 || $this->eso26_rubrica === 0.0 || $this->eso26_rubrica == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_rubrica"]:$this->eso26_rubrica);
+       $this->eso26_instituicao = ($this->eso26_instituicao === 0 || $this->eso26_instituicao === 0.0 || $this->eso26_instituicao == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_instituicao"]:$this->eso26_instituicao);
+       $this->eso26_natureza = ($this->eso26_natureza === 0 || $this->eso26_natureza === 0.0 || $this->eso26_natureza == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_natureza"]:$this->eso26_natureza);
        if($this->eso26_datainicial == ""){
          $this->eso26_datainicial_dia = ($this->eso26_datainicial_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_datainicial_dia"]:$this->eso26_datainicial_dia);
          $this->eso26_datainicial_mes = ($this->eso26_datainicial_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_datainicial_mes"]:$this->eso26_datainicial_mes);
@@ -139,11 +139,11 @@ class cl_esocialrubricas
        $this->eso26_codincirrf = ($this->eso26_codincirrf == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codincirrf"]:$this->eso26_codincirrf);
        $this->eso26_codincfgts = ($this->eso26_codincfgts == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codincfgts"]:$this->eso26_codincfgts);
        $this->eso26_codinccprp = ($this->eso26_codinccprp == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codinccprp"]:$this->eso26_codinccprp);
-       $this->eso26_tetoremun = ($this->eso26_tetoremun == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_tetoremun"]:$this->eso26_tetoremun);
+       $this->eso26_tetoremun = ($this->eso26_tetoremun === 0 || $this->eso26_tetoremun === 0.0 || $this->eso26_tetoremun == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_tetoremun"]:$this->eso26_tetoremun);
        $this->eso26_codincpispasep = ($this->eso26_codincpispasep == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codincpispasep"]:$this->eso26_codincpispasep);
-       $this->eso26_tpproc = ($this->eso26_tpproc == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_tpproc"]:$this->eso26_tpproc);
+       $this->eso26_tpproc = ($this->eso26_tpproc === 0 || $this->eso26_tpproc === 0.0 || $this->eso26_tpproc == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_tpproc"]:$this->eso26_tpproc);
        $this->eso26_nrprocprocessocp = ($this->eso26_nrprocprocessocp == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_nrprocprocessocp"]:$this->eso26_nrprocprocessocp);
-       $this->eso26_extdecisao = ($this->eso26_extdecisao == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_extdecisao"]:$this->eso26_extdecisao);
+       $this->eso26_extdecisao = ($this->eso26_extdecisao === 0 || $this->eso26_extdecisao === 0.0 || $this->eso26_extdecisao == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_extdecisao"]:$this->eso26_extdecisao);
        $this->eso26_codsuspprocessocp = ($this->eso26_codsuspprocessocp == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codsuspprocessocp"]:$this->eso26_codsuspprocessocp);
        $this->eso26_nrprocirrf = ($this->eso26_nrprocirrf == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_nrprocirrf"]:$this->eso26_nrprocirrf);
        $this->eso26_codsuspirrf = ($this->eso26_codsuspirrf == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codsuspirrf"]:$this->eso26_codsuspirrf);
@@ -151,7 +151,7 @@ class cl_esocialrubricas
        $this->eso26_nrprocpispasep = ($this->eso26_nrprocpispasep == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_nrprocpispasep"]:$this->eso26_nrprocpispasep);
        $this->eso26_codsusppispasep = ($this->eso26_codsusppispasep == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_codsusppispasep"]:$this->eso26_codsusppispasep);
      }else{
-       $this->eso26_sequencial = ($this->eso26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_sequencial"]:$this->eso26_sequencial);
+       $this->eso26_sequencial = ($this->eso26_sequencial === 0 || $this->eso26_sequencial === 0.0 || $this->eso26_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["eso26_sequencial"]:$this->eso26_sequencial);
      }
    }
 

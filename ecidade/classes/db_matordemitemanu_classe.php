@@ -73,13 +73,13 @@ class cl_matordemitemanu {
   // funcao para atualizar campos
   public function atualizacampos($exclusao=false) {
     if($exclusao==false){
-      $this->m36_sequencial = ($this->m36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_sequencial"]:$this->m36_sequencial);
-      $this->m36_matordemitem = ($this->m36_matordemitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_matordemitem"]:$this->m36_matordemitem);
-      $this->m36_matordemanul = ($this->m36_matordemanul == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_matordemanul"]:$this->m36_matordemanul);
-      $this->m36_vrlanu = ($this->m36_vrlanu == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_vrlanu"]:$this->m36_vrlanu);
-      $this->m36_qtd = ($this->m36_qtd == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_qtd"]:$this->m36_qtd);
+      $this->m36_sequencial = ($this->m36_sequencial === 0 || $this->m36_sequencial === 0.0 || $this->m36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_sequencial"]:$this->m36_sequencial);
+      $this->m36_matordemitem = ($this->m36_matordemitem === 0 || $this->m36_matordemitem === 0.0 || $this->m36_matordemitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_matordemitem"]:$this->m36_matordemitem);
+      $this->m36_matordemanul = ($this->m36_matordemanul === 0 || $this->m36_matordemanul === 0.0 || $this->m36_matordemanul == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_matordemanul"]:$this->m36_matordemanul);
+      $this->m36_vrlanu = ($this->m36_vrlanu === 0 || $this->m36_vrlanu === 0.0 || $this->m36_vrlanu == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_vrlanu"]:$this->m36_vrlanu);
+      $this->m36_qtd = ($this->m36_qtd === 0 || $this->m36_qtd === 0.0 || $this->m36_qtd == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_qtd"]:$this->m36_qtd);
     }else{
-      $this->m36_sequencial = ($this->m36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_sequencial"]:$this->m36_sequencial);
+      $this->m36_sequencial = ($this->m36_sequencial === 0 || $this->m36_sequencial === 0.0 || $this->m36_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m36_sequencial"]:$this->m36_sequencial);
     }
   }
   // funcao para inclusao
@@ -145,7 +145,7 @@ class cl_matordemitemanu {
         $this->m36_sequencial = $m36_sequencial;
       }
     }
-    if(($this->m36_sequencial == null) || ($this->m36_sequencial == "") ){
+    if(($this->m36_sequencial == null) || ($this->m36_sequencial === 0 || $this->m36_sequencial === 0.0 || $this->m36_sequencial == "") ){
       $this->erro_sql = " Campo m36_sequencial nao declarado.";
       $this->erro_banco = "Chave Primaria zerada.";
       $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

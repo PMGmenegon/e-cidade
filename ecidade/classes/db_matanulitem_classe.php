@@ -80,8 +80,8 @@ class cl_matanulitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m103_codigo = ($this->m103_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_codigo"]:$this->m103_codigo);
-       $this->m103_id_usuario = ($this->m103_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_id_usuario"]:$this->m103_id_usuario);
+       $this->m103_codigo = ($this->m103_codigo === 0 || $this->m103_codigo === 0.0 || $this->m103_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_codigo"]:$this->m103_codigo);
+       $this->m103_id_usuario = ($this->m103_id_usuario === 0 || $this->m103_id_usuario === 0.0 || $this->m103_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_id_usuario"]:$this->m103_id_usuario);
        if($this->m103_data == ""){
          $this->m103_data_dia = ($this->m103_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_data_dia"]:$this->m103_data_dia);
          $this->m103_data_mes = ($this->m103_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_data_mes"]:$this->m103_data_mes);
@@ -92,10 +92,10 @@ class cl_matanulitem {
        }
        $this->m103_hora = ($this->m103_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_hora"]:$this->m103_hora);
        $this->m103_motivo = ($this->m103_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_motivo"]:$this->m103_motivo);
-       $this->m103_quantanulada = ($this->m103_quantanulada == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_quantanulada"]:$this->m103_quantanulada);
-       $this->m103_tipoanu = ($this->m103_tipoanu == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_tipoanu"]:$this->m103_tipoanu);
+       $this->m103_quantanulada = ($this->m103_quantanulada === 0 || $this->m103_quantanulada === 0.0 || $this->m103_quantanulada == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_quantanulada"]:$this->m103_quantanulada);
+       $this->m103_tipoanu = ($this->m103_tipoanu === 0 || $this->m103_tipoanu === 0.0 || $this->m103_tipoanu == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_tipoanu"]:$this->m103_tipoanu);
      }else{
-       $this->m103_codigo = ($this->m103_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_codigo"]:$this->m103_codigo);
+       $this->m103_codigo = ($this->m103_codigo === 0 || $this->m103_codigo === 0.0 || $this->m103_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m103_codigo"]:$this->m103_codigo);
      }
    }
    // funcao para inclusao
@@ -179,7 +179,7 @@ class cl_matanulitem {
          $this->m103_codigo = $m103_codigo;
        }
      }
-     if(($this->m103_codigo == null) || ($this->m103_codigo == "") ){
+     if(($this->m103_codigo == null) || ($this->m103_codigo === 0 || $this->m103_codigo === 0.0 || $this->m103_codigo == "") ){
        $this->erro_sql = " Campo m103_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

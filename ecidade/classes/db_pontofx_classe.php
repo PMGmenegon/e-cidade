@@ -81,19 +81,19 @@ class cl_pontofx {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->r90_anousu = ($this->r90_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_anousu"]:$this->r90_anousu);
-       $this->r90_mesusu = ($this->r90_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_mesusu"]:$this->r90_mesusu);
-       $this->r90_regist = ($this->r90_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_regist"]:$this->r90_regist);
+       $this->r90_anousu = ($this->r90_anousu === 0 || $this->r90_anousu === 0.0 || $this->r90_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_anousu"]:$this->r90_anousu);
+       $this->r90_mesusu = ($this->r90_mesusu === 0 || $this->r90_mesusu === 0.0 || $this->r90_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_mesusu"]:$this->r90_mesusu);
+       $this->r90_regist = ($this->r90_regist === 0 || $this->r90_regist === 0.0 || $this->r90_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_regist"]:$this->r90_regist);
        $this->r90_rubric = ($this->r90_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_rubric"]:$this->r90_rubric);
-       $this->r90_valor = ($this->r90_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_valor"]:$this->r90_valor);
-       $this->r90_quant = ($this->r90_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_quant"]:$this->r90_quant);
+       $this->r90_valor = ($this->r90_valor === 0 || $this->r90_valor === 0.0 || $this->r90_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_valor"]:$this->r90_valor);
+       $this->r90_quant = ($this->r90_quant === 0 || $this->r90_quant === 0.0 || $this->r90_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_quant"]:$this->r90_quant);
        $this->r90_lotac = ($this->r90_lotac == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_lotac"]:$this->r90_lotac);
        $this->r90_datlim = ($this->r90_datlim == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_datlim"]:$this->r90_datlim);
-       $this->r90_instit = ($this->r90_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_instit"]:$this->r90_instit);
+       $this->r90_instit = ($this->r90_instit === 0 || $this->r90_instit === 0.0 || $this->r90_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_instit"]:$this->r90_instit);
      }else{
-       $this->r90_anousu = ($this->r90_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_anousu"]:$this->r90_anousu);
-       $this->r90_mesusu = ($this->r90_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_mesusu"]:$this->r90_mesusu);
-       $this->r90_regist = ($this->r90_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_regist"]:$this->r90_regist);
+       $this->r90_anousu = ($this->r90_anousu === 0 || $this->r90_anousu === 0.0 || $this->r90_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_anousu"]:$this->r90_anousu);
+       $this->r90_mesusu = ($this->r90_mesusu === 0 || $this->r90_mesusu === 0.0 || $this->r90_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_mesusu"]:$this->r90_mesusu);
+       $this->r90_regist = ($this->r90_regist === 0 || $this->r90_regist === 0.0 || $this->r90_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_regist"]:$this->r90_regist);
        $this->r90_rubric = ($this->r90_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["r90_rubric"]:$this->r90_rubric);
      }
    }
@@ -140,7 +140,7 @@ class cl_pontofx {
        $this->r90_mesusu = $r90_mesusu;
        $this->r90_regist = $r90_regist;
        $this->r90_rubric = $r90_rubric;
-     if(($this->r90_anousu == null) || ($this->r90_anousu == "") ){
+     if(($this->r90_anousu == null) || ($this->r90_anousu === 0 || $this->r90_anousu === 0.0 || $this->r90_anousu == "") ){
        $this->erro_sql = " Campo r90_anousu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -148,7 +148,7 @@ class cl_pontofx {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r90_mesusu == null) || ($this->r90_mesusu == "") ){
+     if(($this->r90_mesusu == null) || ($this->r90_mesusu === 0 || $this->r90_mesusu === 0.0 || $this->r90_mesusu == "") ){
        $this->erro_sql = " Campo r90_mesusu nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -156,7 +156,7 @@ class cl_pontofx {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->r90_regist == null) || ($this->r90_regist == "") ){
+     if(($this->r90_regist == null) || ($this->r90_regist === 0 || $this->r90_regist === 0.0 || $this->r90_regist == "") ){
        $this->erro_sql = " Campo r90_regist nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

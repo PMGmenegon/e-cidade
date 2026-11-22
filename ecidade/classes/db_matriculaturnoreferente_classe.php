@@ -69,11 +69,11 @@ class cl_matriculaturnoreferente {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed337_codigo = ($this->ed337_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_codigo"]:$this->ed337_codigo);
-       $this->ed337_matricula = ($this->ed337_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_matricula"]:$this->ed337_matricula);
-       $this->ed337_turmaturnoreferente = ($this->ed337_turmaturnoreferente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_turmaturnoreferente"]:$this->ed337_turmaturnoreferente);
+       $this->ed337_codigo = ($this->ed337_codigo === 0 || $this->ed337_codigo === 0.0 || $this->ed337_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_codigo"]:$this->ed337_codigo);
+       $this->ed337_matricula = ($this->ed337_matricula === 0 || $this->ed337_matricula === 0.0 || $this->ed337_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_matricula"]:$this->ed337_matricula);
+       $this->ed337_turmaturnoreferente = ($this->ed337_turmaturnoreferente === 0 || $this->ed337_turmaturnoreferente === 0.0 || $this->ed337_turmaturnoreferente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_turmaturnoreferente"]:$this->ed337_turmaturnoreferente);
      }else{
-       $this->ed337_codigo = ($this->ed337_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_codigo"]:$this->ed337_codigo);
+       $this->ed337_codigo = ($this->ed337_codigo === 0 || $this->ed337_codigo === 0.0 || $this->ed337_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed337_codigo"]:$this->ed337_codigo);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_matriculaturnoreferente {
          $this->ed337_codigo = $ed337_codigo;
        }
      }
-     if(($this->ed337_codigo == null) || ($this->ed337_codigo == "") ){
+     if(($this->ed337_codigo == null) || ($this->ed337_codigo === 0 || $this->ed337_codigo === 0.0 || $this->ed337_codigo == "") ){
        $this->erro_sql = " Campo ed337_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usu�rio: \\n\\n ".$this->erro_sql." \\n\\n";

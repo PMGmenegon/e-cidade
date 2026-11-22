@@ -66,12 +66,12 @@ class cl_regenciahorario
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->ed58_i_codigo = ($this->ed58_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_codigo"] : $this->ed58_i_codigo);
-            $this->ed58_i_regencia = ($this->ed58_i_regencia == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_regencia"] : $this->ed58_i_regencia);
-            $this->ed58_i_diasemana = ($this->ed58_i_diasemana == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_diasemana"] : $this->ed58_i_diasemana);
-            $this->ed58_i_periodo = ($this->ed58_i_periodo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_periodo"] : $this->ed58_i_periodo);
-            $this->ed58_i_rechumano = ($this->ed58_i_rechumano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_rechumano"] : $this->ed58_i_rechumano);
-            $this->ed58_tipovinculo = ($this->ed58_tipovinculo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_tipovinculo"] : $this->ed58_tipovinculo);
+            $this->ed58_i_codigo = ($this->ed58_i_codigo === 0 || $this->ed58_i_codigo === 0.0 || $this->ed58_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_codigo"] : $this->ed58_i_codigo);
+            $this->ed58_i_regencia = ($this->ed58_i_regencia === 0 || $this->ed58_i_regencia === 0.0 || $this->ed58_i_regencia == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_regencia"] : $this->ed58_i_regencia);
+            $this->ed58_i_diasemana = ($this->ed58_i_diasemana === 0 || $this->ed58_i_diasemana === 0.0 || $this->ed58_i_diasemana == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_diasemana"] : $this->ed58_i_diasemana);
+            $this->ed58_i_periodo = ($this->ed58_i_periodo === 0 || $this->ed58_i_periodo === 0.0 || $this->ed58_i_periodo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_periodo"] : $this->ed58_i_periodo);
+            $this->ed58_i_rechumano = ($this->ed58_i_rechumano === 0 || $this->ed58_i_rechumano === 0.0 || $this->ed58_i_rechumano == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_rechumano"] : $this->ed58_i_rechumano);
+            $this->ed58_tipovinculo = ($this->ed58_tipovinculo === 0 || $this->ed58_tipovinculo === 0.0 || $this->ed58_tipovinculo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_tipovinculo"] : $this->ed58_tipovinculo);
             if ($this->ed58_datainicio == "") {
                 $this->ed58_datainicio_dia = ($this->ed58_datainicio_dia == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_datainicio_dia"] : $this->ed58_datainicio_dia);
                 $this->ed58_datainicio_mes = ($this->ed58_datainicio_mes == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_datainicio_mes"] : $this->ed58_datainicio_mes);
@@ -89,7 +89,7 @@ class cl_regenciahorario
                 }
             }
         } else {
-            $this->ed58_i_codigo = ($this->ed58_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_codigo"] : $this->ed58_i_codigo);
+            $this->ed58_i_codigo = ($this->ed58_i_codigo === 0 || $this->ed58_i_codigo === 0.0 || $this->ed58_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed58_i_codigo"] : $this->ed58_i_codigo);
         }
     }
 
@@ -180,7 +180,7 @@ class cl_regenciahorario
                 $this->ed58_i_codigo = $ed58_i_codigo;
             }
         }
-        if (($this->ed58_i_codigo == null) || ($this->ed58_i_codigo == "")) {
+        if (($this->ed58_i_codigo == null) || ($this->ed58_i_codigo === 0 || $this->ed58_i_codigo === 0.0 || $this->ed58_i_codigo == "")) {
             $this->erro_sql = " Campo ed58_i_codigo não declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";
@@ -1481,7 +1481,7 @@ class cl_regenciahorario
         $sCampos = "*",
         $sOrdem = null,
         $sWhereRegencia = null,
-        $sWhereSubstituicao
+        $sWhereSubstituicao = null
     )
     {
         $sSql = "  select {$sCampos}                                                       ";
@@ -1633,7 +1633,7 @@ class cl_regenciahorario
         return $sSql;
     }
 
-    function sql_query_periodos_de_regencia($sWhereRegencia = null, $sWhereSubstituicao)
+    function sql_query_periodos_de_regencia($sWhereRegencia = null, $sWhereSubstituicao = null)
     {
         $sSql = "  select  DISTINCT                                                        ";
         $sSql .= "          ed58_i_diasemana,                                               ";
@@ -1872,9 +1872,9 @@ class cl_regenciahorario
         $camposUnion = "*",
         $ordem = null,
         $dbwhere = "",
-        $aCodigoTurno,
+        $aCodigoTurno = null,
         $dbwhereUnion = "",
-        $aCodigoTurnoUnion,
+        $aCodigoTurnoUnion = null,
         $lFazUnion = true
     )
     {

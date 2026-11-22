@@ -71,12 +71,12 @@ class cl_tabcurritipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->h02_codigo = ($this->h02_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_codigo"]:$this->h02_codigo);
+       $this->h02_codigo = ($this->h02_codigo === 0 || $this->h02_codigo === 0.0 || $this->h02_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_codigo"]:$this->h02_codigo);
        $this->h02_descr = ($this->h02_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_descr"]:$this->h02_descr);
        $this->h02_obs = ($this->h02_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_obs"]:$this->h02_obs);
        $this->h02_tipotreinamento = ($this->h02_tipotreinamento == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_tipotreinamento"]:$this->h02_tipotreinamento);
      }else{
-       $this->h02_codigo = ($this->h02_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_codigo"]:$this->h02_codigo);
+       $this->h02_codigo = ($this->h02_codigo === 0 || $this->h02_codigo === 0.0 || $this->h02_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["h02_codigo"]:$this->h02_codigo);
      }
    }
    // funcao para inclusao
@@ -127,7 +127,7 @@ class cl_tabcurritipo {
          $this->h02_codigo = $h02_codigo;
        }
      }
-     if(($this->h02_codigo == null) || ($this->h02_codigo == "") ){
+     if(($this->h02_codigo == null) || ($this->h02_codigo === 0 || $this->h02_codigo === 0.0 || $this->h02_codigo == "") ){
        $this->erro_sql = " Campo h02_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

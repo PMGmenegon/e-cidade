@@ -69,11 +69,11 @@ class cl_workflowativdb_cadattdinamico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db117_sequencial = ($this->db117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_sequencial"]:$this->db117_sequencial);
-       $this->db117_db_cadattdinamico = ($this->db117_db_cadattdinamico == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_db_cadattdinamico"]:$this->db117_db_cadattdinamico);
-       $this->db117_workflowativ = ($this->db117_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_workflowativ"]:$this->db117_workflowativ);
+       $this->db117_sequencial = ($this->db117_sequencial === 0 || $this->db117_sequencial === 0.0 || $this->db117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_sequencial"]:$this->db117_sequencial);
+       $this->db117_db_cadattdinamico = ($this->db117_db_cadattdinamico === 0 || $this->db117_db_cadattdinamico === 0.0 || $this->db117_db_cadattdinamico == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_db_cadattdinamico"]:$this->db117_db_cadattdinamico);
+       $this->db117_workflowativ = ($this->db117_workflowativ === 0 || $this->db117_workflowativ === 0.0 || $this->db117_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_workflowativ"]:$this->db117_workflowativ);
      }else{
-       $this->db117_sequencial = ($this->db117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_sequencial"]:$this->db117_sequencial);
+       $this->db117_sequencial = ($this->db117_sequencial === 0 || $this->db117_sequencial === 0.0 || $this->db117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db117_sequencial"]:$this->db117_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_workflowativdb_cadattdinamico {
          $this->db117_sequencial = $db117_sequencial;
        }
      }
-     if(($this->db117_sequencial == null) || ($this->db117_sequencial == "") ){
+     if(($this->db117_sequencial == null) || ($this->db117_sequencial === 0 || $this->db117_sequencial === 0.0 || $this->db117_sequencial == "") ){
        $this->erro_sql = " Campo db117_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

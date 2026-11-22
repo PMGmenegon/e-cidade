@@ -73,13 +73,13 @@ class cl_localatendimentosocial {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as16_sequencial = ($this->as16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_sequencial"]:$this->as16_sequencial);
-       $this->as16_tipo = ($this->as16_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_tipo"]:$this->as16_tipo);
+       $this->as16_sequencial = ($this->as16_sequencial === 0 || $this->as16_sequencial === 0.0 || $this->as16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_sequencial"]:$this->as16_sequencial);
+       $this->as16_tipo = ($this->as16_tipo === 0 || $this->as16_tipo === 0.0 || $this->as16_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_tipo"]:$this->as16_tipo);
        $this->as16_descricao = ($this->as16_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_descricao"]:$this->as16_descricao);
        $this->as16_identificadorunico = ($this->as16_identificadorunico == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_identificadorunico"]:$this->as16_identificadorunico);
-       $this->as16_db_depart = ($this->as16_db_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_db_depart"]:$this->as16_db_depart);
+       $this->as16_db_depart = ($this->as16_db_depart === 0 || $this->as16_db_depart === 0.0 || $this->as16_db_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_db_depart"]:$this->as16_db_depart);
      }else{
-       $this->as16_sequencial = ($this->as16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_sequencial"]:$this->as16_sequencial);
+       $this->as16_sequencial = ($this->as16_sequencial === 0 || $this->as16_sequencial === 0.0 || $this->as16_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as16_sequencial"]:$this->as16_sequencial);
      }
    }
    // funcao para inclusao
@@ -130,7 +130,7 @@ class cl_localatendimentosocial {
          $this->as16_sequencial = $as16_sequencial;
        }
      }
-     if(($this->as16_sequencial == null) || ($this->as16_sequencial == "") ){
+     if(($this->as16_sequencial == null) || ($this->as16_sequencial === 0 || $this->as16_sequencial === 0.0 || $this->as16_sequencial == "") ){
        $this->erro_sql = " Campo as16_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

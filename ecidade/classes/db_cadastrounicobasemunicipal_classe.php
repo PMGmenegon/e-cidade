@@ -71,12 +71,12 @@ class cl_cadastrounicobasemunicipal {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as09_sequencial = ($this->as09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_sequencial"]:$this->as09_sequencial);
-       $this->as09_tiporegistro = ($this->as09_tiporegistro == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_tiporegistro"]:$this->as09_tiporegistro);
+       $this->as09_sequencial = ($this->as09_sequencial === 0 || $this->as09_sequencial === 0.0 || $this->as09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_sequencial"]:$this->as09_sequencial);
+       $this->as09_tiporegistro = ($this->as09_tiporegistro === 0 || $this->as09_tiporegistro === 0.0 || $this->as09_tiporegistro == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_tiporegistro"]:$this->as09_tiporegistro);
        $this->as09_chaveregistro = ($this->as09_chaveregistro == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_chaveregistro"]:$this->as09_chaveregistro);
        $this->as09_conteudolinha = ($this->as09_conteudolinha == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_conteudolinha"]:$this->as09_conteudolinha);
      }else{
-       $this->as09_sequencial = ($this->as09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_sequencial"]:$this->as09_sequencial);
+       $this->as09_sequencial = ($this->as09_sequencial === 0 || $this->as09_sequencial === 0.0 || $this->as09_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as09_sequencial"]:$this->as09_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_cadastrounicobasemunicipal {
          $this->as09_sequencial = $as09_sequencial;
        }
      }
-     if(($this->as09_sequencial == null) || ($this->as09_sequencial == "") ){
+     if(($this->as09_sequencial == null) || ($this->as09_sequencial === 0 || $this->as09_sequencial === 0.0 || $this->as09_sequencial == "") ){
        $this->erro_sql = " Campo as09_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

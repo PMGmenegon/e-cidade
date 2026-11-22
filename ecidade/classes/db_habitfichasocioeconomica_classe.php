@@ -69,11 +69,11 @@ class cl_habitfichasocioeconomica {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht12_sequencial = ($this->ht12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_sequencial"]:$this->ht12_sequencial);
-       $this->ht12_avaliacaogruporesposta = ($this->ht12_avaliacaogruporesposta == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_avaliacaogruporesposta"]:$this->ht12_avaliacaogruporesposta);
-       $this->ht12_habitcandidato = ($this->ht12_habitcandidato == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_habitcandidato"]:$this->ht12_habitcandidato);
+       $this->ht12_sequencial = ($this->ht12_sequencial === 0 || $this->ht12_sequencial === 0.0 || $this->ht12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_sequencial"]:$this->ht12_sequencial);
+       $this->ht12_avaliacaogruporesposta = ($this->ht12_avaliacaogruporesposta === 0 || $this->ht12_avaliacaogruporesposta === 0.0 || $this->ht12_avaliacaogruporesposta == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_avaliacaogruporesposta"]:$this->ht12_avaliacaogruporesposta);
+       $this->ht12_habitcandidato = ($this->ht12_habitcandidato === 0 || $this->ht12_habitcandidato === 0.0 || $this->ht12_habitcandidato == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_habitcandidato"]:$this->ht12_habitcandidato);
      }else{
-       $this->ht12_sequencial = ($this->ht12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_sequencial"]:$this->ht12_sequencial);
+       $this->ht12_sequencial = ($this->ht12_sequencial === 0 || $this->ht12_sequencial === 0.0 || $this->ht12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht12_sequencial"]:$this->ht12_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_habitfichasocioeconomica {
          $this->ht12_sequencial = $ht12_sequencial;
        }
      }
-     if(($this->ht12_sequencial == null) || ($this->ht12_sequencial == "") ){
+     if(($this->ht12_sequencial == null) || ($this->ht12_sequencial === 0 || $this->ht12_sequencial === 0.0 || $this->ht12_sequencial == "") ){
        $this->erro_sql = " Campo ht12_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

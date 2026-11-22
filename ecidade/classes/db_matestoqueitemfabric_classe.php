@@ -52,7 +52,7 @@ class cl_matestoqueitemfabric {
                  m78_matfabricante = int4 = Fabricante
                  ";
    //funcao construtor da classe
-   public function cl_matestoqueitemfabric() {
+   public function __construct() {
      //classes dos rotulos dos campos
      $this->rotulo = new rotulo("matestoqueitemfabric");
      $this->pagina_retorno =  basename($GLOBALS["HTTP_SERVER_VARS"]["PHP_SELF"]);
@@ -69,11 +69,11 @@ class cl_matestoqueitemfabric {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m78_sequencial = ($this->m78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_sequencial"]:$this->m78_sequencial);
-       $this->m78_matestoqueitem = ($this->m78_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_matestoqueitem"]:$this->m78_matestoqueitem);
-       $this->m78_matfabricante = ($this->m78_matfabricante == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_matfabricante"]:$this->m78_matfabricante);
+       $this->m78_sequencial = ($this->m78_sequencial === 0 || $this->m78_sequencial === 0.0 || $this->m78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_sequencial"]:$this->m78_sequencial);
+       $this->m78_matestoqueitem = ($this->m78_matestoqueitem === 0 || $this->m78_matestoqueitem === 0.0 || $this->m78_matestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_matestoqueitem"]:$this->m78_matestoqueitem);
+       $this->m78_matfabricante = ($this->m78_matfabricante === 0 || $this->m78_matfabricante === 0.0 || $this->m78_matfabricante == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_matfabricante"]:$this->m78_matfabricante);
      }else{
-       $this->m78_sequencial = ($this->m78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_sequencial"]:$this->m78_sequencial);
+       $this->m78_sequencial = ($this->m78_sequencial === 0 || $this->m78_sequencial === 0.0 || $this->m78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["m78_sequencial"]:$this->m78_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_matestoqueitemfabric {
          $this->m78_sequencial = $m78_sequencial;
        }
      }
-     if(($this->m78_sequencial == null) || ($this->m78_sequencial == "") ){
+     if(($this->m78_sequencial == null) || ($this->m78_sequencial === 0 || $this->m78_sequencial === 0.0 || $this->m78_sequencial == "") ){
        $this->erro_sql = " Campo m78_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

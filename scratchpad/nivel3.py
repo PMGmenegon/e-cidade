@@ -13,7 +13,8 @@ Uso (da raiz do repositorio):
 Opcoes:
     --candidatas   lista as telas de inclusao dos prefixos, com a tabela de cada uma e uma sugestao
     --tabelas T    tabelas que a tela grava (padrao: a da classe que a tela instancia, achada no codigo).
-                   Todas sao fotografadas e restauradas; informe as filhas quando a tela gravar mais de uma
+                   Todas sao fotografadas e restauradas (filhas antes das maes, pela FK, em qualquer ordem
+                   informada); informe as filhas quando a tela gravar mais de uma
     --payload P    o formulario a enviar (padrao: gerado pelo scratchpad/payload_auto.py lendo a tela)
     --sid SID      sessao autenticada (padrao: a mais recente do 7.4)
 

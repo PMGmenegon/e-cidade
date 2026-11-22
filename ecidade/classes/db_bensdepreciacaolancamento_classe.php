@@ -80,11 +80,11 @@ class cl_bensdepreciacaolancamento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t78_sequencial = ($this->t78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_sequencial"]:$this->t78_sequencial);
-       $this->t78_usuario = ($this->t78_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_usuario"]:$this->t78_usuario);
-       $this->t78_instit = ($this->t78_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_instit"]:$this->t78_instit);
-       $this->t78_mes = ($this->t78_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_mes"]:$this->t78_mes);
-       $this->t78_ano = ($this->t78_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_ano"]:$this->t78_ano);
+       $this->t78_sequencial = ($this->t78_sequencial === 0 || $this->t78_sequencial === 0.0 || $this->t78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_sequencial"]:$this->t78_sequencial);
+       $this->t78_usuario = ($this->t78_usuario === 0 || $this->t78_usuario === 0.0 || $this->t78_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_usuario"]:$this->t78_usuario);
+       $this->t78_instit = ($this->t78_instit === 0 || $this->t78_instit === 0.0 || $this->t78_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_instit"]:$this->t78_instit);
+       $this->t78_mes = ($this->t78_mes === 0 || $this->t78_mes === 0.0 || $this->t78_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_mes"]:$this->t78_mes);
+       $this->t78_ano = ($this->t78_ano === 0 || $this->t78_ano === 0.0 || $this->t78_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_ano"]:$this->t78_ano);
        if($this->t78_data == ""){
          $this->t78_data_dia = ($this->t78_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_data_dia"]:$this->t78_data_dia);
          $this->t78_data_mes = ($this->t78_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_data_mes"]:$this->t78_data_mes);
@@ -95,7 +95,7 @@ class cl_bensdepreciacaolancamento {
        }
        $this->t78_estornado = ($this->t78_estornado == "f"?@$GLOBALS["HTTP_POST_VARS"]["t78_estornado"]:$this->t78_estornado);
      }else{
-       $this->t78_sequencial = ($this->t78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_sequencial"]:$this->t78_sequencial);
+       $this->t78_sequencial = ($this->t78_sequencial === 0 || $this->t78_sequencial === 0.0 || $this->t78_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t78_sequencial"]:$this->t78_sequencial);
      }
    }
    // funcao para inclusao
@@ -179,7 +179,7 @@ class cl_bensdepreciacaolancamento {
          $this->t78_sequencial = $t78_sequencial;
        }
      }
-     if(($this->t78_sequencial == null) || ($this->t78_sequencial == "") ){
+     if(($this->t78_sequencial == null) || ($this->t78_sequencial === 0 || $this->t78_sequencial === 0.0 || $this->t78_sequencial == "") ){
        $this->erro_sql = " Campo t78_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -71,13 +71,13 @@ class cl_acordoitemexecutadoempautitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac19_sequencial = ($this->ac19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequencial"]:$this->ac19_sequencial);
-       $this->ac19_sequen = ($this->ac19_sequen == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequen"]:$this->ac19_sequen);
-       $this->ac19_autori = ($this->ac19_autori == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_autori"]:$this->ac19_autori);
-       $this->ac19_acordoitemexecutado = ($this->ac19_acordoitemexecutado == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_acordoitemexecutado"]:$this->ac19_acordoitemexecutado);
+       $this->ac19_sequencial = ($this->ac19_sequencial === 0 || $this->ac19_sequencial === 0.0 || $this->ac19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequencial"]:$this->ac19_sequencial);
+       $this->ac19_sequen = ($this->ac19_sequen === 0 || $this->ac19_sequen === 0.0 || $this->ac19_sequen == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequen"]:$this->ac19_sequen);
+       $this->ac19_autori = ($this->ac19_autori === 0 || $this->ac19_autori === 0.0 || $this->ac19_autori == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_autori"]:$this->ac19_autori);
+       $this->ac19_acordoitemexecutado = ($this->ac19_acordoitemexecutado === 0 || $this->ac19_acordoitemexecutado === 0.0 || $this->ac19_acordoitemexecutado == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_acordoitemexecutado"]:$this->ac19_acordoitemexecutado);
      }else{
-       $this->ac19_sequencial = ($this->ac19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequencial"]:$this->ac19_sequencial);
-       $this->ac19_sequen = ($this->ac19_sequen == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequen"]:$this->ac19_sequen);
+       $this->ac19_sequencial = ($this->ac19_sequencial === 0 || $this->ac19_sequencial === 0.0 || $this->ac19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequencial"]:$this->ac19_sequencial);
+       $this->ac19_sequen = ($this->ac19_sequen === 0 || $this->ac19_sequen === 0.0 || $this->ac19_sequen == ""?@$GLOBALS["HTTP_POST_VARS"]["ac19_sequen"]:$this->ac19_sequen);
      }
    }
    // funcao para inclusao
@@ -125,7 +125,7 @@ class cl_acordoitemexecutadoempautitem {
          $this->ac19_sequencial = $ac19_sequencial;
        }
      }
-     if(($this->ac19_sequencial == null) || ($this->ac19_sequencial == "") ){
+     if(($this->ac19_sequencial == null) || ($this->ac19_sequencial === 0 || $this->ac19_sequencial === 0.0 || $this->ac19_sequencial == "") ){
        $this->erro_sql = " Campo ac19_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

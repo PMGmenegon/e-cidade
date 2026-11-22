@@ -81,10 +81,10 @@ class cl_cflicitavalores {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->l40_sequencial = ($this->l40_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_sequencial"]:$this->l40_sequencial);
-       $this->l40_codfclicita = ($this->l40_codfclicita == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_codfclicita"]:$this->l40_codfclicita);
-       $this->l40_valorminimo = ($this->l40_valorminimo == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_valorminimo"]:$this->l40_valorminimo);
-       $this->l40_valormaximo = ($this->l40_valormaximo == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_valormaximo"]:$this->l40_valormaximo);
+       $this->l40_sequencial = ($this->l40_sequencial === 0 || $this->l40_sequencial === 0.0 || $this->l40_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_sequencial"]:$this->l40_sequencial);
+       $this->l40_codfclicita = ($this->l40_codfclicita === 0 || $this->l40_codfclicita === 0.0 || $this->l40_codfclicita == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_codfclicita"]:$this->l40_codfclicita);
+       $this->l40_valorminimo = ($this->l40_valorminimo === 0 || $this->l40_valorminimo === 0.0 || $this->l40_valorminimo == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_valorminimo"]:$this->l40_valorminimo);
+       $this->l40_valormaximo = ($this->l40_valormaximo === 0 || $this->l40_valormaximo === 0.0 || $this->l40_valormaximo == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_valormaximo"]:$this->l40_valormaximo);
        if($this->l40_datainicial == ""){
          $this->l40_datainicial_dia = ($this->l40_datainicial_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_datainicial_dia"]:$this->l40_datainicial_dia);
          $this->l40_datainicial_mes = ($this->l40_datainicial_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_datainicial_mes"]:$this->l40_datainicial_mes);
@@ -102,7 +102,7 @@ class cl_cflicitavalores {
          }
        }
      }else{
-       $this->l40_sequencial = ($this->l40_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_sequencial"]:$this->l40_sequencial);
+       $this->l40_sequencial = ($this->l40_sequencial === 0 || $this->l40_sequencial === 0.0 || $this->l40_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["l40_sequencial"]:$this->l40_sequencial);
      }
    }
    // funcao para inclusao
@@ -177,7 +177,7 @@ class cl_cflicitavalores {
          $this->l40_sequencial = $l40_sequencial;
        }
      }
-     if(($this->l40_sequencial == null) || ($this->l40_sequencial == "") ){
+     if(($this->l40_sequencial == null) || ($this->l40_sequencial === 0 || $this->l40_sequencial === 0.0 || $this->l40_sequencial == "") ){
        $this->erro_sql = " Campo l40_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

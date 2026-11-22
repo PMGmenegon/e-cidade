@@ -71,12 +71,12 @@ class cl_workflowativandpadrao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db115_sequencial = ($this->db115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_sequencial"]:$this->db115_sequencial);
-       $this->db115_workflowativ = ($this->db115_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_workflowativ"]:$this->db115_workflowativ);
-       $this->db115_codigo = ($this->db115_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_codigo"]:$this->db115_codigo);
-       $this->db115_ordem = ($this->db115_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_ordem"]:$this->db115_ordem);
+       $this->db115_sequencial = ($this->db115_sequencial === 0 || $this->db115_sequencial === 0.0 || $this->db115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_sequencial"]:$this->db115_sequencial);
+       $this->db115_workflowativ = ($this->db115_workflowativ === 0 || $this->db115_workflowativ === 0.0 || $this->db115_workflowativ == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_workflowativ"]:$this->db115_workflowativ);
+       $this->db115_codigo = ($this->db115_codigo === 0 || $this->db115_codigo === 0.0 || $this->db115_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_codigo"]:$this->db115_codigo);
+       $this->db115_ordem = ($this->db115_ordem === 0 || $this->db115_ordem === 0.0 || $this->db115_ordem == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_ordem"]:$this->db115_ordem);
      }else{
-       $this->db115_sequencial = ($this->db115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_sequencial"]:$this->db115_sequencial);
+       $this->db115_sequencial = ($this->db115_sequencial === 0 || $this->db115_sequencial === 0.0 || $this->db115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db115_sequencial"]:$this->db115_sequencial);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_workflowativandpadrao {
          $this->db115_sequencial = $db115_sequencial;
        }
      }
-     if(($this->db115_sequencial == null) || ($this->db115_sequencial == "") ){
+     if(($this->db115_sequencial == null) || ($this->db115_sequencial === 0 || $this->db115_sequencial === 0.0 || $this->db115_sequencial == "") ){
        $this->erro_sql = " Campo db115_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

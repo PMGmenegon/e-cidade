@@ -87,9 +87,9 @@ class cl_registroprecomovimentacaoitens {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc66_sequencial = ($this->pc66_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_sequencial"]:$this->pc66_sequencial);
-       $this->pc66_registroprecomovimentacao = ($this->pc66_registroprecomovimentacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_registroprecomovimentacao"]:$this->pc66_registroprecomovimentacao);
-       $this->pc66_orcamforne = ($this->pc66_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_orcamforne"]:$this->pc66_orcamforne);
+       $this->pc66_sequencial = ($this->pc66_sequencial === 0 || $this->pc66_sequencial === 0.0 || $this->pc66_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_sequencial"]:$this->pc66_sequencial);
+       $this->pc66_registroprecomovimentacao = ($this->pc66_registroprecomovimentacao === 0 || $this->pc66_registroprecomovimentacao === 0.0 || $this->pc66_registroprecomovimentacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_registroprecomovimentacao"]:$this->pc66_registroprecomovimentacao);
+       $this->pc66_orcamforne = ($this->pc66_orcamforne === 0 || $this->pc66_orcamforne === 0.0 || $this->pc66_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_orcamforne"]:$this->pc66_orcamforne);
        if($this->pc66_datainicial == ""){
          $this->pc66_datainicial_dia = ($this->pc66_datainicial_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_datainicial_dia"]:$this->pc66_datainicial_dia);
          $this->pc66_datainicial_mes = ($this->pc66_datainicial_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_datainicial_mes"]:$this->pc66_datainicial_mes);
@@ -106,12 +106,12 @@ class cl_registroprecomovimentacaoitens {
             $this->pc66_datafinal = $this->pc66_datafinal_ano."-".$this->pc66_datafinal_mes."-".$this->pc66_datafinal_dia;
          }
        }
-       $this->pc66_pcorcamitem = ($this->pc66_pcorcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_pcorcamitem"]:$this->pc66_pcorcamitem);
+       $this->pc66_pcorcamitem = ($this->pc66_pcorcamitem === 0 || $this->pc66_pcorcamitem === 0.0 || $this->pc66_pcorcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_pcorcamitem"]:$this->pc66_pcorcamitem);
        $this->pc66_justificativa = ($this->pc66_justificativa == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_justificativa"]:$this->pc66_justificativa);
-       $this->pc66_tipomovimentacao = ($this->pc66_tipomovimentacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_tipomovimentacao"]:$this->pc66_tipomovimentacao);
-       $this->pc66_solicitem = ($this->pc66_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_solicitem"]:$this->pc66_solicitem);
+       $this->pc66_tipomovimentacao = ($this->pc66_tipomovimentacao === 0 || $this->pc66_tipomovimentacao === 0.0 || $this->pc66_tipomovimentacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_tipomovimentacao"]:$this->pc66_tipomovimentacao);
+       $this->pc66_solicitem = ($this->pc66_solicitem === 0 || $this->pc66_solicitem === 0.0 || $this->pc66_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_solicitem"]:$this->pc66_solicitem);
      }else{
-       $this->pc66_sequencial = ($this->pc66_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_sequencial"]:$this->pc66_sequencial);
+       $this->pc66_sequencial = ($this->pc66_sequencial === 0 || $this->pc66_sequencial === 0.0 || $this->pc66_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc66_sequencial"]:$this->pc66_sequencial);
      }
    }
    // funcao para inclusao
@@ -198,7 +198,7 @@ class cl_registroprecomovimentacaoitens {
          $this->pc66_sequencial = $pc66_sequencial;
        }
      }
-     if(($this->pc66_sequencial == null) || ($this->pc66_sequencial == "") ){
+     if(($this->pc66_sequencial == null) || ($this->pc66_sequencial === 0 || $this->pc66_sequencial === 0.0 || $this->pc66_sequencial == "") ){
        $this->erro_sql = " Campo pc66_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
