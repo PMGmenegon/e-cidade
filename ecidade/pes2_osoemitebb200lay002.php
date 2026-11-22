@@ -34,7 +34,8 @@ require_once(modification("classes/db_rharqbanco_classe.php"));
 require_once(modification("classes/db_rhgeracaofolhaarquivo_classe.php"));
 require_once(modification("classes/db_rhgeracaofolhaarquivoreg_classe.php"));
 
-parse_str(base64_decode($HTTP_SERVER_VARS["QUERY_STRING"]));
+parse_str(base64_decode($HTTP_SERVER_VARS["QUERY_STRING"]), $__qs);
+extract($__qs);
 $oGet = db_utils::postMemory($HTTP_GET_VARS);
 
 $clRhGeracaoFolha = new cl_rhgeracaofolha();

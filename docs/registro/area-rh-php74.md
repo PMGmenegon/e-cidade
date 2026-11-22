@@ -406,6 +406,30 @@ Casos (c) resolvidos sem parar, pelo critério (manter a 74 + mínimo para o 8.5
 | `pes1_relac002.php`, `pes1_rhteutri002/003.php` | `parse_str($_SERVER['QUERY_STRING'], $query)` da 74 × `parse_str(…,$__qs); extract($__qs)` da 84 | **74** | a DBSeller já passou para 2 argumentos; manter. Conferir se o restante da tela usa `$query`/`$queryString` ou variáveis extraídas |
 | `pes1_rhcontasrec003.php` | `parse_str($_SERVER["QUERY_STRING"])` (1 argumento) + `db_postmemory($_POST)` | **74**; o Rector converteu o `parse_str` | a 84 usa `$HTTP_POST_VARS`; manter `$_POST` da 74 |
 | `pes1_pontoRfx0011*.php`, `pes1_rhbases004`, `pes1_rhcadcalend002`, `pes1_rhempexcluirsol001`, `pes1_rhrubricas004/005`, `pes1_virafolha001/003` | `explode` (74) × `preg_split("#X#m")` (84) | **74** | separadores literais (`,` `-` `/` `_`): equivalentes |
+| `pes2_admitidos002.php`, `pes2_rhteutri002.php`, `pes2_relfichafinanceiratxt002.php` | 3 + 2 + 1 trechos em que a 74 **reescreveu o relatório** (exporta CSV, remove blocos e o `$pdf->Output()` final) | **74** | funcionalidade da DBSeller; o que a 84 alterou nesses trechos não existe mais na 74 |
+| `pes2_relcad001.php` | `break` fora de laço: 74 `return false;` × 84 `exit;` (6 trechos) | **74** | compila e roda no 8.5; **mudança de comportamento da DBSeller em relação ao 5.6** (o `return false` encerra só o include), não exigida pelo 8.5. Rever se o relatório deve parar |
+| `pes2_relcad001.php` | `$$variavelteste` (74) × `${$variavelteste}` (84) | **74** | variável variável simples, mesma semântica; `explode("#")` literal |
+| `pes2_analitica002`, `pes2_func_e_depend002`, `pes2_pensalim002`, `pes2_relfichafinanceira002`, `pes2_resumorecursoempenhos002`, `pes2_rhteutri002`, `pes2_termorescisao002` | `pg_num_rows($res)` (74) × `($res ? pg_num_rows($res) : null)` (84) | **74 + guarda da 84** só nessa chamada | `pg_num_rows(false)` é TypeError no 8.5 e o 7.4 só avisa e segue (`null == 0`): a guarda preserva o comportamento. Mensagens e textos da 74 mantidos (a 84 trocou acentos) |
+| `pes2_sapestagioprob002.php` | `db_formatar($datai,'d')` (74) × `db_formatar($datai, null)` (84) | **74** | a 84 mudou o argumento, o que muda a saída; não é exigência do 8.5 |
+| `pes2_admitidos002`, `pes2_func_e_depend002`, `pes2_rhteutri002`, `pes2_termorescisao002`, `pes2_relfichafinanceira002` | `parse_str($_SERVER[...], $query)`/`db_postmemory($_POST)` (74) × `$HTTP_SERVER_VARS`/`extract` (84) | **74** (o Rector converte o `parse_str` de 1 argumento) | conferir se a tela usa `$query` ou variáveis extraídas |
+
+## Lote 5 (`pes2`): resultado (22/11/2026)
+
+Commit `PHP8-99` (único). 238 arquivos alterados (+856/−638). **Modo estático**: bateria não rodada (memória da máquina).
+
+| Passo | Resultado |
+|---|---|
+| Classificação (base `e640eb485` × 74 × 84) | sem mudança 20; a1 **10**; a2 **183**; b 269; conflito **42** (29 c1 + 13 c2). Igual ao dimensionamento |
+| a1/a2 | a1 trazidos da 84; a2 por `git merge-file` (ours = 74) |
+| 42 conflitos (111 trechos) | 55 trechos só de `explode` (74) × `preg_split("#X#m")` (84) com separador literal e 2 só de formatação: **74**. Os 54 restantes lidos um a um: ver DECISÕES A REVISAR |
+| 4 Rector (pin `PHP_80`; 9 blocos de 60 sobre os 523 `.php`; até zero) | 12 arquivos alterados pelo Rector em 6 blocos; passada seguinte = 0 em todos. Nenhum ternário aninhado novo no diff |
+| 4b portão de funções (contra o 7.4) | 3 nomes novos no diff, 0 ausentes (`catch` é palavra reservada) |
+| 5 `php -l` | 238 alterados: **0 erros no 7.4 e no 8.5**; universo não medido (589 arquivos): **0 erros nos dois** |
+| LSP (4 arquivos com `extends`/`implements`) | `fpdf151/pdf1.php` e `fpdf151/pdf2.php` falham **igual nos dois** (carregados fora do contexto: `redirect()` em null; `db_debug_backtrace()` redeclarada); os outros 2 `OK` |
+| Alvos do Rector dentro da área depois | 0 |
+| 6/6b classes | **n/a**: nenhuma classe de dados alterada (só telas) |
+| 7 Bateria | **NÃO RODADA** (limite de memória). Pendente |
+| 8 Roteamento | **não feito** |
 
 ## PROGRESSO
 
@@ -417,6 +441,21 @@ Casos (c) resolvidos sem parar, pelo critério (manter a 74 + mínimo para o 8.5
 | 2 | `rec` | **feito** (20/11/2026) | `PHP8-96` (Rector + à mão) | 283 telas; 63 trazidas da 84 + 13 conflitos resolvidos; bateria **213/283 idênticas**, 70 dependem do núcleo; 213 roteadas. Ver *Lote 2 (rec): resultado* |
 | 3 | `pes3` + `pes4` | **feito, modo estático** (22/11/2026) | `PHP8-97` | 45 arquivos; `php -l` 0 erros nos dois; **bateria incompleta** (memória; até `pes3_relchequesemitidos002`); sem roteamento |
 | 4 | `pes1` | **feito, modo estático** (22/11/2026) | `PHP8-98` | 151 arquivos; `php -l` 0 erros nos dois; **bateria não rodada** (memória); sem roteamento; `pes1_reajusteprog001.php` intacto (não compila: reportar) |
-| 5 | `pes2` | pendente | — | — |
+| 5 | `pes2` | **feito, modo estático** (22/11/2026) | `PHP8-99` | 238 arquivos; `php -l` 0 erros nos dois; **bateria não rodada** (memória); sem roteamento |
 | Pedidos ao núcleo (P1–P3) | fora da área | pendente | — | aguardam o dono do núcleo |
 | Bateria completa (7.4 × 8.5) | área toda | pendente | — | ambiente do 7.4 ainda não está de pé |
+
+## PENDENTE PARA ANTES DO MERGE
+
+Esta branch (`pessoal/rh-php85`) entrega os lotes 1, 1B, 2, 3, 4 e 5 da área RH. Os três últimos (`pes3`+`pes4`, `pes1`, `pes2`) foram feitos em **modo estático** por limite de memória da máquina: **nenhuma bateria de telas rodou neles**.
+
+1. **Bateria de `pes3` + `pes4`** (parcial): a rodada foi interrompida duas vezes por memória e chegou só até `pes3_relchequesemitidos002`. Rodar o restante (`cmp.py`, `ONLY=` com `ecidade/tmp/medidas/p34_restantes.txt`) e então rotear no `faseb_map.conf` as idênticas.
+2. **Bateria de `pes1`** (369 telas): não rodada. Não há roteamento.
+3. **Bateria de `pes2`** (523 telas): não rodada. Não há roteamento.
+4. **Bateria completa da área** (7.4 × 8.5, todos os prefixos do RH) depois do item 1–3, e só com o núcleo (P1–P5) já trazido: sem ele a bateria mede o núcleo, não a tela.
+5. **Cenário de cálculo da folha** (6 tipos de folha), 7.4 × 8.5, conferindo valor a valor. **Não fazer merge antes dessa verificação.**
+6. **Levantamento de abas e redirecionamentos (passo 8b)**: `redirecionamentos.py` não foi rodado em nenhum lote da área. Precisa do 7.4 de pé e de uma sessão autenticada.
+7. **Pedidos ao núcleo** (P1–P5, acima): nenhum atendido. Sem `libs/JSON.php`, `fpdf151/fpdf.php`, `dbforms/db_funcoes.php`, `libs/db_utils.php`, `libs/db_stdlib.php` e os DAOs de `classes/`, as telas que dependem deles falham no 8.5.
+8. **Roteamento**: o proxy (`faseb_map.conf`) só tem as telas idênticas dos lotes 1 e 2 (57 + 213). `pes1`, `pes2` e `pes3`/`pes4` ainda não entraram.
+9. **Revisar** a seção DECISÕES A REVISAR (casos (c) resolvidos sem consulta, em especial `pes1_importainfla001.php` e `pes2_relcad001.php`).
+10. **Reportar à DBSeller**: `pes1_reajusteprog001.php` não compila em PHP algum (`Unmatched '}'`, linha 132); fica intacto.

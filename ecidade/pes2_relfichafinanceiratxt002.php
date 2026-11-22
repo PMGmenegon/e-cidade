@@ -38,7 +38,8 @@ $clrhpescargo = new cl_rhpescargo;
 $clrhrubricas = new cl_rhrubricas;
 $clrotulo = new rotulocampo;
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs);
+extract($__qs);
 db_postmemory($HTTP_POST_VARS);
 
 $mesi = str_pad($mesi, 2, "0", STR_PAD_LEFT);
@@ -277,7 +278,7 @@ for($i=0; $i < $clrhpessoal->numrows; $i++){
                                  r14_rubric
                        ";
   $result_dados_gerfs = db_query($sql_dados_gerfs);
-  $numrows_dados_gerfs = pg_numrows($result_dados_gerfs);
+  $numrows_dados_gerfs = ($result_dados_gerfs ? pg_numrows($result_dados_gerfs) : null);
   $mes_anterior = "";
   $ano_anterior = "";
   $contaIarray  = 1;
