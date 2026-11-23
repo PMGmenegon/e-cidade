@@ -525,7 +525,28 @@ base com os 3 PRs juntos.
 Em 21/11/2026 a `base-php85` foi para `111125fb5` (núcleo migrado e mais quatro áreas). Os 3 PRs foram refeitos sobre
 ela, de novo sem mudar nenhuma linha de código da Educação: só saíram as 134 classes que já chegaram idênticas.
 Nenhum arquivo dos PRs foi tocado de forma diferente pela base. `php -l` dos 463 arquivos `.php`, já juntos com a
-base: 0 erros no 7.4 e no 8.5. A bateria acima foi medida sobre `6d881031b`.
+base: 0 erros no 7.4 e no 8.5.
+
+### Regressão sobre a `base-php85` de 21/11/2026 (`111125fb5`)
+
+Bateria repetida em 23/11/2026 no mesmo ambiente e universo: a base sozinha e a base com os 3 PRs juntos.
+
+| Bloco | `base-php85` idêntico / diverge | `base-php85` + 3 PRs idêntico / diverge |
+| --- | --- | --- |
+| Classes (320) | 112 / 206 | 310 / 8 |
+| Sintaxe (1.569) | 1.563 / 2 | 1.565 / 0 |
+| Telas (1.570) | 1.322 / 111 | 1.415 / 16 |
+
+- **293 casos de diverge → idêntico** com os PRs; **nenhum caso que era idêntico na base passou a divergir**.
+- As **16 telas** que ainda divergem são exatamente as 16 da regressão final que quebram **também no 7.4** (HTTP 500
+  nos dois lados; só o tamanho da página de erro muda). Bug antigo, registrado e não corrigido. As 4 que paravam no
+  núcleo deixaram de divergir com o núcleo da base.
+- As **8 classes** que ainda divergem são de outras áreas (`lab`, `rh`, `sau`, `tfd`, `veic`).
+- Duas telas foram de diverge para inconclusivo (resposta vazia nos dois lados): `edu2_gfcoescfreqseries002.php` e
+  `mer4_mer_subitem_ajax004.php`.
+- Comparado com a rodada de 20/11 com os PRs: mais 270 casos idênticos, e nenhum que era idêntico deixou de ser. Os
+  inconclusivos subiram de 78 para 131 telas: são telas que agora dão a mesma página de erro (ou resposta vazia) nos
+  dois runtimes, ou seja, o 8.5 passou a responder como o 7.4, mas a bateria não consegue exercitá-las.
 
 ### Fora da Educação (anotado para os donos)
 
