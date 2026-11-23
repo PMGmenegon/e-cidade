@@ -370,25 +370,28 @@ apareceu neles virou anotação para o dono (abaixo).
 
 ### Commits e pull requests
 
-Três PRs para `base-php85` (a branch que recebe o código migrado), ligados à issue da área. Cada um parte da
-`base-php85` de 21/11/2026 (`111125fb5`, que já traz o núcleo migrado e os PRs do Tributário, Financeiro, Gestor,
-Cidadão, Integrações e Assistência Social, além da correção de `parse_str` do grupo para todas as áreas). São
-independentes entre si e, juntos, dão a árvore final da área. Commits do Rector e manuais nunca misturados.
+Um único PR para `base-php85` (a branch que recebe o código migrado), ligado à issue da área, a partir da branch
+`educacao/php85-migrado`. Ela parte da `base-php85` de 21/11/2026 (`111125fb5`, que já traz o núcleo migrado e os PRs
+do Tributário, Financeiro, Gestor, Cidadão, Integrações e Assistência Social, além da correção de `parse_str` do grupo
+para todas as áreas). Commits do Rector e manuais nunca misturados: primeiro vêm os do Rector, depois os manuais, para
+que a revisão possa ir commit a commit.
 
-| Branch do PR | Commits | Arquivos |
+| Grupo de commits (em ordem) | Conteúdo | Arquivos |
 | --- | --- | --- |
-| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 50 classes `ed*`/`bi*` achadas pela regressão | 343 |
-| `educacao/telas` | Rector em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 11 telas | 23 |
-| `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; guardas achadas na regressão final; este registro | 104 |
+| Rector nas classes | classes das tabelas; classes que ficaram fora dos alvos (guarda `0 == ""`); 50 classes `ed*`/`bi*` achadas pela regressão | 343 |
+| Rector em telas, `model` e `src` | `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 11 telas | 23 |
+| Correções manuais | correções fiéis ao 7.4; guardas achadas na regressão final; este registro. **Revisar linha a linha** | 104 |
+
+No total são 464 arquivos. Os três grupos foram preparados antes como PRs separados e independentes, cada um aplicando
+direto na base. Depois foram juntados num PR só sem mudar nenhum arquivo: a árvore final é a mesma.
 
 O trabalho foi feito sobre `982a95fb5`. Nas telas e nas `func_`, `parse_str` com um argumento usava a forma decidida
 pelo grupo em 19/11/2026 (decisão 3): `parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`,
 numa linha, com o espaçamento original de `x`, igual byte a byte à correção do grupo. Quando essa correção entrou na
 `base-php85`, 509 telas e todas as 258 janelas `func_` da Educação ficaram **idênticas** às nossas, e 4 classes
 ficaram idênticas pelo PR do Financeiro. Depois, o PR da Assistência Social levou à base mais 134 classes de dados que
-as telas `soc` usam, com o mesmo Rector: ficaram **idênticas** às nossas, sem conflito. Esses arquivos saíram dos PRs,
-e o PR das `func_` deixou de existir. No
-`edu2_certconclusao002.php` ficou só a linha do ternário: o Rector tinha tirado os espaços do fim de 64 linhas em
+as telas `soc` usam, com o mesmo Rector: ficaram **idênticas** às nossas, sem conflito. Esses arquivos saíram do PR,
+incluindo todas as `func_`. No `edu2_certconclusao002.php` ficou só a linha do ternário: o Rector tinha tirado os espaços do fim de 64 linhas em
 branco, sem efeito na saída.
 
 ### O que o 7.4 faz e o 8.5 não (medido nos dois containers)
@@ -529,7 +532,8 @@ base: 0 erros no 7.4 e no 8.5.
 
 ### Regressão sobre a `base-php85` de 21/11/2026 (`111125fb5`)
 
-Bateria repetida em 23/11/2026 no mesmo ambiente e universo: a base sozinha e a base com os 3 PRs juntos.
+Bateria repetida em 23/11/2026 no mesmo ambiente e universo: a base sozinha e a base com os 3 PRs juntos (a mesma
+árvore do PR único de `educacao/php85-migrado`).
 
 | Bloco | `base-php85` idêntico / diverge | `base-php85` + 3 PRs idêntico / diverge |
 | --- | --- | --- |
