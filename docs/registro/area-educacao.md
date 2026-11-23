@@ -371,13 +371,13 @@ apareceu neles virou anotação para o dono (abaixo).
 ### Commits e pull requests
 
 Três PRs para `base-php85` (a branch que recebe o código migrado), ligados à issue da área. Cada um parte da
-`base-php85` de 20/11/2026 (`6d881031b`, que já traz os PRs do Tributário e do Financeiro e a correção de `parse_str`
-do grupo para todas as áreas). São independentes entre si e, juntos, dão a árvore final da área. Commits do Rector e
-manuais nunca misturados.
+`base-php85` de 21/11/2026 (`111125fb5`, que já traz o núcleo migrado e os PRs do Tributário, Financeiro, Gestor,
+Cidadão, Integrações e Assistência Social, além da correção de `parse_str` do grupo para todas as áreas). São
+independentes entre si e, juntos, dão a árvore final da área. Commits do Rector e manuais nunca misturados.
 
 | Branch do PR | Commits | Arquivos |
 | --- | --- | --- |
-| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 50 classes `ed*`/`bi*` achadas pela regressão | 477 |
+| `educacao/classes` | Rector nas classes das tabelas; Rector nas classes que ficaram fora dos alvos (guarda `0 == ""`); Rector em 50 classes `ed*`/`bi*` achadas pela regressão | 343 |
 | `educacao/telas` | Rector em `model/educacao` e `src/Educacao`; ternário aninhado em 2 telas; `$$x` → `${$x}` em 11 telas | 23 |
 | `educacao/correcoes-manuais` | Correções manuais fiéis ao 7.4; guardas achadas na regressão final; este registro | 104 |
 
@@ -385,7 +385,9 @@ O trabalho foi feito sobre `982a95fb5`. Nas telas e nas `func_`, `parse_str` com
 pelo grupo em 19/11/2026 (decisão 3): `parse_str(x, $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);`,
 numa linha, com o espaçamento original de `x`, igual byte a byte à correção do grupo. Quando essa correção entrou na
 `base-php85`, 509 telas e todas as 258 janelas `func_` da Educação ficaram **idênticas** às nossas, e 4 classes
-ficaram idênticas pelo PR do Financeiro. Esses arquivos saíram dos PRs, e o PR das `func_` deixou de existir. No
+ficaram idênticas pelo PR do Financeiro. Depois, o PR da Assistência Social levou à base mais 134 classes de dados que
+as telas `soc` usam, com o mesmo Rector: ficaram **idênticas** às nossas, sem conflito. Esses arquivos saíram dos PRs,
+e o PR das `func_` deixou de existir. No
 `edu2_certconclusao002.php` ficou só a linha do ternário: o Rector tinha tirado os espaços do fim de 64 linhas em
 branco, sem efeito na saída.
 
@@ -520,13 +522,17 @@ base com os 3 PRs juntos.
 - Comparado com a rodada final sobre a base antiga (mesmo código da Educação): mais 101 casos idênticos, graças às
   guardas de núcleo que entraram na base, e nenhum caso que era idêntico deixou de ser.
 
+Em 21/11/2026 a `base-php85` foi para `111125fb5` (núcleo migrado e mais quatro áreas). Os 3 PRs foram refeitos sobre
+ela, de novo sem mudar nenhuma linha de código da Educação: só saíram as 134 classes que já chegaram idênticas.
+Nenhum arquivo dos PRs foi tocado de forma diferente pela base. `php -l` dos 463 arquivos `.php`, já juntos com a
+base: 0 erros no 7.4 e no 8.5. A bateria acima foi medida sobre `6d881031b`.
+
 ### Fora da Educação (anotado para os donos)
 
 - `libs/db_app.utils.php:39` (`DB_VERSION` indefinida com a sessão da API) e o retorno
-  antecipado do `db_conecta` — núcleo; a `base-php84` já usa `defined()`.
-- `fpdf151/fpdf.php`: `ParseError` no 8.5 — derruba **todo** relatório em PDF (inclusive os
-  `RelatorioDiarioClasse*` da Educação, que só falham por herdarem dele). O Financeiro portou
-  na 84.
+  antecipado do `db_conecta` — núcleo; a `base-php85` já usa `defined()` desde 21/11.
+- `fpdf151/fpdf.php`: `ParseError` no 8.5 — derrubava **todo** relatório em PDF (inclusive os
+  `RelatorioDiarioClasse*` da Educação, que só falham por herdarem dele). Corrigido na `base-php85` em 21/11.
 - Tabela `configuracoes.itens_menu_usuario_favoritos` ausente no banco de teste.
 - Sessão de login real recusada pelas telas legadas na `base-php74`; só a sessão da API serve.
 - A verificação por lote ainda confere as funções novas contra o 5.6 (`extract`, `is_array`, `preg_split`
@@ -543,8 +549,8 @@ base com os 3 PRs juntos.
   `mer1_mer_desper_und003`.
 - `src/V3/Error/Handler/Error.php`: `_handle` e `handle` exigem 5 parâmetros (`$context`), mas o PHP 8 chama o
   tratador de erros com 4. Todo aviso vira `ArgumentCountError` e a página para no meio (HTTP 200 cortado ou 500).
-  Nenhuma branch corrige ainda; com `$context = null` o comportamento volta ao do 7.4.
-- `libs/db_stdlibwebseller.php:437` e `std/DBDate.php:497`: ver a regressão final acima. O `libs/db_libsys.php:146`
-  já tem guarda na `base-php85`.
+  Ainda sem correção na `base-php85` de 21/11; com `$context = null` o comportamento volta ao do 7.4.
+- `libs/db_stdlibwebseller.php:437`, `std/DBDate.php:497` e `libs/db_libsys.php:146`: ver a regressão final acima.
+  Os três já estão corrigidos na `base-php85`.
 - Bateria byte a byte (passo 7) bloqueada até o núcleo ser portado; roteamento no nginx
   deliberadamente **não** feito.
