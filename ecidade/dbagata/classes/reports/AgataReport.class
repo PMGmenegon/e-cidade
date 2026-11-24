@@ -119,7 +119,7 @@ class AgataReport
                 {
                     if (strstr($Formulafull, "($count)") or strstr($Formulafull, "($count,)"))
                     {
-                        $this->newSummary[$string_key][$count]['sum'] += $Cell;
+                        $this->newSummary[$string_key][$count]['sum'] += (is_string($Cell) && !preg_match('/^\s*[+-]?\.?\d/', $Cell) ? 0 : $Cell);
                         $this->newSummary[$string_key][$count]['count'] ++;
                         $this->newSummary[$string_key][$count]['dist'][$Cell] ++;
                         $this->newSummary[$string_key][$count]['max'] = ($Cell > $this->newSummary[$string_key][$count]['max']) ? $Cell : $this->newSummary[$string_key][$count]['max'];
@@ -165,7 +165,7 @@ class AgataReport
                         $average =  $this->newSummary[$string_key][$count]['sum'] /
                                     $this->newSummary[$string_key][$count]['count'];
                         
-                        $this->newSummary[$string_key][$count]['sum_var'] += pow($Cell - $average, 2);
+                        $this->newSummary[$string_key][$count]['sum_var'] += pow((is_string($Cell) && !preg_match('/^\s*[+-]?\.?\d/', $Cell) ? 0 : $Cell) - $average, 2);
                     }
                     $count ++;
                 }
@@ -211,7 +211,7 @@ class AgataReport
                             }
                             
                             $this->BreakMatrix[$break][$column][] = $cellBreakContent;
-                            $ClearColumns = @array_merge($ClearColumns, $columns);
+                            $ClearColumns = (is_array($ClearColumns) && is_array($columns) ? @array_merge($ClearColumns, $columns) : null);
                         }
                         $FormattedCell = FormatMask($this->Adjustments[$y]['Mask'], $QueryLine[$break]);
                         if ($this->ShowHeader)
@@ -278,7 +278,7 @@ class AgataReport
                     
                     $this->BreakMatrix[$break][$column][] = $cellBreakContent;
                     // colunas afetadas pela fórmula
-                    $ClearColumns = @array_merge($ClearColumns, $columns);
+                    $ClearColumns = (is_array($ClearColumns) && is_array($columns) ? @array_merge($ClearColumns, $columns) : null);
                     
                     $this->Headers[$CountBreak] = trim($QueryCell);
                 }

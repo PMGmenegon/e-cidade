@@ -69,11 +69,11 @@ class cl_acordoitemexecutadoempenho {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ac39_sequencial = ($this->ac39_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_sequencial"]:$this->ac39_sequencial);
-       $this->ac39_acordoitemexecutadoperiodo = ($this->ac39_acordoitemexecutadoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_acordoitemexecutadoperiodo"]:$this->ac39_acordoitemexecutadoperiodo);
-       $this->ac39_numemp = ($this->ac39_numemp == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_numemp"]:$this->ac39_numemp);
+       $this->ac39_sequencial = ($this->ac39_sequencial === 0 || $this->ac39_sequencial === 0.0 || $this->ac39_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_sequencial"]:$this->ac39_sequencial);
+       $this->ac39_acordoitemexecutadoperiodo = ($this->ac39_acordoitemexecutadoperiodo === 0 || $this->ac39_acordoitemexecutadoperiodo === 0.0 || $this->ac39_acordoitemexecutadoperiodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_acordoitemexecutadoperiodo"]:$this->ac39_acordoitemexecutadoperiodo);
+       $this->ac39_numemp = ($this->ac39_numemp === 0 || $this->ac39_numemp === 0.0 || $this->ac39_numemp == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_numemp"]:$this->ac39_numemp);
      }else{
-       $this->ac39_sequencial = ($this->ac39_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_sequencial"]:$this->ac39_sequencial);
+       $this->ac39_sequencial = ($this->ac39_sequencial === 0 || $this->ac39_sequencial === 0.0 || $this->ac39_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ac39_sequencial"]:$this->ac39_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_acordoitemexecutadoempenho {
          $this->ac39_sequencial = $ac39_sequencial;
        }
      }
-     if(($this->ac39_sequencial == null) || ($this->ac39_sequencial == "") ){
+     if(($this->ac39_sequencial == null) || ($this->ac39_sequencial === 0 || $this->ac39_sequencial === 0.0 || $this->ac39_sequencial == "") ){
        $this->erro_sql = " Campo ac39_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

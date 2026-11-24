@@ -87,10 +87,10 @@ class cl_cursosocial {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as19_sequencial = ($this->as19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_sequencial"]:$this->as19_sequencial);
+       $this->as19_sequencial = ($this->as19_sequencial === 0 || $this->as19_sequencial === 0.0 || $this->as19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_sequencial"]:$this->as19_sequencial);
        $this->as19_nome = ($this->as19_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_nome"]:$this->as19_nome);
        $this->as19_detalhamento = ($this->as19_detalhamento == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_detalhamento"]:$this->as19_detalhamento);
-       $this->as19_tabcurritipo = ($this->as19_tabcurritipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_tabcurritipo"]:$this->as19_tabcurritipo);
+       $this->as19_tabcurritipo = ($this->as19_tabcurritipo === 0 || $this->as19_tabcurritipo === 0.0 || $this->as19_tabcurritipo == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_tabcurritipo"]:$this->as19_tabcurritipo);
        if($this->as19_inicio == ""){
          $this->as19_inicio_dia = ($this->as19_inicio_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_inicio_dia"]:$this->as19_inicio_dia);
          $this->as19_inicio_mes = ($this->as19_inicio_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_inicio_mes"]:$this->as19_inicio_mes);
@@ -107,11 +107,11 @@ class cl_cursosocial {
             $this->as19_fim = $this->as19_fim_ano."-".$this->as19_fim_mes."-".$this->as19_fim_dia;
          }
        }
-       $this->as19_horaaulasdia = ($this->as19_horaaulasdia == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_horaaulasdia"]:$this->as19_horaaulasdia);
-       $this->as19_ministrante = ($this->as19_ministrante == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_ministrante"]:$this->as19_ministrante);
-       $this->as19_responsavel = ($this->as19_responsavel == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_responsavel"]:$this->as19_responsavel);
+       $this->as19_horaaulasdia = ($this->as19_horaaulasdia === 0 || $this->as19_horaaulasdia === 0.0 || $this->as19_horaaulasdia == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_horaaulasdia"]:$this->as19_horaaulasdia);
+       $this->as19_ministrante = ($this->as19_ministrante === 0 || $this->as19_ministrante === 0.0 || $this->as19_ministrante == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_ministrante"]:$this->as19_ministrante);
+       $this->as19_responsavel = ($this->as19_responsavel === 0 || $this->as19_responsavel === 0.0 || $this->as19_responsavel == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_responsavel"]:$this->as19_responsavel);
      }else{
-       $this->as19_sequencial = ($this->as19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_sequencial"]:$this->as19_sequencial);
+       $this->as19_sequencial = ($this->as19_sequencial === 0 || $this->as19_sequencial === 0.0 || $this->as19_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as19_sequencial"]:$this->as19_sequencial);
      }
    }
    // funcao para inclusao
@@ -213,7 +213,7 @@ class cl_cursosocial {
          $this->as19_sequencial = $as19_sequencial;
        }
      }
-     if(($this->as19_sequencial == null) || ($this->as19_sequencial == "") ){
+     if(($this->as19_sequencial == null) || ($this->as19_sequencial === 0 || $this->as19_sequencial === 0.0 || $this->as19_sequencial == "") ){
        $this->erro_sql = " Campo as19_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

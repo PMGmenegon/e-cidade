@@ -78,7 +78,7 @@ class cl_procarquiv {
    // funcao para atualizar campos
    function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->p67_codproc = ($this->p67_codproc == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codproc"]:$this->p67_codproc);
+       $this->p67_codproc = ($this->p67_codproc === 0 || $this->p67_codproc === 0.0 || $this->p67_codproc == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codproc"]:$this->p67_codproc);
        if($this->p67_dtarq == ""){
          $this->p67_dtarq_dia = ($this->p67_dtarq_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_dtarq_dia"]:$this->p67_dtarq_dia);
          $this->p67_dtarq_mes = ($this->p67_dtarq_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_dtarq_mes"]:$this->p67_dtarq_mes);
@@ -88,11 +88,11 @@ class cl_procarquiv {
          }
        }
        $this->p67_historico = ($this->p67_historico == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_historico"]:$this->p67_historico);
-       $this->p67_id_usuario = ($this->p67_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_id_usuario"]:$this->p67_id_usuario);
-       $this->p67_coddepto = ($this->p67_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_coddepto"]:$this->p67_coddepto);
-       $this->p67_codarquiv = ($this->p67_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codarquiv"]:$this->p67_codarquiv);
+       $this->p67_id_usuario = ($this->p67_id_usuario === 0 || $this->p67_id_usuario === 0.0 || $this->p67_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_id_usuario"]:$this->p67_id_usuario);
+       $this->p67_coddepto = ($this->p67_coddepto === 0 || $this->p67_coddepto === 0.0 || $this->p67_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_coddepto"]:$this->p67_coddepto);
+       $this->p67_codarquiv = ($this->p67_codarquiv === 0 || $this->p67_codarquiv === 0.0 || $this->p67_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codarquiv"]:$this->p67_codarquiv);
      }else{
-       $this->p67_codarquiv = ($this->p67_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codarquiv"]:$this->p67_codarquiv);
+       $this->p67_codarquiv = ($this->p67_codarquiv === 0 || $this->p67_codarquiv === 0.0 || $this->p67_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p67_codarquiv"]:$this->p67_codarquiv);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_procarquiv {
          $this->p67_codarquiv = $p67_codarquiv;
        }
      }
-     if(($this->p67_codarquiv == null) || ($this->p67_codarquiv == "") ){
+     if(($this->p67_codarquiv == null) || ($this->p67_codarquiv === 0 || $this->p67_codarquiv === 0.0 || $this->p67_codarquiv == "") ){
        $this->erro_sql = " Campo p67_codarquiv nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -128,10 +128,10 @@ class cl_db_ouvidoria {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->po01_sequencial = ($this->po01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_sequencial"]:$this->po01_sequencial);
+       $this->po01_sequencial = ($this->po01_sequencial === 0 || $this->po01_sequencial === 0.0 || $this->po01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_sequencial"]:$this->po01_sequencial);
        $this->po01_nome = ($this->po01_nome == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_nome"]:$this->po01_nome);
        $this->po01_email = ($this->po01_email == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_email"]:$this->po01_email);
-       $this->po01_tipo = ($this->po01_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_tipo"]:$this->po01_tipo);
+       $this->po01_tipo = ($this->po01_tipo === 0 || $this->po01_tipo === 0.0 || $this->po01_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_tipo"]:$this->po01_tipo);
        if($this->po01_datanascimento == ""){
          $this->po01_datanascimento_dia = ($this->po01_datanascimento_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_datanascimento_dia"]:$this->po01_datanascimento_dia);
          $this->po01_datanascimento_mes = ($this->po01_datanascimento_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_datanascimento_mes"]:$this->po01_datanascimento_mes);
@@ -142,7 +142,7 @@ class cl_db_ouvidoria {
        }
        $this->po01_sexo = ($this->po01_sexo == "f"?@$GLOBALS["HTTP_POST_VARS"]["po01_sexo"]:$this->po01_sexo);
        $this->po01_profissao = ($this->po01_profissao == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_profissao"]:$this->po01_profissao);
-       $this->po01_escolaridade = ($this->po01_escolaridade == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_escolaridade"]:$this->po01_escolaridade);
+       $this->po01_escolaridade = ($this->po01_escolaridade === 0 || $this->po01_escolaridade === 0.0 || $this->po01_escolaridade == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_escolaridade"]:$this->po01_escolaridade);
        $this->po01_cpf = ($this->po01_cpf == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_cpf"]:$this->po01_cpf);
        $this->po01_rg = ($this->po01_rg == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_rg"]:$this->po01_rg);
        $this->po01_telefone = ($this->po01_telefone == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_telefone"]:$this->po01_telefone);
@@ -150,10 +150,10 @@ class cl_db_ouvidoria {
        $this->po01_enderecoresidencial = ($this->po01_enderecoresidencial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_enderecoresidencial"]:$this->po01_enderecoresidencial);
        $this->po01_enderecocomercial = ($this->po01_enderecocomercial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_enderecocomercial"]:$this->po01_enderecocomercial);
        $this->po01_cidade = ($this->po01_cidade == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_cidade"]:$this->po01_cidade);
-       $this->po01_db_uf = ($this->po01_db_uf == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_db_uf"]:$this->po01_db_uf);
+       $this->po01_db_uf = ($this->po01_db_uf === 0 || $this->po01_db_uf === 0.0 || $this->po01_db_uf == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_db_uf"]:$this->po01_db_uf);
        $this->po01_sigilo = ($this->po01_sigilo == "f"?@$GLOBALS["HTTP_POST_VARS"]["po01_sigilo"]:$this->po01_sigilo);
        $this->po01_resposta = ($this->po01_resposta == "f"?@$GLOBALS["HTTP_POST_VARS"]["po01_resposta"]:$this->po01_resposta);
-       $this->po01_tiporesposta = ($this->po01_tiporesposta == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_tiporesposta"]:$this->po01_tiporesposta);
+       $this->po01_tiporesposta = ($this->po01_tiporesposta === 0 || $this->po01_tiporesposta === 0.0 || $this->po01_tiporesposta == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_tiporesposta"]:$this->po01_tiporesposta);
        $this->po01_assunto = ($this->po01_assunto == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_assunto"]:$this->po01_assunto);
        $this->po01_mensagem = ($this->po01_mensagem == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_mensagem"]:$this->po01_mensagem);
        $this->po01_url01 = ($this->po01_url01 == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_url01"]:$this->po01_url01);
@@ -176,9 +176,9 @@ class cl_db_ouvidoria {
          }
        }
        $this->po01_texto = ($this->po01_texto == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_texto"]:$this->po01_texto);
-       $this->po01_id_usuario = ($this->po01_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_id_usuario"]:$this->po01_id_usuario);
+       $this->po01_id_usuario = ($this->po01_id_usuario === 0 || $this->po01_id_usuario === 0.0 || $this->po01_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_id_usuario"]:$this->po01_id_usuario);
      }else{
-       $this->po01_sequencial = ($this->po01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_sequencial"]:$this->po01_sequencial);
+       $this->po01_sequencial = ($this->po01_sequencial === 0 || $this->po01_sequencial === 0.0 || $this->po01_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["po01_sequencial"]:$this->po01_sequencial);
      }
    }
    // funcao para inclusao
@@ -322,7 +322,7 @@ class cl_db_ouvidoria {
          $this->po01_sequencial = $po01_sequencial;
        }
      }
-     if(($this->po01_sequencial == null) || ($this->po01_sequencial == "") ){
+     if(($this->po01_sequencial == null) || ($this->po01_sequencial === 0 || $this->po01_sequencial === 0.0 || $this->po01_sequencial == "") ){
        $this->erro_sql = " Campo po01_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

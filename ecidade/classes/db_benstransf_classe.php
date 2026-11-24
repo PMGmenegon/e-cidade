@@ -82,7 +82,7 @@ class cl_benstransf {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t93_codtran = ($this->t93_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_codtran"]:$this->t93_codtran);
+       $this->t93_codtran = ($this->t93_codtran === 0 || $this->t93_codtran === 0.0 || $this->t93_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_codtran"]:$this->t93_codtran);
        if($this->t93_data == ""){
          $this->t93_data_dia = ($this->t93_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_data_dia"]:$this->t93_data_dia);
          $this->t93_data_mes = ($this->t93_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_data_mes"]:$this->t93_data_mes);
@@ -91,14 +91,14 @@ class cl_benstransf {
             $this->t93_data = $this->t93_data_ano."-".$this->t93_data_mes."-".$this->t93_data_dia;
          }
        }
-       $this->t93_depart = ($this->t93_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_depart"]:$this->t93_depart);
-       $this->t93_id_usuario = ($this->t93_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_id_usuario"]:$this->t93_id_usuario);
+       $this->t93_depart = ($this->t93_depart === 0 || $this->t93_depart === 0.0 || $this->t93_depart == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_depart"]:$this->t93_depart);
+       $this->t93_id_usuario = ($this->t93_id_usuario === 0 || $this->t93_id_usuario === 0.0 || $this->t93_id_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_id_usuario"]:$this->t93_id_usuario);
        $this->t93_obs = ($this->t93_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_obs"]:$this->t93_obs);
-       $this->t93_instit = ($this->t93_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_instit"]:$this->t93_instit);
-       $this->t93_clabens = ($this->t93_clabens == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_clabens"]:$this->t93_clabens);
+       $this->t93_instit = ($this->t93_instit === 0 || $this->t93_instit === 0.0 || $this->t93_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_instit"]:$this->t93_instit);
+       $this->t93_clabens = ($this->t93_clabens === 0 || $this->t93_clabens === 0.0 || $this->t93_clabens == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_clabens"]:$this->t93_clabens);
        $this->t93_divisao = ($this->t93_divisao == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_divisao"]:$this->t93_divisao);
      }else{
-       $this->t93_codtran = ($this->t93_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_codtran"]:$this->t93_codtran);
+       $this->t93_codtran = ($this->t93_codtran === 0 || $this->t93_codtran === 0.0 || $this->t93_codtran == ""?@$GLOBALS["HTTP_POST_VARS"]["t93_codtran"]:$this->t93_codtran);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_benstransf {
          $this->t93_codtran = $t93_codtran;
        }
      }
-     if(($this->t93_codtran == null) || ($this->t93_codtran == "") ){
+     if(($this->t93_codtran == null) || ($this->t93_codtran === 0 || $this->t93_codtran === 0.0 || $this->t93_codtran == "") ){
        $this->erro_sql = " Campo t93_codtran nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

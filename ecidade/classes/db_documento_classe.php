@@ -65,9 +65,9 @@ class cl_documento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db58_sequencial = ($this->db58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db58_sequencial"]:$this->db58_sequencial);
+       $this->db58_sequencial = ($this->db58_sequencial === 0 || $this->db58_sequencial === 0.0 || $this->db58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db58_sequencial"]:$this->db58_sequencial);
      }else{
-       $this->db58_sequencial = ($this->db58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db58_sequencial"]:$this->db58_sequencial);
+       $this->db58_sequencial = ($this->db58_sequencial === 0 || $this->db58_sequencial === 0.0 || $this->db58_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db58_sequencial"]:$this->db58_sequencial);
      }
    }
    // funcao para inclusao
@@ -97,7 +97,7 @@ class cl_documento {
          $this->db58_sequencial = $db58_sequencial;
        }
      }
-     if(($this->db58_sequencial == null) || ($this->db58_sequencial == "") ){
+     if(($this->db58_sequencial == null) || ($this->db58_sequencial === 0 || $this->db58_sequencial === 0.0 || $this->db58_sequencial == "") ){
        $this->erro_sql = " Campo db58_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

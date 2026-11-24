@@ -79,8 +79,8 @@ class cl_endereco {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db76_sequencial = ($this->db76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_sequencial"]:$this->db76_sequencial);
-       $this->db76_cadenderlocal = ($this->db76_cadenderlocal == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_cadenderlocal"]:$this->db76_cadenderlocal);
+       $this->db76_sequencial = ($this->db76_sequencial === 0 || $this->db76_sequencial === 0.0 || $this->db76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_sequencial"]:$this->db76_sequencial);
+       $this->db76_cadenderlocal = ($this->db76_cadenderlocal === 0 || $this->db76_cadenderlocal === 0.0 || $this->db76_cadenderlocal == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_cadenderlocal"]:$this->db76_cadenderlocal);
        $this->db76_complemento = ($this->db76_complemento == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_complemento"]:$this->db76_complemento);
        $this->db76_caixapostal = ($this->db76_caixapostal == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_caixapostal"]:$this->db76_caixapostal);
        $this->db76_loteamento = ($this->db76_loteamento == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_loteamento"]:$this->db76_loteamento);
@@ -88,7 +88,7 @@ class cl_endereco {
        $this->db76_pontoref = ($this->db76_pontoref == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_pontoref"]:$this->db76_pontoref);
        $this->db76_cep = ($this->db76_cep == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_cep"]:$this->db76_cep);
      }else{
-       $this->db76_sequencial = ($this->db76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_sequencial"]:$this->db76_sequencial);
+       $this->db76_sequencial = ($this->db76_sequencial === 0 || $this->db76_sequencial === 0.0 || $this->db76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db76_sequencial"]:$this->db76_sequencial);
      }
    }
    // funcao para inclusao
@@ -127,7 +127,7 @@ class cl_endereco {
          $this->db76_sequencial = $db76_sequencial;
        }
      }
-     if(($this->db76_sequencial == null) || ($this->db76_sequencial == "") ){
+     if(($this->db76_sequencial == null) || ($this->db76_sequencial === 0 || $this->db76_sequencial === 0.0 || $this->db76_sequencial == "") ){
        $this->erro_sql = " Campo db76_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

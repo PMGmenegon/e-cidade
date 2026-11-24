@@ -83,9 +83,9 @@ class cl_pcorcamforne {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc21_orcamforne = ($this->pc21_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_orcamforne"]:$this->pc21_orcamforne);
-       $this->pc21_codorc = ($this->pc21_codorc == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_codorc"]:$this->pc21_codorc);
-       $this->pc21_numcgm = ($this->pc21_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_numcgm"]:$this->pc21_numcgm);
+       $this->pc21_orcamforne = ($this->pc21_orcamforne === 0 || $this->pc21_orcamforne === 0.0 || $this->pc21_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_orcamforne"]:$this->pc21_orcamforne);
+       $this->pc21_codorc = ($this->pc21_codorc === 0 || $this->pc21_codorc === 0.0 || $this->pc21_codorc == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_codorc"]:$this->pc21_codorc);
+       $this->pc21_numcgm = ($this->pc21_numcgm === 0 || $this->pc21_numcgm === 0.0 || $this->pc21_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_numcgm"]:$this->pc21_numcgm);
        $this->pc21_importado = ($this->pc21_importado == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc21_importado"]:$this->pc21_importado);
        if($this->pc21_prazoent == ""){
          $this->pc21_prazoent_dia = ($this->pc21_prazoent_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_prazoent_dia"]:$this->pc21_prazoent_dia);
@@ -105,7 +105,7 @@ class cl_pcorcamforne {
        }
        $this->pc21_taxaestimadaglobal = ($this->pc21_taxaestimadaglobal == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_taxaestimadaglobal"]:$this->pc21_taxaestimadaglobal);
      }else{
-       $this->pc21_orcamforne = ($this->pc21_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_orcamforne"]:$this->pc21_orcamforne);
+       $this->pc21_orcamforne = ($this->pc21_orcamforne === 0 || $this->pc21_orcamforne === 0.0 || $this->pc21_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc21_orcamforne"]:$this->pc21_orcamforne);
      }
    }
    // funcao para Inclusão
@@ -171,7 +171,7 @@ class cl_pcorcamforne {
          $this->pc21_orcamforne = $pc21_orcamforne;
        }
      }
-     if(($this->pc21_orcamforne == null) || ($this->pc21_orcamforne == "") ){
+     if(($this->pc21_orcamforne == null) || ($this->pc21_orcamforne === 0 || $this->pc21_orcamforne === 0.0 || $this->pc21_orcamforne == "") ){
        $this->erro_sql = " Campo pc21_orcamforne não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

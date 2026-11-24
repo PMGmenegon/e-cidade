@@ -81,18 +81,18 @@ class cl_cidadaotelefone {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov07_sequencial = ($this->ov07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_sequencial"]:$this->ov07_sequencial);
-       $this->ov07_seq = ($this->ov07_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_seq"]:$this->ov07_seq);
-       $this->ov07_cidadao = ($this->ov07_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_cidadao"]:$this->ov07_cidadao);
+       $this->ov07_sequencial = ($this->ov07_sequencial === 0 || $this->ov07_sequencial === 0.0 || $this->ov07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_sequencial"]:$this->ov07_sequencial);
+       $this->ov07_seq = ($this->ov07_seq === 0 || $this->ov07_seq === 0.0 || $this->ov07_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_seq"]:$this->ov07_seq);
+       $this->ov07_cidadao = ($this->ov07_cidadao === 0 || $this->ov07_cidadao === 0.0 || $this->ov07_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_cidadao"]:$this->ov07_cidadao);
        $this->ov07_numero = ($this->ov07_numero == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_numero"]:$this->ov07_numero);
-       $this->ov07_tipotelefone = ($this->ov07_tipotelefone == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_tipotelefone"]:$this->ov07_tipotelefone);
+       $this->ov07_tipotelefone = ($this->ov07_tipotelefone === 0 || $this->ov07_tipotelefone === 0.0 || $this->ov07_tipotelefone == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_tipotelefone"]:$this->ov07_tipotelefone);
        $this->ov07_ddd = ($this->ov07_ddd == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_ddd"]:$this->ov07_ddd);
        $this->ov07_ramal = ($this->ov07_ramal == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_ramal"]:$this->ov07_ramal);
        $this->ov07_obs = ($this->ov07_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_obs"]:$this->ov07_obs);
        $this->ov07_principal = ($this->ov07_principal == "f"?@$GLOBALS["HTTP_POST_VARS"]["ov07_principal"]:$this->ov07_principal);
      }else{
-       $this->ov07_sequencial = ($this->ov07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_sequencial"]:$this->ov07_sequencial);
-       $this->ov07_seq = ($this->ov07_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_seq"]:$this->ov07_seq);
+       $this->ov07_sequencial = ($this->ov07_sequencial === 0 || $this->ov07_sequencial === 0.0 || $this->ov07_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_sequencial"]:$this->ov07_sequencial);
+       $this->ov07_seq = ($this->ov07_seq === 0 || $this->ov07_seq === 0.0 || $this->ov07_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov07_seq"]:$this->ov07_seq);
      }
    }
    // funcao para inclusao
@@ -164,7 +164,7 @@ class cl_cidadaotelefone {
          $this->ov07_sequencial = $ov07_sequencial;
        }
      }
-     if(($this->ov07_sequencial == null) || ($this->ov07_sequencial == "") ){
+     if(($this->ov07_sequencial == null) || ($this->ov07_sequencial === 0 || $this->ov07_sequencial === 0.0 || $this->ov07_sequencial == "") ){
        $this->erro_sql = " Campo ov07_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -45,12 +45,12 @@ class cl_db_pluginmodulos {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db152_sequencial = ($this->db152_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_sequencial"]:$this->db152_sequencial);
-       $this->db152_db_plugin = ($this->db152_db_plugin == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_db_plugin"]:$this->db152_db_plugin);
-       $this->db152_db_modulo = ($this->db152_db_modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_db_modulo"]:$this->db152_db_modulo);
+       $this->db152_sequencial = ($this->db152_sequencial === 0 || $this->db152_sequencial === 0.0 || $this->db152_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_sequencial"]:$this->db152_sequencial);
+       $this->db152_db_plugin = ($this->db152_db_plugin === 0 || $this->db152_db_plugin === 0.0 || $this->db152_db_plugin == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_db_plugin"]:$this->db152_db_plugin);
+       $this->db152_db_modulo = ($this->db152_db_modulo === 0 || $this->db152_db_modulo === 0.0 || $this->db152_db_modulo == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_db_modulo"]:$this->db152_db_modulo);
        $this->db152_uid = ($this->db152_uid == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_uid"]:$this->db152_uid);
      }else{
-       $this->db152_sequencial = ($this->db152_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_sequencial"]:$this->db152_sequencial);
+       $this->db152_sequencial = ($this->db152_sequencial === 0 || $this->db152_sequencial === 0.0 || $this->db152_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db152_sequencial"]:$this->db152_sequencial);
      }
    }
    // funcao para Inclusão
@@ -98,7 +98,7 @@ class cl_db_pluginmodulos {
          $this->db152_sequencial = $db152_sequencial; 
        }
      }
-     if(($this->db152_sequencial == null) || ($this->db152_sequencial == "") ){ 
+     if(($this->db152_sequencial == null) || ($this->db152_sequencial === 0 || $this->db152_sequencial === 0.0 || $this->db152_sequencial == "") ){ 
        $this->erro_sql = " Campo db152_sequencial não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

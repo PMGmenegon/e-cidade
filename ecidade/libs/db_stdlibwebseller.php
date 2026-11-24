@@ -434,7 +434,7 @@ function eduparametros($escola)
           WHERE ed233_i_escola = $escola
          ";
     $result2 = db_query($sql2);
-    if (pg_num_rows($result2)>0) {
+    if (($result2 ? pg_num_rows($result2) : null)>0) {
         $retorno = pg_result($result2, 0, "ed233_c_decimais");
     }else{
         $retorno = null;
@@ -476,7 +476,7 @@ function VerParametroNota($escola)
           WHERE ed233_i_escola = $escola
          ";
     $result2 = db_query($sql2);
-    if (pg_num_rows($result2)>0) {
+    if (($result2 ? pg_num_rows($result2) : null)>0) {
         $retorno = pg_result($result2, 0, "ed233_c_notabranca");
     }else{
         $retorno = "N";
@@ -4386,7 +4386,7 @@ function getCotasAgendamento(
     $oResult->sMensagem         = "Não encontrado o controle por cotas para a UPS solicitante.";
     $oResult->aCotasAgendamento = null;
 
-    if(is_resource($rs) && pg_num_rows($rs) > 0 ) {
+    if((is_resource($rs) || $rs instanceof \PgSql\Result) && pg_num_rows($rs) > 0 ) {
 
         $oResult->lStatus           = 1;
         $oResult->sMensagem         = "Agendamento realizado por cotas.";

@@ -67,10 +67,10 @@ class cl_tipofamiliar {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->z14_sequencial = ($this->z14_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z14_sequencial"]:$this->z14_sequencial);
+       $this->z14_sequencial = ($this->z14_sequencial === 0 || $this->z14_sequencial === 0.0 || $this->z14_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z14_sequencial"]:$this->z14_sequencial);
        $this->z14_descricao = ($this->z14_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["z14_descricao"]:$this->z14_descricao);
      }else{
-       $this->z14_sequencial = ($this->z14_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z14_sequencial"]:$this->z14_sequencial);
+       $this->z14_sequencial = ($this->z14_sequencial === 0 || $this->z14_sequencial === 0.0 || $this->z14_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["z14_sequencial"]:$this->z14_sequencial);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_tipofamiliar {
        return false;
      }
        $this->z14_sequencial = $z14_sequencial;
-     if(($this->z14_sequencial == null) || ($this->z14_sequencial == "") ){
+     if(($this->z14_sequencial == null) || ($this->z14_sequencial === 0 || $this->z14_sequencial === 0.0 || $this->z14_sequencial == "") ){
        $this->erro_sql = " Campo z14_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

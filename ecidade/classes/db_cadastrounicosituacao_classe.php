@@ -69,11 +69,11 @@ class cl_cadastrounicosituacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as12_sequencial = ($this->as12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_sequencial"]:$this->as12_sequencial);
-       $this->as12_cidadaocadastrounico = ($this->as12_cidadaocadastrounico == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_cidadaocadastrounico"]:$this->as12_cidadaocadastrounico);
-       $this->as12_tiposituacaocadastrounico = ($this->as12_tiposituacaocadastrounico == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_tiposituacaocadastrounico"]:$this->as12_tiposituacaocadastrounico);
+       $this->as12_sequencial = ($this->as12_sequencial === 0 || $this->as12_sequencial === 0.0 || $this->as12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_sequencial"]:$this->as12_sequencial);
+       $this->as12_cidadaocadastrounico = ($this->as12_cidadaocadastrounico === 0 || $this->as12_cidadaocadastrounico === 0.0 || $this->as12_cidadaocadastrounico == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_cidadaocadastrounico"]:$this->as12_cidadaocadastrounico);
+       $this->as12_tiposituacaocadastrounico = ($this->as12_tiposituacaocadastrounico === 0 || $this->as12_tiposituacaocadastrounico === 0.0 || $this->as12_tiposituacaocadastrounico == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_tiposituacaocadastrounico"]:$this->as12_tiposituacaocadastrounico);
      }else{
-       $this->as12_sequencial = ($this->as12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_sequencial"]:$this->as12_sequencial);
+       $this->as12_sequencial = ($this->as12_sequencial === 0 || $this->as12_sequencial === 0.0 || $this->as12_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as12_sequencial"]:$this->as12_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_cadastrounicosituacao {
          $this->as12_sequencial = $as12_sequencial;
        }
      }
-     if(($this->as12_sequencial == null) || ($this->as12_sequencial == "") ){
+     if(($this->as12_sequencial == null) || ($this->as12_sequencial === 0 || $this->as12_sequencial === 0.0 || $this->as12_sequencial == "") ){
        $this->erro_sql = " Campo as12_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

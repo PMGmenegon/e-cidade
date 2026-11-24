@@ -85,9 +85,9 @@ class cl_localatendimentofamilia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as23_sequencial = ($this->as23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_sequencial"]:$this->as23_sequencial);
-       $this->as23_localatendimentosocial = ($this->as23_localatendimentosocial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_localatendimentosocial"]:$this->as23_localatendimentosocial);
-       $this->as23_cidadaofamilia = ($this->as23_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_cidadaofamilia"]:$this->as23_cidadaofamilia);
+       $this->as23_sequencial = ($this->as23_sequencial === 0 || $this->as23_sequencial === 0.0 || $this->as23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_sequencial"]:$this->as23_sequencial);
+       $this->as23_localatendimentosocial = ($this->as23_localatendimentosocial === 0 || $this->as23_localatendimentosocial === 0.0 || $this->as23_localatendimentosocial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_localatendimentosocial"]:$this->as23_localatendimentosocial);
+       $this->as23_cidadaofamilia = ($this->as23_cidadaofamilia === 0 || $this->as23_cidadaofamilia === 0.0 || $this->as23_cidadaofamilia == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_cidadaofamilia"]:$this->as23_cidadaofamilia);
        if($this->as23_datavinculo == ""){
          $this->as23_datavinculo_dia = ($this->as23_datavinculo_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_datavinculo_dia"]:$this->as23_datavinculo_dia);
          $this->as23_datavinculo_mes = ($this->as23_datavinculo_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_datavinculo_mes"]:$this->as23_datavinculo_mes);
@@ -106,9 +106,9 @@ class cl_localatendimentofamilia {
        }
        $this->as23_observacao = ($this->as23_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_observacao"]:$this->as23_observacao);
        $this->as23_ativo = ($this->as23_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["as23_ativo"]:$this->as23_ativo);
-       $this->as23_db_usuario = ($this->as23_db_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_db_usuario"]:$this->as23_db_usuario);
+       $this->as23_db_usuario = ($this->as23_db_usuario === 0 || $this->as23_db_usuario === 0.0 || $this->as23_db_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_db_usuario"]:$this->as23_db_usuario);
      }else{
-       $this->as23_sequencial = ($this->as23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_sequencial"]:$this->as23_sequencial);
+       $this->as23_sequencial = ($this->as23_sequencial === 0 || $this->as23_sequencial === 0.0 || $this->as23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as23_sequencial"]:$this->as23_sequencial);
      }
    }
    // funcao para inclusao
@@ -180,7 +180,7 @@ class cl_localatendimentofamilia {
          $this->as23_sequencial = $as23_sequencial;
        }
      }
-     if(($this->as23_sequencial == null) || ($this->as23_sequencial == "") ){
+     if(($this->as23_sequencial == null) || ($this->as23_sequencial === 0 || $this->as23_sequencial === 0.0 || $this->as23_sequencial == "") ){
        $this->erro_sql = " Campo as23_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

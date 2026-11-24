@@ -82,10 +82,10 @@ class cl_db_dairetido {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w15_sequencial = ($this->w15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_sequencial"]:$this->w15_sequencial);
-       $this->w15_dai = ($this->w15_dai == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_dai"]:$this->w15_dai);
-       $this->w15_mes = ($this->w15_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_mes"]:$this->w15_mes);
-       $this->w15_valreceita = ($this->w15_valreceita == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_valreceita"]:$this->w15_valreceita);
+       $this->w15_sequencial = ($this->w15_sequencial === 0 || $this->w15_sequencial === 0.0 || $this->w15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_sequencial"]:$this->w15_sequencial);
+       $this->w15_dai = ($this->w15_dai === 0 || $this->w15_dai === 0.0 || $this->w15_dai == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_dai"]:$this->w15_dai);
+       $this->w15_mes = ($this->w15_mes === 0 || $this->w15_mes === 0.0 || $this->w15_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_mes"]:$this->w15_mes);
+       $this->w15_valreceita = ($this->w15_valreceita === 0 || $this->w15_valreceita === 0.0 || $this->w15_valreceita == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_valreceita"]:$this->w15_valreceita);
        $this->w15_cnpj = ($this->w15_cnpj == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_cnpj"]:$this->w15_cnpj);
        $this->w15_nota = ($this->w15_nota == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_nota"]:$this->w15_nota);
        $this->w15_serie = ($this->w15_serie == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_serie"]:$this->w15_serie);
@@ -98,7 +98,7 @@ class cl_db_dairetido {
          }
        }
      }else{
-       $this->w15_sequencial = ($this->w15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_sequencial"]:$this->w15_sequencial);
+       $this->w15_sequencial = ($this->w15_sequencial === 0 || $this->w15_sequencial === 0.0 || $this->w15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["w15_sequencial"]:$this->w15_sequencial);
      }
    }
    // funcao para inclusao
@@ -182,7 +182,7 @@ class cl_db_dairetido {
          $this->w15_sequencial = $w15_sequencial; 
        }
      }
-     if(($this->w15_sequencial == null) || ($this->w15_sequencial == "") ){ 
+     if(($this->w15_sequencial == null) || ($this->w15_sequencial === 0 || $this->w15_sequencial === 0.0 || $this->w15_sequencial == "") ){ 
        $this->erro_sql = " Campo w15_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

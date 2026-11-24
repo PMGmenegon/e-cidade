@@ -82,7 +82,7 @@ $clmatparam               = new cl_matparam;
 $cldb_departorg           = new  cl_db_departorg;
 $clmatparam               = new cl_matparam;
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $clmatrequiitem           = new cl_matrequiitem;
 $clmatrequi               = new cl_matrequi;
 $clatendrequiitem         = new cl_atendrequiitem;
@@ -462,11 +462,11 @@ for($x=0;$x<$clmer_cardapiodia->numrows;$x++){
  $msg_erro = "";
  $sep1 = "";
  $sep2 = "";
- for($y=0;$y<pg_num_rows($result_dados);$y++){
+ for($y=0;$y<($result_dados ? pg_num_rows($result_dados) : null);$y++){
   db_fieldsmemory($result_dados,$y);
   if($primeiro!=$m60_codmater){
    if($y>0){
-    $estoque = pg_result($result_dados,$y-1,'m70_quant');
+    $estoque = ($result_dados ? pg_result($result_dados,$y-1,'m70_quant') : null);
     $estoque = $estoque==""?0:$estoque;
     ?>
     <td align="center" width="5%">
@@ -543,14 +543,14 @@ for($x=0;$x<$clmer_cardapiodia->numrows;$x++){
             </table>';
   ?><script>document.getElementById("<?=$m60_codmater.$me12_d_data?>").innerHTML = <?=$texto?></script><?php
  }
- $estoque = pg_result($result_dados,$y-1,'m70_quant');
+ $estoque = ($result_dados ? pg_result($result_dados,$y-1,'m70_quant') : null);
  $estoque = $estoque==""?0:$estoque;
  if(($estoque <= 0 || $estoque < $sum_total) && $estoque!=$sum_total){
-  $msg_erro .= $sep1.pg_result($result_dados,$y-1,'m60_descr');
+  $msg_erro .= $sep1.($result_dados ? pg_result($result_dados,$y-1,'m60_descr') : null);
   $sep1 = " , ";
  }else{
   if($sum_total > 0){
-   $listaitem .= $sep2.pg_result($result_dados,$y-1,'m60_codmater');
+   $listaitem .= $sep2.($result_dados ? pg_result($result_dados,$y-1,'m60_codmater') : null);
    $listaquant .= $sep2.$sum_total;
    $sep2 = ",";
   }

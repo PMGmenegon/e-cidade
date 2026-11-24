@@ -83,18 +83,18 @@ class cl_procavaliacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed41_i_codigo = ($this->ed41_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_codigo"]:$this->ed41_i_codigo);
-       $this->ed41_i_procedimento = ($this->ed41_i_procedimento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procedimento"]:$this->ed41_i_procedimento);
-       $this->ed41_i_periodoavaliacao = ($this->ed41_i_periodoavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_periodoavaliacao"]:$this->ed41_i_periodoavaliacao);
-       $this->ed41_i_formaavaliacao = ($this->ed41_i_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_formaavaliacao"]:$this->ed41_i_formaavaliacao);
-       $this->ed41_i_procavalvinc = ($this->ed41_i_procavalvinc == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procavalvinc"]:$this->ed41_i_procavalvinc);
-       $this->ed41_i_procresultvinc = ($this->ed41_i_procresultvinc == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procresultvinc"]:$this->ed41_i_procresultvinc);
+       $this->ed41_i_codigo = ($this->ed41_i_codigo === 0 || $this->ed41_i_codigo === 0.0 || $this->ed41_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_codigo"]:$this->ed41_i_codigo);
+       $this->ed41_i_procedimento = ($this->ed41_i_procedimento === 0 || $this->ed41_i_procedimento === 0.0 || $this->ed41_i_procedimento == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procedimento"]:$this->ed41_i_procedimento);
+       $this->ed41_i_periodoavaliacao = ($this->ed41_i_periodoavaliacao === 0 || $this->ed41_i_periodoavaliacao === 0.0 || $this->ed41_i_periodoavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_periodoavaliacao"]:$this->ed41_i_periodoavaliacao);
+       $this->ed41_i_formaavaliacao = ($this->ed41_i_formaavaliacao === 0 || $this->ed41_i_formaavaliacao === 0.0 || $this->ed41_i_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_formaavaliacao"]:$this->ed41_i_formaavaliacao);
+       $this->ed41_i_procavalvinc = ($this->ed41_i_procavalvinc === 0 || $this->ed41_i_procavalvinc === 0.0 || $this->ed41_i_procavalvinc == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procavalvinc"]:$this->ed41_i_procavalvinc);
+       $this->ed41_i_procresultvinc = ($this->ed41_i_procresultvinc === 0 || $this->ed41_i_procresultvinc === 0.0 || $this->ed41_i_procresultvinc == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_procresultvinc"]:$this->ed41_i_procresultvinc);
        $this->ed41_c_boletim = ($this->ed41_c_boletim == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_c_boletim"]:$this->ed41_c_boletim);
-       $this->ed41_i_sequencia = ($this->ed41_i_sequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_sequencia"]:$this->ed41_i_sequencia);
-       $this->ed41_numerodisciplinasrecuperacao = ($this->ed41_numerodisciplinasrecuperacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_numerodisciplinasrecuperacao"]:$this->ed41_numerodisciplinasrecuperacao);
+       $this->ed41_i_sequencia = ($this->ed41_i_sequencia === 0 || $this->ed41_i_sequencia === 0.0 || $this->ed41_i_sequencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_sequencia"]:$this->ed41_i_sequencia);
+       $this->ed41_numerodisciplinasrecuperacao = ($this->ed41_numerodisciplinasrecuperacao === 0 || $this->ed41_numerodisciplinasrecuperacao === 0.0 || $this->ed41_numerodisciplinasrecuperacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_numerodisciplinasrecuperacao"]:$this->ed41_numerodisciplinasrecuperacao);
        $this->ed41_julgamenoravaliacao = ($this->ed41_julgamenoravaliacao == "f"?@$GLOBALS["HTTP_POST_VARS"]["ed41_julgamenoravaliacao"]:$this->ed41_julgamenoravaliacao);
      }else{
-       $this->ed41_i_codigo = ($this->ed41_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_codigo"]:$this->ed41_i_codigo);
+       $this->ed41_i_codigo = ($this->ed41_i_codigo === 0 || $this->ed41_i_codigo === 0.0 || $this->ed41_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed41_i_codigo"]:$this->ed41_i_codigo);
      }
    }
    // funcao para inclusao
@@ -187,7 +187,7 @@ class cl_procavaliacao {
          $this->ed41_i_codigo = $ed41_i_codigo;
        }
      }
-     if(($this->ed41_i_codigo == null) || ($this->ed41_i_codigo == "") ){
+     if(($this->ed41_i_codigo == null) || ($this->ed41_i_codigo === 0 || $this->ed41_i_codigo === 0.0 || $this->ed41_i_codigo == "") ){
        $this->erro_sql = " Campo ed41_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

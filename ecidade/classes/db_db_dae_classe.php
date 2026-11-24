@@ -76,8 +76,8 @@ class cl_db_dae {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w04_codigo = ($this->w04_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_codigo"]:$this->w04_codigo);
-       $this->w04_inscr = ($this->w04_inscr == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_inscr"]:$this->w04_inscr);
+       $this->w04_codigo = ($this->w04_codigo === 0 || $this->w04_codigo === 0.0 || $this->w04_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_codigo"]:$this->w04_codigo);
+       $this->w04_inscr = ($this->w04_inscr === 0 || $this->w04_inscr === 0.0 || $this->w04_inscr == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_inscr"]:$this->w04_inscr);
        $this->w04_enviado = ($this->w04_enviado == "f"?@$GLOBALS["HTTP_POST_VARS"]["w04_enviado"]:$this->w04_enviado);
        $this->w04_ano = ($this->w04_ano == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_ano"]:$this->w04_ano);
        if($this->w04_data == ""){
@@ -89,7 +89,7 @@ class cl_db_dae {
          }
        }
      }else{
-       $this->w04_codigo = ($this->w04_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_codigo"]:$this->w04_codigo);
+       $this->w04_codigo = ($this->w04_codigo === 0 || $this->w04_codigo === 0.0 || $this->w04_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w04_codigo"]:$this->w04_codigo);
      }
    }
    // funcao para inclusao
@@ -132,7 +132,7 @@ class cl_db_dae {
        return false;
      }
        $this->w04_codigo = $w04_codigo;
-     if(($this->w04_codigo == null) || ($this->w04_codigo == "") ){
+     if(($this->w04_codigo == null) || ($this->w04_codigo === 0 || $this->w04_codigo === 0.0 || $this->w04_codigo == "") ){
        $this->erro_sql = " Campo w04_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

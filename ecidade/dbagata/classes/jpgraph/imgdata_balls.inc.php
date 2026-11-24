@@ -72,7 +72,7 @@ class ImgData_Balls extends ImgData {
 	return parent::GetImg($aMark,$aIdx);
     }
 
-    public function ImgData_Balls() {
+    public function __construct() {
 
 //==========================================================
 // File: bl_red.png

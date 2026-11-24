@@ -77,15 +77,15 @@ class cl_solicitemregistropreco {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc57_sequencial = ($this->pc57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_sequencial"]:$this->pc57_sequencial);
-       $this->pc57_solicitem = ($this->pc57_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_solicitem"]:$this->pc57_solicitem);
-       $this->pc57_quantmin = ($this->pc57_quantmin == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantmin"]:$this->pc57_quantmin);
-       $this->pc57_quantmax = ($this->pc57_quantmax == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantmax"]:$this->pc57_quantmax);
-       $this->pc57_itemorigem = ($this->pc57_itemorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_itemorigem"]:$this->pc57_itemorigem);
+       $this->pc57_sequencial = ($this->pc57_sequencial === 0 || $this->pc57_sequencial === 0.0 || $this->pc57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_sequencial"]:$this->pc57_sequencial);
+       $this->pc57_solicitem = ($this->pc57_solicitem === 0 || $this->pc57_solicitem === 0.0 || $this->pc57_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_solicitem"]:$this->pc57_solicitem);
+       $this->pc57_quantmin = ($this->pc57_quantmin === 0 || $this->pc57_quantmin === 0.0 || $this->pc57_quantmin == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantmin"]:$this->pc57_quantmin);
+       $this->pc57_quantmax = ($this->pc57_quantmax === 0 || $this->pc57_quantmax === 0.0 || $this->pc57_quantmax == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantmax"]:$this->pc57_quantmax);
+       $this->pc57_itemorigem = ($this->pc57_itemorigem === 0 || $this->pc57_itemorigem === 0.0 || $this->pc57_itemorigem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_itemorigem"]:$this->pc57_itemorigem);
        $this->pc57_ativo = ($this->pc57_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc57_ativo"]:$this->pc57_ativo);
-       $this->pc57_quantidadeexecedente = ($this->pc57_quantidadeexecedente == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantidadeexecedente"]:$this->pc57_quantidadeexecedente);
+       $this->pc57_quantidadeexecedente = ($this->pc57_quantidadeexecedente === 0 || $this->pc57_quantidadeexecedente === 0.0 || $this->pc57_quantidadeexecedente == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_quantidadeexecedente"]:$this->pc57_quantidadeexecedente);
      }else{
-       $this->pc57_sequencial = ($this->pc57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_sequencial"]:$this->pc57_sequencial);
+       $this->pc57_sequencial = ($this->pc57_sequencial === 0 || $this->pc57_sequencial === 0.0 || $this->pc57_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc57_sequencial"]:$this->pc57_sequencial);
      }
    }
    // funcao para inclusao
@@ -151,7 +151,7 @@ class cl_solicitemregistropreco {
          $this->pc57_sequencial = $pc57_sequencial;
        }
      }
-     if(($this->pc57_sequencial == null) || ($this->pc57_sequencial == "") ){
+     if(($this->pc57_sequencial == null) || ($this->pc57_sequencial === 0 || $this->pc57_sequencial === 0.0 || $this->pc57_sequencial == "") ){
        $this->erro_sql = " Campo pc57_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

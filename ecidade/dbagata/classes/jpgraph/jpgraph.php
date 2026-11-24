@@ -385,8 +385,8 @@ class DateLocale {
 
 	for ( $i = 0, $ofs = 0 - strftime('%w'); $i < 7; $i++, $ofs++ ){
 	    $day = strftime('%a', strtotime("$ofs day"));
-	    $day{0} = strtoupper($day{0});
-	    $this->iDayAbb[$aLocale][]= $day{0};
+	    $day[0] = strtoupper($day[0]);
+	    $this->iDayAbb[$aLocale][]= $day[0];
 	    $this->iShortDay[$aLocale][]= $day;
 	}
 
@@ -1183,7 +1183,7 @@ class Graph {
 
 	// Now reconstruct any user URL argument
 	reset($_GET);
-	while( list($key,$value) = each($_GET) ) {
+	foreach ($_GET as $key => $value) {
 	    if( is_array($value) ) {
 		foreach ( $value as $k => $v ) {
 		    $urlarg .= '&amp;'.$key.'%5B'.$k.'%5D='.urlencode($v);
@@ -1198,7 +1198,7 @@ class Graph {
 	// but there is little else we can do. One idea for the
 	// future might be recreate the POST header in case.
 	reset($_POST);
-	while( list($key,$value) = each($_POST) ) {
+	foreach ($_POST as $key => $value) {
 	    if( is_array($value) ) {
 		foreach ( $value as $k => $v ) {
 		    $urlarg .= '&amp;'.$key.'%5B'.$k.'%5D='.urlencode($v);
@@ -2810,7 +2810,7 @@ class Text {
 // CONSTRUCTOR
 
     // Create new text at absolute pixel coordinates
-    function Text($aTxt='',$aXAbsPos=0,$aYAbsPos=0) {
+    function __construct($aTxt='',$aXAbsPos=0,$aYAbsPos=0) {
 	if( ! is_string($aTxt) ) {
 	    JpGraphError::RaiseL(25050);//('First argument to Text::Text() must be s atring.');
 	}
@@ -3054,7 +3054,7 @@ class GraphTabTitle extends Text{
     var $corner = 6 , $posx = 7, $posy = 4;
     var $color='darkred',$fillcolor='lightyellow',$bordercolor='black';
     var $align = 'left', $width=TABTITLE_WIDTHFIT;
-    public function GraphTabTitle() {
+    public function __construct() {
 	$this->t = '';
 	$this->font_style = FS_BOLD;
 	$this->hide = true;
@@ -3075,7 +3075,7 @@ class GraphTabTitle extends Text{
 	$this->align = $aAlign;
     }
 
-    public function SetPos($aAlign) {
+    public function SetPos($aAlign = null, $aYAbsPos = 0, $aHAlign = 'left', $aVAlign = 'top') {
 	$this->align = $aAlign;
     }
 
@@ -3092,7 +3092,7 @@ class GraphTabTitle extends Text{
 	$this->corner = $aD ;
     }
 
-    function Stroke(&$aImg) {
+    function Stroke(&$aImg, $aX = null, $aY = null) {
 	if( $this->hide )
 	    return;
 	$this->boxed = false;
@@ -3185,8 +3185,8 @@ class SuperScriptText extends Text {
     var $iSDir=0;
     var $iSimple=false;
 
-    public function SuperScriptText($aTxt="",$aSuper="",$aXAbsPos=0,$aYAbsPos=0) {
-	parent::Text($aTxt,$aXAbsPos,$aYAbsPos);
+    public function __construct($aTxt="",$aSuper="",$aXAbsPos=0,$aYAbsPos=0) {
+	parent::__construct($aTxt,$aXAbsPos,$aYAbsPos);
 	$this->iSuper = $aSuper;
     }
 
@@ -3363,7 +3363,7 @@ class Grid {
     var $fill=false,$fillcolor=array('#EFEFEF','#BBCCFF');
 //---------------
 // CONSTRUCTOR
-    function Grid(&$aAxis) {
+    function __construct(&$aAxis) {
 	$this->scale = &$aAxis->scale;
 	$this->img = &$aAxis->img;
     }
@@ -3528,7 +3528,7 @@ class Axis {
 
 //---------------
 // CONSTRUCTOR
-    function Axis(&$img,&$aScale,$color=array(0,0,0)) {
+    function __construct(&$img,&$aScale,$color=array(0,0,0)) {
 	$this->img = &$img;
 	$this->scale = &$aScale;
 	$this->color = $color;
@@ -3983,7 +3983,7 @@ class Ticks {
 
 //---------------
 // CONSTRUCTOR
-    function Ticks(&$aScale) {
+    function __construct(&$aScale) {
 	$this->scale=&$aScale;
 	$this->precision = -1;
     }
@@ -4111,7 +4111,7 @@ class LinearTicks extends Ticks {
 
 //---------------
 // CONSTRUCTOR
-    public function LinearTicks() {
+    public function __construct() {
 	$this->precision = -1;
     }
 
@@ -4475,7 +4475,7 @@ class LinearScale {
     var $name = 'lin';
 //---------------
 // CONSTRUCTOR
-    public function LinearScale($aMin=0,$aMax=0,$aType="y") {
+    public function __construct($aMin=0,$aMax=0,$aType="y") {
 	assert($aType=="x" || $aType=="y" );
 	assert($aMin<=$aMax);
 
@@ -5012,7 +5012,7 @@ class ImgStreamCache {
     var $timeout=0; 	// Infinite timeout
     //---------------
     // CONSTRUCTOR
-    function ImgStreamCache(&$aImg, $aCacheDir=CACHE_DIR) {
+    function __construct(&$aImg, $aCacheDir=CACHE_DIR) {
 	$this->img = &$aImg;
 	$this->cache_dir = $aCacheDir;
     }
@@ -5670,7 +5670,7 @@ class Plot {
     var $legendcsimalt='';
 //---------------
 // CONSTRUCTOR
-    function Plot(&$aDatay,$aDatax=false) {
+    function __construct(&$aDatay,$aDatax=false) {
 	$this->numpoints = count($aDatay);
 	if( $this->numpoints==0 )
 	    JpGraphError::RaiseL(25121);//("Empty input data array specified for plot. Must have at least one data point.");

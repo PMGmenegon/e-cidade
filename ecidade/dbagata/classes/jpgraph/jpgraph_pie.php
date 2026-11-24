@@ -1214,7 +1214,7 @@ class PieGraph extends Graph {
     var $pieaa = false ;
 //---------------
 // CONSTRUCTOR
-    public function PieGraph($width=300,$height=200,$cachedName="",$timeout=0,$inline=1) {
+    public function __construct($width=300,$height=200,$cachedName="",$timeout=0,$inline=1) {
 	$this->Graph($width,$height,$cachedName,$timeout,$inline);
 	$this->posx=$width/2;
 	$this->posy=$height/2;

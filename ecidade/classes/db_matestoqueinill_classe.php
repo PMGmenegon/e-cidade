@@ -67,18 +67,18 @@ class cl_matestoqueinill {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m87_matestoqueinil = ($this->m87_matestoqueinil == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueinil"]:$this->m87_matestoqueinil);
-       $this->m87_matestoqueini = ($this->m87_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueini"]:$this->m87_matestoqueini);
+       $this->m87_matestoqueinil = ($this->m87_matestoqueinil === 0 || $this->m87_matestoqueinil === 0.0 || $this->m87_matestoqueinil == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueinil"]:$this->m87_matestoqueinil);
+       $this->m87_matestoqueini = ($this->m87_matestoqueini === 0 || $this->m87_matestoqueini === 0.0 || $this->m87_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueini"]:$this->m87_matestoqueini);
      }else{
-       $this->m87_matestoqueinil = ($this->m87_matestoqueinil == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueinil"]:$this->m87_matestoqueinil);
-       $this->m87_matestoqueini = ($this->m87_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueini"]:$this->m87_matestoqueini);
+       $this->m87_matestoqueinil = ($this->m87_matestoqueinil === 0 || $this->m87_matestoqueinil === 0.0 || $this->m87_matestoqueinil == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueinil"]:$this->m87_matestoqueinil);
+       $this->m87_matestoqueini = ($this->m87_matestoqueini === 0 || $this->m87_matestoqueini === 0.0 || $this->m87_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m87_matestoqueini"]:$this->m87_matestoqueini);
      }
    }
    // funcao para inclusao
    public function incluir ($m87_matestoqueinil){
       $this->atualizacampos();
        $this->m87_matestoqueinil = $m87_matestoqueinil;
-     if(($this->m87_matestoqueinil == null) || ($this->m87_matestoqueinil == "") ){
+     if(($this->m87_matestoqueinil == null) || ($this->m87_matestoqueinil === 0 || $this->m87_matestoqueinil === 0.0 || $this->m87_matestoqueinil == "") ){
        $this->erro_sql = " Campo m87_matestoqueinil nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

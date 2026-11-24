@@ -83,18 +83,18 @@ class cl_base {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed31_i_codigo = ($this->ed31_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_codigo"]:$this->ed31_i_codigo);
-       $this->ed31_i_curso = ($this->ed31_i_curso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_curso"]:$this->ed31_i_curso);
+       $this->ed31_i_codigo = ($this->ed31_i_codigo === 0 || $this->ed31_i_codigo === 0.0 || $this->ed31_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_codigo"]:$this->ed31_i_codigo);
+       $this->ed31_i_curso = ($this->ed31_i_curso === 0 || $this->ed31_i_curso === 0.0 || $this->ed31_i_curso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_curso"]:$this->ed31_i_curso);
        $this->ed31_c_descr = ($this->ed31_c_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_descr"]:$this->ed31_c_descr);
        $this->ed31_c_turno = ($this->ed31_c_turno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_turno"]:$this->ed31_c_turno);
        $this->ed31_c_medfreq = ($this->ed31_c_medfreq == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_medfreq"]:$this->ed31_c_medfreq);
        $this->ed31_c_contrfreq = ($this->ed31_c_contrfreq == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_contrfreq"]:$this->ed31_c_contrfreq);
        $this->ed31_t_obs = ($this->ed31_t_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_t_obs"]:$this->ed31_t_obs);
        $this->ed31_c_conclusao = ($this->ed31_c_conclusao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_conclusao"]:$this->ed31_c_conclusao);
-       $this->ed31_i_regimemat = ($this->ed31_i_regimemat == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_regimemat"]:$this->ed31_i_regimemat);
+       $this->ed31_i_regimemat = ($this->ed31_i_regimemat === 0 || $this->ed31_i_regimemat === 0.0 || $this->ed31_i_regimemat == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_regimemat"]:$this->ed31_i_regimemat);
        $this->ed31_c_ativo = ($this->ed31_c_ativo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_c_ativo"]:$this->ed31_c_ativo);
      }else{
-       $this->ed31_i_codigo = ($this->ed31_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_codigo"]:$this->ed31_i_codigo);
+       $this->ed31_i_codigo = ($this->ed31_i_codigo === 0 || $this->ed31_i_codigo === 0.0 || $this->ed31_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed31_i_codigo"]:$this->ed31_i_codigo);
      }
    }
    // funcao para inclusao
@@ -187,7 +187,7 @@ class cl_base {
          $this->ed31_i_codigo = $ed31_i_codigo;
        }
      }
-     if(($this->ed31_i_codigo == null) || ($this->ed31_i_codigo == "") ){
+     if(($this->ed31_i_codigo == null) || ($this->ed31_i_codigo === 0 || $this->ed31_i_codigo === 0.0 || $this->ed31_i_codigo == "") ){
        $this->erro_sql = " Campo ed31_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -71,12 +71,12 @@ class cl_matestoqueitemunid {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m75_codmatestoqueitem = ($this->m75_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatestoqueitem"]:$this->m75_codmatestoqueitem);
-       $this->m75_codmatunid = ($this->m75_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatunid"]:$this->m75_codmatunid);
-       $this->m75_quant = ($this->m75_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_quant"]:$this->m75_quant);
-       $this->m75_quantmult = ($this->m75_quantmult == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_quantmult"]:$this->m75_quantmult);
+       $this->m75_codmatestoqueitem = ($this->m75_codmatestoqueitem === 0 || $this->m75_codmatestoqueitem === 0.0 || $this->m75_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatestoqueitem"]:$this->m75_codmatestoqueitem);
+       $this->m75_codmatunid = ($this->m75_codmatunid === 0 || $this->m75_codmatunid === 0.0 || $this->m75_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatunid"]:$this->m75_codmatunid);
+       $this->m75_quant = ($this->m75_quant === 0 || $this->m75_quant === 0.0 || $this->m75_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_quant"]:$this->m75_quant);
+       $this->m75_quantmult = ($this->m75_quantmult === 0 || $this->m75_quantmult === 0.0 || $this->m75_quantmult == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_quantmult"]:$this->m75_quantmult);
      }else{
-       $this->m75_codmatestoqueitem = ($this->m75_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatestoqueitem"]:$this->m75_codmatestoqueitem);
+       $this->m75_codmatestoqueitem = ($this->m75_codmatestoqueitem === 0 || $this->m75_codmatestoqueitem === 0.0 || $this->m75_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m75_codmatestoqueitem"]:$this->m75_codmatestoqueitem);
      }
    }
    // funcao para inclusao
@@ -110,7 +110,7 @@ class cl_matestoqueitemunid {
        return false;
      }
        $this->m75_codmatestoqueitem = $m75_codmatestoqueitem;
-     if(($this->m75_codmatestoqueitem == null) || ($this->m75_codmatestoqueitem == "") ){
+     if(($this->m75_codmatestoqueitem == null) || ($this->m75_codmatestoqueitem === 0 || $this->m75_codmatestoqueitem === 0.0 || $this->m75_codmatestoqueitem == "") ){
        $this->erro_sql = " Campo m75_codmatestoqueitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

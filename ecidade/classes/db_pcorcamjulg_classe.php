@@ -69,12 +69,12 @@ class cl_pcorcamjulg {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc24_orcamitem = ($this->pc24_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamitem"]:$this->pc24_orcamitem);
-       $this->pc24_pontuacao = ($this->pc24_pontuacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_pontuacao"]:$this->pc24_pontuacao);
-       $this->pc24_orcamforne = ($this->pc24_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamforne"]:$this->pc24_orcamforne);
+       $this->pc24_orcamitem = ($this->pc24_orcamitem === 0 || $this->pc24_orcamitem === 0.0 || $this->pc24_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamitem"]:$this->pc24_orcamitem);
+       $this->pc24_pontuacao = ($this->pc24_pontuacao === 0 || $this->pc24_pontuacao === 0.0 || $this->pc24_pontuacao == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_pontuacao"]:$this->pc24_pontuacao);
+       $this->pc24_orcamforne = ($this->pc24_orcamforne === 0 || $this->pc24_orcamforne === 0.0 || $this->pc24_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamforne"]:$this->pc24_orcamforne);
      }else{
-       $this->pc24_orcamitem = ($this->pc24_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamitem"]:$this->pc24_orcamitem);
-       $this->pc24_orcamforne = ($this->pc24_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamforne"]:$this->pc24_orcamforne);
+       $this->pc24_orcamitem = ($this->pc24_orcamitem === 0 || $this->pc24_orcamitem === 0.0 || $this->pc24_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamitem"]:$this->pc24_orcamitem);
+       $this->pc24_orcamforne = ($this->pc24_orcamforne === 0 || $this->pc24_orcamforne === 0.0 || $this->pc24_orcamforne == ""?@$GLOBALS["HTTP_POST_VARS"]["pc24_orcamforne"]:$this->pc24_orcamforne);
      }
    }
    // funcao para inclusao
@@ -91,7 +91,7 @@ class cl_pcorcamjulg {
      }
        $this->pc24_orcamitem = $pc24_orcamitem;
        $this->pc24_orcamforne = $pc24_orcamforne;
-     if(($this->pc24_orcamitem == null) || ($this->pc24_orcamitem == "") ){
+     if(($this->pc24_orcamitem == null) || ($this->pc24_orcamitem === 0 || $this->pc24_orcamitem === 0.0 || $this->pc24_orcamitem == "") ){
        $this->erro_sql = " Campo pc24_orcamitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -99,7 +99,7 @@ class cl_pcorcamjulg {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->pc24_orcamforne == null) || ($this->pc24_orcamforne == "") ){
+     if(($this->pc24_orcamforne == null) || ($this->pc24_orcamforne === 0 || $this->pc24_orcamforne === 0.0 || $this->pc24_orcamforne == "") ){
        $this->erro_sql = " Campo pc24_orcamforne nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

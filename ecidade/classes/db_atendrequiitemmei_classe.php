@@ -71,12 +71,12 @@ class cl_atendrequiitemmei {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m44_codigo = ($this->m44_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codigo"]:$this->m44_codigo);
-       $this->m44_codatendreqitem = ($this->m44_codatendreqitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codatendreqitem"]:$this->m44_codatendreqitem);
-       $this->m44_codmatestoqueitem = ($this->m44_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codmatestoqueitem"]:$this->m44_codmatestoqueitem);
-       $this->m44_quant = ($this->m44_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_quant"]:$this->m44_quant);
+       $this->m44_codigo = ($this->m44_codigo === 0 || $this->m44_codigo === 0.0 || $this->m44_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codigo"]:$this->m44_codigo);
+       $this->m44_codatendreqitem = ($this->m44_codatendreqitem === 0 || $this->m44_codatendreqitem === 0.0 || $this->m44_codatendreqitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codatendreqitem"]:$this->m44_codatendreqitem);
+       $this->m44_codmatestoqueitem = ($this->m44_codmatestoqueitem === 0 || $this->m44_codmatestoqueitem === 0.0 || $this->m44_codmatestoqueitem == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codmatestoqueitem"]:$this->m44_codmatestoqueitem);
+       $this->m44_quant = ($this->m44_quant === 0 || $this->m44_quant === 0.0 || $this->m44_quant == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_quant"]:$this->m44_quant);
      }else{
-       $this->m44_codigo = ($this->m44_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codigo"]:$this->m44_codigo);
+       $this->m44_codigo = ($this->m44_codigo === 0 || $this->m44_codigo === 0.0 || $this->m44_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m44_codigo"]:$this->m44_codigo);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_atendrequiitemmei {
          $this->m44_codigo = $m44_codigo;
        }
      }
-     if(($this->m44_codigo == null) || ($this->m44_codigo == "") ){
+     if(($this->m44_codigo == null) || ($this->m44_codigo === 0 || $this->m44_codigo === 0.0 || $this->m44_codigo == "") ){
        $this->erro_sql = " Campo m44_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

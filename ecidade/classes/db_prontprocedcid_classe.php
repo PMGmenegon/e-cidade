@@ -69,11 +69,11 @@ class cl_prontprocedcid {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s135_i_codigo = ($this->s135_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_codigo"]:$this->s135_i_codigo);
-       $this->s135_i_prontproced = ($this->s135_i_prontproced == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_prontproced"]:$this->s135_i_prontproced);
-       $this->s135_i_cid = ($this->s135_i_cid == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_cid"]:$this->s135_i_cid);
+       $this->s135_i_codigo = ($this->s135_i_codigo === 0 || $this->s135_i_codigo === 0.0 || $this->s135_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_codigo"]:$this->s135_i_codigo);
+       $this->s135_i_prontproced = ($this->s135_i_prontproced === 0 || $this->s135_i_prontproced === 0.0 || $this->s135_i_prontproced == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_prontproced"]:$this->s135_i_prontproced);
+       $this->s135_i_cid = ($this->s135_i_cid === 0 || $this->s135_i_cid === 0.0 || $this->s135_i_cid == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_cid"]:$this->s135_i_cid);
      }else{
-       $this->s135_i_codigo = ($this->s135_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_codigo"]:$this->s135_i_codigo);
+       $this->s135_i_codigo = ($this->s135_i_codigo === 0 || $this->s135_i_codigo === 0.0 || $this->s135_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s135_i_codigo"]:$this->s135_i_codigo);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_prontprocedcid {
          $this->s135_i_codigo = $s135_i_codigo;
        }
      }
-     if(($this->s135_i_codigo == null) || ($this->s135_i_codigo == "") ){
+     if(($this->s135_i_codigo == null) || ($this->s135_i_codigo === 0 || $this->s135_i_codigo === 0.0 || $this->s135_i_codigo == "") ){
        $this->erro_sql = " Campo s135_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

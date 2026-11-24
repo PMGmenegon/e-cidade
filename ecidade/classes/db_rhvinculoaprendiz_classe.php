@@ -77,15 +77,15 @@ class cl_rhvinculoaprendiz
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->rh312_sequencial = ($this->rh312_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_sequencial"]:$this->rh312_sequencial);
-            $this->rh312_matricula = ($this->rh312_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_matricula"]:$this->rh312_matricula);
-            $this->rh312_modalidade = ($this->rh312_modalidade == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_modalidade"]:$this->rh312_modalidade);
-            $this->rh312_instit = ($this->rh312_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_instit"]:$this->rh312_instit);
+            $this->rh312_sequencial = ($this->rh312_sequencial === 0 || $this->rh312_sequencial === 0.0 || $this->rh312_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_sequencial"]:$this->rh312_sequencial);
+            $this->rh312_matricula = ($this->rh312_matricula === 0 || $this->rh312_matricula === 0.0 || $this->rh312_matricula == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_matricula"]:$this->rh312_matricula);
+            $this->rh312_modalidade = ($this->rh312_modalidade === 0 || $this->rh312_modalidade === 0.0 || $this->rh312_modalidade == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_modalidade"]:$this->rh312_modalidade);
+            $this->rh312_instit = ($this->rh312_instit === 0 || $this->rh312_instit === 0.0 || $this->rh312_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_instit"]:$this->rh312_instit);
             $this->rh312_cnpjqualificadora = ($this->rh312_cnpjqualificadora == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_cnpjqualificadora"]:$this->rh312_cnpjqualificadora);
             $this->rh312_cnpjefetivada = ($this->rh312_cnpjefetivada == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_cnpjefetivada"]:$this->rh312_cnpjefetivada);
             $this->rh312_cnpjpratica = ($this->rh312_cnpjpratica == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_cnpjpratica"]:$this->rh312_cnpjpratica);
         } else {
-            $this->rh312_sequencial = ($this->rh312_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_sequencial"]:$this->rh312_sequencial);
+            $this->rh312_sequencial = ($this->rh312_sequencial === 0 || $this->rh312_sequencial === 0.0 || $this->rh312_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh312_sequencial"]:$this->rh312_sequencial);
         }
     }
 
@@ -152,7 +152,7 @@ class cl_rhvinculoaprendiz
                 $this->rh312_sequencial = $rh312_sequencial; 
             }
         }
-        if (($this->rh312_sequencial == null) || ($this->rh312_sequencial == "")) { 
+        if (($this->rh312_sequencial == null) || ($this->rh312_sequencial === 0 || $this->rh312_sequencial === 0.0 || $this->rh312_sequencial == "")) { 
             $this->erro_sql = " Campo rh312_sequencial não declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

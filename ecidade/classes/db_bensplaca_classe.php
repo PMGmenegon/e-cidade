@@ -82,10 +82,10 @@ class cl_bensplaca {
    // funcao para atualizar campos
    function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t41_codigo = ($this->t41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_codigo"]:$this->t41_codigo);
-       $this->t41_bem = ($this->t41_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_bem"]:$this->t41_bem);
+       $this->t41_codigo = ($this->t41_codigo === 0 || $this->t41_codigo === 0.0 || $this->t41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_codigo"]:$this->t41_codigo);
+       $this->t41_bem = ($this->t41_bem === 0 || $this->t41_bem === 0.0 || $this->t41_bem == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_bem"]:$this->t41_bem);
        $this->t41_placa = ($this->t41_placa == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_placa"]:$this->t41_placa);
-       $this->t41_placaseq = ($this->t41_placaseq == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_placaseq"]:$this->t41_placaseq);
+       $this->t41_placaseq = ($this->t41_placaseq === 0 || $this->t41_placaseq === 0.0 || $this->t41_placaseq == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_placaseq"]:$this->t41_placaseq);
        $this->t41_obs = ($this->t41_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_obs"]:$this->t41_obs);
        if($this->t41_data == ""){
          $this->t41_data_dia = ($this->t41_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_data_dia"]:$this->t41_data_dia);
@@ -95,10 +95,10 @@ class cl_bensplaca {
             $this->t41_data = $this->t41_data_ano."-".$this->t41_data_mes."-".$this->t41_data_dia;
          }
        }
-       $this->t41_usuario = ($this->t41_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_usuario"]:$this->t41_usuario);
+       $this->t41_usuario = ($this->t41_usuario === 0 || $this->t41_usuario === 0.0 || $this->t41_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_usuario"]:$this->t41_usuario);
        $this->t41_excluido = ($this->t41_excluido == "f"?@$GLOBALS["HTTP_POST_VARS"]["t41_excluido"]:$this->t41_excluido);
      }else{
-       $this->t41_codigo = ($this->t41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_codigo"]:$this->t41_codigo);
+       $this->t41_codigo = ($this->t41_codigo === 0 || $this->t41_codigo === 0.0 || $this->t41_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["t41_codigo"]:$this->t41_codigo);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_bensplaca {
          $this->t41_codigo = $t41_codigo;
        }
      }
-     if(($this->t41_codigo == null) || ($this->t41_codigo == "") ){
+     if(($this->t41_codigo == null) || ($this->t41_codigo === 0 || $this->t41_codigo === 0.0 || $this->t41_codigo == "") ){
        $this->erro_sql = " Campo t41_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

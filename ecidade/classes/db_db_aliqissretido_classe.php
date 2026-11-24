@@ -67,10 +67,10 @@ class cl_db_aliqissretido {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w14_codigo = ($this->w14_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_codigo"]:$this->w14_codigo);
-       $this->w14_valor = ($this->w14_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_valor"]:$this->w14_valor);
+       $this->w14_codigo = ($this->w14_codigo === 0 || $this->w14_codigo === 0.0 || $this->w14_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_codigo"]:$this->w14_codigo);
+       $this->w14_valor = ($this->w14_valor === 0 || $this->w14_valor === 0.0 || $this->w14_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_valor"]:$this->w14_valor);
      }else{
-       $this->w14_codigo = ($this->w14_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_codigo"]:$this->w14_codigo);
+       $this->w14_codigo = ($this->w14_codigo === 0 || $this->w14_codigo === 0.0 || $this->w14_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w14_codigo"]:$this->w14_codigo);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_db_aliqissretido {
          $this->w14_codigo = $w14_codigo; 
        }
      }
-     if(($this->w14_codigo == null) || ($this->w14_codigo == "") ){ 
+     if(($this->w14_codigo == null) || ($this->w14_codigo === 0 || $this->w14_codigo === 0.0 || $this->w14_codigo == "") ){ 
        $this->erro_sql = " Campo w14_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

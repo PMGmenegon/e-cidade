@@ -69,11 +69,11 @@ class cl_rhrubelemento {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh23_instit = ($this->rh23_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_instit"]:$this->rh23_instit);
+       $this->rh23_instit = ($this->rh23_instit === 0 || $this->rh23_instit === 0.0 || $this->rh23_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_instit"]:$this->rh23_instit);
        $this->rh23_rubric = ($this->rh23_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_rubric"]:$this->rh23_rubric);
-       $this->rh23_codele = ($this->rh23_codele == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_codele"]:$this->rh23_codele);
+       $this->rh23_codele = ($this->rh23_codele === 0 || $this->rh23_codele === 0.0 || $this->rh23_codele == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_codele"]:$this->rh23_codele);
      }else{
-       $this->rh23_instit = ($this->rh23_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_instit"]:$this->rh23_instit);
+       $this->rh23_instit = ($this->rh23_instit === 0 || $this->rh23_instit === 0.0 || $this->rh23_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_instit"]:$this->rh23_instit);
        $this->rh23_rubric = ($this->rh23_rubric == ""?@$GLOBALS["HTTP_POST_VARS"]["rh23_rubric"]:$this->rh23_rubric);
      }
    }
@@ -99,7 +99,7 @@ class cl_rhrubelemento {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->rh23_instit == null) || ($this->rh23_instit == "") ){
+     if(($this->rh23_instit == null) || ($this->rh23_instit === 0 || $this->rh23_instit === 0.0 || $this->rh23_instit == "") ){
        $this->erro_sql = " Campo rh23_instit nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

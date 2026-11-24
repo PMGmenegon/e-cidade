@@ -67,10 +67,10 @@ class cl_rhcadregime {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh52_regime = ($this->rh52_regime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh52_regime"]:$this->rh52_regime);
+       $this->rh52_regime = ($this->rh52_regime === 0 || $this->rh52_regime === 0.0 || $this->rh52_regime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh52_regime"]:$this->rh52_regime);
        $this->rh52_descr = ($this->rh52_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["rh52_descr"]:$this->rh52_descr);
      }else{
-       $this->rh52_regime = ($this->rh52_regime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh52_regime"]:$this->rh52_regime);
+       $this->rh52_regime = ($this->rh52_regime === 0 || $this->rh52_regime === 0.0 || $this->rh52_regime == ""?@$GLOBALS["HTTP_POST_VARS"]["rh52_regime"]:$this->rh52_regime);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_rhcadregime {
        return false;
      }
        $this->rh52_regime = $rh52_regime;
-     if(($this->rh52_regime == null) || ($this->rh52_regime == "") ){
+     if(($this->rh52_regime == null) || ($this->rh52_regime === 0 || $this->rh52_regime === 0.0 || $this->rh52_regime == "") ){
        $this->erro_sql = " Campo rh52_regime nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

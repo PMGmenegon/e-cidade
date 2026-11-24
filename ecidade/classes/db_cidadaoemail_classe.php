@@ -73,14 +73,14 @@ class cl_cidadaoemail {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov08_sequencial = ($this->ov08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_sequencial"]:$this->ov08_sequencial);
-       $this->ov08_seq = ($this->ov08_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_seq"]:$this->ov08_seq);
-       $this->ov08_cidadao = ($this->ov08_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_cidadao"]:$this->ov08_cidadao);
+       $this->ov08_sequencial = ($this->ov08_sequencial === 0 || $this->ov08_sequencial === 0.0 || $this->ov08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_sequencial"]:$this->ov08_sequencial);
+       $this->ov08_seq = ($this->ov08_seq === 0 || $this->ov08_seq === 0.0 || $this->ov08_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_seq"]:$this->ov08_seq);
+       $this->ov08_cidadao = ($this->ov08_cidadao === 0 || $this->ov08_cidadao === 0.0 || $this->ov08_cidadao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_cidadao"]:$this->ov08_cidadao);
        $this->ov08_email = ($this->ov08_email == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_email"]:$this->ov08_email);
        $this->ov08_principal = ($this->ov08_principal == "f"?@$GLOBALS["HTTP_POST_VARS"]["ov08_principal"]:$this->ov08_principal);
      }else{
-       $this->ov08_sequencial = ($this->ov08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_sequencial"]:$this->ov08_sequencial);
-       $this->ov08_seq = ($this->ov08_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_seq"]:$this->ov08_seq);
+       $this->ov08_sequencial = ($this->ov08_sequencial === 0 || $this->ov08_sequencial === 0.0 || $this->ov08_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_sequencial"]:$this->ov08_sequencial);
+       $this->ov08_seq = ($this->ov08_seq === 0 || $this->ov08_seq === 0.0 || $this->ov08_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["ov08_seq"]:$this->ov08_seq);
      }
    }
    // funcao para inclusao
@@ -137,7 +137,7 @@ class cl_cidadaoemail {
          $this->ov08_sequencial = $ov08_sequencial;
        }
      }
-     if(($this->ov08_sequencial == null) || ($this->ov08_sequencial == "") ){
+     if(($this->ov08_sequencial == null) || ($this->ov08_sequencial === 0 || $this->ov08_sequencial === 0.0 || $this->ov08_sequencial == "") ){
        $this->erro_sql = " Campo ov08_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

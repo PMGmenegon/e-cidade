@@ -84,12 +84,12 @@ class cl_rhpeslocaltrab
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh56_seq = ($this->rh56_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seq"]:$this->rh56_seq);
-       $this->rh56_seqpes = ($this->rh56_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seqpes"]:$this->rh56_seqpes);
-       $this->rh56_localtrab = ($this->rh56_localtrab == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_localtrab"]:$this->rh56_localtrab);
+       $this->rh56_seq = ($this->rh56_seq === 0 || $this->rh56_seq === 0.0 || $this->rh56_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seq"]:$this->rh56_seq);
+       $this->rh56_seqpes = ($this->rh56_seqpes === 0 || $this->rh56_seqpes === 0.0 || $this->rh56_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seqpes"]:$this->rh56_seqpes);
+       $this->rh56_localtrab = ($this->rh56_localtrab === 0 || $this->rh56_localtrab === 0.0 || $this->rh56_localtrab == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_localtrab"]:$this->rh56_localtrab);
        $this->rh56_princ = ($this->rh56_princ == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_princ"]:$this->rh56_princ);
-       $this->rh56_quantidadecusto = ($this->rh56_quantidadecusto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_quantidadecusto"]:$this->rh56_quantidadecusto);
-       $this->rh56_percentualcusto = ($this->rh56_percentualcusto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_percentualcusto"]:$this->rh56_percentualcusto);
+       $this->rh56_quantidadecusto = ($this->rh56_quantidadecusto === 0 || $this->rh56_quantidadecusto === 0.0 || $this->rh56_quantidadecusto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_quantidadecusto"]:$this->rh56_quantidadecusto);
+       $this->rh56_percentualcusto = ($this->rh56_percentualcusto === 0 || $this->rh56_percentualcusto === 0.0 || $this->rh56_percentualcusto == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_percentualcusto"]:$this->rh56_percentualcusto);
        if($this->rh56_datainicio == ""){
          $this->rh56_datainicio_dia = ($this->rh56_datainicio_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_datainicio_dia"]:$this->rh56_datainicio_dia);
          $this->rh56_datainicio_mes = ($this->rh56_datainicio_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_datainicio_mes"]:$this->rh56_datainicio_mes);
@@ -107,7 +107,7 @@ class cl_rhpeslocaltrab
          }
        }
      }else{
-       $this->rh56_seq = ($this->rh56_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seq"]:$this->rh56_seq);
+       $this->rh56_seq = ($this->rh56_seq === 0 || $this->rh56_seq === 0.0 || $this->rh56_seq == ""?@$GLOBALS["HTTP_POST_VARS"]["rh56_seq"]:$this->rh56_seq);
      }
    }
 
@@ -177,7 +177,7 @@ class cl_rhpeslocaltrab
          $this->rh56_seq = $rh56_seq;
        }
      }
-     if(($this->rh56_seq == null) || ($this->rh56_seq == "") ){
+     if(($this->rh56_seq == null) || ($this->rh56_seq === 0 || $this->rh56_seq === 0.0 || $this->rh56_seq == "") ){
        $this->erro_sql = " Campo rh56_seq não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -584,7 +584,7 @@ class cl_rhpeslocaltrab
      }
      return $sql;
   }
-   public function sql_query_retorno ( $rh56_seq=null,$campos="*",$ordem=null,$dbwhere="",$anonovo,$mesnovo){
+   public function sql_query_retorno ( $rh56_seq=null,$campos="*",$ordem=null,$dbwhere="",$anonovo = null,$mesnovo = null){
      $sql = "select ";
      if($campos != "*" ){
        $campos_sql = explode("#",$campos);

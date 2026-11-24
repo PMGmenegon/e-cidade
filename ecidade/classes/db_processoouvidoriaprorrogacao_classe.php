@@ -83,9 +83,9 @@ class cl_processoouvidoriaprorrogacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov15_sequencial = ($this->ov15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_sequencial"]:$this->ov15_sequencial);
-       $this->ov15_protprocesso = ($this->ov15_protprocesso == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_protprocesso"]:$this->ov15_protprocesso);
-       $this->ov15_coddepto = ($this->ov15_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_coddepto"]:$this->ov15_coddepto);
+       $this->ov15_sequencial = ($this->ov15_sequencial === 0 || $this->ov15_sequencial === 0.0 || $this->ov15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_sequencial"]:$this->ov15_sequencial);
+       $this->ov15_protprocesso = ($this->ov15_protprocesso === 0 || $this->ov15_protprocesso === 0.0 || $this->ov15_protprocesso == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_protprocesso"]:$this->ov15_protprocesso);
+       $this->ov15_coddepto = ($this->ov15_coddepto === 0 || $this->ov15_coddepto === 0.0 || $this->ov15_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_coddepto"]:$this->ov15_coddepto);
        if($this->ov15_dtini == ""){
          $this->ov15_dtini_dia = ($this->ov15_dtini_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_dtini_dia"]:$this->ov15_dtini_dia);
          $this->ov15_dtini_mes = ($this->ov15_dtini_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_dtini_mes"]:$this->ov15_dtini_mes);
@@ -105,7 +105,7 @@ class cl_processoouvidoriaprorrogacao {
        $this->ov15_motivo = ($this->ov15_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_motivo"]:$this->ov15_motivo);
        $this->ov15_ativo = ($this->ov15_ativo == "f"?@$GLOBALS["HTTP_POST_VARS"]["ov15_ativo"]:$this->ov15_ativo);
      }else{
-       $this->ov15_sequencial = ($this->ov15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_sequencial"]:$this->ov15_sequencial);
+       $this->ov15_sequencial = ($this->ov15_sequencial === 0 || $this->ov15_sequencial === 0.0 || $this->ov15_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov15_sequencial"]:$this->ov15_sequencial);
      }
    }
    // funcao para inclusao
@@ -180,7 +180,7 @@ class cl_processoouvidoriaprorrogacao {
          $this->ov15_sequencial = $ov15_sequencial;
        }
      }
-     if(($this->ov15_sequencial == null) || ($this->ov15_sequencial == "") ){
+     if(($this->ov15_sequencial == null) || ($this->ov15_sequencial === 0 || $this->ov15_sequencial === 0.0 || $this->ov15_sequencial == "") ){
        $this->erro_sql = " Campo ov15_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -79,7 +79,7 @@ class cl_cidadaofamilia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as04_sequencial = ($this->as04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_sequencial"]:$this->as04_sequencial);
+       $this->as04_sequencial = ($this->as04_sequencial === 0 || $this->as04_sequencial === 0.0 || $this->as04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_sequencial"]:$this->as04_sequencial);
        if($this->as04_dataentrevista == ""){
          $this->as04_dataentrevista_dia = ($this->as04_dataentrevista_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_dataentrevista_dia"]:$this->as04_dataentrevista_dia);
          $this->as04_dataentrevista_mes = ($this->as04_dataentrevista_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_dataentrevista_mes"]:$this->as04_dataentrevista_mes);
@@ -88,7 +88,7 @@ class cl_cidadaofamilia {
             $this->as04_dataentrevista = $this->as04_dataentrevista_ano."-".$this->as04_dataentrevista_mes."-".$this->as04_dataentrevista_dia;
          }
        }
-       $this->as04_rendafamiliar = ($this->as04_rendafamiliar == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_rendafamiliar"]:$this->as04_rendafamiliar);
+       $this->as04_rendafamiliar = ($this->as04_rendafamiliar === 0 || $this->as04_rendafamiliar === 0.0 || $this->as04_rendafamiliar == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_rendafamiliar"]:$this->as04_rendafamiliar);
        if($this->as04_dataatualizacao == ""){
          $this->as04_dataatualizacao_dia = ($this->as04_dataatualizacao_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_dataatualizacao_dia"]:$this->as04_dataatualizacao_dia);
          $this->as04_dataatualizacao_mes = ($this->as04_dataatualizacao_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_dataatualizacao_mes"]:$this->as04_dataatualizacao_mes);
@@ -99,7 +99,7 @@ class cl_cidadaofamilia {
        }
        $this->as04_aparelhoeletricocontinuo = ($this->as04_aparelhoeletricocontinuo == "f"?@$GLOBALS["HTTP_POST_VARS"]["as04_aparelhoeletricocontinuo"]:$this->as04_aparelhoeletricocontinuo);
      }else{
-       $this->as04_sequencial = ($this->as04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_sequencial"]:$this->as04_sequencial);
+       $this->as04_sequencial = ($this->as04_sequencial === 0 || $this->as04_sequencial === 0.0 || $this->as04_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as04_sequencial"]:$this->as04_sequencial);
      }
    }
    // funcao para inclusao
@@ -165,7 +165,7 @@ class cl_cidadaofamilia {
          $this->as04_sequencial = $as04_sequencial;
        }
      }
-     if(($this->as04_sequencial == null) || ($this->as04_sequencial == "") ){
+     if(($this->as04_sequencial == null) || ($this->as04_sequencial === 0 || $this->as04_sequencial === 0.0 || $this->as04_sequencial == "") ){
        $this->erro_sql = " Campo as04_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

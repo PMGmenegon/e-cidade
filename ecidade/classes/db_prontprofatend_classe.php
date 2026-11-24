@@ -70,12 +70,12 @@ class cl_prontprofatend {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s104_i_codigo = ($this->s104_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_codigo"]:$this->s104_i_codigo);
-       $this->s104_i_prontuario = ($this->s104_i_prontuario == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_prontuario"]:$this->s104_i_prontuario);
-       $this->s104_i_profissional = ($this->s104_i_profissional == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_profissional"]:$this->s104_i_profissional);
-       $this->s104_rhcbo = ($this->s104_rhcbo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_rhcbo"]:$this->s104_rhcbo);
+       $this->s104_i_codigo = ($this->s104_i_codigo === 0 || $this->s104_i_codigo === 0.0 || $this->s104_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_codigo"]:$this->s104_i_codigo);
+       $this->s104_i_prontuario = ($this->s104_i_prontuario === 0 || $this->s104_i_prontuario === 0.0 || $this->s104_i_prontuario == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_prontuario"]:$this->s104_i_prontuario);
+       $this->s104_i_profissional = ($this->s104_i_profissional === 0 || $this->s104_i_profissional === 0.0 || $this->s104_i_profissional == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_profissional"]:$this->s104_i_profissional);
+       $this->s104_rhcbo = ($this->s104_rhcbo === 0 || $this->s104_rhcbo === 0.0 || $this->s104_rhcbo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_rhcbo"]:$this->s104_rhcbo);
      }else{
-       $this->s104_i_codigo = ($this->s104_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_codigo"]:$this->s104_i_codigo);
+       $this->s104_i_codigo = ($this->s104_i_codigo === 0 || $this->s104_i_codigo === 0.0 || $this->s104_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s104_i_codigo"]:$this->s104_i_codigo);
      }
    }
    // funcao para Inclusão
@@ -120,7 +120,7 @@ class cl_prontprofatend {
          $this->s104_i_codigo = $s104_i_codigo;
        }
      }
-     if(($this->s104_i_codigo == null) || ($this->s104_i_codigo == "") ){
+     if(($this->s104_i_codigo == null) || ($this->s104_i_codigo === 0 || $this->s104_i_codigo === 0.0 || $this->s104_i_codigo == "") ){
        $this->erro_sql = " Campo s104_i_codigo não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

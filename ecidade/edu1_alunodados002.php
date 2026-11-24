@@ -35,7 +35,7 @@ require_once(modification("libs/db_app.utils.php"));
 require_once(modification("dbforms/db_funcoes.php"));
 require_once(modification("libs/db_jsplibwebseller.php"));
 
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 db_postmemory($_POST);
 
 $claluno           = new cl_aluno;
@@ -56,7 +56,7 @@ $iOpcaoFiliacao = 2;
 $ed47_v_nomesocial = isset($ed47_v_nomesocial) ? $ed47_v_nomesocial : "";
 
 $sqlParametros = "select ed290_habilitarcampostransescolar from secretariadeeducacao.sec_parametros";
-$resultHabilitarCamposTransescolar = pg_fetch_assoc(db_query($sqlParametros));
+$resultHabilitarCamposTransescolar = (($rsParametros = db_query($sqlParametros)) ? pg_fetch_assoc($rsParametros) : null);
 $habilitarCamposTransescolar = $resultHabilitarCamposTransescolar['ed290_habilitarcampostransescolar']  == 't' ? 'S' : 'N';
 
 function TiraEspacoNome($nome)

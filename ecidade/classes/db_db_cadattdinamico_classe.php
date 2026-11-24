@@ -67,10 +67,10 @@ class cl_db_cadattdinamico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->db118_sequencial = ($this->db118_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db118_sequencial"]:$this->db118_sequencial);
+       $this->db118_sequencial = ($this->db118_sequencial === 0 || $this->db118_sequencial === 0.0 || $this->db118_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db118_sequencial"]:$this->db118_sequencial);
        $this->db118_descricao = ($this->db118_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["db118_descricao"]:$this->db118_descricao);
      }else{
-       $this->db118_sequencial = ($this->db118_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db118_sequencial"]:$this->db118_sequencial);
+       $this->db118_sequencial = ($this->db118_sequencial === 0 || $this->db118_sequencial === 0.0 || $this->db118_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["db118_sequencial"]:$this->db118_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_db_cadattdinamico {
          $this->db118_sequencial = $db118_sequencial;
        }
      }
-     if(($this->db118_sequencial == null) || ($this->db118_sequencial == "") ){
+     if(($this->db118_sequencial == null) || ($this->db118_sequencial === 0 || $this->db118_sequencial === 0.0 || $this->db118_sequencial == "") ){
        $this->erro_sql = " Campo db118_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

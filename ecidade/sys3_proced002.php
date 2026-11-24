@@ -31,7 +31,8 @@ include(modification("libs/db_sessoes.php"));
 include(modification("libs/db_usuariosonline.php"));
 include(modification("dbforms/db_funcoes.php"));
 include(modification("classes/db_db_syscadproceditem_classe.php"));
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $queryString);
+$codproced = $queryString['codproced'] ?? 'NULL';
 
 $cldb_syscadproceditem = new cl_db_syscadproceditem; 
 ?>

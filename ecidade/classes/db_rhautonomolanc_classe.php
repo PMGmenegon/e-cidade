@@ -88,11 +88,11 @@ class cl_rhautonomolanc {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh89_sequencial = ($this->rh89_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_sequencial"]:$this->rh89_sequencial);
-       $this->rh89_numcgm = ($this->rh89_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_numcgm"]:$this->rh89_numcgm);
-       $this->rh89_codord = ($this->rh89_codord == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_codord"]:$this->rh89_codord);
-       $this->rh89_anousu = ($this->rh89_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_anousu"]:$this->rh89_anousu);
-       $this->rh89_mesusu = ($this->rh89_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_mesusu"]:$this->rh89_mesusu);
+       $this->rh89_sequencial = ($this->rh89_sequencial === 0 || $this->rh89_sequencial === 0.0 || $this->rh89_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_sequencial"]:$this->rh89_sequencial);
+       $this->rh89_numcgm = ($this->rh89_numcgm === 0 || $this->rh89_numcgm === 0.0 || $this->rh89_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_numcgm"]:$this->rh89_numcgm);
+       $this->rh89_codord = ($this->rh89_codord === 0 || $this->rh89_codord === 0.0 || $this->rh89_codord == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_codord"]:$this->rh89_codord);
+       $this->rh89_anousu = ($this->rh89_anousu === 0 || $this->rh89_anousu === 0.0 || $this->rh89_anousu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_anousu"]:$this->rh89_anousu);
+       $this->rh89_mesusu = ($this->rh89_mesusu === 0 || $this->rh89_mesusu === 0.0 || $this->rh89_mesusu == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_mesusu"]:$this->rh89_mesusu);
        if($this->rh89_dataliq == ""){
          $this->rh89_dataliq_dia = ($this->rh89_dataliq_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_dataliq_dia"]:$this->rh89_dataliq_dia);
          $this->rh89_dataliq_mes = ($this->rh89_dataliq_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_dataliq_mes"]:$this->rh89_dataliq_mes);
@@ -101,13 +101,13 @@ class cl_rhautonomolanc {
             $this->rh89_dataliq = $this->rh89_dataliq_ano."-".$this->rh89_dataliq_mes."-".$this->rh89_dataliq_dia;
          }
        }
-       $this->rh89_valorserv = ($this->rh89_valorserv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorserv"]:$this->rh89_valorserv);
-       $this->rh89_valorretirrf = ($this->rh89_valorretirrf == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorretirrf"]:$this->rh89_valorretirrf);
-       $this->rh89_valorretinss = ($this->rh89_valorretinss == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorretinss"]:$this->rh89_valorretinss);
-       $this->rh89_instit = ($this->rh89_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_instit"]:$this->rh89_instit);
+       $this->rh89_valorserv = ($this->rh89_valorserv === 0 || $this->rh89_valorserv === 0.0 || $this->rh89_valorserv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorserv"]:$this->rh89_valorserv);
+       $this->rh89_valorretirrf = ($this->rh89_valorretirrf === 0 || $this->rh89_valorretirrf === 0.0 || $this->rh89_valorretirrf == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorretirrf"]:$this->rh89_valorretirrf);
+       $this->rh89_valorretinss = ($this->rh89_valorretinss === 0 || $this->rh89_valorretinss === 0.0 || $this->rh89_valorretinss == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_valorretinss"]:$this->rh89_valorretinss);
+       $this->rh89_instit = ($this->rh89_instit === 0 || $this->rh89_instit === 0.0 || $this->rh89_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_instit"]:$this->rh89_instit);
        $this->rh89_processado = ($this->rh89_processado == "f"?@$GLOBALS["HTTP_POST_VARS"]["rh89_processado"]:$this->rh89_processado);
      }else{
-       $this->rh89_sequencial = ($this->rh89_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_sequencial"]:$this->rh89_sequencial);
+       $this->rh89_sequencial = ($this->rh89_sequencial === 0 || $this->rh89_sequencial === 0.0 || $this->rh89_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["rh89_sequencial"]:$this->rh89_sequencial);
      }
    }
    // funcao para inclusao
@@ -227,7 +227,7 @@ class cl_rhautonomolanc {
          $this->rh89_sequencial = $rh89_sequencial;
        }
      }
-     if(($this->rh89_sequencial == null) || ($this->rh89_sequencial == "") ){
+     if(($this->rh89_sequencial == null) || ($this->rh89_sequencial === 0 || $this->rh89_sequencial === 0.0 || $this->rh89_sequencial == "") ){
        $this->erro_sql = " Campo rh89_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

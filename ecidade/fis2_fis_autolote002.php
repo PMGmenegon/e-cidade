@@ -43,7 +43,7 @@ $clrotulo      = new rotulocampo;
 $clrotulo->label('y50_codauto');
 $clrotulo->label('y50_nome');
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $iCodigoProcessoFiscal = $procfiscalini;
 $procFiscal            = explode(",",$iCodigoProcessoFiscal);
@@ -73,7 +73,7 @@ for($abc = 0; $abc < count($procFiscal); $abc++){
 
   $ResulFis  =  db_query($sSqlFis);
 
-  if(pg_num_rows($ResulFis) > 0){
+  if(($ResulFis ? pg_num_rows($ResulFis) : null) > 0){
     db_fieldsmemory($ResulFis,0);  
     $iTemplateAutoinfracao = $fd01_doc;
   } else {

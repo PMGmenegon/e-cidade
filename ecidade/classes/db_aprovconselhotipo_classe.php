@@ -67,10 +67,10 @@ class cl_aprovconselhotipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed122_sequencial = ($this->ed122_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed122_sequencial"]:$this->ed122_sequencial);
+       $this->ed122_sequencial = ($this->ed122_sequencial === 0 || $this->ed122_sequencial === 0.0 || $this->ed122_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed122_sequencial"]:$this->ed122_sequencial);
        $this->ed122_descricao = ($this->ed122_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed122_descricao"]:$this->ed122_descricao);
      }else{
-       $this->ed122_sequencial = ($this->ed122_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed122_sequencial"]:$this->ed122_sequencial);
+       $this->ed122_sequencial = ($this->ed122_sequencial === 0 || $this->ed122_sequencial === 0.0 || $this->ed122_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed122_sequencial"]:$this->ed122_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_aprovconselhotipo {
          $this->ed122_sequencial = $ed122_sequencial;
        }
      }
-     if(($this->ed122_sequencial == null) || ($this->ed122_sequencial == "") ){
+     if(($this->ed122_sequencial == null) || ($this->ed122_sequencial === 0 || $this->ed122_sequencial === 0.0 || $this->ed122_sequencial == "") ){
        $this->erro_sql = " Campo ed122_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

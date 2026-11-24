@@ -77,15 +77,15 @@ class cl_diario {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed95_i_codigo = ($this->ed95_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_codigo"]:$this->ed95_i_codigo);
-       $this->ed95_i_escola = ($this->ed95_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_escola"]:$this->ed95_i_escola);
-       $this->ed95_i_calendario = ($this->ed95_i_calendario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_calendario"]:$this->ed95_i_calendario);
-       $this->ed95_i_aluno = ($this->ed95_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_aluno"]:$this->ed95_i_aluno);
-       $this->ed95_i_serie = ($this->ed95_i_serie == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_serie"]:$this->ed95_i_serie);
-       $this->ed95_i_regencia = ($this->ed95_i_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_regencia"]:$this->ed95_i_regencia);
+       $this->ed95_i_codigo = ($this->ed95_i_codigo === 0 || $this->ed95_i_codigo === 0.0 || $this->ed95_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_codigo"]:$this->ed95_i_codigo);
+       $this->ed95_i_escola = ($this->ed95_i_escola === 0 || $this->ed95_i_escola === 0.0 || $this->ed95_i_escola == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_escola"]:$this->ed95_i_escola);
+       $this->ed95_i_calendario = ($this->ed95_i_calendario === 0 || $this->ed95_i_calendario === 0.0 || $this->ed95_i_calendario == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_calendario"]:$this->ed95_i_calendario);
+       $this->ed95_i_aluno = ($this->ed95_i_aluno === 0 || $this->ed95_i_aluno === 0.0 || $this->ed95_i_aluno == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_aluno"]:$this->ed95_i_aluno);
+       $this->ed95_i_serie = ($this->ed95_i_serie === 0 || $this->ed95_i_serie === 0.0 || $this->ed95_i_serie == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_serie"]:$this->ed95_i_serie);
+       $this->ed95_i_regencia = ($this->ed95_i_regencia === 0 || $this->ed95_i_regencia === 0.0 || $this->ed95_i_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_regencia"]:$this->ed95_i_regencia);
        $this->ed95_c_encerrado = ($this->ed95_c_encerrado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_c_encerrado"]:$this->ed95_c_encerrado);
      }else{
-       $this->ed95_i_codigo = ($this->ed95_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_codigo"]:$this->ed95_i_codigo);
+       $this->ed95_i_codigo = ($this->ed95_i_codigo === 0 || $this->ed95_i_codigo === 0.0 || $this->ed95_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed95_i_codigo"]:$this->ed95_i_codigo);
      }
    }
    // funcao para inclusao
@@ -169,7 +169,7 @@ class cl_diario {
          $this->ed95_i_codigo = $ed95_i_codigo;
        }
      }
-     if(($this->ed95_i_codigo == null) || ($this->ed95_i_codigo == "") ){
+     if(($this->ed95_i_codigo == null) || ($this->ed95_i_codigo === 0 || $this->ed95_i_codigo === 0.0 || $this->ed95_i_codigo == "") ){
        $this->erro_sql = " Campo ed95_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

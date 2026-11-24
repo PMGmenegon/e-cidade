@@ -90,14 +90,14 @@ class PDF extends FPDF {
                                    url,
                                    logo
                             from db_config where codigo = ".db_getsession("DB_instit"));
-    $url = @pg_result($dados,0,"url");
+    $url = ($dados ? @pg_result($dados,0,"url") : null);
     $this->SetXY(1,1);
-    $this->Image('imagens/files/'.pg_result($dados,0,"logo"),7,3,20);
+    $this->Image('imagens/files/'.($dados ? pg_result($dados,0,"logo") : null),7,3,20);
 
   //$this->Cell(100,32,"",1);
-    $nome = pg_result($dados,0,"nomeinst");
+    $nome = ($dados ? pg_result($dados,0,"nomeinst") : null);
     global $nomeinst;
-    $nomeinst = pg_result($dados,0,"nomeinst");
+    $nomeinst = ($dados ? pg_result($dados,0,"nomeinst") : null);
 
     if(strlen($nome) > 65) {
         $TamFonteNome = 5.9;
@@ -111,14 +111,14 @@ class PDF extends FPDF {
     $this->SetFont('Arial','BI',$TamFonteNome);
     $this->Text(33,10,$nome);
     $this->SetFont('Arial','I',8);
-    $sComplento = substr(trim(pg_result($dados,0,"db21_compl") ),0,20 );
+    $sComplento = substr(trim(($dados ? pg_result($dados,0,"db21_compl") : null) ),0,20 );
     if ($sComplento != '' || $sComplento != null ) {
-    	$sComplento = ", ".substr(trim(pg_result($dados,0,"db21_compl") ),0,20 );
+    	$sComplento = ", ".substr(trim(($dados ? pg_result($dados,0,"db21_compl") : null) ),0,20 );
     }
-    $this->Text(33,14,trim(pg_result($dados,0,"rua")).", ".trim(pg_result($dados,0,"numero")).$sComplento );
-    $this->Text(33,18,trim(pg_result($dados,0,"munic"))." - ".pg_result($dados,0,"uf"));
-    $this->Text(33,22,trim(pg_result($dados,0,"telef"))."   -    CNPJ : ".db_formatar(pg_result($dados,0,"cgc"),"cnpj"));
-    $this->Text(33,26,trim(pg_result($dados,0,"email")));
+    $this->Text(33,14,trim(($dados ? pg_result($dados,0,"rua") : null)).", ".trim(($dados ? pg_result($dados,0,"numero") : null)).$sComplento );
+    $this->Text(33,18,trim(($dados ? pg_result($dados,0,"munic") : null))." - ".($dados ? pg_result($dados,0,"uf") : null));
+    $this->Text(33,22,trim(($dados ? pg_result($dados,0,"telef") : null))."   -    CNPJ : ".db_formatar(($dados ? pg_result($dados,0,"cgc") : null),"cnpj"));
+    $this->Text(33,26,trim(($dados ? pg_result($dados,0,"email") : null)));
     $comprim = ($this->w - $this->rMargin - $this->lMargin);
     $this->Text(33,30,$url);
     $Espaco = $this->w - 80 ;

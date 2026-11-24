@@ -67,10 +67,10 @@ class cl_pcorcamitem {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc22_orcamitem = ($this->pc22_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_orcamitem"]:$this->pc22_orcamitem);
-       $this->pc22_codorc = ($this->pc22_codorc == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_codorc"]:$this->pc22_codorc);
+       $this->pc22_orcamitem = ($this->pc22_orcamitem === 0 || $this->pc22_orcamitem === 0.0 || $this->pc22_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_orcamitem"]:$this->pc22_orcamitem);
+       $this->pc22_codorc = ($this->pc22_codorc === 0 || $this->pc22_codorc === 0.0 || $this->pc22_codorc == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_codorc"]:$this->pc22_codorc);
      }else{
-       $this->pc22_orcamitem = ($this->pc22_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_orcamitem"]:$this->pc22_orcamitem);
+       $this->pc22_orcamitem = ($this->pc22_orcamitem === 0 || $this->pc22_orcamitem === 0.0 || $this->pc22_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc22_orcamitem"]:$this->pc22_orcamitem);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_pcorcamitem {
          $this->pc22_orcamitem = $pc22_orcamitem;
        }
      }
-     if(($this->pc22_orcamitem == null) || ($this->pc22_orcamitem == "") ){
+     if(($this->pc22_orcamitem == null) || ($this->pc22_orcamitem === 0 || $this->pc22_orcamitem === 0.0 || $this->pc22_orcamitem == "") ){
        $this->erro_sql = " Campo pc22_orcamitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

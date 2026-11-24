@@ -37,8 +37,7 @@ $clrotulo->label('r06_pd');
 $clgerasql = new cl_gera_sql_folha;
 $clgerasql->inicio_rh = false;
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs);
-extract($__qs);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $dbwhere = " rh23_rubric is null ";
 $dbwhererubs = "";

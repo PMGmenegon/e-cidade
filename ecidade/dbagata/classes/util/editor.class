@@ -186,7 +186,7 @@ class ScintillaPHP extends GtkScintilla
     /***********************************************************/
     /* Constructor Method
     /***********************************************************/
-    function ScintillaPHP()
+    function __construct()
     {
         GtkScintilla::GtkScintilla();
         GtkScintilla::connect_object('char_added', array($this,'char_added'));
@@ -292,7 +292,7 @@ class ScintillaPHP extends GtkScintilla
         $disable_autocomplete = TRUE;
         if (trim($word) == substr($word,1)) $word[0] = " ";
         if ((strlen($word) > 2) || $word == '(')
-        switch ($word{0})
+        switch ($word[0])
         {
             case "$":
             if ($is_key) $this->lastword = $word;

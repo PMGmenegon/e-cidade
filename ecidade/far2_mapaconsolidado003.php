@@ -37,7 +37,7 @@ include(modification("classes/db_far_fechalivro_classe.php"));
 include(modification("classes/db_far_farmacia_classe.php"));
 
 db_postmemory($HTTP_POST_VARS);
-parse_str($HTTP_SERVER_VARS["QUERY_STRING"]);
+parse_str($HTTP_SERVER_VARS["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 $clfar_modelolivro = new cl_far_modelolivro;
 $clfar_fechalivro = new cl_far_fechalivro;
 $clfar_farmacia = new cl_far_farmacia;
@@ -48,7 +48,7 @@ $ano=date('Y');
 
   $colname_v = "-1";
 if (isset($_POST['lv'])) {
-  $colname_v = (get_magic_quotes_gpc()) ? $_POST['lv'] : addslashes($_POST['lv']);
+  $colname_v = (false) ? $_POST['lv'] : addslashes($_POST['lv']);
 }  
 $sql = "SELECT * FROM far_modelolivro WHERE fa16_i_codigo = '$lv' ";
 $qr = db_query($sql) ;

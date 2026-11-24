@@ -200,7 +200,7 @@
 	    // Percorre o resumo do limite de caraceters até um ponto que haja espaço em branco para não quebre alguma palavra
 	    for ($iInd = $iTotalCaract; $iInd < strlen($descricaoitem); $iInd++) {
 
-	      if ( $descricaoitem{$iInd} == ' ') {
+	      if ( $descricaoitem[$iInd] == ' ') {
 
 	        $iLimitString = $iInd;
 	        break;

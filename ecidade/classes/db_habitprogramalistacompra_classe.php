@@ -76,8 +76,8 @@ class cl_habitprogramalistacompra {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ht17_sequencial = ($this->ht17_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_sequencial"]:$this->ht17_sequencial);
-       $this->ht17_habitprograma = ($this->ht17_habitprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_habitprograma"]:$this->ht17_habitprograma);
+       $this->ht17_sequencial = ($this->ht17_sequencial === 0 || $this->ht17_sequencial === 0.0 || $this->ht17_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_sequencial"]:$this->ht17_sequencial);
+       $this->ht17_habitprograma = ($this->ht17_habitprograma === 0 || $this->ht17_habitprograma === 0.0 || $this->ht17_habitprograma == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_habitprograma"]:$this->ht17_habitprograma);
        $this->ht17_descricao = ($this->ht17_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_descricao"]:$this->ht17_descricao);
        if($this->ht17_datalimite == ""){
          $this->ht17_datalimite_dia = ($this->ht17_datalimite_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_datalimite_dia"]:$this->ht17_datalimite_dia);
@@ -87,9 +87,9 @@ class cl_habitprogramalistacompra {
             $this->ht17_datalimite = $this->ht17_datalimite_ano."-".$this->ht17_datalimite_mes."-".$this->ht17_datalimite_dia;
          }
        }
-       $this->ht17_formaavaliacao = ($this->ht17_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_formaavaliacao"]:$this->ht17_formaavaliacao);
+       $this->ht17_formaavaliacao = ($this->ht17_formaavaliacao === 0 || $this->ht17_formaavaliacao === 0.0 || $this->ht17_formaavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_formaavaliacao"]:$this->ht17_formaavaliacao);
      }else{
-       $this->ht17_sequencial = ($this->ht17_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_sequencial"]:$this->ht17_sequencial);
+       $this->ht17_sequencial = ($this->ht17_sequencial === 0 || $this->ht17_sequencial === 0.0 || $this->ht17_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ht17_sequencial"]:$this->ht17_sequencial);
      }
    }
    // funcao para inclusao
@@ -149,7 +149,7 @@ class cl_habitprogramalistacompra {
          $this->ht17_sequencial = $ht17_sequencial;
        }
      }
-     if(($this->ht17_sequencial == null) || ($this->ht17_sequencial == "") ){
+     if(($this->ht17_sequencial == null) || ($this->ht17_sequencial === 0 || $this->ht17_sequencial === 0.0 || $this->ht17_sequencial == "") ){
        $this->erro_sql = " Campo ht17_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

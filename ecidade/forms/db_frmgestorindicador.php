@@ -83,7 +83,7 @@ fieldset table td:first-child {
        $sSqlPeriodicidade = $cldb_periodicidade->sql_query("","*","db84_sequencial ASC");       
        $result = $cldb_periodicidade->sql_record($sSqlPeriodicidade);
        $aPer = array();
-       while ($row = pg_fetch_array($result)) {
+       while ($row = ($result ? pg_fetch_array($result) : null)) {
          $aPer[$row[0]] = $row[1]; 
        }
        db_select("g04_periodicidade", $aPer, true, $db_opcao, "style='width:123px;'");

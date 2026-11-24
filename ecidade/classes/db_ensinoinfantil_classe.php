@@ -67,10 +67,10 @@ class cl_ensinoinfantil {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed117_sequencial = ($this->ed117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_sequencial"]:$this->ed117_sequencial);
-       $this->ed117_ensino = ($this->ed117_ensino == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_ensino"]:$this->ed117_ensino);
+       $this->ed117_sequencial = ($this->ed117_sequencial === 0 || $this->ed117_sequencial === 0.0 || $this->ed117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_sequencial"]:$this->ed117_sequencial);
+       $this->ed117_ensino = ($this->ed117_ensino === 0 || $this->ed117_ensino === 0.0 || $this->ed117_ensino == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_ensino"]:$this->ed117_ensino);
      }else{
-       $this->ed117_sequencial = ($this->ed117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_sequencial"]:$this->ed117_sequencial);
+       $this->ed117_sequencial = ($this->ed117_sequencial === 0 || $this->ed117_sequencial === 0.0 || $this->ed117_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed117_sequencial"]:$this->ed117_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_ensinoinfantil {
          $this->ed117_sequencial = $ed117_sequencial;
        }
      }
-     if(($this->ed117_sequencial == null) || ($this->ed117_sequencial == "") ){
+     if(($this->ed117_sequencial == null) || ($this->ed117_sequencial === 0 || $this->ed117_sequencial === 0.0 || $this->ed117_sequencial == "") ){
        $this->erro_sql = " Campo ed117_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

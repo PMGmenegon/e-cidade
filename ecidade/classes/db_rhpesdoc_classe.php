@@ -122,15 +122,15 @@ class cl_rhpesdoc
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->rh16_regist = ($this->rh16_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_regist"]:$this->rh16_regist);
+       $this->rh16_regist = ($this->rh16_regist === 0 || $this->rh16_regist === 0.0 || $this->rh16_regist == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_regist"]:$this->rh16_regist);
        $this->rh16_titele = ($this->rh16_titele == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_titele"]:$this->rh16_titele);
        $this->rh16_zonael = ($this->rh16_zonael == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_zonael"]:$this->rh16_zonael);
        $this->rh16_secaoe = ($this->rh16_secaoe == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_secaoe"]:$this->rh16_secaoe);
        $this->rh16_reserv = ($this->rh16_reserv == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_reserv"]:$this->rh16_reserv);
        $this->rh16_catres = ($this->rh16_catres == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_catres"]:$this->rh16_catres);
        $this->rh16_ctps_n = ($this->rh16_ctps_n == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_n"]:$this->rh16_ctps_n);
-       $this->rh16_ctps_s = ($this->rh16_ctps_s == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_s"]:$this->rh16_ctps_s);
-       $this->rh16_ctps_d = ($this->rh16_ctps_d == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_d"]:$this->rh16_ctps_d);
+       $this->rh16_ctps_s = ($this->rh16_ctps_s === 0 || $this->rh16_ctps_s === 0.0 || $this->rh16_ctps_s == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_s"]:$this->rh16_ctps_s);
+       $this->rh16_ctps_d = ($this->rh16_ctps_d === 0 || $this->rh16_ctps_d === 0.0 || $this->rh16_ctps_d == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_d"]:$this->rh16_ctps_d);
        $this->rh16_ctps_uf = ($this->rh16_ctps_uf == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_ctps_uf"]:$this->rh16_ctps_uf);
        $this->rh16_pis = ($this->rh16_pis == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_pis"]:$this->rh16_pis);
        $this->rh16_carth_n = ($this->rh16_carth_n == ""?@$GLOBALS["HTTP_POST_VARS"]["rh16_carth_n"]:$this->rh16_carth_n);
@@ -206,7 +206,7 @@ class cl_rhpesdoc
                 }
             }
         } else {
-            $this->rh16_regist = ($this->rh16_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["rh16_regist"] : $this->rh16_regist);
+            $this->rh16_regist = ($this->rh16_regist === 0 || $this->rh16_regist === 0.0 || $this->rh16_regist == "" ? @$GLOBALS["HTTP_POST_VARS"]["rh16_regist"] : $this->rh16_regist);
         }
     }
 
@@ -266,7 +266,7 @@ class cl_rhpesdoc
     }
 
         $this->rh16_regist = $rh16_regist;
-        if (($this->rh16_regist == null) || ($this->rh16_regist == "")) {
+        if (($this->rh16_regist == null) || ($this->rh16_regist === 0 || $this->rh16_regist === 0.0 || $this->rh16_regist == "")) {
             $this->erro_sql = " Campo rh16_regist nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";
@@ -890,7 +890,7 @@ class cl_rhpesdoc
      }
      return $sql;
   }
-   public function sql_query_gerfs($rh16_regist = null, $campos = "*", $ordem = null, $dbwhere = "", $sigla, $pis)
+   public function sql_query_gerfs($rh16_regist = null, $campos = "*", $ordem = null, $dbwhere = "", $sigla = null, $pis = null)
     {
         $sql = "select ";
         $campos = str_replace("#s#", $sigla, $campos);

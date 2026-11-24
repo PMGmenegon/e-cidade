@@ -41,8 +41,7 @@ $clrotulo->label('rh01_regist');
 $clrotulo->label('z01_numcgm');
 $clrotulo->label('z01_nome');
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs);
-extract($__qs);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $head3 = "RELATÓRIO DE PAGAMENTO DE ATRASADOS";
 $head5 = "DATA DE PAGAMENTO: ".db_formatar($datai,"d");

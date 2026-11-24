@@ -19,7 +19,7 @@ class ErrorPlot extends Plot {
 //---------------
 // CONSTRUCTOR
     public function __construct(&$datay,$datax=false) {
-	$this->Plot($datay,$datax);
+	parent::__construct($datay,$datax);
 	$this->numpoints /= 2;
     }
 //---------------

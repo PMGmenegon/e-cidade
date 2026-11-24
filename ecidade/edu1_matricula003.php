@@ -33,7 +33,7 @@ require_once(modification("libs/db_stdlibwebseller.php"));
 require_once(modification("libs/db_utils.php"));
 require_once(modification("dbforms/db_funcoes.php"));
 
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 db_postmemory($_POST);
 
 $oGet = db_utils::postMemory($_GET);
@@ -114,7 +114,7 @@ if (isset($excluir)) {
     $result_prog = $cltrocaserie->sql_record($sSqlTrocaSerie);
 
     $sql = "select ed60_c_situacao from matricula where ed60_i_codigo = {$oPost->ed60_matricula}";
-    $situacao = pg_fetch_assoc(db_query($sql));
+    $situacao = (($rsSituacaoMatricula = db_query($sql)) ? pg_fetch_assoc($rsSituacaoMatricula) : null);
     if ($cltrocaserie->numrows > 0 && trim($situacao['ed60_c_situacao']) == "AVANÇADO") {
         $lErro = true;
         $clmatricula->erro_status = "0";
@@ -325,7 +325,7 @@ if (isset($excluir)) {
 
         $sqlEtapaDestino = "SELECT ed364_codigo as codigo
             FROM escola.etapadestinomatricula WHERE ed364_matricula = {$matriculaAluno->getCodigo()};";
-        $rsEtapaDestino = pg_fetch_assoc(db_query($sqlEtapaDestino));
+        $rsEtapaDestino = (($rsSqlEtapaDestino = db_query($sqlEtapaDestino)) ? pg_fetch_assoc($rsSqlEtapaDestino) : null);
 
         if (!empty($rsEtapaDestino)) {
             $etapaDestinoCodigo = [];

@@ -97,7 +97,15 @@ function db_query($param1, $param2 = null, $param3 = "SQL")
                 }
             }
         }
-        $dbresult = pg_query($dbsql);
+        try {
+            $dbresult = pg_query($dbsql);
+        } catch (\Error $e) {
+            // 8.x: sem conexao aberta, pg_query() lanca Error; o 7.4 avisava e devolvia false
+            if (get_class($e) != 'Error') {
+                throw $e;
+            }
+            $dbresult = false;
+        }
     } else {
         $dbsql = $sBackTrace . $param2;
         if ($lExecutaAccount) {
@@ -1462,8 +1470,8 @@ function db_fieldsmemory($recordset, $indice, $formatar = "", $mostravar = false
     //#99#//Exemplo:
     //#99#//db_fieldsmemory($result,0);
     //#99#//Cria todas as variáveis com o conteúdo de cada uma sendo o valor do campo
-    $fm_numfields = pg_num_fields($recordset);
-    $fm_numrows = pg_num_rows($recordset);
+    $fm_numfields = $recordset ? pg_num_fields($recordset) : null;
+    $fm_numrows = $recordset ? pg_num_rows($recordset) : null;
     //if(pg_num_rows($recordset)==0){
     // echo "RecordSet Vazio: <br>";
     // for ($i = 0;$i < $fm_numfields;$i++){
@@ -1648,7 +1656,7 @@ function db_vencimento($dt = "")
     if (empty($dt)) {
         $dt = db_getsession("DB_datausu");
     }
-    $data = date("Y-m-d", $dt);
+    $data = (is_array($dt) || (is_string($dt) && !preg_match('/^\s*[+-]?\.?\d/', $dt)) ? false : date("Y-m-d", (int) $dt));
 
     return $data;
 }
@@ -1926,7 +1934,7 @@ function db_lovrot(
 
         db_putsession("dblov_query_inicial", $query);
 
-        ${$tot_registros} = pg_fetch_result($tot, 0, 0);
+        ${$tot_registros} = $tot ? pg_fetch_result($tot, 0, 0) : null;
 
         if (${$tot_registros} == 0) {
             $Dd2 = "disabled";
@@ -2059,11 +2067,11 @@ function db_lovrot(
     $query .= " limit $numlinhas offset " . ${$offset};
     $result = db_query($query);
     if ($origem === 'func_empnota001.php') {
-        while ($row = pg_fetch_assoc($result)) {
+        while ($row = ($result ? pg_fetch_assoc($result) : null)) {
             $codNotas[] = $row["e69_codnota"];
         }
     }
-    $NumRows = pg_num_rows($result);
+    $NumRows = $result ? pg_num_rows($result) : null;
 
     if ($NumRows == 0) {
         if (isset($query_anterior)) {
@@ -2090,11 +2098,11 @@ function db_lovrot(
                 $tot = db_query("select count(*) from ({$query_anterior}) as temp");
             }
 
-            $$tot_registros = pg_fetch_result($tot, 0, 0);
+            $$tot_registros = $tot ? pg_fetch_result($tot, 0, 0) : null;
 
             $query = $query_anterior . " limit $numlinhas offset " . ${$offset};
             $result = db_query($query);
-            $NumRows = pg_num_rows($result);
+            $NumRows = $result ? pg_num_rows($result) : null;
             $filtroquery = $query_anterior;
         }
     } else {
@@ -2122,7 +2130,7 @@ function db_lovrot(
                 $tot = db_query("select count(*) from ({$query_novo_filtro}) as temp");
             }
 
-            ${$tot_registros} = pg_fetch_result($tot, 0, 0);
+            ${$tot_registros} = $tot ? pg_fetch_result($tot, 0, 0) : null;
 
             if (${$tot_registros} == 0) {
                 $Dd2 = "disabled";
@@ -2130,7 +2138,7 @@ function db_lovrot(
         }
     }
 
-    $NumFields = pg_num_fields($result);
+    $NumFields = $result ? pg_num_fields($result) : null;
 
     if (($NumRows < $numlinhas) && ($numlinhas < (${$tot_registros} - ${$offset} - $numlinhas))) {
         $Dd1 = @ $Dd2 = "disabled";
@@ -2233,7 +2241,7 @@ function db_lovrot(
 
     if (isset($totalizacao) && isset($tot)) {
         if (count($totalizacao) > 0) {
-            $totNumfields = pg_num_fields($tot);
+            $totNumfields = $tot ? pg_num_fields($tot) : null;
             for ($totrep = 1; $totrep < $totNumfields; $totrep++) {
                 $sHtml .= "<input type=\"hidden\"";
                 $sHtml .= "       name=\"totrep_" . pg_field_name($tot, $totrep) . "\"";
@@ -2715,7 +2723,7 @@ function db_lovrot(
     }
 
     if ($automatico) {
-        if (pg_num_rows($result) == 1 && $$offset == 0) {
+        if (($result ? pg_num_rows($result) : null) == 1 && $$offset == 0) {
             $sHtml .= "<script>" . @$resultadoRetorno . "</script>";
         }
     }
@@ -2908,7 +2916,7 @@ function db_logsmanual_demais($string = '', $id_usuario = 0, $modulo = 0, $item 
 {
 
     // sem conexao com o banco
-    if (!isset($GLOBALS['conn']) || !is_resource($GLOBALS['conn'])) {
+    if (!isset($GLOBALS['conn']) || !(is_resource($GLOBALS['conn']) || $GLOBALS['conn'] instanceof \PgSql\Connection)) {
         return false;
     }
 
@@ -3200,7 +3208,7 @@ function print_vars($obj)
     $arr = get_object_vars($obj);
     echo "<table border=0 bgcolor=#AAAAFF style='border:1px solid'>";
     echo "<tr><td colspan=3>Debug da classe " . get_class($obj) . " </td></tr>";
-    while (list ($prop, $val) = each($arr)) {
+    foreach ($arr as $prop => $val) {
         echo "<tr><td>&nbsp; </td><td align=left>var ${$prop} </td><td> $val </td>";
     }
 }
@@ -3818,7 +3826,7 @@ function db_buscaImagemBanco($cadban, $conn)
             // seta os dados para o boleto passando as informações do logo
             db_query($conn, "begin");
             $caminho = "tmp/" . $banco . ".jpg";
-            pg_lo_export("$db90_logo", $caminho, $conn);
+            try { pg_lo_export($conn, "$db90_logo", $caminho); } catch (\ArgumentCountError | \ValueError | \TypeError $e) { /* 8.x: argumento invalido lanca erro; o 7.4 avisava e devolvia false */ }
             db_query($conn, "commit");
 
             $arr = array(

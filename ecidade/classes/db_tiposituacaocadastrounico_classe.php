@@ -67,10 +67,10 @@ class cl_tiposituacaocadastrounico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as11_sequencial = ($this->as11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as11_sequencial"]:$this->as11_sequencial);
+       $this->as11_sequencial = ($this->as11_sequencial === 0 || $this->as11_sequencial === 0.0 || $this->as11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as11_sequencial"]:$this->as11_sequencial);
        $this->as11_situacao = ($this->as11_situacao == ""?@$GLOBALS["HTTP_POST_VARS"]["as11_situacao"]:$this->as11_situacao);
      }else{
-       $this->as11_sequencial = ($this->as11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as11_sequencial"]:$this->as11_sequencial);
+       $this->as11_sequencial = ($this->as11_sequencial === 0 || $this->as11_sequencial === 0.0 || $this->as11_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as11_sequencial"]:$this->as11_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_tiposituacaocadastrounico {
          $this->as11_sequencial = $as11_sequencial;
        }
      }
-     if(($this->as11_sequencial == null) || ($this->as11_sequencial == "") ){
+     if(($this->as11_sequencial == null) || ($this->as11_sequencial === 0 || $this->as11_sequencial === 0.0 || $this->as11_sequencial == "") ){
        $this->erro_sql = " Campo as11_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

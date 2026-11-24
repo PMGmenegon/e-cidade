@@ -84,15 +84,15 @@ class cl_periodoescola
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->ed17_i_codigo = ($this->ed17_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_codigo"] : $this->ed17_i_codigo);
-            $this->ed17_i_escola = ($this->ed17_i_escola == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_escola"] : $this->ed17_i_escola);
-            $this->ed17_i_turno = ($this->ed17_i_turno == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_turno"] : $this->ed17_i_turno);
-            $this->ed17_i_periodoaula = ($this->ed17_i_periodoaula == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_periodoaula"] : $this->ed17_i_periodoaula);
+            $this->ed17_i_codigo = ($this->ed17_i_codigo === 0 || $this->ed17_i_codigo === 0.0 || $this->ed17_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_codigo"] : $this->ed17_i_codigo);
+            $this->ed17_i_escola = ($this->ed17_i_escola === 0 || $this->ed17_i_escola === 0.0 || $this->ed17_i_escola == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_escola"] : $this->ed17_i_escola);
+            $this->ed17_i_turno = ($this->ed17_i_turno === 0 || $this->ed17_i_turno === 0.0 || $this->ed17_i_turno == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_turno"] : $this->ed17_i_turno);
+            $this->ed17_i_periodoaula = ($this->ed17_i_periodoaula === 0 || $this->ed17_i_periodoaula === 0.0 || $this->ed17_i_periodoaula == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_periodoaula"] : $this->ed17_i_periodoaula);
             $this->ed17_h_inicio = ($this->ed17_h_inicio == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_h_inicio"] : $this->ed17_h_inicio);
             $this->ed17_h_fim = ($this->ed17_h_fim == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_h_fim"] : $this->ed17_h_fim);
             $this->ed17_duracao = ($this->ed17_duracao == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_duracao"] : $this->ed17_duracao);
         } else {
-            $this->ed17_i_codigo = ($this->ed17_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_codigo"] : $this->ed17_i_codigo);
+            $this->ed17_i_codigo = ($this->ed17_i_codigo === 0 || $this->ed17_i_codigo === 0.0 || $this->ed17_i_codigo == "" ? @$GLOBALS["HTTP_POST_VARS"]["ed17_i_codigo"] : $this->ed17_i_codigo);
         }
     }
 
@@ -178,7 +178,7 @@ class cl_periodoescola
                 $this->ed17_i_codigo = $ed17_i_codigo;
             }
         }
-        if (($this->ed17_i_codigo == null) || ($this->ed17_i_codigo == "")) {
+        if (($this->ed17_i_codigo == null) || ($this->ed17_i_codigo === 0 || $this->ed17_i_codigo === 0.0 || $this->ed17_i_codigo == "")) {
             $this->erro_sql = " Campo ed17_i_codigo nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

@@ -67,11 +67,11 @@ class cl_matmaterunisai {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m62_codmater = ($this->m62_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmater"]:$this->m62_codmater);
-       $this->m62_codmatunid = ($this->m62_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmatunid"]:$this->m62_codmatunid);
+       $this->m62_codmater = ($this->m62_codmater === 0 || $this->m62_codmater === 0.0 || $this->m62_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmater"]:$this->m62_codmater);
+       $this->m62_codmatunid = ($this->m62_codmatunid === 0 || $this->m62_codmatunid === 0.0 || $this->m62_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmatunid"]:$this->m62_codmatunid);
      }else{
-       $this->m62_codmater = ($this->m62_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmater"]:$this->m62_codmater);
-       $this->m62_codmatunid = ($this->m62_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmatunid"]:$this->m62_codmatunid);
+       $this->m62_codmater = ($this->m62_codmater === 0 || $this->m62_codmater === 0.0 || $this->m62_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmater"]:$this->m62_codmater);
+       $this->m62_codmatunid = ($this->m62_codmatunid === 0 || $this->m62_codmatunid === 0.0 || $this->m62_codmatunid == ""?@$GLOBALS["HTTP_POST_VARS"]["m62_codmatunid"]:$this->m62_codmatunid);
      }
    }
    // funcao para inclusao
@@ -79,7 +79,7 @@ class cl_matmaterunisai {
       $this->atualizacampos();
        $this->m62_codmater = $m62_codmater;
        $this->m62_codmatunid = $m62_codmatunid;
-     if(($this->m62_codmater == null) || ($this->m62_codmater == "") ){
+     if(($this->m62_codmater == null) || ($this->m62_codmater === 0 || $this->m62_codmater === 0.0 || $this->m62_codmater == "") ){
        $this->erro_sql = " Campo m62_codmater nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -87,7 +87,7 @@ class cl_matmaterunisai {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->m62_codmatunid == null) || ($this->m62_codmatunid == "") ){
+     if(($this->m62_codmatunid == null) || ($this->m62_codmatunid === 0 || $this->m62_codmatunid === 0.0 || $this->m62_codmatunid == "") ){
        $this->erro_sql = " Campo m62_codmatunid nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

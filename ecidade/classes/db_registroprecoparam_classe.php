@@ -73,13 +73,13 @@ class cl_registroprecoparam {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc08_instit = ($this->pc08_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_instit"]:$this->pc08_instit);
+       $this->pc08_instit = ($this->pc08_instit === 0 || $this->pc08_instit === 0.0 || $this->pc08_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_instit"]:$this->pc08_instit);
        $this->pc08_incluiritemestimativa = ($this->pc08_incluiritemestimativa == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc08_incluiritemestimativa"]:$this->pc08_incluiritemestimativa);
        $this->pc08_alteraabertura = ($this->pc08_alteraabertura == "f"?@$GLOBALS["HTTP_POST_VARS"]["pc08_alteraabertura"]:$this->pc08_alteraabertura);
-       $this->pc08_percentuquantmax = ($this->pc08_percentuquantmax == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_percentuquantmax"]:$this->pc08_percentuquantmax);
-       $this->pc08_ordemitensestimativa = ($this->pc08_ordemitensestimativa == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_ordemitensestimativa"]:$this->pc08_ordemitensestimativa);
+       $this->pc08_percentuquantmax = ($this->pc08_percentuquantmax === 0 || $this->pc08_percentuquantmax === 0.0 || $this->pc08_percentuquantmax == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_percentuquantmax"]:$this->pc08_percentuquantmax);
+       $this->pc08_ordemitensestimativa = ($this->pc08_ordemitensestimativa === 0 || $this->pc08_ordemitensestimativa === 0.0 || $this->pc08_ordemitensestimativa == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_ordemitensestimativa"]:$this->pc08_ordemitensestimativa);
      }else{
-       $this->pc08_instit = ($this->pc08_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_instit"]:$this->pc08_instit);
+       $this->pc08_instit = ($this->pc08_instit === 0 || $this->pc08_instit === 0.0 || $this->pc08_instit == ""?@$GLOBALS["HTTP_POST_VARS"]["pc08_instit"]:$this->pc08_instit);
      }
    }
    // funcao para inclusao
@@ -98,7 +98,7 @@ class cl_registroprecoparam {
        $this->pc08_ordemitensestimativa = "1";
      }
        $this->pc08_instit = $pc08_instit;
-     if(($this->pc08_instit == null) || ($this->pc08_instit == "") ){
+     if(($this->pc08_instit == null) || ($this->pc08_instit === 0 || $this->pc08_instit === 0.0 || $this->pc08_instit == "") ){
        $this->erro_sql = " Campo pc08_instit nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

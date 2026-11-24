@@ -90,7 +90,7 @@ class PlotMark {
 
 //--------------
 // CONSTRUCTOR
-    function PlotMark() {
+    function __construct() {
 	$this->title = new Text();
 	$this->title->Hide();
 	$this->csimareas = '';

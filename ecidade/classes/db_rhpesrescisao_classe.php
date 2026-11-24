@@ -91,7 +91,7 @@ class cl_rhpesrescisao
                  ";
 
     //funcao construtor da classe
-    function cl_rhpesrescisao()
+    function __construct()
     {
         //classes dos rotulos dos campos
         $this->rotulo = new rotulo("rhpesrescisao"); 
@@ -113,7 +113,7 @@ class cl_rhpesrescisao
     function atualizacampos($exclusao = false)
     {
      if($exclusao==false){
-       $this->rh05_seqpes = ($this->rh05_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_seqpes"]:$this->rh05_seqpes);
+       $this->rh05_seqpes = ($this->rh05_seqpes === 0 || $this->rh05_seqpes === 0.0 || $this->rh05_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_seqpes"]:$this->rh05_seqpes);
        if($this->rh05_recis == ""){
          $this->rh05_recis_dia = ($this->rh05_recis_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_recis_dia"]:$this->rh05_recis_dia);
          $this->rh05_recis_mes = ($this->rh05_recis_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_recis_mes"]:$this->rh05_recis_mes);
@@ -122,7 +122,7 @@ class cl_rhpesrescisao
             $this->rh05_recis = $this->rh05_recis_ano."-".$this->rh05_recis_mes."-".$this->rh05_recis_dia;
          }
        }
-       $this->rh05_causa = ($this->rh05_causa == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_causa"]:$this->rh05_causa);
+       $this->rh05_causa = ($this->rh05_causa === 0 || $this->rh05_causa === 0.0 || $this->rh05_causa == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_causa"]:$this->rh05_causa);
        $this->rh05_caub = ($this->rh05_caub == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_caub"]:$this->rh05_caub);
        if($this->rh05_aviso == ""){
          $this->rh05_aviso_dia = ($this->rh05_aviso_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_aviso_dia"]:$this->rh05_aviso_dia);
@@ -132,19 +132,19 @@ class cl_rhpesrescisao
             $this->rh05_aviso = $this->rh05_aviso_ano."-".$this->rh05_aviso_mes."-".$this->rh05_aviso_dia;
          }
        }
-       $this->rh05_taviso = ($this->rh05_taviso == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_taviso"]:$this->rh05_taviso);
-       $this->rh05_mremun = ($this->rh05_mremun == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_mremun"]:$this->rh05_mremun);
+       $this->rh05_taviso = ($this->rh05_taviso === 0 || $this->rh05_taviso === 0.0 || $this->rh05_taviso == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_taviso"]:$this->rh05_taviso);
+       $this->rh05_mremun = ($this->rh05_mremun === 0 || $this->rh05_mremun === 0.0 || $this->rh05_mremun == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_mremun"]:$this->rh05_mremun);
        $this->rh05_empenhado = ($this->rh05_empenhado == "f"?@$GLOBALS["HTTP_POST_VARS"]["rh05_empenhado"]:$this->rh05_empenhado);
        $this->rh05_trct = ($this->rh05_trct == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_trct"]:$this->rh05_trct);
        $this->rh05_codigoseguranca = ($this->rh05_codigoseguranca == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_codigoseguranca"]:$this->rh05_codigoseguranca);
-       $this->rh05_feriasavos = ($this->rh05_feriasavos == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_feriasavos"]:$this->rh05_feriasavos);
-       $this->rh05_feriasvencidas = ($this->rh05_feriasvencidas == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_feriasvencidas"]:$this->rh05_feriasvencidas);
-       $this->rh05_13salarioavos = ($this->rh05_13salarioavos == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_13salarioavos"]:$this->rh05_13salarioavos);
+       $this->rh05_feriasavos = ($this->rh05_feriasavos === 0 || $this->rh05_feriasavos === 0.0 || $this->rh05_feriasavos == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_feriasavos"]:$this->rh05_feriasavos);
+       $this->rh05_feriasvencidas = ($this->rh05_feriasvencidas === 0 || $this->rh05_feriasvencidas === 0.0 || $this->rh05_feriasvencidas == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_feriasvencidas"]:$this->rh05_feriasvencidas);
+       $this->rh05_13salarioavos = ($this->rh05_13salarioavos === 0 || $this->rh05_13salarioavos === 0.0 || $this->rh05_13salarioavos == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_13salarioavos"]:$this->rh05_13salarioavos);
        $this->rh05_codigorescisao = ($this->rh05_codigorescisao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_codigorescisao"]:$this->rh05_codigorescisao);
-       $this->rh05_tiporescisao = ($this->rh05_tiporescisao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_tiporescisao"]:$this->rh05_tiporescisao);
+       $this->rh05_tiporescisao = ($this->rh05_tiporescisao === 0 || $this->rh05_tiporescisao === 0.0 || $this->rh05_tiporescisao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_tiporescisao"]:$this->rh05_tiporescisao);
 
        // Caso a global rh05_tiporescisao esteja vazia, setar valor default "1".
-       if($this->rh05_tiporescisao == "") {
+       if($this->rh05_tiporescisao === 0 || $this->rh05_tiporescisao === 0.0 || $this->rh05_tiporescisao == "") {
          $this->rh05_tiporescisao = 1;
        }
        if($this->rh05_datapagamento == ""){
@@ -157,7 +157,7 @@ class cl_rhpesrescisao
        }
        $this->rh05_observacao = ($this->rh05_observacao == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_observacao"]:$this->rh05_observacao);
      }else{
-       $this->rh05_seqpes = ($this->rh05_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_seqpes"]:$this->rh05_seqpes);
+       $this->rh05_seqpes = ($this->rh05_seqpes === 0 || $this->rh05_seqpes === 0.0 || $this->rh05_seqpes == ""?@$GLOBALS["HTTP_POST_VARS"]["rh05_seqpes"]:$this->rh05_seqpes);
      }
    }
 
@@ -229,7 +229,7 @@ class cl_rhpesrescisao
        $this->rh05_datapagamento = "null";
      }
        $this->rh05_seqpes = $rh05_seqpes; 
-     if(($this->rh05_seqpes == null) || ($this->rh05_seqpes == "") ){ 
+     if(($this->rh05_seqpes == null) || ($this->rh05_seqpes === 0 || $this->rh05_seqpes === 0.0 || $this->rh05_seqpes == "") ){ 
        $this->erro_sql = " Campo rh05_seqpes não declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -739,7 +739,7 @@ class cl_rhpesrescisao
   	 $this->incluir($this->rh05_seqpes);
    }
 
-    function sql_query_retorno($rh05_seqpes = null, $campos = "*", $ordem = null, $dbwhere = "", $anonovo, $mesnovo)
+    function sql_query_retorno($rh05_seqpes = null, $campos = "*", $ordem = null, $dbwhere = "", $anonovo = null, $mesnovo = null)
     {
      $sql = "select ";
      if($campos != "*" ){
@@ -830,7 +830,7 @@ class cl_rhpesrescisao
     {
         $sql = "select ";
         if ($campos != "*" ) {
-            $campos_sql = split("#",$campos);
+            $campos_sql = preg_split("#\\##m",$campos);
             $virgula = "";
             for ($i=0;$i<sizeof($campos_sql);$i++) {
                 $sql .= $virgula.$campos_sql[$i];
@@ -861,7 +861,7 @@ class cl_rhpesrescisao
         $sql .= $sql2;
         if ($ordem != null ) {
             $sql .= " order by ";
-            $campos_sql = split("#",$ordem);
+            $campos_sql = preg_split("#\\##m",$ordem);
             $virgula = "";
             for ($i=0; $i<sizeof($campos_sql); $i++) {
                 $sql .= $virgula.$campos_sql[$i];
@@ -1011,7 +1011,7 @@ class cl_rhpesrescisao
     {
      $sql = "select ";
      if($campos != "*" ){
-       $campos_sql = split("#",$campos);
+       $campos_sql = preg_split("#\\##m",$campos);
        $virgula = "";
        for($i=0;$i<sizeof($campos_sql);$i++){
          $sql .= $virgula.$campos_sql[$i];
@@ -1034,7 +1034,7 @@ class cl_rhpesrescisao
      $sql .= $sql2;
      if($ordem != null ){
        $sql .= " order by ";
-       $campos_sql = split("#",$ordem);
+       $campos_sql = preg_split("#\\##m",$ordem);
        $virgula = "";
        for($i=0;$i<sizeof($campos_sql);$i++){
          $sql .= $virgula.$campos_sql[$i];

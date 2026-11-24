@@ -93,7 +93,7 @@ class cl_db_calendario {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->s_codigo = ($this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
+       $this->s_codigo = ($this->s_codigo === 0 || $this->s_codigo === 0.0 || $this->s_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["s_codigo"]:$this->s_codigo);
        if($this->s_datainicio == ""){
          $this->s_datainicio_dia = ($this->s_datainicio_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["s_datainicio_dia"]:$this->s_datainicio_dia);
          $this->s_datainicio_mes = ($this->s_datainicio_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["s_datainicio_mes"]:$this->s_datainicio_mes);
@@ -112,7 +112,7 @@ class cl_db_calendario {
          }
        }
        $this->s_horafim = ($this->s_horafim == ""?@$GLOBALS["HTTP_POST_VARS"]["s_horafim"]:$this->s_horafim);
-       $this->s_secretaria = ($this->s_secretaria == ""?@$GLOBALS["HTTP_POST_VARS"]["s_secretaria"]:$this->s_secretaria);
+       $this->s_secretaria = ($this->s_secretaria === 0 || $this->s_secretaria === 0.0 || $this->s_secretaria == ""?@$GLOBALS["HTTP_POST_VARS"]["s_secretaria"]:$this->s_secretaria);
        $this->s_descricao = ($this->s_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["s_descricao"]:$this->s_descricao);
        $this->s_localid = ($this->s_localid == ""?@$GLOBALS["HTTP_POST_VARS"]["s_localid"]:$this->s_localid);
        $this->s_telefone = ($this->s_telefone == ""?@$GLOBALS["HTTP_POST_VARS"]["s_telefone"]:$this->s_telefone);

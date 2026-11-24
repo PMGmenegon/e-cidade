@@ -73,13 +73,13 @@ class cl_rescompoeres {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed68_i_codigo = ($this->ed68_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_codigo"]:$this->ed68_i_codigo);
-       $this->ed68_i_procresultado = ($this->ed68_i_procresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_procresultado"]:$this->ed68_i_procresultado);
-       $this->ed68_i_procresultcomp = ($this->ed68_i_procresultcomp == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_procresultcomp"]:$this->ed68_i_procresultcomp);
-       $this->ed68_i_peso = ($this->ed68_i_peso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_peso"]:$this->ed68_i_peso);
+       $this->ed68_i_codigo = ($this->ed68_i_codigo === 0 || $this->ed68_i_codigo === 0.0 || $this->ed68_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_codigo"]:$this->ed68_i_codigo);
+       $this->ed68_i_procresultado = ($this->ed68_i_procresultado === 0 || $this->ed68_i_procresultado === 0.0 || $this->ed68_i_procresultado == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_procresultado"]:$this->ed68_i_procresultado);
+       $this->ed68_i_procresultcomp = ($this->ed68_i_procresultcomp === 0 || $this->ed68_i_procresultcomp === 0.0 || $this->ed68_i_procresultcomp == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_procresultcomp"]:$this->ed68_i_procresultcomp);
+       $this->ed68_i_peso = ($this->ed68_i_peso === 0 || $this->ed68_i_peso === 0.0 || $this->ed68_i_peso == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_peso"]:$this->ed68_i_peso);
        $this->ed68_c_minimoaprov = ($this->ed68_c_minimoaprov == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_c_minimoaprov"]:$this->ed68_c_minimoaprov);
      }else{
-       $this->ed68_i_codigo = ($this->ed68_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_codigo"]:$this->ed68_i_codigo);
+       $this->ed68_i_codigo = ($this->ed68_i_codigo === 0 || $this->ed68_i_codigo === 0.0 || $this->ed68_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed68_i_codigo"]:$this->ed68_i_codigo);
      }
    }
    // funcao para inclusao
@@ -136,7 +136,7 @@ class cl_rescompoeres {
          $this->ed68_i_codigo = $ed68_i_codigo;
        }
      }
-     if(($this->ed68_i_codigo == null) || ($this->ed68_i_codigo == "") ){
+     if(($this->ed68_i_codigo == null) || ($this->ed68_i_codigo === 0 || $this->ed68_i_codigo === 0.0 || $this->ed68_i_codigo == "") ){
        $this->erro_sql = " Campo ed68_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

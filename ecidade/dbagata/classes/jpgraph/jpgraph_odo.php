@@ -65,7 +65,7 @@ class OdoGraph extends Graph {
     var $iOdoColor = "lightblue";
     var $caption;
 
-    function OdoGraph($aWidth=-1,$aHeight=-1,$aCachedName="",$aTimeOut=0,$aInline=true) {
+    function __construct($aWidth=-1,$aHeight=-1,$aCachedName="",$aTimeOut=0,$aInline=true) {
 	Graph::Graph($aWidth,$aHeight,$aCachedName,$aTimeOut,$aInline);		
 	$this->SetColor($this->iOdoColor);
 	$this->img->SetMargin(5,5,5,5);
@@ -166,7 +166,7 @@ class OdoNeedle extends LineProperty {
     var $iLineWeight=1;
     var $iShadowColor="gray:0.7",$iShadow=false, $idxShadow=4, $idyShadow=4;
 
-    public function OdoNeedle() {
+    public function __construct() {
 	$this->iArrowSize = array(
 	    3,5, 3,8, 3,15,    // SS, SM, SL
 	    4,7, 4,12, 5,20,    // MS, MM, ML

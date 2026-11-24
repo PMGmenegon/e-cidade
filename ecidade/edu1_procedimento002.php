@@ -35,7 +35,7 @@ require_once(modification("model/educacao/ArredondamentoNota.model.php"));
 require_once(modification("libs/db_utils.php"));
 
 
-parse_str($_SERVER["QUERY_STRING"]);
+parse_str($_SERVER["QUERY_STRING"], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 db_postmemory($_POST);
 $oDaoProcedimento       = new cl_procedimento();
 $db_opcao               = 22;
@@ -66,7 +66,7 @@ if (isset($alterar)) {
   db_fieldsmemory($rsProcedimento, 0);
 
   $sqlParametros = "select ed290_permite_alteracao_proc_avaliacao from secretariadeeducacao.sec_parametros";
-  $permiteAlterarProcAvaliacao = pg_fetch_assoc(db_query($sqlParametros));
+  $permiteAlterarProcAvaliacao = (($rsParametros = db_query($sqlParametros)) ? pg_fetch_assoc($rsParametros) : null);
   $possuiTurmasEncerradas = $permiteAlterarProcAvaliacao['ed290_permite_alteracao_proc_avaliacao']  == 'f' ? 'S' : 'N';
   $db_botao               = !($possuiTurmasEncerradas == 'S');
   ?>

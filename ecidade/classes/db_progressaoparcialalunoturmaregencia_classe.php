@@ -74,9 +74,9 @@ class cl_progressaoparcialalunoturmaregencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed115_sequencial = ($this->ed115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_sequencial"]:$this->ed115_sequencial);
-       $this->ed115_progressaoparcialalunomatricula = ($this->ed115_progressaoparcialalunomatricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_progressaoparcialalunomatricula"]:$this->ed115_progressaoparcialalunomatricula);
-       $this->ed115_regencia = ($this->ed115_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_regencia"]:$this->ed115_regencia);
+       $this->ed115_sequencial = ($this->ed115_sequencial === 0 || $this->ed115_sequencial === 0.0 || $this->ed115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_sequencial"]:$this->ed115_sequencial);
+       $this->ed115_progressaoparcialalunomatricula = ($this->ed115_progressaoparcialalunomatricula === 0 || $this->ed115_progressaoparcialalunomatricula === 0.0 || $this->ed115_progressaoparcialalunomatricula == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_progressaoparcialalunomatricula"]:$this->ed115_progressaoparcialalunomatricula);
+       $this->ed115_regencia = ($this->ed115_regencia === 0 || $this->ed115_regencia === 0.0 || $this->ed115_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_regencia"]:$this->ed115_regencia);
        if($this->ed115_datavinculo == ""){
          $this->ed115_datavinculo_dia = ($this->ed115_datavinculo_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_datavinculo_dia"]:$this->ed115_datavinculo_dia);
          $this->ed115_datavinculo_mes = ($this->ed115_datavinculo_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_datavinculo_mes"]:$this->ed115_datavinculo_mes);
@@ -86,7 +86,7 @@ class cl_progressaoparcialalunoturmaregencia {
          }
        }
      }else{
-       $this->ed115_sequencial = ($this->ed115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_sequencial"]:$this->ed115_sequencial);
+       $this->ed115_sequencial = ($this->ed115_sequencial === 0 || $this->ed115_sequencial === 0.0 || $this->ed115_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed115_sequencial"]:$this->ed115_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_progressaoparcialalunoturmaregencia {
          $this->ed115_sequencial = $ed115_sequencial;
        }
      }
-     if(($this->ed115_sequencial == null) || ($this->ed115_sequencial == "") ){
+     if(($this->ed115_sequencial == null) || ($this->ed115_sequencial === 0 || $this->ed115_sequencial === 0.0 || $this->ed115_sequencial == "") ){
        $this->erro_sql = " Campo ed115_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

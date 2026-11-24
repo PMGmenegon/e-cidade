@@ -74,8 +74,8 @@ class cl_registroprecocedencia {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc37_sequencial = ($this->pc37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_sequencial"]:$this->pc37_sequencial);
-       $this->pc37_usuario = ($this->pc37_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_usuario"]:$this->pc37_usuario);
+       $this->pc37_sequencial = ($this->pc37_sequencial === 0 || $this->pc37_sequencial === 0.0 || $this->pc37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_sequencial"]:$this->pc37_sequencial);
+       $this->pc37_usuario = ($this->pc37_usuario === 0 || $this->pc37_usuario === 0.0 || $this->pc37_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_usuario"]:$this->pc37_usuario);
        if($this->pc37_data == ""){
          $this->pc37_data_dia = ($this->pc37_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_data_dia"]:$this->pc37_data_dia);
          $this->pc37_data_mes = ($this->pc37_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_data_mes"]:$this->pc37_data_mes);
@@ -86,7 +86,7 @@ class cl_registroprecocedencia {
        }
        $this->pc37_resumo = ($this->pc37_resumo == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_resumo"]:$this->pc37_resumo);
      }else{
-       $this->pc37_sequencial = ($this->pc37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_sequencial"]:$this->pc37_sequencial);
+       $this->pc37_sequencial = ($this->pc37_sequencial === 0 || $this->pc37_sequencial === 0.0 || $this->pc37_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["pc37_sequencial"]:$this->pc37_sequencial);
      }
    }
    // funcao para inclusao
@@ -134,7 +134,7 @@ class cl_registroprecocedencia {
          $this->pc37_sequencial = $pc37_sequencial;
        }
      }
-     if(($this->pc37_sequencial == null) || ($this->pc37_sequencial == "") ){
+     if(($this->pc37_sequencial == null) || ($this->pc37_sequencial === 0 || $this->pc37_sequencial === 0.0 || $this->pc37_sequencial == "") ){
        $this->erro_sql = " Campo pc37_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

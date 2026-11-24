@@ -29,7 +29,7 @@ require_once(modification("libs/db_sql.php"));
 require_once(modification("libs/db_utils.php"));
 
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
 $iEscola = db_getsession("DB_coddepto");
 
@@ -124,7 +124,7 @@ $rsDados = db_query($sSql);
 $oDados =  db_utils::fieldsMemory($rsDados, 0);
 $head6 = $iEscola.' - '.$oDados->escola;
 
-$iLinhas = pg_num_rows($rsDados);
+$iLinhas = ($rsDados ? pg_num_rows($rsDados) : null);
 
 if (!is_null($tipo)){
     if ($tipo == 0 || $tipo == 1) {

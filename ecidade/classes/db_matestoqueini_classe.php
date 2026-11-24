@@ -80,8 +80,8 @@ class cl_matestoqueini {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m80_codigo = ($this->m80_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codigo"]:$this->m80_codigo);
-       $this->m80_login = ($this->m80_login == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_login"]:$this->m80_login);
+       $this->m80_codigo = ($this->m80_codigo === 0 || $this->m80_codigo === 0.0 || $this->m80_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codigo"]:$this->m80_codigo);
+       $this->m80_login = ($this->m80_login === 0 || $this->m80_login === 0.0 || $this->m80_login == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_login"]:$this->m80_login);
        if($this->m80_data == ""){
          $this->m80_data_dia = ($this->m80_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_data_dia"]:$this->m80_data_dia);
          $this->m80_data_mes = ($this->m80_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_data_mes"]:$this->m80_data_mes);
@@ -92,10 +92,10 @@ class cl_matestoqueini {
        }
        $this->m80_hora = ($this->m80_hora == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_hora"]:$this->m80_hora);
        $this->m80_obs = ($this->m80_obs == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_obs"]:$this->m80_obs);
-       $this->m80_codtipo = ($this->m80_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codtipo"]:$this->m80_codtipo);
-       $this->m80_coddepto = ($this->m80_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_coddepto"]:$this->m80_coddepto);
+       $this->m80_codtipo = ($this->m80_codtipo === 0 || $this->m80_codtipo === 0.0 || $this->m80_codtipo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codtipo"]:$this->m80_codtipo);
+       $this->m80_coddepto = ($this->m80_coddepto === 0 || $this->m80_coddepto === 0.0 || $this->m80_coddepto == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_coddepto"]:$this->m80_coddepto);
      }else{
-       $this->m80_codigo = ($this->m80_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codigo"]:$this->m80_codigo);
+       $this->m80_codigo = ($this->m80_codigo === 0 || $this->m80_codigo === 0.0 || $this->m80_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m80_codigo"]:$this->m80_codigo);
      }
    }
    // funcao para inclusao
@@ -181,7 +181,7 @@ class cl_matestoqueini {
          $this->m80_codigo = $m80_codigo;
        }
      }
-     if(($this->m80_codigo == null) || ($this->m80_codigo == "") ){
+     if(($this->m80_codigo == null) || ($this->m80_codigo === 0 || $this->m80_codigo === 0.0 || $this->m80_codigo == "") ){
        $this->erro_sql = " Campo m80_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

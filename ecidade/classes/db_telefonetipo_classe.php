@@ -67,10 +67,10 @@ class cl_telefonetipo {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ov23_sequencial = ($this->ov23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov23_sequencial"]:$this->ov23_sequencial);
+       $this->ov23_sequencial = ($this->ov23_sequencial === 0 || $this->ov23_sequencial === 0.0 || $this->ov23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov23_sequencial"]:$this->ov23_sequencial);
        $this->ov23_descricao = ($this->ov23_descricao == ""?@$GLOBALS["HTTP_POST_VARS"]["ov23_descricao"]:$this->ov23_descricao);
      }else{
-       $this->ov23_sequencial = ($this->ov23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov23_sequencial"]:$this->ov23_sequencial);
+       $this->ov23_sequencial = ($this->ov23_sequencial === 0 || $this->ov23_sequencial === 0.0 || $this->ov23_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ov23_sequencial"]:$this->ov23_sequencial);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_telefonetipo {
          $this->ov23_sequencial = $ov23_sequencial;
        }
      }
-     if(($this->ov23_sequencial == null) || ($this->ov23_sequencial == "") ){
+     if(($this->ov23_sequencial == null) || ($this->ov23_sequencial === 0 || $this->ov23_sequencial === 0.0 || $this->ov23_sequencial == "") ){
        $this->erro_sql = " Campo ov23_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

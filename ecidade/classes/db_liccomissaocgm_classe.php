@@ -71,12 +71,12 @@ class cl_liccomissaocgm {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->l31_codigo = ($this->l31_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_codigo"]:$this->l31_codigo);
-       $this->l31_liccomissao = ($this->l31_liccomissao == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_liccomissao"]:$this->l31_liccomissao);
-       $this->l31_numcgm = ($this->l31_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_numcgm"]:$this->l31_numcgm);
+       $this->l31_codigo = ($this->l31_codigo === 0 || $this->l31_codigo === 0.0 || $this->l31_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_codigo"]:$this->l31_codigo);
+       $this->l31_liccomissao = ($this->l31_liccomissao === 0 || $this->l31_liccomissao === 0.0 || $this->l31_liccomissao == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_liccomissao"]:$this->l31_liccomissao);
+       $this->l31_numcgm = ($this->l31_numcgm === 0 || $this->l31_numcgm === 0.0 || $this->l31_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_numcgm"]:$this->l31_numcgm);
        $this->l31_tipo = ($this->l31_tipo == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_tipo"]:$this->l31_tipo);
      }else{
-       $this->l31_codigo = ($this->l31_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_codigo"]:$this->l31_codigo);
+       $this->l31_codigo = ($this->l31_codigo === 0 || $this->l31_codigo === 0.0 || $this->l31_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["l31_codigo"]:$this->l31_codigo);
      }
    }
    // funcao para inclusao
@@ -133,7 +133,7 @@ class cl_liccomissaocgm {
          $this->l31_codigo = $l31_codigo;
        }
      }
-     if(($this->l31_codigo == null) || ($this->l31_codigo == "") ){
+     if(($this->l31_codigo == null) || ($this->l31_codigo === 0 || $this->l31_codigo === 0.0 || $this->l31_codigo == "") ){
        $this->erro_sql = " Campo l31_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

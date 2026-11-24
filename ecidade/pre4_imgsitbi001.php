@@ -40,7 +40,7 @@ if(isset($HTTP_POST_VARS["confirmar"])) {
   if($HTTP_POST_VARS["matricula"] != $aux[0] && $HTTP_POST_VARS["matricula"] != "") {
     $matricula = trim($HTTP_POST_VARS["matricula"]);
 	$result = db_query("select j01_matric from iptubase where j01_matric = $matricula");
-	if(pg_numrows($result) == 0)
+	if(($result ? pg_numrows($result) : null) == 0)
 	  $TestaMatricula = 1;
   } else
     $matricula = $aux[0];
@@ -48,21 +48,21 @@ if(isset($HTTP_POST_VARS["confirmar"])) {
     $data = @$aux[1]."-".@$aux[2]."-".substr(@$aux[3],0,strpos(@$aux[3],"."));
     $data_input = $HTTP_POST_VARS["data_ano"]."-".$HTTP_POST_VARS["data_mes"]."-".$HTTP_POST_VARS["data_dia"];
     if($data != $data_input) {
-      if(checkdate($HTTP_POST_VARS["data_mes"],$HTTP_POST_VARS["data_dia"],$HTTP_POST_VARS["data_ano"])) {
+      if(!is_array($HTTP_POST_VARS["data_mes"]) && !is_array($HTTP_POST_VARS["data_dia"]) && !is_array($HTTP_POST_VARS["data_ano"]) && checkdate((int)$HTTP_POST_VARS["data_mes"],(int)$HTTP_POST_VARS["data_dia"],(int)$HTTP_POST_VARS["data_ano"])) {
         $data = $data_input;
 	  } else {
         db_msgbox("Data do formulário inválida");
 	    db_redireciona();
 	  }
     } else {
-      if(!checkdate($aux[2],substr($aux[3],0,strpos($aux[3],".")),$aux[1])) {
+      if(!checkdate((int)$aux[2],(int)substr($aux[3],0,strpos($aux[3],".")),(int)$aux[1])) {
         db_msgbox("Data do arquivo inválida");
 	    db_redireciona();
 	    exit;
 	  }
     }
     db_query("begin");
-    $oid = pg_loimport($DocRoot."/tmp/".$imagem) or die("Erro(21) importando imagem");
+    $oid = pg_lo_import($conn, $DocRoot."/tmp/".$imagem) or die("Erro(21) importando imagem");
     db_query("insert into db_imgsitbi(matricula,data,arq) values('$matricula','$data',$oid)") or die("Erro(22) inserindo em db_imgsitbi");
     db_query("commit");
   } else {
@@ -122,7 +122,7 @@ table {
 			  			 where p.j01_matric = $cod_matricula");
       }
 
-	  if(pg_numrows($result) > 0) {
+	  if(($result ? pg_numrows($result) : null) > 0) {
 	    db_fieldsmemory($result,0);
 	    if(isset($_FILES["arq"]))
 		  copy($tmp_name,$DocRoot."/tmp/".$name);

@@ -75,14 +75,14 @@ class cl_regenciahorariohistorico {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed323_sequencial = ($this->ed323_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_sequencial"]:$this->ed323_sequencial);
-       $this->ed323_docente = ($this->ed323_docente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_docente"]:$this->ed323_docente);
-       $this->ed323_substituto = ($this->ed323_substituto == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_substituto"]:$this->ed323_substituto);
-       $this->ed323_regencia = ($this->ed323_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_regencia"]:$this->ed323_regencia);
-       $this->ed323_periodo = ($this->ed323_periodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_periodo"]:$this->ed323_periodo);
-       $this->ed323_diasemana = ($this->ed323_diasemana == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_diasemana"]:$this->ed323_diasemana);
+       $this->ed323_sequencial = ($this->ed323_sequencial === 0 || $this->ed323_sequencial === 0.0 || $this->ed323_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_sequencial"]:$this->ed323_sequencial);
+       $this->ed323_docente = ($this->ed323_docente === 0 || $this->ed323_docente === 0.0 || $this->ed323_docente == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_docente"]:$this->ed323_docente);
+       $this->ed323_substituto = ($this->ed323_substituto === 0 || $this->ed323_substituto === 0.0 || $this->ed323_substituto == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_substituto"]:$this->ed323_substituto);
+       $this->ed323_regencia = ($this->ed323_regencia === 0 || $this->ed323_regencia === 0.0 || $this->ed323_regencia == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_regencia"]:$this->ed323_regencia);
+       $this->ed323_periodo = ($this->ed323_periodo === 0 || $this->ed323_periodo === 0.0 || $this->ed323_periodo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_periodo"]:$this->ed323_periodo);
+       $this->ed323_diasemana = ($this->ed323_diasemana === 0 || $this->ed323_diasemana === 0.0 || $this->ed323_diasemana == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_diasemana"]:$this->ed323_diasemana);
      }else{
-       $this->ed323_sequencial = ($this->ed323_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_sequencial"]:$this->ed323_sequencial);
+       $this->ed323_sequencial = ($this->ed323_sequencial === 0 || $this->ed323_sequencial === 0.0 || $this->ed323_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed323_sequencial"]:$this->ed323_sequencial);
      }
    }
    // funcao para inclusao
@@ -157,7 +157,7 @@ class cl_regenciahorariohistorico {
          $this->ed323_sequencial = $ed323_sequencial;
        }
      }
-     if(($this->ed323_sequencial == null) || ($this->ed323_sequencial == "") ){
+     if(($this->ed323_sequencial == null) || ($this->ed323_sequencial === 0 || $this->ed323_sequencial === 0.0 || $this->ed323_sequencial == "") ){
        $this->erro_sql = " Campo ed323_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

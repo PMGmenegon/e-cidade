@@ -15,6 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libicu-dev libxml2-dev libonig-dev libcurl4-openssl-dev libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# LibreOffice Writer, como no 7.4 (docker/php74-apache/Dockerfile): os relatorios que viram PDF pelo soffice
+# (Agata, db_stdClass::ex_oo2pdf) falhavam no 8.5 com "Falhou em executar o soffice em /usr/bin/soffice"
+RUN apt-get update && apt-get install -y --no-install-recommends libreoffice-writer \
+    && rm -rf /var/lib/apt/lists/*
+
 # locale pt_BR em ISO-8859-1 (o e-cidade e o banco operam em LATIN1)
 RUN sed -i 's/^# *pt_BR ISO-8859-1/pt_BR ISO-8859-1/' /etc/locale.gen \
     && sed -i 's/^# *pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen \

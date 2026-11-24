@@ -67,8 +67,8 @@ class cl_pcorcamitemlic {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc26_orcamitem = ($this->pc26_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc26_orcamitem"]:$this->pc26_orcamitem);
-       $this->pc26_liclicitem = ($this->pc26_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc26_liclicitem"]:$this->pc26_liclicitem);
+       $this->pc26_orcamitem = ($this->pc26_orcamitem === 0 || $this->pc26_orcamitem === 0.0 || $this->pc26_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc26_orcamitem"]:$this->pc26_orcamitem);
+       $this->pc26_liclicitem = ($this->pc26_liclicitem === 0 || $this->pc26_liclicitem === 0.0 || $this->pc26_liclicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc26_liclicitem"]:$this->pc26_liclicitem);
      }else{
      }
    }

@@ -67,10 +67,10 @@ class cl_matestoqueinil {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->m86_codigo = ($this->m86_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_codigo"]:$this->m86_codigo);
-       $this->m86_matestoqueini = ($this->m86_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_matestoqueini"]:$this->m86_matestoqueini);
+       $this->m86_codigo = ($this->m86_codigo === 0 || $this->m86_codigo === 0.0 || $this->m86_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_codigo"]:$this->m86_codigo);
+       $this->m86_matestoqueini = ($this->m86_matestoqueini === 0 || $this->m86_matestoqueini === 0.0 || $this->m86_matestoqueini == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_matestoqueini"]:$this->m86_matestoqueini);
      }else{
-       $this->m86_codigo = ($this->m86_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_codigo"]:$this->m86_codigo);
+       $this->m86_codigo = ($this->m86_codigo === 0 || $this->m86_codigo === 0.0 || $this->m86_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["m86_codigo"]:$this->m86_codigo);
      }
    }
    // funcao para inclusao
@@ -109,7 +109,7 @@ class cl_matestoqueinil {
          $this->m86_codigo = $m86_codigo;
        }
      }
-     if(($this->m86_codigo == null) || ($this->m86_codigo == "") ){
+     if(($this->m86_codigo == null) || ($this->m86_codigo === 0 || $this->m86_codigo === 0.0 || $this->m86_codigo == "") ){
        $this->erro_sql = " Campo m86_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

@@ -553,6 +553,7 @@ function SetDrawColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for all stroking operations
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->DrawColor=sprintf('%.3f G',$r/255);
   else
@@ -573,6 +574,7 @@ function SetFillColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for all filling operations
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->FillColor=sprintf('%.3f g',$r/255);
   else
@@ -593,6 +595,7 @@ function SetTextColor($r,$g=-1,$b=-1)
 //#20#//b            : Componente Azul (entre 0 e 255).
 {
   //Set color for text
+  if (is_string($r) && !is_numeric($r)) { $r = (float) $r; } if (is_string($g) && !is_numeric($g)) { $g = (float) $g; } if (is_string($b) && !is_numeric($b)) { $b = (float) $b; } // 8.x: texto nao numerico nao vira numero sozinho; o 7.4 convertia
   if(($r==0 and $g==0 and $b==0) or $g==-1)
     $this->TextColor=sprintf('%.3f g',$r/255);
   else
@@ -611,7 +614,7 @@ function GetStringWidth($s)
   $w=0;
   $l=strlen($s);
   for($i=0;$i<$l;$i++)
-    $w+=$cw[$s{$i}];
+    $w+=$cw[$s[$i]];
   return $w*$this->FontSize/1000;
 }
 
@@ -868,7 +871,7 @@ function Text($x,$y,$txt)
   //Output a string
   $txt=str_replace(')','\\)',str_replace('(','\\(',str_replace('\\','\\\\',$txt)));
   $s=sprintf('BT %.2f %.2f Td (%s) Tj ET',$x*$this->k,($this->h-$y)*$this->k,$txt);
-  if($this->underline and $txt!='')
+  if($this->underline and ($txt!='' && $txt!==0 && $txt!==0.0))
     $s.=' '.$this->_dounderline($x,$y,$txt);
   if($this->ColorFlag)
     $s='q '.$this->TextColor.' '.$s.' Q';
@@ -967,7 +970,7 @@ function Cell($w,$h=0,$txt='',$border=0,$ln=0,$align='',$fill=0,$link='',$preenc
     if(is_int(strpos($border,'B')))
       $s.=sprintf('%.2f %.2f m %.2f %.2f l S ',$x*$k,($this->h-($y+$h))*$k,($x+$w)*$k,($this->h-($y+$h))*$k);
   }
-  if($txt!='')
+  if($txt!='' && $txt!==0 && $txt!==0.0)
   {
     if($align=='R')
       $dx=$w-$this->cMargin-$this->GetStringWidth($txt);
@@ -1263,7 +1266,7 @@ function Write($h,$txt,$link='')
   while($i<$nb)
   {
     //Get next character
-    $c=$s{$i};
+    $c=$s[$i];
     if($c=="\n")
     {
       //Explicit line break
@@ -1905,7 +1908,7 @@ function _beginpage($orientation)
     $orientation=$this->DefOrientation;
   else
   {
-    $orientation=strtoupper($orientation{0});
+    $orientation=strtoupper($orientation[0]);
     if($orientation!=$this->DefOrientation)
       $this->OrientationChanges[$this->page]=true;
   }

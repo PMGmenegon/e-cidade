@@ -80,12 +80,12 @@ class cl_db_daevalores {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->w07_codigo = ($this->w07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_codigo"]:$this->w07_codigo);
-       $this->w07_item = ($this->w07_item == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_item"]:$this->w07_item);
+       $this->w07_codigo = ($this->w07_codigo === 0 || $this->w07_codigo === 0.0 || $this->w07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_codigo"]:$this->w07_codigo);
+       $this->w07_item = ($this->w07_item === 0 || $this->w07_item === 0.0 || $this->w07_item == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_item"]:$this->w07_item);
        $this->w07_mes = ($this->w07_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_mes"]:$this->w07_mes);
-       $this->w07_valor = ($this->w07_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_valor"]:$this->w07_valor);
-       $this->w07_aliquota = ($this->w07_aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_aliquota"]:$this->w07_aliquota);
-       $this->w07_imposto = ($this->w07_imposto == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_imposto"]:$this->w07_imposto);
+       $this->w07_valor = ($this->w07_valor === 0 || $this->w07_valor === 0.0 || $this->w07_valor == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_valor"]:$this->w07_valor);
+       $this->w07_aliquota = ($this->w07_aliquota === 0 || $this->w07_aliquota === 0.0 || $this->w07_aliquota == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_aliquota"]:$this->w07_aliquota);
+       $this->w07_imposto = ($this->w07_imposto === 0 || $this->w07_imposto === 0.0 || $this->w07_imposto == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_imposto"]:$this->w07_imposto);
        if($this->w07_dtpaga == ""){
          $this->w07_dtpaga_dia = ($this->w07_dtpaga_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_dtpaga_dia"]:$this->w07_dtpaga_dia);
          $this->w07_dtpaga_mes = ($this->w07_dtpaga_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_dtpaga_mes"]:$this->w07_dtpaga_mes);
@@ -95,8 +95,8 @@ class cl_db_daevalores {
          }
        }
      }else{
-       $this->w07_codigo = ($this->w07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_codigo"]:$this->w07_codigo);
-       $this->w07_item = ($this->w07_item == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_item"]:$this->w07_item);
+       $this->w07_codigo = ($this->w07_codigo === 0 || $this->w07_codigo === 0.0 || $this->w07_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_codigo"]:$this->w07_codigo);
+       $this->w07_item = ($this->w07_item === 0 || $this->w07_item === 0.0 || $this->w07_item == ""?@$GLOBALS["HTTP_POST_VARS"]["w07_item"]:$this->w07_item);
      }
    }
    // funcao para inclusao
@@ -149,7 +149,7 @@ class cl_db_daevalores {
      }
        $this->w07_codigo = $w07_codigo; 
        $this->w07_item = $w07_item; 
-     if(($this->w07_codigo == null) || ($this->w07_codigo == "") ){ 
+     if(($this->w07_codigo == null) || ($this->w07_codigo === 0 || $this->w07_codigo === 0.0 || $this->w07_codigo == "") ){ 
        $this->erro_sql = " Campo w07_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -157,7 +157,7 @@ class cl_db_daevalores {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->w07_item == null) || ($this->w07_item == "") ){ 
+     if(($this->w07_item == null) || ($this->w07_item === 0 || $this->w07_item === 0.0 || $this->w07_item == "") ){ 
        $this->erro_sql = " Campo w07_item nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

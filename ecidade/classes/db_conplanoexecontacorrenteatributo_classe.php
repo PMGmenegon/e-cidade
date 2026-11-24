@@ -47,12 +47,12 @@ class cl_conplanoexecontacorrenteatributo
     public function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->id = ($this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
-            $this->c144_conplanoexecontacorrente = ($this->c144_conplanoexecontacorrente == "" ? @$GLOBALS["HTTP_POST_VARS"]["c144_conplanoexecontacorrente"] : $this->c144_conplanoexecontacorrente);
-            $this->c144_conplanoinfocomplementar = ($this->c144_conplanoinfocomplementar == "" ? @$GLOBALS["HTTP_POST_VARS"]["c144_conplanoinfocomplementar"] : $this->c144_conplanoinfocomplementar);
+            $this->id = ($this->id === 0 || $this->id === 0.0 || $this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
+            $this->c144_conplanoexecontacorrente = ($this->c144_conplanoexecontacorrente === 0 || $this->c144_conplanoexecontacorrente === 0.0 || $this->c144_conplanoexecontacorrente == "" ? @$GLOBALS["HTTP_POST_VARS"]["c144_conplanoexecontacorrente"] : $this->c144_conplanoexecontacorrente);
+            $this->c144_conplanoinfocomplementar = ($this->c144_conplanoinfocomplementar === 0 || $this->c144_conplanoinfocomplementar === 0.0 || $this->c144_conplanoinfocomplementar == "" ? @$GLOBALS["HTTP_POST_VARS"]["c144_conplanoinfocomplementar"] : $this->c144_conplanoinfocomplementar);
             $this->c144_valor = ($this->c144_valor == "" ? @$GLOBALS["HTTP_POST_VARS"]["c144_valor"] : $this->c144_valor);
         } else {
-            $this->id = ($this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
+            $this->id = ($this->id === 0 || $this->id === 0.0 || $this->id == "" ? @$GLOBALS["HTTP_POST_VARS"]["id"] : $this->id);
         }
     }
 
@@ -110,7 +110,7 @@ class cl_conplanoexecontacorrenteatributo
                 $this->id = $id;
             }
         }
-        if (($this->id == null) || ($this->id == "")) {
+        if (($this->id == null) || ($this->id === 0 || $this->id === 0.0 || $this->id == "")) {
             $this->erro_sql = " Campo id não declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";

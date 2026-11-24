@@ -166,7 +166,7 @@ class RadarAxis extends Axis {
 //---------------
 // CONSTRUCTOR
     function __construct(&$img,&$aScale,$color=array(0,0,0)) {
-	parent::Axis($img,$aScale,$color);
+	parent::__construct($img,$aScale,$color);
 	$this->len=$img->plotheight;
 	$this->title = new Text();
 	$this->title->SetFont(FF_FONT1,FS_BOLD);

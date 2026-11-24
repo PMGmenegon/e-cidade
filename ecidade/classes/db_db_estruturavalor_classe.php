@@ -84,15 +84,15 @@ class cl_db_estruturavalor
     function atualizacampos($exclusao = false)
     {
         if ($exclusao == false) {
-            $this->db121_sequencial = ($this->db121_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_sequencial"] : $this->db121_sequencial);
-            $this->db121_db_estrutura = ($this->db121_db_estrutura == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_db_estrutura"] : $this->db121_db_estrutura);
+            $this->db121_sequencial = ($this->db121_sequencial === 0 || $this->db121_sequencial === 0.0 || $this->db121_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_sequencial"] : $this->db121_sequencial);
+            $this->db121_db_estrutura = ($this->db121_db_estrutura === 0 || $this->db121_db_estrutura === 0.0 || $this->db121_db_estrutura == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_db_estrutura"] : $this->db121_db_estrutura);
             $this->db121_estrutural = ($this->db121_estrutural == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_estrutural"] : $this->db121_estrutural);
             $this->db121_descricao = ($this->db121_descricao == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_descricao"] : $this->db121_descricao);
-            $this->db121_estruturavalorpai = ($this->db121_estruturavalorpai == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_estruturavalorpai"] : $this->db121_estruturavalorpai);
+            $this->db121_estruturavalorpai = ($this->db121_estruturavalorpai === 0 || $this->db121_estruturavalorpai === 0.0 || $this->db121_estruturavalorpai == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_estruturavalorpai"] : $this->db121_estruturavalorpai);
             $this->db121_nivel = ($this->db121_nivel === "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_nivel"] : $this->db121_nivel);
             $this->db121_tipoconta = ($this->db121_tipoconta === "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_tipoconta"] : $this->db121_tipoconta);
         } else {
-            $this->db121_sequencial = ($this->db121_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_sequencial"] : $this->db121_sequencial);
+            $this->db121_sequencial = ($this->db121_sequencial === 0 || $this->db121_sequencial === 0.0 || $this->db121_sequencial == "" ? @$GLOBALS["HTTP_POST_VARS"]["db121_sequencial"] : $this->db121_sequencial);
         }
     }
 
@@ -162,7 +162,7 @@ class cl_db_estruturavalor
                 $this->db121_sequencial = $db121_sequencial;
             }
         }
-        if (($this->db121_sequencial == null) || ($this->db121_sequencial == "")) {
+        if (($this->db121_sequencial == null) || ($this->db121_sequencial === 0 || $this->db121_sequencial === 0.0 || $this->db121_sequencial == "")) {
             $this->erro_sql = " Campo db121_sequencial nao declarado.";
             $this->erro_banco = "Chave Primaria zerada.";
             $this->erro_msg = "Usuário: \\n\\n " . $this->erro_sql . " \\n\\n";
@@ -341,9 +341,9 @@ class cl_db_estruturavalor
                     $resac = db_query("insert into db_acount values($acount,3173,17963,'" . AddSlashes(pg_result($resaco, $conresaco, 'db121_descricao')) . "','$this->db121_descricao'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
                 if (isset($GLOBALS["HTTP_POST_VARS"]["db121_estruturavalorpai"]) || $this->db121_estruturavalorpai != "")
                     $resac = db_query("insert into db_acount values($acount,3173,17964,'" . AddSlashes(pg_result($resaco, $conresaco, 'db121_estruturavalorpai')) . "','$this->db121_estruturavalorpai'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
-                if (isset($GLOBALS["HTTP_POST_VARS"]["db121_nivel"]) || $this->db121_nivel != "")
+                if (isset($GLOBALS["HTTP_POST_VARS"]["db121_nivel"]) || ($this->db121_nivel != "" && $this->db121_nivel !== 0 && $this->db121_nivel !== 0.0))
                     $resac = db_query("insert into db_acount values($acount,3173,17965,'" . AddSlashes(pg_result($resaco, $conresaco, 'db121_nivel')) . "','$this->db121_nivel'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
-                if (isset($GLOBALS["HTTP_POST_VARS"]["db121_tipoconta"]) || $this->db121_tipoconta != "")
+                if (isset($GLOBALS["HTTP_POST_VARS"]["db121_tipoconta"]) || ($this->db121_tipoconta != "" && $this->db121_tipoconta !== 0 && $this->db121_tipoconta !== 0.0))
                     $resac = db_query("insert into db_acount values($acount,3173,17966,'" . AddSlashes(pg_result($resaco, $conresaco, 'db121_tipoconta')) . "','$this->db121_tipoconta'," . db_getsession('DB_datausu') . "," . db_getsession('DB_id_usuario') . ")");
             }
         }

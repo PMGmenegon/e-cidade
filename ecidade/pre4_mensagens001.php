@@ -35,7 +35,7 @@ try {
   $iInstituicao  = db_getsession("DB_instit");
   $clconfigdbpref = new cl_configdbpref();
 
-  parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+  parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 
   $rsParametro = db_query(
     $clconfigdbpref->sql_query_file($iInstituicao,"w13_exigecpfcnpjmatricula,w13_exigecpfcnpjinscricao")
@@ -45,7 +45,7 @@ try {
     throw new Exception("Erro ao Buscar os parâmetros de configuração do e-cidade.". pg_last_error());
   }
 
-  if ( pg_num_rows($rsParametro) == 0 ) {
+  if ( ($rsParametro ? pg_num_rows($rsParametro) : null) == 0 ) {
     $oRetorno    = (object)array(
       "w13_exigecpfcnpjinscricao" => "f",
       "w13_exigecpfcnpjmatricula" => "f"
@@ -86,7 +86,7 @@ if(isset($HTTP_POST_VARS["enviar"])) {
   $sMensagemCorpo  = ($sMensagemCorpo);
   $sAlinhamento    = pg_escape_string($sAlinhamento);
 
-  if ( pg_num_rows($rsValidacao) == 0 ) {
+  if ( ($rsValidacao ? pg_num_rows($rsValidacao) : null) == 0 ) {
     $sSql = "insert into db_confmensagem ( cod, mens, alinhamento, instit) values ('$cod', '$sMensagemCorpo', '$sAlinhamento', $iInstituicao)";
   } else {
     $sSql  = " update db_confmensagem                                             ";
@@ -120,7 +120,7 @@ if(isset($HTTP_POST_VARS["enviar"])) {
 <?php
 $Rod    = isset($Rod) ? $Rod : '';
 $result = db_query("select mens,alinhamento from db_confmensagem where instit = {$iInstituicao} and cod = '{$Cab}' or cod = '{$Rod}' order by cod");
-if (!$result || pg_num_rows($result) == 0 ) {
+if (!$result || ($result ? pg_num_rows($result) : null) == 0 ) {
   $mens        = '';
   $alinhamento = '';
 }
@@ -129,10 +129,10 @@ echo "
 function js_iniciar() {
   var F = document.form1;
 
-  AlinhamentoCabecalho = '".@str_replace("\r"," ",str_replace("\n"," ",pg_result($result,0,1)))."';
-  AlinhamentoRodape = '".@str_replace("\r"," ",str_replace("\n"," ",pg_result($result,1,1)))."';
-  TextoCabecalho = '".@str_replace("\r"," ",str_replace("\n"," ",pg_result($result,0,0)))."';
-  TextoRodape = '".@str_replace("\r"," ",str_replace("\n"," ",pg_result($result,1,0)))."';
+  AlinhamentoCabecalho = '".@str_replace("\r"," ",str_replace("\n"," ",($result ? pg_result($result,0,1) : null)))."';
+  AlinhamentoRodape = '".@str_replace("\r"," ",str_replace("\n"," ",($result ? pg_result($result,1,1) : null)))."';
+  TextoCabecalho = '".@str_replace("\r"," ",str_replace("\n"," ",($result ? pg_result($result,0,0) : null)))."';
+  TextoRodape = '".@str_replace("\r"," ",str_replace("\n"," ",($result ? pg_result($result,1,0) : null)))."';
 
   if(TextoRodape == '') {
     F.RG_cabrod[0].disabled = true;
@@ -524,12 +524,12 @@ echo "<br /> <b><u>Mensagem de Cabeçalho e Rodapé do Link ".ucfirst(substr($Cab,
       throw new DBException("Erro ao buscar os dados da configuração de mensagem.".pg_last_error());
     }
 
-    if ( pg_num_rows($result) > 0 ) {
+    if ( ($result ? pg_num_rows($result) : null) > 0 ) {
 
 
-      $nome_help  = pg_result($result,0,"cod");
-      $texto_help = pg_result($result,0,"mens");
-      $param_help = explode("&",pg_result($result,0,"alinhamento"));
+      $nome_help  = ($result ? pg_result($result,0,"cod") : null);
+      $texto_help = ($result ? pg_result($result,0,"mens") : null);
+      $param_help = explode("&",($result ? pg_result($result,0,"alinhamento") : null));
       $larg_div   = isset($param_help[0]) ? $param_help[0] : null;
       $alt_div    = isset($param_help[1]) ? $param_help[1] : null;
       $x_div      = isset($param_help[2]) ? $param_help[2] : null;

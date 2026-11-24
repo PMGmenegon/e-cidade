@@ -79,7 +79,7 @@ var $fpdf_charwidths;
 *                              Public methods                               *
 *                                                                           *
 ****************************************************************************/
-function FPDF($orientation='P',$unit='mm',$format='A4')
+function __construct($orientation='P',$unit='mm',$format='A4')
 {
 	//Check for PHP locale-related bug
 	if(1.1==1)
@@ -585,7 +585,7 @@ public function GetStringWidth($s)
 	$w=0;
 	$l=strlen($s);
 	for($i=0;$i<$l;$i++)
-		$w+=$cw[$s{$i}];
+		$w+=$cw[$s[$i]];
 	return $w*$this->FontSize/1000;
 }
 
@@ -987,7 +987,7 @@ function Write($h,$txt,$link='')
 	while($i<$nb)
 	{
 		//Get next character
-		$c=$s{$i};
+		$c=$s[$i];
 		if($c=="\n")
 		{
 			//Explicit line break
@@ -1069,7 +1069,7 @@ function Image($file,$x,$y,$w,$h=0,$type='',$link='')
 			$type=substr($file,$pos+1);
 		}
 		$type=strtolower($type);
-		$mqr=get_magic_quotes_runtime();
+		$mqr=false; // get_magic_quotes_runtime() saiu no 8.0; desde o 5.4 devolvia false
 		// set_magic_quotes_runtime(0);
 		if($type=='jpg' or $type=='jpeg')
 			$info=$this->_parsejpg($file);
@@ -1519,7 +1519,7 @@ public function _beginpage($orientation)
 		$orientation=$this->DefOrientation;
 	else
 	{
-		$orientation=strtoupper($orientation{0});
+		$orientation=strtoupper($orientation[0]);
 		if($orientation!=$this->DefOrientation)
 			$this->OrientationChanges[$this->page]=true;
 	}

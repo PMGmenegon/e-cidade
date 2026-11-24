@@ -43,11 +43,11 @@ class cl_criterioavaliacaoperiodoavaliacao {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed340_sequencial = ($this->ed340_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_sequencial"]:$this->ed340_sequencial);
-       $this->ed340_criterioavaliacao = ($this->ed340_criterioavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_criterioavaliacao"]:$this->ed340_criterioavaliacao);
-       $this->ed340_periodoavaliacao = ($this->ed340_periodoavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_periodoavaliacao"]:$this->ed340_periodoavaliacao);
+       $this->ed340_sequencial = ($this->ed340_sequencial === 0 || $this->ed340_sequencial === 0.0 || $this->ed340_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_sequencial"]:$this->ed340_sequencial);
+       $this->ed340_criterioavaliacao = ($this->ed340_criterioavaliacao === 0 || $this->ed340_criterioavaliacao === 0.0 || $this->ed340_criterioavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_criterioavaliacao"]:$this->ed340_criterioavaliacao);
+       $this->ed340_periodoavaliacao = ($this->ed340_periodoavaliacao === 0 || $this->ed340_periodoavaliacao === 0.0 || $this->ed340_periodoavaliacao == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_periodoavaliacao"]:$this->ed340_periodoavaliacao);
      }else{
-       $this->ed340_sequencial = ($this->ed340_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_sequencial"]:$this->ed340_sequencial);
+       $this->ed340_sequencial = ($this->ed340_sequencial === 0 || $this->ed340_sequencial === 0.0 || $this->ed340_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["ed340_sequencial"]:$this->ed340_sequencial);
      }
    }
    // funcao para inclusao
@@ -95,7 +95,7 @@ class cl_criterioavaliacaoperiodoavaliacao {
          $this->ed340_sequencial = $ed340_sequencial;
        }
      }
-     if(($this->ed340_sequencial == null) || ($this->ed340_sequencial == "") ){
+     if(($this->ed340_sequencial == null) || ($this->ed340_sequencial === 0 || $this->ed340_sequencial === 0.0 || $this->ed340_sequencial == "") ){
        $this->erro_sql = " Campo ed340_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

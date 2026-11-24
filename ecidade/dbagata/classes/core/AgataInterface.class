@@ -94,7 +94,7 @@ class AgataInterface
     /***********************************************************/
     /* Builds the Agata Interface
     /***********************************************************/
-    function AgataInterface($agataConfig, $subQuery = false)
+    function __construct($agataConfig, $subQuery = false)
     {
         $this->subQuery = $subQuery;
         $this->agataConfig = $agataConfig;

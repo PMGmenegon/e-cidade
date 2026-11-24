@@ -29,7 +29,7 @@ require(modification("libs/db_stdlib.php"));
 require(modification("libs/db_conecta.php"));
 include(modification("libs/db_sessoes.php"));
 
-parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
+parse_str($HTTP_SERVER_VARS['QUERY_STRING'], $__qs); unset($__qs['this'], $__qs['GLOBALS']); extract($__qs);
 ?>
 <html>
 <head>
@@ -51,7 +51,7 @@ parse_str($HTTP_SERVER_VARS['QUERY_STRING']);
 <div align="left" class="observ">
 <?php
 $result = db_query("select obs from db_itbi where id_itbi = $itbi");
-echo str_replace("\n","<br>",pg_result($result,0,0));
+echo str_replace("\n","<br>",($result ? pg_result($result,0,0) : null));
 ?>
 </div>
 </td></tr>

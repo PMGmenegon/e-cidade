@@ -74,9 +74,9 @@ class cl_cidadaofamiliavisitacontato {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->as10_sequencial = ($this->as10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_sequencial"]:$this->as10_sequencial);
-       $this->as10_cidadaofamiliavisita = ($this->as10_cidadaofamiliavisita == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_cidadaofamiliavisita"]:$this->as10_cidadaofamiliavisita);
-       $this->as10_profissionalcontato = ($this->as10_profissionalcontato == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_profissionalcontato"]:$this->as10_profissionalcontato);
+       $this->as10_sequencial = ($this->as10_sequencial === 0 || $this->as10_sequencial === 0.0 || $this->as10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_sequencial"]:$this->as10_sequencial);
+       $this->as10_cidadaofamiliavisita = ($this->as10_cidadaofamiliavisita === 0 || $this->as10_cidadaofamiliavisita === 0.0 || $this->as10_cidadaofamiliavisita == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_cidadaofamiliavisita"]:$this->as10_cidadaofamiliavisita);
+       $this->as10_profissionalcontato = ($this->as10_profissionalcontato === 0 || $this->as10_profissionalcontato === 0.0 || $this->as10_profissionalcontato == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_profissionalcontato"]:$this->as10_profissionalcontato);
        if($this->as10_data == ""){
          $this->as10_data_dia = ($this->as10_data_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_data_dia"]:$this->as10_data_dia);
          $this->as10_data_mes = ($this->as10_data_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_data_mes"]:$this->as10_data_mes);
@@ -86,7 +86,7 @@ class cl_cidadaofamiliavisitacontato {
          }
        }
      }else{
-       $this->as10_sequencial = ($this->as10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_sequencial"]:$this->as10_sequencial);
+       $this->as10_sequencial = ($this->as10_sequencial === 0 || $this->as10_sequencial === 0.0 || $this->as10_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["as10_sequencial"]:$this->as10_sequencial);
      }
    }
    // funcao para inclusao
@@ -143,7 +143,7 @@ class cl_cidadaofamiliavisitacontato {
          $this->as10_sequencial = $as10_sequencial;
        }
      }
-     if(($this->as10_sequencial == null) || ($this->as10_sequencial == "") ){
+     if(($this->as10_sequencial == null) || ($this->as10_sequencial === 0 || $this->as10_sequencial === 0.0 || $this->as10_sequencial == "") ){
        $this->erro_sql = " Campo as10_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

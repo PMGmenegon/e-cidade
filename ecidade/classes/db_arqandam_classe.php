@@ -69,8 +69,8 @@ class cl_arqandam {
    // funcao para atualizar campos
    function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->p69_codarquiv = ($this->p69_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p69_codarquiv"]:$this->p69_codarquiv);
-       $this->p69_codandam = ($this->p69_codandam == ""?@$GLOBALS["HTTP_POST_VARS"]["p69_codandam"]:$this->p69_codandam);
+       $this->p69_codarquiv = ($this->p69_codarquiv === 0 || $this->p69_codarquiv === 0.0 || $this->p69_codarquiv == ""?@$GLOBALS["HTTP_POST_VARS"]["p69_codarquiv"]:$this->p69_codarquiv);
+       $this->p69_codandam = ($this->p69_codandam === 0 || $this->p69_codandam === 0.0 || $this->p69_codandam == ""?@$GLOBALS["HTTP_POST_VARS"]["p69_codandam"]:$this->p69_codandam);
        $this->p69_arquivado = ($this->p69_arquivado == "f"?@$GLOBALS["HTTP_POST_VARS"]["p69_arquivado"]:$this->p69_arquivado);
      }else{
      }

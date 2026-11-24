@@ -67,11 +67,11 @@ class cl_pcsugforn {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc40_solic = ($this->pc40_solic == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_solic"]:$this->pc40_solic);
-       $this->pc40_numcgm = ($this->pc40_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_numcgm"]:$this->pc40_numcgm);
+       $this->pc40_solic = ($this->pc40_solic === 0 || $this->pc40_solic === 0.0 || $this->pc40_solic == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_solic"]:$this->pc40_solic);
+       $this->pc40_numcgm = ($this->pc40_numcgm === 0 || $this->pc40_numcgm === 0.0 || $this->pc40_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_numcgm"]:$this->pc40_numcgm);
      }else{
-       $this->pc40_solic = ($this->pc40_solic == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_solic"]:$this->pc40_solic);
-       $this->pc40_numcgm = ($this->pc40_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_numcgm"]:$this->pc40_numcgm);
+       $this->pc40_solic = ($this->pc40_solic === 0 || $this->pc40_solic === 0.0 || $this->pc40_solic == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_solic"]:$this->pc40_solic);
+       $this->pc40_numcgm = ($this->pc40_numcgm === 0 || $this->pc40_numcgm === 0.0 || $this->pc40_numcgm == ""?@$GLOBALS["HTTP_POST_VARS"]["pc40_numcgm"]:$this->pc40_numcgm);
      }
    }
    // funcao para inclusao
@@ -79,7 +79,7 @@ class cl_pcsugforn {
       $this->atualizacampos();
        $this->pc40_solic = $pc40_solic;
        $this->pc40_numcgm = $pc40_numcgm;
-     if(($this->pc40_solic == null) || ($this->pc40_solic == "") ){
+     if(($this->pc40_solic == null) || ($this->pc40_solic === 0 || $this->pc40_solic === 0.0 || $this->pc40_solic == "") ){
        $this->erro_sql = " Campo pc40_solic nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -87,7 +87,7 @@ class cl_pcsugforn {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->pc40_numcgm == null) || ($this->pc40_numcgm == "") ){
+     if(($this->pc40_numcgm == null) || ($this->pc40_numcgm === 0 || $this->pc40_numcgm === 0.0 || $this->pc40_numcgm == "") ){
        $this->erro_sql = " Campo pc40_numcgm nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

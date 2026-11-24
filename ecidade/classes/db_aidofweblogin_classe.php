@@ -67,10 +67,10 @@ class cl_aidofweblogin {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->y09_aidofweb = ($this->y09_aidofweb == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_aidofweb"]:$this->y09_aidofweb);
-       $this->y09_loginext = ($this->y09_loginext == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_loginext"]:$this->y09_loginext);
+       $this->y09_aidofweb = ($this->y09_aidofweb === 0 || $this->y09_aidofweb === 0.0 || $this->y09_aidofweb == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_aidofweb"]:$this->y09_aidofweb);
+       $this->y09_loginext = ($this->y09_loginext === 0 || $this->y09_loginext === 0.0 || $this->y09_loginext == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_loginext"]:$this->y09_loginext);
      }else{
-       $this->y09_aidofweb = ($this->y09_aidofweb == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_aidofweb"]:$this->y09_aidofweb);
+       $this->y09_aidofweb = ($this->y09_aidofweb === 0 || $this->y09_aidofweb === 0.0 || $this->y09_aidofweb == ""?@$GLOBALS["HTTP_POST_VARS"]["y09_aidofweb"]:$this->y09_aidofweb);
      }
    }
    // funcao para inclusao
@@ -86,7 +86,7 @@ class cl_aidofweblogin {
        return false;
      }
        $this->y09_aidofweb = $y09_aidofweb; 
-     if(($this->y09_aidofweb == null) || ($this->y09_aidofweb == "") ){ 
+     if(($this->y09_aidofweb == null) || ($this->y09_aidofweb === 0 || $this->y09_aidofweb === 0.0 || $this->y09_aidofweb == "") ){ 
        $this->erro_sql = " Campo y09_aidofweb nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

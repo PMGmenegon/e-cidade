@@ -67,11 +67,11 @@ class cl_solicitempcmater {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc16_codmater = ($this->pc16_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_codmater"]:$this->pc16_codmater);
-       $this->pc16_solicitem = ($this->pc16_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_solicitem"]:$this->pc16_solicitem);
+       $this->pc16_codmater = ($this->pc16_codmater === 0 || $this->pc16_codmater === 0.0 || $this->pc16_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_codmater"]:$this->pc16_codmater);
+       $this->pc16_solicitem = ($this->pc16_solicitem === 0 || $this->pc16_solicitem === 0.0 || $this->pc16_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_solicitem"]:$this->pc16_solicitem);
      }else{
-       $this->pc16_codmater = ($this->pc16_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_codmater"]:$this->pc16_codmater);
-       $this->pc16_solicitem = ($this->pc16_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_solicitem"]:$this->pc16_solicitem);
+       $this->pc16_codmater = ($this->pc16_codmater === 0 || $this->pc16_codmater === 0.0 || $this->pc16_codmater == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_codmater"]:$this->pc16_codmater);
+       $this->pc16_solicitem = ($this->pc16_solicitem === 0 || $this->pc16_solicitem === 0.0 || $this->pc16_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc16_solicitem"]:$this->pc16_solicitem);
      }
    }
    // funcao para inclusao
@@ -79,7 +79,7 @@ class cl_solicitempcmater {
       $this->atualizacampos();
        $this->pc16_codmater = $pc16_codmater;
        $this->pc16_solicitem = $pc16_solicitem;
-     if(($this->pc16_codmater == null) || ($this->pc16_codmater == "") ){
+     if(($this->pc16_codmater == null) || ($this->pc16_codmater === 0 || $this->pc16_codmater === 0.0 || $this->pc16_codmater == "") ){
        $this->erro_sql = " Campo pc16_codmater nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -87,7 +87,7 @@ class cl_solicitempcmater {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->pc16_solicitem == null) || ($this->pc16_solicitem == "") ){
+     if(($this->pc16_solicitem == null) || ($this->pc16_solicitem === 0 || $this->pc16_solicitem === 0.0 || $this->pc16_solicitem == "") ){
        $this->erro_sql = " Campo pc16_solicitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

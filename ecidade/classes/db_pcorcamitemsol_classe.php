@@ -67,11 +67,11 @@ class cl_pcorcamitemsol {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->pc29_orcamitem = ($this->pc29_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_orcamitem"]:$this->pc29_orcamitem);
-       $this->pc29_solicitem = ($this->pc29_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_solicitem"]:$this->pc29_solicitem);
+       $this->pc29_orcamitem = ($this->pc29_orcamitem === 0 || $this->pc29_orcamitem === 0.0 || $this->pc29_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_orcamitem"]:$this->pc29_orcamitem);
+       $this->pc29_solicitem = ($this->pc29_solicitem === 0 || $this->pc29_solicitem === 0.0 || $this->pc29_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_solicitem"]:$this->pc29_solicitem);
      }else{
-       $this->pc29_orcamitem = ($this->pc29_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_orcamitem"]:$this->pc29_orcamitem);
-       $this->pc29_solicitem = ($this->pc29_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_solicitem"]:$this->pc29_solicitem);
+       $this->pc29_orcamitem = ($this->pc29_orcamitem === 0 || $this->pc29_orcamitem === 0.0 || $this->pc29_orcamitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_orcamitem"]:$this->pc29_orcamitem);
+       $this->pc29_solicitem = ($this->pc29_solicitem === 0 || $this->pc29_solicitem === 0.0 || $this->pc29_solicitem == ""?@$GLOBALS["HTTP_POST_VARS"]["pc29_solicitem"]:$this->pc29_solicitem);
      }
    }
    // funcao para inclusao
@@ -79,7 +79,7 @@ class cl_pcorcamitemsol {
       $this->atualizacampos();
        $this->pc29_orcamitem = $pc29_orcamitem;
        $this->pc29_solicitem = $pc29_solicitem;
-     if(($this->pc29_orcamitem == null) || ($this->pc29_orcamitem == "") ){
+     if(($this->pc29_orcamitem == null) || ($this->pc29_orcamitem === 0 || $this->pc29_orcamitem === 0.0 || $this->pc29_orcamitem == "") ){
        $this->erro_sql = " Campo pc29_orcamitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
@@ -87,7 +87,7 @@ class cl_pcorcamitemsol {
        $this->erro_status = "0";
        return false;
      }
-     if(($this->pc29_solicitem == null) || ($this->pc29_solicitem == "") ){
+     if(($this->pc29_solicitem == null) || ($this->pc29_solicitem === 0 || $this->pc29_solicitem === 0.0 || $this->pc29_solicitem == "") ){
        $this->erro_sql = " Campo pc29_solicitem nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

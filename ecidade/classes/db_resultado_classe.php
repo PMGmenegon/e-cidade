@@ -69,11 +69,11 @@ class cl_resultado {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->ed42_i_codigo = ($this->ed42_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_i_codigo"]:$this->ed42_i_codigo);
+       $this->ed42_i_codigo = ($this->ed42_i_codigo === 0 || $this->ed42_i_codigo === 0.0 || $this->ed42_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_i_codigo"]:$this->ed42_i_codigo);
        $this->ed42_c_descr = ($this->ed42_c_descr == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_c_descr"]:$this->ed42_c_descr);
        $this->ed42_c_abrev = ($this->ed42_c_abrev == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_c_abrev"]:$this->ed42_c_abrev);
      }else{
-       $this->ed42_i_codigo = ($this->ed42_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_i_codigo"]:$this->ed42_i_codigo);
+       $this->ed42_i_codigo = ($this->ed42_i_codigo === 0 || $this->ed42_i_codigo === 0.0 || $this->ed42_i_codigo == ""?@$GLOBALS["HTTP_POST_VARS"]["ed42_i_codigo"]:$this->ed42_i_codigo);
      }
    }
    // funcao para inclusao
@@ -112,7 +112,7 @@ class cl_resultado {
          $this->ed42_i_codigo = $ed42_i_codigo;
        }
      }
-     if(($this->ed42_i_codigo == null) || ($this->ed42_i_codigo == "") ){
+     if(($this->ed42_i_codigo == null) || ($this->ed42_i_codigo === 0 || $this->ed42_i_codigo === 0.0 || $this->ed42_i_codigo == "") ){
        $this->erro_sql = " Campo ed42_i_codigo nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

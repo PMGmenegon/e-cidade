@@ -69,11 +69,11 @@ class cl_dbprefempresajuridica {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->q56_sequencial = ($this->q56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_sequencial"]:$this->q56_sequencial);
-       $this->q56_dbprefempresa = ($this->q56_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_dbprefempresa"]:$this->q56_dbprefempresa);
+       $this->q56_sequencial = ($this->q56_sequencial === 0 || $this->q56_sequencial === 0.0 || $this->q56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_sequencial"]:$this->q56_sequencial);
+       $this->q56_dbprefempresa = ($this->q56_dbprefempresa === 0 || $this->q56_dbprefempresa === 0.0 || $this->q56_dbprefempresa == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_dbprefempresa"]:$this->q56_dbprefempresa);
        $this->q56_rejuc = ($this->q56_rejuc == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_rejuc"]:$this->q56_rejuc);
      }else{
-       $this->q56_sequencial = ($this->q56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_sequencial"]:$this->q56_sequencial);
+       $this->q56_sequencial = ($this->q56_sequencial === 0 || $this->q56_sequencial === 0.0 || $this->q56_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["q56_sequencial"]:$this->q56_sequencial);
      }
    }
    // funcao para inclusao
@@ -121,7 +121,7 @@ class cl_dbprefempresajuridica {
          $this->q56_sequencial = $q56_sequencial;
        }
      }
-     if(($this->q56_sequencial == null) || ($this->q56_sequencial == "") ){
+     if(($this->q56_sequencial == null) || ($this->q56_sequencial === 0 || $this->q56_sequencial === 0.0 || $this->q56_sequencial == "") ){
        $this->erro_sql = " Campo q56_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";

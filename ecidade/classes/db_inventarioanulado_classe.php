@@ -78,8 +78,8 @@ class cl_inventarioanulado {
    // funcao para atualizar campos
    public function atualizacampos($exclusao=false) {
      if($exclusao==false){
-       $this->t76_sequencial = ($this->t76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_sequencial"]:$this->t76_sequencial);
-       $this->t76_inventario = ($this->t76_inventario == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_inventario"]:$this->t76_inventario);
+       $this->t76_sequencial = ($this->t76_sequencial === 0 || $this->t76_sequencial === 0.0 || $this->t76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_sequencial"]:$this->t76_sequencial);
+       $this->t76_inventario = ($this->t76_inventario === 0 || $this->t76_inventario === 0.0 || $this->t76_inventario == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_inventario"]:$this->t76_inventario);
        if($this->t76_dataanulacao == ""){
          $this->t76_dataanulacao_dia = ($this->t76_dataanulacao_dia == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_dataanulacao_dia"]:$this->t76_dataanulacao_dia);
          $this->t76_dataanulacao_mes = ($this->t76_dataanulacao_mes == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_dataanulacao_mes"]:$this->t76_dataanulacao_mes);
@@ -89,10 +89,10 @@ class cl_inventarioanulado {
          }
        }
        $this->t76_horaanulacao = ($this->t76_horaanulacao == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_horaanulacao"]:$this->t76_horaanulacao);
-       $this->t76_usuario = ($this->t76_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_usuario"]:$this->t76_usuario);
+       $this->t76_usuario = ($this->t76_usuario === 0 || $this->t76_usuario === 0.0 || $this->t76_usuario == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_usuario"]:$this->t76_usuario);
        $this->t76_motivo = ($this->t76_motivo == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_motivo"]:$this->t76_motivo);
      }else{
-       $this->t76_sequencial = ($this->t76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_sequencial"]:$this->t76_sequencial);
+       $this->t76_sequencial = ($this->t76_sequencial === 0 || $this->t76_sequencial === 0.0 || $this->t76_sequencial == ""?@$GLOBALS["HTTP_POST_VARS"]["t76_sequencial"]:$this->t76_sequencial);
      }
    }
    // funcao para inclusao
@@ -167,7 +167,7 @@ class cl_inventarioanulado {
          $this->t76_sequencial = $t76_sequencial;
        }
      }
-     if(($this->t76_sequencial == null) || ($this->t76_sequencial == "") ){
+     if(($this->t76_sequencial == null) || ($this->t76_sequencial === 0 || $this->t76_sequencial === 0.0 || $this->t76_sequencial == "") ){
        $this->erro_sql = " Campo t76_sequencial nao declarado.";
        $this->erro_banco = "Chave Primaria zerada.";
        $this->erro_msg   = "Usuário: \\n\\n ".$this->erro_sql." \\n\\n";
